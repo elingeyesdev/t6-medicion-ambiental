@@ -1,0 +1,407 @@
+{
+  "corteUtc": "2026-10-16T12:36:38+00:00",
+  "estado": "preparacion_parcial",
+  "milestone": {
+    "numero": 2,
+    "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/milestone/2",
+    "fechaPrevista": "2026-10-22",
+    "aceptado": false
+  },
+  "versionWebEjecutada": "1540f43c5567d360b6bf66dc7dc57549cc41931e",
+  "pullRequestsAlCorte": [
+    {
+      "baseRefName": "develop",
+      "headRefName": "feature/15-base-web-api",
+      "headRefOid": "1a91f6241c9a2f07d81012d8bd774a1799f3eaed",
+      "isDraft": false,
+      "number": 23,
+      "reviewRequests": [
+        {
+          "__typename": "User",
+          "login": "Jazielle"
+        }
+      ],
+      "reviews": [],
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T01:49:13Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38837113769/job/116768599994",
+          "name": "verificar (8.2)",
+          "startedAt": "2026-10-16T01:48:45Z",
+          "status": "COMPLETED",
+          "workflowName": "Base web y API"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T01:49:00Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38837113769/job/116768599827",
+          "name": "verificar (8.3)",
+          "startedAt": "2026-10-16T01:48:45Z",
+          "status": "COMPLETED",
+          "workflowName": "Base web y API"
+        }
+      ],
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/23",
+      "issue": 15
+    },
+    {
+      "baseRefName": "develop",
+      "headRefName": "feature/16-catalogo-territorial",
+      "headRefOid": "b59abbc4608b354bc7bd7285b81ff93e07f51bd6",
+      "isDraft": false,
+      "number": 24,
+      "reviewRequests": [
+        {
+          "__typename": "User",
+          "login": "Jazielle"
+        }
+      ],
+      "reviews": [],
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T04:17:25Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38849833485/job/116808374786",
+          "name": "filtros-php (ubuntu-latest, 8.2)",
+          "startedAt": "2026-10-16T04:17:13Z",
+          "status": "COMPLETED",
+          "workflowName": "Catálogo territorial"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T04:17:26Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38849833485/job/116808374894",
+          "name": "filtros-php (ubuntu-latest, 8.3)",
+          "startedAt": "2026-10-16T04:17:13Z",
+          "status": "COMPLETED",
+          "workflowName": "Catálogo territorial"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T04:17:43Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38849833485/job/116808374902",
+          "name": "filtros-php (windows-latest, 8.3)",
+          "startedAt": "2026-10-16T04:17:14Z",
+          "status": "COMPLETED",
+          "workflowName": "Catálogo territorial"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T04:17:27Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38849833485/job/116808374525",
+          "name": "geometrias",
+          "startedAt": "2026-10-16T04:17:13Z",
+          "status": "COMPLETED",
+          "workflowName": "Catálogo territorial"
+        }
+      ],
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/24",
+      "issue": 16
+    },
+    {
+      "baseRefName": "develop",
+      "headRefName": "feature/18-api-focos-calor",
+      "headRefOid": "7457718d38c52136c626e3c5a9e8757746f70ad7",
+      "isDraft": false,
+      "number": 25,
+      "reviewRequests": [
+        {
+          "__typename": "User",
+          "login": "Jazielle"
+        }
+      ],
+      "reviews": [],
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T05:39:06Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38856837962/job/116830100998",
+          "name": "verificar (8.2)",
+          "startedAt": "2026-10-16T05:38:41Z",
+          "status": "COMPLETED",
+          "workflowName": "Base web y API"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T05:38:53Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38856837861/job/116830099998",
+          "name": "filtros-php (ubuntu-latest, 8.2)",
+          "startedAt": "2026-10-16T05:38:40Z",
+          "status": "COMPLETED",
+          "workflowName": "Catálogo territorial"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T05:39:07Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38856837962/job/116830100865",
+          "name": "verificar (8.3)",
+          "startedAt": "2026-10-16T05:38:41Z",
+          "status": "COMPLETED",
+          "workflowName": "Base web y API"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T05:38:49Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38856837861/job/116830100380",
+          "name": "filtros-php (ubuntu-latest, 8.3)",
+          "startedAt": "2026-10-16T05:38:41Z",
+          "status": "COMPLETED",
+          "workflowName": "Catálogo territorial"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T05:39:00Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38856837861/job/116830100195",
+          "name": "filtros-php (windows-latest, 8.3)",
+          "startedAt": "2026-10-16T05:38:40Z",
+          "status": "COMPLETED",
+          "workflowName": "Catálogo territorial"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T05:38:50Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38856837962/job/116830101041",
+          "name": "contrato",
+          "startedAt": "2026-10-16T05:38:41Z",
+          "status": "COMPLETED",
+          "workflowName": "Base web y API"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T05:38:57Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38856837861/job/116830100483",
+          "name": "geometrias",
+          "startedAt": "2026-10-16T05:38:41Z",
+          "status": "COMPLETED",
+          "workflowName": "Catálogo territorial"
+        }
+      ],
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/25",
+      "issue": 18
+    },
+    {
+      "baseRefName": "develop",
+      "headRefName": "feature/19-web-focos-calor",
+      "headRefOid": "1540f43c5567d360b6bf66dc7dc57549cc41931e",
+      "isDraft": false,
+      "number": 26,
+      "reviewRequests": [
+        {
+          "__typename": "User",
+          "login": "Jazielle"
+        }
+      ],
+      "reviews": [],
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T06:39:00Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38862378674/job/116847375756",
+          "name": "verificar (8.2)",
+          "startedAt": "2026-10-16T06:38:46Z",
+          "status": "COMPLETED",
+          "workflowName": "Base web y API"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T06:38:58Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38862378556/job/116847375300",
+          "name": "filtros-php (ubuntu-latest, 8.2)",
+          "startedAt": "2026-10-16T06:38:45Z",
+          "status": "COMPLETED",
+          "workflowName": "Catálogo territorial"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T06:39:05Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38862378674/job/116847375880",
+          "name": "verificar (8.3)",
+          "startedAt": "2026-10-16T06:38:46Z",
+          "status": "COMPLETED",
+          "workflowName": "Base web y API"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T06:38:58Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38862378556/job/116847375490",
+          "name": "filtros-php (ubuntu-latest, 8.3)",
+          "startedAt": "2026-10-16T06:38:46Z",
+          "status": "COMPLETED",
+          "workflowName": "Catálogo territorial"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T06:39:09Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38862378556/job/116847375416",
+          "name": "filtros-php (windows-latest, 8.3)",
+          "startedAt": "2026-10-16T06:38:46Z",
+          "status": "COMPLETED",
+          "workflowName": "Catálogo territorial"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T06:38:54Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38862378674/job/116847375457",
+          "name": "contrato",
+          "startedAt": "2026-10-16T06:38:45Z",
+          "status": "COMPLETED",
+          "workflowName": "Base web y API"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T06:39:03Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38862378556/job/116847375051",
+          "name": "geometrias",
+          "startedAt": "2026-10-16T06:38:45Z",
+          "status": "COMPLETED",
+          "workflowName": "Catálogo territorial"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-16T06:38:51Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/38862378674/job/116847375653",
+          "name": "visor-web",
+          "startedAt": "2026-10-16T06:38:46Z",
+          "status": "COMPLETED",
+          "workflowName": "Base web y API"
+        }
+      ],
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/26",
+      "issue": 19
+    }
+  ],
+  "evidencias": [
+    {
+      "ruta": "docs/evidencias/set01_20261015/pruebas.txt",
+      "commitContenedor": "1540f43c5567d360b6bf66dc7dc57549cc41931e",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/blob/1540f43c5567d360b6bf66dc7dc57549cc41931e/docs/evidencias/set01_20261015/pruebas.txt",
+      "sha256BlobGit": "6c8d7a50880a370522aeb1fd5a357e1c493ea3787aea0905307f9aa7114c0b74",
+      "bytesBlobGit": 194
+    },
+    {
+      "ruta": "docs/evidencias/geo01/comprobaciones.txt",
+      "commitContenedor": "1540f43c5567d360b6bf66dc7dc57549cc41931e",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/blob/1540f43c5567d360b6bf66dc7dc57549cc41931e/docs/evidencias/geo01/comprobaciones.txt",
+      "sha256BlobGit": "5169f4f29cd25c4ddbee042536fd7b499ac53686d78677cbbd2893b23d7a9595",
+      "bytesBlobGit": 536
+    },
+    {
+      "ruta": "docs/evidencias/geo01/validacion_geometrica.json",
+      "commitContenedor": "1540f43c5567d360b6bf66dc7dc57549cc41931e",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/blob/1540f43c5567d360b6bf66dc7dc57549cc41931e/docs/evidencias/geo01/validacion_geometrica.json",
+      "sha256BlobGit": "f7d865cf400517b63be63bafb81aacebf67191a3a8a505a24ccf860e06944087",
+      "bytesBlobGit": 3388
+    },
+    {
+      "ruta": "docs/evidencias/api01/consulta_real.json",
+      "commitContenedor": "1540f43c5567d360b6bf66dc7dc57549cc41931e",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/blob/1540f43c5567d360b6bf66dc7dc57549cc41931e/docs/evidencias/api01/consulta_real.json",
+      "sha256BlobGit": "45617ca00f42d057d8404fe48f2157da5fcd809fccb860e37e25d574e784bdce",
+      "bytesBlobGit": 51375
+    },
+    {
+      "ruta": "docs/evidencias/web01/pruebas_php.txt",
+      "commitContenedor": "1540f43c5567d360b6bf66dc7dc57549cc41931e",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/blob/1540f43c5567d360b6bf66dc7dc57549cc41931e/docs/evidencias/web01/pruebas_php.txt",
+      "sha256BlobGit": "a81c15313c28e7bfa2ad1f30310fe0150c0997c18ed530c7053ea189a2e72796",
+      "bytesBlobGit": 94
+    },
+    {
+      "ruta": "docs/evidencias/web01/pruebas_js.txt",
+      "commitContenedor": "1540f43c5567d360b6bf66dc7dc57549cc41931e",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/blob/1540f43c5567d360b6bf66dc7dc57549cc41931e/docs/evidencias/web01/pruebas_js.txt",
+      "sha256BlobGit": "7b699d579bbc48fe676402dec071e35134b9d321eb48c3322e06696d95ea439b",
+      "bytesBlobGit": 1341
+    },
+    {
+      "ruta": "docs/evidencias/web01/recorrido_navegador.json",
+      "commitContenedor": "1540f43c5567d360b6bf66dc7dc57549cc41931e",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/blob/1540f43c5567d360b6bf66dc7dc57549cc41931e/docs/evidencias/web01/recorrido_navegador.json",
+      "sha256BlobGit": "a458ddbe41c2cd10f89ded35dd1cff4bb41769ae307c12b0d586c0f97689f3ce",
+      "bytesBlobGit": 2822
+    },
+    {
+      "ruta": "docs/evidencias/web01/visor_escritorio.png",
+      "commitContenedor": "1540f43c5567d360b6bf66dc7dc57549cc41931e",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/blob/1540f43c5567d360b6bf66dc7dc57549cc41931e/docs/evidencias/web01/visor_escritorio.png",
+      "sha256BlobGit": "8d49046000584742975dfc4bd869893c33cb7c6adc053787f58f6e6c8fd37339",
+      "bytesBlobGit": 145914
+    },
+    {
+      "ruta": "docs/evidencias/web01/pantalla_pequena.png",
+      "commitContenedor": "1540f43c5567d360b6bf66dc7dc57549cc41931e",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/blob/1540f43c5567d360b6bf66dc7dc57549cc41931e/docs/evidencias/web01/pantalla_pequena.png",
+      "sha256BlobGit": "b990bd791c4d0187aacee06f4ad6bbf256a4e7b6603359df239ceba2b33cfdc6",
+      "bytesBlobGit": 139967
+    },
+    {
+      "ruta": "compartido/api/openapi.json",
+      "commitContenedor": "1540f43c5567d360b6bf66dc7dc57549cc41931e",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/blob/1540f43c5567d360b6bf66dc7dc57549cc41931e/compartido/api/openapi.json",
+      "sha256BlobGit": "4f8a9f097e0ffaedb90b62eaf811c29b1f66e98a674115bdf3c790360e044785",
+      "bytesBlobGit": 35355
+    }
+  ],
+  "integridad": "SHA256 de bytes originales del blob Git en el commit fijado; los textos de Windows pueden tener otros finales de línea.",
+  "interpretacion": "No se suman suites heredadas. Evidencia externa histórica y fixtures automáticos están separados. La captura de pantalla pequeña es web, no Flutter.",
+  "pendientes": [
+    {
+      "issues": [
+        17,
+        20
+      ],
+      "responsable": "Jazielle",
+      "resultado": "Aplicación Flutter y ejecución real sin evidencia publicada al corte"
+    },
+    {
+      "issues": [
+        21
+      ],
+      "responsable": "Jazielle con Josué",
+      "resultado": "Comparación web/móvil y defectos/correcciones pendientes"
+    },
+    {
+      "issues": [
+        15,
+        16,
+        18,
+        19
+      ],
+      "responsable": "Jazielle",
+      "resultado": "Revisión de PR y acuerdo de catálogo/contrato pendientes"
+    },
+    {
+      "issues": [
+        22
+      ],
+      "responsable": "Josué; revisa Jazielle",
+      "resultado": "Paquete final pendiente de #21 y revisión; no se cierra M2"
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "metodo": "Etiqueta sin diacríticos, espacios ni paréntesis; unión uno a uno de los 56 nombres. Sin inferencia espacial o por proximidad.",
+  "correspondencias": [
+    {
+      "identificador": "BO070101",
+      "nombreGeometria": "Santa Cruz de la Sierra",
+      "nombreINE2024": "Santa Cruz de La Sierra"
+    },
+    {
+      "identificador": "BO070102",
+      "nombreGeometria": "Cotoca",
+      "nombreINE2024": "Cotoca"
+    },
+    {
+      "identificador": "BO070103",
+      "nombreGeometria": "Porongo",
+      "nombreINE2024": "Porongo"
+    },
+    {
+      "identificador": "BO070104",
+      "nombreGeometria": "La Guardia",
+      "nombreINE2024": "La Guardia"
+    },
+    {
+      "identificador": "BO070105",
+      "nombreGeometria": "El Torno",
+      "nombreINE2024": "El Torno"
+    },
+    {
+      "identificador": "BO070201",
+      "nombreGeometria": "Warnes",
+      "nombreINE2024": "Warnes"
+    },
+    {
+      "identificador": "BO070202",
+      "nombreGeometria": "Okinawa Uno",
+      "nombreINE2024": "Okinawa Uno"
+    },
+    {
+      "identificador": "BO070301",
+      "nombreGeometria": "San Ignacio",
+      "nombreINE2024": "San Ignacio"
+    },
+    {
+      "identificador": "BO070302",
+      "nombreGeometria": "San Miguel",
+      "nombreINE2024": "San Miguel"
+    },
+    {
+      "identificador": "BO070303",
+      "nombreGeometria": "San Rafael",
+      "nombreINE2024": "San Rafael"
+    },
+    {
+      "identificador": "BO070401",
+      "nombreGeometria": "Buena Vista",
+      "nombreINE2024": "Buena Vista"
+    },
+    {
+      "identificador": "BO070402",
+      "nombreGeometria": "San Carlos",
+      "nombreINE2024": "San Carlos"
+    },
+    {
+      "identificador": "BO070403",
+      "nombreGeometria": "Yapacaní",
+      "nombreINE2024": "Yapacaní"
+    },
+    {
+      "identificador": "BO070404",
+      "nombreGeometria": "San Juan",
+      "nombreINE2024": "San Juan"
+    },
+    {
+      "identificador": "BO070501",
+      "nombreGeometria": "San José",
+      "nombreINE2024": "San José"
+    },
+    {
+      "identificador": "BO070502",
+      "nombreGeometria": "Pailón",
+      "nombreINE2024": "Pailón"
+    },
+    {
+      "identificador": "BO070503",
+      "nombreGeometria": "Roboré",
+      "nombreINE2024": "Roboré"
+    },
+    {
+      "identificador": "BO070601",
+      "nombreGeometria": "Portachuelo",
+      "nombreINE2024": "Portachuelo"
+    },
+    {
+      "identificador": "BO070602",
+      "nombreGeometria": "Santa Rosa",
+      "nombreINE2024": "Santa Rosa"
+    },
+    {
+      "identificador": "BO070603",
+      "nombreGeometria": "Colpa Bélgica",
+      "nombreINE2024": "Colpa Bélgica"
+    },
+    {
+      "identificador": "BO070701",
+      "nombreGeometria": "Lagunillas",
+      "nombreINE2024": "Lagunillas"
+    },
+    {
+      "identificador": "BO070702",
+      "nombreGeometria": "Charagua",
+      "nombreINE2024": "Charagua (Autonomía Guaraní Charagua Iyambae)"
+    },
+    {
+      "identificador": "BO070703",
+      "nombreGeometria": "Cabezas",
+      "nombreINE2024": "Cabezas"
+    },
+    {
+      "identificador": "BO070704",
+      "nombreGeometria": "Cuevo",
+      "nombreINE2024": "Cuevo"
+    },
+    {
+      "identificador": "BO070705",
+      "nombreGeometria": "Gutiérrez",
+      "nombreINE2024": "Gutiérrez (Autonomía Indígena Kereimba Iyaambae)"
+    },
+    {
+      "identificador": "BO070706",
+      "nombreGeometria": "Camiri",
+      "nombreINE2024": "Camiri"
+    },
+    {
+      "identificador": "BO070707",
+      "nombreGeometria": "Boyuibe",
+      "nombreINE2024": "Boyuibe"
+    },
+    {
+      "identificador": "BO070801",
+      "nombreGeometria": "Vallegrande",
+      "nombreINE2024": "Vallegrande"
+    },
+    {
+      "identificador": "BO070802",
+      "nombreGeometria": "Trigal",
+      "nombreINE2024": "Trigal"
+    },
+    {
+      "identificador": "BO070803",
+      "nombreGeometria": "Moromoro",
+      "nombreINE2024": "Moromoro"
+    },
+    {
+      "identificador": "BO070804",
+      "nombreGeometria": "Postrervalle",
+      "nombreINE2024": "Postrervalle"
+    },
+    {
+      "identificador": "BO070805",
+      "nombreGeometria": "Pucará",
+      "nombreINE2024": "Pucara"
+    },
+    {
+      "identificador": "BO070901",
+      "nombreGeometria": "Samaipata",
+      "nombreINE2024": "Samaipata"
+    },
+    {
+      "identificador": "BO070902",
+      "nombreGeometria": "Pampa Grande",
+      "nombreINE2024": "Pampagrande"
+    },
+    {
+      "identificador": "BO070903",
+      "nombreGeometria": "Mairana",
+      "nombreINE2024": "Mairana"
+    },
+    {
+      "identificador": "BO070904",
+      "nombreGeometria": "Quirusillas",
+      "nombreINE2024": "Quirusillas"
+    },
+    {
+      "identificador": "BO071001",
+      "nombreGeometria": "Montero",
+      "nombreINE2024": "Montero"
+    },
+    {
+      "identificador": "BO071002",
+      "nombreGeometria": "General Saavedra",
+      "nombreINE2024": "General Saavedra"
+    },
+    {
+      "identificador": "BO071003",
+      "nombreGeometria": "Mineros",
+      "nombreINE2024": "Mineros"
+    },
+    {
+      "identificador": "BO071004",
+      "nombreGeometria": "Fernández Alonso",
+      "nombreINE2024": "Fernández Alonso"
+    },
+    {
+      "identificador": "BO071005",
+      "nombreGeometria": "San Pedro",
+      "nombreINE2024": "San Pedro"
+    },
+    {
+      "identificador": "BO071101",
+      "nombreGeometria": "Concepción",
+      "nombreINE2024": "Concepción"
+    },
+    {
+      "identificador": "BO071102",
+      "nombreGeometria": "San Javier",
+      "nombreINE2024": "San Javier"
+    },
+    {
+      "identificador": "BO071103",
+      "nombreGeometria": "San Julián",
+      "nombreINE2024": "San Julián"
+    },
+    {
+      "identificador": "BO071104",
+      "nombreGeometria": "San Antonio de Lomerio",
+      "nombreINE2024": "San Antonio de Lomerio"
+    },
+    {
+      "identificador": "BO071105",
+      "nombreGeometria": "San Ramón",
+      "nombreINE2024": "San Ramón"
+    },
+    {
+      "identificador": "BO071106",
+      "nombreGeometria": "Cuatro Cañadas",
+      "nombreINE2024": "Cuatro Cañadas"
+    },
+    {
+      "identificador": "BO071201",
+      "nombreGeometria": "San Matías",
+      "nombreINE2024": "San Matías"
+    },
+    {
+      "identificador": "BO071301",
+      "nombreGeometria": "Comarapa",
+      "nombreINE2024": "Comarapa"
+    },
+    {
+      "identificador": "BO071302",
+      "nombreGeometria": "Saipina",
+      "nombreINE2024": "Saipina"
+    },
+    {
+      "identificador": "BO071401",
+      "nombreGeometria": "Puerto Suarez",
+      "nombreINE2024": "Puerto Suárez"
+    },
+    {
+      "identificador": "BO071402",
+      "nombreGeometria": "Puerto Quijarro",
+      "nombreINE2024": "Puerto Quijarro"
+    },
+    {
+      "identificador": "BO071403",
+      "nombreGeometria": "El Carmen Rivero Tórrez",
+      "nombreINE2024": "El Carmen Rivero Tórrez"
+    },
+    {
+      "identificador": "BO071501",
+      "nombreGeometria": "Ascención de Guarayos",
+      "nombreINE2024": "Ascención de Guarayos"
+    },
+    {
+      "identificador": "BO071502",
+      "nombreGeometria": "Urubicha",
+      "nombreINE2024": "Urubichá"
+    },
+    {
+      "identificador": "BO071503",
+      "nombreGeometria": "El Puente",
+      "nombreINE2024": "El Puente"
+    }
+  ]
+}

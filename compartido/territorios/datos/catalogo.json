@@ -1,0 +1,732 @@
+{
+  "version": "scz-codab-v02-1.0.0-propuesta",
+  "estado": "propuesta_pendiente_revision",
+  "espacioIdentificadores": "PCODE_OCHA_CODAB_BOL_v02",
+  "crs": "OGC:CRS84",
+  "ordenCoordenadas": [
+    "longitud",
+    "latitud"
+  ],
+  "territorios": [
+    {
+      "identificador": "BO07",
+      "tipo": "departamento",
+      "nombre": "Santa Cruz",
+      "nombreFuenteGeometria": "Santa Cruz",
+      "padre": null,
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/departamentos.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0701",
+      "tipo": "provincia",
+      "nombre": "Andrés Ibáñez",
+      "nombreFuenteGeometria": "Andrés Ibáñez",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070101",
+      "tipo": "municipio",
+      "nombre": "Santa Cruz de La Sierra",
+      "nombreFuenteGeometria": "Santa Cruz de la Sierra",
+      "padre": "BO0701",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070102",
+      "tipo": "municipio",
+      "nombre": "Cotoca",
+      "nombreFuenteGeometria": "Cotoca",
+      "padre": "BO0701",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070103",
+      "tipo": "municipio",
+      "nombre": "Porongo",
+      "nombreFuenteGeometria": "Porongo",
+      "padre": "BO0701",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070104",
+      "tipo": "municipio",
+      "nombre": "La Guardia",
+      "nombreFuenteGeometria": "La Guardia",
+      "padre": "BO0701",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070105",
+      "tipo": "municipio",
+      "nombre": "El Torno",
+      "nombreFuenteGeometria": "El Torno",
+      "padre": "BO0701",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0702",
+      "tipo": "provincia",
+      "nombre": "Warnes",
+      "nombreFuenteGeometria": "Warnes",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070201",
+      "tipo": "municipio",
+      "nombre": "Warnes",
+      "nombreFuenteGeometria": "Warnes",
+      "padre": "BO0702",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070202",
+      "tipo": "municipio",
+      "nombre": "Okinawa Uno",
+      "nombreFuenteGeometria": "Okinawa Uno",
+      "padre": "BO0702",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0703",
+      "tipo": "provincia",
+      "nombre": "Velasco",
+      "nombreFuenteGeometria": "Velasco",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070301",
+      "tipo": "municipio",
+      "nombre": "San Ignacio",
+      "nombreFuenteGeometria": "San Ignacio",
+      "padre": "BO0703",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070302",
+      "tipo": "municipio",
+      "nombre": "San Miguel",
+      "nombreFuenteGeometria": "San Miguel",
+      "padre": "BO0703",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070303",
+      "tipo": "municipio",
+      "nombre": "San Rafael",
+      "nombreFuenteGeometria": "San Rafael",
+      "padre": "BO0703",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0704",
+      "tipo": "provincia",
+      "nombre": "Ichilo",
+      "nombreFuenteGeometria": "Ichilo",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070401",
+      "tipo": "municipio",
+      "nombre": "Buena Vista",
+      "nombreFuenteGeometria": "Buena Vista",
+      "padre": "BO0704",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070402",
+      "tipo": "municipio",
+      "nombre": "San Carlos",
+      "nombreFuenteGeometria": "San Carlos",
+      "padre": "BO0704",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070403",
+      "tipo": "municipio",
+      "nombre": "Yapacaní",
+      "nombreFuenteGeometria": "Yapacaní",
+      "padre": "BO0704",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070404",
+      "tipo": "municipio",
+      "nombre": "San Juan",
+      "nombreFuenteGeometria": "San Juan",
+      "padre": "BO0704",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0705",
+      "tipo": "provincia",
+      "nombre": "Chiquitos",
+      "nombreFuenteGeometria": "Chiquitos",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070501",
+      "tipo": "municipio",
+      "nombre": "San José",
+      "nombreFuenteGeometria": "San José",
+      "padre": "BO0705",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070502",
+      "tipo": "municipio",
+      "nombre": "Pailón",
+      "nombreFuenteGeometria": "Pailón",
+      "padre": "BO0705",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070503",
+      "tipo": "municipio",
+      "nombre": "Roboré",
+      "nombreFuenteGeometria": "Roboré",
+      "padre": "BO0705",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0706",
+      "tipo": "provincia",
+      "nombre": "Sara",
+      "nombreFuenteGeometria": "Sara",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070601",
+      "tipo": "municipio",
+      "nombre": "Portachuelo",
+      "nombreFuenteGeometria": "Portachuelo",
+      "padre": "BO0706",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070602",
+      "tipo": "municipio",
+      "nombre": "Santa Rosa",
+      "nombreFuenteGeometria": "Santa Rosa",
+      "padre": "BO0706",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070603",
+      "tipo": "municipio",
+      "nombre": "Colpa Bélgica",
+      "nombreFuenteGeometria": "Colpa Bélgica",
+      "padre": "BO0706",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0707",
+      "tipo": "provincia",
+      "nombre": "Cordillera",
+      "nombreFuenteGeometria": "Cordillera",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070701",
+      "tipo": "municipio",
+      "nombre": "Lagunillas",
+      "nombreFuenteGeometria": "Lagunillas",
+      "padre": "BO0707",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070702",
+      "tipo": "municipio",
+      "nombre": "Charagua (Autonomía Guaraní Charagua Iyambae)",
+      "nombreFuenteGeometria": "Charagua",
+      "padre": "BO0707",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": true
+    },
+    {
+      "identificador": "BO070703",
+      "tipo": "municipio",
+      "nombre": "Cabezas",
+      "nombreFuenteGeometria": "Cabezas",
+      "padre": "BO0707",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070704",
+      "tipo": "municipio",
+      "nombre": "Cuevo",
+      "nombreFuenteGeometria": "Cuevo",
+      "padre": "BO0707",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070705",
+      "tipo": "municipio",
+      "nombre": "Gutiérrez (Autonomía Indígena Kereimba Iyaambae)",
+      "nombreFuenteGeometria": "Gutiérrez",
+      "padre": "BO0707",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": true
+    },
+    {
+      "identificador": "BO070706",
+      "tipo": "municipio",
+      "nombre": "Camiri",
+      "nombreFuenteGeometria": "Camiri",
+      "padre": "BO0707",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070707",
+      "tipo": "municipio",
+      "nombre": "Boyuibe",
+      "nombreFuenteGeometria": "Boyuibe",
+      "padre": "BO0707",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0708",
+      "tipo": "provincia",
+      "nombre": "Vallegrande",
+      "nombreFuenteGeometria": "Vallegrande",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070801",
+      "tipo": "municipio",
+      "nombre": "Vallegrande",
+      "nombreFuenteGeometria": "Vallegrande",
+      "padre": "BO0708",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070802",
+      "tipo": "municipio",
+      "nombre": "Trigal",
+      "nombreFuenteGeometria": "Trigal",
+      "padre": "BO0708",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070803",
+      "tipo": "municipio",
+      "nombre": "Moromoro",
+      "nombreFuenteGeometria": "Moromoro",
+      "padre": "BO0708",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070804",
+      "tipo": "municipio",
+      "nombre": "Postrervalle",
+      "nombreFuenteGeometria": "Postrervalle",
+      "padre": "BO0708",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070805",
+      "tipo": "municipio",
+      "nombre": "Pucara",
+      "nombreFuenteGeometria": "Pucará",
+      "padre": "BO0708",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0709",
+      "tipo": "provincia",
+      "nombre": "Florida",
+      "nombreFuenteGeometria": "Florida",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070901",
+      "tipo": "municipio",
+      "nombre": "Samaipata",
+      "nombreFuenteGeometria": "Samaipata",
+      "padre": "BO0709",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070902",
+      "tipo": "municipio",
+      "nombre": "Pampagrande",
+      "nombreFuenteGeometria": "Pampa Grande",
+      "padre": "BO0709",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070903",
+      "tipo": "municipio",
+      "nombre": "Mairana",
+      "nombreFuenteGeometria": "Mairana",
+      "padre": "BO0709",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO070904",
+      "tipo": "municipio",
+      "nombre": "Quirusillas",
+      "nombreFuenteGeometria": "Quirusillas",
+      "padre": "BO0709",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0710",
+      "tipo": "provincia",
+      "nombre": "Obispo Santistéban",
+      "nombreFuenteGeometria": "Obispo Santistéban",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071001",
+      "tipo": "municipio",
+      "nombre": "Montero",
+      "nombreFuenteGeometria": "Montero",
+      "padre": "BO0710",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071002",
+      "tipo": "municipio",
+      "nombre": "General Saavedra",
+      "nombreFuenteGeometria": "General Saavedra",
+      "padre": "BO0710",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071003",
+      "tipo": "municipio",
+      "nombre": "Mineros",
+      "nombreFuenteGeometria": "Mineros",
+      "padre": "BO0710",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071004",
+      "tipo": "municipio",
+      "nombre": "Fernández Alonso",
+      "nombreFuenteGeometria": "Fernández Alonso",
+      "padre": "BO0710",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071005",
+      "tipo": "municipio",
+      "nombre": "San Pedro",
+      "nombreFuenteGeometria": "San Pedro",
+      "padre": "BO0710",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0711",
+      "tipo": "provincia",
+      "nombre": "Ñuflo De Chávez",
+      "nombreFuenteGeometria": "Ñuflo De Chávez",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071101",
+      "tipo": "municipio",
+      "nombre": "Concepción",
+      "nombreFuenteGeometria": "Concepción",
+      "padre": "BO0711",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071102",
+      "tipo": "municipio",
+      "nombre": "San Javier",
+      "nombreFuenteGeometria": "San Javier",
+      "padre": "BO0711",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071103",
+      "tipo": "municipio",
+      "nombre": "San Julián",
+      "nombreFuenteGeometria": "San Julián",
+      "padre": "BO0711",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071104",
+      "tipo": "municipio",
+      "nombre": "San Antonio de Lomerio",
+      "nombreFuenteGeometria": "San Antonio de Lomerio",
+      "padre": "BO0711",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071105",
+      "tipo": "municipio",
+      "nombre": "San Ramón",
+      "nombreFuenteGeometria": "San Ramón",
+      "padre": "BO0711",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071106",
+      "tipo": "municipio",
+      "nombre": "Cuatro Cañadas",
+      "nombreFuenteGeometria": "Cuatro Cañadas",
+      "padre": "BO0711",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0712",
+      "tipo": "provincia",
+      "nombre": "Angel Sandoval",
+      "nombreFuenteGeometria": "Angel Sandoval",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071201",
+      "tipo": "municipio",
+      "nombre": "San Matías",
+      "nombreFuenteGeometria": "San Matías",
+      "padre": "BO0712",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0713",
+      "tipo": "provincia",
+      "nombre": "Manuel María Caballero",
+      "nombreFuenteGeometria": "Manuel María Caballero",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071301",
+      "tipo": "municipio",
+      "nombre": "Comarapa",
+      "nombreFuenteGeometria": "Comarapa",
+      "padre": "BO0713",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071302",
+      "tipo": "municipio",
+      "nombre": "Saipina",
+      "nombreFuenteGeometria": "Saipina",
+      "padre": "BO0713",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0714",
+      "tipo": "provincia",
+      "nombre": "Germán Busch",
+      "nombreFuenteGeometria": "Germán Busch",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071401",
+      "tipo": "municipio",
+      "nombre": "Puerto Suárez",
+      "nombreFuenteGeometria": "Puerto Suarez",
+      "padre": "BO0714",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071402",
+      "tipo": "municipio",
+      "nombre": "Puerto Quijarro",
+      "nombreFuenteGeometria": "Puerto Quijarro",
+      "padre": "BO0714",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071403",
+      "tipo": "municipio",
+      "nombre": "El Carmen Rivero Tórrez",
+      "nombreFuenteGeometria": "El Carmen Rivero Tórrez",
+      "padre": "BO0714",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO0715",
+      "tipo": "provincia",
+      "nombre": "Guarayos",
+      "nombreFuenteGeometria": "Guarayos",
+      "padre": "BO07",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/provincias.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071501",
+      "tipo": "municipio",
+      "nombre": "Ascención de Guarayos",
+      "nombreFuenteGeometria": "Ascención de Guarayos",
+      "padre": "BO0715",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071502",
+      "tipo": "municipio",
+      "nombre": "Urubichá",
+      "nombreFuenteGeometria": "Urubicha",
+      "padre": "BO0715",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    },
+    {
+      "identificador": "BO071503",
+      "tipo": "municipio",
+      "nombre": "El Puente",
+      "nombreFuenteGeometria": "El Puente",
+      "padre": "BO0715",
+      "fuenteGeometria": "hdx_codab_bol_v02",
+      "archivoLimite": "limites/municipios.geojson",
+      "denominacionAutonomiaINE": false
+    }
+  ]
+}

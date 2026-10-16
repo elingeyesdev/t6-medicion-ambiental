@@ -1,0 +1,4 @@
+# Originales de terceros: conservar bytes y SRI, sin reformatear espacios o saltos.
+leaflet.js -text -eol -whitespace
+leaflet.css -text -eol -whitespace
+leaflet.js.map -text -eol -whitespace

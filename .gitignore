@@ -5,6 +5,8 @@
 **/.env.*
 !**/.env.example
 **/vendor/
+!web/public/vendor/
+!web/public/vendor/**
 **/node_modules/
 **/.dart_tool/
 **/.flutter-plugins
@@ -27,3 +29,5 @@
 .DS_Store
 Thumbs.db
 tmp/
+.venv-geo/
+**/__pycache__/
