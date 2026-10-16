@@ -1,7 +1,7 @@
 {
   "estado": "correcto",
   "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
-  "fechaEjecucionUTC": "2026-10-16T04:11:30.906133+00:00",
+  "fechaEjecucionUTC": "2026-10-16T04:14:57.276443+00:00",
   "herramientas": {
     "python": "3.12.14",
     "shapely": "2.1.2",

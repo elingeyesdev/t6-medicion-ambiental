@@ -23,7 +23,8 @@ def leer_json(archivo):
 def guardar_json(archivo, contenido, compacto=False):
     archivo.parent.mkdir(parents=True, exist_ok=True)
     opciones = {"separators": (",", ":")} if compacto else {"indent": 2}
-    archivo.write_text(json.dumps(contenido, ensure_ascii=False, allow_nan=False, **opciones) + "\n", encoding="utf-8")
+    # write_text convierte LF a CRLF en Windows; las huellas deben ser portables.
+    archivo.write_bytes((json.dumps(contenido, ensure_ascii=False, allow_nan=False, **opciones) + "\n").encode("utf-8"))
 
 
 def clave_nombre(nombre):

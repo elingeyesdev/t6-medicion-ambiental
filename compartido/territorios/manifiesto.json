@@ -1,12 +1,12 @@
 {
   "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
   "archivos": {
-    "datos/catalogo.json": "5870d1afcacafbb331ece05aa87615e8322ece0c4fb28273a727101a33ce42ed",
-    "datos/limites/departamentos.geojson": "0ddf5fefdc8bb187f5935aec16f4fb3ac16be45a60f08a99f7f0316295b424a0",
-    "datos/limites/municipios.geojson": "4037a17302cd9dd9d4b068a34aad855f6245a0053214c80a75ba62e19471cb10",
-    "datos/limites/provincias.geojson": "8d314982eb2dcde9698026ce4d141ef2f936783db9f92e1d82bfef54a6d6ddf6",
-    "fuentes/conciliacion_nombres.json": "d58bfd89c2ece465479d388cc8c07b00e166304463d2ab912f59f718806accc9",
-    "fuentes/fuentes.json": "8768795a17e377f2b08f6c3c7a29096989c57691ece3eeaf099a6887c695012e",
-    "fuentes/nombres_ine_2024.json": "d1ab2b5443c47aef53d9e44d746ef4b4e8041d4e58626a1f05ce9f75edefed28"
+    "datos/catalogo.json": "4144d8ecc598d5cdacb4ef5d14c9dbf96f29ff5d7482fe3c660c192459d2c2c8",
+    "datos/limites/departamentos.geojson": "9b04b7a4b8b75dd1e7cbe5abd95da68d1ae6368ce629e3aa7397968d65cf547b",
+    "datos/limites/municipios.geojson": "d9293e6f8805fced5eca24b9b90882bc461c5a1390ddac4cd1cfc4a1dd06c83d",
+    "datos/limites/provincias.geojson": "d544dbb1defe2cd10cd0e6c9b46aebf645f97411a9b94c905c45abbdc72f4d47",
+    "fuentes/conciliacion_nombres.json": "c06b426978161bbe3389b123e57948c083dc8fb21eb62ae2bb2678df863664ca",
+    "fuentes/fuentes.json": "7d6463eff649d735c10c63cc20f6927290bc6e1f2c422829dd6579de8a0cf09e",
+    "fuentes/nombres_ine_2024.json": "36563d03ed3ed77629e9169b573e72adb05c211032549bac17eecb90adfe273f"
   }
 }

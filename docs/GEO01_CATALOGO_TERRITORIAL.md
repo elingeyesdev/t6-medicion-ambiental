@@ -26,6 +26,7 @@ El catálogo compartido puede consumirse desde Flutter; la clase PHP se reserva 
 - **16 divisiones completas**: unión de las 15 provincias respecto del departamento y unión de municipios de cada provincia. Comparaciones en EPSG:6933; residuo numérico admitido de 1 m², sin atribuirle precisión cartográfica.
 - Coordenadas de las **72 geometrías idénticas numéricamente a la fuente ZIP fijada**. No se repararon, simplificaron o recortaron polígonos.
 - Reconstrucción desde el mismo ZIP: manifiesto y datos idénticos byte a byte.
+- Checkout limpio en Windows con conversión automática de finales de línea: las 244 comprobaciones y todas las huellas se conservan. La serialización y `.gitattributes` fijan LF.
 - **Seis consultas HTTP locales** verificadas: sin filtros, selección válida, selección incompatible, inferencia de provincia, ID de otro departamento y parámetro de tipo array. Se registraron 200/422 según el caso.
 - Recorrido real en Chrome: selección válida, rechazo de Warnes con Andrés Ibáñez e inferencia de Andrés Ibáñez al seleccionar Cotoca.
 - El servidor del #15 conserva respuesta HTTP 200 en `/api/salud` durante la preparación aislada de #16.
