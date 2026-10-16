@@ -1,0 +1,147 @@
+{
+  "estado": "correcto",
+  "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+  "fechaEjecucionUTC": "2026-10-16T04:14:57.276443+00:00",
+  "herramientas": {
+    "python": "3.12.14",
+    "shapely": "2.1.2",
+    "geos": "3.13.1",
+    "pyproj": "3.7.2",
+    "numpy": "2.3.5"
+  },
+  "crsCoordenadas": "OGC:CRS84",
+  "orden": [
+    "longitud",
+    "latitud"
+  ],
+  "crsSoloParaCompararAreas": "EPSG:6933",
+  "toleranciaNumericaM2": 1.0,
+  "geometriasValidas": 72,
+  "comparadasCoordenadaACoordenadaConOrigen": 72,
+  "conteos": {
+    "departamento": 1,
+    "provincia": 15,
+    "municipio": 56
+  },
+  "bboxDepartamento": [
+    -64.84241285599995,
+    -20.473213712999893,
+    -57.45443352799998,
+    -13.475739208999926
+  ],
+  "coberturas": [
+    {
+      "padre": "BO07",
+      "hijos": 15,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 0.0,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0701",
+      "hijos": 5,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 8.58306884765625e-06,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0702",
+      "hijos": 2,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 0.0,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0703",
+      "hijos": 3,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 0.000274658203125,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0704",
+      "hijos": 4,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 0.0,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0705",
+      "hijos": 3,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 0.0,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0706",
+      "hijos": 3,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 0.0,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0707",
+      "hijos": 7,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 0.0,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0708",
+      "hijos": 5,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 0.0,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0709",
+      "hijos": 4,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 4.291534423828125e-06,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0710",
+      "hijos": 5,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 0.0,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0711",
+      "hijos": 6,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 0.00019073486328125,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0712",
+      "hijos": 1,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 0.0,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0713",
+      "hijos": 2,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 0.0,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0714",
+      "hijos": 3,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 0.0,
+      "fueraDelPadreM2": 0.0
+    },
+    {
+      "padre": "BO0715",
+      "hijos": 3,
+      "diferenciaSimetricaM2": 0.0,
+      "solapeHijosM2": 0.000186920166015625,
+      "fueraDelPadreM2": 0.0
+    }
+  ],
+  "alcance": "Validación técnica exhaustiva del conjunto publicado; no es una certificación de deslinde legal o actualización temporal a 2026. Acuerdo del equipo pendiente."
+}

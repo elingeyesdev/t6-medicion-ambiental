@@ -1,0 +1,40 @@
+[
+  {
+    "ruta": "/api/v1/focos-calor?desde=2026-10-10T00:00:00Z&hasta=2026-10-11T00:00:00Z&tamanioPagina=500",
+    "http": 200,
+    "tipo": "consulta_proveedor",
+    "total": 60,
+    "registrosPagina": 60,
+    "fechaConsulta": "2026-10-16T05:30:26Z"
+  },
+  {
+    "ruta": "/api/v1/territorios?tipo=provincia",
+    "http": 200,
+    "error": null,
+    "total": null
+  },
+  {
+    "ruta": "/api/v1/territorios/BO070101/limite",
+    "http": 200,
+    "error": null,
+    "total": null
+  },
+  {
+    "ruta": "/api/v1/focos-calor?desde=2026-10-10T00:00:00Z&hasta=2026-10-11T00:00:00Z&provincia=BO0702&municipio=BO070101",
+    "http": 422,
+    "error": "FILTROS_INCOMPATIBLES",
+    "total": null
+  },
+  {
+    "ruta": "/api/v1/focos-calor?desde=2026-10-10T00:00:00Z&hasta=2026-10-11T00:00:00Z&confianza=alta",
+    "http": 200,
+    "error": null,
+    "total": 1
+  },
+  {
+    "ruta": "/api/v1/sequias",
+    "http": 503,
+    "error": "MODULO_NO_DISPONIBLE",
+    "total": null
+  }
+]

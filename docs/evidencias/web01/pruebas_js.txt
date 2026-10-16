@@ -1,0 +1,25 @@
+> test
+> node --test tests/Js/*.test.mjs
+
+✔ Bolivia se convierte a UTC sin depender de la zona horaria del PC (1.3198ms)
+✔ los enlaces no normalizan silenciosamente fechas imposibles o sin zona (0.2279ms)
+✔ FRP cero se distingue de ausencia de dato (10.9287ms)
+✔ el catálogo de respuestas se valida antes de publicar datos (1.4528ms)
+✔ el transporte convierte HTML y fallos HTTP en errores, sin resultados ficticios (0.3269ms)
+✔ carga inicial y resultado publican estado y fuente del mismo contrato (0.9368ms)
+✔ páginas conservan token, filtros, total y resumen; no solicitan otro límite (1.6017ms)
+✔ una respuesta atrasada no sustituye una consulta más reciente (0.7851ms)
+✔ editar filtros cancela la petición y preserva el conjunto anterior etiquetable (0.715ms)
+✔ un fallo conserva los datos anteriores y reintenta la solicitud pendiente (0.9179ms)
+✔ un 409 mantiene el resultado anterior y reinicia sin arrastrar el token (0.7551ms)
+✔ el fallo cartográfico conserva los resultados y el acceso textual (0.4623ms)
+✔ vacío, parcial y sin cobertura no se convierten en errores o datos simulados (0.8985ms)
+✔ un resumen cambiado entre páginas se rechaza antes de mezclar conjuntos (0.6808ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 79.6819

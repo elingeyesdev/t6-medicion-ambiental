@@ -13,13 +13,40 @@ Tablero: https://github.com/users/elingeyesdev/projects/13
 - `compartido/`: contratos, catálogo y recursos comunes revisados por ambos.
 - `docs/`: planificación, instrucciones y evidencias.
 
-La base del repositorio contiene instrucciones y estructura documental. Laravel y Flutter se incorporarán en las tareas #15 y #17; este inicio no acredita aplicaciones implementadas. Los documentos de M1 y sus evidencias están vinculados en los Issues #1 a #14.
+Esta rama incorpora la base Laravel/Blade de #15, el catálogo candidato de #16 y la API de focos de calor de #18. Sus PR y el acuerdo territorial permanecen pendientes de revisión. Flutter y el visor web se desarrollan en sus tareas. Los documentos de M1 y sus evidencias están vinculados en los Issues #1 a #14.
+
+API de #18: [contrato y pruebas manuales](compartido/api/README.md). En esta copia de trabajo puede iniciarse con `./iniciar-api.ps1` y probarse en http://127.0.0.1:8002/api/v1/territorios. La configuración privada está en `web/.env`, excluida de Git. [Resultados y evidencia](docs/API01_FOCOS_CALOR.md).
+
+Visor web de #19: `./iniciar-web.ps1` y abrir http://127.0.0.1:8003/modulos/focos-calor. Mapa/lista por página, filtros, ficha y resumen del conjunto: [guía, organización del código y evidencia](docs/WEB01_VISOR_FOCOS_CALOR.md). Los PR de esta rama y sus dependencias permanecen pendientes de revisión.
+
+## Arranque de la base web
+
+Requiere PHP 8.2 o superior, sus extensiones y Composer 2. Instrucciones completas: [Web y API](web/README.md).
+
+En Windows, desde la raíz de la copia oficial, con PHP disponible en PATH:
+
+```powershell
+.\preparar.ps1
+.\iniciar.ps1
+```
+
+La preparación descarga Composer de su sitio oficial, verifica SHA256 y usa `web/composer.lock`. Si PHP es portable y no tiene `php.ini`, el ejecutor crea una configuración local en `tmp/`; no cambia la instalación global. La aplicación abre en http://127.0.0.1:8000 y su salud JSON en http://127.0.0.1:8000/api/salud. Detener con Ctrl+C.
+
+En otros sistemas, dentro de `web/`:
+
+```sh
+composer install
+composer run setup
+composer run dev
+```
+
+Pruebas aisladas: `composer test` dentro de `web/`. La conexión de Flutter y los ejemplos de URL están documentados en [Desarrollo compartido](compartido/DESARROLLO.md).
 
 ## Ramas y revisión
 
 `main` conserva versiones estables; `develop` integra cambios revisados. Las ramas `feature/<issue>-<tarea>` parten de `develop`. Cada PR debe enlazar su Issue, explicar el cambio, indicar cómo probarlo y aportar evidencia. El compañero revisa los cambios antes de integrarlos.
 
-Las ramas preparadas para M2 parten de la misma base inicial y todavía no contienen sus implementaciones. Antes de empezar una tarea, actualizar `develop` y sincronizar la rama con los cambios ya integrados.
+Las ramas preparadas para M2 parten de la misma base inicial. Cada implementación se incorpora mediante su PR. Antes de empezar una tarea, actualizar `develop` y sincronizar la rama con los cambios ya integrados.
 
 ## Segunda iteración
 

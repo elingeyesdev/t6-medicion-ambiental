@@ -1,0 +1,1 @@
+{"name":"geocruz-web","private":true,"type":"module","scripts":{"test":"node --test tests/Js/*.test.mjs"},"description":"Pruebas del visor con Node; sin dependencias ni compilación de frontend."}
