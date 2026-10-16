@@ -1,0 +1,53 @@
+:root { font-family: Segoe UI, system-ui, sans-serif; color: #173d35; background: #f3f6f4; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 1120px; margin: auto; padding: 30px 28px 45px; }
+header { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 48px; }
+a { color: #126c55; }
+a:focus-visible, select:focus-visible, button:focus-visible { outline: 3px solid #b87922; outline-offset: 3px; }
+.marca { text-decoration: none; font-size: 27px; font-weight: 750; letter-spacing: -1px; }
+.marca span { font-size: 12px; font-weight: 400; letter-spacing: 0; margin-left: 15px; }
+.pendiente { border: 1px solid #e5d7b9; background: #fff8e9; color: #775723; font-size: 11px; padding: 8px 11px; border-radius: 20px; }
+.etiqueta { color: #417e61; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; }
+h1 { font-size: clamp(27px, 4vw, 38px); letter-spacing: -1.2px; font-weight: 600; margin: 13px 0; }
+h2 { font-size: 19px; margin-top: 0; letter-spacing: -.3px; }
+p { color: #51675e; font-size: 13px; line-height: 1.75; }
+.introduccion { max-width: 750px; margin-bottom: 26px; }
+.conteos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+.conteos div { background: #fff; border: 1px solid #dce5df; border-radius: 10px; padding: 20px 24px; }
+.conteos strong { display: block; font-size: 31px; font-weight: 600; }
+.conteos span { display: block; color: #64766b; font-size: 11px; margin-top: 5px; }
+.panel { background: #fff; border: 1px solid #dce5df; border-radius: 12px; padding: 28px; margin: 23px 0; }
+form { display: grid; grid-template-columns: 1fr 1.5fr auto; gap: 15px; align-items: end; margin-top: 22px; }
+label { font-size: 12px; font-weight: 600; display: grid; gap: 8px; min-width: 0; }
+select { width: 100%; padding: 11px 10px; background: #fff; color: #294b3f; border: 1px solid #cbd9cf; border-radius: 6px; font-family: inherit; font-size: 12px; }
+button { background: #126c55; color: #fff; border: 0; border-radius: 6px; padding: 13px 15px; font: 600 12px Segoe UI, sans-serif; cursor: pointer; }
+.limpiar { font-size: 12px; }
+.ayuda { font-size: 11px; color: #6d7d71; }
+.resultado { border-radius: 8px; padding: 17px 20px; margin-top: 18px; font-size: 13px; }
+.resultado p { margin-bottom: 3px; }
+.correcto { background: #edf6ee; border: 1px solid #c9e0cd; }
+.error { background: #fff1ed; border: 1px solid #eec9b9; color: #8a3c2b; }
+.fuentes { padding: 12px 9px 2px; }
+.fuentes p { font-size: 12px; }
+.fuentes>a { font-size: 12px; }
+details { border-top: 1px solid #e0e8e1; }
+summary { padding: 16px 0; font-size: 13px; cursor: pointer; }
+code { color: #416952; background: #eaf1eb; padding: 3px 6px; border-radius: 4px; font-size: 11px; }
+summary code { margin-left: 10px; }
+summary span { float: right; color: #738175; font-size: 11px; }
+ul { padding: 0 0 12px 22px; list-style: none; }
+li { font-size: 12px; margin: 12px 0; color: #3d594b; }
+li code { margin-right: 10px; }
+footer { text-align: center; font-size: 10px; color: #718175; padding: 12px; }
+@media(max-width: 700px) {
+    main { padding: 20px 18px; }
+    header { align-items: flex-start; margin-bottom: 30px; }
+    .marca span { display: block; margin: 3px 0 0; }
+    .pendiente { max-width: 150px; text-align: center; line-height: 1.5; }
+    .conteos { grid-template-columns: 1fr 1fr; }
+    .panel { padding: 22px 18px; }
+    form { grid-template-columns: 1fr; }
+    summary code { font-size: 9px; margin-left: 4px; }
+    summary span { float: none; display: block; margin-top: 7px; }
+}

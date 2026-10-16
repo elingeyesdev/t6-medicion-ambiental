@@ -1,0 +1,4 @@
+consulta_real.json: esquema y formatos válidos
+catalogo_real.json: esquema y formatos válidos
+limite_real.json: esquema y formatos válidos
+Evidencia externa congelada; no equivale a una nueva consulta ni a una prueba Flutter.
