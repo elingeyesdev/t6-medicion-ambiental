@@ -17,6 +17,8 @@ Esta rama incorpora la base Laravel/Blade de #15, el catálogo candidato de #16 
 
 API de #18: [contrato y pruebas manuales](compartido/api/README.md). En esta copia de trabajo puede iniciarse con `./iniciar-api.ps1` y probarse en http://127.0.0.1:8002/api/v1/territorios. La configuración privada está en `web/.env`, excluida de Git. [Resultados y evidencia](docs/API01_FOCOS_CALOR.md).
 
+Visor web de #19: `./iniciar-web.ps1` y abrir http://127.0.0.1:8003/modulos/focos-calor. Mapa/lista por página, filtros, ficha y resumen del conjunto: [guía, organización del código y evidencia](docs/WEB01_VISOR_FOCOS_CALOR.md). Los PR de esta rama y sus dependencias permanecen pendientes de revisión.
+
 ## Arranque de la base web
 
 Requiere PHP 8.2 o superior, sus extensiones y Composer 2. Instrucciones completas: [Web y API](web/README.md).
