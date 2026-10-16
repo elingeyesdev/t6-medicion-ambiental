@@ -59,6 +59,6 @@ class BaseWebTest extends TestCase
 
     public function test_no_se_publican_las_operaciones_ambientales_pendientes(): void
     {
-        $this->get('/api/v1/focos-calor')->assertNotFound()->assertJsonStructure(['message']);
+        $this->get('/api/v1/sequias')->assertStatus(503)->assertJsonPath('error.codigo', 'MODULO_NO_DISPONIBLE');
     }
 }
