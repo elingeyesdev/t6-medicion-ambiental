@@ -1,0 +1,39 @@
+{
+  "fecha": "2026-10-16T01:44:57.282748+00:00",
+  "origen": "http://127.0.0.1:8000",
+  "comprobaciones": [
+    {
+      "ruta": "/",
+      "estado": 200,
+      "tipo": "text/html; charset=utf-8"
+    },
+    {
+      "ruta": "/modulos/focos-calor",
+      "estado": 200,
+      "tipo": "text/html; charset=utf-8"
+    },
+    {
+      "ruta": "/api/salud",
+      "estado": 200,
+      "tipo": "application/json"
+    },
+    {
+      "ruta": "/up",
+      "estado": 200,
+      "tipo": "text/html; charset=utf-8"
+    },
+    {
+      "ruta": "/css/geocruz.css",
+      "estado": 200,
+      "tipo": "text/css; charset=UTF-8"
+    }
+  ],
+  "salud": {
+    "servicio": "GeoCruz",
+    "estado": "disponible",
+    "alcance": "aplicacion",
+    "fecha": "2026-10-16T01:44:57+00:00"
+  },
+  "cacheControlSalud": "no-store, private",
+  "alcance": "Base oficial Laravel y Blade; sin consultas ambientales ni prueba Flutter."
+}
