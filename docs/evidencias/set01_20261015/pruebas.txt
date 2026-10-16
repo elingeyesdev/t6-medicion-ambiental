@@ -1,0 +1,10 @@
+> @php artisan config:clear --ansi
+
+   INFO  Configuration cache cleared successfully.
+
+> @php artisan test --compact
+
+  ...............
+
+  Tests:    15 passed (79 assertions)
+  Duration: 0.49s
