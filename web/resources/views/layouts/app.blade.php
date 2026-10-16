@@ -6,8 +6,9 @@
     <meta name="description" content="GeoCruz, información ambiental para Santa Cruz, sus provincias y municipios.">
     <title>@yield('titulo', 'Inicio') · GeoCruz</title>
     <link rel="stylesheet" href="{{ asset('css/geocruz.css') }}">
+    @stack('estilos')
 </head>
-<body>
+<body class="@yield('clase-cuerpo')">
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 <div class="aplicacion">
     <aside class="lateral">
@@ -34,5 +35,6 @@
         <footer>GeoCruz · Santa Cruz, Bolivia <span>Información con contexto y procedencia.</span></footer>
     </div>
 </div>
+@stack('scripts')
 </body>
 </html>
