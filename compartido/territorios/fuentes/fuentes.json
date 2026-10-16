@@ -1,0 +1,47 @@
+{
+  "geometrias": {
+    "identificador": "hdx_codab_bol_v02",
+    "titulo": "Bolivia (Plurinational State of) - Subnational Administrative Boundaries",
+    "version": "v02",
+    "publicador": "OCHA Field Information Services / HDX",
+    "productor": "Ministerio de Desarrollo Rural y Tierras",
+    "pagina": "https://data.humdata.org/dataset/cod-ab-bol",
+    "metadata": "https://data.humdata.org/api/3/action/package_show?id=cod-ab-bol",
+    "recurso": "https://data.humdata.org/dataset/67333305-5479-4936-a7a3-1713ec3b7398/resource/ecb99c2f-be51-4535-a454-bf3c5dfad024/download/bol_admin_boundaries.geojson.zip",
+    "recursoId": "ecb99c2f-be51-4535-a454-bf3c5dfad024",
+    "sha256Zip": "e3ab68584d8e52db55c3260bff0c9e47662e5f026553a6bb03340bce7ee24ded",
+    "fechaGeometrias": "2013-01-01",
+    "validoDesdeSegunPublicador": "2024-09-16",
+    "revisionPublicador": "2025-10-30",
+    "fechaModificacionRecurso": "2026-05-13T13:23:01.124909",
+    "licencia": "CC BY 3.0 IGO",
+    "urlLicencia": "https://creativecommons.org/licenses/by/3.0/igo/legalcode",
+    "atribucion": "Ministerio de Desarrollo Rural y Tierras; OCHA FIS / HDX. Bolivia COD-AB v02. CC BY 3.0 IGO.",
+    "crsOriginal": "OGC:CRS84",
+    "ordenCoordenadas": [
+      "longitud",
+      "latitud"
+    ],
+    "seleccion": {
+      "campo": "adm1_pcode",
+      "valor": "BO07"
+    },
+    "unidadesBolivia": {
+      "ADM1": 9,
+      "ADM2": 112,
+      "ADM3": 339
+    },
+    "transformaciones": "Selección por código del departamento; se añaden identificadores y nombres de consulta. Coordenadas sin simplificación, reparación ni recorte.",
+    "limitesUso": "Cartografía de referencia del conjunto publicado. Su revisión no constituye deslinde legal ni prueba de actualización de las coordenadas a 2026."
+  },
+  "nombres": {
+    "identificador": "ine_cpv2024_santa_cruz_snapshot",
+    "publicador": "Instituto Nacional de Estadística de Bolivia",
+    "pagina": "https://cpv2024.ine.gob.bo/",
+    "variablePublica": "santacruz_municipios",
+    "fechaConsultaUTC": "2026-10-16T03:54:30.790617+00:00",
+    "sha256HtmlConsultado": "c1310b8735e063d49f453185228cb052ec1fe2659d54f54fd8aaaa06e9800dc8",
+    "alcance": "Solo se conservan los 56 nombres publicados. La columna cod del mapa es ordinal y NO se usa como código oficial INE.",
+    "condiciones": "Nombres territoriales y referencia a su publicación oficial. No se localizó una licencia abierta explícita del sitio; no se redistribuyen imágenes, población ni el HTML completo."
+  }
+}

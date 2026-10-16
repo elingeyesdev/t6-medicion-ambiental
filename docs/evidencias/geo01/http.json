@@ -1,0 +1,51 @@
+{
+  "fechaUTC": "2026-10-16T04:08:39.670247+00:00",
+  "origen": "http://127.0.0.1:8001/revisar_catalogo.php",
+  "casos": [
+    {
+      "consulta": "(sin filtros)",
+      "estadoEsperado": 200,
+      "estadoRecibido": 200,
+      "textoVerificado": "Santa Cruz"
+    },
+    {
+      "consulta": "?provincia=BO0701&municipio=BO070101",
+      "estadoEsperado": 200,
+      "estadoRecibido": 200,
+      "textoVerificado": "Selección válida"
+    },
+    {
+      "consulta": "?provincia=BO0701&municipio=BO070201",
+      "estadoEsperado": 422,
+      "estadoRecibido": 422,
+      "textoVerificado": "FILTROS_INCOMPATIBLES"
+    },
+    {
+      "consulta": "?municipio=BO070102",
+      "estadoEsperado": 200,
+      "estadoRecibido": 200,
+      "textoVerificado": "obtenida desde el municipio"
+    },
+    {
+      "consulta": "?municipio=BO08",
+      "estadoEsperado": 422,
+      "estadoRecibido": 422,
+      "textoVerificado": "TERRITORIO_NO_DISPONIBLE"
+    },
+    {
+      "consulta": "?provincia%5B%5D=BO0701",
+      "estadoEsperado": 422,
+      "estadoRecibido": 422,
+      "textoVerificado": "FILTRO_INVALIDO"
+    }
+  ],
+  "base15Conservada": {
+    "estado": 200,
+    "salud": {
+      "servicio": "GeoCruz",
+      "estado": "disponible",
+      "alcance": "aplicacion",
+      "fecha": "2026-10-16T04:08:39+00:00"
+    }
+  }
+}
