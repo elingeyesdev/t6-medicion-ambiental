@@ -13,7 +13,7 @@ Tablero: https://github.com/users/elingeyesdev/projects/13
 - `compartido/`: contratos, catálogo y recursos comunes revisados por ambos.
 - `docs/`: planificación, instrucciones y evidencias.
 
-Esta rama incorpora la base Laravel/Blade de #15, el catálogo candidato de #16 y la API de focos de calor de #18. Sus PR y el acuerdo territorial permanecen pendientes de revisión. Flutter y el visor web se desarrollan en sus tareas. Los documentos de M1 y sus evidencias están vinculados en los Issues #1 a #14.
+Esta rama incorpora la base Laravel/Blade de #15, el catálogo candidato de #16, la API de focos de calor de #18 y el visor web de #19. Sus PR y el acuerdo territorial permanecen pendientes de revisión. Flutter se desarrolla en #17/#20. Los documentos de M1 y sus evidencias están vinculados en los Issues #1 a #14.
 
 API de #18: [contrato y pruebas manuales](compartido/api/README.md). En esta copia de trabajo puede iniciarse con `./iniciar-api.ps1` y probarse en http://127.0.0.1:8002/api/v1/territorios. La configuración privada está en `web/.env`, excluida de Git. [Resultados y evidencia](docs/API01_FOCOS_CALOR.md).
 
@@ -51,5 +51,7 @@ Las ramas preparadas para M2 parten de la misma base inicial. Cada implementaci�
 ## Segunda iteración
 
 [M2 Focos de calor en web y móvil](https://github.com/elingeyesdev/t6-medicion-ambiental/milestone/2), con entrega prevista el 22 de octubre de 2026. Tareas y dependencias: [Iteración 2](docs/ITERACION_2.md).
+
+[Índice de demostración y evidencias M2](docs/entrega-m2/README.md): versiones, PR, arranque, recorrido web y pendientes de móvil/revisión. Preparación parcial de #22; no acredita entrega final ni aceptación del milestone.
 
 Los cinco módulos previstos son focos de calor, sequías, inundaciones, deforestación y calidad del aire. M2 desarrolla el primero y sus bases comunes. Las claves privadas de fuentes externas se configuran únicamente en el backend y nunca se incorporan a Git. Las demostraciones se identifican y no sustituyen consultas reales.

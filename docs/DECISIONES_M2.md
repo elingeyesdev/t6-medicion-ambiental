@@ -19,3 +19,11 @@ Se propone conservar tres niveles de filtro y resolver padre-hijo por los campos
 Contrato `1.0-m2-candidata` basado en DOC-12. Se concreta la retención pendiente con instantáneas de 15 minutos y parámetro `versionConjunto`, reutilización de 5 minutos y error 409 al expirar/cambiar filtros. Período máximo 168 horas, consultas NASA por bloques de hasta cinco días. Se propone incluir bordes en cada selección, sin asignación municipal arbitraria cuando coinciden varias geometrías; consultas de territorios vecinos pueden compartir puntos de borde. Estas reglas y la adopción del catálogo siguen pendientes de revisión de Jaziel. Implementación y prueba real no equivalen a acuerdo ni aprobación del equipo.
 
 El producto operativo candidato es VIIRS_SNPP_NRT y solo `modo=externo` tiene integración; demostración y otros módulos no tienen datos operativos en #18. No se adopta una regla de incendios confirmados, área quemada o gravedad. Los detalles se registran en `compartido/api/README.md` y `docs/API01_FOCOS_CALOR.md`.
+
+## Seguimiento de entrega / #22 · corte 16/10/2026
+
+La API y el visor web cuentan con evidencia externa y pruebas, en PR #25/#26 abiertos. Base #15 y catálogo #16 también siguen pendientes de revisión en #23/#24. No hay aprobación registrada del compañero al corte. La página web de pantalla pequeña no acredita implementación Flutter.
+
+Pendientes que condicionan el cierre de M2: base/consulta móvil #17/#20 (Jaziel), equivalencia web/móvil #21 (Jaziel con participación de Josué), adopción del catálogo/contrato y revisión cruzada, y consolidación final #22 (Josué, revisa Jaziel). Se prepara el índice de evidencia y demostración en [entrega-m2/README.md](entrega-m2/README.md); su estado es parcial.
+
+Seguimiento C/D/E: C preparado para revisión; D pendiente de evidencia; E con API/web preparadas y móvil/integración pendientes. No se altera Planner ni la línea base de PERT/CPM. Entrega prevista 22/10/2026; si persiste un bloqueo, registrar fecha, responsable, impacto y acuerdo antes de darla por aceptada. El cumplimiento técnico observado no implica revisión del equipo ni aprobación académica.

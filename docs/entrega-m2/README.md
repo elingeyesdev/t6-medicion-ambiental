@@ -1,0 +1,95 @@
+# Segunda entrega · GeoCruz
+
+**Preparación parcial de ENT-02 / #22. Corte: 16/10/2026. Entrega prevista: 22/10/2026.**
+
+Este es el índice de la demostración y sus evidencias. La base web, el catálogo, la API y el visor están preparados en PR abiertos. Flutter (#17/#20), la comparación conjunta (#21) y las revisiones siguen pendientes. **No es una entrega final aprobada.**
+
+## 1. Qué abrir
+
+- [Milestone M2](https://github.com/elingeyesdev/t6-medicion-ambiental/milestone/2): objetivo, fecha y criterios de aceptación.
+- [Tablero oficial](https://github.com/users/elingeyesdev/projects/13/views/1): avance observado, separado de la aceptación.
+- [Visor web local](http://127.0.0.1:8003/modulos/focos-calor?desde=2026-10-10T00:00:00Z&hasta=2026-10-11T00:00:00Z): muestra histórica reproducible mientras el proveedor la conserve.
+- [Registro de versiones y evidencias](estado.json): commits completos, PR, verificaciones y huellas SHA256 de los archivos originales en Git.
+
+El registro es una fotografía del corte; consultar los PR para saber su estado actual. La versión ejecutada para las evidencias web es `1540f43c5567d360b6bf66dc7dc57549cc41931e`. Esta rama documental contiene esa base para enlazar todos los recursos, sin fusionar ni aprobar sus PR.
+
+[Verificación de este paquete](verificacion.json): enlaces locales, integridad de los originales y salud HTTP local. No es una nueva ejecución de las suites ni una prueba móvil.
+
+## 2. Implementación preparada
+
+**Josué, revisión de Jaziel pendiente:**
+
+- #15 / [PR #23](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/23): Laravel/Blade, salud de API, arranque y pruebas iniciales. [Informe](../SET01_BASE_WEB_API.md).
+- #16 / [PR #24](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/24): catálogo candidato, 1 departamento, 15 provincias, 56 unidades municipales, 72 geometrías; acuerdo territorial compartido pendiente. [Informe](../GEO01_CATALOGO_TERRITORIAL.md).
+- #18 / [PR #25](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/25): consulta externa NASA, normalización y contrato `1.0-m2-candidata`. [Informe](../API01_FOCOS_CALOR.md) y [contrato para clientes](../../compartido/api/README.md).
+- #19 / [PR #26](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/26): mapa/lista, filtros, detalle y resumen del mismo conjunto. [Informe, código y pruebas](../WEB01_VISOR_FOCOS_CALOR.md).
+
+No sumar las pruebas de #15, #18 y #19 como ejecuciones independientes del producto final: las suites posteriores contienen las anteriores. La suite web registrada más reciente tiene **35 pruebas PHP / 263 aserciones y 14 pruebas JavaScript**. Los ocho controles de CI de PR #26 estaban aprobados al corte. Sus enlaces y resultados están en `estado.json`.
+
+## 3. Arranque en esta PC
+
+La copia ya preparada y probada está en `C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\web-focos`. Mantener el visor/API en la misma copia y puerto para evitar mezclar versiones.
+
+```powershell
+cd C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\web-focos
+.\iniciar-web.ps1
+```
+
+Abrir http://127.0.0.1:8003/modulos/focos-calor. Si el puerto ya responde, usar el servidor existente. Para detenerlo: Ctrl+C en su terminal. No volver a ejecutar la preparación ni regenerar claves cuando la instalación ya funciona.
+
+En una instalación nueva de esa versión: ejecutar `preparar.ps1`, configurar la propia `NASA_FIRMS_CLAVE` únicamente en `web/.env` y arrancar `iniciar-web.ps1`. PHP 8.2+, Composer 2 y extensiones según [web/README](../../web/README.md). Node 22+ solo para las pruebas JavaScript. `.env` y dependencias no forman parte del paquete público. La copia documental `tmp/entrega-m2` no trae dependencias ni configuración privada preparadas.
+
+La salud http://127.0.0.1:8003/api/salud comprueba la aplicación; no certifica NASA. Para la demostración externa usar el visor o `/api/v1/focos-calor`, con fechas explícitas.
+
+## 4. Recorrido web de cinco minutos
+
+1. Abrir la [muestra del 10/10 UTC](http://127.0.0.1:8003/modulos/focos-calor?desde=2026-10-10T00:00:00Z&hasta=2026-10-11T00:00:00Z). En Bolivia equivale a **09/10 20:00 → 10/10 20:00**, con final excluido. Explicar fuente, fecha de recuperación y cobertura antes del total.
+2. Mostrar resumen y alcance de página. En la ejecución registrada hubo **60 detecciones**, 1 de confianza alta y FRP máxima **6.31 MW**; mapa/lista mostraron 25 de 60. Es una referencia histórica, no una cifra garantizada para futuras consultas.
+3. Abrir una fila y el mismo punto: comprobar ID completo, adquisición, FRP, confianza y procedencia idénticos. Cerrar la ficha conserva los filtros.
+4. Pasar a la segunda página: comprobar 25 puntos/filas y el mismo total/resumen. El token `versionConjunto` conserva la instantánea; al expirar se debe reiniciar la consulta.
+5. Filtrar confianza Alta y consultar. La ejecución registrada devolvió 1 detección y máximo 5.23 MW. Después elegir provincia/municipio y modificar provincia: un municipio incompatible se elimina y los resultados anteriores conservan su ámbito/fecha hasta consultar.
+6. Probar Desde posterior a Hasta: debe aparecer validación conservando los resultados anteriores. Deshacer cambios permite recuperar los filtros aplicados. En pantalla pequeña comprobar que formulario, lista y ficha siguen utilizables.
+
+El total puede cambiar por correcciones o disponibilidad del producto NRT. Si falla NASA, mostrar el estado real y, por separado, abrir las evidencias guardadas. No presentar un archivo histórico como respuesta en vivo. Un foco no confirma incendio; MW no mide área quemada y confianza no significa gravedad.
+
+## 5. Evidencia mínima para mostrar
+
+- [Respuesta externa completa](../evidencias/api01/consulta_real.json), recuperada **16/10/2026 05:30:26 UTC**, con parámetros y procedencia; no contiene la MAP_KEY.
+- [Escritorio](../evidencias/web01/visor_escritorio.png), [pantalla pequeña](../evidencias/web01/pantalla_pequena.png) y [recorrido observado](../evidencias/web01/recorrido_navegador.json). La pantalla pequeña es web adaptable, no Flutter.
+- [Pruebas PHP](../evidencias/web01/pruebas_php.txt) y [JavaScript](../evidencias/web01/pruebas_js.txt): usan respuestas controladas sin red. No sustituyen la consulta externa.
+- [Validación geométrica](../evidencias/geo01/validacion_geometrica.json): comprobación técnica de la propuesta, no certificación administrativa ni aprobación de Jaziel.
+
+No hace falta volver a adjuntar cada Word/PDF o duplicar imágenes: este índice enlaza las evidencias versionadas. Para identificar exactamente lo ejecutado, consultar el commit de cada evidencia en `estado.json`.
+
+## 6. Repetir pruebas sin NASA
+
+Desde la copia `tmp/web-focos`:
+
+```powershell
+cd web
+..\herramientas\php.ps1 artisan test --compact
+npm test
+```
+
+Separar la fecha de una nueva ejecución de los registros originales. No sustituir sus archivos históricos por una captura posterior sin registrar versión y entorno.
+
+## 7. Qué queda para Jaziel y la revisión conjunta
+
+**#17 y #20:** publicar la aplicación Flutter, sus instrucciones reales de arranque, URL base configurable y ejecución en emulador/dispositivo. En este corte `movil/` solo tiene instrucciones; no hay una app ejecutable ni se puede dar un comando `flutter run` verificado.
+
+Para preparar la conexión futura: usar la API del mismo backend. En un emulador Android estándar, el origen del PC es `http://10.0.2.2:8003`, base API `http://10.0.2.2:8003/api`; los recursos ambientales añaden `/v1`. Comprobar primero `/api/salud`. Es configuración propuesta, no prueba móvil. Otras redes/dispositivos requieren su dirección adecuada; ver [desarrollo compartido](../../compartido/DESARROLLO.md). El cliente nunca recibe la clave NASA.
+
+**#21:** ejecutar en ambas interfaces el mismo territorio, período y confianza, usando la misma `versionConjunto` mientras sea válida. Guardar versión de Flutter/backend, fecha, IDs de página, valores, unidades, faltantes, totales, fuente y cobertura. Si las consultas independientes recuperan versiones diferentes, no afirmar equivalencia solo porque coincidan los totales. Añadir casos inválidos, vacío, cobertura, fallo y respuesta antigua; los casos controlados deben identificarse como fixtures.
+
+**#22:** incorporar esas evidencias y defectos/correcciones, registrar revisión del compañero y confirmar la demostración de ambas interfaces. Recién entonces evaluar el cierre de M2. Si no se llega al 22/10, registrar impacto y acuerdo en el seguimiento; no cambiar la línea base silenciosamente.
+
+## 8. Seguimiento y aceptación
+
+- C / EDT 3.1: base web/catálogo preparados; revisión y acuerdo pendientes.
+- D / EDT 3.2: base móvil sin evidencia de implementación al corte.
+- E / EDT 4.1: API y web preparadas; Flutter y equivalencia conjunta pendientes.
+- ENT-02: índice y evidencia web consolidados; paquete final y revisión pendientes de #21.
+
+Este seguimiento no modifica el archivo Planner, las duraciones PERT/CPM ni las fechas aprobadas en M1. Las tareas distribuyen el trabajo de C/D/E sin añadir jornadas. [Decisiones y restricciones actuales](../DECISIONES_M2.md).
+
+Jaziel revisa los PR de Josué; Josué revisa los de Jaziel. La falta de comentarios o las pruebas verdes no sustituyen la aprobación. Se propone revisar las bases #23/#24 antes de #25 y después #26, sincronizando cada rama con lo aceptado en `develop`. Las evidencias previas conservan su SHA; volver a comprobar los cambios resultantes antes de integrar.
