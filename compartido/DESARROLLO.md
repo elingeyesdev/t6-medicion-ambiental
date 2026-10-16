@@ -1,6 +1,6 @@
 # Conexión de desarrollo entre web y móvil
 
-La aplicación Laravel de `web/` es el backend común. Su puerto predeterminado es **8000**. Flutter se incorporará en #17; el consumo ambiental, en #18 y #20. Los ejemplos siguientes son instrucciones de configuración, no evidencia de ejecución en un dispositivo.
+La aplicación Laravel de `web/` es el backend común. Su puerto predeterminado es **8000**; `iniciar-api.ps1` usa **8002** para revisar esta rama sin interrumpir #15. Flutter se incorpora en #17 y consume la API en #20. Los ejemplos siguientes son instrucciones de configuración, no evidencia de ejecución en un dispositivo.
 
 ## Direcciones
 
@@ -35,6 +35,6 @@ La salud no afirma que los módulos, la base de datos o los proveedores estén o
 
 ## Contrato ambiental
 
-La ruta de salud es operativa y queda fuera de la envoltura ambiental de DOC-12. El prefijo/versionado y los modelos de las consultas ambientales se incorporan en #18, conservando las decisiones pendientes y la revisión de ambos integrantes. El catálogo y los límites pertenecen a #16: no se crean códigos territoriales ficticios para completar esta base.
+La ruta de salud es operativa y queda fuera de la envoltura ambiental de DOC-12. [API compartida de #18](api/README.md) y [OpenAPI](api/openapi.json) describen la versión candidata implementada para catálogo, límites y focos. El catálogo y los límites de #16 conservan su estado pendiente de adopción; no se inventan códigos ni revisión del equipo. Adaptar el puerto de los ejemplos al servidor que se use.
 
 Referencia del emulador: [direcciones de red de Android Emulator](https://developer.android.com/studio/run/emulator-networking-address).
