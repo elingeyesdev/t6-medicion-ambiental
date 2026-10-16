@@ -27,3 +27,5 @@
 .DS_Store
 Thumbs.db
 tmp/
+.venv-geo/
+**/__pycache__/

@@ -1,0 +1,41 @@
+name: Catálogo territorial
+
+on:
+  pull_request:
+    branches: [develop, main]
+    paths: ['compartido/territorios/**', 'web/app/Services/Territorios/**', '.github/workflows/territorios.yml']
+  push:
+    branches: [develop, main]
+    paths: ['compartido/territorios/**', 'web/app/Services/Territorios/**', '.github/workflows/territorios.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  filtros-php:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.2', '8.3']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+      - run: php -l compartido/territorios/revisar_catalogo.php
+      - run: php compartido/territorios/comprobar.php
+
+  geometrias:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r compartido/territorios/herramientas/requirements.txt
+      - run: python compartido/territorios/herramientas/validar_geometrias.py --salida "${{ runner.temp }}/validacion_geometrica.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: validacion-geometrica
+          path: ${{ runner.temp }}/validacion_geometrica.json
