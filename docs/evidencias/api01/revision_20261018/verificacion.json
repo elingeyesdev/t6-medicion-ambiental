@@ -1,0 +1,38 @@
+{
+  "fechaUtc": "2026-10-18T06:25:32+00:00",
+  "baseBackendGit": "7457718d38c52136c626e3c5a9e8757746f70ad7",
+  "jsonschema": "4.26.0",
+  "enlacesLocales": 14,
+  "sinClavePrivada": true,
+  "casos": [
+    {
+      "archivo": "consulta_nominal_real.json",
+      "sha256": "c699943fd39bf891051db781902b6531743a3ebf1d8b4ac9768b89d5265c9576",
+      "esquemaValido": true,
+      "resumenConsistente": true,
+      "obtencion": {
+        "tipo": "consulta_proveedor",
+        "fechaRecuperacion": "2026-10-18T06:22:59Z",
+        "fechaActualizacion": null,
+        "antiguedadSegundos": 0,
+        "expiraEn": "2026-10-18T06:37:59Z"
+      },
+      "total": 4
+    },
+    {
+      "archivo": "consulta_alta_sin_registros.json",
+      "sha256": "f33945bce9853c89e4144a6ec7fc00ebcfda8a7eede3c1c1da218aa3998257e8",
+      "esquemaValido": true,
+      "resumenConsistente": true,
+      "obtencion": {
+        "tipo": "cache",
+        "fechaRecuperacion": "2026-10-18T06:22:28Z",
+        "fechaActualizacion": null,
+        "antiguedadSegundos": 71,
+        "expiraEn": "2026-10-18T06:37:28Z"
+      },
+      "total": 0
+    }
+  ],
+  "alcance": "Evidencia externa y su consistencia. No prueba Flutter ni acredita revisión final del compañero."
+}

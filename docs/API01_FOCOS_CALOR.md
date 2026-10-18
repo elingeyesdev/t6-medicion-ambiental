@@ -27,6 +27,8 @@ Se verificaron por HTTP catálogo 200, límite 200, provincia-municipio incompat
 
 ## Dónde probar y qué observar
 
+Para una explicación de dos minutos solicitada en la revisión de #18: [demostración sencilla de NASA](API01_DEMOSTRACION_NASA.md). Ejecutar `./demostrar-api.ps1 -FechaUtc 2026-10-17 -Confianza nominal` desde la raíz de esta copia muestra fuente, período, resumen y una detección real en la terminal, sin revelar la clave. Se agregó evidencia nueva del 18/10, separada de la muestra histórica del 16/10.
+
 Abrir PowerShell en `C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\api-focos` y ejecutar `./iniciar-api.ps1`. El servidor queda en **http://127.0.0.1:8002**. Detener con Ctrl+C. En una copia nueva, ejecutar antes `preparar.ps1` y configurar la propia clave en `web/.env`.
 
 1. `/api/v1/territorios?tipo=provincia` devuelve 15 provincias; `/api/v1/territorios?tipo=municipio` devuelve 56 unidades de nivel municipal del catálogo candidato.
@@ -38,5 +40,7 @@ Abrir PowerShell en `C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\api-focos` y eje
 El navegador muestra JSON. Para una presentación legible, activar su casilla de formato. Las instrucciones completas y reglas de clientes están en [contrato compartido](../compartido/api/README.md).
 
 ## Pendientes de aceptación
+
+Jaziel registró una revisión preliminar el 17/10 en #18: comprobó el alcance y las pruebas, y pidió una demostración sencilla de la consulta real antes de aprobar. La guía y el comando anteriores responden a esa solicitud. No hay una aprobación final registrada por esta preparación.
 
 Jaziel debe revisar el PR, el uso de PCODE/límites de #16, la política conservadora de fronteras, el máximo de 168 horas y la retención/parametrización de `versionConjunto`. Se documenta una implementación candidata; las decisiones no se presentan como acuerdo del equipo. La integración en web, Flutter y la revisión conjunta siguen sus propios issues. El proveedor puede corregir NRT y la retención del snapshot es temporal; no se implementa una base histórica.
