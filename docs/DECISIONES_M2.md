@@ -27,3 +27,9 @@ La API y el visor web cuentan con evidencia externa y pruebas, en PR #25/#26 abi
 Pendientes que condicionan el cierre de M2: base/consulta móvil #17/#20 (Jaziel), equivalencia web/móvil #21 (Jaziel con participación de Josué), adopción del catálogo/contrato y revisión cruzada, y consolidación final #22 (Josué, revisa Jaziel). Se prepara el índice de evidencia y demostración en [entrega-m2/README.md](entrega-m2/README.md); su estado es parcial.
 
 Seguimiento C/D/E: C preparado para revisión; D pendiente de evidencia; E con API/web preparadas y móvil/integración pendientes. No se altera Planner ni la línea base de PERT/CPM. Entrega prevista 22/10/2026; si persiste un bloqueo, registrar fecha, responsable, impacto y acuerdo antes de darla por aceptada. El cumplimiento técnico observado no implica revisión del equipo ni aprobación académica.
+
+## Observaciones recibidas · 18/10/2026
+
+Se comprobaron comentarios de Jaziel del 17/10: en #15 verificó la carga de la base; en #16 aprobó el catálogo mostrado de municipios/provincias; en #18 verificó alcance y pruebas y pidió una demostración real sencilla antes de aprobar. No constan revisiones formales de los PR #23–#26 al consultar este seguimiento. La aprobación del listado en #16 no se amplía por inferencia a las reglas de fronteras o retención del contrato.
+
+Respuesta preparada a #18: [guía y comando reproducible](API01_DEMOSTRACION_NASA.md), con consulta externa nueva y resultados explicados; API/contrato sin cambios. Mantener pendiente la demostración conjunta y la aprobación final de Jaziel. Las evidencias del corte anterior conservan sus versiones históricas.

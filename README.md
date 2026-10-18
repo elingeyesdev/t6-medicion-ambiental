@@ -19,6 +19,8 @@ API de #18: [contrato y pruebas manuales](compartido/api/README.md). En esta cop
 
 Visor web de #19: `./iniciar-web.ps1` y abrir http://127.0.0.1:8003/modulos/focos-calor. Mapa/lista por página, filtros, ficha y resumen del conjunto: [guía, organización del código y evidencia](docs/WEB01_VISOR_FOCOS_CALOR.md). Los PR de esta rama y sus dependencias permanecen pendientes de revisión.
 
+[Demostración sencilla de la consulta NASA](docs/API01_DEMOSTRACION_NASA.md): con el servidor iniciado, ejecutar `./demostrar-api.ps1 -FechaUtc 2026-10-17 -Confianza nominal`. Explica en terminal la respuesta externa y sus límites para la revisión de #18; no añade una interfaz de mapa ni modifica el contrato.
+
 ## Arranque de la base web
 
 Requiere PHP 8.2 o superior, sus extensiones y Composer 2. Instrucciones completas: [Web y API](web/README.md).

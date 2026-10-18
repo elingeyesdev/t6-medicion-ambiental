@@ -93,3 +93,9 @@ Para preparar la conexión futura: usar la API del mismo backend. En un emulador
 Este seguimiento no modifica el archivo Planner, las duraciones PERT/CPM ni las fechas aprobadas en M1. Las tareas distribuyen el trabajo de C/D/E sin añadir jornadas. [Decisiones y restricciones actuales](../DECISIONES_M2.md).
 
 Jaziel revisa los PR de Josué; Josué revisa los de Jaziel. La falta de comentarios o las pruebas verdes no sustituyen la aprobación. Se propone revisar las bases #23/#24 antes de #25 y después #26, sincronizando cada rama con lo aceptado en `develop`. Las evidencias previas conservan su SHA; volver a comprobar los cambios resultantes antes de integrar.
+
+## Anexo de revisión · 18/10/2026
+
+Jaziel dejó una revisión preliminar en #18 y pidió explicar la consulta real antes de aprobar. Se agregó la [demostración sencilla de NASA](../API01_DEMOSTRACION_NASA.md), con comando PowerShell y nueva evidencia externa del 18/10: para el 17/10 UTC, 4 detecciones nominales y máximo 5,26 MW; el filtro Alta devolvió cero y potencia máxima desconocida. Son consultas nuevas, separadas de las muestras del corte 16/10 y sus huellas en `estado.json`.
+
+El comando `demostrar-api.ps1` y la guía se incorporaron a las ramas de API, visor y entrega. La implementación y el contrato ambiental no cambiaron. La revisión final, la presentación conjunta y Flutter siguen pendientes; no se registra aprobación por haber preparado esta explicación.
