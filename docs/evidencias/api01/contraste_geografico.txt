@@ -1,0 +1,1 @@
+60 detecciones reales: pertenencia departamental y municipal contrastada con Shapely, sin duplicados, máximo FRP coherente.

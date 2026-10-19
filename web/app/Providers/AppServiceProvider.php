@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\Territorios\CatalogoTerritorial;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +12,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(CatalogoTerritorial::class,
+            fn () => new CatalogoTerritorial(config('focos.datos_territoriales')));
     }
 
     /**

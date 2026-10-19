@@ -70,7 +70,7 @@ Las claves NASA y de otros proveedores se añadirán solo al backend en las tare
 
 La fecha real se genera en UTC en cada respuesta. El ejemplo describe el formato. Esta ruta verifica que la aplicación puede responder; no comprueba SQLite, NASA, catálogos, exactitud ambiental ni disponibilidad de los módulos. `/up` es la comprobación nativa de Laravel y devuelve 500 si falla un diagnóstico registrado.
 
-Las rutas `/api/*` devuelven errores JSON incluso sin encabezado Accept. Las operaciones ambientales de DOC-12, incluido `/api/v1/focos-calor`, siguen pendientes de #18; no se publican colecciones vacías o datos de muestra para simularlas. La página de cada módulo explica que aún no existe una consulta disponible. La ruta operativa `/api/salud` no adopta por sí sola una versión del contrato ambiental.
+Las rutas `/api/*` devuelven errores JSON incluso sin encabezado Accept. Esta rama implementa `/api/v1/territorios`, su límite y `/api/v1/focos-calor` con NASA FIRMS en backend. Contrato candidato, filtros, paginación y errores: [API compartida](../compartido/api/README.md). Las páginas Blade conservan su estado pendiente: el mapa y su interfaz corresponden a #19. Los otros módulos responden 503 explícito. No se convierten fallos en simulaciones. `/api/salud` conserva su contrato operativo independiente.
 
 ## Pruebas
 
