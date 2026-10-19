@@ -1,5 +1,13 @@
 # Seguimiento de decisiones de M2
 
+## Estado vigente · integración del 19/10/2026
+
+Las secciones posteriores conservan la historia de preparación y revisión. En este corte, PR #23 y #24 cuentan con aprobación formal de Jaziel y están fusionados en `develop`. PR #25 también está fusionado, respaldado por la aceptación de #18 del 18/10. El merge de API incorpora ambas bases, conserva su árbol de archivos y pasó los siete controles de CI. Los detalles y commits están en [el registro de integración](entrega-m2/integracion_20261019.json).
+
+El código aceptado conserva los identificadores de versión territorial `scz-codab-v02-1.0.0-propuesta` y de contrato `1.0-m2-candidata`: no se cambian esquemas, códigos, coordenadas ni reglas ambientales por actualizar el estado del trabajo. La aprobación técnica de la implementación no certifica límites legales ni acredita pruebas Flutter.
+
+PR #26 conserva las correcciones de #19 y espera una nueva revisión de Jaziel. #17/#20, #21 y la entrega final #22 continúan pendientes; #27 sigue en borrador. No se modifican Planner, duraciones ni fecha prevista de M2.
+
 ## Propuesta territorial GEO-01 / #16
 
 Preparación: Josué Padilla. Revisión y acuerdo de adopción: **pendientes de Jaziel**. Antecedente: DOC-14 / #14, cerrado documentalmente sin resolver automáticamente la decisión de catálogo y límites.

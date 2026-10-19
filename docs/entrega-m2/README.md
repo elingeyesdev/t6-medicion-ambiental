@@ -1,5 +1,14 @@
 # Segunda entrega · GeoCruz
 
+## Estado actualizado · 19/10/2026, después de integrar las bases
+
+- **Integrados en `develop`:** [PR #23](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/23), base Laravel/API, y [PR #24](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/24), catálogo territorial, con aprobación formal de Jaziel. [PR #25](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/25), API, integrado tras la [aceptación de Jaziel en #18](https://github.com/elingeyesdev/t6-medicion-ambiental/issues/18#issuecomment-6255891786). Su sincronización no cambió archivos y volvió a pasar los siete controles de CI.
+- **Visor pendiente de nueva revisión:** #19 / PR #26, con las cuatro correcciones publicadas y sincronizado con `develop`. La sincronización conserva exactamente el contenido probado en `05bdd8e`; no equivale a aprobación de Jaziel.
+- **Pendientes de M2:** Flutter #17/#20, comparación web/móvil #21 y consolidación/revisión final #22. PR #27 permanece en borrador; el milestone permanece abierto con fecha prevista 22/10/2026.
+- [Registro de esta integración](integracion_20261019.json): commits de merge y estados consultados. Los cortes y evidencias de las secciones siguientes conservan sus fechas; sus menciones a PR abiertos describen aquel momento.
+
+Para trabajar desde la base compartida: `git fetch origin`, cambiar a la rama propia y ejecutar `git merge origin/develop`. Resolver y probar cualquier conflicto antes de publicar; no reemplazar el trabajo local ni copiar archivos de la repo demo. El visor corregido sigue disponible en la copia y puerto indicados en la sección 3.
+
 **Preparación parcial de ENT-02 / #22. Corte: 16/10/2026. Entrega prevista: 22/10/2026.**
 
 Este es el índice de la demostración y sus evidencias. La base web, el catálogo, la API y el visor están preparados en PR abiertos. Flutter (#17/#20), la comparación conjunta (#21) y las revisiones siguen pendientes. **No es una entrega final aprobada.**
