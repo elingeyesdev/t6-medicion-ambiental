@@ -449,6 +449,45 @@ button:disabled {
     outline:3px solid #34483b;
     outline-offset:3px
 }
+
+.agrupacion-focos {
+    display: grid;
+    place-items: center;
+    border: 2px solid white;
+    border-radius: 50%;
+    background: #173d2e;
+    color: white;
+    box-shadow: 0 1px 5px #173d2e66;
+    font: 700 14px/1 system-ui, sans-serif;
+}
+.agrupacion-focos:focus-visible,.opcion-grupo:focus-visible {
+    outline: 3px solid #bd671d;
+    outline-offset: 3px;
+}
+.etiqueta-deteccion {
+    width: 240px;
+    max-width: calc(100vw - 80px);
+    white-space: normal;
+    line-height: 1.5;
+}
+.grupo-focos {
+    padding: 14px;
+    border-top: 1px solid #d7dfd5;
+    background: #f7f9f3;
+}
+.grupo-focos h4 { margin: 0; }
+#lista-grupo { display: grid; gap: 8px; max-height: 220px; overflow: auto; }
+.opcion-grupo {
+    border: 1px solid #cbd8c8;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: left;
+    font: inherit;
+    color: #173d2e;
+    background: white;
+    cursor: pointer;
+}
+.opcion-grupo[aria-pressed="true"] { border-color: #173d2e; background: #e6efdf; }
 .resultados-anteriores .etiqueta {
     color:#996226
 }

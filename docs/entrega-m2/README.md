@@ -99,3 +99,11 @@ Jaziel revisa los PR de Josué; Josué revisa los de Jaziel. La falta de comenta
 Jaziel dejó una revisión preliminar en #18 y pidió explicar la consulta real antes de aprobar. Se agregó la [demostración sencilla de NASA](../API01_DEMOSTRACION_NASA.md), con comando PowerShell y nueva evidencia externa del 18/10: para el 17/10 UTC, 4 detecciones nominales y máximo 5,26 MW; el filtro Alta devolvió cero y potencia máxima desconocida. Son consultas nuevas, separadas de las muestras del corte 16/10 y sus huellas en `estado.json`.
 
 El comando `demostrar-api.ps1` y la guía se incorporaron a las ramas de API, visor y entrega. La implementación y el contrato ambiental no cambiaron. La revisión final, la presentación conjunta y Flutter siguen pendientes; no se registra aprobación por haber preparado esta explicación.
+
+## Revisión del visor · 19/10/2026
+
+#18 fue aceptado y cerrado por Jaziel el 18/10 después de la demostración. Para #19 pidió cuatro ajustes: cerrar la etiqueta anterior, limitar los calendarios, contar puntos próximos y usar etiquetas comprensibles. Las correcciones están en [PR #26](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/26), commit `05bdd8e`, y se incorporan a esta preparación sin fusionar PR en `develop`.
+
+[Guía y evidencia de las correcciones](../WEB01_VISOR_FOCOS_CALOR.md#correcciones-de-revisión--19102026): 21 pruebas JavaScript y 35 PHP / 263 aserciones; recorrido real y pantalla pequeña. Probar el mismo visor y puerto de la sección 3, consultando del 12 al 19/10 UTC, abrir un grupo numerado y cambiar/cerrar selecciones. Los grupos cuentan solo registros de la página y no desplazan coordenadas.
+
+Las evidencias antiguas del corte 16/10 mantienen sus commits y huellas. La nueva revisión de #19 y las tareas móviles/conjuntas #17/#20/#21 siguen pendientes; #22 permanece parcial. Jaziel dejó además conformidad para integrar la base en el comentario del PR #23; su integración es un paso distinto del cierre de los Issues.

@@ -1,6 +1,7 @@
 import { aLocal, filtrosDelFormulario, solicitarJson, validarInstanteUrl } from './contrato.js';
 import { ConsultaFocosWeb } from './consulta.js';
 import { VistaFocos } from './vista.js';
+import { ajustarCalendarios } from './periodo.js';
 
 function iniciar() {
     const raiz = document.getElementById('visor-focos');
@@ -8,6 +9,8 @@ function iniciar() {
     const formulario = document.getElementById('filtros-focos');
     const provincia = document.getElementById('provincia');
     const municipio = document.getElementById('municipio');
+    const desde = document.getElementById('desde');
+    const hasta = document.getElementById('hasta');
     const vista = new VistaFocos();
     const consulta = new ConsultaFocosWeb(raiz.dataset.api, estado => {
         vista.mostrar(estado);
@@ -30,6 +33,7 @@ function iniciar() {
         document.getElementById('confianza').value = filtros?.confianza ?? '';
         if (filtros?.desde) document.getElementById('desde').value = aLocal(filtros.desde);
         if (filtros?.hasta) document.getElementById('hasta').value = aLocal(filtros.hasta);
+        ajustarCalendarios(desde, hasta);
     };
     const hoy = aLocal(new Date().toISOString()).slice(0, 10);
     const fin = new Date(`${hoy}T00:00:00-04:00`);
@@ -78,6 +82,13 @@ function iniciar() {
     });
     formulario.addEventListener('input', () => consulta.editar());
     formulario.addEventListener('change', () => consulta.editar());
+    for (const fecha of [desde, hasta]) {
+        fecha.addEventListener('input', () => ajustarCalendarios(desde, hasta));
+        fecha.addEventListener('change', () => ajustarCalendarios(desde, hasta));
+    }
+    document.getElementById('limpiar-periodo').addEventListener('click', () => {
+        desde.value = ''; hasta.value = ''; ajustarCalendarios(desde, hasta); consulta.editar(); desde.focus();
+    });
     formulario.addEventListener('submit', e => {
         e.preventDefault();
         try { consulta.consultar(filtrosDelFormulario(formulario)); }

@@ -33,3 +33,9 @@ Seguimiento C/D/E: C preparado para revisión; D pendiente de evidencia; E con A
 Se comprobaron comentarios de Jaziel del 17/10: en #15 verificó la carga de la base; en #16 aprobó el catálogo mostrado de municipios/provincias; en #18 verificó alcance y pruebas y pidió una demostración real sencilla antes de aprobar. No constan revisiones formales de los PR #23–#26 al consultar este seguimiento. La aprobación del listado en #16 no se amplía por inferencia a las reglas de fronteras o retención del contrato.
 
 Respuesta preparada a #18: [guía y comando reproducible](API01_DEMOSTRACION_NASA.md), con consulta externa nueva y resultados explicados; API/contrato sin cambios. Mantener pendiente la demostración conjunta y la aprobación final de Jaziel. Las evidencias del corte anterior conservan sus versiones históricas.
+
+## Resultado de revisión · 19/10/2026
+
+Jaziel aceptó y cerró #18 el 18/10 tras comprobar sus detecciones. En #19 solicitó cuatro correcciones de interfaz; se prepararon y probaron en el commit `05bdd8e` del PR #26: etiqueta única, límites de calendario, conteos de proximidad sin alterar coordenadas y etiquetas comprensibles. [Detalle y evidencia](WEB01_VISOR_FOCOS_CALOR.md). Pendiente su nueva revisión del visor; Flutter y QA conjunta conservan sus tareas.
+
+En [PR #23](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/23#issuecomment-6257001313) consta conformidad de Jaziel para integrar la base en `develop`. Esta actualización no fusiona los PR ni presenta #19 o M2 como aprobados. El avance observado y las fechas de M1 se conservan.
