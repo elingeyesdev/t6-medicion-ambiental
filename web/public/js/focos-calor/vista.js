@@ -1,5 +1,6 @@
 import { fechaBolivia, numero } from './contrato.js';
 import { MapaFocos } from './mapa.js';
+import { etiquetaDeteccion } from './representacion.js';
 
 const texto = (id, valor) => { document.getElementById(id).textContent = valor; };
 const nodo = (tipo, contenido, clase) => {
@@ -14,7 +15,7 @@ export class VistaFocos {
         this.nombres = new Map();
         this.mapa = new MapaFocos('mapa-focos', (id, origen) => this.detalle(id, origen), mensaje => {
             texto('error-mapa', mensaje ?? ''); document.getElementById('error-mapa').hidden = !mensaje;
-        });
+        }, id => this.nombres.get(id));
         document.getElementById('lista-focos').addEventListener('click', e => {
             const boton = e.target.closest('button[data-foco]');
             if (boton) this.detalle(boton.dataset.foco, boton);
@@ -90,7 +91,7 @@ export class VistaFocos {
         if (r.datos.length === 0) lista.append(nodo('p', r.paginacion.total > 0 ? 'Esta página no contiene registros. El resumen conserva el total del conjunto.' : 'Sin detecciones para esta consulta. Revisa el período y la cobertura publicada.', 'sin-resultados'));
         for (const foco of r.datos) {
             const boton = nodo('button', undefined, 'fila-foco'); boton.type = 'button'; boton.dataset.foco = foco.identificador;
-            boton.setAttribute('aria-pressed', 'false'); boton.setAttribute('aria-label', `Ver detección ${foco.identificador.slice(-8)}, ${fechaBolivia(foco.fechas.observadoDesde)}`);
+            boton.setAttribute('aria-pressed', 'false'); boton.setAttribute('aria-label', `Ver detección: ${etiquetaDeteccion(foco, this.nombres.get(foco.territorio.municipio))}`);
             boton.append(nodo('strong', fechaBolivia(foco.fechas.observadoDesde)), nodo('span', numero(foco.atributos.potenciaRadiativa, 'MW'), 'frp'), nodo('span', `Confianza ${foco.atributos.confianza}`), nodo('span', `Ver detalle ↗`), nodo('span', this.nombres.get(foco.territorio.municipio) ?? (foco.territorio.motivoAsignacion ? 'Asignación municipal no determinada' : 'Santa Cruz'), 'municipio-foco'));
             lista.append(boton);
         }

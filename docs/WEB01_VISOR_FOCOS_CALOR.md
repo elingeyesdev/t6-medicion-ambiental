@@ -17,6 +17,8 @@ El navegador consume el contrato común de #18, mediante su propio backend. No l
 - `web/public/js/focos-calor/consulta.js`: ciclo de consulta, cancelación, respuesta anterior, reintento, paginación y control de respuestas atrasadas.
 - `web/public/js/focos-calor/vista.js`: presenta datos y una ficha común para lista/mapa; los valores externos se insertan como texto.
 - `web/public/js/focos-calor/mapa.js`: representación Leaflet y selección de puntos. No recalcula pertenencia territorial, confianza ni indicadores.
+- `web/public/js/focos-calor/periodo.js`: límites recíprocos de los calendarios; conserva el máximo de 168 horas y permite limpiar/restaurar fechas.
+- `web/public/js/focos-calor/representacion.js`: etiquetas comprensibles y agrupación visual de los registros próximos de la página, sin modificar coordenadas.
 - `web/public/css/focos-calor.css`: estilos del módulo y adaptación a pantalla pequeña.
 - `web/app/Services/FocosCalor/` y `Territorios/`: backend heredado de #18/#16; se conserva su contrato candidato.
 
@@ -70,3 +72,20 @@ Siguen pendientes la adopción del catálogo/reglas candidatas y la revisión de
 ## Cartografía y librería
 
 Leaflet **1.9.4** se distribuye localmente con licencia BSD-2-Clause, procedencia e integridad verificadas en `web/public/vendor/leaflet/`. El mapa base usa teselas HTTPS de OpenStreetMap con atribución visible y caché normal del navegador; no hay descarga masiva ni modo offline. Los puntos, límites, fuente ambiental y fechas no se deducen del mapa base. Referencias: [Leaflet estable y descargas](https://leafletjs.com/download.html), [política de teselas OSM](https://operations.osmfoundation.org/policies/tiles/).
+
+## Correcciones de revisión · 19/10/2026
+
+Se atienden las cuatro [observaciones de Jaziel en #19](https://github.com/elingeyesdev/t6-medicion-ambiental/issues/19#issuecomment-6256265997):
+
+1. **Una sola selección:** el visor administra una etiqueta y un anillo en las coordenadas reales. Cambiar de detección retira inmediatamente los anteriores; cerrar detalle, cambiar de página o aplicar otra respuesta los elimina. Se desactivó el desvanecimiento de Leaflet para que no queden etiquetas anteriores visibles durante su retirada.
+2. **Calendarios de hasta siete días:** `min`/`max` se calculan en ambos sentidos, con diferencia positiva y máximo 168 horas. La validación de consulta y la del backend se conservan. `Limpiar fechas` permite elegir un período lejano sin quedar atrapado por los límites del anterior; `Deshacer cambios` recupera los filtros aplicados. No se corrige una fecha inválida cambiándola silenciosamente.
+3. **Conteos de puntos próximos:** se agrupan registros conectados a 28 píxeles o menos al zoom actual. Los números cuentan registros de la **página**, no zonas administrativas ni todo el conjunto. El símbolo de grupo se ancla en una coordenada existente; los registros no se desplazan ni se separan artificialmente. Pulsar o activar con teclado un grupo acerca el mapa y abre su lista de detecciones. Incluso cuando comparten coordenadas exactas pueden elegirse desde esa lista; al acercar se recalculan los grupos.
+4. **Etiquetas comprensibles:** fecha/hora Bolivia, municipio, confianza y FRP con su unidad o `Sin dato`. El ID completo se conserva en el detalle y en la asociación mapa/lista. La etiqueta tiene ancho legible y se desplaza la vista del mapa para evitar recortarla, sin cambiar la ubicación del registro.
+
+**Validación:** 35 pruebas PHP / 263 aserciones y **21 pruebas JavaScript**, incluidas siete regresiones nuevas de calendarios, edición manual, grupos, coordenadas coincidentes, contenido de etiquetas y reemplazo/cierre de selección. Las pruebas controladas no consultan NASA.
+
+El recorrido real en Chrome consultó del **12/10/2026 00:00 UTC al 19/10/2026 00:00 UTC**: 690 detecciones, 16 altas y FRP máxima 448,04 MW en esa ejecución. La primera página mostró 25: grupos de 10, 4, 7 y 3, más un punto individual, sin alterar el total. Son resultados de esa consulta externa, no cifras fijas del producto. Cambiar de selección produjo una etiqueta, luego una etiqueta distinta, y cerrar dejó cero; el mismo ID se comprobó desde punto/lista/grupo. El calendario rechazó 168 horas más un segundo y conservó los resultados aplicados. Cambiar a la segunda página conservó el total y limpió selección/grupo. Pantalla pequeña de **390 × 844** sin desborde horizontal; etiqueta completa dentro del mapa.
+
+Evidencia nueva, sin sobrescribir el recorrido anterior: [escritorio con grupo y selección](evidencias/web01/revision_20261019/grupos_y_seleccion_final.png), [pantalla pequeña](evidencias/web01/revision_20261019/pantalla_pequena_verificada.png), [recorrido observado](evidencias/web01/revision_20261019/recorrido_navegador.json), [pruebas PHP](evidencias/web01/revision_20261019/pruebas_php.txt) y [pruebas JavaScript](evidencias/web01/revision_20261019/pruebas_js.txt).
+
+Para repetir: arrancar `iniciar-web.ps1` y abrir http://127.0.0.1:8003/modulos/focos-calor?desde=2026-10-12T00:00:00Z&hasta=2026-10-19T00:00:00Z . Elegir dos detecciones y cerrar detalle; abrir un grupo numerado; limpiar/restaurar fechas y comprobar el máximo de siete días. La disponibilidad NRT puede cambiar. Las correcciones quedan para nueva revisión de Jaziel; no se registra aprobación de #19 ni ejecución Flutter por estas pruebas. #18 ya consta cerrado y aceptado en su comentario del 18/10, lo cual no equivale a haber fusionado su PR.

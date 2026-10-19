@@ -22,12 +22,17 @@ export function validarInstanteUrl(texto) {
     return texto;
 }
 
-export function filtrosDelFormulario(formulario) {
-    const datos = new FormData(formulario);
-    const desde = aUtc(datos.get('desde'));
-    const hasta = aUtc(datos.get('hasta'));
+export function validarPeriodoLocal(inicio, fin) {
+    const desde = aUtc(inicio);
+    const hasta = aUtc(fin);
     const diferencia = new Date(hasta) - new Date(desde);
     if (diferencia <= 0 || diferencia > 7 * 86400000) throw new Error('Desde debe ser anterior a Hasta. El máximo es de 7 días (168 horas).');
+    return { desde, hasta };
+}
+
+export function filtrosDelFormulario(formulario) {
+    const datos = new FormData(formulario);
+    const { desde, hasta } = validarPeriodoLocal(datos.get('desde'), datos.get('hasta'));
     const filtros = { desde, hasta, modo: 'externo' };
     for (const nombre of ['provincia', 'municipio', 'confianza']) {
         if (datos.get(nombre)) filtros[nombre] = datos.get(nombre);

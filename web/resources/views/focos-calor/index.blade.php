@@ -25,10 +25,10 @@
                     <label>Confianza<select name="confianza" id="confianza"><option value="">Todas</option><option value="alta">Alta</option><option value="nominal">Nominal</option><option value="baja">Baja</option><option value="desconocida">Desconocida</option></select></label>
                     <label>Desde <small>Incluido</small><input type="datetime-local" id="desde" name="desde" required step="1"></label>
                     <label>Hasta <small>Excluido</small><input type="datetime-local" id="hasta" name="hasta" required step="1"></label>
-                    <div class="acciones-filtros"><button type="submit" class="boton-principal" id="consultar">Consultar focos</button><button type="button" class="boton-suave" id="cancelar-filtros" hidden>Deshacer cambios</button></div>
+                    <div class="acciones-filtros"><button type="submit" class="boton-principal" id="consultar">Consultar focos</button><button type="button" class="boton-suave" id="limpiar-periodo">Limpiar fechas</button><button type="button" class="boton-suave" id="cancelar-filtros" hidden>Deshacer cambios</button></div>
                 </div>
             </fieldset>
-            <p class="ayuda-filtros">Máximo 7 días. El municipio debe pertenecer a la provincia; sin selección, se consulta todo el departamento.</p>
+            <p class="ayuda-filtros">Máximo 7 días. Los calendarios se limitan entre sí; para elegir otro período lejano, pulsa Limpiar fechas. El municipio debe pertenecer a la provincia; sin selección, se consulta todo el departamento.</p>
         </form>
         <p id="estado-catalogo" role="status">Cargando catálogo territorial…</p>
         <button type="button" id="reintentar-catalogo" class="boton-suave" hidden>Reintentar catálogo</button>
@@ -50,9 +50,14 @@
             <section class="panel-mapa" aria-labelledby="titulo-mapa">
                 <div class="encabezado-panel"><h3 id="titulo-mapa">El territorio, de cerca</h3><button type="button" id="centrar-territorio" class="boton-texto">Centrar territorio</button></div>
                 <p id="alcance-mapa" class="nota-pagina"></p>
-                <div id="mapa-focos" aria-label="Mapa interactivo de las detecciones de la página actual"></div>
+                <div id="mapa-focos" tabindex="-1" aria-label="Mapa interactivo de las detecciones de la página actual"></div>
+                <p class="nota-pagina">Los números agrupan detecciones próximas de esta página. Pulsa un grupo para acercarte y elegir un registro; las coordenadas no se desplazan.</p>
+                <section id="grupo-focos" class="grupo-focos" aria-labelledby="titulo-grupo" hidden>
+                    <div class="encabezado-panel"><h4 id="titulo-grupo" tabindex="-1"></h4><button type="button" id="cerrar-grupo" class="boton-suave">Cerrar grupo</button></div>
+                    <div id="lista-grupo"></div>
+                </section>
                 <p id="error-mapa" class="aviso-mapa" role="status" hidden></p>
-                <div class="leyenda"><span><i class="alta"></i>Alta</span><span><i class="nominal"></i>Nominal</span><span><i class="baja"></i>Baja</span><span><i class="desconocida"></i>Desconocida</span><small>Color = confianza</small></div>
+                <div class="leyenda"><span><i class="alta"></i>Alta</span><span><i class="nominal"></i>Nominal</span><span><i class="baja"></i>Baja</span><span><i class="desconocida"></i>Desconocida</span><small>Color de punto = confianza</small></div>
             </section>
             <section class="panel-listado" aria-labelledby="titulo-listado">
                 <div class="encabezado-panel"><h3 id="titulo-listado">Detecciones</h3><span id="conteo-pagina"></span></div>

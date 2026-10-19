@@ -1,0 +1,33 @@
+
+> test
+> node --test tests/Js/*.test.mjs
+
+✔ Bolivia se convierte a UTC sin depender de la zona horaria del PC (3.8323ms)
+✔ los enlaces no normalizan silenciosamente fechas imposibles o sin zona (2.803ms)
+✔ FRP cero se distingue de ausencia de dato (10.4933ms)
+✔ el catálogo de respuestas se valida antes de publicar datos (1.4954ms)
+✔ el transporte convierte HTML y fallos HTTP en errores, sin resultados ficticios (0.3255ms)
+✔ carga inicial y resultado publican estado y fuente del mismo contrato (0.8993ms)
+✔ páginas conservan token, filtros, total y resumen; no solicitan otro límite (2.0916ms)
+✔ una respuesta atrasada no sustituye una consulta más reciente (1.1928ms)
+✔ editar filtros cancela la petición y preserva el conjunto anterior etiquetable (0.8153ms)
+✔ un fallo conserva los datos anteriores y reintenta la solicitud pendiente (0.9846ms)
+✔ un 409 mantiene el resultado anterior y reinicia sin arrastrar el token (0.7885ms)
+✔ el fallo cartográfico conserva los resultados y el acceso textual (0.5084ms)
+✔ vacío, parcial y sin cobertura no se convierten en errores o datos simulados (1.4506ms)
+✔ un resumen cambiado entre páginas se rechaza antes de mezclar conjuntos (1.1813ms)
+✔ calendarios limitan ambos extremos a 168 horas, con intervalo positivo de segundos (2.3515ms)
+✔ limpiar y restaurar fechas elimina restricciones antiguas sin inventar otra fecha (0.2956ms)
+✔ la validación al consultar rechaza edición manual fuera de límites aunque no intervenga el calendario (0.9948ms)
+✔ agrupación conserva cada registro una vez y no modifica coordenadas ni objetos (0.7939ms)
+✔ acercar separa puntos próximos, pero coordenadas idénticas mantienen todos sus registros (0.5208ms)
+✔ etiqueta comprensible conserva fecha Bolivia, municipio, confianza y FRP, sin ID técnico (13.2881ms)
+✔ cambiar de selección y cerrar detalle elimina etiqueta y anillo anteriores en sus coordenadas reales (0.7078ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 98.2035
