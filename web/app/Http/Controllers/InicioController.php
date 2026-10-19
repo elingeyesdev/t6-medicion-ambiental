@@ -16,7 +16,7 @@ class InicioController extends Controller
         $modulos = config('geocruz.modulos');
         abort_unless(array_key_exists($modulo, $modulos), 404);
 
-        return view('modulo', [
+        return view($modulo === 'focos-calor' ? 'focos-calor.index' : 'modulo', [
             'modulos' => $modulos,
             'identificador' => $modulo,
             'modulo' => $modulos[$modulo],

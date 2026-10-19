@@ -1,0 +1,167 @@
+{
+  "fechaUtc": "2026-10-19T19:19:25.062Z",
+  "consulta": "2026-10-12T00:00:00Z/2026-10-19T00:00:00Z",
+  "naturaleza": "observaciones de la interfaz contra API real; pruebas controladas en los archivos de pruebas separados",
+  "casos": [
+    {
+      "caso": "seleccion_primera",
+      "detalleVisible": true,
+      "etiquetas": 1,
+      "id": "firms-016515a2e840f9cb2349ed4b7f47556aaa9e8e66da862dd90fb567d8095cce13",
+      "texto": "18/10/26, 14:11 · San Rafael · confianza nominal · FRP 59,07 MW"
+    },
+    {
+      "caso": "seleccion_segunda",
+      "detalleVisible": true,
+      "etiquetas": 1,
+      "id": "firms-02729a4afa9e5b3f9488a890ab93990839790a117c1eec8d9e2bde9dd59db07d",
+      "texto": "18/10/26, 14:11 · San José · confianza nominal · FRP 4,04 MW"
+    },
+    {
+      "caso": "cerrar_detalle",
+      "detalleVisible": false,
+      "etiquetas": 0,
+      "id": "firms-02729a4afa9e5b3f9488a890ab93990839790a117c1eec8d9e2bde9dd59db07d",
+      "texto": ""
+    },
+    {
+      "caso": "grupos_en_vista_departamental",
+      "alcance": "Mapa y lista: 25 de 690 detecciones. Los puntos corresponden solo a la página actual.",
+      "grupos": [
+        10,
+        4,
+        7,
+        3
+      ],
+      "puntosIndividuales": 1,
+      "total": "690"
+    },
+    {
+      "caso": "abrir_grupo",
+      "gruposRestantes": [
+        3,
+        2,
+        2,
+        4
+      ],
+      "puntosIndividuales": 14,
+      "registros": 10,
+      "titulo": "10 detecciones del grupo seleccionado",
+      "visible": true
+    },
+    {
+      "caso": "seleccionar_registro_de_grupo",
+      "idEsperado": "firms-02729a4afa9e5b3f9488a890ab93990839790a117c1eec8d9e2bde9dd59db07d",
+      "detalleVisible": true,
+      "etiquetas": 1,
+      "id": "firms-02729a4afa9e5b3f9488a890ab93990839790a117c1eec8d9e2bde9dd59db07d",
+      "texto": "18/10/26, 14:11 · San José · confianza nominal · FRP 4,04 MW"
+    },
+    {
+      "caso": "limites_calendarios_168h",
+      "desde": {
+        "max": "2026-10-18T19:59:59",
+        "min": "2026-10-11T20:00:00",
+        "valido": true,
+        "valor": "2026-10-11T20:00"
+      },
+      "hasta": {
+        "max": "2026-10-18T20:00:00",
+        "min": "2026-10-11T20:00:01",
+        "valido": true,
+        "valor": "2026-10-18T20:00"
+      }
+    },
+    {
+      "caso": "edicion_manual_168h_mas_un_segundo",
+      "max": "2026-10-18T20:00:00",
+      "superaMaximo": true,
+      "valido": false,
+      "valor": "2026-10-18T20:00:01",
+      "vigencia": "RESULTADOS ANTERIORES · CONSERVADOS"
+    },
+    {
+      "caso": "consulta_invalida_no_sustituye_resultados",
+      "hastaInvalido": true,
+      "periodoAplicado": "11/10/26, 20:00 → 18/10/26, 20:00 · Bolivia · final excluido",
+      "titulo": "Filtros modificados",
+      "total": "690"
+    },
+    {
+      "caso": "limpiar_para_otro_periodo",
+      "desde": {
+        "max": "",
+        "min": "",
+        "valor": ""
+      },
+      "hasta": {
+        "max": "",
+        "min": "",
+        "valor": ""
+      }
+    },
+    {
+      "caso": "nuevo_periodo_lejano",
+      "desde": "2026-09-01T00:00",
+      "hastaMax": "2026-09-08T00:00:00",
+      "hastaMin": "2026-09-01T00:00:01"
+    },
+    {
+      "caso": "restaurar_filtros_aplicados",
+      "desde": "2026-10-11T20:00",
+      "hasta": "2026-10-18T20:00",
+      "hastaMax": "2026-10-18T20:00:00",
+      "total": "690"
+    },
+    {
+      "caso": "seleccion_por_click_en_punto",
+      "idEsperado": "firms-06f9b45b01578ab55f555adf866f56fc0f14ecbd720b014500fc97be3af80d2e",
+      "detalleVisible": true,
+      "etiquetas": 1,
+      "id": "firms-06f9b45b01578ab55f555adf866f56fc0f14ecbd720b014500fc97be3af80d2e",
+      "texto": "18/10/26, 14:11 · Pailón · confianza nominal · FRP 3,7 MW"
+    },
+    {
+      "caso": "grupo_por_teclado",
+      "registros": 10,
+      "visible": true
+    },
+    {
+      "caso": "pantalla_pequena",
+      "ancho": 390,
+      "anchoDocumento": 375,
+      "detalleVisible": true,
+      "etiquetas": 1
+    },
+    {
+      "caso": "cerrar_detalle_pantalla_pequena",
+      "detalleVisible": false,
+      "etiquetas": 0,
+      "id": "firms-016515a2e840f9cb2349ed4b7f47556aaa9e8e66da862dd90fb567d8095cce13",
+      "texto": ""
+    },
+    {
+      "caso": "paginacion_limpia_seleccion",
+      "etiquetas": 0,
+      "grupoVisible": false,
+      "pagina": "Página 2 de 28",
+      "total": "690"
+    },
+    {
+      "caso": "etiqueta_legible_sin_recorte",
+      "alto": 49.33333587646485,
+      "ancho": 240,
+      "dentroDelMapa": true,
+      "etiquetas": 1,
+      "texto": "18/10/26, 14:11 · San Rafael · confianza nominal · FRP 59,07 MW"
+    },
+    {
+      "caso": "pantalla_pequena_verificada",
+      "ancho": 390,
+      "anchoDocumento": 375,
+      "dentroDelMapa": true,
+      "etiquetas": 1,
+      "texto": "18/10/26, 14:11 · San José · confianza nominal · FRP 4,04 MW"
+    }
+  ]
+}

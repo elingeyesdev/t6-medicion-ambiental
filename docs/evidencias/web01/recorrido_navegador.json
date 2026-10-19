@@ -1,0 +1,79 @@
+[
+  {
+    "alcance": "Mapa y lista: 25 de 60 detecciones. Los puntos corresponden solo a la página actual.",
+    "caso": "consulta_real_inicial",
+    "fecha": "2026-10-16T06:21:13.531Z",
+    "filas": 25,
+    "frp": "6,31 MW",
+    "marcadores": 25,
+    "pagina": "Página 1 de 3",
+    "recuperacion": "Recuperación: 16/10/26, 02:16 · Bolivia",
+    "total": "60"
+  },
+  {
+    "caso": "detalle_mapa_y_lista",
+    "idLista": "firms-3146c7081348d834405ab97daefdf21a313e64f877e47873ea54b6d43d0a3d86",
+    "idDetalleLista": "firms-3146c7081348d834405ab97daefdf21a313e64f877e47873ea54b6d43d0a3d86",
+    "idDetalleMapa": "firms-3146c7081348d834405ab97daefdf21a313e64f877e47873ea54b6d43d0a3d86",
+    "coinciden": true
+  },
+  {
+    "caso": "pagina_dos",
+    "estado": "Consulta lista",
+    "filas": 25,
+    "frp": "6,31 MW",
+    "marcadores": 25,
+    "obtencion": "Datos en caché · 4 min de antigüedad al responder",
+    "pagina": "Página 2 de 3",
+    "recuperacion": "Recuperación: 16/10/26, 02:16 · Bolivia",
+    "total": "60"
+  },
+  {
+    "caso": "cambio_provincia_descarta_municipio_incompatible",
+    "estado": "Filtros modificados",
+    "municipio": "",
+    "provincia": "BO0702",
+    "resultadosDe": "Santa Cruz",
+    "total": "60",
+    "vigencia": "RESULTADOS ANTERIORES · CONSERVADOS"
+  },
+  {
+    "caso": "periodo_invertido",
+    "desde": "2026-10-11T20:00",
+    "hasta": "2026-10-10T20:00",
+    "mensaje": "Desde debe ser anterior a Hasta. El máximo es de 7 días (168 horas). Los resultados anteriores se conservan con sus fechas y filtros originales.",
+    "totalAnterior": "60",
+    "vigencia": "RESULTADOS ANTERIORES · CONSERVADOS"
+  },
+  {
+    "caso": "confianza_alta_real",
+    "confianzas": [
+      "10/10/26, 13:205,23 MWConfianza altaVer detalle ↗San Ignacio"
+    ],
+    "estado": "Consulta lista",
+    "filas": 1,
+    "frp": "5,23 MW",
+    "marcadores": 1,
+    "total": "1",
+    "url": "http://127.0.0.1:8003/modulos/focos-calor?desde=2026-10-10T00%3A00%3A00Z&hasta=2026-10-11T00%3A00%3A00Z&modo=externo&confianza=alta"
+  },
+  {
+    "alto": 844,
+    "ancho": 390,
+    "caso": "pantalla_pequena",
+    "desbordeHorizontal": false,
+    "detalleVisible": true,
+    "identificador": "firms-887685486df712195de9bd3d02ab22bf68569fe6dc2abfc8e68f9a822f61d263",
+    "total": "1"
+  },
+  {
+    "caso": "consulta_municipal_real",
+    "cobertura": "Cobertura desconocida. Disponibilidad temporal publicada; las detecciones no acreditan observación completa de cada municipio. Filas inválidas y períodos no disponibles se advierten.",
+    "estado": "Sin registros para estos filtros",
+    "filas": 0,
+    "marcadores": 0,
+    "mensaje": "La consulta no devolvió detecciones. Esto no demuestra ausencia de incendios ni de otros fenómenos.",
+    "territorio": "Santa Cruz de La Sierra",
+    "total": "0"
+  }
+]
