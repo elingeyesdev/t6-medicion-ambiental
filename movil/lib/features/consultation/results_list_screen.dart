@@ -156,7 +156,7 @@ class _NotIntegratedMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const _MessageCard(
       icon: Icons.hourglass_empty_rounded,
-      title: 'Consulta móvil en preparación',
+      title: 'Próximamente',
       message:
           'Todavía no hay una consulta integrada para este módulo. '
           'Este estado no representa un resultado vacío ni falta de cobertura.',

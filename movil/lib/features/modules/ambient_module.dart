@@ -18,7 +18,7 @@ class AmbientModule {
   final ModuleAvailability availability;
 
   String get statusLabel => switch (availability) {
-    ModuleAvailability.mobileInProgress => 'Móvil en preparación',
+    ModuleAvailability.mobileInProgress => 'Próximamente',
     ModuleAvailability.comingSoon => 'Próximamente',
   };
 }

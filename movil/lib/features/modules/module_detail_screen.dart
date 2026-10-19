@@ -45,39 +45,19 @@ class ModuleDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 18),
                   Text(
-                    module.availability == ModuleAvailability.mobileInProgress
-                        ? 'La consulta móvil está en preparación'
-                        : 'Este módulo está en preparación',
+                    module.statusLabel,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 8),
                   Text(
                     module.availability == ModuleAvailability.mobileInProgress
                         ? 'El visor de focos de calor está disponible en web. '
-                              'La consulta móvil se integrará cuando esté lista; '
+                              'La consulta móvil todavía no está disponible; '
                               'esta pantalla no presenta resultados de ejemplo.'
                         : 'La consulta de datos todavía no está disponible '
                               'en móvil. Este estado no significa que no haya '
                               'datos o que el fenómeno esté ausente.',
                     style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 18),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.schedule_outlined,
-                        size: 18,
-                        color: GeoCruzColors.amber,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        module.statusLabel,
-                        style: const TextStyle(
-                          color: GeoCruzColors.amber,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),

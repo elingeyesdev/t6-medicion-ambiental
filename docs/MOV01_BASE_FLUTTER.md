@@ -12,9 +12,8 @@ navegación por módulos, territorio y lenguaje de la web GeoCruz. No usa imáge
 remotas o generadas.
 
 La navegación común tiene Inicio y Módulos; cada módulo abre una pantalla de
-estado. Focos de calor se indica como trabajo móvil en preparación porque la
-consulta ya existe en web, pero aún corresponde a MOV-02 en Flutter. Sequías,
-Inundaciones, Deforestación y Calidad del aire se muestran como próximos. No se
+estado. Los cinco módulos móviles se muestran como próximos. Focos de calor ya
+existe en web, pero su consulta en Flutter corresponde a MOV-02. No se
 presentan registros ambientales ficticios ni se interpreta la falta de consulta
 móvil como resultado vacío o falta de cobertura.
 
@@ -51,7 +50,7 @@ de focos de calor queda para MOV-02.
 | Aplicación Flutter bajo `movil/`, dependencias reproducibles y pasos de ejecución | Implementado; `pubspec.lock` y `movil/README.md` incluidos. |
 | Navegación según el diseño de GeoCruz; conservar territorio, período e ID lista→detalle | Implementado; plantillas y prueba de widget. Revisión de diseño por Josué pendiente. |
 | Cliente HTTP y URL configurable, sin claves de proveedor en Flutter | Implementado; integración con datos reales pendiente de MOV-02. |
-| Mostrar módulos futuros sin simular implementación ni reemplazar datos | Implementado; los cuatro módulos y la consulta móvil de focos se identifican como pendientes. |
+| Mostrar módulos futuros sin simular implementación ni reemplazar datos | Implementado; los cinco módulos muestran “Próximamente” y no se presentan datos ficticios. |
 | Ejecución real, pruebas iniciales y evidencia | Registrado arriba y capturado en `docs/evidencias/mov01/`. |
 | Pull request a `develop` revisado por Josué | La revisión humana no se presume; requiere PR y aprobación explícita del compañero. |
 

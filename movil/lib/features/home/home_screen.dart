@@ -147,7 +147,7 @@ class _AvailableOnWebNotice extends StatelessWidget {
           Expanded(
             child: Text(
               'Focos de calor ya tiene una consulta web. La experiencia móvil '
-              'está en preparación; aquí no se muestran datos de ejemplo.',
+              'aún no está disponible; aquí no se muestran datos de ejemplo.',
               style: TextStyle(
                 color: GeoCruzColors.greenDark,
                 height: 1.4,

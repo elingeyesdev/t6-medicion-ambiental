@@ -32,7 +32,7 @@ void main() {
     });
 
     testWidgets(
-      'focos muestra el estado móvil pendiente sin simular consulta',
+      'focos muestra Próximamente sin simular una consulta',
       (tester) async {
         await tester.pumpWidget(_app());
         await tester.tap(find.text('Módulos'));
@@ -41,9 +41,10 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(
-          find.text('La consulta móvil está en preparación'),
+          find.text('Próximamente'),
           findsOneWidget,
         );
+        expect(find.textContaining('Móvil en preparación'), findsNothing);
         expect(
           find.textContaining('no presenta resultados de ejemplo'),
           findsOneWidget,
@@ -66,7 +67,7 @@ void main() {
 
       expect(find.text('Santa Cruz'), findsOneWidget);
       expect(find.text(expectedPeriod), findsOneWidget);
-      expect(find.text('Consulta móvil en preparación'), findsOneWidget);
+      expect(find.text('Próximamente'), findsOneWidget);
       expect(find.text('Sin resultados para estos filtros'), findsNothing);
     });
 
@@ -127,7 +128,7 @@ void main() {
       );
 
       expect(find.text('Sin resultados para estos filtros'), findsOneWidget);
-      expect(find.text('Consulta móvil en preparación'), findsNothing);
+      expect(find.text('Próximamente'), findsNothing);
     });
   });
 }
