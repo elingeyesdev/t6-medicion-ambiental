@@ -13,11 +13,11 @@ Tablero: https://github.com/users/elingeyesdev/projects/13
 - `compartido/`: contratos, catálogo y recursos comunes revisados por ambos.
 - `docs/`: planificación, instrucciones y evidencias.
 
-Esta rama incorpora la base Laravel/Blade de #15, el catálogo candidato de #16, la API de focos de calor de #18 y el visor web de #19. Sus PR y el acuerdo territorial permanecen pendientes de revisión. Flutter se desarrolla en #17/#20. Los documentos de M1 y sus evidencias están vinculados en los Issues #1 a #14.
+La base Laravel/Blade de #15, el catálogo territorial de #16, la API de focos de calor de #18 y el visor web de #19 ya fueron revisados e integrados en `develop` mediante los PR #23 a #26. La base Flutter de #17 también quedó aprobada e integrada mediante PR #28, con análisis, nueve pruebas y compilación Android comprobados en CI. La consulta móvil pertenece a #20. Los documentos de M1 y sus evidencias están vinculados en los Issues #1 a #14.
 
 API de #18: [contrato y pruebas manuales](compartido/api/README.md). En esta copia de trabajo puede iniciarse con `./iniciar-api.ps1` y probarse en http://127.0.0.1:8002/api/v1/territorios. La configuración privada está en `web/.env`, excluida de Git. [Resultados y evidencia](docs/API01_FOCOS_CALOR.md).
 
-Visor web de #19: `./iniciar-web.ps1` y abrir http://127.0.0.1:8003/modulos/focos-calor. Mapa/lista por página, filtros, ficha y resumen del conjunto: [guía, organización del código y evidencia](docs/WEB01_VISOR_FOCOS_CALOR.md). Los PR de esta rama y sus dependencias permanecen pendientes de revisión.
+Visor web de #19: `./iniciar-web.ps1` y abrir http://127.0.0.1:8003/modulos/focos-calor. Mapa/lista por página, filtros, ficha y resumen del conjunto: [guía, organización del código y evidencia](docs/WEB01_VISOR_FOCOS_CALOR.md). El PR #26 fue aprobado por Jaziel y fusionado el 19/10/2026.
 
 [Demostración sencilla de la consulta NASA](docs/API01_DEMOSTRACION_NASA.md): con el servidor iniciado, ejecutar `./demostrar-api.ps1 -FechaUtc 2026-10-17 -Confianza nominal`. Explica en terminal la respuesta externa y sus límites para la revisión de #18; no añade una interfaz de mapa ni modifica el contrato.
 

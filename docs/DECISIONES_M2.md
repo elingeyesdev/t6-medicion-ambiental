@@ -6,7 +6,7 @@ Las secciones posteriores conservan la historia de preparación y revisión. En 
 
 El código aceptado conserva los identificadores de versión territorial `scz-codab-v02-1.0.0-propuesta` y de contrato `1.0-m2-candidata`: no se cambian esquemas, códigos, coordenadas ni reglas ambientales por actualizar el estado del trabajo. La aprobación técnica de la implementación no certifica límites legales ni acredita pruebas Flutter.
 
-PR #26 conserva las correcciones de #19 y espera una nueva revisión de Jaziel. #17/#20, #21 y la entrega final #22 continúan pendientes; #27 sigue en borrador. No se modifican Planner, duraciones ni fecha prevista de M2.
+PR #26 fue aprobado por Jaziel y fusionado el 19/10/2026 mediante `9bebd53`; #19 está cerrado. La base Flutter de #17 fue revisada por Josué e integrada en PR #28 mediante `202df8f`, con análisis, nueve pruebas y APK comprobados en CI. [Resultado de revisión de MOV-01](entrega-m2/REVISION_MOV01.md). #20, #21 y la entrega final #22 continúan pendientes; #27 sigue en borrador. El [recorrido conjunto preparado](entrega-m2/PRUEBA_CONJUNTA.md) no acredita ejecución ni aceptación de QA. No se modifican Planner, duraciones ni fecha prevista de M2.
 
 ## Propuesta territorial GEO-01 / #16
 

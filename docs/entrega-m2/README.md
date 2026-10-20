@@ -3,8 +3,9 @@
 ## Estado actualizado · 19/10/2026, después de integrar las bases
 
 - **Integrados en `develop`:** [PR #23](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/23), base Laravel/API, y [PR #24](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/24), catálogo territorial, con aprobación formal de Jaziel. [PR #25](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/25), API, integrado tras la [aceptación de Jaziel en #18](https://github.com/elingeyesdev/t6-medicion-ambiental/issues/18#issuecomment-6255891786). Su sincronización no cambió archivos y volvió a pasar los siete controles de CI.
-- **Visor pendiente de nueva revisión:** #19 / PR #26, con las cuatro correcciones publicadas y sincronizado con `develop`. La sincronización conserva exactamente el contenido probado en `05bdd8e`; no equivale a aprobación de Jaziel.
-- **Pendientes de M2:** Flutter #17/#20, comparación web/móvil #21 y consolidación/revisión final #22. PR #27 permanece en borrador; el milestone permanece abierto con fecha prevista 22/10/2026.
+- **Visor integrado:** #19 / PR #26, aprobado por Jaziel y fusionado mediante `9bebd53`. Sus cuatro verificaciones de CI pasaron; #19 está cerrado.
+- **Base Flutter integrada:** #17 / [PR #28](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/28), revisada y fusionada en `develop` mediante `202df8f`. Análisis sin incidencias, nueve pruebas y APK debug comprobados en CI; las capturas del emulador fueron aportadas por Jaziel. [Revisión, límites y cómo probar](REVISION_MOV01.md). El consumo real en móvil pertenece a #20.
+- **Pendientes de M2:** consulta móvil #20, comparación web/móvil #21 y consolidación/revisión final #22. PR #27 permanece en borrador; el milestone permanece abierto con fecha prevista 22/10/2026.
 - [Registro de esta integración](integracion_20261019.json): commits de merge y estados consultados. Los cortes y evidencias de las secciones siguientes conservan sus fechas; sus menciones a PR abiertos describen aquel momento.
 
 Para trabajar desde la base compartida: `git fetch origin`, cambiar a la rama propia y ejecutar `git merge origin/develop`. Resolver y probar cualquier conflicto antes de publicar; no reemplazar el trabajo local ni copiar archivos de la repo demo. El visor corregido sigue disponible en la copia y puerto indicados en la sección 3.
@@ -83,6 +84,8 @@ npm test
 Separar la fecha de una nueva ejecución de los registros originales. No sustituir sus archivos históricos por una captura posterior sin registrar versión y entorno.
 
 ## 7. Qué queda para Jaziel y la revisión conjunta
+
+**Actualización del 19/10:** la base móvil de PR #28 ya fue revisada, probada en CI e integrada en `develop`. Los párrafos del corte original que siguen describen lo que faltaba el 16/10, no niegan ese código nuevo. El [recorrido de QA-01](PRUEBA_CONJUNTA.md) deja listos los casos y la evidencia mínima para ejecutar #21 después de #20; todos permanecen pendientes de ejecución conjunta.
 
 **#17 y #20:** publicar la aplicación Flutter, sus instrucciones reales de arranque, URL base configurable y ejecución en emulador/dispositivo. En este corte `movil/` solo tiene instrucciones; no hay una app ejecutable ni se puede dar un comando `flutter run` verificado.
 
