@@ -1,0 +1,46 @@
+name: Base Flutter
+
+on:
+  pull_request:
+    branches: [develop, main]
+    paths: ['movil/**', '.github/workflows/movil.yml']
+  push:
+    branches: [develop, main]
+    paths: ['movil/**', '.github/workflows/movil.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  verificar-movil:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.38.3'
+          channel: stable
+          cache: true
+      - name: Instalar dependencias fijadas
+        working-directory: movil
+        run: flutter pub get --enforce-lockfile
+      - name: Analizar Flutter
+        working-directory: movil
+        run: flutter analyze --fatal-infos
+      - name: Probar navegación, contexto y cliente HTTP
+        working-directory: movil
+        run: flutter test --reporter expanded
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Compilar aplicación Android de prueba
+        working-directory: movil
+        run: flutter build apk --debug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: geocruz-mov01-debug
+          path: movil/build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
+          retention-days: 7
