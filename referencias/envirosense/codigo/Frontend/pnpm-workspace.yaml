@@ -1,0 +1,7 @@
+packages:
+  - '.'
+allowBuilds:
+  '@firebase/util': false
+  '@tsparticles/engine': false
+  core-js: false
+  protobufjs: false

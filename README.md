@@ -6,6 +6,8 @@ Repositorio oficial: https://github.com/elingeyesdev/t6-medicion-ambiental
 
 Tablero: https://github.com/users/elingeyesdev/projects/13
 
+La [referencia de EnviroSense](referencias/envirosense/README.md) conserva el código publicado del proyecto de origen y declara las sustituciones de credenciales. Está separada de la aplicación GeoCruz. Esta línea base no incorpora las implementaciones posteriores de `develop` ni acredita su aprobación académica.
+
 ## Organización
 
 - `web/`: backend y API compartida con Laravel, e interfaz Blade. Responsable: Josué.
