@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../core/network/geocruz_api_client.dart';
-import '../modules/module_detail_screen.dart';
-import '../modules/ambient_module.dart';
-import '../modules/modules_screen.dart';
+import '../../../core/network/geocruz_api_client.dart';
+import '../../modules/view/module_detail_screen.dart';
+import '../../modules/model/ambient_module.dart';
+import '../../modules/view/modules_screen.dart';
+import '../../hotspots/view/hotspots_screen.dart';
 import 'home_screen.dart';
 
 class HomeShell extends StatefulWidget {
@@ -19,6 +20,14 @@ class _HomeShellState extends State<HomeShell> {
   int _selectedIndex = 0;
 
   void _openModule(AmbientModule module) {
+    if (module.id == 'focos-calor') {
+      Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => HotspotsScreen(apiClient: widget.apiClient),
+        ),
+      );
+      return;
+    }
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => ModuleDetailScreen(module: module),
@@ -29,7 +38,10 @@ class _HomeShellState extends State<HomeShell> {
   @override
   Widget build(BuildContext context) {
     final pages = <Widget>[
-      HomeScreen(onExploreModules: () => setState(() => _selectedIndex = 1)),
+      HomeScreen(
+        onExploreModules: () => setState(() => _selectedIndex = 1),
+        onOpenHotspots: () => _openModule(ambientModules.first),
+      ),
       ModulesScreen(onModuleSelected: _openModule),
     ];
 

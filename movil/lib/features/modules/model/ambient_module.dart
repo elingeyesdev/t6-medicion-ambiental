@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum ModuleAvailability { mobileInProgress, comingSoon }
+enum ModuleAvailability { available, mobileInProgress, comingSoon }
 
 class AmbientModule {
   const AmbientModule({
@@ -18,6 +18,7 @@ class AmbientModule {
   final ModuleAvailability availability;
 
   String get statusLabel => switch (availability) {
+    ModuleAvailability.available => 'Disponible',
     ModuleAvailability.mobileInProgress => 'Próximamente',
     ModuleAvailability.comingSoon => 'Próximamente',
   };
@@ -30,7 +31,7 @@ const ambientModules = <AmbientModule>[
     summary:
         'Consulta de detecciones térmicas con su fuente, período y contexto.',
     icon: Icons.local_fire_department_outlined,
-    availability: ModuleAvailability.mobileInProgress,
+    availability: ModuleAvailability.available,
   ),
   AmbientModule(
     id: 'sequias',
