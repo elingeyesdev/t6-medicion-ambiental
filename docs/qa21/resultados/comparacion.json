@@ -1,0 +1,39 @@
+{
+  "fechaUtc": "2026-10-21T21:51:20.616138+00:00",
+  "resultado": "correcto",
+  "tipo": "replay_controlado",
+  "casosPorCliente": 11,
+  "registrosComparados": 25,
+  "camposComparados": [
+    "IDs",
+    "coordenadas",
+    "atributos/unidades",
+    "fechas",
+    "territorio",
+    "faltantes",
+    "naturaleza",
+    "método",
+    "fuentes",
+    "consulta",
+    "resumen",
+    "cobertura",
+    "advertencias",
+    "paginación/versionConjunto"
+  ],
+  "capturaHistorica": "docs/evidencias/api01/consulta_real.json",
+  "sha256Captura": "45617ca00f42d057d8404fe48f2157da5fcd809fccb860e37e25d574e784bdce",
+  "casos": [
+    "cero_faltante",
+    "equivalencia",
+    "expiracion",
+    "fallo_reintento",
+    "paginacion",
+    "parcial",
+    "periodo_invalido",
+    "respuesta_antigua",
+    "sin_cobertura",
+    "territorio_incompatible",
+    "vacio"
+  ],
+  "limite": "Reproduce datos capturados y casos derivados. No ejecuta UI en emulador ni una nueva consulta NASA."
+}
