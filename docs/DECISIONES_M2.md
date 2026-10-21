@@ -1,5 +1,13 @@
 # Seguimiento de decisiones de M2
 
+## Estado vigente - integración QA del 21/10/2026
+
+MOV-02 / #20 quedó integrado por PR #32 y QA-01 / #21 por PR #33, merge `5fd724c`. QA conserva cinco capturas externas de Jaziel y una comparación controlada de 25 registros, con 11 casos por cliente. [Resultados y límites](qa21/README.md).
+
+Seguimiento de C/D/E: bases web/catálogo y Flutter integradas; consulta de focos y verificación técnica integradas. ENT-02 / #22 queda para revisión final de Jaziel. Las cuatro consultas restantes no están implementadas. No se alteran Planner, fechas ni duraciones: M2 mantiene entrega prevista el 22/10/2026 y aceptación final pendiente.
+
+Las versiones y restricciones ambientales publicadas se mantienen. La promoción a main depende de aprobación expresa del ingeniero; la referencia EnviroSense #30/#31 tiene revisión separada. Las secciones fechadas siguientes describen cortes históricos.
+
 ## Estado vigente · integración del 19/10/2026
 
 Las secciones posteriores conservan la historia de preparación y revisión. En este corte, PR #23 y #24 cuentan con aprobación formal de Jaziel y están fusionados en `develop`. PR #25 también está fusionado, respaldado por la aceptación de #18 del 18/10. El merge de API incorpora ambas bases, conserva su árbol de archivos y pasó los siete controles de CI. Los detalles y commits están en [el registro de integración](entrega-m2/integracion_20261019.json).

@@ -1,6 +1,6 @@
 # Recorrido conjunto de web y Flutter · QA-01 / #21
 
-**Preparado para ejecutar cuando MOV-02 / #20 esté disponible. Sin resultados registrados ni aceptación de QA.**
+**Guía de repetición. QA-01 fue revisado e integrado el 21/10/2026 mediante PR #33.** Los resultados, matriz y límites están en [la revisión QA-01](../qa21/README.md). Los pasos siguientes conservan el plan de comprobación; no acreditan por sí solos una ejecución adicional.
 
 Responsable de #21: Jaziel. Revisión: Josué. Usar el mismo backend integrado en `develop`; no confundir una captura de la web en pantalla pequeña con Flutter.
 
@@ -26,4 +26,4 @@ Responsable de #21: Jaziel. Revisión: Josué. Usar el mismo backend integrado e
 
 Registrar: caso, fecha, versiones de código, parámetros, `versionConjunto`, origen externo/fixture, resultado esperado, resultado observado en web, resultado observado en Flutter, enlaces de capturas/respuestas, defecto y verificación de su corrección si corresponde.
 
-**Estado inicial de todos los casos: pendiente de ejecución.** #21 solo se acepta tras el recorrido y revisión cruzada; después #22 incorpora las evidencias y Jaziel revisa el paquete final de M2. Esta guía no cambia Planner ni la fecha prevista del 22/10/2026.
+El registro ejecutado está en [la matriz de QA](../qa21/matriz.json). #22 incorpora esos resultados y queda pendiente de revisión de Jaziel. Repetir esta guía en otra versión requiere registrar resultados reales; esta guía no cambia Planner ni la fecha prevista del 22/10/2026.

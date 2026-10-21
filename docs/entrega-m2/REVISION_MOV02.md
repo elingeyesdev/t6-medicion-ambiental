@@ -1,5 +1,7 @@
 # Revisión de MOV-02 / #20
 
+Actualización posterior del 21/10/2026: QA-01 quedó revisado e integrado por PR #33; [resultado actual](../qa21/README.md). Las menciones a QA pendiente en el corte de revisión de MOV-02 que sigue describen aquel momento. ENT-02 continúa pendiente de revisión final de Jaziel.
+
 Corte: 21/10/2026. Responsable de implementación: Jaziel Díaz. Revisión y correcciones puntuales: Josué Padilla. [PR #32](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/32), aprobado e integrado en `develop` mediante `fd23678dd1a95f7464907f185f8cfb1e9aafbb1b`. Versión móvil verificada: `13535fd0154831b182b0c2fcf28b7e8a52ce1444`.
 
 ## Decisión y correcciones
