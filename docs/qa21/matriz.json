@@ -1,0 +1,86 @@
+{
+  "fechaUtc": "2026-10-21T21:51:20.616138+00:00",
+  "tipo": "replay_controlado",
+  "headPruebas": "c3351df79af00f3733823368b6b3842e8a753c69",
+  "ci": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/39681981989",
+  "casos": [
+    {
+      "id": "cero_faltante",
+      "esperado": "Conservar FRP cero, nulo y faltante declarado.",
+      "observado": "Cero y nulo diferenciados; faltante conservado.",
+      "web": "correcto",
+      "flutter": "correcto"
+    },
+    {
+      "id": "equivalencia",
+      "esperado": "Misma página y contexto; todos los campos se conservan.",
+      "observado": "25 registros y metadatos iguales campo a campo.",
+      "web": "correcto",
+      "flutter": "correcto"
+    },
+    {
+      "id": "expiracion",
+      "esperado": "Conservar anterior ante 409; reiniciar sin token.",
+      "observado": "Anterior retenido; reinicio sin versionConjunto.",
+      "web": "correcto",
+      "flutter": "correcto"
+    },
+    {
+      "id": "fallo_reintento",
+      "esperado": "Retener resultados ante 503 y permitir reintento.",
+      "observado": "Mismo objeto anterior retenido; reintento completado.",
+      "web": "correcto",
+      "flutter": "correcto"
+    },
+    {
+      "id": "paginacion",
+      "esperado": "Página 2 con token y resumen de la misma versión.",
+      "observado": "IDs de posiciones 26-50, token y resumen conservados.",
+      "web": "correcto",
+      "flutter": "correcto"
+    },
+    {
+      "id": "parcial",
+      "esperado": "Mantener cobertura parcial incluso con cero registros.",
+      "observado": "Estado parcial y cero registros conservados.",
+      "web": "correcto",
+      "flutter": "correcto"
+    },
+    {
+      "id": "periodo_invalido",
+      "esperado": "Rechazar nulo, invertido y más de 168 horas.",
+      "observado": "Los tres intervalos fueron rechazados.",
+      "web": "correcto",
+      "flutter": "correcto"
+    },
+    {
+      "id": "respuesta_antigua",
+      "esperado": "No sobrescribir la consulta más reciente.",
+      "observado": "Se conserva consulta-control-mas-reciente.",
+      "web": "correcto",
+      "flutter": "correcto"
+    },
+    {
+      "id": "sin_cobertura",
+      "esperado": "No equiparar falta de cobertura con ausencia del fenómeno.",
+      "observado": "Estado sin_cobertura y cero registros conservados.",
+      "web": "correcto",
+      "flutter": "correcto"
+    },
+    {
+      "id": "territorio_incompatible",
+      "esperado": "Rechazar provincia BO0702 con municipio BO070101.",
+      "observado": "Web: 422 controlado; móvil: rechazo previo a HTTP.",
+      "web": "correcto",
+      "flutter": "correcto"
+    },
+    {
+      "id": "vacio",
+      "esperado": "Cero válido sin error ni datos de reemplazo.",
+      "observado": "Respuesta válida vacía en ambos clientes.",
+      "web": "correcto",
+      "flutter": "correcto"
+    }
+  ],
+  "limites": "Reproduce datos capturados y casos derivados. No ejecuta UI en emulador ni una nueva consulta NASA."
+}

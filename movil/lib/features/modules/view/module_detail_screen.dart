@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theme/geocruz_theme.dart';
-import 'ambient_module.dart';
+import '../../../core/theme/geocruz_theme.dart';
+import '../model/ambient_module.dart';
 
 class ModuleDetailScreen extends StatelessWidget {
   const ModuleDetailScreen({required this.module, super.key});
@@ -27,10 +27,10 @@ class ModuleDetailScreen extends StatelessWidget {
           Text(module.name, style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(height: 8),
           Text(module.summary, style: Theme.of(context).textTheme.bodyLarge),
-          const SizedBox(height: 24),
+          const SizedBox(height: 18),
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -51,29 +51,23 @@ class ModuleDetailScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     module.availability == ModuleAvailability.mobileInProgress
-                        ? 'El visor de focos de calor está disponible en web. '
-                              'La consulta móvil todavía no está disponible; '
-                              'esta pantalla no presenta resultados de ejemplo.'
-                        : 'La consulta de datos todavía no está disponible '
-                              'en móvil. Este estado no significa que no haya '
-                              'datos o que el fenómeno esté ausente.',
+                        ? 'Este módulo todavía no está disponible en móvil. '
+                              'No se muestran datos de ejemplo.'
+                        : 'La consulta todavía no está integrada. Esto no '
+                              'significa que no haya datos ni que el fenómeno '
+                              'esté ausente.',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    _moduleCaveat(module.id),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
               ),
             ),
           ),
-          const SizedBox(height: 22),
-          Text(
-            'Alcance del módulo',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            _moduleCaveat(module.id),
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          const SizedBox(height: 26),
+          const SizedBox(height: 18),
           OutlinedButton.icon(
             onPressed: () => Navigator.of(context).pop(),
             icon: const Icon(Icons.arrow_back_rounded),

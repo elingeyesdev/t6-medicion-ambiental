@@ -1,0 +1,1099 @@
+{
+  "cliente": "web",
+  "origen": "replay_controlado",
+  "casos": [
+    "equivalencia",
+    "paginacion",
+    "vacio",
+    "sin_cobertura",
+    "parcial",
+    "fallo_reintento",
+    "expiracion",
+    "respuesta_antigua",
+    "periodo_invalido",
+    "territorio_incompatible",
+    "cero_faltante"
+  ],
+  "equivalencia": {
+    "datos": [
+      {
+        "identificador": "firms-3146c7081348d834405ab97daefdf21a313e64f877e47873ea54b6d43d0a3d86",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 3.57,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T17:20:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071501",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071501",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -63.51882,
+          -14.3773
+        ]
+      },
+      {
+        "identificador": "firms-4e431ec546acb98f725364cb543e194a29c93cc90122fa88ea62c0c9014a886c",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 5.23,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T17:20:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO070301",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0703",
+          "municipio": "BO070301",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -62.09563,
+          -13.81676
+        ]
+      },
+      {
+        "identificador": "firms-887685486df712195de9bd3d02ab22bf68569fe6dc2abfc8e68f9a822f61d263",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "h",
+          "confianza": "alta",
+          "potenciaRadiativa": 5.23,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T17:20:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO070301",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0703",
+          "municipio": "BO070301",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -62.09868,
+          -13.81714
+        ]
+      },
+      {
+        "identificador": "firms-db074644acc2455781aec20fc92200d89ce20305d8d008075a7be72bffcee4ce",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 5.21,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T17:20:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO070301",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0703",
+          "municipio": "BO070301",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -62.0971,
+          -13.8194
+        ]
+      },
+      {
+        "identificador": "firms-019c4697911cd8cc801f4ad02d15212ba064d9d8a3bfc214e8b5997ffb26bc6b",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 5.82,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071501",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071501",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -63.65878,
+          -15.57475
+        ]
+      },
+      {
+        "identificador": "firms-04b561f9064f544184709458b016e7cc57733abd820727a9d7ee1342e89af72a",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 1.14,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071501",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071501",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -63.66781,
+          -15.56749
+        ]
+      },
+      {
+        "identificador": "firms-20c4ad1e428b004ca748aadb23186835158af1f28ac3eb4f628c5d3c623df063",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 1.21,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071502",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071502",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -62.51801,
+          -15.12811
+        ]
+      },
+      {
+        "identificador": "firms-277736916790df85b16bc69a76c6f9ebbd4b5126bc49ced6d5e5485e1d0d04af",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 1.32,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071502",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071502",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -62.52855,
+          -15.12032
+        ]
+      },
+      {
+        "identificador": "firms-2ea9ddfebd42a1a1544879054b020fb3a955126beb514a79ea3c70126b01efc3",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 2.87,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071501",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071501",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -63.65503,
+          -15.57422
+        ]
+      },
+      {
+        "identificador": "firms-56f49fdc87b35df13407e82beb831d62c82cf7c336f461e1efda2038976b161f",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 1.32,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071502",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071502",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -62.52372,
+          -15.1275
+        ]
+      },
+      {
+        "identificador": "firms-68686a1eff212772ef35fc854b3c130305cb3bce816229271f3dba00c3bd07a7",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 3,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071502",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071502",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -62.52344,
+          -15.13161
+        ]
+      },
+      {
+        "identificador": "firms-711c4a3f004df4d569e8125ed21e7ea6d98e0179785fa9227fefa189d0b11471",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 3.75,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071501",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071501",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -63.66408,
+          -15.56702
+        ]
+      },
+      {
+        "identificador": "firms-71b74da7fe768ec1df1046cba286635170f5203acca8ccf050894caa01ad9d27",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 2.58,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071501",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071501",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -63.66439,
+          -15.5804
+        ]
+      },
+      {
+        "identificador": "firms-7e051c4e10bc14fcaca8b259d2c1b0e87f29cc6d2d24c50efe6185696b1f3994",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 3.75,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071501",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071501",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -63.65995,
+          -15.57371
+        ]
+      },
+      {
+        "identificador": "firms-96373901733b043ae2214c954056a0673902de8cda37778f9c4766290bf3cf80",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 3.02,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071501",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071501",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -63.66897,
+          -15.56651
+        ]
+      },
+      {
+        "identificador": "firms-9b19443fb3c2500e2ffa9e92a0400ca7a069dc168c005412521119c7b1043b16",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 3.07,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071501",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071501",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -63.66558,
+          -15.57939
+        ]
+      },
+      {
+        "identificador": "firms-b2a937b111e5890f12072716c1d9848c914f7e2aa0966e9df7c55b2e0e4d9f3e",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 2.58,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071501",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071501",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -63.66368,
+          -15.57421
+        ]
+      },
+      {
+        "identificador": "firms-bcf7cf67cb186af6434feed3692edcb290dd557d5c7f574a89ebc21cf6540930",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 3.63,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071502",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071502",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -62.53002,
+          -15.13764
+        ]
+      },
+      {
+        "identificador": "firms-d2f20f0c6ea94afa1d86813b63b16e48ba6be645a22d3a9079292d3a4ea00b81",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 1.62,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071502",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071502",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -62.52455,
+          -15.13409
+        ]
+      },
+      {
+        "identificador": "firms-d9368125ef917bcb3209add15af4802168b2c5dc0201fc0b860041469aef41c7",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 1.09,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071501",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071501",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -63.67268,
+          -15.56695
+        ]
+      },
+      {
+        "identificador": "firms-e9612d20a62e3a37e555827e52c51cd1ce2a901127eb8beffdd90b08826d6e98",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 1.62,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071502",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071502",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -62.53026,
+          -15.13349
+        ]
+      },
+      {
+        "identificador": "firms-f196dde52df5efb5aa04d216f2fcab4e11de0ecd1e88a691bf17b88c700f0611",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 1.14,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071501",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071501",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -63.66293,
+          -15.56802
+        ]
+      },
+      {
+        "identificador": "firms-f233ba94833fb208426e574979d14b377b44ba91ac35eef2e15f6bbf586cc80d",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 2.08,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T06:27:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071501",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071501",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -63.67821,
+          -15.5726
+        ]
+      },
+      {
+        "identificador": "firms-0088cdccc9733a3508fb8f919545f0043ab881ba22f88f8dbab566eabb34b5d7",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 3.55,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T04:49:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO071501",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0715",
+          "municipio": "BO071501",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -63.66494,
+          -15.56347
+        ]
+      },
+      {
+        "identificador": "firms-04af2d353013ca470318f995c77128c08f0d9e4026564dd82996e8bdc3c0c4b8",
+        "atributos": {
+          "satelite": "N",
+          "instrumento": "VIIRS",
+          "confianzaOriginal": "n",
+          "confianza": "nominal",
+          "potenciaRadiativa": 2.12,
+          "unidadPotenciaRadiativa": "MW",
+          "versionOriginal": "2.0NRT"
+        },
+        "fechas": {
+          "observadoDesde": "2026-10-10T04:49:00Z",
+          "observadoHasta": null,
+          "procesadoEn": null,
+          "emitidoEn": null
+        },
+        "territorio": {
+          "identificador": "BO070301",
+          "tipo": "municipio",
+          "departamento": "BO07",
+          "provincia": "BO0703",
+          "municipio": "BO070301",
+          "fuenteCatalogo": "hdx_codab_bol_v02",
+          "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+          "motivoAsignacion": null
+        },
+        "faltantes": [],
+        "fuentesRef": [
+          "nasa-firms-snpp-nrt"
+        ],
+        "naturaleza": "observacion",
+        "metodo": null,
+        "coordenadas": [
+          -61.36737,
+          -15.8554
+        ]
+      }
+    ],
+    "consulta": {
+      "identificador": "1872fa89-502c-4d18-bc3c-73ae44075563",
+      "modulo": "focos-calor",
+      "modo": "externo",
+      "filtrosSolicitados": {
+        "desde": "2026-10-10T00:00:00Z",
+        "hasta": "2026-10-11T00:00:00Z",
+        "tamanioPagina": "500"
+      },
+      "filtrosEfectivos": {
+        "provincia": null,
+        "municipio": null,
+        "desde": "2026-10-10T00:00:00Z",
+        "hasta": "2026-10-11T00:00:00Z",
+        "modo": "externo",
+        "confianza": null
+      },
+      "territorio": {
+        "identificador": "BO07",
+        "tipo": "departamento",
+        "departamento": "BO07",
+        "provincia": null,
+        "municipio": null,
+        "fuenteCatalogo": "hdx_codab_bol_v02",
+        "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+        "motivoAsignacion": null
+      },
+      "periodo": {
+        "desde": "2026-10-10T00:00:00Z",
+        "hasta": "2026-10-11T00:00:00Z",
+        "resolucion": "instante de adquisición UTC",
+        "regla": "final_excluido"
+      },
+      "fechaConsulta": "2026-10-16T05:30:26Z",
+      "obtencion": {
+        "tipo": "consulta_proveedor",
+        "fechaRecuperacion": "2026-10-16T05:30:26Z",
+        "fechaActualizacion": null,
+        "antiguedadSegundos": 0,
+        "expiraEn": "2026-10-16T05:45:26Z"
+      }
+    },
+    "fuentes": [
+      {
+        "identificador": "nasa-firms-snpp-nrt",
+        "proveedor": "NASA FIRMS",
+        "producto": "VIIRS_SNPP_NRT",
+        "version": "2.0NRT",
+        "referencia": "https://firms.modaps.eosdis.nasa.gov/api/area/",
+        "naturaleza": "observacion",
+        "resolucion": {
+          "valor": 375,
+          "unidad": "m",
+          "descripcion": "Resolución nominal VIIRS; no precisión del punto ni superficie quemada."
+        }
+      }
+    ],
+    "resumen": {
+      "totalRegistros": 60,
+      "registrosValidos": 60,
+      "registrosConFaltantes": 0,
+      "indicadores": [
+        {
+          "codigo": "totalFocos",
+          "valor": 60,
+          "unidad": "registros",
+          "registrosValidos": 60,
+          "metodo": "conteo",
+          "naturaleza": "observacion"
+        },
+        {
+          "codigo": "focosConfianzaAlta",
+          "valor": 1,
+          "unidad": "registros",
+          "registrosValidos": 60,
+          "metodo": "conteo_confianza_alta",
+          "naturaleza": "observacion"
+        },
+        {
+          "codigo": "potenciaMaxima",
+          "valor": 6.31,
+          "unidad": "MW",
+          "registrosValidos": 60,
+          "metodo": "maximo",
+          "naturaleza": "observacion"
+        }
+      ]
+    },
+    "cobertura": {
+      "estado": "desconocida",
+      "fundamento": "Disponibilidad temporal publicada; las detecciones no acreditan observación completa de cada municipio. Filas inválidas y períodos no disponibles se advierten.",
+      "referenciaEvidencia": "https://firms.modaps.eosdis.nasa.gov/api/data_availability/",
+      "periodoDisponible": {
+        "desde": "2026-07-01T00:00:00Z",
+        "hasta": "2026-10-17T00:00:00Z"
+      },
+      "ambitoDisponible": "Producto global consultado mediante caja y filtrado al polígono territorial de referencia."
+    },
+    "advertencias": [
+      {
+        "codigo": "CATALOGO_PENDIENTE_REVISION",
+        "mensaje": "Catálogo de #16 en revisión: versión candidata, no adoptada por el equipo."
+      },
+      {
+        "codigo": "INTERPRETACION",
+        "mensaje": "Detecciones térmicas, no incendios confirmados. Confianza no es gravedad; FRP en MW no es superficie quemada."
+      },
+      {
+        "codigo": "ACTUALIZACION_DESCONOCIDA",
+        "mensaje": "fechaActualizacion no informada; recuperación no equivale a adquisición ni a actualización del producto."
+      },
+      {
+        "codigo": "FRONTERAS",
+        "mensaje": "Se incluyen bordes del área consultada una sola vez por detección; pertenencia municipal ambigua queda nula. Consultas independientes de áreas vecinas pueden compartir puntos de borde."
+      },
+      {
+        "codigo": "FUERA_DE_FILTROS",
+        "mensaje": "Registros afectados: 24",
+        "cantidad": 24
+      }
+    ],
+    "paginacion": {
+      "pagina": 1,
+      "tamanioPagina": 25,
+      "total": 60,
+      "siguiente": 2,
+      "versionConjunto": "6b26105d-5d86-40b9-b93f-e3aaf7b08551"
+    }
+  }
+}
