@@ -169,13 +169,16 @@ void main() {
 
   runCase('respuesta_antigua', () async {
     final deferred = <Completer<http.Response>>[];
+    final started = Completer<void>();
     final vm = create((_) {
       final pending = Completer<http.Response>();
       deferred.add(pending);
+      if (deferred.length == 2) started.complete();
       return pending.future;
     });
     final old = vm.apply(filters);
     final recent = vm.apply(filters);
+    await started.future;
     final newer = page();
     newer['consulta']['identificador'] = 'consulta-control-mas-reciente';
     deferred[1].complete(jsonResponse(newer)); await recent;
