@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theme/geocruz_theme.dart';
-import 'ambient_module.dart';
+import '../../../core/theme/geocruz_theme.dart';
+import '../model/ambient_module.dart';
 
 class ModulesScreen extends StatelessWidget {
   const ModulesScreen({required this.onModuleSelected, super.key});
@@ -23,11 +23,10 @@ class ModulesScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Cinco perspectivas ambientales para Santa Cruz. La '
-                'disponibilidad móvil se indica en cada módulo.',
+                'Consulta lo disponible y conoce qué módulos llegarán después.',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-              const SizedBox(height: 22),
+              const SizedBox(height: 16),
               for (final module in ambientModules) ...[
                 _ModuleCard(
                   module: module,
@@ -35,8 +34,6 @@ class ModulesScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
               ],
-              const SizedBox(height: 8),
-              const _InterpretationNote(),
             ],
           ),
         ),
@@ -53,21 +50,23 @@ class _ModuleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final inProgress =
-        module.availability == ModuleAvailability.mobileInProgress;
-    final statusColor = inProgress
-        ? GeoCruzColors.amber
-        : GeoCruzColors.textSoft;
-    final statusBackground = inProgress
-        ? GeoCruzColors.amberSoft
-        : GeoCruzColors.background;
+    final statusColor = switch (module.availability) {
+      ModuleAvailability.available => GeoCruzColors.green,
+      ModuleAvailability.mobileInProgress => GeoCruzColors.amber,
+      ModuleAvailability.comingSoon => GeoCruzColors.textSoft,
+    };
+    final statusBackground = switch (module.availability) {
+      ModuleAvailability.available => GeoCruzColors.greenSoft,
+      ModuleAvailability.mobileInProgress => GeoCruzColors.amberSoft,
+      ModuleAvailability.comingSoon => GeoCruzColors.background,
+    };
 
     return Card(
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -100,8 +99,10 @@ class _ModuleCard extends StatelessWidget {
                     Text(
                       module.summary,
                       style: Theme.of(context).textTheme.bodyMedium,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 8),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         color: statusBackground,
@@ -127,26 +128,6 @@ class _ModuleCard extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _InterpretationNote extends StatelessWidget {
-  const _InterpretationNote();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 8),
-      child: Text(
-        'La disponibilidad de una consulta y la cobertura de una fuente se '
-        'mostrarán por separado cuando se integre cada módulo.',
-        style: TextStyle(
-          color: GeoCruzColors.textSoft,
-          fontSize: 13,
-          height: 1.45,
         ),
       ),
     );
