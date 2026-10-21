@@ -1,0 +1,19 @@
+require('dotenv').config()
+const { Pool } = require('pg')
+const logger = require('../utils/logger');
+
+const pool = new Pool({
+  host:     process.env.DB_HOST     || 'localhost',
+  port:     Number(process.env.DB_PORT) || 5432,
+  database: process.env.DB_NAME     || 'sistema_ambiental',
+  user:     process.env.DB_USER     || 'admin',
+  password: process.env.DB_PASSWORD || 'admin123',
+})
+
+pool.on('error', (err) => logger.error('[pg] error en cliente idle:', err))
+
+pool.connect()
+  .then(c => { logger.info('✅ Conectado a PostgreSQL (pg.Pool)'); c.release() })
+  .catch(err => logger.error('❌ Error de conexión a PostgreSQL:', err))
+
+module.exports = pool

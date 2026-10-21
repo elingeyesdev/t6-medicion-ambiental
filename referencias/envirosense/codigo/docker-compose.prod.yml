@@ -1,0 +1,78 @@
+services:
+  # ─── Base de datos PostgreSQL ───
+  db:
+    image: timescale/timescaledb:2.14.2-pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-sistema_ambiental}
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-admin123}
+    # ELIMINADO EL BLOQUE 'ports'. Solo accesible por la red interna de Docker.
+    volumes:
+      - ./database/esquema_envirosense.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./database/seeds/01_sudamerica.sql:/docker-entrypoint-initdb.d/02_sudamerica.sql
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-admin} -d ${DB_NAME:-sistema_ambiental}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s # Bajado de 300s a 60s para no demorar el despliegue
+
+  # ─── Backend (API Node.js + Express) ───
+  backend:
+    build: ./Backend
+    restart: unless-stopped
+    # ELIMINADO EL BLOQUE 'ports'. Nginx hablará con él internamente en el puerto 3000.
+    environment:
+      PORT: 3000
+      DB_HOST: db # Apunta directamente al nombre del servicio
+      DB_PORT: 5432 # El puerto interno del contenedor DB
+      DB_NAME: ${DB_NAME:-sistema_ambiental}
+      DB_USER: ${DB_USER:-admin}
+      DB_PASSWORD: ${DB_PASSWORD:-admin123}
+      JWT_SECRET: ${JWT_SECRET:-secret_para_tokens_envirosense_2026}
+      JWT_EXPIRES_IN: 24h
+      CORS_ORIGIN: ${CORS_ORIGIN}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASS: ${SMTP_PASS}
+      SMTP_FROM: ${SMTP_FROM}
+    volumes:
+      - whatsapp_session:/app/.wwebjs_auth
+      - ./data:/app/data   # <--- CORREGIDO: Apunta a tu carpeta física de PNGs
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ─── Frontend (React + Vite + Nginx) ───
+  frontend_prod:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile.prod
+      args:
+        VITE_MAPBOX_TOKEN: ${VITE_MAPBOX_TOKEN}
+        VITE_FIREBASE_API_KEY: ${VITE_FIREBASE_API_KEY}
+        VITE_FIREBASE_AUTH_DOMAIN: ${VITE_FIREBASE_AUTH_DOMAIN}
+        VITE_FIREBASE_PROJECT_ID: ${VITE_FIREBASE_PROJECT_ID}
+        VITE_FIREBASE_MESSAGING_SENDER_ID: ${VITE_FIREBASE_MESSAGING_SENDER_ID}
+        VITE_FIREBASE_APP_ID: ${VITE_FIREBASE_APP_ID}
+        VITE_FIREBASE_VAPID_KEY: ${VITE_FIREBASE_VAPID_KEY}
+        VITE_API_URL: ${VITE_API_URL}
+        VITE_MAP_DATA_URL: ${VITE_MAP_DATA_URL}
+    container_name: envirosense_nginx
+    restart: always
+    ports:
+      - "3080:80"   # <--- PUERTO SEGURO: En Cloudflare pondrás localhost:3080
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./data:/app/data:ro
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  whatsapp_session:
+  # Eliminado data_volume
