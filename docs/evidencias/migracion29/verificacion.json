@@ -1,0 +1,19 @@
+{
+  "fechaUtc": "2026-10-21T00:42:01.872571+00:00",
+  "baseGeoCruz": "202df8fb77ace56eebc81d5b135ef6dd1d509fd7",
+  "commitReferenciaMain": "ffe3470",
+  "verificacionReferencia": {
+    "resultado": "correcto",
+    "archivos": 352,
+    "identicosAlOrigen": 350,
+    "archivosConSustituciones": 2,
+    "contrasteZip": "352 blobs originales coinciden",
+    "commitOriginal": "ab4f93a48c2b8a082909feb3310db35296f6cbaa"
+  },
+  "exportacionGit": "Verificada desde git archive del commit de referencia; conserva inventario y hashes.",
+  "cambiosCodigoActivo": 0,
+  "alcance": "Referencia y trazabilidad, sin implementar nuevas funciones ambientales.",
+  "prLineaBase": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/30",
+  "pruebasAmbientalesNuevas": "No ejecutadas: código web, móvil y contrato sin cambios. Ver evidencias anteriores de M2.",
+  "aprobacionIngeniero": "Pendiente; main no modificado."
+}
