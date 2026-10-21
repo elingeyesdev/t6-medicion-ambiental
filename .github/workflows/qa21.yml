@@ -1,0 +1,44 @@
+name: QA-01 comparación web y Flutter
+
+on:
+  pull_request:
+    branches: [develop, main]
+    paths: ['web/**', 'movil/**', 'compartido/**', 'herramientas/verificar_qa21.py', '.github/workflows/qa21.yml']
+  push:
+    branches: [develop]
+    paths: ['web/**', 'movil/**', 'compartido/**', 'herramientas/verificar_qa21.py', '.github/workflows/qa21.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  comparar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.38.3'
+          channel: stable
+          cache: true
+      - name: Ejecutar cliente web sobre captura común
+        working-directory: web
+        run: node --test tests/Js/qa21-compartida.test.mjs
+      - name: Preparar Flutter con dependencias fijadas
+        working-directory: movil
+        run: flutter pub get --enforce-lockfile
+      - name: Ejecutar cliente Flutter sobre captura común
+        working-directory: movil
+        run: flutter test test/qa21_compartida_test.dart --reporter expanded
+      - name: Comparar salidas conservadas por ambos clientes
+        run: python herramientas/verificar_qa21.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qa21-comparacion-clientes
+          path: tmp/qa21/*.json
+          if-no-files-found: error
+          retention-days: 14
