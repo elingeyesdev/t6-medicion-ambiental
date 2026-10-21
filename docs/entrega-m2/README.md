@@ -1,5 +1,13 @@
 # Segunda entrega · GeoCruz
 
+## Estado actualizado · 21/10/2026, después de MOV-02
+
+- **Consulta móvil integrada:** #20 / [PR #32](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/32), revisado y fusionado en `develop` mediante `fd23678d`. Análisis, 17 pruebas y APK debug correctos. [Decisión, correcciones, evidencia y cómo probar](REVISION_MOV02.md).
+- **QA-01 / #21:** se revisaron cinco capturas de una consulta válida. Su PR y la matriz de casos restantes siguen pendientes; no se declara aceptada la prueba conjunta.
+- **ENT-02 / #22:** índice sincronizado con la consulta móvil y actualizado con sus límites reales. PR #27 permanece en borrador hasta completar #21 y la revisión final del paquete.
+- **Referencia EnviroSense:** #29, PR #30 a `main` en borrador y #31 a `develop` pendientes de revisión. No forman parte de la aceptación de MOV-02 y no se fusionan por esta revisión.
+- [Registro del corte](integracion_20261021.json). Los cortes históricos siguientes mantienen sus fechas y no describen el estado actual.
+
 ## Estado actualizado · 19/10/2026, después de integrar las bases
 
 - **Integrados en `develop`:** [PR #23](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/23), base Laravel/API, y [PR #24](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/24), catálogo territorial, con aprobación formal de Jaziel. [PR #25](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/25), API, integrado tras la [aceptación de Jaziel en #18](https://github.com/elingeyesdev/t6-medicion-ambiental/issues/18#issuecomment-6255891786). Su sincronización no cambió archivos y volvió a pasar los siete controles de CI.

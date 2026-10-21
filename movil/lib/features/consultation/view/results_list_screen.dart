@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../core/formatters/bolivia_time.dart';
-import '../../core/theme/geocruz_theme.dart';
-import '../modules/ambient_module.dart';
-import 'consulta_context.dart';
+import '../../../core/formatters/bolivia_time.dart';
+import '../../../core/theme/geocruz_theme.dart';
+import '../../modules/model/ambient_module.dart';
+import '../model/consulta_context.dart';
 import 'record_detail_screen.dart';
 
 enum ResultsAvailability { notIntegrated, ready }

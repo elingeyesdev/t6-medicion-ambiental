@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class GeoCruzApiClient {
@@ -20,6 +21,7 @@ class GeoCruzApiClient {
   Future<Object?> getJson(
     String endpoint, {
     Map<String, String> queryParameters = const {},
+    Duration? timeoutOverride,
   }) async {
     final normalizedEndpoint = endpoint.replaceFirst(RegExp(r'^/+'), '');
     if (normalizedEndpoint.isEmpty ||
@@ -35,13 +37,27 @@ class GeoCruzApiClient {
           queryParameters: queryParameters.isEmpty ? null : queryParameters,
         );
     final response = await _client
-        .get(uri, headers: const {'Accept': 'application/json'})
-        .timeout(timeout);
+        .get(
+          uri,
+          headers: const {
+            'Accept': 'application/json',
+            'Accept-Encoding': 'identity',
+            'Connection': 'close',
+          },
+        )
+        .timeout(timeoutOverride ?? timeout);
 
     Object? payload;
     try {
-      payload = jsonDecode(utf8.decode(response.bodyBytes));
-    } on FormatException {
+      final body = utf8.decode(response.bodyBytes);
+      payload = jsonDecode(body);
+    } on FormatException catch (error) {
+      debugPrint(
+        'Respuesta JSON inválida: HTTP ${response.statusCode}, '
+        'bytes=${response.bodyBytes.length}, '
+        'content-type=${response.headers['content-type']}, '
+        'offset=${error.offset}, mensaje=${error.message}',
+      );
       throw GeoCruzApiException(
         statusCode: response.statusCode,
         message: 'La API devolvió una respuesta que no es JSON válido.',
@@ -51,11 +67,13 @@ class GeoCruzApiClient {
     if (response.statusCode < 200 || response.statusCode >= 300) {
       final error = payload is Map<String, dynamic> ? payload['error'] : null;
       final message = error is Map<String, dynamic> ? error['mensaje'] : null;
+      final code = error is Map<String, dynamic> ? error['codigo'] : null;
       throw GeoCruzApiException(
         statusCode: response.statusCode,
         message: message is String
             ? message
             : 'La consulta no pudo completarse.',
+        code: code is String ? code : null,
       );
     }
 
@@ -66,11 +84,16 @@ class GeoCruzApiClient {
 }
 
 class GeoCruzApiException implements Exception {
-  const GeoCruzApiException({required this.statusCode, required this.message});
+  const GeoCruzApiException({
+    required this.statusCode,
+    required this.message,
+    this.code,
+  });
 
   final int statusCode;
   final String message;
+  final String? code;
 
   @override
-  String toString() => 'GeoCruzApiException($statusCode): $message';
+  String toString() => 'GeoCruzApiException($statusCode, $code): $message';
 }

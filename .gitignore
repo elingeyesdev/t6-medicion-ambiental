@@ -9,6 +9,7 @@
 !web/public/vendor/**
 **/node_modules/
 **/.dart_tool/
+**/.idea/
 **/.flutter-plugins
 **/.flutter-plugins-dependencies
 **/build/

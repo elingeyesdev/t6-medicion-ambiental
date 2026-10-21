@@ -1,0 +1,52 @@
+{
+  "fechaUtc": "2026-10-21T05:54:55.444557+00:00",
+  "pullRequest": 32,
+  "headRevisado": "13535fd0154831b182b0c2fcf28b7e8a52ce1444",
+  "mergeDevelop": "fd23678dd1a95f7464907f185f8cfb1e9aafbb1b",
+  "ci": {
+    "run": 39551102830,
+    "resultado": "success",
+    "analisis": "sin incidencias",
+    "pruebas": 17,
+    "apk": "compilado",
+    "artifact": 12323169361
+  },
+  "capturasAutor": {
+    "repositorio": "elingeyesdev/t6-medicion-ambiental",
+    "commit": "2e56d6b",
+    "archivos": [
+      {
+        "archivo": "01-web-consulta-mapa-lista.png",
+        "sha256": "28a28091e6204a7c18dca060ba52685df5038ad54c807a28df9b23937b6306de"
+      },
+      {
+        "archivo": "02-movil-filtros.png",
+        "sha256": "81d82a2ed5f35d8743e5485062e6e2455f7467bcbf7cc0aeb36892cdc02c5234"
+      },
+      {
+        "archivo": "03-movil-mapa-resumen.png",
+        "sha256": "45d83b815e7d5dbecc8a87629487cc1161b845ca72ed14da04997348db88daed"
+      },
+      {
+        "archivo": "04-web-detalle-fuente.png",
+        "sha256": "347a3c146c1174f28ede220248b33ed51d1afbf8ebef0ad76a7398c802e94c37"
+      },
+      {
+        "archivo": "05-movil-detalle-fuente.png",
+        "sha256": "05d1de14cd8636b38b353fb73a9de3d377387aa80405970878edea2d1a49a2d6"
+      }
+    ],
+    "observacion": "Una consulta válida externa, revisada visualmente; no nueva ejecución del emulador por Josué."
+  },
+  "comprobacionLocal": {
+    "recurso": "/api/v1/territorios/BO0702/limite",
+    "http": 200,
+    "geometria": "Polygon",
+    "versionCatalogo": "scz-codab-v02-1.0.0-propuesta"
+  },
+  "pendientes": [
+    21,
+    22
+  ],
+  "mainModificado": false
+}
