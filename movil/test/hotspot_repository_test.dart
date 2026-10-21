@@ -1,14 +1,95 @@
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocruz_movil/core/network/geocruz_api_client.dart';
 import 'package:geocruz_movil/features/hotspots/view_model/hotspots_view_model.dart';
 import 'package:geocruz_movil/features/hotspots/model/hotspot_models.dart';
 import 'package:geocruz_movil/features/hotspots/model/hotspot_repository.dart';
+import 'package:geocruz_movil/features/hotspots/view/hotspots_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 
 void main() {
+  group('MOV-02 revisión de consultas pendientes', () {
+    test('cerrar durante catálogo no notifica ni inicia otra consulta', () async {
+      final pending = Completer<http.Response>();
+      var calls = 0;
+      final api = GeoCruzApiClient(
+        baseUrl: Uri.parse('http://localhost/api/v1/'),
+        client: MockClient((_) {
+          calls++;
+          return pending.future;
+        }),
+      );
+      final controller = HotspotsViewModel(HotspotRepository(api));
+      final task = controller.initialize();
+      controller.dispose();
+      pending.complete(_json(_catalog()));
+      await task;
+      expect(calls, 1);
+      expect(controller.response, isNull);
+      api.close();
+    });
+
+    test('cerrar durante consulta descarta la respuesta tardía', () async {
+      final pending = Completer<http.Response>();
+      final api = GeoCruzApiClient(
+        baseUrl: Uri.parse('http://localhost/api/v1/'),
+        client: MockClient((_) => pending.future),
+      );
+      final controller = HotspotsViewModel(HotspotRepository(api));
+      final task = controller.apply(HotspotsViewModel.defaultFilters());
+      controller.dispose();
+      pending.complete(_json(_response()));
+      await task;
+      expect(controller.response, isNull);
+      api.close();
+    });
+
+    for (final coverage in ['sin_cobertura', 'parcial']) {
+      testWidgets('cero registros con $coverage no afirma ausencia', (
+        tester,
+      ) async {
+        final payload = _response(total: 0);
+        payload['datos'] = <Object>[];
+        payload['cobertura'] = {
+          'estado': coverage,
+          'fundamento': 'Cobertura de prueba controlada.',
+        };
+        final api = GeoCruzApiClient(
+          baseUrl: Uri.parse('http://localhost/api/v1/'),
+          client: MockClient((request) async {
+            if (request.url.path.endsWith('/territorios')) {
+              return _json(_catalog());
+            }
+            if (request.url.path.endsWith('/focos-calor')) {
+              return _json(payload);
+            }
+            return _json(_boundary());
+          }),
+        );
+        await tester.pumpWidget(
+          MaterialApp(home: HotspotsScreen(apiClient: api)),
+        );
+        for (var i = 0; i < 8; i++) {
+          await tester.pump(const Duration(milliseconds: 50));
+        }
+        expect(
+          find.text(coverage == 'sin_cobertura'
+              ? 'Sin cobertura comprobada'
+              : 'Resultados con cobertura parcial'),
+          findsOneWidget,
+        );
+        expect(find.text('Sin detecciones para estos filtros'), findsNothing);
+        expect(find.text('No hay detecciones en el período consultado.'), findsNothing);
+        await tester.pumpWidget(const SizedBox());
+        api.close();
+      });
+    }
+  });
+
   group('MOV-02 contrato de focos', () {
     test('carga catálogo, consulta y límite territorial de la API', () async {
       final requests = <http.Request>[];

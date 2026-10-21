@@ -25,6 +25,14 @@ class HotspotsViewModel extends ChangeNotifier {
   bool queryExpired = false;
   _PendingQuery? _pending;
   int _requestGeneration = 0;
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    _requestGeneration++;
+    super.dispose();
+  }
 
   List<TerritoryOption> get provinces => territories
       .where((territory) => territory.type == 'provincia')
@@ -55,15 +63,19 @@ class HotspotsViewModel extends ChangeNotifier {
   }
 
   Future<void> loadCatalog({bool runInitialQuery = false}) async {
+    if (_disposed) return;
     loadingCatalog = true;
     catalogError = null;
     notifyListeners();
     try {
-      territories = await repository.loadTerritories();
+      final loaded = await repository.loadTerritories();
+      if (_disposed) return;
+      territories = loaded;
       loadingCatalog = false;
       notifyListeners();
       if (runInitialQuery) await apply(filters);
     } catch (error) {
+      if (_disposed) return;
       loadingCatalog = false;
       catalogError = _friendlyError(error);
       notifyListeners();
@@ -157,6 +169,7 @@ class HotspotsViewModel extends ChangeNotifier {
     required int page,
     String? setVersion,
   }) async {
+    if (_disposed) return;
     final generation = ++_requestGeneration;
     _pending = _PendingQuery(requested, page, setVersion);
     loading = true;

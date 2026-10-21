@@ -221,22 +221,31 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
         coverage != 'parcial') {
       return const SizedBox.shrink();
     }
-    final title = response.total == 0
-        ? 'Sin detecciones para estos filtros'
-        : switch (coverage) {
-            'sin_cobertura' => 'Sin cobertura comprobada',
-            'parcial' => 'Resultados con cobertura parcial',
-            _ => 'Consulta lista',
-          };
-    final message = response.total == 0
-        ? 'No hay detecciones en el período consultado.'
-        : response.coverage['fundamento']?.toString() ??
-              'La fuente informó cobertura parcial para este período.';
+    final title = switch (coverage) {
+      'sin_cobertura' => 'Sin cobertura comprobada',
+      'parcial' => 'Resultados con cobertura parcial',
+      _ => response.total == 0
+          ? 'Sin detecciones para estos filtros'
+          : 'Consulta lista',
+    };
+    final message = switch (coverage) {
+      'sin_cobertura' =>
+        'La fuente no cubre el período solicitado. No se puede inferir ausencia de detecciones. '
+            '${response.coverage['fundamento'] ?? ''}',
+      'parcial' =>
+        'La cobertura es parcial; los resultados no describen todo el período. '
+            '${response.coverage['fundamento'] ?? ''}',
+      _ => response.total == 0
+          ? 'La consulta respondió sin detecciones; revisa la cobertura publicada.'
+          : response.coverage['fundamento']?.toString() ?? '',
+    };
     final tone = coverage == 'sin_cobertura' || coverage == 'parcial'
         ? _StatusTone.warning
         : _StatusTone.success;
     return _StatusCard(
-      icon: Icons.check_circle_outline_rounded,
+      icon: tone == _StatusTone.warning
+          ? Icons.warning_amber_rounded
+          : Icons.check_circle_outline_rounded,
       title: title,
       message: message,
       tone: tone,
