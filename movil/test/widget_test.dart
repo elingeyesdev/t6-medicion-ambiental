@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocruz_movil/core/network/geocruz_api_client.dart';
 import 'package:geocruz_movil/core/theme/geocruz_theme.dart';
-import 'package:geocruz_movil/features/consultation/consulta_context.dart';
-import 'package:geocruz_movil/features/consultation/results_list_screen.dart';
-import 'package:geocruz_movil/features/home/home_shell.dart';
-import 'package:geocruz_movil/features/modules/ambient_module.dart';
+import 'package:geocruz_movil/features/consultation/model/consulta_context.dart';
+import 'package:geocruz_movil/features/consultation/view/results_list_screen.dart';
+import 'package:geocruz_movil/features/home/view/home_shell.dart';
+import 'package:geocruz_movil/features/modules/model/ambient_module.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 
@@ -32,7 +32,7 @@ void main() {
     });
 
     testWidgets(
-      'focos muestra Próximamente sin simular una consulta',
+      'focos abre la consulta móvil y permite reintentar el catálogo',
       (tester) async {
         await tester.pumpWidget(_app());
         await tester.tap(find.text('Módulos'));
@@ -40,16 +40,10 @@ void main() {
         await tester.tap(find.text('Focos de calor'));
         await tester.pumpAndSettle();
 
-        expect(
-          find.text('Próximamente'),
-          findsOneWidget,
-        );
-        expect(find.textContaining('Móvil en preparación'), findsNothing);
-        expect(
-          find.textContaining('no presenta resultados de ejemplo'),
-          findsOneWidget,
-        );
-        expect(find.textContaining('NASA FIRMS'), findsNothing);
+        expect(find.text('Focos de calor'), findsOneWidget);
+        expect(find.text('Reintentar catálogo'), findsOneWidget);
+        expect(find.text('Próximamente'), findsNothing);
+        expect(find.textContaining('resultados de ejemplo'), findsNothing);
       },
     );
 

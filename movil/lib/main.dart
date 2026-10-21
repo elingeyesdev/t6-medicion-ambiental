@@ -8,7 +8,10 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     GeoCruzApp(
-      apiClient: GeoCruzApiClient(baseUrl: ApiConfig.fromEnvironment()),
+      apiClient: GeoCruzApiClient(
+        baseUrl: ApiConfig.fromEnvironment(),
+        timeout: const Duration(seconds: 75),
+      ),
     ),
   );
 }
