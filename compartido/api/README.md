@@ -1,6 +1,8 @@
 # API de GeoCruz · M2 / #18
 
-Contrato implementado **`1.0-m2-candidata`**, basado en DOC-12. Revisión de Jaziel pendiente. La versión territorial de #16 continúa como propuesta; usarla en desarrollo no acredita su adopción. Especificación para clientes: [OpenAPI 3.1](openapi.json).
+Contrato implementado **`1.0-m2-candidata`**, basado en DOC-12. API y catálogo revisados e integrados en `develop` mediante PR #25 y #24; Flutter consume esta API mediante PR #32 y la comparación web/móvil se integró en PR #33. Los identificadores de versión conservan sus nombres publicados; la aceptación técnica no certifica límites administrativos ni sustituye la aprobación académica. Especificación para clientes: [OpenAPI 3.1](openapi.json).
+
+Para conectar Flutter al backend existente, seguir [Desarrollo compartido](../DESARROLLO.md). La referencia React/Express de EnviroSense no cambia estas rutas ni exige rehacer el cliente móvil.
 
 ## Operaciones de lectura
 

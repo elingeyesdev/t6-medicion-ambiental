@@ -32,7 +32,7 @@ La fusión a `main` se hace después de su aprobación expresa. Un tag de versi�
 
 La rama `feature/29-base-envirosense` parte del `main` existente en `6895946e20df0abdd1510e8daae54a553eaff4a8` y añade la referencia completa bajo `referencias/envirosense/`. Su PR a `main` se prepara **en borrador**, a la espera de confirmar y aprobar el orden académico. No incorpora automáticamente las funciones de M2.
 
-La rama `feature/29-adaptacion-geocruz` parte del `develop` existente en `202df8fb77ace56eebc81d5b135ef6dd1d509fd7`, incluye la misma referencia y documenta su correspondencia con Laravel/Blade/Flutter. Se revisa mediante un PR independiente hacia `develop`.
+La rama `feature/29-adaptacion-geocruz` parte del `develop` existente en `202df8fb77ace56eebc81d5b135ef6dd1d509fd7`, incluye la misma referencia y documenta su correspondencia con Laravel/Blade/Flutter. Se sincronizó posteriormente con `develop` en `5fd724cd1b4360e296896538f658522bfe6c8c21`, incluyendo consulta móvil y QA ya aceptadas. Se revisa mediante un PR independiente hacia `develop`.
 
 Así se conserva la historia real de los trabajos ya realizados. No se reemplaza `main`, no se fuerza el historial y no se cambian fechas de commits para aparentar que el original se cargó antes. La copia original se identifica por su commit de procedencia y por el manifiesto de archivos.
 

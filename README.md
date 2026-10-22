@@ -16,11 +16,11 @@ La [referencia de EnviroSense](referencias/envirosense/README.md) conserva el c�
 - `docs/`: planificación, instrucciones y evidencias.
 - `referencias/envirosense/`: código de origen conservado para comparación; no forma parte del arranque de GeoCruz.
 
-`develop` ya integra la base Laravel/Blade de #15, el catálogo de #16, la API de focos de #18, el visor web de #19 y la base Flutter de #17 mediante los PR #23, #24, #25, #26 y #28. La consulta móvil real sigue en #20 y la verificación conjunta en #21. Los identificadores de versión candidata conservan sus nombres publicados; la aceptación técnica no certifica límites administrativos ni implica aprobación del ingeniero. Los documentos de M1 y sus evidencias están vinculados en los Issues #1 a #14.
+La base Laravel/Blade, el catálogo, la API y el visor web están integrados mediante PR #23 a #26. Flutter y su consulta de focos se integraron mediante PR #28 y #32. QA-01 se revisó e integró mediante PR #33; sus 11 casos por cliente y comparación de 25 registros están en [QA-01](docs/qa21/README.md). Las cuatro consultas restantes y la aprobación académica siguen pendientes. M1 y sus evidencias están vinculados en los Issues #1 a #14.
 
 API de #18: [contrato y pruebas manuales](compartido/api/README.md). En esta copia de trabajo puede iniciarse con `./iniciar-api.ps1` y probarse en http://127.0.0.1:8002/api/v1/territorios. La configuración privada está en `web/.env`, excluida de Git. [Resultados y evidencia](docs/API01_FOCOS_CALOR.md).
 
-Visor web de #19: `./iniciar-web.ps1` y abrir http://127.0.0.1:8003/modulos/focos-calor. Mapa/lista por página, filtros, ficha y resumen del conjunto: [guía, organización del código y evidencia](docs/WEB01_VISOR_FOCOS_CALOR.md).
+Visor web de #19: `./iniciar-web.ps1` y abrir http://127.0.0.1:8003/modulos/focos-calor. Mapa/lista por página, filtros, ficha y resumen del conjunto: [guía, organización del código y evidencia](docs/WEB01_VISOR_FOCOS_CALOR.md). El PR #26 fue aprobado por Jaziel y fusionado el 19/10/2026.
 
 [Demostración sencilla de la consulta NASA](docs/API01_DEMOSTRACION_NASA.md): con el servidor iniciado, ejecutar `./demostrar-api.ps1 -FechaUtc 2026-10-17 -Confianza nominal`. Explica en terminal la respuesta externa y sus límites para la revisión de #18; no añade una interfaz de mapa ni modifica el contrato.
 
@@ -49,9 +49,9 @@ Pruebas aisladas: `composer test` dentro de `web/`. La conexión de Flutter y lo
 
 ## Ramas y revisión
 
-`main` conserva versiones estables y requiere aprobación expresa del ingeniero para nuevas fusiones. `develop` integra cambios revisados por el compañero. Las ramas `feature/<issue>-<tarea>` parten de `develop`. Cada PR debe enlazar su Issue, explicar el cambio, indicar cómo probarlo y aportar evidencia. [Flujo y propuesta de línea base](docs/FLUJO_GIT.md).
+`main` conserva versiones estables y requiere aprobación expresa del ingeniero para nuevas fusiones; `develop` integra cambios revisados. Las ramas `feature/<issue>-<tarea>` parten de `develop`. Cada PR debe enlazar su Issue, explicar el cambio, indicar cómo probarlo y aportar evidencia. El compañero revisa los cambios antes de integrarlos. [Flujo y propuesta de línea base](docs/FLUJO_GIT.md).
 
-Antes de empezar una tarea, actualizar `develop` y crear su rama desde la integración vigente. Conservar web y móvil como carpetas del mismo repositorio. Subir a `main` no despliega automáticamente una aplicación.
+Las ramas preparadas para M2 parten de la misma base inicial. Cada implementación se incorpora mediante su PR. Antes de empezar una tarea, actualizar `develop` y sincronizar la rama con los cambios ya integrados.
 
 ## Segunda iteración
 
