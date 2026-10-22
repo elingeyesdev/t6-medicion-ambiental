@@ -13,7 +13,7 @@ Tablero: https://github.com/users/elingeyesdev/projects/13
 - `compartido/`: contratos, catálogo y recursos comunes revisados por ambos.
 - `docs/`: planificación, instrucciones y evidencias.
 
-La base Laravel/Blade, el catálogo, la API y el visor web están integrados mediante PR #23 a #26. Flutter y su consulta de focos se integraron mediante PR #28 y #32. QA-01 se revisó e integró mediante PR #33; sus 11 casos por cliente y comparación de 25 registros están en [QA-01](docs/qa21/README.md). El [paquete M2](docs/entrega-m2/README.md) queda para revisión final de Jaziel en #22 / PR #27. Las cuatro consultas restantes y la aprobación académica siguen pendientes. M1 y sus evidencias están vinculados en los Issues #1 a #14.
+La base Laravel/Blade, el catálogo, la API y el visor web están integrados mediante PR #23 a #26. Flutter y su consulta de focos se integraron mediante PR #28 y #32. QA-01 se revisó e integró mediante PR #33; sus 11 casos por cliente y comparación de 25 registros están en [QA-01](docs/qa21/README.md). Las cuatro consultas restantes y la aprobación académica siguen pendientes. M1 y sus evidencias están vinculados en los Issues #1 a #14.
 
 API de #18: [contrato y pruebas manuales](compartido/api/README.md). En esta copia de trabajo puede iniciarse con `./iniciar-api.ps1` y probarse en http://127.0.0.1:8002/api/v1/territorios. La configuración privada está en `web/.env`, excluida de Git. [Resultados y evidencia](docs/API01_FOCOS_CALOR.md).
 
