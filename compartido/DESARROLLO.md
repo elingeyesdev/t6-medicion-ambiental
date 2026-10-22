@@ -1,40 +1,60 @@
 # Conexión de desarrollo entre web y móvil
 
-La aplicación Laravel de `web/` es el backend común. Su puerto predeterminado es **8000**; `iniciar-api.ps1` usa **8002** para revisar esta rama sin interrumpir #15. Flutter se incorpora en #17 y consume la API en #20. Los ejemplos siguientes son instrucciones de configuración, no evidencia de ejecución en un dispositivo.
+Laravel en `web/` sirve la interfaz Blade y la API común. Flutter ya consume focos de calor mediante MOV-02 / PR #32, integrado en `develop`; QA-01 / PR #33 comprueba la equivalencia entre clientes. Conservar EnviroSense como referencia no exige rehacer esa integración.
 
-## Direcciones
+## Actualizar la copia
 
-- Navegador del mismo PC: origen `http://127.0.0.1:8000`; base API `http://127.0.0.1:8000/api`.
-- Emulador Android estándar de Android Studio: origen `http://10.0.2.2:8000`; base API `http://10.0.2.2:8000/api`.
-- Android físico u otro PC en la misma red: origen `http://IP_LAN_DEL_PC:8000`; base API `http://IP_LAN_DEL_PC:8000/api`. Reemplazar IP_LAN_DEL_PC por la IPv4 real del PC que ejecuta Laravel.
-
-`localhost` y `127.0.0.1` en Android apuntan al propio emulador o teléfono, no al PC. La dirección especial 10.0.2.2 corresponde al emulador estándar; no se presume que sirva en todos los emuladores.
-
-Para recibir desde otro dispositivo, iniciar explícitamente en las interfaces de red del PC:
+Desde una copia sin cambios pendientes:
 
 ```powershell
-# Desde la raíz, Windows
-.\iniciar.ps1 -Direccion 0.0.0.0 -Puerto 8000
+git fetch origin
+git switch develop
+git pull --ff-only origin develop
 ```
 
-O, dentro de `web/`, con PHP configurado:
+Si hay trabajo local sin guardar, conservarlo antes de cambiar de rama. El corte con móvil y QA integrados es `5fd724cd1b4360e296896538f658522bfe6c8c21`; no hace falta esperar los PR documentales #27/#31 ni la propuesta académica #30 para usar la API existente.
 
-```sh
-php artisan serve --host=0.0.0.0 --port=8000
+## Arrancar el backend
+
+Desde la raíz del repositorio, después de la [preparación de Laravel](../web/README.md):
+
+```powershell
+.\iniciar.ps1 -Direccion 0.0.0.0 -Puerto 8002
 ```
 
-`0.0.0.0` es la dirección de escucha, no una URL para abrir en el cliente. Usar la IP LAN, mantener ambos equipos en la misma red y comprobar que el firewall permite la conexión local. El proyecto no abre reglas de firewall automáticamente. El servidor de Artisan es para desarrollo local.
+`iniciar.ps1` usa 8000 si no se indica puerto; aquí se elige **8002** para coincidir con la configuración actual de Flutter. `0.0.0.0` es la dirección de escucha, no una URL para el cliente. Artisan es un servidor de desarrollo local.
 
-## Primera comprobación de conexión
+Probar primero en el PC:
 
-Probar `GET BASE_API/salud`. Ejemplo Android Studio: `http://10.0.2.2:8000/api/salud`. Debe devolver 200 y JSON con servicio GeoCruz, estado disponible, alcance aplicacion y fecha UTC.
+- Salud: <http://127.0.0.1:8002/api/salud> (200 y JSON; no acredita conexión NASA).
+- Catálogo: <http://127.0.0.1:8002/api/v1/territorios>.
+- Visor web: <http://127.0.0.1:8002/modulos/focos-calor>.
 
-Usar una URL base configurable en Flutter; nunca una clave NASA. Si se emplea HTTP local en Android, habilitarlo solo en la configuración de depuración de #17 según sus requisitos de plataforma. Flutter Web añade restricciones CORS del navegador y requiere una comprobación específica; no se da por probado con las pruebas PHP.
+Configurar `NASA_FIRMS_CLAVE` únicamente en `web/.env`, excluido de Git. No compartir el archivo ni copiar la clave a Flutter. Una consulta externa necesita una clave válida y disponibilidad del proveedor; una falla debe conservar su error, sin reemplazo ficticio.
 
-La salud no afirma que los módulos, la base de datos o los proveedores estén operativos. Si no responde, revisar primero proceso, dirección, puerto y acceso de red. No sustituir un fallo por un JSON inventado o datos de ejemplo.
+## Conectar Flutter
 
-## Contrato ambiental
+Desde `movil/`, emulador Android estándar de Android Studio:
 
-La ruta de salud es operativa y queda fuera de la envoltura ambiental de DOC-12. [API compartida de #18](api/README.md) y [OpenAPI](api/openapi.json) describen la versión candidata implementada para catálogo, límites y focos. El catálogo y los límites de #16 conservan su estado pendiente de adopción; no se inventan códigos ni revisión del equipo. Adaptar el puerto de los ejemplos al servidor que se use.
+```powershell
+flutter pub get
+flutter run --dart-define=GEOCRUZ_API_BASE_URL=http://10.0.2.2:8002/api/v1/
+```
 
-Referencia del emulador: [direcciones de red de Android Emulator](https://developer.android.com/studio/run/emulator-networking-address).
+Esa URL ya es el valor predeterminado en `lib/core/config/api_config.dart`. Para un teléfono físico u otro PC, reemplazar `IP_LAN_DEL_PC` por la IPv4 del equipo que ejecuta Laravel, con ambos equipos en la misma red:
+
+```powershell
+flutter run --dart-define=GEOCRUZ_API_BASE_URL=http://IP_LAN_DEL_PC:8002/api/v1/
+```
+
+Antes de abrir Flutter en el teléfono, probar `http://IP_LAN_DEL_PC:8002/api/salud` en su navegador. `localhost` y `127.0.0.1` en Android apuntan al propio dispositivo. `10.0.2.2` corresponde al emulador estándar, no al teléfono físico. Conservar `/api/v1/` en la variable de Flutter; la salud usa `/api/salud`, fuera de esa envoltura ambiental.
+
+Si falla la salud desde el dispositivo, revisar proceso, dirección, puerto y acceso de red antes de cambiar código. El proyecto no abre reglas de firewall automáticamente. El permiso HTTP local de Android se limita a depuración. Flutter Web requiere revisar CORS por separado; no se da por probado con Android o PHP. Más detalles en [la guía móvil](../movil/README.md).
+
+## Qué probar juntos
+
+Usar el mismo territorio, confianza y período de hasta 168 horas, con inicio incluido y final excluido. Comparar ID del registro, fecha, coordenadas, FRP/unidad, fuente, resumen, cobertura y advertencias entre web y móvil. Mapa y lista representan la misma página; el resumen corresponde al conjunto filtrado. Distinguir resultados vacíos, falta de cobertura y error del proveedor.
+
+Consultar [OpenAPI](api/openapi.json), [reglas de la API](api/README.md) y [matriz y evidencias QA-01](../docs/qa21/README.md). Las versiones conservan los identificadores publicados `1.0-m2-candidata` y `scz-codab-v02-1.0.0-propuesta`; su aceptación técnica no certifica límites administrativos ni sustituye la aprobación del ingeniero. Las cuatro consultas ambientales restantes siguen pendientes.
+
+Estas instrucciones permiten repetir la prueba; no son evidencia de una ejecución nueva en un dispositivo ni de una consulta NASA nueva.

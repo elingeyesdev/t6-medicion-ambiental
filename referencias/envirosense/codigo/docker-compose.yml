@@ -1,0 +1,92 @@
+services:
+  data-worker:
+    build: ./data-worker
+    volumes:
+      - .:/app
+      - ./data:/app/data
+      - ~/.cdsapirc:/root/.cdsapirc:ro   # <--- ESTE ES EL PUENTE
+    container_name: data-worker
+
+  # ─── Base de datos PostgreSQL ───
+  db:
+    image: timescale/timescaledb:2.14.2-pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: sistema_ambiental
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "5433:5432"
+    volumes:
+      # Esquema normalizado y semillas de inicialización
+      - ./database/esquema_envirosense.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./database/seeds/01_sudamerica.sql:/docker-entrypoint-initdb.d/02_sudamerica.sql
+      # Volumen persistente para no perder datos al reiniciar
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d sistema_ambiental"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  # ─── Backend (API Node.js + Express) ───
+  backend:
+    build: ./Backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./Backend/.env
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - NODE_ENV=development
+      - CI=true
+    depends_on:
+      db:
+        condition: service_healthy
+    tty: true
+    stdin_open: true
+    command: pnpm run dev
+    # Sincroniza tu código local con el contenedor (hot-reload)
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
+      - ./data:/app/data
+      - whatsapp_session:/app/.wwebjs_auth
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # ─── Frontend (React + Vite) ───
+  frontend:
+    build: ./Frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      - CI=true
+    tty: true
+    stdin_open: true
+    # Sincroniza tu código local con el contenedor (hot-reload)
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:5173 || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+# Volumen nombrado para persistir los datos de PostgreSQL
+volumes:
+  pgdata:
+  whatsapp_session:
