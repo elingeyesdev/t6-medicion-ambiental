@@ -57,4 +57,6 @@ Las ramas preparadas para M2 parten de la misma base inicial. Cada implementaci�
 
 [M2 Focos de calor en web y móvil](https://github.com/elingeyesdev/t6-medicion-ambiental/milestone/2), con entrega prevista el 22 de octubre de 2026. Tareas y dependencias: [Iteración 2](docs/ITERACION_2.md).
 
+[Índice de demostración y evidencias M2](docs/entrega-m2/README.md): versiones, PR, arranque, recorrido web y pendientes de móvil/revisión. Preparación parcial de #22; no acredita entrega final ni aceptación del milestone.
+
 Los cinco módulos previstos son focos de calor, sequías, inundaciones, deforestación y calidad del aire. M2 desarrolla el primero y sus bases comunes. Las claves privadas de fuentes externas se configuran únicamente en el backend y nunca se incorporan a Git. Las demostraciones se identifican y no sustituyen consultas reales.

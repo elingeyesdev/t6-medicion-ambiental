@@ -1,0 +1,135 @@
+{
+  "corteUtc": "2026-10-19T21:04:52.161993+00:00",
+  "repositorio": "https://github.com/elingeyesdev/t6-medicion-ambiental",
+  "develop": "dc7f1af484797d52b53fe8228307cb9b0ff951bc",
+  "pullRequests": [
+    {
+      "numero": 23,
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/23",
+      "estado": "merged",
+      "head": "1a91f6241c9a2f07d81012d8bd774a1799f3eaed",
+      "mergeCommit": "313aa57b6b07b698bebd0d08157f571fb19b399c",
+      "mergedAt": "2026-10-19T20:55:14Z",
+      "evidenciaRevision": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/23"
+    },
+    {
+      "numero": 24,
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/24",
+      "estado": "merged",
+      "head": "b59abbc4608b354bc7bd7285b81ff93e07f51bd6",
+      "mergeCommit": "d65c3fca8853908ae761f58664368325ce16da2e",
+      "mergedAt": "2026-10-19T20:55:30Z",
+      "evidenciaRevision": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/24"
+    },
+    {
+      "numero": 25,
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/25",
+      "estado": "merged",
+      "head": "c0f85517ae780f231e8a573ebf5b50021029901f",
+      "mergeCommit": "dc7f1af484797d52b53fe8228307cb9b0ff951bc",
+      "mergedAt": "2026-10-19T20:57:44Z",
+      "evidenciaRevision": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/18#issuecomment-6255891786"
+    },
+    {
+      "numero": 26,
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/26",
+      "estado": "open",
+      "head": "4702728f477df8c856a7f85aff5ce9986c84ec38",
+      "mergeCommit": null,
+      "mergedAt": null,
+      "evidenciaRevision": null
+    },
+    {
+      "numero": 27,
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/27",
+      "estado": "draft",
+      "head": "226a77ef4fd66f4c232b5a25e74fbec3aed76b73",
+      "mergeCommit": null,
+      "mergedAt": null,
+      "evidenciaRevision": null
+    }
+  ],
+  "checksDevelop": [
+    {
+      "nombre": "verificar (8.3)",
+      "estado": "completed",
+      "resultado": "success",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/39323655118/job/118303823234"
+    },
+    {
+      "nombre": "verificar (8.2)",
+      "estado": "completed",
+      "resultado": "success",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/39323655118/job/118303822998"
+    },
+    {
+      "nombre": "filtros-php (windows-latest, 8.3)",
+      "estado": "completed",
+      "resultado": "success",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/39323655004/job/118303822675"
+    },
+    {
+      "nombre": "contrato",
+      "estado": "completed",
+      "resultado": "success",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/39323655118/job/118303822639"
+    },
+    {
+      "nombre": "filtros-php (ubuntu-latest, 8.2)",
+      "estado": "completed",
+      "resultado": "success",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/39323655004/job/118303822570"
+    },
+    {
+      "nombre": "filtros-php (ubuntu-latest, 8.3)",
+      "estado": "completed",
+      "resultado": "success",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/39323655004/job/118303822522"
+    },
+    {
+      "nombre": "geometrias",
+      "estado": "completed",
+      "resultado": "success",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/39323655004/job/118303822145"
+    }
+  ],
+  "checksVisor": [
+    {
+      "nombre": "verificar (8.2)",
+      "estado": "completed",
+      "resultado": "success",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/39323698697/job/118303971878"
+    },
+    {
+      "nombre": "verificar (8.3)",
+      "estado": "completed",
+      "resultado": "success",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/39323698697/job/118303971750"
+    },
+    {
+      "nombre": "visor-web",
+      "estado": "completed",
+      "resultado": "success",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/39323698697/job/118303971512"
+    },
+    {
+      "nombre": "contrato",
+      "estado": "completed",
+      "resultado": "success",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/39323698697/job/118303971299"
+    }
+  ],
+  "pendientes": {
+    "19": "Nueva revision de Jaziel del visor corregido; PR26 sin fusionar.",
+    "17": "Base Flutter y evidencia.",
+    "20": "Consulta Flutter y evidencia.",
+    "21": "Comparacion web/movil.",
+    "22": "Consolidacion y revision final; PR27 en borrador."
+  },
+  "milestone": {
+    "numero": 2,
+    "fechaPrevista": "2026-10-22",
+    "aceptado": false
+  },
+  "nota": "Registro nuevo; no reemplaza cortes, huellas o ejecuciones historicas. Sin nuevas pruebas Flutter."
+}

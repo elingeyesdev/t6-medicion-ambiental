@@ -1,0 +1,5 @@
+verificar-movil	Analizar Flutter	2026-10-20T01:21:39.0728467Z No issues found! (ran in 8.4s)
+verificar-movil	Probar navegación, contexto y cliente HTTP	2026-10-20T01:21:46.7664631Z 00:01 +9: All tests passed!
+verificar-movil	Compilar aplicación Android de prueba	2026-10-20T01:24:39.8177203Z ✓ Built build/app/outputs/flutter-apk/app-debug.apk
+verificar-movil	Run actions/upload-artifact@v4	2026-10-20T01:24:44.3083850Z SHA256 digest of uploaded artifact zip is a17f22df97969ffbb17e4adaed09623ed65db624716ec189510d3523de630228
+verificar-movil	Run actions/upload-artifact@v4	2026-10-20T01:24:44.5723904Z Artifact download URL: https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/39352882869/artifacts/12233857467

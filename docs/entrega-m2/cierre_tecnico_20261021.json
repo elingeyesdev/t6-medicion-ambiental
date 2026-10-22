@@ -1,0 +1,32 @@
+{
+  "fechaUtc": "2026-10-21T22:02:27.476498+00:00",
+  "qa21Integrado": true,
+  "mergeQA21": "5fd724cd1b4360e296896538f658522bfe6c8c21",
+  "prQA21": 33,
+  "commitPruebas": "c3351df79af00f3733823368b6b3842e8a753c69",
+  "headQA21Aprobado": "932211e26000d18bdc01a77f214185d81926fcc8",
+  "comparacion": {
+    "run": 39681981989,
+    "casosPorCliente": 11,
+    "registros": 25,
+    "resultado": "correcto"
+  },
+  "web": {
+    "run": 39681982057,
+    "pruebasJs": 32,
+    "casosPhp": 35,
+    "asercionesPhp": 263,
+    "avisosPhp": "entorno de pruebas; registrados por CI"
+  },
+  "flutter": {
+    "run": 39681981850,
+    "pruebas": 28,
+    "analisis": "correcto",
+    "apk": "compilado"
+  },
+  "revisionesPendientes": [
+    "Jaziel: paquete ENT-02 / #22 y PR #27",
+    "Ingeniero: aceptación académica y cualquier promoción a main"
+  ],
+  "mainModificado": false
+}
