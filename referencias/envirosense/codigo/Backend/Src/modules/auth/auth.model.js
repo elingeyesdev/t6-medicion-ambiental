@@ -1,0 +1,69 @@
+const db = require('../../config/db')
+
+const findByEmail = async (email) => {
+  const { rows } = await db.query(
+    `SELECT u.*, r.clave AS rol_clave 
+     FROM usuarios u 
+     JOIN roles r ON u.rol_id = r.id 
+     WHERE u.email = $1`,
+    [email]
+  )
+  return rows[0] || null
+}
+
+const createUser = async ({
+  nombre,
+  apellido,
+  email,
+  password_hash,
+  latitud = null,
+  longitud = null,
+  notif_email = false,
+  notif_whatsapp = false,
+  whatsapp_destino = null,
+  notif_telegram = false,
+  telegram_destino = null
+}) => {
+  const { rows } = await db.query(
+    `INSERT INTO usuarios (
+      rol_id, nombre, apellido, email, password_hash,
+      latitud, longitud,
+      notif_email, notif_whatsapp, whatsapp_destino,
+      notif_telegram, telegram_destino
+     )
+     VALUES (
+      (SELECT id FROM roles WHERE clave = 'visualizador'), $1, $2, $3, $4,
+      $5, $6,
+      $7, $8, $9,
+      $10, $11
+     )
+     RETURNING id, nombre, apellido, email, rol_id,
+               latitud, longitud,
+               notif_email, notif_whatsapp, whatsapp_destino,
+               notif_telegram, telegram_destino`,
+    [
+      nombre,
+      apellido,
+      email,
+      password_hash,
+      latitud,
+      longitud,
+      notif_email,
+      notif_whatsapp,
+      whatsapp_destino,
+      notif_telegram,
+      telegram_destino
+    ]
+  )
+  return rows[0]
+}
+
+const updatePassword = async (email, password_hash) => {
+  const { rows } = await db.query(
+    'UPDATE usuarios SET password_hash = $1 WHERE email = $2 RETURNING id, email',
+    [password_hash, email]
+  )
+  return rows[0] || null
+}
+
+module.exports = { findByEmail, createUser, updatePassword }

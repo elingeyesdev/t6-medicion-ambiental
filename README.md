@@ -6,12 +6,15 @@ Repositorio oficial: https://github.com/elingeyesdev/t6-medicion-ambiental
 
 Tablero: https://github.com/users/elingeyesdev/projects/13
 
+La [referencia de EnviroSense](referencias/envirosense/README.md) conserva el código publicado del proyecto de origen y declara las sustituciones de credenciales. Su [adaptación a GeoCruz](docs/MIGRACION_ENVIROSENSE.md) relaciona las funciones del referente con Laravel 12, Blade, la API común y Flutter, e identifica lo que sigue pendiente.
+
 ## Organización
 
 - `web/`: backend y API compartida con Laravel, e interfaz Blade. Responsable: Josué.
 - `movil/`: aplicación Flutter. Responsable: Jaziel.
 - `compartido/`: contratos, catálogo y recursos comunes revisados por ambos.
 - `docs/`: planificación, instrucciones y evidencias.
+- `referencias/envirosense/`: código de origen conservado para comparación; no forma parte del arranque de GeoCruz.
 
 La base Laravel/Blade, el catálogo, la API y el visor web están integrados mediante PR #23 a #26. Flutter y su consulta de focos se integraron mediante PR #28 y #32. QA-01 se revisó e integró mediante PR #33; sus 11 casos por cliente y comparación de 25 registros están en [QA-01](docs/qa21/README.md). Las cuatro consultas restantes y la aprobación académica siguen pendientes. M1 y sus evidencias están vinculados en los Issues #1 a #14.
 
@@ -46,7 +49,7 @@ Pruebas aisladas: `composer test` dentro de `web/`. La conexión de Flutter y lo
 
 ## Ramas y revisión
 
-`main` conserva versiones estables; `develop` integra cambios revisados. Las ramas `feature/<issue>-<tarea>` parten de `develop`. Cada PR debe enlazar su Issue, explicar el cambio, indicar cómo probarlo y aportar evidencia. El compañero revisa los cambios antes de integrarlos.
+`main` conserva versiones estables y requiere aprobación expresa del ingeniero para nuevas fusiones; `develop` integra cambios revisados. Las ramas `feature/<issue>-<tarea>` parten de `develop`. Cada PR debe enlazar su Issue, explicar el cambio, indicar cómo probarlo y aportar evidencia. El compañero revisa los cambios antes de integrarlos. [Flujo y propuesta de línea base](docs/FLUJO_GIT.md).
 
 Las ramas preparadas para M2 parten de la misma base inicial. Cada implementación se incorpora mediante su PR. Antes de empezar una tarea, actualizar `develop` y sincronizar la rama con los cambios ya integrados.
 

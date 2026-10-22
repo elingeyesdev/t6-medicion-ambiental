@@ -1,0 +1,27 @@
+name: Integridad de la referencia EnviroSense
+
+on:
+  pull_request:
+    paths:
+      - 'referencias/envirosense/**'
+      - '.github/workflows/referencia-envirosense.yml'
+  push:
+    branches: [main, develop]
+    paths:
+      - 'referencias/envirosense/**'
+      - '.github/workflows/referencia-envirosense.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  integridad:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Comprobar inventario y archivos de referencia
+        run: python referencias/envirosense/verificar.py

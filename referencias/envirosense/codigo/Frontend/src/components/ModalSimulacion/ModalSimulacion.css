@@ -1,0 +1,513 @@
+/* =============================================================
+   ModalSimulacion — Nueva UI de configuración de escenarios
+   Estilo editorial científico, coherente con el resto del sistema
+   ============================================================= */
+
+/* ── Overlay ────────────────────────────────────────────────── */
+.msim-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: msimFadeIn 0.2s ease-out;
+}
+
+@keyframes msimFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Caja principal ─────────────────────────────────────────── */
+.msim-box {
+  background: var(--card, #fafaf8);
+  border: 1px solid var(--line, #e5e2da);
+  border-radius: 16px;
+  width: min(600px, calc(100vw - 2rem));
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(20,26,22,0.22);
+  animation: msimSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes msimSlideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.msim-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 0;
+  flex-shrink: 0;
+}
+
+.msim-box-title {
+  font: 700 11px/1 var(--font-sans, sans-serif);
+  color: var(--ink-faint, #999);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.msim-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--ink-faint, #999);
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+}
+.msim-close-btn:hover { color: var(--ink, #141a16); background: var(--paper, #f5f4f0); }
+
+/* ── Dots de navegación ─────────────────────────────────────── */
+.msim-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 0 4px;
+  flex-shrink: 0;
+}
+
+.msim-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--line, #e5e2da);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.msim-dot:hover { transform: scale(1.3); }
+.msim-dot--active { width: 22px; border-radius: 4px; }
+
+/* ── Card principal ─────────────────────────────────────────── */
+.msim-card {
+  padding: 14px 24px 12px;
+  flex: 1;
+}
+
+/* Número + badge */
+.msim-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.msim-card-num {
+  font: 700 11px/1 var(--font-mono, monospace);
+  color: var(--ink-faint, #999);
+  background: var(--paper, #f5f4f0);
+  border: 1px solid var(--line, #e5e2da);
+  border-radius: 4px;
+  padding: 3px 7px;
+}
+
+.msim-card-num-label {
+  font: 600 9.5px/1 var(--font-sans, sans-serif);
+  color: var(--ink-faint, #999);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  flex: 1;
+}
+
+.msim-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid;
+  font: 600 10px/1 var(--font-sans, sans-serif);
+  letter-spacing: 0.06em;
+}
+
+.msim-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Título de métrica */
+.msim-metric-title {
+  font-family: var(--font-serif, serif);
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 1.05;
+  color: var(--ink, #141a16);
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.msim-metric-italic {
+  font-style: italic;
+  color: var(--ink-mute, #666);
+}
+
+.msim-metric-desc {
+  margin: 0 0 16px;
+  font: 400 12.5px/1.5 var(--font-sans, sans-serif);
+  color: var(--ink-mute, #555);
+}
+
+/* ── Sección escenarios ─────────────────────────────────────── */
+.msim-section-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font: 700 9.5px/1 var(--font-sans, sans-serif);
+  color: var(--ink-faint, #999);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 10px;
+}
+
+.msim-section-hint {
+  font-weight: 500;
+  color: var(--ink-faint, #aaa);
+}
+
+.msim-escenarios-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+/* Cards de escenario */
+.msim-escenario-card {
+  border: 1.5px solid var(--line, #e5e2da);
+  border-radius: 10px;
+  padding: 14px 12px 12px;
+  cursor: pointer;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--paper, #fff);
+}
+
+.msim-escenario-card:hover {
+  background: var(--paper, #f5f4f0);
+  box-shadow: 0 2px 8px rgba(20,26,22,0.08);
+}
+
+.msim-escenario-card--active {
+  box-shadow: 0 0 0 1px currentColor, 0 3px 12px rgba(20,26,22,0.1);
+}
+
+.msim-escenario-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 2px;
+}
+
+.msim-escenario-nombre {
+  font: 600 13px/1.2 var(--font-serif, serif);
+  color: var(--ink, #141a16);
+}
+
+.msim-escenario-desc {
+  font: 400 10.5px/1.4 var(--font-sans, sans-serif);
+  color: var(--ink-mute, #666);
+}
+
+.msim-escenario-rango {
+  font: 700 10px/1 var(--font-mono, monospace);
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+  margin-top: 2px;
+}
+
+/* ── Preview sparkline ──────────────────────────────────────── */
+.msim-preview-chart {
+  background: var(--paper, #f5f4f0);
+  border: 1px solid var(--line-soft, #ece9e0);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  animation: msimFadeIn 0.2s ease;
+}
+
+.msim-preview-label {
+  font: 500 10.5px/1 var(--font-mono, monospace);
+  color: var(--ink-faint, #999);
+  letter-spacing: 0.03em;
+}
+
+/* ── Controles ──────────────────────────────────────────────── */
+.msim-controls-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  padding: 14px 0 6px;
+  border-top: 1px solid var(--line-soft, #ece9e0);
+}
+
+.msim-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.msim-ctrl-label {
+  font: 700 9px/1 var(--font-sans, sans-serif);
+  color: var(--ink-faint, #999);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.msim-ctrl-hint {
+  font: 500 9.5px/1 var(--font-mono, monospace);
+  color: var(--ink-faint, #bbb);
+  letter-spacing: 0.02em;
+}
+
+/* Spinner numérico */
+.msim-spinner {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line, #e5e2da);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--paper, #fff);
+}
+
+.msim-spinner-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 7px 8px;
+  font: 600 14px/1 var(--font-mono, monospace);
+  color: var(--ink, #141a16);
+  background: transparent;
+  width: 0;
+  min-width: 0;
+}
+
+/* hide native spinner arrows */
+.msim-spinner-input::-webkit-outer-spin-button,
+.msim-spinner-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.msim-spinner-input[type=number] { -moz-appearance: textfield; }
+
+.msim-spinner-unit {
+  font: 500 10px/1 var(--font-mono, monospace);
+  color: var(--ink-faint, #999);
+  padding: 0 6px 0 2px;
+  border-left: 1px solid var(--line-soft, #ece9e0);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.msim-spinner-arrows {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--line-soft, #ece9e0);
+}
+
+.msim-spinner-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 5px;
+  font-size: 7px;
+  color: var(--ink-faint, #999);
+  flex: 1;
+  line-height: 1;
+  transition: background 0.1s;
+}
+.msim-spinner-btn:hover { background: var(--paper, #f5f4f0); color: var(--ink, #141a16); }
+
+/* Select reemplaza el spinner-input cuando hay opciones fijas */
+.msim-select {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 7px 4px;
+  font: 600 13px/1 var(--font-mono, monospace);
+  color: var(--ink, #141a16);
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.msim-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px 10px;
+  border-top: 1px solid var(--line-soft, #ece9e0);
+  background: var(--paper, #f5f4f0);
+  border-radius: 0 0 16px 16px;
+  flex-shrink: 0;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.msim-footer-resumen {
+  flex: 1;
+  margin: 0;
+  font: 500 11px/1.4 var(--font-sans, sans-serif);
+  color: var(--ink-faint, #888);
+  min-width: 0;
+}
+
+.msim-footer-resumen strong { color: var(--ink, #141a16); font-weight: 700; }
+
+.msim-footer-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.msim-btn {
+  padding: 9px 18px;
+  border-radius: 8px;
+  font: 700 12px/1 var(--font-sans, sans-serif);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  border: 1px solid transparent;
+}
+
+.msim-btn-preview {
+  background: var(--paper, #fff);
+  color: var(--ink, #141a16);
+  border-color: var(--line, #e5e2da);
+}
+.msim-btn-preview:hover { background: var(--paper, #f5f4f0); }
+
+.msim-btn-start {
+  background: var(--ink, #141a16);
+  color: var(--paper, #f5f4f0);
+}
+.msim-btn-start:hover { background: #2a3430; transform: translateY(-1px); }
+.msim-btn-start:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.msim-btn-stop {
+  background: #ef4444;
+  color: #fff;
+  border-color: #dc2626;
+}
+.msim-btn-stop:hover { background: #dc2626; }
+
+/* ── Navegación inferior ────────────────────────────────────── */
+.msim-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 24px 14px;
+  flex-shrink: 0;
+}
+
+.msim-nav-btn {
+  background: none;
+  border: 1px solid var(--line, #e5e2da);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font: 600 11px/1 var(--font-sans, sans-serif);
+  color: var(--ink-mute, #666);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.msim-nav-btn:hover:not(:disabled) {
+  background: var(--paper, #f5f4f0);
+  color: var(--ink, #141a16);
+}
+.msim-nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+.msim-nav-counter {
+  font: 600 11px/1 var(--font-mono, monospace);
+  color: var(--ink-faint, #aaa);
+  letter-spacing: 0.04em;
+}
+
+/* ── Selector de Zonas ────────────────────────────────────────── */
+.msim-zone-selector {
+  display: flex;
+  gap: 2px;
+  background: var(--paper, #f5f4f0);
+  padding: 4px;
+  margin: 0 20px;
+  border-radius: 10px;
+  border: 1px solid var(--line-soft, #ece9e0);
+}
+
+.msim-zone-tab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 8px 12px;
+  border-radius: 7px;
+  font: 600 11px/1 var(--font-sans, sans-serif);
+  color: var(--ink-mute, #666);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.msim-zone-tab:hover {
+  background: var(--bg-hover);
+  color: var(--ink, #141a16);
+}
+
+.msim-zone-tab.active {
+  background: var(--paper, #fff);
+  color: var(--ink, #141a16);
+  box-shadow: 0 2px 6px rgba(20, 26, 22, 0.08);
+}
+
+.msim-info-msg {
+  font: 500 10.5px/1.4 var(--font-sans, sans-serif);
+  color: var(--ink-faint, #999);
+  font-style: italic;
+  padding: 14px 0 6px;
+  border-top: 1px solid var(--line-soft, #ece9e0);
+  text-align: center;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .msim-box { border-radius: 12px; }
+  .msim-card { padding: 12px 16px 10px; }
+  .msim-escenarios-grid { grid-template-columns: 1fr; }
+  .msim-controls-row { grid-template-columns: 1fr 1fr; }
+  .msim-footer { flex-direction: column; align-items: flex-start; }
+  .msim-metric-title { font-size: 1.6rem; }
+  .msim-zone-selector { margin: 0 16px; }
+}
