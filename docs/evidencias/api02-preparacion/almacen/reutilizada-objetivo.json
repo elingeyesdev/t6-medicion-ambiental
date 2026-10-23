@@ -1,0 +1,58 @@
+{
+    "reutilizada": true,
+    "integridad": "verificada",
+    "versionAlmacenamiento": 1,
+    "identificador": "195010a0862fd4f0384b65693bb3a7966fa0540f1ea5c41c54c0fb7313ebb723",
+    "preparadoEn": "2026-10-23T04:16:52.787720Z",
+    "procedencia": {
+        "version": "procedencia-precipitacion-1.0",
+        "tipoEvidencia": "captura_externa",
+        "proveedor": "Open-Meteo",
+        "producto": "ERA5",
+        "naturaleza": "reanalisis",
+        "muestra": "scz-piloto-01",
+        "coordenadaSolicitada": [
+            -63.1821,
+            -17.7833
+        ],
+        "coordenadaCelda": [
+            -63.25,
+            -17.75
+        ],
+        "periodo": {
+            "desde": "2024-07-01",
+            "hastaIncluido": "2024-09-30",
+            "zona": "UTC"
+        },
+        "obtenidoEn": "2026-10-23T02:56:34.271956Z",
+        "urlOrigen": "https:\/\/archive-api.open-meteo.com\/v1\/archive?latitude=-17.7833&longitude=-63.1821&daily=precipitation_sum&models=era5&timezone=GMT&precipitation_unit=mm&cell_selection=nearest&elevation=nan&start_date=2024-07-01&end_date=2024-09-30",
+        "licencia": "https:\/\/creativecommons.org\/licenses\/by\/4.0\/",
+        "atribucion": "Open-Meteo.com; ECMWF \/ Copernicus Climate Change Service, ERA5.",
+        "sha256": "466daaa00dc6e067bfb625532b5de1f6e40bb5a8dc2f81126188f81c23ba4fc3"
+    },
+    "informe": {
+        "versionInforme": "calidad-precipitacion-1.0",
+        "estado": "completa",
+        "aptoParaAgregacionMensual": true,
+        "periodo": {
+            "desde": "2024-07-01",
+            "hastaIncluido": "2024-09-30",
+            "zona": "UTC"
+        },
+        "unidad": "mm",
+        "resumen": {
+            "diasEsperados": 92,
+            "registrosRecibidos": 92,
+            "diasValidos": 92,
+            "diasAusentes": 0,
+            "diasNulos": 0,
+            "mesesEsperados": 3,
+            "mesesCompletos": 3,
+            "mesesIncompletos": 0
+        },
+        "advertencias": [
+            "Completitud diaria verificada; no acredita exactitud de la fuente, SPI ni sequía."
+        ]
+    },
+    "checksumManifiesto": "acd513336cba0fb6630b3e808c4f49d09bef1398cab08dba63cf1565f2947205"
+}

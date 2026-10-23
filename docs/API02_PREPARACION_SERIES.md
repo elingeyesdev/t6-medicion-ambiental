@@ -1,6 +1,6 @@
 # API-02 / #36: preparación independiente de las series
 
-Primer avance de #36, separado del acuerdo científico de #35 / PR #42. Se implementa **validación y agregación mensual de archivos diarios de lluvia**, reutilizable cuando se adopte el método. No incorpora SPI, umbrales, años de calibración, catálogo de muestras, llamadas de red ni publicación de la API de sequías. La ruta existente sigue respondiendo 503 `MODULO_NO_DISPONIBLE`.
+Avance técnico de #36, separado del acuerdo científico de #35 / PR #42. Se implementan **validación, agregación mensual y almacenamiento versionado de archivos diarios de lluvia con su procedencia**, reutilizables cuando se adopte el método. No incorpora SPI, umbrales, años de calibración, catálogo de muestras, llamadas de red ni publicación de la API de sequías. La ruta existente sigue respondiendo 503 `MODULO_NO_DISPONIBLE`.
 
 ## Qué hace
 
@@ -40,8 +40,41 @@ En otra instalación, preparar primero con `preparar.ps1` desde la raíz o `comp
 - [Comando Artisan](../web/app/Console/Commands/ValidarSeriePrecipitacion.php): archivo local, lectura acotada, JSON, hash e informe/salida. Laravel descubre el comando en `app/Console/Commands`.
 - [Validador de series](../web/app/Services/Sequias/ValidadorSeriePrecipitacion.php): calendario, valores y calidad mensual. No depende de Laravel, HTTP, sesión o base de datos.
 - [Error de serie](../web/app/Services/Sequias/SeriePrecipitacionInvalida.php): código y mensaje controlados, separado de los errores de focos y territorios.
+- [Lector JSON](../web/app/Services/Sequias/LectorJsonLocal.php): lectura local acotada compartida por los comandos; sin URLs ejecutables ni exposición del contenido en errores.
+- [Procedencia](../web/app/Services/Sequias/ProcedenciaSeriePrecipitacion.php): campos declarados, coordenadas y recuperación UTC normalizados; separa fixtures de capturas externas.
+- [Repositorio](../web/app/Services/Sequias/RepositorioSeriesPrecipitacion.php): guarda las versiones y verifica los bytes y el informe al reutilizarlas.
+- [Preparar](../web/app/Console/Commands/PrepararSeriePrecipitacion.php) y [ver](../web/app/Console/Commands/VerSeriePrecipitacion.php): comandos del almacén local. [Configuración](../web/config/sequias.php) solo indica su directorio, sin activar ningún módulo.
 - [Pruebas de series y consola](../web/tests/Feature/Sequias): casos de calendario, calidad, tipos, límites, errores y preservación del archivo/API.
 - [Ejemplos controlados](ejemplos/sequias/) e [informes de ejecución](evidencias/api02-preparacion/README.md).
+
+## Guardar y reutilizar una serie
+
+Prueba sencilla desde la raíz de esta rama, en PowerShell:
+
+```powershell
+.\herramientas\sequias\probar-preparacion.ps1
+```
+
+Comprueba preparación, lectura e integridad de la serie completa de **60 mm**, repite la operación para comprobar que reutiliza la misma versión y conserva la incompleta con acumulado null. No descarga datos. Se puede repetir; la fecha original de preparación se conserva. El script termina en 0 cuando las comprobaciones son correctas, aunque la serie incompleta use salida 1 en sus comandos individuales.
+
+Los comandos individuales, desde `web/`, son:
+
+```powershell
+..\herramientas\php.ps1 artisan sequias:preparar-serie ..\docs\ejemplos\sequias\serie-completa.json ..\docs\ejemplos\sequias\procedencia-completa.json
+..\herramientas\php.ps1 artisan sequias:ver-serie IDENTIFICADOR_DEVUELTO --detalle
+```
+
+En otras plataformas, usar `php artisan`. `preparar-serie` devuelve un ID de 64 caracteres, `reutilizada`, `integridad`, fecha de preparación, procedencia e informe resumido. `ver-serie --detalle` añade los meses. Salidas: 0 para serie completa, 1 para incompleta guardada/recuperada con informe, 2 para error de entrada/almacén. No hace falta un servidor web ni acceso a Internet.
+
+La declaración de procedencia es otro JSON local de máximo 64 KiB. Los [dos ejemplos](ejemplos/sequias/procedencia-completa.json) muestran los campos obligatorios: versión, tipo de evidencia, proveedor/producto/naturaleza, muestra, coordenadas solicitada y de celda `[lon,lat]`, período UTC, instante de recuperación, URL de origen, licencia, atribución y SHA-256 exacto de la captura. El instante y las coordenadas de los ejemplos controlados son de prueba. Para capturas externas se conserva el instante de recuperación original, no el de importación; su URL HTTPS se almacena como declaración y **no se consulta**.
+
+La validación de una declaración no certifica su autenticidad. El hash debe coincidir con los bytes del archivo; si este contiene coordenadas devueltas, deben coincidir con la celda declarada. No se deduce un territorio municipal ni se equipara muestra con cobertura. Se conservan capturas incompletas con su calidad y sus faltantes, sin habilitarlas como índices válidos.
+
+Las versiones se guardan únicamente en `web/storage/app/private/sequias/series/`, excluido de Git, con captura original y manifiesto. El ID depende de la procedencia normalizada, que incluye el hash de datos; cambiar producto, muestra, período o recuperación crea otra versión. Repetir la misma preparación devuelve la existente sin reescribirla ni cambiar `preparadoEn`.
+
+Se escriben ambos archivos en un temporal de la misma carpeta y se publica el directorio al finalizar. Un bloqueo local de escritura evita preparaciones simultáneas por estos comandos; si está ocupado, se informa `ALMACEN_OCUPADO` para reintentar. Se usan las operaciones documentadas de PHP [flock](https://www.php.net/manual/en/function.flock.php) y [rename](https://www.php.net/manual/en/function.rename.php). El almacén está pensado para disco local y estos lectores/escritores, no como almacenamiento distribuido.
+
+Cada lectura verifica identificador, checksums, declaración y captura, y recalcula la calidad mensual para contrastarla con el informe conservado. Una versión incompleta/modificada devuelve `SERIE_CORRUPTA`; no se repara ni sustituye silenciosamente. Los checksums detectan inconsistencias: no son una firma de un proveedor ni un respaldo contra pérdida del disco. Tampoco existe caducidad/revalidación de proveedor: este almacén versionado no sustituye la futura caché operativa del cálculo.
 
 ## Verificación ejecutada
 
@@ -53,10 +86,10 @@ Desde `web/`:
 ..\herramientas\php.ps1 vendor/bin/pint --test
 ```
 
-Resultado local: **40 pruebas nuevas aprobadas (97 aserciones)**; suite completa **75 aprobadas (360 aserciones)**; formato aprobado. Se verifican bisiestos, cambio de año, ceros/null/ausentes, mes entero faltante, decimales, orden/duplicados/fechas imposibles, valores/unidades/zona inválidos, desbordamiento numérico, lectura máxima, JSON inválido y errores sin red. Una prueba confirma que `/api/v1/sequias` continúa en 503 después de usar el comando; otra comprueba que los ejemplos publicados producen exactamente sus informes conservados.
+Resultado local: **63 casos de preparación de sequías aprobados (198 aserciones)**; suite completa **98 aprobados (461 aserciones)**; formato aprobado. Se verifican bisiestos, cambio de año, ceros/null/ausentes, mes entero faltante, decimales, orden/duplicados/fechas imposibles, valores/unidades/zona inválidos, desbordamiento numérico, lectura máxima, JSON inválido y errores sin red. Las pruebas del almacén cubren reutilización, versiones distintas, procedencia, hashes, archivos ausentes/modificados, bloqueo ocupado y errores del directorio. Una prueba confirma que `/api/v1/sequias` continúa en 503 después de usar los comandos; otra comprueba que los ejemplos publicados producen exactamente sus informes conservados.
 
 Además se releyó **offline** la captura externa conservada en el commit `1d1865f` del PR #42: 92 días completos de julio–septiembre de 2024, acumulados mensuales **28,2 / 64 / 22,3 mm**, total **114,5 mm**, con el mismo SHA-256 del archivo original. Esta es una nueva validación local de esa captura, no otra descarga ni una nueva prueba del proveedor. La ejecución se realizó el 22/10/2026 en Bolivia (23/10 03:30 UTC); enlaces y detalles en la evidencia.
 
 ## Estado y siguiente paso
 
-Este avance puede revisarse por separado sin adoptar el SPI propuesto. El resto de #36 mantiene su dependencia de #35: método/contrato, fuente operativa, preparación histórica y caché, cálculo contrastado, territorio y respuesta HTTP. No se cierra #36 ni se habilita el módulo con este validador. Después del acuerdo se reutilizará esta validación antes de preparar las series del cálculo y se ampliarán los tests de integración correspondientes.
+Este avance puede revisarse por separado sin adoptar el SPI propuesto. Ya funcionan la validación y el almacén local de series, y se prepararon las dos capturas de #35 con integridad y reutilización verificadas. El resto de #36 mantiene su dependencia de #35: método/contrato, fuente operativa y renovación, selección de referencia y caché del cálculo, indicador contrastado, territorio y respuesta HTTP. No se cierra #36 ni se habilita el módulo con esta preparación.

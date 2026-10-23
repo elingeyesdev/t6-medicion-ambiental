@@ -3,10 +3,10 @@ name: Base web y API
 on:
   pull_request:
     branches: [develop, main]
-    paths: ['web/**', 'compartido/api/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', '.github/workflows/web.yml']
+    paths: ['web/**', 'compartido/api/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'herramientas/sequias/**', '.github/workflows/web.yml']
   push:
     branches: [develop, main]
-    paths: ['web/**', 'compartido/api/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', '.github/workflows/web.yml']
+    paths: ['web/**', 'compartido/api/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'herramientas/sequias/**', '.github/workflows/web.yml']
 
 permissions:
   contents: read
@@ -37,6 +37,29 @@ jobs:
       - name: Ejecutar pruebas aisladas
         working-directory: web
         run: composer test
+
+  almacen-windows:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, pdo_sqlite, sqlite3, curl, fileinfo
+          coverage: none
+          tools: composer:v2
+      - name: Preparar instalación local
+        working-directory: web
+        run: |
+          composer install --no-interaction --prefer-dist --no-progress
+          composer run setup
+      - name: Verificar series, integridad y versiones en Windows
+        working-directory: web
+        run: php artisan test --compact --filter="Serie|Sequias"
+      - name: Ejecutar la demostración de PowerShell que usa el usuario
+        shell: pwsh
+        run: ./herramientas/sequias/probar-preparacion.ps1
 
   contrato:
     runs-on: ubuntu-latest
