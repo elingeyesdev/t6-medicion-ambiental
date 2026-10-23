@@ -49,6 +49,10 @@ Para ejecutar comandos en esta modalidad, situarse en `web/`:
 ..\herramientas\php.ps1 vendor/bin/pint --test
 ```
 
+## Preparación de series de sequías
+
+Preparación de sequías (#36): [validador de series diarias por consola](../docs/API02_PREPARACION_SERIES.md), con ejemplos completos/incompletos y pruebas sin red. Este avance de calidad de datos mantiene la consulta HTTP de sequías en preparación mientras se revisa el método #35.
+
 ## Configuración y secretos
 
 `.env.example` no contiene credenciales. `.env`, la clave de la aplicación, la base SQLite, los logs y `vendor/` quedan fuera de Git. `APP_DEBUG=false` evita exponer trazas en el arranque por defecto. `APP_KEY` es propia de cada instalación: no compartirla con Flutter ni incorporarla a commits.
