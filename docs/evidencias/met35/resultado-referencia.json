@@ -1,0 +1,208 @@
+{
+  "estado": "propuesta_pendiente_revision",
+  "metodo": "spi3-era5-gamma-mle-1991-2020-v0.1-propuesta",
+  "naturaleza": "derivado_de_reanalisis",
+  "muestra": "scz-piloto-01",
+  "territorioContexto": "BO070101",
+  "municipioDelCentroCelda": "BO070103",
+  "coordenadaSolicitada": [
+    -63.1821,
+    -17.7833
+  ],
+  "coordenadaCelda": [
+    -63.25,
+    -17.75
+  ],
+  "periodo": {
+    "mesFinal": "2024-09",
+    "desde": "2024-07-01",
+    "hastaIncluido": "2024-09-30",
+    "zona": "UTC"
+  },
+  "base": {
+    "primerAnioFin": 1991,
+    "ultimoAnioFin": 2020,
+    "mesFin": 9,
+    "ventanas": [
+      {
+        "anioFin": 1991,
+        "acumuladoMm": 234.8
+      },
+      {
+        "anioFin": 1992,
+        "acumuladoMm": 238.5
+      },
+      {
+        "anioFin": 1993,
+        "acumuladoMm": 180.6
+      },
+      {
+        "anioFin": 1994,
+        "acumuladoMm": 108.2
+      },
+      {
+        "anioFin": 1995,
+        "acumuladoMm": 168.9
+      },
+      {
+        "anioFin": 1996,
+        "acumuladoMm": 124.2
+      },
+      {
+        "anioFin": 1997,
+        "acumuladoMm": 135.0
+      },
+      {
+        "anioFin": 1998,
+        "acumuladoMm": 379.4
+      },
+      {
+        "anioFin": 1999,
+        "acumuladoMm": 114.2
+      },
+      {
+        "anioFin": 2000,
+        "acumuladoMm": 144.5
+      },
+      {
+        "anioFin": 2001,
+        "acumuladoMm": 140.7
+      },
+      {
+        "anioFin": 2002,
+        "acumuladoMm": 141.2
+      },
+      {
+        "anioFin": 2003,
+        "acumuladoMm": 109.6
+      },
+      {
+        "anioFin": 2004,
+        "acumuladoMm": 164.3
+      },
+      {
+        "anioFin": 2005,
+        "acumuladoMm": 187.2
+      },
+      {
+        "anioFin": 2006,
+        "acumuladoMm": 99.0
+      },
+      {
+        "anioFin": 2007,
+        "acumuladoMm": 56.0
+      },
+      {
+        "anioFin": 2008,
+        "acumuladoMm": 126.30000000000001
+      },
+      {
+        "anioFin": 2009,
+        "acumuladoMm": 191.79999999999998
+      },
+      {
+        "anioFin": 2010,
+        "acumuladoMm": 151.0
+      },
+      {
+        "anioFin": 2011,
+        "acumuladoMm": 148.7
+      },
+      {
+        "anioFin": 2012,
+        "acumuladoMm": 77.89999999999999
+      },
+      {
+        "anioFin": 2013,
+        "acumuladoMm": 143.7
+      },
+      {
+        "anioFin": 2014,
+        "acumuladoMm": 134.5
+      },
+      {
+        "anioFin": 2015,
+        "acumuladoMm": 279.7
+      },
+      {
+        "anioFin": 2016,
+        "acumuladoMm": 133.9
+      },
+      {
+        "anioFin": 2017,
+        "acumuladoMm": 103.3
+      },
+      {
+        "anioFin": 2018,
+        "acumuladoMm": 138.4
+      },
+      {
+        "anioFin": 2019,
+        "acumuladoMm": 133.7
+      },
+      {
+        "anioFin": 2020,
+        "acumuladoMm": 119.4
+      }
+    ]
+  },
+  "precipitacionAcumuladaMm": 114.5,
+  "resultado": {
+    "valor": -0.6410480784168507,
+    "categoria": "normal",
+    "motivo": null,
+    "aniosValidos": 30,
+    "parametrosAjuste": {
+      "forma": 7.4759302341133544,
+      "escalaMm": 20.548613375097833,
+      "probabilidadCero": 0.0,
+      "positivos": 30
+    },
+    "probabilidadAcumulada": 0.2607457232491371
+  },
+  "reproductor": {
+    "biblioteca": "SciPy",
+    "version": "1.16.3"
+  },
+  "fuentes": [
+    {
+      "archivo": "base.json",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-17.7833&longitude=-63.1821&daily=precipitation_sum&models=era5&timezone=GMT&precipitation_unit=mm&cell_selection=nearest&elevation=nan&start_date=1990-11-01&end_date=2020-12-31",
+      "obtenidoEn": "2026-10-23T02:56:32.946304Z",
+      "http": 200,
+      "cabeceras": {
+        "Date": "Fri, 23 Oct 2026 02:56:28 GMT",
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      "bytes": 199559,
+      "sha256": "5408b175da7efb0b6e896c10cd567f8b676181e9ecde4860c7602f385c7e3199",
+      "diasDevueltos": 11019,
+      "coordenadaDevuelta": [
+        -63.25,
+        -17.75
+      ],
+      "desde": "1990-11-01",
+      "hasta": "2020-12-31"
+    },
+    {
+      "archivo": "objetivo.json",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-17.7833&longitude=-63.1821&daily=precipitation_sum&models=era5&timezone=GMT&precipitation_unit=mm&cell_selection=nearest&elevation=nan&start_date=2024-07-01&end_date=2024-09-30",
+      "obtenidoEn": "2026-10-23T02:56:34.271956Z",
+      "http": 200,
+      "cabeceras": {
+        "Date": "Fri, 23 Oct 2026 02:56:33 GMT",
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      "bytes": 1923,
+      "sha256": "466daaa00dc6e067bfb625532b5de1f6e40bb5a8dc2f81126188f81c23ba4fc3",
+      "diasDevueltos": 92,
+      "coordenadaDevuelta": [
+        -63.25,
+        -17.75
+      ],
+      "desde": "2024-07-01",
+      "hasta": "2024-09-30"
+    }
+  ],
+  "limitacion": "Una celda piloto; no estima superficie afectada ni sequía de todo el municipio."
+}

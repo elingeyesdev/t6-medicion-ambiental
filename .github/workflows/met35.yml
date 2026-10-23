@@ -1,0 +1,33 @@
+name: MET-01 referencia SPI-3
+
+on:
+  pull_request:
+    branches: [develop]
+    paths: ['herramientas/met35/**', 'compartido/api/sequias-propuesta/**', 'docs/evidencias/met35/**', '.github/workflows/met35.yml']
+  push:
+    branches: [develop]
+    paths: ['herramientas/met35/**', 'compartido/api/sequias-propuesta/**', 'docs/evidencias/met35/**', '.github/workflows/met35.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  referencia:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: herramientas/met35/requirements.txt
+      - run: python -m pip install -r herramientas/met35/requirements.txt
+      - name: Reproducir fuente conservada y comprobar contrato sin consultar proveedores
+        run: python -m unittest discover -s herramientas/met35 -p 'test_*.py' -v
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+      - name: Verificar que contexto solicitado y centro de celda se distinguen
+        run: php herramientas/met35/verificar_piloto.php
