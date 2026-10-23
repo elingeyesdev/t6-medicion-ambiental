@@ -1,0 +1,136 @@
+{
+  "versionContrato": "sequias-0.1-propuesta",
+  "datos": [
+    {
+      "idMuestra": "scz-piloto-01",
+      "territorioContexto": "BO070101",
+      "municipioDelCentroCelda": "BO070103",
+      "coordenadaSolicitada": [
+        -63.1821,
+        -17.7833
+      ],
+      "coordenadaCelda": [
+        -63.25,
+        -17.75
+      ],
+      "naturaleza": "derivado_de_reanalisis",
+      "fuentesRef": [
+        "open_meteo_era5"
+      ],
+      "metodo": "spi3-era5-gamma-mle-1991-2020-v0.1-propuesta",
+      "precipitacionAcumuladaMm": 114.5,
+      "spi": {
+        "valor": -0.6410480784168507,
+        "categoria": "normal",
+        "motivo": null,
+        "aniosValidos": 30,
+        "parametrosAjuste": {
+          "forma": 7.4759302341133544,
+          "escalaMm": 20.548613375097833,
+          "probabilidadCero": 0.0,
+          "positivos": 30
+        },
+        "probabilidadAcumulada": 0.2607457232491371
+      }
+    }
+  ],
+  "consulta": {
+    "estado": "propuesta_pendiente_revision",
+    "mesFinal": "2024-09",
+    "desde": "2024-07-01",
+    "hastaIncluido": "2024-09-30",
+    "zona": "UTC",
+    "municipio": "BO070101",
+    "provincia": "BO0701",
+    "muestra": "scz-piloto-01",
+    "obtencion": {
+      "tipo": "reproduccion_captura",
+      "obtenidoEn": "2026-10-23T02:56:34.271956Z",
+      "esRespuestaHttp": false
+    }
+  },
+  "fuentes": [
+    {
+      "id": "open_meteo_era5",
+      "proveedor": "Open-Meteo",
+      "producto": "ERA5",
+      "naturaleza": "reanalisis",
+      "variable": "precipitation_sum",
+      "unidad": "mm",
+      "resolucionGrados": 0.25,
+      "licencia": "https://creativecommons.org/licenses/by/4.0/",
+      "atribucion": "Open-Meteo.com; ECMWF / Copernicus Climate Change Service, ERA5.",
+      "fechaActualizacion": null,
+      "capturas": [
+        {
+          "archivo": "base.json",
+          "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-17.7833&longitude=-63.1821&daily=precipitation_sum&models=era5&timezone=GMT&precipitation_unit=mm&cell_selection=nearest&elevation=nan&start_date=1990-11-01&end_date=2020-12-31",
+          "obtenidoEn": "2026-10-23T02:56:32.946304Z",
+          "http": 200,
+          "cabeceras": {
+            "Date": "Fri, 23 Oct 2026 02:56:28 GMT",
+            "Content-Type": "application/json; charset=utf-8"
+          },
+          "bytes": 199559,
+          "sha256": "5408b175da7efb0b6e896c10cd567f8b676181e9ecde4860c7602f385c7e3199",
+          "diasDevueltos": 11019,
+          "coordenadaDevuelta": [
+            -63.25,
+            -17.75
+          ],
+          "desde": "1990-11-01",
+          "hasta": "2020-12-31"
+        },
+        {
+          "archivo": "objetivo.json",
+          "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-17.7833&longitude=-63.1821&daily=precipitation_sum&models=era5&timezone=GMT&precipitation_unit=mm&cell_selection=nearest&elevation=nan&start_date=2024-07-01&end_date=2024-09-30",
+          "obtenidoEn": "2026-10-23T02:56:34.271956Z",
+          "http": 200,
+          "cabeceras": {
+            "Date": "Fri, 23 Oct 2026 02:56:33 GMT",
+            "Content-Type": "application/json; charset=utf-8"
+          },
+          "bytes": 1923,
+          "sha256": "466daaa00dc6e067bfb625532b5de1f6e40bb5a8dc2f81126188f81c23ba4fc3",
+          "diasDevueltos": 92,
+          "coordenadaDevuelta": [
+            -63.25,
+            -17.75
+          ],
+          "desde": "2024-07-01",
+          "hasta": "2024-09-30"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "totalMuestras": 1,
+    "muestrasConIndice": 1,
+    "muestrasSinIndice": 0,
+    "muestrasConDeficit": 0,
+    "spiMinimo": -0.6410480784168507,
+    "unidadConteo": "muestras_no_superficie"
+  },
+  "cobertura": {
+    "estadoEspacial": "muestras_puntuales",
+    "municipiosEnFiltro": 1,
+    "municipiosConMuestra": 1,
+    "municipiosConIndice": 1,
+    "celdasUnicas": 1,
+    "superficieEvaluadaKm2": null
+  },
+  "advertencias": [
+    "Ejemplo candidato generado; no se consultó una API de sequías implementada.",
+    "Una celda piloto; no estima superficie afectada ni sequía de todo el municipio.",
+    "El centro de celda cae en BO070103; el punto solicitado está en BO070101. No reasignar el contexto territorial.",
+    "Sin contraste con estaciones locales; no es el producto SPI oficial de Copernicus."
+  ],
+  "paginacion": {
+    "aplica": false
+  },
+  "representacionMapa": {
+    "tipo": "Point",
+    "alcance": "conjunto",
+    "rellenarPoligonos": false
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "tipo": "consulta_externa_real",
+  "proveedor": "Open-Meteo",
+  "productoSolicitado": "ERA5",
+  "naturaleza": "reanalisis",
+  "muestra": "scz-piloto-01",
+  "territorioContexto": "BO070101",
+  "parametrosComunes": {
+    "latitude": "-17.7833",
+    "longitude": "-63.1821",
+    "daily": "precipitation_sum",
+    "models": "era5",
+    "timezone": "GMT",
+    "precipitation_unit": "mm",
+    "cell_selection": "nearest",
+    "elevation": "nan"
+  },
+  "archivos": [
+    {
+      "archivo": "base.json",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-17.7833&longitude=-63.1821&daily=precipitation_sum&models=era5&timezone=GMT&precipitation_unit=mm&cell_selection=nearest&elevation=nan&start_date=1990-11-01&end_date=2020-12-31",
+      "obtenidoEn": "2026-10-23T02:56:32.946304Z",
+      "http": 200,
+      "cabeceras": {
+        "Date": "Fri, 23 Oct 2026 02:56:28 GMT",
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      "bytes": 199559,
+      "sha256": "5408b175da7efb0b6e896c10cd567f8b676181e9ecde4860c7602f385c7e3199",
+      "diasDevueltos": 11019,
+      "coordenadaDevuelta": [
+        -63.25,
+        -17.75
+      ],
+      "desde": "1990-11-01",
+      "hasta": "2020-12-31"
+    },
+    {
+      "archivo": "objetivo.json",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-17.7833&longitude=-63.1821&daily=precipitation_sum&models=era5&timezone=GMT&precipitation_unit=mm&cell_selection=nearest&elevation=nan&start_date=2024-07-01&end_date=2024-09-30",
+      "obtenidoEn": "2026-10-23T02:56:34.271956Z",
+      "http": 200,
+      "cabeceras": {
+        "Date": "Fri, 23 Oct 2026 02:56:33 GMT",
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      "bytes": 1923,
+      "sha256": "466daaa00dc6e067bfb625532b5de1f6e40bb5a8dc2f81126188f81c23ba4fc3",
+      "diasDevueltos": 92,
+      "coordenadaDevuelta": [
+        -63.25,
+        -17.75
+      ],
+      "desde": "2024-07-01",
+      "hasta": "2024-09-30"
+    }
+  ],
+  "atribucion": "Open-Meteo.com; ECMWF / Copernicus Climate Change Service, ERA5.",
+  "licencia": "https://creativecommons.org/licenses/by/4.0/"
+}
