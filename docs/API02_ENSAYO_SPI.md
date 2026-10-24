@@ -63,4 +63,4 @@ Verificación local de este avance: **19 pruebas nuevas / 244 aserciones**; suit
 
 ## Lo que continúa pendiente
 
-Revisión del método/contrato #35, adopción e integración del cálculo, caché de resultados, respuesta HTTP y clientes web/Flutter. La [captura candidata desde el proveedor](API02_CAPTURA_LLUVIA.md), con índice y renovación, y el [catálogo de puntos candidatos](API02_MUESTRAS_TERRITORIALES.md) ya funcionan por consola como avances separados. El ensayo PHP reduce el riesgo del portado numérico; no completa la API ni cierra sus issues.
+Revisión del método/contrato #35, adopción e integración del cálculo, respuesta HTTP y clientes web/Flutter. La [caché candidata del cálculo](API02_CACHE_CALCULO.md), la [captura candidata desde el proveedor](API02_CAPTURA_LLUVIA.md), con índice y renovación, y el [catálogo de puntos candidatos](API02_MUESTRAS_TERRITORIALES.md) ya funcionan por consola como avances separados. El ensayo PHP reduce el riesgo del portado numérico; no completa la API ni cierra sus issues.

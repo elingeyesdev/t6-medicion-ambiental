@@ -16,6 +16,12 @@ final class EnsayoSpi3
 
     public function ejecutar(string $baseId, string $objetivoId, string $mesFinal, DateTimeImmutable $ahora): array
     {
+        return $this->calcularPreparado($this->preparar($baseId, $objetivoId, $mesFinal, $ahora));
+    }
+
+    /** Verifica calendario y originales antes de buscar cualquier resultado en caché. */
+    public function preparar(string $baseId, string $objetivoId, string $mesFinal, DateTimeImmutable $ahora): PreparacionSpi3
+    {
         if (! preg_match('/^[0-9]{4}-(0[1-9]|1[0-2])$/D', $mesFinal) || $mesFinal < '2021-01'
             || $mesFinal >= $ahora->setTimezone(new DateTimeZone('UTC'))->format('Y-m')) {
             throw new SeriePrecipitacionInvalida('MES_NO_ADMITIDO', 'Indica un mes completo desde 2021-01 y anterior al mes UTC actual.');
@@ -47,21 +53,35 @@ final class EnsayoSpi3
             $ventanas[] = ['anioFin' => $anio, 'acumuladoMm' => $this->acumular($mensuales, $anio.substr($mesFinal, 4))];
         }
         $acumulado = $this->acumular($objetivos, $mesFinal);
-        $resultado = $this->spi->calcular(array_column($ventanas, 'acumuladoMm'), $acumulado);
 
-        return ['estado' => 'ensayo_pendiente_revision', 'metodo' => Spi3Propuesto::VERSION,
+        return new PreparacionSpi3(['estado' => 'ensayo_pendiente_revision', 'metodo' => Spi3Propuesto::VERSION,
             'tipoEvidencia' => $p['tipoEvidencia'],
             'naturaleza' => $p['naturaleza'] === 'simulacion' ? 'controlada_simulacion' : 'derivado_de_reanalisis',
             'muestra' => $p['muestra'], 'coordenadaSolicitada' => $p['coordenadaSolicitada'], 'coordenadaCelda' => $p['coordenadaCelda'],
             'periodo' => ['mesFinal' => $mesFinal, 'desde' => $fin->modify('-2 months')->format('Y-m-d'),
                 'hastaIncluido' => $fin->modify('last day of this month')->format('Y-m-d'), 'zona' => 'UTC'],
             'base' => ['primerAnioFin' => 1991, 'ultimoAnioFin' => 2020, 'mesFin' => (int) $fin->format('m'), 'ventanas' => $ventanas],
-            'precipitacionAcumuladaMm' => $acumulado, 'resultado' => $resultado,
+            'precipitacionAcumuladaMm' => $acumulado,
             'versiones' => array_map(fn ($v) => ['identificador' => $v['identificador'], 'integridad' => $v['integridad'], 'procedencia' => $v['procedencia']], [$base, $objetivo]),
             'advertencias' => ['Método propuesto sin adoptar; ensayo local sin respuesta HTTP operativa.',
                 'Resultado de una celda, no superficie afectada ni sequía de todo un municipio.',
                 'La coordenada solicitada y el centro de celda pueden pertenecer a municipios distintos.',
-                'La procedencia es declarada y su integridad se verifica; no certifica autenticidad del proveedor.']];
+                'La procedencia es declarada y su integridad se verifica; no certifica autenticidad del proveedor.']]);
+    }
+
+    /** @internal Solo recibe la preparación verificada; no es una entrada HTTP. */
+    public function calcularPreparado(PreparacionSpi3 $preparacion): array
+    {
+        $r = [];
+        foreach ($preparacion->informe as $campo => $valor) {
+            $r[$campo] = $valor;
+            if ($campo === 'precipitacionAcumuladaMm') {
+                $r['resultado'] = $this->spi->calcular(
+                    array_column($preparacion->informe['base']['ventanas'], 'acumuladoMm'), $valor);
+            }
+        }
+
+        return $r;
     }
 
     private function acumular(array $mensuales, string $mesFinal): ?float

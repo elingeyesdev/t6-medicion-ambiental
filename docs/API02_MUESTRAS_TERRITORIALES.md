@@ -69,4 +69,4 @@ Verificación local de este avance: **32 pruebas PHP nuevas / 343 aserciones**, 
 
 Los puntos son candidatos de solicitud, no estaciones ni una validación espacial del clima. Solo el piloto tiene captura comprobada en esta evidencia; los demás requieren recuperar historia suficiente y contrastar celdas/resultados. No se infieren 56 celdas únicas ni superficie cubierta por tener 56 puntos.
 
-Para completar #36 quedan revisión/adopción de #35, integración del cálculo revisado, caché de resultados y operaciones HTTP (consulta/detalle/resumen) para ambos clientes. Esas partes no se dan por aprobadas con el catálogo ni se cierra el issue.
+Para completar #36 quedan revisión/adopción de #35, integración del cálculo revisado y operaciones HTTP (consulta/detalle/resumen) para ambos clientes. La [caché candidata](API02_CACHE_CALCULO.md) ya se puede probar por consola. Estas partes no se dan por aprobadas con el catálogo ni se cierra el issue.

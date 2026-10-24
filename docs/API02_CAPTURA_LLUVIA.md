@@ -71,4 +71,4 @@ Verificación local: **36 pruebas nuevas / 198 aserciones; suite completa 153 ap
 
 El [catálogo candidato de muestras y la captura por ID](API02_MUESTRAS_TERRITORIALES.md) ya permiten usar puntos registrados, con filtros y contexto de celda separados. El comando de coordenadas manuales de esta guía queda como herramienta de captura puntual.
 
-Pendiente para completar #36: acuerdo de #35, adopción del cálculo/contrato, caché de resultados y operaciones HTTP para web/Flutter. El flujo candidato de captura → almacén → ensayo funciona por consola; no acredita esos componentes restantes ni disponibilidad climática en los 56 puntos.
+La [caché candidata de resultados](API02_CACHE_CALCULO.md) ya funciona por consola, separada del índice de capturas. Pendiente para completar #36: acuerdo de #35, adopción del cálculo/contrato y operaciones HTTP para web/Flutter. El flujo candidato de captura → almacén → ensayo no acredita esos componentes restantes ni disponibilidad climática en los 56 puntos.
