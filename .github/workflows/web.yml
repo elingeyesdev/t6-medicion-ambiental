@@ -3,10 +3,10 @@ name: Base web y API
 on:
   pull_request:
     branches: [develop, main]
-    paths: ['web/**', 'compartido/api/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'herramientas/sequias/**', '.github/workflows/web.yml']
+    paths: ['web/**', 'compartido/api/**', 'compartido/sequias/**', 'compartido/territorios/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'herramientas/sequias/**', '.github/workflows/web.yml']
   push:
     branches: [develop, main]
-    paths: ['web/**', 'compartido/api/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'herramientas/sequias/**', '.github/workflows/web.yml']
+    paths: ['web/**', 'compartido/api/**', 'compartido/sequias/**', 'compartido/territorios/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'herramientas/sequias/**', '.github/workflows/web.yml']
 
 permissions:
   contents: read
@@ -59,7 +59,20 @@ jobs:
         run: php artisan test --compact --filter="Serie|Sequias"
       - name: Ejecutar la demostración de PowerShell que usa el usuario
         shell: pwsh
-        run: ./herramientas/sequias/probar-preparacion.ps1
+        run: |
+          ./herramientas/sequias/probar-preparacion.ps1
+          ./herramientas/sequias/probar-muestras.ps1
+
+  muestras-geometria:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r herramientas/sequias/requirements-muestras.txt
+      - name: Verificar selección interior y reproducción del catálogo candidato
+        run: python herramientas/sequias/test_muestras.py
 
   contrato:
     runs-on: ubuntu-latest

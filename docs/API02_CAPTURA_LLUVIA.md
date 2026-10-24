@@ -69,4 +69,6 @@ Desde `web/`:
 
 Verificación local: **36 pruebas nuevas / 198 aserciones; suite completa 153 aprobadas / 903 aserciones**. La demostración PowerShell y una descarga externa real se comprobaron por separado. [Evidencia y resultado con la nueva captura](evidencias/api02-fuente/README.md).
 
-Pendiente para completar #36: acuerdo de #35, catálogo territorial de muestras, adopción del cálculo/contrato, caché de resultados y operaciones HTTP para web/Flutter. El flujo candidato de captura → almacén → ensayo funciona por consola; no acredita esos componentes restantes.
+El [catálogo candidato de muestras y la captura por ID](API02_MUESTRAS_TERRITORIALES.md) ya permiten usar puntos registrados, con filtros y contexto de celda separados. El comando de coordenadas manuales de esta guía queda como herramienta de captura puntual.
+
+Pendiente para completar #36: acuerdo de #35, adopción del cálculo/contrato, caché de resultados y operaciones HTTP para web/Flutter. El flujo candidato de captura → almacén → ensayo funciona por consola; no acredita esos componentes restantes ni disponibilidad climática en los 56 puntos.

@@ -57,6 +57,8 @@ También hay un [ensayo SPI-3 en PHP](../docs/API02_ENSAYO_SPI.md), aislado como
 
 La [captura candidata Open-Meteo/ERA5](../docs/API02_CAPTURA_LLUVIA.md) obtiene y conserva lluvia con reutilización/renovación. Se prueba con `./herramientas/sequias/probar-fuente.ps1`; requiere Internet si no hay captura reciente. No usa la clave NASA ni habilita el módulo público.
 
+El [catálogo de muestras candidatas](../docs/API02_MUESTRAS_TERRITORIALES.md) verifica 56 puntos y permite filtrar o capturar por identificador. Prueba sin Internet: `./herramientas/sequias/probar-muestras.ps1`. Agregar `-ConsultarPiloto` prueba la captura registrada y su contexto territorial, con Internet si no hay una captura reciente.
+
 ## Configuración y secretos
 
 `.env.example` no contiene credenciales. `.env`, la clave de la aplicación, la base SQLite, los logs y `vendor/` quedan fuera de Git. `APP_DEBUG=false` evita exponer trazas en el arranque por defecto. `APP_KEY` es propia de cada instalación: no compartirla con Flutter ni incorporarla a commits.
