@@ -1,0 +1,72 @@
+{
+    "estado": "captura_candidata_pendiente_revision",
+    "tipoObtencion": "consulta_proveedor",
+    "esConsultaNueva": true,
+    "expiraEn": "2026-10-24T08:39:15Z",
+    "httpOriginal": {
+        "estado": 200,
+        "fechaCabecera": "Sat, 24 Oct 2026 02:39:14 GMT",
+        "tipoContenido": "application\/json; charset=utf-8"
+    },
+    "version": {
+        "integridad": "verificada",
+        "versionAlmacenamiento": 1,
+        "identificador": "81c72f90d1cd1019449b274bb7e46a1071d0d651881d10170f1f2e6bd353431e",
+        "preparadoEn": "2026-10-24T02:39:15.590861Z",
+        "procedencia": {
+            "version": "procedencia-precipitacion-1.0",
+            "tipoEvidencia": "captura_externa",
+            "proveedor": "Open-Meteo",
+            "producto": "ERA5",
+            "naturaleza": "reanalisis",
+            "muestra": "scz-piloto-01",
+            "coordenadaSolicitada": [
+                -63.1821,
+                -17.7833
+            ],
+            "coordenadaCelda": [
+                -63.25,
+                -17.75
+            ],
+            "periodo": {
+                "desde": "2024-07-01",
+                "hastaIncluido": "2024-09-30",
+                "zona": "UTC"
+            },
+            "obtenidoEn": "2026-10-24T02:39:15.585398Z",
+            "urlOrigen": "https:\/\/archive-api.open-meteo.com\/v1\/archive?latitude=-17.7833&longitude=-63.1821&daily=precipitation_sum&models=era5&timezone=GMT&precipitation_unit=mm&cell_selection=nearest&elevation=nan&start_date=2024-07-01&end_date=2024-09-30",
+            "licencia": "https:\/\/creativecommons.org\/licenses\/by\/4.0\/",
+            "atribucion": "Open-Meteo.com; ECMWF \/ Copernicus Climate Change Service, ERA5.",
+            "sha256": "1ec1fac03a7babf3fa69f87748c052899b51d67c8dcc7d804142ac132ed2d35a"
+        },
+        "informe": {
+            "versionInforme": "calidad-precipitacion-1.0",
+            "estado": "completa",
+            "aptoParaAgregacionMensual": true,
+            "periodo": {
+                "desde": "2024-07-01",
+                "hastaIncluido": "2024-09-30",
+                "zona": "UTC"
+            },
+            "unidad": "mm",
+            "resumen": {
+                "diasEsperados": 92,
+                "registrosRecibidos": 92,
+                "diasValidos": 92,
+                "diasAusentes": 0,
+                "diasNulos": 0,
+                "mesesEsperados": 3,
+                "mesesCompletos": 3,
+                "mesesIncompletos": 0
+            },
+            "advertencias": [
+                "Completitud diaria verificada; no acredita exactitud de la fuente, SPI ni sequía."
+            ]
+        },
+        "checksumManifiesto": "9bb707f52b9a209b86ff076d034af12598ce032f31f3bbee06dba9e7cbda8dbe"
+    },
+    "advertencias": [
+        "Captura de una celda de reanálisis; no constituye SPI ni una estación observada.",
+        "No acredita cobertura municipal ni activa el módulo público; propuesta de #35 pendiente de revisión."
+    ]
+}

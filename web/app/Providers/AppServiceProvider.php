@@ -2,7 +2,13 @@
 
 namespace App\Providers;
 
+use App\Services\Sequias\Experimental\CatalogoMuestrasSequias;
+use App\Services\Sequias\LectorJsonLocal;
+use App\Services\Sequias\ProcedenciaSeriePrecipitacion;
+use App\Services\Sequias\RepositorioSeriesPrecipitacion;
+use App\Services\Sequias\ValidadorSeriePrecipitacion;
 use App\Services\Territorios\CatalogoTerritorial;
+use App\Services\Territorios\GeometriaTerritorial;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,6 +20,13 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(CatalogoTerritorial::class,
             fn () => new CatalogoTerritorial(config('focos.datos_territoriales')));
+        $this->app->singleton(RepositorioSeriesPrecipitacion::class,
+            fn ($app) => new RepositorioSeriesPrecipitacion(config('sequias.directorio_series'),
+                $app->make(LectorJsonLocal::class), $app->make(ValidadorSeriePrecipitacion::class),
+                $app->make(ProcedenciaSeriePrecipitacion::class)));
+        $this->app->singleton(CatalogoMuestrasSequias::class,
+            fn ($app) => new CatalogoMuestrasSequias(config('sequias.archivo_muestras'), dirname(config('focos.datos_territoriales')),
+                $app->make(LectorJsonLocal::class), $app->make(CatalogoTerritorial::class), $app->make(GeometriaTerritorial::class)));
     }
 
     /**

@@ -1,0 +1,16 @@
+{
+  "version": "procedencia-precipitacion-1.0",
+  "tipoEvidencia": "controlada",
+  "proveedor": "Fixture local de GeoCruz",
+  "producto": "lluvia-constante-2mm",
+  "naturaleza": "simulacion",
+  "muestra": "controlada-01",
+  "coordenadaSolicitada": [-63.1821, -17.7833],
+  "coordenadaCelda": [-63.25, -17.75],
+  "periodo": {"desde": "2024-06-01", "hastaIncluido": "2024-06-30", "zona": "UTC"},
+  "obtenidoEn": "2024-07-01T00:00:00Z",
+  "urlOrigen": null,
+  "licencia": "No aplica: datos controlados del ejemplo del proyecto",
+  "atribucion": "GeoCruz. Todos los valores, coordenadas e instante de esta fixture son de prueba, sin observación ni descarga real.",
+  "sha256": "0f68f454670c7b840acdce3aa770dbbe3e1439dd6d1500233bb07faca9ac564e"
+}
