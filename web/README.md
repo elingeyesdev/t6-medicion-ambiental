@@ -55,6 +55,8 @@ Preparación de sequías (#36): [validador de series diarias por consola](../doc
 
 También hay un [ensayo SPI-3 en PHP](../docs/API02_ENSAYO_SPI.md), aislado como experimental y contrastado con la referencia SciPy. En este equipo se prueba desde la raíz con `./herramientas/sequias/probar-spi.ps1`. Sigue pendiente de revisión del método y no activa la API.
 
+La [captura candidata Open-Meteo/ERA5](../docs/API02_CAPTURA_LLUVIA.md) obtiene y conserva lluvia con reutilización/renovación. Se prueba con `./herramientas/sequias/probar-fuente.ps1`; requiere Internet si no hay captura reciente. No usa la clave NASA ni habilita el módulo público.
+
 ## Configuración y secretos
 
 `.env.example` no contiene credenciales. `.env`, la clave de la aplicación, la base SQLite, los logs y `vendor/` quedan fuera de Git. `APP_DEBUG=false` evita exponer trazas en el arranque por defecto. `APP_KEY` es propia de cada instalación: no compartirla con Flutter ni incorporarla a commits.

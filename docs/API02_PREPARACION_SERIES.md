@@ -2,6 +2,8 @@
 
 Avance técnico de #36, separado del acuerdo científico de #35 / PR #42. Se implementan **validación, agregación mensual y almacenamiento versionado de archivos diarios de lluvia con su procedencia**, reutilizables cuando se adopte el método. Estos componentes no incorporan umbrales o años de calibración, catálogo de muestras, llamadas de red ni publicación de la API de sequías. La ruta existente sigue respondiendo 503 `MODULO_NO_DISPONIBLE`. El [ensayo SPI-3 añadido después](API02_ENSAYO_SPI.md) está aislado como experimental y utiliza estas versiones, sin adoptar el método.
 
+La [captura candidata por red](API02_CAPTURA_LLUVIA.md) se añadió como comando separado: valida la respuesta del proveedor, prepara versiones en este almacén y mantiene su propio índice de reutilización. La importación/lectura local de esta guía sigue sin consultar Internet.
+
 ## Qué hace
 
 `sequias:validar-serie` lee un JSON **local** y emite un informe JSON `calidad-precipitacion-1.0`. El usuario declara el período esperado mediante `--desde` y `--hasta`, con meses completos y fechas inclusivas UTC. Así detecta también días iniciales/finales o un mes entero que no llegaron en el archivo. No infiere cobertura a partir de la primera y última fila recibidas.
@@ -92,4 +94,4 @@ Además se releyó **offline** la captura externa conservada en el commit `1d186
 
 ## Estado y siguiente paso
 
-Este avance puede revisarse por separado sin adoptar el SPI propuesto. Ya funcionan la validación y el almacén local de series, y se prepararon las dos capturas de #35 con integridad y reutilización verificadas. Después se agregó un ensayo numérico PHP contrastado por consola, documentado por separado. El resto de #36 mantiene su dependencia de #35: método/contrato, fuente operativa y renovación, catálogo de muestras, caché del cálculo, territorio y respuesta HTTP. No se cierra #36 ni se habilita el módulo con esta preparación.
+Este avance puede revisarse por separado sin adoptar el SPI propuesto. Ya funcionan la validación y el almacén local de series, y se prepararon las dos capturas de #35 con integridad y reutilización verificadas. Después se agregaron el ensayo numérico PHP contrastado y la captura candidata con reutilización/renovación, por consola y documentados por separado. El resto de #36 mantiene su dependencia de #35: método/contrato revisados, catálogo de muestras, caché del cálculo, territorio y respuesta HTTP. No se cierra #36 ni se habilita el módulo con esta preparación.

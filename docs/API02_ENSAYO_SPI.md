@@ -63,4 +63,4 @@ Verificación local de este avance: **19 pruebas nuevas / 244 aserciones**; suit
 
 ## Lo que continúa pendiente
 
-Revisión del método/contrato #35, catálogo territorial de muestras, acceso y renovación del proveedor, caché operativa, respuesta HTTP y clientes web/Flutter. El ensayo PHP reduce el riesgo del portado numérico; no acredita esas funcionalidades ni cierra sus issues.
+Revisión del método/contrato #35, catálogo territorial de muestras, adopción e integración del cálculo, caché de resultados, respuesta HTTP y clientes web/Flutter. La [captura candidata desde el proveedor](API02_CAPTURA_LLUVIA.md), con índice y renovación, ya funciona por consola como avance separado. El ensayo PHP reduce el riesgo del portado numérico; no completa la API ni cierra sus issues.

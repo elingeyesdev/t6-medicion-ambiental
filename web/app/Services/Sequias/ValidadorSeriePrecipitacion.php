@@ -15,15 +15,7 @@ final class ValidadorSeriePrecipitacion
 
     public function validar(array $documento, string $desde, string $hasta): array
     {
-        $inicio = $this->dia($desde);
-        $fin = $this->dia($hasta);
-        if ($inicio > $fin || $inicio->format('d') !== '01' || $fin->format('d') !== $fin->format('t')) {
-            throw new SeriePrecipitacionInvalida('RANGO_NO_MENSUAL', 'Indica meses completos: primer día inicial y último día final, en orden.');
-        }
-        $diasEsperados = (int) $inicio->diff($fin)->days + 1;
-        if ($diasEsperados > self::MAX_DIAS) {
-            throw new SeriePrecipitacionInvalida('RANGO_DEMASIADO_GRANDE', 'El intervalo supera el límite técnico de días por archivo.');
-        }
+        [$inicio, $fin, $diasEsperados] = $this->validarPeriodo($desde, $hasta);
         if (($documento['daily_units']['precipitation_sum'] ?? null) !== 'mm') {
             throw new SeriePrecipitacionInvalida('UNIDAD_INVALIDA', 'La precipitación diaria debe declarar unidad mm.');
         }
@@ -61,6 +53,27 @@ final class ValidadorSeriePrecipitacion
             $anterior = $dia;
         }
 
+        return $this->agregar($diarios, $inicio, $fin, $desde, $hasta, $diasEsperados, count($fechas));
+    }
+
+    /** Calendario y límite comunes a archivos locales y solicitudes al proveedor. */
+    public function validarPeriodo(string $desde, string $hasta): array
+    {
+        $inicio = $this->dia($desde);
+        $fin = $this->dia($hasta);
+        if ($inicio > $fin || $inicio->format('d') !== '01' || $fin->format('d') !== $fin->format('t')) {
+            throw new SeriePrecipitacionInvalida('RANGO_NO_MENSUAL', 'Indica meses completos: primer día inicial y último día final, en orden.');
+        }
+        $diasEsperados = (int) $inicio->diff($fin)->days + 1;
+        if ($diasEsperados > self::MAX_DIAS) {
+            throw new SeriePrecipitacionInvalida('RANGO_DEMASIADO_GRANDE', 'El intervalo supera el límite técnico de días por archivo.');
+        }
+
+        return [$inicio, $fin, $diasEsperados];
+    }
+
+    private function agregar(array $diarios, DateTimeImmutable $inicio, DateTimeImmutable $fin, string $desde, string $hasta, int $diasEsperados, int $registros): array
+    {
         $meses = [];
         $sumas = [];
         $compensaciones = [];
@@ -110,7 +123,7 @@ final class ValidadorSeriePrecipitacion
             'aptoParaAgregacionMensual' => $apto,
             'periodo' => ['desde' => $desde, 'hastaIncluido' => $hasta, 'zona' => 'UTC'],
             'unidad' => 'mm',
-            'resumen' => ['diasEsperados' => $diasEsperados, 'registrosRecibidos' => count($fechas),
+            'resumen' => ['diasEsperados' => $diasEsperados, 'registrosRecibidos' => $registros,
                 'diasValidos' => $validos, 'diasAusentes' => array_sum(array_column($meses, 'diasAusentes')),
                 'diasNulos' => array_sum(array_column($meses, 'diasNulos')), 'mesesEsperados' => count($meses),
                 'mesesCompletos' => $completos, 'mesesIncompletos' => count($meses) - $completos],

@@ -3,10 +3,10 @@ name: Base web y API
 on:
   pull_request:
     branches: [develop, main]
-    paths: ['web/**', 'compartido/api/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'herramientas/sequias/**', '.github/workflows/web.yml']
+    paths: ['web/**', 'compartido/api/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'herramientas/sequias/**', '.github/workflows/web.yml']
   push:
     branches: [develop, main]
-    paths: ['web/**', 'compartido/api/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'herramientas/sequias/**', '.github/workflows/web.yml']
+    paths: ['web/**', 'compartido/api/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'herramientas/sequias/**', '.github/workflows/web.yml']
 
 permissions:
   contents: read
