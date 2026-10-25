@@ -12,7 +12,7 @@ try {
     if ($datosEnsayoSpi.estado -ne 'ensayo_pendiente_revision' -or $datosEnsayoSpi.resultado.categoria -ne 'normal' -or [math]::Abs($datosEnsayoSpi.resultado.valor - (-0.6410480784168507)) -gt 0.000001 -or [math]::Abs($datosEnsayoSpi.precipitacionAcumuladaMm - 114.5) -gt 0.000001) {
         throw 'El piloto no coincide con la referencia conservada. Revisar la salida del comando individual.'
     }
-    Write-Host 'Ensayo SPI-3: propuesta pendiente de revision (#35); sin API habilitada.' -ForegroundColor Yellow
+    Write-Host 'Ensayo offline SPI-3 del metodo #35 acordado; no publica datos HTTP por si solo.' -ForegroundColor Yellow
     Write-Host "Julio-septiembre 2024: $($datosEnsayoSpi.precipitacionAcumuladaMm) mm."
     Write-Host "SPI: $($datosEnsayoSpi.resultado.valor); categoria: $($datosEnsayoSpi.resultado.categoria)." -ForegroundColor Green
     Write-Host "Base: $($datosEnsayoSpi.resultado.aniosValidos) ventanas completas de 1991-2020."

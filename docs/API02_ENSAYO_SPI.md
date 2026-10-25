@@ -1,6 +1,6 @@
 # API-02 / #36: ensayo local del SPI-3 propuesto
 
-El candidato de #35 / PR #42 ya se puede **contrastar en PHP**, separado en `web/app/Services/Sequias/Experimental/`. Sigue pendiente de revisión de Jaziel: este avance no adopta el método ni completa #36. La ruta de sequías sigue en 503; `main`, focos y el contrato HTTP aceptado se conservan. No se exige Python para ejecutar Laravel ni el ensayo.
+El método de #35 / PR #42 fue aprobado por Jaziel el 25/10/2026. Esta guía conserva el **ensayo offline en PHP**, separado en `web/app/Services/Sequias/Experimental/`. La [API operativa candidata](API02_API_SEQUIAS.md) lo integra con publicaciones verificadas y queda para revisión en #43. No se exige Python para ejecutar Laravel ni el ensayo; focos y `main` se conservan.
 
 ## Prueba sencilla en este equipo
 
@@ -63,4 +63,4 @@ Verificación local de este avance: **19 pruebas nuevas / 244 aserciones**; suit
 
 ## Lo que continúa pendiente
 
-Revisión del método/contrato #35, adopción e integración del cálculo, respuesta HTTP y clientes web/Flutter. La [caché candidata del cálculo](API02_CACHE_CALCULO.md), la [captura candidata desde el proveedor](API02_CAPTURA_LLUVIA.md), con índice y renovación, y el [catálogo de puntos candidatos](API02_MUESTRAS_TERRITORIALES.md) ya funcionan por consola como avances separados. El ensayo PHP reduce el riesgo del portado numérico; no completa la API ni cierra sus issues.
+El método #35 ya está acordado. La [API #36](API02_API_SEQUIAS.md) integra preparación, cálculo y consulta HTTP y requiere revisión de la implementación en #43; siguen los clientes web/Flutter. El ensayo offline por sí solo no publica resultados ni cierra issues.

@@ -39,12 +39,12 @@ try {
             throw 'Se alteraron identificador, integridad o procedencia de una entrada.'
         }
     }
-    Write-Host 'Cache candidata SPI-3: propuesta pendiente de revision (#35).' -ForegroundColor Yellow
+    Write-Host 'Cache del ensayo SPI-3: metodo #35 acordado; implementacion #43 para revision.' -ForegroundColor Yellow
     Write-Host "Primera: $($aCacheSpi.cacheCalculo.tipo). Segunda: $($bCacheSpi.cacheCalculo.tipo)." -ForegroundColor Green
     Write-Host "SPI: $($bCacheSpi.resultado.valor); categoria: $($bCacheSpi.resultado.categoria); lluvia: $($bCacheSpi.precipitacionAcumuladaMm) mm."
     Write-Host "Calculado: $(([datetimeoffset]$bCacheSpi.cacheCalculo.calculadoEn).ToUniversalTime().ToString('o'))"
     Write-Host 'Mismo calculo y fechas en la segunda consulta; originales verificados otra vez.'
-    Write-Host 'No hubo descarga ni se renovaron los datos de 2024. La API sigue pendiente.'
+    Write-Host 'No hubo descarga ni se renovaron los datos de 2024. Esta prueba de cache no publica datos HTTP.'
 } finally {
     Pop-Location
 }

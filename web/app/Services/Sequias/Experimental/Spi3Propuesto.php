@@ -7,14 +7,14 @@ namespace App\Services\Sequias\Experimental;
 use App\Services\Sequias\SeriePrecipitacionInvalida;
 use RuntimeException;
 
-/** Candidato de #35, aislado de rutas y contrato operativo hasta revisión. */
+/** Fórmulas acordadas en #35; conserva el ID de la referencia revisada. */
 final class Spi3Propuesto
 {
     public const VERSION = 'spi3-era5-gamma-mle-1991-2020-v0.1-propuesta';
 
     public function __construct(private readonly NumericaGammaNormal $numerica) {}
 
-    public function calcular(array $base, mixed $objetivo): array
+    public function calcular(array $base, mixed $objetivo, ?array $ajustePreparado = null): array
     {
         if (! array_is_list($base)) {
             throw new SeriePrecipitacionInvalida('ACUMULACION_INVALIDA', 'La base debe ser una lista de acumulados.');
@@ -38,8 +38,22 @@ final class Spi3Propuesto
             return [...$r, 'motivo' => 'BASE_NO_AJUSTABLE'];
         }
         try {
-            [$forma, $escala] = $this->numerica->ajustar($positivos);
             $q = (30 - count($positivos)) / 30;
+            if ($ajustePreparado === null) {
+                [$forma, $escala] = $this->numerica->ajustar($positivos);
+            } else {
+                if (count($ajustePreparado) !== 4 || ($ajustePreparado['positivos'] ?? null) !== count($positivos)
+                    || ($ajustePreparado['probabilidadCero'] ?? null) !== $q) {
+                    throw new SeriePrecipitacionInvalida('AJUSTE_PREPARADO_INVALIDO', 'El ajuste no corresponde a los acumulados de referencia.');
+                }
+                foreach (['forma', 'escalaMm'] as $campo) {
+                    $v = $ajustePreparado[$campo] ?? null;
+                    if ((! is_int($v) && ! is_float($v)) || ! is_finite((float) $v) || $v <= 0) {
+                        throw new SeriePrecipitacionInvalida('AJUSTE_PREPARADO_INVALIDO', 'El ajuste preparado debe tener forma y escala finitas positivas.');
+                    }
+                }
+                [$forma, $escala] = [$ajustePreparado['forma'], $ajustePreparado['escalaMm']];
+            }
             $r['parametrosAjuste'] = ['forma' => $forma, 'escalaMm' => $escala,
                 'probabilidadCero' => $q, 'positivos' => count($positivos)];
             [$g] = $this->numerica->gamma($forma, $objetivo < 0.01 ? 0.0 : $objetivo / $escala);

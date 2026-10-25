@@ -93,7 +93,7 @@ class CapturaMuestraCatalogadaTest extends TestCase
         $this->assertSame('BO070101', $r['muestraCatalogada']['municipio']);
         $this->assertSame('BO070103', $r['municipioDelCentroCelda']);
         $this->assertArrayNotHasKey('meses', $r['version']['informe']);
-        $this->getJson('/api/v1/sequias')->assertStatus(503);
+        $this->getJson('/api/v1/inundaciones')->assertStatus(503);
         Http::assertSentCount(1);
     }
 

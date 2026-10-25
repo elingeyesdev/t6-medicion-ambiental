@@ -75,6 +75,6 @@ final class CapturadorPrecipitacion
         return ['estado' => 'captura_candidata_pendiente_revision', 'tipoObtencion' => $cache ? 'cache_captura' : 'consulta_proveedor',
             'esConsultaNueva' => ! $cache, 'expiraEn' => $indice['expiraEn'], 'httpOriginal' => $indice['http'],
             'version' => $v, 'advertencias' => ['Captura de una celda de reanálisis; no constituye SPI ni una estación observada.',
-                'No acredita cobertura municipal ni activa el módulo público; propuesta de #35 pendiente de revisión.']];
+                'Esta captura puntual no acredita cobertura municipal ni publica por sí sola un resultado SPI en la API.']];
     }
 }

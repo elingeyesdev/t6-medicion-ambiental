@@ -1,6 +1,6 @@
 # API-02 / #36: captura candidata de lluvia desde Laravel
 
-Ya se puede obtener una serie diaria puntual de **Open-Meteo Historical Weather API / ERA5**, conservar sus bytes originales y procedencia en el almacén y reutilizarla sin otra solicitud. Se ejecuta por consola, separada como experimental mientras se revisa #35 / PR #42. No habilita el endpoint público de sequías ni completa el catálogo o la integración de los clientes.
+Ya se puede obtener una serie diaria puntual de **Open-Meteo Historical Weather API / ERA5**, conservar sus bytes originales y procedencia y reutilizarla sin otra solicitud. El método #35 / PR #42 fue aprobado el 25/10/2026. La [API #36](API02_API_SEQUIAS.md) incorpora un preparador operativo que publica después de verificar/calcular; el comando de captura puntual de esta guía no publica por sí solo una respuesta HTTP.
 
 ## Probar en este equipo
 
@@ -71,4 +71,4 @@ Verificación local: **36 pruebas nuevas / 198 aserciones; suite completa 153 ap
 
 El [catálogo candidato de muestras y la captura por ID](API02_MUESTRAS_TERRITORIALES.md) ya permiten usar puntos registrados, con filtros y contexto de celda separados. El comando de coordenadas manuales de esta guía queda como herramienta de captura puntual.
 
-La [caché candidata de resultados](API02_CACHE_CALCULO.md) ya funciona por consola, separada del índice de capturas. Pendiente para completar #36: acuerdo de #35, adopción del cálculo/contrato y operaciones HTTP para web/Flutter. El flujo candidato de captura → almacén → ensayo no acredita esos componentes restantes ni disponibilidad climática en los 56 puntos.
+La [caché de resultados del ensayo](API02_CACHE_CALCULO.md) está separada del índice de capturas. La [API #36](API02_API_SEQUIAS.md) ya implementa publicaciones/consultas HTTP y requiere revisión en #43. La captura puntual no acredita disponibilidad climática de los 56 puntos ni implementación de los clientes.

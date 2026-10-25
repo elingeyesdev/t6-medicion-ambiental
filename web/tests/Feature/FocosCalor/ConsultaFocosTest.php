@@ -225,7 +225,7 @@ class ConsultaFocosTest extends TestCase
     {
         $this->postJson('/api/v1/focos-calor')->assertStatus(405)->assertJsonPath('error.codigo', 'METODO_NO_ADMITIDO');
         $this->getJson('/api/v1/no-existe')->assertNotFound()->assertJsonPath('error.codigo', 'RUTA_NO_ENCONTRADA');
-        $this->getJson('/api/v1/sequias')->assertStatus(503)->assertJsonPath('error.codigo', 'MODULO_NO_DISPONIBLE');
+        $this->getJson('/api/v1/inundaciones')->assertStatus(503)->assertJsonPath('error.codigo', 'MODULO_NO_DISPONIBLE');
         $this->getJson('/api/incendios')->assertNotFound();
         Http::assertNothingSent();
     }

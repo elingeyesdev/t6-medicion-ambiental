@@ -1,6 +1,6 @@
 # API-02 / #36: catálogo candidato y consulta por muestra
 
-Ya funciona el catálogo de **56 puntos de solicitud**, con filtros territoriales y captura por identificador. Completa esta preparación del borrador #43; el método #35 sigue pendiente de revisión y la ruta pública de sequías continúa en 503. Se mantiene separado como experimental: no habilita el módulo web/Flutter ni calcula 56 índices.
+Ya funciona el catálogo de **56 puntos de solicitud**, con filtros territoriales y captura por identificador. El método #35 fue aprobado el 25/10/2026; la [API #36](API02_API_SEQUIAS.md) usa este catálogo y publica solo muestras con datos verificados, con cobertura parcial explícita. La implementación #43 requiere revisión y los clientes siguen pendientes; registrar 56 puntos no calcula 56 índices.
 
 ## Probar ahora
 
@@ -69,4 +69,4 @@ Verificación local de este avance: **32 pruebas PHP nuevas / 343 aserciones**, 
 
 Los puntos son candidatos de solicitud, no estaciones ni una validación espacial del clima. Solo el piloto tiene captura comprobada en esta evidencia; los demás requieren recuperar historia suficiente y contrastar celdas/resultados. No se infieren 56 celdas únicas ni superficie cubierta por tener 56 puntos.
 
-Para completar #36 quedan revisión/adopción de #35, integración del cálculo revisado y operaciones HTTP (consulta/detalle/resumen) para ambos clientes. La [caché candidata](API02_CACHE_CALCULO.md) ya se puede probar por consola. Estas partes no se dan por aprobadas con el catálogo ni se cierra el issue.
+El método #35 ya está acordado y las operaciones HTTP se incorporan en [#36 / PR #43](API02_API_SEQUIAS.md). Quedan revisión de implementación y clientes. El catálogo por sí solo no acredita cobertura climática; el piloto es la única historia comprobada en la evidencia actual.

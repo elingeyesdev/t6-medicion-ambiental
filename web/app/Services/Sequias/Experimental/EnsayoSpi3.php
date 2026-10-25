@@ -20,7 +20,7 @@ final class EnsayoSpi3
     }
 
     /** Verifica calendario y originales antes de buscar cualquier resultado en caché. */
-    public function preparar(string $baseId, string $objetivoId, string $mesFinal, DateTimeImmutable $ahora): PreparacionSpi3
+    public function preparar(string $baseId, string $objetivoId, string $mesFinal, DateTimeImmutable $ahora, bool $basePorCelda = false): PreparacionSpi3
     {
         if (! preg_match('/^[0-9]{4}-(0[1-9]|1[0-2])$/D', $mesFinal) || $mesFinal < '2021-01'
             || $mesFinal >= $ahora->setTimezone(new DateTimeZone('UTC'))->format('Y-m')) {
@@ -30,12 +30,16 @@ final class EnsayoSpi3
         $objetivo = $this->series->leer($objetivoId);
         $p = $base['procedencia'];
         $o = $objetivo['procedencia'];
-        foreach (['tipoEvidencia', 'proveedor', 'producto', 'naturaleza', 'muestra'] as $campo) {
+        foreach (['tipoEvidencia', 'proveedor', 'producto', 'naturaleza'] as $campo) {
             if ($p[$campo] !== $o[$campo]) {
                 throw new SeriePrecipitacionInvalida('SERIES_INCOMPATIBLES', 'Base y objetivo deben conservar fuente, producto, naturaleza y muestra.');
             }
         }
-        foreach (['coordenadaSolicitada', 'coordenadaCelda'] as $campo) {
+        if ((! $basePorCelda || $p['tipoEvidencia'] !== 'captura_externa') && $p['muestra'] !== $o['muestra']) {
+            throw new SeriePrecipitacionInvalida('SERIES_INCOMPATIBLES', 'Las muestras deben coincidir en el ensayo puntual.');
+        }
+        $coordenadas = $basePorCelda && $p['tipoEvidencia'] === 'captura_externa' ? ['coordenadaCelda'] : ['coordenadaSolicitada', 'coordenadaCelda'];
+        foreach ($coordenadas as $campo) {
             for ($i = 0; $i < 2; $i++) {
                 if (abs($p[$campo][$i] - $o[$campo][$i]) > 1e-9) {
                     throw new SeriePrecipitacionInvalida('SERIES_INCOMPATIBLES', 'Las coordenadas solicitadas y las celdas deben coincidir entre períodos.');
@@ -57,27 +61,48 @@ final class EnsayoSpi3
         return new PreparacionSpi3(['estado' => 'ensayo_pendiente_revision', 'metodo' => Spi3Propuesto::VERSION,
             'tipoEvidencia' => $p['tipoEvidencia'],
             'naturaleza' => $p['naturaleza'] === 'simulacion' ? 'controlada_simulacion' : 'derivado_de_reanalisis',
-            'muestra' => $p['muestra'], 'coordenadaSolicitada' => $p['coordenadaSolicitada'], 'coordenadaCelda' => $p['coordenadaCelda'],
+            'muestra' => $o['muestra'], 'coordenadaSolicitada' => $o['coordenadaSolicitada'], 'coordenadaCelda' => $p['coordenadaCelda'],
             'periodo' => ['mesFinal' => $mesFinal, 'desde' => $fin->modify('-2 months')->format('Y-m-d'),
                 'hastaIncluido' => $fin->modify('last day of this month')->format('Y-m-d'), 'zona' => 'UTC'],
             'base' => ['primerAnioFin' => 1991, 'ultimoAnioFin' => 2020, 'mesFin' => (int) $fin->format('m'), 'ventanas' => $ventanas],
             'precipitacionAcumuladaMm' => $acumulado,
             'versiones' => array_map(fn ($v) => ['identificador' => $v['identificador'], 'integridad' => $v['integridad'], 'procedencia' => $v['procedencia']], [$base, $objetivo]),
-            'advertencias' => ['Método propuesto sin adoptar; ensayo local sin respuesta HTTP operativa.',
+            'advertencias' => ['Ensayo numérico local del método acordado en #35; implementación candidata pendiente de revisión del PR #43.',
                 'Resultado de una celda, no superficie afectada ni sequía de todo un municipio.',
                 'La coordenada solicitada y el centro de celda pueden pertenecer a municipios distintos.',
                 'La procedencia es declarada y su integridad se verifica; no certifica autenticidad del proveedor.']]);
     }
 
+    /** Prepara los doce ajustes fuera de HTTP, conservando cada ventana de referencia. */
+    public function referencia(string $baseId): array
+    {
+        $base = $this->series->leer($baseId);
+        $mensuales = array_column($base['informe']['meses'], 'precipitacionAcumuladaMm', 'mes');
+        $ajustes = [];
+        for ($mes = 1; $mes <= 12; $mes++) {
+            $ventanas = [];
+            for ($anio = 1991; $anio <= 2020; $anio++) {
+                $ventanas[] = $this->acumular($mensuales, sprintf('%04d-%02d', $anio, $mes));
+            }
+            // Cero es solo una sonda para obtener el ajuste; no es lluvia observada.
+            $sonda = $this->spi->calcular($ventanas, 0.0);
+            $ajustes[(string) $mes] = ['acumuladosMm' => $ventanas, 'aniosValidos' => $sonda['aniosValidos'],
+                'parametrosAjuste' => $sonda['parametrosAjuste'],
+                'motivoBase' => in_array($sonda['motivo'], ['BASE_INCOMPLETA', 'BASE_NO_AJUSTABLE', 'AJUSTE_FALLIDO'], true) ? $sonda['motivo'] : null];
+        }
+
+        return $ajustes;
+    }
+
     /** @internal Solo recibe la preparación verificada; no es una entrada HTTP. */
-    public function calcularPreparado(PreparacionSpi3 $preparacion): array
+    public function calcularPreparado(PreparacionSpi3 $preparacion, ?array $ajuste = null): array
     {
         $r = [];
         foreach ($preparacion->informe as $campo => $valor) {
             $r[$campo] = $valor;
             if ($campo === 'precipitacionAcumuladaMm') {
                 $r['resultado'] = $this->spi->calcular(
-                    array_column($preparacion->informe['base']['ventanas'], 'acumuladoMm'), $valor);
+                    array_column($preparacion->informe['base']['ventanas'], 'acumuladoMm'), $valor, $ajuste);
             }
         }
 

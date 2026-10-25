@@ -1,6 +1,6 @@
 # API-02 / #36: preparación independiente de las series
 
-Avance técnico de #36, separado del acuerdo científico de #35 / PR #42. Se implementan **validación, agregación mensual y almacenamiento versionado de archivos diarios de lluvia con su procedencia**, reutilizables cuando se adopte el método. Estos componentes no incorporan umbrales o años de calibración, catálogo de muestras, llamadas de red ni publicación de la API de sequías. La ruta existente sigue respondiendo 503 `MODULO_NO_DISPONIBLE`. El [ensayo SPI-3 añadido después](API02_ENSAYO_SPI.md) está aislado como experimental y utiliza estas versiones, sin adoptar el método.
+Componente de #36: **validación, agregación mensual y almacenamiento versionado de archivos diarios de lluvia con procedencia**. El método #35 / PR #42 fue aprobado el 25/10/2026; la [API #36](API02_API_SEQUIAS.md) integra estas versiones y el ensayo SPI-3. La importación local de esta guía sigue sin incorporar fórmulas, red ni publicación HTTP por sí sola.
 
 La [captura candidata por red](API02_CAPTURA_LLUVIA.md) se añadió como comando separado: valida la respuesta del proveedor, prepara versiones en este almacén y mantiene su propio índice de reutilización. La importación/lectura local de esta guía sigue sin consultar Internet.
 

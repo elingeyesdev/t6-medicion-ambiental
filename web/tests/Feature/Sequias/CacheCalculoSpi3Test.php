@@ -258,6 +258,6 @@ class CacheCalculoSpi3Test extends TestCase
         $this->assertSame('PERIODO_INCOMPLETO', json_decode(Artisan::output(), true)['resultado']['motivo']);
         $this->assertSame(2, Artisan::call('sequias:ensayar-spi', [...$args, '--cache' => true, 'mes' => '2026-10']));
         $this->assertSame('MES_NO_ADMITIDO', json_decode(Artisan::output(), true)['error']['codigo']);
-        $this->getJson('/api/v1/sequias')->assertStatus(503)->assertJsonPath('error.codigo', 'MODULO_NO_DISPONIBLE');
+        $this->getJson('/api/v1/inundaciones')->assertStatus(503)->assertJsonPath('error.codigo', 'MODULO_NO_DISPONIBLE');
     }
 }

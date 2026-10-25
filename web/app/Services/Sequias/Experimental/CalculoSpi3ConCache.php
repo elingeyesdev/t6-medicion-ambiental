@@ -59,7 +59,7 @@ final class CalculoSpi3ConCache
         }
     }
 
-    private function motor(): array
+    public function motor(): array
     {
         $archivos = [];
         foreach (['EnsayoSpi3.php', 'Spi3Propuesto.php', 'NumericaGammaNormal.php'] as $nombre) {

@@ -1,0 +1,274 @@
+{
+    "publicacion": "c8c53cba790257230f2db1444d68d51ef88b60a53c3f5deecb6c36827edbaf7d",
+    "datos": {
+        "version": 1,
+        "mesFinal": "2024-09",
+        "muestra": "scz-piloto-01",
+        "catalogo": {
+            "version": "scz-muestras-sequias-0.1-propuesta",
+            "estado": "propuesta_pendiente_revision",
+            "versionCatalogoTerritorial": "scz-codab-v02-1.0.0-propuesta",
+            "crs": "OGC:CRS84",
+            "ordenCoordenadas": [
+                "longitud",
+                "latitud"
+            ],
+            "fuentesTerritorialesSha256": {
+                "datos\/catalogo.json": "4144d8ecc598d5cdacb4ef5d14c9dbf96f29ff5d7482fe3c660c192459d2c2c8",
+                "datos\/limites\/municipios.geojson": "d9293e6f8805fced5eca24b9b90882bc461c5a1390ddac4cd1cfc4a1dd06c83d"
+            },
+            "generacion": {
+                "algoritmo": "punto_interior_y_piloto_conservado_v1",
+                "shapely": "2.1.2",
+                "geos": "3.13.1",
+                "numpy": "2.3.4"
+            },
+            "alcance": "Un punto candidato por unidad municipal del catálogo; no es estación, promedio municipal ni cobertura climática."
+        },
+        "motor": {
+            "version": "spi3-php-experimental-1.0",
+            "metodo": "spi3-era5-gamma-mle-1991-2020-v0.1-propuesta",
+            "archivosSha256LF": {
+                "EnsayoSpi3.php": "ad461a9b0e2eeb40449f1307ab900fb7d6bfb52b17447fd52c6597242f3f5bd1",
+                "Spi3Propuesto.php": "38ddcc2840b2180507f69d5a6a345dc3d5bfbcd9030f843fa0e77c448b89742e",
+                "NumericaGammaNormal.php": "3de955eba26a7a602653b5d700f7d8717216a44adf6918ca6ec71dc405e03fa1"
+            }
+        },
+        "base": "7642d10dab58e12edaf928a3d4548a3d7d804c74aa5c36d0fc585316ab51dd79",
+        "objetivo": "68870d9ba7fa4cd7e093b971fb83e4fec68d0b0243b929e22e872a41e4b51f1e",
+        "ajustes": "a1ce412926553f2d6db48a9176e0422fa0c9098e175b376bab6dd45d73ca543b",
+        "informe": {
+            "estado": "ensayo_pendiente_revision",
+            "metodo": "spi3-era5-gamma-mle-1991-2020-v0.1-propuesta",
+            "tipoEvidencia": "captura_externa",
+            "naturaleza": "derivado_de_reanalisis",
+            "muestra": "scz-piloto-01",
+            "coordenadaSolicitada": [
+                -63.1821,
+                -17.7833
+            ],
+            "coordenadaCelda": [
+                -63.25,
+                -17.75
+            ],
+            "periodo": {
+                "mesFinal": "2024-09",
+                "desde": "2024-07-01",
+                "hastaIncluido": "2024-09-30",
+                "zona": "UTC"
+            },
+            "base": {
+                "primerAnioFin": 1991,
+                "ultimoAnioFin": 2020,
+                "mesFin": 9,
+                "ventanas": [
+                    {
+                        "anioFin": 1991,
+                        "acumuladoMm": 234.8
+                    },
+                    {
+                        "anioFin": 1992,
+                        "acumuladoMm": 238.5
+                    },
+                    {
+                        "anioFin": 1993,
+                        "acumuladoMm": 180.6
+                    },
+                    {
+                        "anioFin": 1994,
+                        "acumuladoMm": 108.2
+                    },
+                    {
+                        "anioFin": 1995,
+                        "acumuladoMm": 168.9
+                    },
+                    {
+                        "anioFin": 1996,
+                        "acumuladoMm": 124.19999999999999
+                    },
+                    {
+                        "anioFin": 1997,
+                        "acumuladoMm": 135.0
+                    },
+                    {
+                        "anioFin": 1998,
+                        "acumuladoMm": 379.4
+                    },
+                    {
+                        "anioFin": 1999,
+                        "acumuladoMm": 114.2
+                    },
+                    {
+                        "anioFin": 2000,
+                        "acumuladoMm": 144.5
+                    },
+                    {
+                        "anioFin": 2001,
+                        "acumuladoMm": 140.7
+                    },
+                    {
+                        "anioFin": 2002,
+                        "acumuladoMm": 141.2
+                    },
+                    {
+                        "anioFin": 2003,
+                        "acumuladoMm": 109.60000000000001
+                    },
+                    {
+                        "anioFin": 2004,
+                        "acumuladoMm": 164.29999999999998
+                    },
+                    {
+                        "anioFin": 2005,
+                        "acumuladoMm": 187.2
+                    },
+                    {
+                        "anioFin": 2006,
+                        "acumuladoMm": 99.0
+                    },
+                    {
+                        "anioFin": 2007,
+                        "acumuladoMm": 56.0
+                    },
+                    {
+                        "anioFin": 2008,
+                        "acumuladoMm": 126.30000000000001
+                    },
+                    {
+                        "anioFin": 2009,
+                        "acumuladoMm": 191.8
+                    },
+                    {
+                        "anioFin": 2010,
+                        "acumuladoMm": 151.0
+                    },
+                    {
+                        "anioFin": 2011,
+                        "acumuladoMm": 148.7
+                    },
+                    {
+                        "anioFin": 2012,
+                        "acumuladoMm": 77.9
+                    },
+                    {
+                        "anioFin": 2013,
+                        "acumuladoMm": 143.7
+                    },
+                    {
+                        "anioFin": 2014,
+                        "acumuladoMm": 134.5
+                    },
+                    {
+                        "anioFin": 2015,
+                        "acumuladoMm": 279.7
+                    },
+                    {
+                        "anioFin": 2016,
+                        "acumuladoMm": 133.89999999999998
+                    },
+                    {
+                        "anioFin": 2017,
+                        "acumuladoMm": 103.30000000000001
+                    },
+                    {
+                        "anioFin": 2018,
+                        "acumuladoMm": 138.39999999999998
+                    },
+                    {
+                        "anioFin": 2019,
+                        "acumuladoMm": 133.7
+                    },
+                    {
+                        "anioFin": 2020,
+                        "acumuladoMm": 119.39999999999999
+                    }
+                ]
+            },
+            "precipitacionAcumuladaMm": 114.5,
+            "resultado": {
+                "valor": -0.6410480784168531,
+                "categoria": "normal",
+                "motivo": null,
+                "aniosValidos": 30,
+                "parametrosAjuste": {
+                    "forma": 7.475930234113382,
+                    "escalaMm": 20.548613375097762,
+                    "probabilidadCero": 0,
+                    "positivos": 30
+                },
+                "probabilidadAcumulada": 0.26074572324913725
+            },
+            "versiones": [
+                {
+                    "identificador": "7642d10dab58e12edaf928a3d4548a3d7d804c74aa5c36d0fc585316ab51dd79",
+                    "integridad": "verificada",
+                    "procedencia": {
+                        "version": "procedencia-precipitacion-1.0",
+                        "tipoEvidencia": "captura_externa",
+                        "proveedor": "Open-Meteo",
+                        "producto": "ERA5",
+                        "naturaleza": "reanalisis",
+                        "muestra": "scz-piloto-01",
+                        "coordenadaSolicitada": [
+                            -63.1821,
+                            -17.7833
+                        ],
+                        "coordenadaCelda": [
+                            -63.25,
+                            -17.75
+                        ],
+                        "periodo": {
+                            "desde": "1990-11-01",
+                            "hastaIncluido": "2020-12-31",
+                            "zona": "UTC"
+                        },
+                        "obtenidoEn": "2026-10-23T02:56:32.946304Z",
+                        "urlOrigen": "https:\/\/archive-api.open-meteo.com\/v1\/archive?latitude=-17.7833&longitude=-63.1821&daily=precipitation_sum&models=era5&timezone=GMT&precipitation_unit=mm&cell_selection=nearest&elevation=nan&start_date=1990-11-01&end_date=2020-12-31",
+                        "licencia": "https:\/\/creativecommons.org\/licenses\/by\/4.0\/",
+                        "atribucion": "Open-Meteo.com; ECMWF \/ Copernicus Climate Change Service, ERA5.",
+                        "sha256": "5408b175da7efb0b6e896c10cd567f8b676181e9ecde4860c7602f385c7e3199"
+                    }
+                },
+                {
+                    "identificador": "68870d9ba7fa4cd7e093b971fb83e4fec68d0b0243b929e22e872a41e4b51f1e",
+                    "integridad": "verificada",
+                    "procedencia": {
+                        "version": "procedencia-precipitacion-1.0",
+                        "tipoEvidencia": "captura_externa",
+                        "proveedor": "Open-Meteo",
+                        "producto": "ERA5",
+                        "naturaleza": "reanalisis",
+                        "muestra": "scz-piloto-01",
+                        "coordenadaSolicitada": [
+                            -63.1821,
+                            -17.7833
+                        ],
+                        "coordenadaCelda": [
+                            -63.25,
+                            -17.75
+                        ],
+                        "periodo": {
+                            "desde": "2024-07-01",
+                            "hastaIncluido": "2024-09-30",
+                            "zona": "UTC"
+                        },
+                        "obtenidoEn": "2026-10-25T18:04:08.846370Z",
+                        "urlOrigen": "https:\/\/archive-api.open-meteo.com\/v1\/archive?latitude=-17.7833&longitude=-63.1821&daily=precipitation_sum&models=era5&timezone=GMT&precipitation_unit=mm&cell_selection=nearest&elevation=nan&start_date=2024-07-01&end_date=2024-09-30",
+                        "licencia": "https:\/\/creativecommons.org\/licenses\/by\/4.0\/",
+                        "atribucion": "Open-Meteo.com; ECMWF \/ Copernicus Climate Change Service, ERA5.",
+                        "sha256": "a13f643eb39edb7a3e7edcef6aad0f8dab205cad6d10ed66497a5b8a61b6bf21"
+                    }
+                }
+            ],
+            "advertencias": [
+                "Ensayo numérico local del método acordado en #35; implementación candidata pendiente de revisión del PR #43.",
+                "Resultado de una celda, no superficie afectada ni sequía de todo un municipio.",
+                "La coordenada solicitada y el centro de celda pueden pertenecer a municipios distintos.",
+                "La procedencia es declarada y su integridad se verifica; no certifica autenticidad del proveedor."
+            ]
+        },
+        "preparadoEn": "2026-10-25T18:13:48.133827Z",
+        "vigenteHasta": "2026-10-26T18:04:08.846370Z"
+    },
+    "nota": "Preparación terminada. La API reutiliza esta versión hasta su vencimiento; no descarga ni ajusta Gamma durante HTTP."
+}

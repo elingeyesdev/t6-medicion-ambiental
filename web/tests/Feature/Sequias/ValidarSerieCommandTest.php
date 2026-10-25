@@ -49,7 +49,7 @@ class ValidarSerieCommandTest extends TestCase
         $this->assertSame(hash('sha256', $json), $r['origen']['sha256']);
         $this->assertSame(strlen($json), $r['origen']['bytes']);
         $this->assertSame($json, file_get_contents($archivo));
-        $this->getJson('/api/v1/sequias')->assertStatus(503)->assertJsonPath('error.codigo', 'MODULO_NO_DISPONIBLE');
+        $this->getJson('/api/v1/inundaciones')->assertStatus(503)->assertJsonPath('error.codigo', 'MODULO_NO_DISPONIBLE');
         Http::assertNothingSent();
     }
 

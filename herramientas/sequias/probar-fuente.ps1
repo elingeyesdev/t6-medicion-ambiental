@@ -33,7 +33,7 @@ try {
     if ($fechaCaptura -is [datetime] -or $fechaCaptura -is [datetimeoffset]) {
         $fechaCaptura = $fechaCaptura.ToUniversalTime().ToString("yyyy-MM-dd'T'HH:mm:ss.ffffff'Z'", [System.Globalization.CultureInfo]::InvariantCulture)
     }
-    Write-Host 'Captura candidata Open-Meteo / ERA5; revision de #35 pendiente.' -ForegroundColor Yellow
+    Write-Host 'Captura Open-Meteo / ERA5; metodo #35 acordado. No publica SPI por si sola.' -ForegroundColor Yellow
     Write-Host "Primera obtencion: $($primeraCaptura.tipoObtencion). Recuperada UTC: $fechaCaptura."
     Write-Host "92 dias completos de julio-septiembre de 2024. Total: $totalCaptura mm." -ForegroundColor Green
     Write-Host 'Repeticion: misma version y fecha, sin nueva solicitud al proveedor.'

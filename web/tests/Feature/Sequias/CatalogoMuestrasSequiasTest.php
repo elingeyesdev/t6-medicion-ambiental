@@ -179,7 +179,7 @@ class CatalogoMuestrasSequiasTest extends TestCase
         $this->assertNull($g['features'][0]['properties']['spi']);
         $this->assertSame(2, Artisan::call('sequias:muestras', ['--muestra' => 'no-existe']));
         $this->assertSame('MUESTRA_NO_DISPONIBLE', json_decode(Artisan::output(), true)['error']['codigo']);
-        $this->getJson('/api/v1/sequias')->assertStatus(503);
+        $this->getJson('/api/v1/inundaciones')->assertStatus(503);
         Http::assertNothingSent();
     }
 

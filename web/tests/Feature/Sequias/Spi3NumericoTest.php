@@ -51,6 +51,31 @@ class Spi3NumericoTest extends TestCase
         $this->assertEqualsWithDelta(0.0, $n->normalInversa(0.5), 1e-14);
     }
 
+    public function test_reutilizar_ajuste_preparado_conserva_los_nueve_casos_de_referencia(): void
+    {
+        $spi = app(Spi3Propuesto::class);
+        foreach (self::oraculo()['casos'] as $caso) {
+            $primero = $spi->calcular($caso['base'], $caso['objetivo']);
+            $reusado = $spi->calcular($caso['base'], $caso['objetivo'], $primero['parametrosAjuste']);
+            $this->assertSame($primero, $reusado);
+            $this->assertEqualsWithDelta($caso['esperado']['valor'], $reusado['valor'], 1e-6);
+        }
+    }
+
+    public function test_ajuste_preparado_incompatible_o_no_finito_se_rechaza(): void
+    {
+        $spi = app(Spi3Propuesto::class);
+        $parametros = $spi->calcular(range(1, 30), 20)['parametrosAjuste'];
+        foreach ([['forma' => INF], ['escalaMm' => -1], ['positivos' => 29], ['probabilidadCero' => 0.5]] as $cambio) {
+            try {
+                $spi->calcular(range(1, 30), 20, [...$parametros, ...$cambio]);
+                $this->fail('Aceptó un ajuste incompatible.');
+            } catch (SeriePrecipitacionInvalida $e) {
+                $this->assertSame('AJUSTE_PREPARADO_INVALIDO', $e->codigo);
+            }
+        }
+    }
+
     public function test_null_y_extremos_no_se_convierten_en_indice_normal_ni_en_valor_recortado(): void
     {
         $spi = app(Spi3Propuesto::class);

@@ -1,6 +1,6 @@
 # API-02 / #36: caché candidata del cálculo SPI-3
 
-El ensayo puede reutilizar un resultado para **las mismas versiones locales, ventana e implementación**, conservando por separado cuándo se recuperó la lluvia y cuándo se calculó el índice. Es una preparación experimental del PR #43: el método #35 / PR #42 sigue pendiente de revisión. No habilita la ruta HTTP ni completa #36.
+El ensayo puede reutilizar un resultado para **las mismas versiones locales, ventana e implementación**, conservando por separado recuperación y cálculo. El método #35 / PR #42 fue aprobado el 25/10/2026. Esta caché offline queda separada de las [publicaciones HTTP de la API #36](API02_API_SEQUIAS.md), integradas en #43 para revisión de la implementación.
 
 ## Probar en este equipo
 
@@ -55,4 +55,4 @@ Desde `web/`:
 
 [Dos salidas reales del piloto](evidencias/api02-cache/README.md) acreditan cálculo nuevo y reutilización de entradas históricas conservadas. No acreditan una descarga nueva, todos los puntos de Santa Cruz ni aprobación del método.
 
-Quedan revisión/acuerdo de #35, integración del método revisado, operaciones HTTP de consulta/detalle/resumen y clientes. Esta caché se adaptará si cambia el acuerdo científico.
+El acuerdo de #35 ya está resuelto y las operaciones HTTP se incorporan en #43; quedan revisión de implementación y clientes. Si cambia el método, la identificación del motor evita reutilizar cálculos anteriores.

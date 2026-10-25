@@ -51,9 +51,9 @@ Para ejecutar comandos en esta modalidad, situarse en `web/`:
 
 ## Preparación de series de sequías
 
-Preparación de sequías (#36): [validador de series diarias por consola](../docs/API02_PREPARACION_SERIES.md), con ejemplos completos/incompletos y pruebas sin red. Este avance de calidad de datos mantiene la consulta HTTP de sequías en preparación mientras se revisa el método #35.
+La [API de sequías (#36)](../docs/API02_API_SEQUIAS.md) ya tiene consulta, detalle y resumen sobre datos preparados, con método #35 aprobado en #42. En este equipo: `http://127.0.0.1:5789/api/v1/sequias?mesFinal=2024-09&muestra=scz-piloto-01`. Arranque desde la raíz: `./herramientas/sequias/iniciar-api.ps1`; prueba: `./herramientas/sequias/probar-api.ps1`. El PR #43 queda para revisión. Solo el piloto histórico está preparado; las otras 55 muestras se informan pendientes.
 
-También hay un [ensayo SPI-3 en PHP](../docs/API02_ENSAYO_SPI.md), aislado como experimental y contrastado con la referencia SciPy. En este equipo se prueba desde la raíz con `./herramientas/sequias/probar-spi.ps1`. Sigue pendiente de revisión del método y no activa la API.
+Componentes de preparación: [validación y versiones diarias](../docs/API02_PREPARACION_SERIES.md), [ensayo SPI-3 en PHP](../docs/API02_ENSAYO_SPI.md) contrastado con SciPy y caché de cálculos. En este equipo, `./herramientas/sequias/probar-spi.ps1` reproduce el piloto offline; no descarga ni publica por sí solo resultados HTTP.
 
 La [captura candidata Open-Meteo/ERA5](../docs/API02_CAPTURA_LLUVIA.md) obtiene y conserva lluvia con reutilización/renovación. Se prueba con `./herramientas/sequias/probar-fuente.ps1`; requiere Internet si no hay captura reciente. No usa la clave NASA ni habilita el módulo público.
 

@@ -310,7 +310,7 @@ class CapturadorPrecipitacionTest extends TestCase
         $this->assertArrayNotHasKey('meses', $r['version']['informe']);
         $this->assertSame(2, Artisan::call('sequias:capturar-serie', [...$p, '--desde' => '']));
         $this->assertArrayHasKey('error', json_decode(Artisan::output(), true, flags: JSON_THROW_ON_ERROR));
-        $this->getJson('/api/v1/sequias')->assertStatus(503)->assertJsonPath('error.codigo', 'MODULO_NO_DISPONIBLE');
+        $this->getJson('/api/v1/inundaciones')->assertStatus(503)->assertJsonPath('error.codigo', 'MODULO_NO_DISPONIBLE');
         Http::assertSentCount(1);
     }
 

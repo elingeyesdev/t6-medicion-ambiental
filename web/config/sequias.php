@@ -1,7 +1,8 @@
 <?php
 
 return [
-    // Almacén local de preparación, sin rutas públicas ni activación del indicador.
+    // Originales y derivados privados; se preparan fuera de las peticiones HTTP.
     'directorio_series' => storage_path('app/private/sequias/series'),
     'archivo_muestras' => base_path('../compartido/sequias/muestras.json'),
+    'directorio_publicaciones' => storage_path('app/private/sequias/publicaciones'),
 ];

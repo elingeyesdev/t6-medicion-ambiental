@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\Sequias\AlmacenPublicacionesSequias;
 use App\Services\Sequias\Experimental\CatalogoMuestrasSequias;
 use App\Services\Sequias\LectorJsonLocal;
 use App\Services\Sequias\ProcedenciaSeriePrecipitacion;
@@ -24,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
             fn ($app) => new RepositorioSeriesPrecipitacion(config('sequias.directorio_series'),
                 $app->make(LectorJsonLocal::class), $app->make(ValidadorSeriePrecipitacion::class),
                 $app->make(ProcedenciaSeriePrecipitacion::class)));
+        $this->app->singleton(AlmacenPublicacionesSequias::class,
+            fn ($app) => new AlmacenPublicacionesSequias(config('sequias.directorio_publicaciones'), $app->make(LectorJsonLocal::class)));
         $this->app->singleton(CatalogoMuestrasSequias::class,
             fn ($app) => new CatalogoMuestrasSequias(config('sequias.archivo_muestras'), dirname(config('focos.datos_territoriales')),
                 $app->make(LectorJsonLocal::class), $app->make(CatalogoTerritorial::class), $app->make(GeometriaTerritorial::class)));
