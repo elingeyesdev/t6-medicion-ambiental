@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Respuesta candidata de sequías 0.1; no acredita endpoint operativo",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["versionContrato", "datos", "consulta", "fuentes", "resumen", "cobertura", "advertencias", "paginacion", "representacionMapa"],
+  "properties": {
+    "versionContrato": {"const": "sequias-0.1-propuesta"},
+    "datos": {"type": "array", "maxItems": 56, "items": {"$ref": "#/$defs/dato"}},
+    "consulta": {
+      "type": "object", "additionalProperties": false,
+      "required": ["estado", "mesFinal", "desde", "hastaIncluido", "zona", "municipio", "provincia", "muestra", "obtencion"],
+      "properties": {
+        "estado": {"const": "propuesta_pendiente_revision"},
+        "mesFinal": {"type": "string", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"},
+        "desde": {"type": "string", "format": "date"},
+        "hastaIncluido": {"type": "string", "format": "date"},
+        "zona": {"const": "UTC"},
+        "municipio": {"type": ["string", "null"]},
+        "provincia": {"type": ["string", "null"]},
+        "muestra": {"type": ["string", "null"]},
+        "obtencion": {
+          "type": "object", "additionalProperties": false,
+          "required": ["tipo", "obtenidoEn", "esRespuestaHttp"],
+          "properties": {
+            "tipo": {"enum": ["consulta_proveedor", "cache", "reproduccion_captura"]},
+            "obtenidoEn": {"type": "string", "format": "date-time"},
+            "esRespuestaHttp": {"type": "boolean"}
+          }
+        }
+      }
+    },
+    "fuentes": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "proveedor", "producto", "naturaleza", "variable", "unidad", "resolucionGrados", "licencia", "atribucion", "fechaActualizacion", "capturas"],
+        "properties": {
+          "id": {"const": "open_meteo_era5"}, "proveedor": {"const": "Open-Meteo"},
+          "producto": {"const": "ERA5"}, "naturaleza": {"const": "reanalisis"},
+          "variable": {"const": "precipitation_sum"}, "unidad": {"const": "mm"},
+          "resolucionGrados": {"const": 0.25}, "licencia": {"type": "string", "format": "uri"},
+          "atribucion": {"type": "string"}, "fechaActualizacion": {"type": ["string", "null"], "format": "date-time"},
+          "capturas": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["url", "sha256", "obtenidoEn"], "properties": {"url": {"type": "string", "format": "uri"}, "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "obtenidoEn": {"type": "string", "format": "date-time"}}}}
+        }
+      }
+    },
+    "resumen": {
+      "type": "object", "additionalProperties": false,
+      "required": ["totalMuestras", "muestrasConIndice", "muestrasSinIndice", "muestrasConDeficit", "spiMinimo", "unidadConteo"],
+      "properties": {
+        "totalMuestras": {"type": "integer", "minimum": 0},
+        "muestrasConIndice": {"type": "integer", "minimum": 0},
+        "muestrasSinIndice": {"type": "integer", "minimum": 0},
+        "muestrasConDeficit": {"type": "integer", "minimum": 0},
+        "spiMinimo": {"type": ["number", "null"]}, "unidadConteo": {"const": "muestras_no_superficie"}
+      }
+    },
+    "cobertura": {
+      "type": "object", "additionalProperties": false,
+      "required": ["estadoEspacial", "municipiosEnFiltro", "municipiosConMuestra", "municipiosConIndice", "celdasUnicas", "superficieEvaluadaKm2"],
+      "properties": {
+        "estadoEspacial": {"const": "muestras_puntuales"},
+        "municipiosEnFiltro": {"type": "integer", "minimum": 0},
+        "municipiosConMuestra": {"type": "integer", "minimum": 0},
+        "municipiosConIndice": {"type": "integer", "minimum": 0},
+        "celdasUnicas": {"type": "integer", "minimum": 0},
+        "superficieEvaluadaKm2": {"type": "null"}
+      }
+    },
+    "advertencias": {"type": "array", "items": {"type": "string"}},
+    "paginacion": {"const": {"aplica": false}},
+    "representacionMapa": {"const": {"tipo": "Point", "alcance": "conjunto", "rellenarPoligonos": false}}
+  },
+  "$defs": {
+    "coordenada": {"type": "array", "prefixItems": [{"type": "number", "minimum": -180, "maximum": 180}, {"type": "number", "minimum": -90, "maximum": 90}], "minItems": 2, "maxItems": 2},
+    "spi": {
+      "type": "object", "additionalProperties": false,
+      "required": ["valor", "categoria", "motivo", "aniosValidos", "parametrosAjuste", "probabilidadAcumulada"],
+      "properties": {
+        "valor": {"type": ["number", "null"]},
+        "categoria": {"enum": [null, "extremadamente_seco", "muy_seco", "moderadamente_seco", "normal", "moderadamente_humedo", "muy_humedo", "extremadamente_humedo"]},
+        "motivo": {"enum": [null, "BASE_INCOMPLETA", "PERIODO_INCOMPLETO", "BASE_NO_AJUSTABLE", "AJUSTE_FALLIDO", "PROBABILIDAD_EXTREMA"]},
+        "aniosValidos": {"type": "integer", "minimum": 0, "maximum": 30},
+        "parametrosAjuste": {"oneOf": [{"type": "null"}, {"type": "object", "additionalProperties": false, "required": ["forma", "escalaMm", "probabilidadCero", "positivos"], "properties": {"forma": {"type": "number", "exclusiveMinimum": 0}, "escalaMm": {"type": "number", "exclusiveMinimum": 0}, "probabilidadCero": {"type": "number", "minimum": 0, "maximum": 1}, "positivos": {"type": "integer", "minimum": 10, "maximum": 30}}}]},
+        "probabilidadAcumulada": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      },
+      "if": {"properties": {"valor": {"type": "null"}}},
+      "then": {"properties": {"categoria": {"type": "null"}, "motivo": {"type": "string"}}},
+      "else": {"properties": {"categoria": {"type": "string"}, "motivo": {"type": "null"}, "aniosValidos": {"const": 30}, "parametrosAjuste": {"type": "object"}, "probabilidadAcumulada": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1}}}
+    },
+    "dato": {
+      "type": "object", "additionalProperties": false,
+      "required": ["idMuestra", "territorioContexto", "municipioDelCentroCelda", "coordenadaSolicitada", "coordenadaCelda", "naturaleza", "fuentesRef", "metodo", "precipitacionAcumuladaMm", "spi"],
+      "properties": {
+        "idMuestra": {"type": "string"}, "territorioContexto": {"type": "string"},
+        "municipioDelCentroCelda": {"type": ["string", "null"]},
+        "coordenadaSolicitada": {"$ref": "#/$defs/coordenada"}, "coordenadaCelda": {"$ref": "#/$defs/coordenada"},
+        "naturaleza": {"const": "derivado_de_reanalisis"}, "fuentesRef": {"const": ["open_meteo_era5"]},
+        "metodo": {"const": "spi3-era5-gamma-mle-1991-2020-v0.1-propuesta"},
+        "precipitacionAcumuladaMm": {"type": ["number", "null"], "minimum": 0}, "spi": {"$ref": "#/$defs/spi"}
+      }
+    }
+  }
+}

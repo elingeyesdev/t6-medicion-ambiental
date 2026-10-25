@@ -14,6 +14,8 @@ Las consultas son públicas, sin sesión ni clave NASA en el cliente. Se limita 
 
 Las rutas de sequías, inundaciones, deforestación y calidad del aire responden 503 `MODULO_NO_DISPONIBLE`; no son integraciones implementadas. Las rutas `/api/incendios`, `dias` y `fuente` de la demo no se trasladan ni se adaptan silenciosamente. No se añaden endpoints separados de detalle/resumen: ambos se obtienen de la misma respuesta de focos.
 
+Para M3 hay una [propuesta de método y contrato de sequías](sequias-propuesta/README.md) en revisión (#35). Conserva evidencia externa y una referencia reproducible; todavía no habilita una respuesta operativa de sequías ni modifica este contrato M2.
+
 ## Filtros efectivos
 
 Fechas ISO 8601 con segundos y zona explícita, normalizadas a UTC. Ejemplo válido: `2026-10-10T00:00:00-04:00`; los signos `+` deben codificarse como `%2B`. Intervalo positivo de **máximo 168 horas**, inicio incluido y final excluido. NASA recibe días de calendario UTC en bloques de máximo cinco días; el backend aplica después los instantes exactos. No se amplía silenciosamente el período efectivo.
