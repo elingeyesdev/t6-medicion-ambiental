@@ -1,0 +1,30 @@
+{
+    "catalogo": "scz-codab-v02-1.0.0-propuesta",
+    "pertenencia": {
+        "solicitada": {
+            "coordenada": [
+                -63.1821,
+                -17.7833
+            ],
+            "municipios": [
+                "BO070101"
+            ],
+            "nombres": [
+                "Santa Cruz de La Sierra"
+            ]
+        },
+        "celda": {
+            "coordenada": [
+                -63.25,
+                -17.75
+            ],
+            "municipios": [
+                "BO070103"
+            ],
+            "nombres": [
+                "Porongo"
+            ]
+        }
+    },
+    "advertencia": "El centro de celda y el punto solicitado pertenecen a distintos municipios; no reasignar el contexto ni inferir cobertura municipal."
+}
