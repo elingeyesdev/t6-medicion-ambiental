@@ -65,7 +65,7 @@ python herramientas/inundaciones/catalogo.py consultar --proveedor mpc --ventana
 
 Consulta una sola página de hasta 12 fichas, con límite de 2 MiB y 30 s. No sigue enlaces de activos, páginas ni redirecciones automáticamente; no descarga bandas. Conserva el original JSON y su hash solo si es verificable. HTML y fallos tienen diagnóstico separado. La configuración permite elegir explícitamente `cdse` o `mpc`; no cambia de proveedor en silencio. No sobrescribe evidencias existentes.
 
-`herramientas/inundaciones/verificar_area.py` repite la intersección con Shapely usando las dependencias ya fijadas en `herramientas/sequias/requirements-muestras.txt`; CI también la verifica. El lector de catálogo no requiere esas bibliotecas.
+`herramientas/inundaciones/verificar_area.py` repite la intersección con Shapely usando las versiones fijadas en `herramientas/inundaciones/requirements.txt`; CI también la verifica. Se instala en un entorno Python del proyecto con `python -m pip install -r herramientas/inundaciones/requirements.txt`. El lector de catálogo no requiere esas bibliotecas y la verificación no depende de la rama de la API de sequías.
 
 ## Propuesta de consumo y siguiente entrega
 
