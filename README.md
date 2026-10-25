@@ -16,7 +16,9 @@ La [referencia de EnviroSense](referencias/envirosense/README.md) conserva el c�
 - `docs/`: planificación, instrucciones y evidencias.
 - `referencias/envirosense/`: código de origen conservado para comparación; no forma parte del arranque de GeoCruz.
 
-La base Laravel/Blade, el catálogo, la API y el visor web están integrados mediante PR #23 a #26. Flutter y su consulta de focos se integraron mediante PR #28 y #32. QA-01 se revisó e integró mediante PR #33; sus 11 casos por cliente y comparación de 25 registros están en [QA-01](docs/qa21/README.md). Las cuatro consultas restantes y la aprobación académica siguen pendientes. M1 y sus evidencias están vinculados en los Issues #1 a #14.
+La base Laravel/Blade, el catálogo, la API y el visor web están integrados mediante PR #23 a #26. Flutter y su consulta de focos se integraron mediante PR #28 y #32. QA-01 se revisó e integró mediante PR #33; sus 11 casos por cliente y comparación de 25 registros están en [QA-01](docs/qa21/README.md). M1 y sus evidencias están vinculados en los Issues #1 a #14. La aprobación académica sigue pendiente.
+
+En esta rama de M3, el [visor de sequías #37](docs/WEB02_VISOR_SEQUIAS.md) usa la API #36 / PR #43 todavía para revisión. Abrir <http://127.0.0.1:5790/modulos/sequias?mesFinal=2024-09>; arrancar con `./herramientas/sequias/iniciar-visor.ps1`. Muestra el piloto histórico preparado, sus faltantes y cobertura; no acredita las otras 55 series ni la integración móvil. Los módulos de inundaciones, deforestación y calidad del aire siguen pendientes. La web no se declara integrada en `develop` por existir esta rama.
 
 API de #18: [contrato y pruebas manuales](compartido/api/README.md). En esta copia de trabajo puede iniciarse con `./iniciar-api.ps1` y probarse en http://127.0.0.1:8002/api/v1/territorios. La configuración privada está en `web/.env`, excluida de Git. [Resultados y evidencia](docs/API01_FOCOS_CALOR.md).
 

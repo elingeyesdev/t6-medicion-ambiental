@@ -34,7 +34,7 @@ También abrir:
 - `/api/v1/sequias?mesFinal=2026-10`: 422 `FILTROS_INVALIDOS` porque octubre aún no terminó en el corte de prueba.
 - `/api/v1/sequias?mesFinal=2024-09&municipio=BO070103&muestra=scz-piloto-01`: 422 `FILTROS_INCOMPATIBLES`.
 
-La pantalla Blade de sequías se implementa en #37; por ahora estas pruebas verifican la API JSON.
+El [visor Blade de sequías #37](WEB02_VISOR_SEQUIAS.md) consume esta API en su rama dependiente. Las pruebas de esta guía verifican la API JSON; el recorrido visual y su servidor en el puerto 5790 se documentan por separado. Ambas implementaciones mantienen pendiente su revisión e integración.
 
 ## Renovar o preparar datos
 

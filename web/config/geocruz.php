@@ -1,7 +1,7 @@
 <?php
 
 return [
-    // Navegación inicial de DOC-11. Estas entradas no habilitan consultas.
+    // Navegación común. Cada pantalla informa su disponibilidad y cobertura real.
     'modulos' => [
         'focos-calor' => [
             'nombre' => 'Focos de calor',
@@ -10,7 +10,7 @@ return [
         ],
         'sequias' => [
             'nombre' => 'Sequías',
-            'descripcion' => 'Variables ambientales e indicadores con su método y período de referencia.',
+            'descripcion' => 'SPI-3 derivado de ERA5, con referencia 1991–2020 y cobertura explícita por muestras.',
             'icono' => '02',
         ],
         'inundaciones' => [
