@@ -27,7 +27,7 @@ Los resultados proceden de la publicación real de API-02 recuperada el **25/10/
 ## Código y responsabilidades
 
 - `InicioController.php`: habilita la vista y entrega los catálogos territoriales y de muestras, sin consultar lluvia ni calcular índices.
-- `resources/views/sequias/index.blade.php` y `public/css/sequias.css`: estructura accesible y diseño adaptable; `inicio.blade.php` identifica los dos módulos consultables y los tres pendientes.
+- `resources/views/modulos/sequias/index.blade.php` y `public/css/modulos/sequias.css`: estructura accesible y diseño adaptable. `paginas/inicio.blade.php` publica las dos consultas disponibles; la revisión #47 oculta las otras tres pantallas hasta implementarlas.
 - `public/js/sequias/contrato.js`: filtros, enlaces, validación de contexto y cobertura, fechas y etiquetas. No ajusta Gamma ni recalcula SPI/categorías.
 - `consulta.js`: carga, cancelación, respuestas atrasadas, reintento, filtros editados y vencimiento de la publicación abierta.
 - `mapa.js`: Leaflet local, puntos en centros de celda, selección y contorno sin relleno. Muestras coincidentes permanecen seleccionables desde el grupo o la lista.

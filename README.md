@@ -1,4 +1,12 @@
-# GeoCruz
+# EnviroSense / GeoCruz
+
+Adaptación de EnviroSense a Laravel/Blade y Flutter, centrada en los módulos del Planner. La revisión de M3 reorganiza el panel con Tabler y oculta las pantallas que aún no tienen consulta implementada.
+
+- [Dónde está cada parte del código y la plantilla](docs/ORGANIZACION_CODIGO.md).
+- [Qué conservamos, adaptamos y dejamos fuera de EnviroSense](docs/REINGENIERIA_ENVIROSENSE_M3.md).
+- [Revisión de la guía GitHub del curso y pendientes reales](docs/GUIA_CURSO_ESTADO.md).
+
+Los apartados siguientes conservan instrucciones y resultados de la base integrada; el estado vigente de adaptación se sigue en #29 y #47-50.
 
 Sistema de consulta ambiental para el departamento de Santa Cruz, sus provincias y municipios. Proyecto de Sistemas III, UNIVALLE, gestión 2026. Integrantes: Josué Padilla y Jaziel Díaz.
 
