@@ -1,6 +1,6 @@
 # WEB-02 / #37: consulta web de sequías
 
-Interfaz Blade y JavaScript sobre la API #36 / PR #43. La rama `feature/37-web-sequias` parte de esa implementación para avanzar en paralelo; no declara aceptada la API ni la integra en `develop`. El PR de la web se prepara en borrador sobre `feature/36-api-sequias`, para revisar solo el cambio de interfaz. Después de fusionar #43 se actualizará su base a `develop` y se pedirá la aceptación de Jaziel. `main` conserva la condición de aprobación del ingeniero.
+Interfaz Blade y JavaScript sobre la API #36 / PR #43. Jaziel aprobó e integró #43 en `develop` mediante `d18c54ccfaf868d56eb97fef4cc5791359d9159e` (25/10/2026 a las 22:15 Bolivia). El PR #45 de la web se dirige ahora a `develop`, con revisión de Jaziel pendiente. La implementación web conserva el mismo contrato de la API aceptada; `main` conserva la condición de aprobación del ingeniero.
 
 ## Probar en este equipo
 
