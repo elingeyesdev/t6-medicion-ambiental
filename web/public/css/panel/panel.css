@@ -1,0 +1,66 @@
+/* Tabler aporta el layout y los componentes. Aquí solo van ajustes de GeoCruz. */
+:root {
+    --tblr-primary: #206bc4;
+    --tblr-border-radius: 4px;
+    --borde: #dce1e7;
+    --texto-suave: #5d6b7a;
+}
+body { font-family: var(--tblr-font-sans-serif); }
+[hidden] { display: none !important; }
+.page-wrapper { min-width: 0; }
+.contenido-panel { margin-top: 0; padding: 28px 32px 36px; max-width: 1600px; width: 100%; }
+.icono-panel { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; }
+.icono-panel svg { width: 22px; height: 22px; stroke-width: 1.7; }
+.marca-panel { justify-content: start; gap: 10px; text-align: left; font-size: 21px; padding: 26px 24px; }
+.marca-panel small { display: block; font-size: 12px; line-height: 1.5; font-weight: 400; opacity: .7; margin-top: 3px; }
+.marca-panel .marca-icono svg { width: 30px; height: 30px; }
+.navbar-vertical { --tblr-navbar-width: 15rem; }
+.nav-seccion { padding: 12px 24px 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: #9cabc0; }
+.navbar-vertical .nav-link { min-height: 48px; }
+.nav-territorio { display: flex; gap: 10px; color: #b7c2d1; margin: 36px 24px 20px; border-top: 1px solid #ffffff20; padding-top: 20px; font-size: 13px; }
+.nav-territorio small { display: block; opacity: .7; font-size: 12px; }
+.cabecera-panel { min-height: 61px; }
+.cabecera-panel .container-fluid { padding-inline: 32px; font-size: 13px; }
+.footer .container-fluid { padding-inline: 32px; }
+.card { box-shadow: 0 1px 2px #18243305; }
+.saltar { position: fixed; top: 8px; left: 8px; z-index: 2000; padding: 10px 16px; background: white; color: #182433; transform: translateY(-180%); }
+.saltar:focus { transform: translateY(0); }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid #206bc4; outline-offset: 3px; }
+.etiqueta { color: #667382; text-transform: uppercase; letter-spacing: .06em; font-size: 11px; font-weight: 600; }
+.pagina-focos main, .pagina-sequias main { max-width: 1600px; padding: 28px 32px 36px; }
+.intro-focos h1, .sq-intro h1 { font-size: 25px; font-weight: 600; letter-spacing: 0; margin-bottom: 8px; }
+.panel-filtros, .panel-mapa, .panel-listado, .panel-detalle, .procedencia, .sq-panel { border-radius: 4px; border-color: var(--borde); }
+.rejilla-filtros label, .sq-rejilla-filtros label { font-size: 13px; }
+.rejilla-filtros input, .rejilla-filtros select, .sq-rejilla-filtros input, .sq-rejilla-filtros select { font-size: 13px; color: #182433; border-color: #cbd2da; min-height: 40px; border-radius: 4px; }
+.intro-focos p:not(.etiqueta), .sq-intro p:not(.etiqueta) { font-size: 13px; }
+.ayuda-filtros, .sq-ayuda, #estado-catalogo, .nota-pagina, .nota-interpretacion, .sq-interpretacion, .cobertura { font-size: 12px; }
+.boton-principal, .sq-boton { background: #206bc4; border-color: #206bc4; border-radius: 4px; font-size: 13px; }
+.boton-principal:hover, .sq-boton:hover { background: #1a58a2; }
+.boton-suave, .sq-secundario { color: #182433; border-color: #cbd2da; border-radius: 4px; font-size: 12px; }
+.fuente-insignia, .sq-fuente { border-radius: 4px; background: #fff; }
+.intro-focos .etiqueta, .sq-intro .etiqueta { font-size: 10px; }
+.estado-consulta, .sq-estado { border-radius: 4px; }
+.indicadores article, .sq-indicadores article { border-radius: 4px; }
+.indicadores article > span, .indicadores small { font-size: 11px; }
+.encabezado-panel h2, .encabezado-panel h3 { font-size: 15px; }
+.lista-focos .fila-foco strong { font-size: 13px; }
+.lista-focos .fila-foco span { font-size: 12px; }
+.leyenda, .leyenda small, .campos-detalle dt { font-size: 11px; }
+.campos-detalle dd { font-size: 13px; }
+.procedencia { font-size: 12px; }
+@media (max-width: 991.98px) {
+    .navbar .navbar-brand { padding: 12px; font-size: 18px; }
+    .navbar .navbar-toggler { border: 0; }
+    .nav-seccion { padding-top: 16px; }
+    .nav-territorio { margin-top: 18px; }
+    .contenido-panel, .pagina-focos main, .pagina-sequias main { padding: 24px 20px 32px; }
+}
+@media (max-width: 575.98px) {
+    .contenido-panel, .pagina-focos main, .pagina-sequias main { padding: 20px 16px 30px; }
+    .intro-focos, .sq-intro { gap: 12px; }
+    .intro-focos h1, .sq-intro h1 { font-size: 24px; }
+    .footer .container-fluid { padding-inline: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}

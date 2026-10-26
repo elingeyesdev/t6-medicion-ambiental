@@ -3,12 +3,12 @@
 @section('clase-cuerpo', 'pagina-sequias')
 @push('estilos')
 <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
-<link rel="stylesheet" href="{{ asset('css/sequias.css') }}">
+<link rel="stylesheet" href="{{ asset('css/modulos/sequias.css') }}">
 @endpush
 
 @section('contenido')
 <div id="visor-sequias" data-api="{{ url('/api/v1') }}">
-    <div class="sq-intro"><div><p class="etiqueta">SANTA CRUZ · INDICADOR METEOROLÓGICO</p><h1>Sequías</h1><p>La lluvia en contexto, a escala de una celda.</p></div><span class="sq-fuente">ERA5 · SPI-3</span></div>
+    <div class="sq-intro"><div><p class="etiqueta">Monitoreo ambiental</p><h1>Sequías</h1><p>Consulta el indicador de precipitación por muestra y mes.</p></div><span class="sq-fuente">ERA5 · SPI-3</span></div>
     <p class="sq-interpretacion">Índice de precipitación de tres meses frente a <strong>1991–2020</strong>. Derivado de reanálisis: no es una estación ni confirma daños por sequía.</p>
 
     <section class="sq-panel sq-filtros" aria-labelledby="sq-titulo-filtros">

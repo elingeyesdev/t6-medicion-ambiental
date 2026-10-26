@@ -3,13 +3,13 @@
 @section('clase-cuerpo', 'pagina-focos')
 @push('estilos')
 <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
-<link rel="stylesheet" href="{{ asset('css/focos-calor.css') }}">
+<link rel="stylesheet" href="{{ asset('css/modulos/focos-calor.css') }}">
 @endpush
 
 @section('contenido')
 <div id="visor-focos" data-api="{{ url('/api/v1') }}">
     <div class="intro-focos">
-        <div><p class="etiqueta">SANTA CRUZ · CONSULTA AMBIENTAL</p><h1>Focos de calor</h1><p>Una mirada al territorio, con datos y contexto.</p></div>
+        <div><p class="etiqueta">Monitoreo ambiental</p><h1>Focos de calor</h1><p>Consulta detecciones térmicas por territorio y período.</p></div>
         <span class="fuente-insignia"><span aria-hidden="true">●</span> NASA FIRMS · VIIRS</span>
     </div>
     <p class="nota-interpretacion">Una detección térmica <strong>no confirma un incendio</strong>. La confianza no expresa gravedad; la potencia radiativa (MW) no es superficie quemada.</p>
@@ -48,7 +48,7 @@
         <p class="cobertura" id="estado-cobertura"></p>
         <div class="rejilla-visor">
             <section class="panel-mapa" aria-labelledby="titulo-mapa">
-                <div class="encabezado-panel"><h3 id="titulo-mapa">El territorio, de cerca</h3><button type="button" id="centrar-territorio" class="boton-texto">Centrar territorio</button></div>
+                <div class="encabezado-panel"><h3 id="titulo-mapa">Mapa de detecciones</h3><button type="button" id="centrar-territorio" class="boton-texto">Centrar territorio</button></div>
                 <p id="alcance-mapa" class="nota-pagina"></p>
                 <div id="mapa-focos" tabindex="-1" aria-label="Mapa interactivo de las detecciones de la página actual"></div>
                 <p class="nota-pagina">Los números agrupan detecciones próximas de esta página. Pulsa un grupo para acercarte y elegir un registro; las coordenadas no se desplazan.</p>

@@ -1,32 +1,37 @@
 <?php
 
 return [
-    // Navegación común. Cada pantalla informa su disponibilidad y cobertura real.
+    // El plan conserva cinco módulos; el panel publica solo pantallas funcionales.
     'modulos' => [
         'focos-calor' => [
             'nombre' => 'Focos de calor',
             'descripcion' => 'Detecciones térmicas y su procedencia. Un foco de calor no confirma un incendio.',
-            'icono' => '01',
+            'icono' => 'flame',
+            'habilitado' => true,
         ],
         'sequias' => [
             'nombre' => 'Sequías',
             'descripcion' => 'SPI-3 derivado de ERA5, con referencia 1991–2020 y cobertura explícita por muestras.',
-            'icono' => '02',
+            'icono' => 'cloud-rain',
+            'habilitado' => true,
         ],
         'inundaciones' => [
             'nombre' => 'Inundaciones',
             'descripcion' => 'Presencia y cambios de agua, diferenciados de una inundación confirmada.',
-            'icono' => '03',
+            'icono' => 'waves',
+            'habilitado' => false,
         ],
         'deforestacion' => [
             'nombre' => 'Deforestación',
             'descripcion' => 'Pérdida de cobertura forestal con su producto, definición y año de publicación.',
-            'icono' => '04',
+            'icono' => 'trees',
+            'habilitado' => false,
         ],
         'calidad-aire' => [
             'nombre' => 'Calidad del aire',
             'descripcion' => 'Concentraciones disponibles, unidades, fecha y cobertura de cada fuente.',
-            'icono' => '05',
+            'icono' => 'wind',
+            'habilitado' => false,
         ],
     ],
 ];
