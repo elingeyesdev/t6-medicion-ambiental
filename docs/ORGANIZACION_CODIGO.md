@@ -48,6 +48,6 @@ Los JavaScript de cada visor siguen separados por función: `contrato.js` interp
 
 ## Probar la adaptación en este PC
 
-Desde `C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\panel-envirosense`, ejecutar `herramientas/sequias/iniciar-visor.ps1 -Puerto 5791`. Abrir http://127.0.0.1:5791/. Probar el menú, focos y el piloto histórico de sequías. Una instalación nueva requiere las dependencias y su configuración privada; las claves no están en el repositorio.
+Desde `C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\panel-envirosense`, ejecutar `./iniciar-web.ps1 -Puerto 5791`. Abrir http://127.0.0.1:5791/. Probar el menú, focos y el piloto histórico de sequías. Una instalación nueva requiere las dependencias y su configuración privada; las claves no están en el repositorio. La comprobación de esta copia se hizo con el servidor PHP nativo alternativo `herramientas/sequias/iniciar-visor.ps1 -Puerto 5791`, que sirve el mismo panel completo.
 
 Las publicaciones de sequías tienen vencimiento. Para renovar el piloto en **esta copia**, desde `web/`: `..\herramientas\php.ps1 artisan sequias:preparar-consulta scz-piloto-01 2024-09 --consultar --renovar`. Esto consulta al proveedor por consola; abrir el panel no descarga series.
