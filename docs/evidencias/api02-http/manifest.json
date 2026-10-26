@@ -1,0 +1,34 @@
+[
+  {
+    "archivo": "detalle.json",
+    "url": "http://127.0.0.1:5789/api/v1/sequias/scz-piloto-01?mesFinal=2024-09&municipio=BO070101",
+    "estado": 200,
+    "recibidoEn": "2026-10-25T18:17:21.7167414Z",
+    "cacheControl": "no-store, private",
+    "sha256": "a9be1bd0f01e3a9742548a5a32ddec9c189723e3629f0e474d15bb30e81784a6"
+  },
+  {
+    "archivo": "departamento-parcial.json",
+    "url": "http://127.0.0.1:5789/api/v1/sequias?mesFinal=2024-09",
+    "estado": 200,
+    "recibidoEn": "2026-10-25T18:17:22.6853833Z",
+    "cacheControl": "no-store, private",
+    "sha256": "de64c50ad7b618320aa10c9ca81cc09597179b5cd816d381dc847df6868f30c2"
+  },
+  {
+    "archivo": "consulta.json",
+    "url": "http://127.0.0.1:5789/api/v1/sequias?mesFinal=2024-09&municipio=BO070101&muestra=scz-piloto-01",
+    "estado": 200,
+    "recibidoEn": "2026-10-25T18:17:23.6372994Z",
+    "cacheControl": "no-store, private",
+    "sha256": "a9be1bd0f01e3a9742548a5a32ddec9c189723e3629f0e474d15bb30e81784a6"
+  },
+  {
+    "archivo": "resumen.json",
+    "url": "http://127.0.0.1:5789/api/v1/sequias/resumen?mesFinal=2024-09&municipio=BO070101&muestra=scz-piloto-01",
+    "estado": 200,
+    "recibidoEn": "2026-10-25T18:17:24.5549823Z",
+    "cacheControl": "no-store, private",
+    "sha256": "c0d02baede8a7469f54ab623aa8fa9e384b5437bc55c5213d1a828fa39afa8f7"
+  }
+]

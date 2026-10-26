@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Filtros operativos de sequías 1.0 candidata M3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mesFinal"
+  ],
+  "properties": {
+    "mesFinal": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"
+    },
+    "provincia": {
+      "type": "string",
+      "pattern": "^BO07[0-9]{2}$"
+    },
+    "municipio": {
+      "type": "string",
+      "pattern": "^BO07[0-9]{4}$"
+    },
+    "muestra": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    }
+  },
+  "$comment": "Validaciones semánticas del servidor: mes completo anterior al mes UTC actual, año >=2021, rango disponible real, PCODE existente y jerarquía compatible, muestra registrada dentro del filtro. Rechazar parámetros HTTP repetidos antes de convertir a objeto."
+}

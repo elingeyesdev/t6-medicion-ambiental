@@ -12,9 +12,9 @@ Para conectar Flutter al backend existente, seguir [Desarrollo compartido](../DE
 
 Las consultas son públicas, sin sesión ni clave NASA en el cliente. Se limita a 30 solicitudes/minuto por IP. Errores y respuestas JSON llevan `Cache-Control: no-store`; la caché de backend es independiente. La prueba de salud `/api/salud` mantiene el contrato de #15.
 
-Las rutas de sequías, inundaciones, deforestación y calidad del aire responden 503 `MODULO_NO_DISPONIBLE`; no son integraciones implementadas. Las rutas `/api/incendios`, `dias` y `fuente` de la demo no se trasladan ni se adaptan silenciosamente. No se añaden endpoints separados de detalle/resumen: ambos se obtienen de la misma respuesta de focos.
+Las rutas de inundaciones, deforestación y calidad del aire responden 503 `MODULO_NO_DISPONIBLE`. Las rutas `/api/incendios`, `dias` y `fuente` de la demo no se trasladan ni se adaptan silenciosamente. Focos conserva detalle/resumen dentro de su misma respuesta.
 
-Para M3 hay una [propuesta de método y contrato de sequías](sequias-propuesta/README.md) en revisión (#35). Conserva evidencia externa y una referencia reproducible; todavía no habilita una respuesta operativa de sequías ni modifica este contrato M2.
+M3 añade la [API de sequías y su OpenAPI separado](sequias/README.md): consulta, detalle y resumen con SPI-3 del método #35, aprobado por Jaziel en #42 el 25/10/2026. La implementación #43 queda para revisión, con publicaciones preparadas fuera de HTTP y cobertura parcial explícita. La [propuesta original](sequias-propuesta/README.md) se conserva como referencia; el OpenAPI M2 de focos permanece compatible.
 
 ## Filtros efectivos
 

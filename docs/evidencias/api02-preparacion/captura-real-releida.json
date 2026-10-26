@@ -1,0 +1,64 @@
+{
+    "versionInforme": "calidad-precipitacion-1.0",
+    "estado": "completa",
+    "aptoParaAgregacionMensual": true,
+    "periodo": {
+        "desde": "2024-07-01",
+        "hastaIncluido": "2024-09-30",
+        "zona": "UTC"
+    },
+    "unidad": "mm",
+    "resumen": {
+        "diasEsperados": 92,
+        "registrosRecibidos": 92,
+        "diasValidos": 92,
+        "diasAusentes": 0,
+        "diasNulos": 0,
+        "mesesEsperados": 3,
+        "mesesCompletos": 3,
+        "mesesIncompletos": 0
+    },
+    "meses": [
+        {
+            "mes": "2024-07",
+            "diasEsperados": 31,
+            "diasValidos": 31,
+            "diasAusentes": 0,
+            "diasNulos": 0,
+            "fechasAusentes": [],
+            "fechasNulas": [],
+            "estado": "completo",
+            "precipitacionAcumuladaMm": 28.2
+        },
+        {
+            "mes": "2024-08",
+            "diasEsperados": 31,
+            "diasValidos": 31,
+            "diasAusentes": 0,
+            "diasNulos": 0,
+            "fechasAusentes": [],
+            "fechasNulas": [],
+            "estado": "completo",
+            "precipitacionAcumuladaMm": 64.0
+        },
+        {
+            "mes": "2024-09",
+            "diasEsperados": 30,
+            "diasValidos": 30,
+            "diasAusentes": 0,
+            "diasNulos": 0,
+            "fechasAusentes": [],
+            "fechasNulas": [],
+            "estado": "completo",
+            "precipitacionAcumuladaMm": 22.3
+        }
+    ],
+    "advertencias": [
+        "Completitud diaria verificada; no acredita exactitud de la fuente, SPI ni sequía."
+    ],
+    "origen": {
+        "tipo": "archivo_local",
+        "sha256": "466daaa00dc6e067bfb625532b5de1f6e40bb5a8dc2f81126188f81c23ba4fc3",
+        "bytes": 1923
+    }
+}

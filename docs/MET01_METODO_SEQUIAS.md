@@ -1,6 +1,6 @@
 # MET-01 / #35: propuesta de sequía meteorológica
 
-Estado: **propuesta pendiente de revisión de Jaziel**. Versión `spi3-era5-gamma-mle-1991-2020-v0.1-propuesta`. Preparada el 22/10/2026 (Bolivia). Esta investigación precede a la implementación Laravel #36, Blade #37 y Flutter #38; el endpoint actual de sequías continúa respondiendo 503. No requiere rehacer focos ni cambiar `main`.
+Estado: **método acordado por el equipo** tras aprobación y fusión de Jaziel en [PR #42](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/42), 25/10/2026. Se conserva la versión científica `spi3-era5-gamma-mle-1991-2020-v0.1-propuesta` y la investigación preparada el 22/10/2026 (Bolivia). La [API Laravel #36](API02_API_SEQUIAS.md) implementa esta referencia y queda para revisión en #43; siguen Blade #37 y Flutter #38. No requiere rehacer focos ni cambiar `main`.
 
 ## Decisión propuesta
 
@@ -83,6 +83,6 @@ La carpeta de salida debe ser nueva. Una descarga parcial/fallida no reemplaza e
 
 ## Revisión requerida y trabajo siguiente
 
-Jaziel debe revisar: SPI-3/MLE/base fija y límites, forma de filtrar meses, `null`/errores, puntos frente a polígonos y los campos consumibles por Flutter. Resolver observaciones en este PR antes de tratar #35 como acordado.
+La revisión de Jaziel quedó registrada en #42 y #35 fue cerrado el 25/10/2026. La aceptación permite implementar el método; la revisión de la API #43, los clientes y la validación climática local siguen siendo trabajos distintos.
 
-Después: #36 implementa calendario, catálogo de muestras, caché/errores, cálculo PHP contrastado con esta referencia y consulta real; #37/#38 implementan los clientes sobre la misma versión; #39 compara resultados, faltantes, cobertura y fallos en ambos. #40 sigue siendo análisis inicial de inundaciones y #41 recopila solo evidencias ejecutadas. Las dependencias del tablero continúan vigentes mientras #35 esté en revisión; se ajustará el alcance de esos issues si cambia la decisión.
+Después: #36 implementa calendario, catálogo de muestras, caché/errores, cálculo PHP contrastado con esta referencia y consulta real; #37/#38 implementan los clientes sobre la misma versión; #39 compara resultados, faltantes, cobertura y fallos en ambos. #40 sigue siendo análisis inicial de inundaciones y #41 recopila solo evidencias ejecutadas. La dependencia de #35 ya está resuelta; los clientes requieren el contrato y la integración de #36.

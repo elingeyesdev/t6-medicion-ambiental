@@ -48,6 +48,26 @@ final class GeometriaTerritorial
         return false;
     }
 
+    /** Interior estricto para muestras: excluye bordes exteriores y de huecos. */
+    public function interiorEstricto(array $g, float $x, float $y): bool
+    {
+        $poligonos = $g['type'] === 'Polygon' ? [$g['coordinates']] : $g['coordinates'];
+        foreach ($poligonos as $p) {
+            if ($this->enAnillo($p[0], $x, $y) !== 1) {
+                continue;
+            }
+            $enHueco = false;
+            foreach (array_slice($p, 1) as $hueco) {
+                $enHueco = $enHueco || $this->enAnillo($hueco, $x, $y) !== 0;
+            }
+            if (! $enHueco) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function asignar(float $x, float $y): array
     {
         if ($this->municipios === []) {

@@ -49,6 +49,16 @@ Para ejecutar comandos en esta modalidad, situarse en `web/`:
 ..\herramientas\php.ps1 vendor/bin/pint --test
 ```
 
+## Preparación de series de sequías
+
+La [API de sequías (#36)](../docs/API02_API_SEQUIAS.md) ya tiene consulta, detalle y resumen sobre datos preparados, con método #35 aprobado en #42. En este equipo: `http://127.0.0.1:5789/api/v1/sequias?mesFinal=2024-09&muestra=scz-piloto-01`. Arranque desde la raíz: `./herramientas/sequias/iniciar-api.ps1`; prueba: `./herramientas/sequias/probar-api.ps1`. El PR #43 queda para revisión. Solo el piloto histórico está preparado; las otras 55 muestras se informan pendientes.
+
+Componentes de preparación: [validación y versiones diarias](../docs/API02_PREPARACION_SERIES.md), [ensayo SPI-3 en PHP](../docs/API02_ENSAYO_SPI.md) contrastado con SciPy y caché de cálculos. En este equipo, `./herramientas/sequias/probar-spi.ps1` reproduce el piloto offline; no descarga ni publica por sí solo resultados HTTP.
+
+La [captura candidata Open-Meteo/ERA5](../docs/API02_CAPTURA_LLUVIA.md) obtiene y conserva lluvia con reutilización/renovación. Se prueba con `./herramientas/sequias/probar-fuente.ps1`; requiere Internet si no hay captura reciente. No usa la clave NASA ni habilita el módulo público.
+
+El [catálogo de muestras candidatas](../docs/API02_MUESTRAS_TERRITORIALES.md) verifica 56 puntos y permite filtrar o capturar por identificador. Prueba sin Internet: `./herramientas/sequias/probar-muestras.ps1`. Agregar `-ConsultarPiloto` prueba la captura registrada y su contexto territorial, con Internet si no hay una captura reciente.
+
 ## Configuración y secretos
 
 `.env.example` no contiene credenciales. `.env`, la clave de la aplicación, la base SQLite, los logs y `vendor/` quedan fuera de Git. `APP_DEBUG=false` evita exponer trazas en el arranque por defecto. `APP_KEY` es propia de cada instalación: no compartirla con Flutter ni incorporarla a commits.

@@ -1,0 +1,867 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "GeoCruz API de sequías",
+    "version": "1.0-m3-candidata"
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ],
+  "paths": {
+    "/sequias": {
+      "get": {
+        "operationId": "consultarSequias",
+        "summary": "Muestras preparadas, detalle y resumen del filtro",
+        "parameters": [
+          {
+            "name": "mesFinal",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"
+            }
+          },
+          {
+            "name": "provincia",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^BO07[0-9]{2}$"
+            }
+          },
+          {
+            "name": "municipio",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^BO07[0-9]{4}$"
+            }
+          },
+          {
+            "name": "muestra",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Muestras preparadas, detalle y resumen del filtro",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "respuesta.schema.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sequias/resumen": {
+      "get": {
+        "operationId": "resumirSequias",
+        "summary": "Resumen del mismo conjunto sin repetir datos",
+        "parameters": [
+          {
+            "name": "mesFinal",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"
+            }
+          },
+          {
+            "name": "provincia",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^BO07[0-9]{2}$"
+            }
+          },
+          {
+            "name": "municipio",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^BO07[0-9]{4}$"
+            }
+          },
+          {
+            "name": "muestra",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resumen del mismo conjunto sin repetir datos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "resumen.schema.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sequias/{muestra}": {
+      "get": {
+        "operationId": "detalleSequia",
+        "summary": "Una muestra registrada con su fuente y SPI",
+        "parameters": [
+          {
+            "name": "mesFinal",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"
+            }
+          },
+          {
+            "name": "provincia",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^BO07[0-9]{2}$"
+            }
+          },
+          {
+            "name": "municipio",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^BO07[0-9]{4}$"
+            }
+          },
+          {
+            "name": "muestra",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Una muestra registrada con su fuente y SPI",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "respuesta.schema.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error explícito; sin sustitución por simulación",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "codigo",
+                        "mensaje",
+                        "identificadorConsulta",
+                        "campos"
+                      ],
+                      "properties": {
+                        "codigo": {
+                          "type": "string"
+                        },
+                        "mensaje": {
+                          "type": "string"
+                        },
+                        "identificadorConsulta": {
+                          "type": "string"
+                        },
+                        "campos": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
