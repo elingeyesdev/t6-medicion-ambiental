@@ -55,6 +55,18 @@ function iniciar() {
             vista.nombres = new Map(territorios.map(t => [t.identificador, t.nombre]));
             opciones(provincia, territorios.filter(t => t.tipo === 'provincia'), 'Todo Santa Cruz');
             actualizarMunicipios('');
+            // EnviroSense abre directamente el mapa, sin inventar detecciones iniciales.
+            // La geometría de contexto es local; NASA solo se consulta al aplicar filtros.
+            if (!consultaEnUrl && !consulta.estado.actual) {
+                try {
+                    const limite = await solicitarJson(`${raiz.dataset.api}/territorios/BO07/limite`, control.signal);
+                    if (limite.territorio?.identificador !== 'BO07' || limite.limite?.type !== 'Feature') throw new Error('Límite incompatible');
+                    // Una consulta iniciada mientras llega el límite no pierde sus puntos.
+                    if (!consulta.estado.actual) vista.mapa.mostrar([], limite.limite, null);
+                } catch {
+                    if (!consulta.estado.actual) vista.mapa.mostrar([], null, 'No se pudo cargar el contorno inicial de Santa Cruz. Puedes consultar los focos igualmente.');
+                }
+            }
             document.getElementById('campos-filtros').disabled = false;
             document.getElementById('estado-catalogo').textContent = 'Límites de referencia OCHA/HDX · catálogo en revisión. Las autonomías conservan su denominación.';
             if (consultaEnUrl) {

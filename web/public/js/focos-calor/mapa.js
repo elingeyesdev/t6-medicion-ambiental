@@ -32,6 +32,9 @@ export class MapaFocos {
         this.mapa.createPane('seleccionFocos').style.zIndex = '625';
         this.puntos = L.layerGroup().addTo(this.mapa);
         this.mapa.on('zoomend', () => this.reagrupar());
+        // El menú puede contraerse sin recargar ni deformar el mapa.
+        this.observador = new ResizeObserver(() => this.mapa.invalidateSize());
+        this.observador.observe(document.getElementById(this.contenedor));
         return true;
     }
 
@@ -107,7 +110,17 @@ export class MapaFocos {
     }
 
     centrar() {
-        if (this.limite) this.mapa?.fitBounds(this.limite.getBounds(), { padding: [18, 18], maxZoom: 11, animate: false });
+        if (this.limite) {
+            const ancho = document.getElementById(this.contenedor).clientWidth;
+            const escritorio = matchMedia('(min-width: 768px)').matches;
+            const controles = document.getElementById('controles-mapa');
+            const resultados = document.getElementById('resultados-focos');
+            const izquierda = escritorio && controles?.open ? controles.offsetWidth + 35 : 18;
+            const derecha = escritorio && !resultados?.hidden ? resultados.offsetWidth + 32 : 18;
+            // Con poco espacio se muestra el contorno completo y se pueden plegar los filtros.
+            const cabenPaneles = ancho - izquierda - derecha > 200;
+            this.mapa?.fitBounds(this.limite.getBounds(), { paddingTopLeft: [cabenPaneles ? izquierda : 18, 65], paddingBottomRight: [cabenPaneles ? derecha : 18, 100], maxZoom: 11, animate: false });
+        }
         else if (this.marcadores.size) this.mapa?.fitBounds(window.L.featureGroup([...this.marcadores.values()]).getBounds(), { padding: [25, 25], maxZoom: 10, animate: false });
     }
 

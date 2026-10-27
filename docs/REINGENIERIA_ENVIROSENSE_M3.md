@@ -8,18 +8,21 @@ La copia de `referencias/envirosense/codigo/` conserva el origen para comparar l
 
 El ingeniero no exigió conservar todas las funciones originales. El alcance sigue siendo los cinco módulos ambientales; los componentes ajenos a ese plan no se incorporan al producto activo. Las entregas documentales anteriores conservan sus versiones originales; este ajuste registra la decisión posterior.
 
+**Corrección del diseño, 26/10:** Josué señaló que la primera propuesta parecía otro sistema y había perdido la esencia de EnviroSense. Se recuperaron el mapa como entrada principal, la barra lateral clara con acento turquesa, el símbolo de marca, Space Grotesk, la ruta superior y los controles superpuestos del original. El menú conserva contracción y tema claro/oscuro. Tabler sigue como base de controles, sin reemplazar esa identidad por un tablero genérico. Las capturas del referente en DOC-03 y sus componentes Sidebar/Navbar/index.css guiaron la adaptación a Blade.
+
 ## Revisión del sistema de origen
 
 Las rutas siguientes pertenecen a `referencias/envirosense/codigo/`. La lectura compara el código conservado; no representa una ejecución nueva de todos los servicios originales.
 
 | Elemento original | Decisión para la adaptación | Resultado o seguimiento |
 | --- | --- | --- |
-| `Frontend/src/components/Layout/Layout.jsx`, Sidebar y Navbar | Conservar el panel y la navegación lateral; adaptar el menú a las consultas del Planner. Sustituir la presentación por Tabler en Blade y componentes compartidos. | #47: menú, cabecera, pie e iconos separados. |
+| `Frontend/src/components/Layout/Layout.jsx`, Sidebar y Navbar | Recuperar identidad, paleta, marca, tipografía, distribución lateral, tema y contracción. Adaptar a Blade con controles Tabler y componentes compartidos. | #47: EnviroSense como estructura del producto, con sus módulos integrados. |
 | `Frontend/src/pages/MapaMonitoreo/MapaMonitoreo.jsx`, ControlPanel y `hooks/useFronteras.js` | Conservar navegación espacial, filtros, mapa y selección. Mejorar coherencia entre mapa/lista/ficha y usar el catálogo común de Santa Cruz. | Focos y sequías mantienen sus consultas y límites. |
 | `AtmosphericDatePicker.jsx`, `utils/unidades.js` | Conservar selección temporal y unidades; adaptar los períodos al producto real. | Ventana de focos y meses de SPI-3; sin reutilizar períodos meteorológicos como si fueran equivalentes. |
 | `Backend/Src/modules/sensores/sensores.service.js`, `utils/response.js`, cliente HTTP | Adaptar acceso, normalización y errores a servicios Laravel y a la API compartida. Mejorar procedencia y faltantes. | Los clientes conservan fuente, período, null y cobertura; no hay reemplazo aleatorio ante fallos. |
 | `Frontend/src/pages/mobile/` | Adaptar objetivos y navegación a Flutter, usando componentes de la plataforma. | #48 y #38: el trabajo móvil no queda terminado por cambiar Blade. |
-| Asistente global, avisos externos, MQTT, simulaciones, reportes, roles y servicios de agua/ruido | Mantener fuera del producto activo mientras no formen parte del Planner. No migrar cuentas ni bases locales del referente. | No se cargan en el arranque del panel adaptado. La referencia histórica permite auditar la selección. |
+| Asistente global, avisos externos, MQTT, reportes, roles y servicios de agua/ruido | Mantener fuera del producto activo mientras no formen parte del Planner. No migrar cuentas ni bases locales del referente. | No se cargan en el arranque del panel adaptado. La referencia histórica permite auditar la selección. |
+| `ControlPanel`, `ModalSimulacion`, `SimulacionContext` y `ZonaSimContext` | Por pedido posterior de Josué, recuperar Simulaciones como función transversal con pantalla y entrada propias, en lugar del interruptor escondido en herramientas del mapa. | #52 planifica alcance, contrato, adaptación y pruebas. Todavía no implementado en Laravel; no se publica una pantalla vacía. |
 | Tarjetas y pantallas de módulos sin implementación | Retirar del inicio y del menú. Conservar el alcance en planificación, sin presentar pantallas de relleno al usuario. | #47: rutas web pendientes responden 404. Las operaciones de API conservan su error explícito; no se simula una consulta exitosa. |
 
 Esta selección es funcional: no se afirma una conversión automática de JSX a PHP ni que los sistemas mantengan las mismas dependencias. No se ejecutan React/Express o los servicios de demostración del referente para arrancar esta adaptación.
@@ -41,6 +44,8 @@ GitHub Projects y ProjectLibre continúan como herramientas aceptadas por Josué
 ## Organización de la plantilla y el código
 
 Ver [ORGANIZACION_CODIGO.md](ORGANIZACION_CODIGO.md). Tabler 1.7.1 y seis SVG de Tabler Icons se guardan localmente con licencia y manifiesto. Las vistas no dependen de una descarga de CDN para dibujar el panel. Los cambios propios no se escriben en el CSS minificado del proveedor.
+
+Space Grotesk se distribuye localmente desde Google Fonts con su licencia SIL OFL 1.1 e integridad registrada. Los colores del mapa base se atenúan para dejar visibles las detecciones; los colores de confianza y sus valores no cambian. Solo se dibuja la página actual de focos y se mantiene explícito su alcance.
 
 ## Entregas y revisión
 

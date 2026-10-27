@@ -1,32 +1,21 @@
 @props(['modulos'])
-<aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark" aria-label="Panel de EnviroSense">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu-panel" aria-controls="menu-panel" aria-expanded="false" aria-label="Abrir o cerrar menú">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand marca-panel" href="{{ route('inicio') }}" aria-label="EnviroSense GeoCruz, inicio">
-            <x-panel.icono nombre="world" class="marca-icono" />
-            <span>EnviroSense<small>GeoCruz</small></span>
+<aside class="enviro-lateral" id="menu-panel" aria-label="Panel de EnviroSense">
+    <a class="enviro-marca" href="{{ route('inicio') }}" aria-label="EnviroSense, mapa de monitoreo">
+        <span class="enviro-simbolo" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3C7 3 4 7 4 12c0 5 4 9 8 9s8-4 8-9"/><path d="M12 3c3 2 4 6 4 9s-1 7-4 9M4 12h16"/></svg></span>
+        <span class="enviro-marca-texto"><strong>EnviroSense</strong><small>OBS · GeoCruz</small></span>
+    </a>
+    <button class="enviro-contraer" id="contraer-menu" type="button" aria-controls="menu-panel" aria-expanded="true" aria-label="Contraer menú"><span aria-hidden="true">‹</span></button>
+    <nav class="enviro-navegacion" aria-label="Navegación principal">
+        <div class="enviro-seccion">Navegación</div>
+        <a class="enviro-enlace {{ request()->routeIs('inicio') ? 'activo' : '' }}" href="{{ route('inicio') }}" title="Mapa de Monitoreo" @if(request()->routeIs('inicio')) aria-current="page" @endif>
+            <x-panel.icono nombre="world" /><span>Mapa de Monitoreo</span>
         </a>
-        <div class="collapse navbar-collapse" id="menu-panel">
-            <nav class="w-100" aria-label="Navegación principal">
-                <div class="nav-seccion">Monitoreo ambiental</div>
-                <ul class="navbar-nav pt-lg-2">
-                    <li class="nav-item {{ request()->routeIs('inicio') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('inicio') }}" @if(request()->routeIs('inicio')) aria-current="page" @endif>
-                            <span class="nav-link-icon"><x-panel.icono nombre="layout-dashboard" /></span><span class="nav-link-title">Panel</span>
-                        </a>
-                    </li>
-                    @foreach($modulos as $id => $item)
-                        <li class="nav-item {{ request()->route('modulo') === $id ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('modulos.mostrar', $id) }}" @if(request()->route('modulo') === $id) aria-current="page" @endif>
-                                <span class="nav-link-icon"><x-panel.icono :nombre="$item['icono']" /></span><span class="nav-link-title">{{ $item['nombre'] }}</span>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-                <div class="nav-territorio"><x-panel.icono nombre="map-pin" /><span>Santa Cruz<small>Bolivia</small></span></div>
-            </nav>
-        </div>
-    </div>
+        <div class="enviro-seccion enviro-seccion-modulos">Módulos ambientales</div>
+        @foreach($modulos as $id => $item)
+            <a class="enviro-enlace {{ request()->route('modulo') === $id ? 'activo' : '' }}" href="{{ route('modulos.mostrar', $id) }}" title="{{ $item['nombre'] }}" aria-label="Abrir {{ $item['nombre'] }}" @if(request()->route('modulo') === $id) aria-current="page" @endif>
+                <x-panel.icono :nombre="$item['icono']" /><span>{{ $item['nombre'] }}</span>
+            </a>
+        @endforeach
+    </nav>
+    <div class="enviro-territorio"><x-panel.icono nombre="map-pin" /><span>Santa Cruz<small>Bolivia</small></span></div>
 </aside>

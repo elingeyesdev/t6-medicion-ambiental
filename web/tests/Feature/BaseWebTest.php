@@ -14,7 +14,11 @@ class BaseWebTest extends TestCase
 
         $response->assertOk()
             ->assertSee('lang="es"', false)
-            ->assertSee('Panel de monitoreo')
+            ->assertSee('Mapa de Monitoreo')
+            ->assertSee('id="mapa-focos"', false)
+            ->assertSee('id="filtros-focos"', false)
+            ->assertSee('id="resultados-focos" hidden', false)
+            ->assertSee('js/panel/navegacion.js')
             ->assertSee('EnviroSense')
             ->assertSee('vendor/tabler/tabler.min.css')
             ->assertSee('css/panel/panel.css')

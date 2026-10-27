@@ -1,0 +1,18 @@
+{
+  "origen": "https://github.com/google/fonts/tree/main/ofl/spacegrotesk",
+  "licencia": "SIL OFL 1.1",
+  "archivos": [
+    {
+      "archivo": "SpaceGrotesk.ttf",
+      "blobGit": "a1b2e6c26093066510a31147e7aec9abdc8d6c5e",
+      "fuente": "https://raw.githubusercontent.com/google/fonts/main/ofl/spacegrotesk/SpaceGrotesk%5Bwght%5D.ttf",
+      "sha256": "acad6de1fc93436f5c0f1f4137751ef04f1aea3063e7036535970ffcfbd79f72"
+    },
+    {
+      "archivo": "OFL.txt",
+      "blobGit": "cb512b9af44ff61e75e1aad387b7424cdfab36a3",
+      "fuente": "https://raw.githubusercontent.com/google/fonts/main/ofl/spacegrotesk/OFL.txt",
+      "sha256": "564ce565c371c5e5bbf286006565a7c9aa55a9f56e7ca58d56e05d649dd61a72"
+    }
+  ]
+}

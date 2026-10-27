@@ -62,6 +62,8 @@ export class VistaFocos {
         document.getElementById('anterior').disabled = !r || estado.fase !== 'listo' || estado.borrador || r.paginacion.pagina <= 1;
         document.getElementById('siguiente').disabled = !r || estado.fase !== 'listo' || estado.borrador || r.paginacion.siguiente === null;
         if (r && this.ultimaRespuesta !== r) {
+            // Tras la primera consulta, liberar el mapa sin perder los filtros editables.
+            if (!this.ultimaRespuesta && matchMedia('(min-width: 768px)').matches) document.getElementById('controles-mapa').open = false;
             this.ultimaRespuesta = r;
             this.actual = estado.actual;
             this.pintarRespuesta(r);
