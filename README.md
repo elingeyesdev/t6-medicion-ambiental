@@ -5,6 +5,7 @@ Adaptación de EnviroSense a Laravel/Blade y Flutter, con consultas ambientales 
 - [Dónde está cada parte del código y la plantilla](docs/ORGANIZACION_CODIGO.md).
 - [Inicio, registro, acceso y cómo probar el mapa](docs/ACCESO_ENVIROSENSE.md).
 - [Marca GeoCruz, navegación y cuenta demo local](docs/MARCA_Y_DEMO.md).
+- [Acceso con cubierta de Tabler y mapa base Mapbox](docs/ACCESO_Y_MAPBOX.md).
 - [Qué conservamos, adaptamos y dejamos fuera de EnviroSense](docs/REINGENIERIA_ENVIROSENSE_M3.md).
 - [Revisión de la guía GitHub del curso y pendientes reales](docs/GUIA_CURSO_ESTADO.md).
 
