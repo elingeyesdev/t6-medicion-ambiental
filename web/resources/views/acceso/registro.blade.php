@@ -1,6 +1,6 @@
 @extends('layouts.acceso')
 @section('titulo', 'Crear cuenta')
-@section('encabezado', 'Crea tu cuenta.')
+@section('encabezado', 'Crea tu cuenta')
 @section('formulario')
 <form method="post" action="{{ route('acceso.registrar') }}">
     @csrf

@@ -19,7 +19,7 @@
             <p>Focos de calor y sequías por provincia y municipio.</p>
             <div class="portada-acciones"><a class="btn btn-primary" href="{{ route('mapa') }}">Entrar al mapa <x-panel.icono nombre="arrow-right" /></a>@guest <a class="btn btn-outline-light" href="{{ route('register') }}">Crear cuenta</a> @endguest</div>
         </div>
-        <figure class="portada-mapa"><img src="{{ asset('img/envirosense/santa-cruz.svg') }}" alt="Mapa de referencia de las provincias de Santa Cruz" width="560" height="610"><figcaption>Santa Cruz · límites de referencia OCHA/HDX</figcaption></figure>
+        <figure class="portada-foto"><img src="{{ asset('img/amboro/selva-amboro.jpg') }}" alt="Selva del Parque Nacional Amboró, Santa Cruz" width="1280" height="960"><figcaption>Parque Nacional Amboró · <x-panel.credito-foto /></figcaption></figure>
     </section>
     <section class="portada-modulos" id="explorar" aria-labelledby="titulo-explorar">
         <h2 id="titulo-explorar">Qué quieres consultar</h2>
@@ -32,5 +32,5 @@
         </div>
     </section>
 </main>
-<footer class="portada-pie"><span>GeoCruz · Santa Cruz, Bolivia</span><span>Límites: OCHA/HDX · CC BY 3.0 IGO</span></footer>
+<footer class="portada-pie"><span>GeoCruz · Santa Cruz, Bolivia</span><span>Observación del territorio</span></footer>
 @endsection

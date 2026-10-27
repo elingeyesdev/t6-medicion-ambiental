@@ -1,0 +1,1 @@
+<a href="https://commons.wikimedia.org/wiki/File:La_selva_en_el_Ambor%C3%B3.jpg" target="_blank" rel="noopener">Foto: Karenrek</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>

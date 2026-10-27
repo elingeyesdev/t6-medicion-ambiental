@@ -1,6 +1,6 @@
 @extends('layouts.acceso')
 @section('titulo', 'Ingresar')
-@section('encabezado', 'Bienvenido de vuelta.')
+@section('encabezado', 'Ingresa a GeoCruz')
 @section('formulario')
 <form method="post" action="{{ route('acceso.entrar') }}">
     @csrf
