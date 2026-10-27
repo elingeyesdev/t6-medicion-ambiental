@@ -37,10 +37,10 @@ export class VistaFocos {
         resultados.hidden = !r;
         resultados.setAttribute('aria-busy', String(cargando));
         resultados.classList.toggle('resultados-anteriores', anterior);
-        texto('etiqueta-vigencia', anterior ? 'RESULTADOS ANTERIORES · CONSERVADOS' : 'CONSULTA APLICADA');
+        texto('etiqueta-vigencia', anterior ? 'Resultados anteriores' : 'Resultados');
         const aviso = document.getElementById('aviso-consulta');
         aviso.dataset.estado = cargando ? 'cargando' : anterior ? 'anterior' : estado.fase;
-        let titulo = 'Listo para explorar';
+        let titulo = 'Elige los filtros';
         let mensaje = 'Elige territorio y fechas.';
         if (r) {
             titulo = r.cobertura.estado === 'sin_cobertura' ? 'Sin cobertura para este período' : r.cobertura.estado === 'parcial' ? 'Resultados parciales' : 'Consulta lista';
@@ -55,6 +55,8 @@ export class VistaFocos {
         if (cargando) { titulo = 'Consultando NASA FIRMS…'; mensaje = r ? 'El mapa conserva la consulta anterior.' : 'Espera unos segundos.'; }
         if (estado.fase === 'error') { titulo = estado.error?.codigo === 'CONJUNTO_CAMBIADO' ? 'La consulta venció' : 'No se pudo consultar'; mensaje = `${estado.error?.message || 'Reintenta más tarde.'}${r ? ' Se conserva la consulta anterior.' : ''}`; }
         texto('titulo-estado', titulo); texto('mensaje-estado', mensaje);
+        // La confirmación normal se anuncia sin añadir otra tarjeta al mapa.
+        aviso.classList.toggle('solo-lector', titulo === 'Consulta lista' && !anterior && !cargando && estado.fase !== 'error');
         document.getElementById('reintentar').hidden = estado.fase !== 'error' || estado.error?.codigo === 'CONJUNTO_CAMBIADO' || !estado.pendiente;
         document.getElementById('reiniciar').hidden = estado.error?.codigo !== 'CONJUNTO_CAMBIADO';
         document.getElementById('cancelar-filtros').hidden = !estado.borrador;

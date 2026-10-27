@@ -23,19 +23,19 @@ body { margin: 0; font-family: var(--tblr-font-sans-serif); color: var(--enviro-
 .enviro-marca-texto strong { display: block; font-size: 22px; font-weight: 600; letter-spacing: -.7px; line-height: 1.1; }
 .enviro-contraer { position: absolute; top: 29px; right: -13px; width: 25px; height: 28px; min-height: 0; padding: 0; background: var(--enviro-panel); border: 1px solid var(--enviro-borde); border-radius: 5px; color: var(--enviro-secundario); font-size: 24px; line-height: 1; cursor: pointer; }
 .enviro-navegacion { padding: 22px 14px; border-top: 1px solid var(--enviro-borde); flex: 1; overflow: auto; }
-.enviro-seccion { font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--enviro-secundario); padding: 5px 10px 12px; white-space: nowrap; }
+.enviro-seccion { font-size: 14px; font-weight: 500; color: var(--enviro-secundario); padding: 5px 10px 12px; white-space: nowrap; }
 .enviro-seccion-modulos { padding-top: 28px; }
-.enviro-enlace { display: flex; gap: 10px; align-items: center; padding: 11px 10px; margin-bottom: 4px; border-radius: 6px; color: var(--enviro-secundario); font-size: 13px; font-weight: 500; text-decoration: none; white-space: nowrap; }
+.enviro-enlace { display: flex; gap: 10px; align-items: center; padding: 11px 10px; margin-bottom: 4px; border-radius: 6px; color: var(--enviro-secundario); font-size: 15px; font-weight: 500; text-decoration: none; white-space: nowrap; }
 .enviro-enlace:hover { background: var(--enviro-fondo); color: var(--enviro-texto); text-decoration: none; }
 .enviro-enlace.activo { background: var(--enviro-suave); color: #096d35; font-weight: 600; box-shadow: inset 3px 0 #15803d; }
 [data-bs-theme="dark"] .enviro-enlace.activo { color: #c4f2d1; background: #214830; }
 .icono-panel { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .icono-panel svg { width: 22px; height: 22px; stroke-width: 1.7; }
-.enviro-territorio { display: flex; gap: 10px; align-items: center; padding: 18px 22px; border-top: 1px solid var(--enviro-borde); color: var(--enviro-secundario); font-size: 12px; }
-.enviro-territorio small { display: block; font-size: 10px; }
+.enviro-territorio { display: flex; gap: 10px; align-items: center; padding: 18px 22px; border-top: 1px solid var(--enviro-borde); color: var(--enviro-secundario); font-size: 14px; }
+.enviro-territorio small { display: block; font-size: 14px; }
 .enviro-principal { margin-left: var(--enviro-ancho); min-width: 0; transition: margin-left .2s; }
 .enviro-cabecera { position: sticky; top: 0; z-index: 900; height: 60px; display: flex; align-items: center; gap: 14px; padding: 0 25px; border-bottom: 1px solid var(--enviro-borde); background: var(--enviro-fondo); }
-.enviro-ruta { min-width: 0; flex: 1; font-size: 12px; color: var(--enviro-secundario); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.enviro-ruta { min-width: 0; flex: 1; font-size: 16px; color: var(--enviro-secundario); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .enviro-ruta strong { color: var(--enviro-texto); font-weight: 600; }
 .enviro-boton-icono { display: grid; place-items: center; padding: 0; width: 32px; height: 32px; min-height: 32px; flex-shrink: 0; color: var(--enviro-secundario); background: var(--enviro-panel); border: 1px solid var(--enviro-borde); border-radius: 6px; cursor: pointer; }
 .enviro-abrir { display: none; }
