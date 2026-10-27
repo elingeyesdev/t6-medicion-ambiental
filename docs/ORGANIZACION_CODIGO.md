@@ -26,7 +26,8 @@ web/
     css/panel/panel.css               identidad, menú y cabecera de EnviroSense
     css/panel/marca.css               logo GeoCruz y tamaños
     css/panel/mapas.css               selector y atribución de mapas
-    css/paginas/publico.css           inicio y cubierta de acceso
+    css/paginas/publico.css           base pública y cubierta de acceso
+    css/paginas/inicio.css            portada, foto y accesos a consultas
     img/marca/                        logotipo y símbolo aprobados
     img/amboro/                       fotografía real, fuente y licencia
     css/modulos/                     estilos particulares de cada consulta

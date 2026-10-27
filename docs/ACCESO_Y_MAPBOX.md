@@ -10,7 +10,8 @@ Las adaptaciones propias son el nombre/logo, los campos Laravel, los textos brev
 
 - `layouts/acceso.blade.php`: composición de cubierta.
 - `acceso/entrar.blade.php` y `acceso/registro.blade.php`: formularios con validación y CSRF.
-- `public/css/paginas/publico.css`: apariencia de inicio/acceso.
+- `public/css/paginas/publico.css`: base pública y cubierta de acceso.
+- `public/css/paginas/inicio.css`: portada, foto y tarjetas de consultas, separadas del acceso.
 - `public/css/panel/panel.css`: colores y controles compartidos.
 
 ## Mapa base
@@ -40,3 +41,11 @@ Documentación oficial: [Mapbox en Leaflet](https://docs.mapbox.com/help/dive-de
 ## Probar
 
 En este PC: http://127.0.0.1:5791/login, con la misma cuenta demo local. Comprobar ingreso y error de clave, crear cuenta y su validación, cambiar Relieve/Satélite/Calles manteniendo consulta y selección, abrir el piloto de sequías, menú contraído, tema oscuro y celular. El iniciador sigue siendo `./iniciar-web.ps1 -Puerto 5791`. La cuenta demo y las publicaciones locales conservan sus condiciones anteriores; las imágenes satélite no sustituyen una publicación vencida de sequías.
+
+## Lectura y portada revisadas · 27/10
+
+Se quitaron los rótulos decorativos en mayúsculas, la explicación repetida de los colores y la tarjeta inicial sin resultados. Los filtros usan etiquetas de 15 px y campos de 16 px. Resultados, leyenda y ayudas usan 14 px como mínimo, sin modificar los créditos obligatorios de las teselas. El aviso de una consulta normal se conserva para lectores de pantalla; los estados de carga, error, filtros modificados, vacío y cobertura parcial siguen visibles.
+
+Fuentes, interpretación y reglas de fechas están en Acerca de esta consulta / Fuente y detalles. La leyenda se titula Confianza. El período mantiene el límite final excluido; no cambia la API. La portada usa la misma fotografía real a mayor tamaño, acciones breves y tarjetas Tabler diferenciadas por consulta. No se añaden cifras, fuentes nuevas ni pantallas pendientes.
+
+La apariencia de inicio está en `css/paginas/inicio.css`; la cubierta y los estilos públicos comunes siguen en `css/paginas/publico.css`. Los archivos de Tabler no se editan.
