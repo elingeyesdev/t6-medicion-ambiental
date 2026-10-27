@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { agruparProximos, etiquetaDeteccion } from '../../public/js/focos-calor/representacion.js';
+import { agruparProximos, etiquetaDeteccion, nombreCortoMunicipio } from '../../public/js/focos-calor/representacion.js';
 import { limitesPeriodo, ajustarCalendarios } from '../../public/js/focos-calor/periodo.js';
 import { validarPeriodoLocal } from '../../public/js/focos-calor/contrato.js';
 import { MapaFocos } from '../../public/js/focos-calor/mapa.js';
@@ -76,9 +76,54 @@ test('cambiar de selección y cerrar detalle elimina etiqueta y anillo anteriore
         assert.equal(capas.has(anterior), false);
         assert.equal([...capas].filter(c => c.tipo === 'etiqueta').length, 1);
         assert.deepEqual(mapa.etiquetaActual.posicion, [-17.7, -62]);
-        assert.match(mapa.etiquetaActual.contenido, /5 MW/);
+        assert.match(mapa.etiquetaActual.contenido, /Cotoca/);
+        assert.doesNotMatch(mapa.etiquetaActual.contenido, /FRP/);
         mapa.seleccionar(null);
         assert.equal(capas.size, 0);
         assert.equal(mapa.etiquetaActual, null);
     } finally { globalThis.window = ventanaAnterior; globalThis.document = documentoAnterior; }
+});
+
+test('la fila abrevia municipios largos sin modificar la denominación ni la etiqueta completa', () => {
+    const nombre = 'Charagua (Autonomía Guaraní Charagua Iyambae)';
+    assert.equal(nombreCortoMunicipio(nombre), 'Charagua');
+    assert.match(etiquetaDeteccion(deteccion('A', -63, 5), nombre), /Autonomía Guaraní/);
+    assert.equal(nombreCortoMunicipio('Santa Cruz de La Sierra'), 'Santa Cruz de La Sierra');
+    assert.equal(nombreCortoMunicipio(null), 'Municipio no determinado');
+});
+
+test('las llamas conservan coordenadas y los registros coincidentes siguen seleccionables en un grupo', () => {
+    const anteriores = { window: globalThis.window, document: globalThis.document, requestAnimationFrame: globalThis.requestAnimationFrame, matchMedia: globalThis.matchMedia };
+    const elemento = () => ({ children: [], eventos: {}, dataset: {}, append(...n) { this.children.push(...n); }, replaceChildren() { this.children = []; }, setAttribute(k, v) { this[k] = v; }, addEventListener(k, f) { this.eventos[k] = f; }, querySelectorAll() { return []; }, focus() {} });
+    const nodos = new Map(['titulo-grupo', 'controles-mapa'].map(id => [id, elemento()]));
+    const creados = [], capas = new Set(), elegidos = [];
+    const marker = (posicion, opciones) => {
+        const e = elemento(), eventos = {};
+        const m = { posicion, opciones, eventos, on(k, f) { eventos[k] = f; return this; }, getElement() { return e; }, addTo() { capas.add(this); eventos.add?.(); return this; } };
+        creados.push(m); return m;
+    };
+    globalThis.document = { createElement: elemento, getElementById: id => nodos.get(id) };
+    globalThis.window = { L: { marker, divIcon: o => o, latLngBounds: p => p } };
+    globalThis.requestAnimationFrame = () => {};
+    globalThis.matchMedia = () => ({ matches: true });
+    try {
+        const datos = Object.freeze([deteccion('A', -63, 0), deteccion('B', -63, 5), deteccion('C', -60, 2)].map(f => Object.freeze(f)));
+        const coordenadas = datos.map(f => [...f.geometria.coordinates]);
+        const mapa = Object.create(MapaFocos.prototype);
+        Object.assign(mapa, { datos: [], marcadores: new Map(), panelGrupo: elemento(), listaGrupo: elemento(), iniciar: () => true, avisar() {}, alSeleccionar: id => elegidos.push(id), nombreMunicipio: () => 'Cotoca', mapa: { latLngToLayerPoint: p => ({ x: p[1] * 100, y: p[0] * 100 }), fitBounds() {} }, puntos: { clearLayers() { capas.clear(); } } });
+        mapa.mostrar(datos, null, null);
+        const individuales = creados.filter(m => m.opciones.icon.className === 'marcador-calor');
+        assert.deepEqual(individuales.map(m => m.posicion), coordenadas.map(([x, y]) => [y, x]));
+        assert.deepEqual(datos.map(f => f.geometria.coordinates), coordenadas);
+        const grupo = creados.find(m => m.opciones.icon.className === 'agrupacion-focos');
+        assert.equal(capas.size, 2);
+        grupo.eventos.click();
+        assert.equal(mapa.listaGrupo.children.length, 2);
+        mapa.listaGrupo.children[1].eventos.click();
+        individuales[2].eventos.click();
+        let prevenido = false;
+        individuales[2].getElement().eventos.keydown({ key: ' ', preventDefault() { prevenido = true; } });
+        assert.deepEqual(elegidos, ['B', 'C', 'C']);
+        assert.equal(prevenido, true);
+    } finally { Object.assign(globalThis, anteriores); }
 });

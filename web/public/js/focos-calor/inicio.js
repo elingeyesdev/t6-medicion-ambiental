@@ -44,7 +44,7 @@ function iniciar() {
     const consultaEnUrl = parametros.has('desde') && parametros.has('hasta');
 
     async function cargarCatalogo() {
-        document.getElementById('estado-catalogo').textContent = 'Cargando catálogo territorial…';
+        document.getElementById('estado-catalogo').textContent = 'Cargando…';
         document.getElementById('reintentar-catalogo').hidden = true;
         const control = new AbortController();
         const tiempo = setTimeout(() => control.abort(), 15000);

@@ -24,3 +24,12 @@ export function agruparProximos(entradas, distancia = 28) {
     }
     return grupos;
 }
+
+// La denominación oficial completa se conserva en el detalle y en la API.
+export function nombreCortoMunicipio(nombre) {
+    return typeof nombre === 'string' && nombre.trim() ? nombre.split(' (')[0].trim() : 'Municipio no determinado';
+}
+
+export function etiquetaBreveDeteccion(foco, municipio) {
+    return `${nombreCortoMunicipio(municipio)} · ${fechaBolivia(foco.fechas.observadoDesde)}`;
+}

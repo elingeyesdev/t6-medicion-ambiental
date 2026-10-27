@@ -1,6 +1,7 @@
 import { fechaBolivia, numero } from './contrato.js';
 import { MapaFocos } from './mapa.js';
 import { etiquetaDeteccion } from './representacion.js';
+import { crearContenidoFoco } from './elementos.js';
 
 const texto = (id, valor) => { document.getElementById(id).textContent = valor; };
 const nodo = (tipo, contenido, clase) => {
@@ -52,7 +53,7 @@ export class VistaFocos {
             if (r.cobertura.estado === 'sin_cobertura') titulo = 'Sin cobertura para este período';
         }
         if (estado.borrador) { titulo = 'Filtros modificados'; mensaje = r ? 'Aplica los cambios. El mapa conserva la consulta anterior.' : 'Pulsa Consultar focos.'; }
-        if (cargando) { titulo = 'Consultando NASA FIRMS…'; mensaje = r ? 'El mapa conserva la consulta anterior.' : 'Espera unos segundos.'; }
+        if (cargando) { titulo = 'Cargando…'; mensaje = r ? 'El mapa conserva la consulta anterior.' : 'Espera unos segundos.'; }
         if (estado.fase === 'error') { titulo = estado.error?.codigo === 'CONJUNTO_CAMBIADO' ? 'La consulta venció' : 'No se pudo consultar'; mensaje = `${estado.error?.message || 'Reintenta más tarde.'}${r ? ' Se conserva la consulta anterior.' : ''}`; }
         texto('titulo-estado', titulo); texto('mensaje-estado', mensaje);
         // La confirmación normal se anuncia sin añadir otra tarjeta al mapa.
@@ -76,7 +77,7 @@ export class VistaFocos {
     pintarRespuesta(r) {
         const territorio = r.consulta.territorio;
         texto('titulo-resultados', this.nombres.get(territorio.identificador) ?? territorio.identificador);
-        texto('periodo-aplicado', `${fechaBolivia(r.consulta.periodo.desde)} → ${fechaBolivia(r.consulta.periodo.hasta)} · Bolivia · final excluido`);
+        texto('periodo-aplicado', `${fechaBolivia(r.consulta.periodo.desde)} → ${fechaBolivia(r.consulta.periodo.hasta)} · Bolivia`);
         const obt = r.consulta.obtencion;
         texto('tipo-obtencion', obt.tipo === 'cache' ? `Caché · ${numero(Math.floor(obt.antiguedadSegundos / 60))} min al consultar` : 'NASA FIRMS · consulta directa');
         texto('fecha-obtencion', `Recuperación: ${fechaBolivia(obt.fechaRecuperacion)} · Bolivia`);
@@ -96,7 +97,7 @@ export class VistaFocos {
         for (const foco of r.datos) {
             const boton = nodo('button', undefined, 'fila-foco'); boton.type = 'button'; boton.dataset.foco = foco.identificador;
             boton.setAttribute('aria-pressed', 'false'); boton.setAttribute('aria-label', `Ver detección: ${etiquetaDeteccion(foco, this.nombres.get(foco.territorio.municipio))}`);
-            boton.append(nodo('strong', fechaBolivia(foco.fechas.observadoDesde)), nodo('span', numero(foco.atributos.potenciaRadiativa, 'MW'), 'frp'), nodo('span', `Confianza ${foco.atributos.confianza}`), nodo('span', `Ver detalle ↗`), nodo('span', this.nombres.get(foco.territorio.municipio) ?? (foco.territorio.motivoAsignacion ? 'Asignación municipal no determinada' : 'Santa Cruz'), 'municipio-foco'));
+            boton.append(...crearContenidoFoco(foco, this.nombres.get(foco.territorio.municipio)));
             lista.append(boton);
         }
         document.getElementById('detalle-foco').hidden = true;
@@ -118,15 +119,17 @@ export class VistaFocos {
         this.mapa.seleccionar(id);
         document.querySelectorAll('.fila-foco').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.foco === id)));
         const campos = document.getElementById('campos-detalle'); campos.replaceChildren();
+        const extras = document.getElementById('campos-detalle-extra'); extras.replaceChildren();
         const coordenadas = f.geometria?.type === 'Point' ? `${f.geometria.coordinates[1]}, ${f.geometria.coordinates[0]} (latitud, longitud)` : 'No informadas';
         const valores = [
-            ['Identificador', f.identificador], ['Adquisición · Bolivia', fechaBolivia(f.fechas.observadoDesde)], ['Adquisición · UTC', f.fechas.observadoDesde],
+            ['Identificador', f.identificador], ['Fecha y hora (Bolivia)', fechaBolivia(f.fechas.observadoDesde)], ['Adquisición · UTC', f.fechas.observadoDesde],
             ['Confianza de detección', f.atributos.confianza], ['Confianza original', f.atributos.confianzaOriginal ?? 'No informada'], ['Potencia radiativa · FRP', numero(f.atributos.potenciaRadiativa, 'MW')],
             ['Municipio', this.nombres.get(f.territorio.municipio) ?? 'No determinado'], ['Provincia', this.nombres.get(f.territorio.provincia) ?? 'No determinada'], ['Coordenadas · WGS84', coordenadas],
             ['Satélite / instrumento', `${f.atributos.satelite ?? 'No informado'} / ${f.atributos.instrumento ?? 'No informado'}`], ['Naturaleza', f.naturaleza === 'observacion' ? 'Observación satelital' : f.naturaleza], ['Fuente / producto', r.fuentes.map(s => `${s.proveedor} · ${s.producto}`).join('; ')],
             ['Versión del registro', f.atributos.versionOriginal ?? 'No informada'], ['Recuperación · Bolivia', fechaBolivia(r.consulta.obtencion.fechaRecuperacion)], ['Consulta · Bolivia', fechaBolivia(r.consulta.fechaConsulta)],
         ];
-        valores.forEach(([nombre, valor]) => { const grupo = nodo('div'); grupo.append(nodo('dt', nombre), nodo('dd', valor)); campos.append(grupo); });
+        const principales = new Set(['Municipio', 'Provincia', 'Fecha y hora (Bolivia)', 'Confianza de detección']);
+        valores.forEach(([nombre, valor]) => { const grupo = nodo('div'); grupo.append(nodo('dt', nombre), nodo('dd', valor)); (principales.has(nombre) ? campos : extras).append(grupo); });
         texto('faltantes-detalle', f.faltantes.length ? `Faltantes: ${f.faltantes.map(x => `${x.campo}: ${x.motivo}`).join(' · ')}` : 'Sin faltantes declarados en los atributos del registro. Un foco térmico no confirma un incendio.');
         document.getElementById('detalle-foco').hidden = false;
         document.getElementById('titulo-detalle').focus({ preventScroll: true });

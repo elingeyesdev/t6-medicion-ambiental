@@ -13,7 +13,7 @@ export class MapaSequias {
         if (!window.L) { this.avisar('No se pudo iniciar el mapa. Consulta las mismas muestras en la lista.'); return; }
         const L = window.L;
         if (!this.mapa) {
-            this.mapa = L.map('sq-mapa', { scrollWheelZoom: false, zoomAnimation: false, fadeAnimation: false }).setView([-17.5, -61.5], 6);
+            this.mapa = L.map('sq-mapa', { scrollWheelZoom: true, zoomAnimation: false, fadeAnimation: false }).setView([-17.5, -61.5], 6);
             this.baseVisual = iniciarMapaBase(this.mapa, mensaje => this.avisar(mensaje), 'base-mapa-sequias');
             this.puntos = L.layerGroup().addTo(this.mapa);
         }

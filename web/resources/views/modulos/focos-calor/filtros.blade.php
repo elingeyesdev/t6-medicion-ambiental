@@ -20,6 +20,6 @@
             <p>Fuente: NASA FIRMS · VIIRS. Una detección térmica <strong>no confirma un incendio</strong>.</p>
             <p>Límites territoriales de referencia: OCHA/HDX.</p>
         </details>
-        <p id="estado-catalogo" role="status">Cargando catálogo territorial…</p>
+        <p id="estado-catalogo" role="status">Cargando…</p>
         <button type="button" id="reintentar-catalogo" class="btn boton-suave" hidden>Reintentar catálogo</button>
     </section>
