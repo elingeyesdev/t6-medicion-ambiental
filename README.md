@@ -1,12 +1,13 @@
-# EnviroSense / GeoCruz
+# EnviroSense
 
-Adaptación de EnviroSense a Laravel/Blade y Flutter, centrada en los módulos del Planner. La revisión de M3 reorganiza el panel con Tabler y oculta las pantallas que aún no tienen consulta implementada.
+Adaptación de EnviroSense a Laravel/Blade y Flutter, con los módulos ambientales de GeoCruz integrados en su recorrido de inicio, acceso y mapa. La interfaz conserva su identidad y usa Tabler 1.7.1 para los componentes. Solo se muestran las consultas disponibles.
 
 - [Dónde está cada parte del código y la plantilla](docs/ORGANIZACION_CODIGO.md).
+- [Inicio, registro, acceso y cómo probar el mapa](docs/ACCESO_ENVIROSENSE.md).
 - [Qué conservamos, adaptamos y dejamos fuera de EnviroSense](docs/REINGENIERIA_ENVIROSENSE_M3.md).
 - [Revisión de la guía GitHub del curso y pendientes reales](docs/GUIA_CURSO_ESTADO.md).
 
-Los apartados siguientes conservan instrucciones y resultados de la base integrada; el estado vigente de adaptación se sigue en #29 y #47-50.
+Los apartados siguientes conservan instrucciones y resultados de la base integrada; el estado vigente de adaptación se sigue en #29, #47-50 y #53.
 
 Sistema de consulta ambiental para el departamento de Santa Cruz, sus provincias y municipios. Proyecto de Sistemas III, UNIVALLE, gestión 2026. Integrantes: Josué Padilla y Jaziel Díaz.
 
@@ -24,9 +25,9 @@ La [referencia de EnviroSense](referencias/envirosense/README.md) conserva el c�
 - `docs/`: planificación, instrucciones y evidencias.
 - `referencias/envirosense/`: código de origen conservado para comparación; no forma parte del arranque de GeoCruz.
 
-La base Laravel/Blade, el catálogo, la API y el visor web están integrados mediante PR #23 a #26. Flutter y su consulta de focos se integraron mediante PR #28 y #32. QA-01 se revisó e integró mediante PR #33; sus 11 casos por cliente y comparación de 25 registros están en [QA-01](docs/qa21/README.md). M1 y sus evidencias están vinculados en los Issues #1 a #14. La aprobación académica sigue pendiente.
+La base Laravel/Blade, el catálogo, la API y el visor web están integrados mediante PR #23 a #26. Flutter y su consulta de focos se integraron mediante PR #28 y #32. QA-01 se revisó e integró mediante PR #33; sus 11 casos por cliente y comparación de 25 registros están en [QA-01](docs/qa21/README.md). M1 y sus evidencias están vinculados en los Issues #1 a #14. Josué confirmó la aceptación académica de M1 y M2 el 26/10; la revisión de los cambios de M3 se realiza aparte.
 
-En esta rama de M3, el [visor de sequías #37](docs/WEB02_VISOR_SEQUIAS.md) usa la API #36 / PR #43 todavía para revisión. Abrir <http://127.0.0.1:5790/modulos/sequias?mesFinal=2024-09>; arrancar con `./herramientas/sequias/iniciar-visor.ps1`. Muestra el piloto histórico preparado, sus faltantes y cobertura; no acredita las otras 55 series ni la integración móvil. Los módulos de inundaciones, deforestación y calidad del aire siguen pendientes. La web no se declara integrada en `develop` por existir esta rama.
+El [visor de sequías #37](docs/WEB02_VISOR_SEQUIAS.md) y la API #36 ya están integrados en develop mediante los PR #45 y #43. Muestra el piloto histórico preparado, sus faltantes y cobertura; no acredita las otras 55 series ni la integración móvil. El recorrido de inicio y acceso de esta rama sigue en revisión mediante PR #51. En esta copia, iniciar `./iniciar-web.ps1 -Puerto 5791` y abrir <http://127.0.0.1:5791/>; crear una cuenta para entrar al mapa y a las consultas. Los módulos de inundaciones, deforestación y calidad del aire siguen pendientes.
 
 API de #18: [contrato y pruebas manuales](compartido/api/README.md). En esta copia de trabajo puede iniciarse con `./iniciar-api.ps1` y probarse en http://127.0.0.1:8002/api/v1/territorios. La configuración privada está en `web/.env`, excluida de Git. [Resultados y evidencia](docs/API01_FOCOS_CALOR.md).
 

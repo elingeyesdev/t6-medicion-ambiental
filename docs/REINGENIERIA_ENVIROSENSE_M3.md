@@ -1,10 +1,10 @@
 # Adaptación de EnviroSense en M3
 
-Actualización del 26/10/2026, después de la defensa de M1 y M2. Seguimiento: #29, #47, #48, #49 y #50. Josué confirmó que el ingeniero aceptó las dos entregas y pidió continuar modificando EnviroSense con el stack acordado: Laravel/Blade, API común y Flutter.
+Actualización del 27/10/2026, después de la defensa de M1 y M2. Seguimiento: #29, #47, #48, #49, #50 y #53. Josué confirmó que el ingeniero aceptó las dos entregas y pidió continuar modificando EnviroSense con el stack acordado: Laravel/Blade, API común y Flutter.
 
 ## Qué cambiamos del enfoque anterior
 
-La copia de `referencias/envirosense/codigo/` conserva el origen para comparar los cambios. No basta con guardarla y construir otro producto sin relación funcional: la implementación activa es la adaptación de ese sistema, seleccionando y mejorando sus funciones según el Planner. El panel se identifica como **EnviroSense / GeoCruz**. No se vuelve a crear una aplicación Laravel ni se desechan API, geometrías, pruebas o consultas ya aceptadas.
+La copia de `referencias/envirosense/codigo/` conserva el origen para comparar los cambios. No basta con guardarla y construir otro producto sin relación funcional: la implementación activa es la adaptación de ese sistema, seleccionando y mejorando sus funciones según el Planner. El producto se identifica como **EnviroSense**, con los módulos de GeoCruz integrados. No se vuelve a crear una aplicación Laravel ni se desechan API, geometrías, pruebas o consultas ya aceptadas.
 
 El ingeniero no exigió conservar todas las funciones originales. El alcance sigue siendo los cinco módulos ambientales; los componentes ajenos a ese plan no se incorporan al producto activo. Las entregas documentales anteriores conservan sus versiones originales; este ajuste registra la decisión posterior.
 
@@ -27,10 +27,17 @@ Las rutas siguientes pertenecen a `referencias/envirosense/codigo/`. La lectura 
 
 Esta selección es funcional: no se afirma una conversión automática de JSX a PHP ni que los sistemas mantengan las mismas dependencias. No se ejecutan React/Express o los servicios de demostración del referente para arrancar esta adaptación.
 
+## Ajuste de recorrido - 27/10
+
+Josué aclaró que conservar la esencia de EnviroSense incluye **inicio, acceso y mapa**, además del aspecto. #53 recupera ese recorrido dentro del PR #51: portada pública breve, registro, ingreso y salida con sesiones de Laravel; los módulos se abren dentro del panel de EnviroSense. La marca deja de presentarse como una mezcla de dos productos. Las cuentas no migran desde el referente; no se recuperan roles, correo o servicios ajenos al plan por defecto. La decisión anterior de dejar fuera todo el acceso queda sustituida para este alcance concreto.
+
+Los controles siguen usando Tabler 1.7.1 y los textos se reducen. La fuente, vigencia, cobertura y límites no se pierden: quedan en el detalle o en secciones desplegables, con errores y estados anteriores identificados. Ver [ACCESO_ENVIROSENSE.md](ACCESO_ENVIROSENSE.md). El trabajo adicional de #53 requiere revisar capacidad y fechas del Planner; no se presume incluido en las 18 horas estimadas antes de este ajuste.
+
 ## Trabajo añadido al Planner
 
 - **#29 MIG-01:** agrupa la integración de GeoCruz en EnviroSense y su comparación con el origen.
-- **#47 REF-WEB, Josué / revisión de Jaziel:** Tabler, navegación, pantallas visibles, organización y recorrido de web. Usa #37 / PR #45; su aceptación sigue siendo necesaria.
+- **#47 REF-WEB, Josué / revisión de Jaziel:** Tabler, navegación, pantallas visibles, organización y recorrido de web. Usa #37 / PR #45, ya aprobado e integrado. El recorrido ampliado de #51 necesita revisión propia.
+- **#53 ACC-01, Josué / revisión de Jaziel:** inicio público, registro, acceso y mapa de EnviroSense, integrado en el mismo PR #51. Añade alcance al ajuste inicial.
 - **#48 REF-MOV, Jaziel / revisión de Josué:** Material 3, menú disponible y componentes comunes de Flutter, coordinados con sequías #38.
 - **#49 DEP-01, Josué / revisión de Jaziel:** PostgreSQL, preparación de Railway, persistencia, CI y verificación de URL. Cuenta y publicación real pendientes.
 - **#50 GIT-01, Josué / revisión de Jaziel:** convenciones del curso, plantillas, corte M2, versiones y APK release; permisos administrativos a cargo del propietario.
