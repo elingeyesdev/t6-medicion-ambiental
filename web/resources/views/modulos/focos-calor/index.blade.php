@@ -16,7 +16,7 @@
             <div class="enviro-consulta-cuerpo">
                 <span class="fuente-insignia">NASA FIRMS · VIIRS</span>
                 @include('modulos.focos-calor.filtros')
-                <p class="nota-interpretacion">Una detección térmica <strong>no confirma un incendio</strong>. La confianza no expresa gravedad; la potencia radiativa (MW) no es superficie quemada.</p>
+                <p class="nota-interpretacion">Una detección térmica <strong>no confirma un incendio</strong>.</p>
             </div>
         </details>
         @include('modulos.focos-calor.estado')

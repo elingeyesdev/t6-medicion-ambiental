@@ -1,12 +1,11 @@
 <section id="resultados-focos" hidden aria-labelledby="titulo-resultados" aria-busy="false">
         <div class="contexto-consulta"><div><span class="etiqueta" id="etiqueta-vigencia">CONSULTA APLICADA</span><h2 id="titulo-resultados">Santa Cruz</h2><p id="periodo-aplicado"></p></div><div class="obtencion"><strong id="tipo-obtencion"></strong><span id="fecha-obtencion"></span></div></div>
         <div class="indicadores" aria-label="Resumen del conjunto completo">
-            <article><span>Detecciones del conjunto</span><strong id="total-focos">—</strong><small>Todos los resultados filtrados</small></article>
-            <article><span>Confianza alta</span><strong id="confianza-alta">—</strong><small>Confianza de detección, no gravedad</small></article>
-            <article><span>FRP máxima</span><strong id="frp-maxima">—</strong><small id="frp-validos">Potencia radiativa · MW</small></article>
-            <article><span>Registros con faltantes</span><strong id="total-faltantes">—</strong><small>Los valores ausentes no son cero</small></article>
+            <article><span>Detecciones</span><strong id="total-focos">—</strong><small>Conjunto filtrado</small></article>
+            <article><span>Confianza alta</span><strong id="confianza-alta">—</strong><small>Calidad de detección</small></article>
+            <article><span>FRP máxima</span><strong id="frp-maxima">—</strong><small>Potencia radiativa</small></article>
+            <article><span>Con faltantes</span><strong id="total-faltantes">—</strong><small>Registros</small></article>
         </div>
-        <p class="cobertura" id="estado-cobertura"></p>
             <section class="panel-listado" aria-labelledby="titulo-listado">
                 <div class="encabezado-panel"><h3 id="titulo-listado">Detecciones</h3><span id="conteo-pagina"></span></div>
                 <div id="lista-focos" class="lista-focos"></div>
@@ -17,5 +16,5 @@
             <dl id="campos-detalle" class="campos-detalle"></dl>
             <p id="faltantes-detalle" class="ayuda-filtros"></p>
         </section>
-        <details class="procedencia"><summary>Fuente, cobertura y límites de interpretación</summary><div id="procedencia-consulta"></div></details>
+        <details class="procedencia"><summary>Fuente y detalles</summary><p class="cobertura" id="estado-cobertura"></p><p id="frp-validos"></p><p>La confianza no expresa gravedad. FRP no mide superficie quemada. Los faltantes no equivalen a cero.</p><div id="procedencia-consulta"></div></details>
     </section>

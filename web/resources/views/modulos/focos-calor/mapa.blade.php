@@ -2,7 +2,7 @@
     <div class="encabezado-panel"><h3 id="titulo-mapa">Mapa de detecciones</h3><button type="button" id="centrar-territorio" class="boton-texto">Centrar territorio</button></div>
     <p id="alcance-mapa" class="nota-pagina"></p>
     <div id="mapa-focos" tabindex="-1" aria-label="Mapa interactivo de las detecciones de la página actual"></div>
-    <p class="nota-pagina">Los números agrupan detecciones próximas de esta página. Pulsa un grupo para acercarte y elegir un registro; las coordenadas no se desplazan.</p>
+    <p class="nota-pagina">Pulsa un grupo para ver sus detecciones.</p>
     <section id="grupo-focos" class="grupo-focos" aria-labelledby="titulo-grupo" hidden>
         <div class="encabezado-panel"><h4 id="titulo-grupo" tabindex="-1"></h4><button type="button" id="cerrar-grupo" class="boton-suave">Cerrar grupo</button></div>
         <div id="lista-grupo"></div>

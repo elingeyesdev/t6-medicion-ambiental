@@ -12,7 +12,7 @@
                     <div class="acciones-filtros"><button type="submit" class="btn boton-principal" id="consultar">Consultar focos</button><button type="button" class="btn boton-suave" id="limpiar-periodo">Limpiar fechas</button><button type="button" class="btn boton-suave" id="cancelar-filtros" hidden>Deshacer cambios</button></div>
                 </div>
             </fieldset>
-            <details class="ayuda-consulta"><summary>Cómo consultar</summary><p class="ayuda-filtros">Máximo 7 días. Los calendarios se limitan entre sí; para elegir otro período lejano, pulsa Limpiar fechas. El municipio debe pertenecer a la provincia; sin selección, se consulta todo el departamento.</p></details>
+            <details class="ayuda-consulta"><summary>Ayuda</summary><p class="ayuda-filtros">Máximo 7 días. Sin provincia ni municipio se consulta todo Santa Cruz. Usa Limpiar fechas para cambiar de período.</p></details>
         </form>
         <p id="estado-catalogo" role="status">Cargando catálogo territorial…</p>
         <button type="button" id="reintentar-catalogo" class="btn boton-suave" hidden>Reintentar catálogo</button>

@@ -41,19 +41,19 @@ export class VistaFocos {
         const aviso = document.getElementById('aviso-consulta');
         aviso.dataset.estado = cargando ? 'cargando' : anterior ? 'anterior' : estado.fase;
         let titulo = 'Listo para explorar';
-        let mensaje = 'Revisa los filtros y pulsa Consultar focos. Los resultados se obtienen de la fuente externa.';
+        let mensaje = 'Elige territorio y fechas.';
         if (r) {
             titulo = r.cobertura.estado === 'sin_cobertura' ? 'Sin cobertura para este período' : r.cobertura.estado === 'parcial' ? 'Resultados parciales' : 'Consulta lista';
-            mensaje = 'Mapa y lista corresponden a la misma página. El resumen abarca todo el conjunto filtrado.';
+            mensaje = 'Resultados del período seleccionado.';
             if (r.datos.length === 0) {
                 titulo = r.paginacion.total > 0 ? 'Página sin registros' : 'Sin registros para estos filtros';
-                mensaje = r.paginacion.total > 0 ? 'El conjunto sí contiene detecciones. Vuelve a una página anterior.' : 'La consulta no devolvió detecciones. Esto no demuestra ausencia de incendios ni de otros fenómenos.';
+                mensaje = r.paginacion.total > 0 ? 'Vuelve a la página anterior.' : 'Sin detecciones publicadas. No descarta incendios.';
             }
             if (r.cobertura.estado === 'sin_cobertura') titulo = 'Sin cobertura para este período';
         }
-        if (estado.borrador) { titulo = 'Filtros modificados'; mensaje = r ? 'Los resultados visibles conservan su territorio y período anteriores. Aplica los nuevos filtros o deshaz los cambios.' : 'Pulsa Consultar focos para aplicar la selección.'; }
-        if (cargando) { titulo = 'Consultando la fuente…'; mensaje = r ? 'Se conservan los resultados anteriores, identificados abajo. Espera la nueva respuesta.' : 'Estamos consultando NASA FIRMS desde GeoCruz. Puede tardar unos segundos.'; }
-        if (estado.fase === 'error') { titulo = estado.error?.codigo === 'CONJUNTO_CAMBIADO' ? 'El conjunto de consulta expiró' : 'No se pudo completar la consulta'; mensaje = `${estado.error?.message || 'Reintenta más tarde.'}${r ? ' Los resultados anteriores se conservan con sus fechas y filtros originales.' : ' No se sustituyeron por datos de demostración.'}`; }
+        if (estado.borrador) { titulo = 'Filtros modificados'; mensaje = r ? 'Aplica los cambios. El mapa conserva la consulta anterior.' : 'Pulsa Consultar focos.'; }
+        if (cargando) { titulo = 'Consultando NASA FIRMS…'; mensaje = r ? 'El mapa conserva la consulta anterior.' : 'Espera unos segundos.'; }
+        if (estado.fase === 'error') { titulo = estado.error?.codigo === 'CONJUNTO_CAMBIADO' ? 'La consulta venció' : 'No se pudo consultar'; mensaje = `${estado.error?.message || 'Reintenta más tarde.'}${r ? ' Se conserva la consulta anterior.' : ''}`; }
         texto('titulo-estado', titulo); texto('mensaje-estado', mensaje);
         document.getElementById('reintentar').hidden = estado.fase !== 'error' || estado.error?.codigo === 'CONJUNTO_CAMBIADO' || !estado.pendiente;
         document.getElementById('reiniciar').hidden = estado.error?.codigo !== 'CONJUNTO_CAMBIADO';
@@ -76,7 +76,7 @@ export class VistaFocos {
         texto('titulo-resultados', this.nombres.get(territorio.identificador) ?? territorio.identificador);
         texto('periodo-aplicado', `${fechaBolivia(r.consulta.periodo.desde)} → ${fechaBolivia(r.consulta.periodo.hasta)} · Bolivia · final excluido`);
         const obt = r.consulta.obtencion;
-        texto('tipo-obtencion', obt.tipo === 'cache' ? `Datos en caché · ${numero(Math.floor(obt.antiguedadSegundos / 60))} min de antigüedad al responder` : 'Datos recuperados de la fuente');
+        texto('tipo-obtencion', obt.tipo === 'cache' ? `Caché · ${numero(Math.floor(obt.antiguedadSegundos / 60))} min al consultar` : 'NASA FIRMS · consulta directa');
         texto('fecha-obtencion', `Recuperación: ${fechaBolivia(obt.fechaRecuperacion)} · Bolivia`);
         const indicador = codigo => r.resumen.indicadores.find(i => i.codigo === codigo);
         texto('total-focos', numero(r.resumen.totalRegistros));
@@ -86,7 +86,7 @@ export class VistaFocos {
         texto('total-faltantes', numero(r.resumen.registrosConFaltantes));
         const cobertura = { desconocida: 'Cobertura desconocida', parcial: 'Cobertura parcial', sin_cobertura: 'Sin cobertura comprobada', disponible: 'Datos disponibles con límites del producto' };
         texto('estado-cobertura', `${cobertura[r.cobertura.estado] ?? 'Cobertura no informada'}. ${r.cobertura.fundamento}`);
-        texto('alcance-mapa', `Mapa y lista: ${numero(r.datos.length)} de ${numero(r.paginacion.total)} detecciones. Los puntos corresponden solo a la página actual.`);
+        texto('alcance-mapa', `Mapa: ${numero(r.datos.length)} de ${numero(r.paginacion.total)} detecciones · página ${r.paginacion.pagina}`);
         texto('conteo-pagina', `${numero(r.datos.length)} en esta página`);
         texto('pagina-actual', `Página ${r.paginacion.pagina} de ${Math.max(1, Math.ceil(r.paginacion.total / r.paginacion.tamanioPagina))}`);
         const lista = document.getElementById('lista-focos'); lista.replaceChildren();

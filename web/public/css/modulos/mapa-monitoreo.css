@@ -52,7 +52,7 @@
 .enviro-controles .estado-consulta[data-estado="error"], .enviro-controles .estado-consulta[data-estado="anterior"] { background: #fff6e9; }
 .enviro-controles .estado-consulta[data-estado="cargando"] { background: var(--enviro-suave); }
 .enviro-consulta .nota-interpretacion { font-size: 10px; margin: 0; color: var(--enviro-secundario); }
-#resultados-focos { position: absolute; right: 16px; top: 70px; width: 340px; max-height: calc(100% - 246px); overflow: auto; z-index: 402; padding: 16px; border: 1px solid var(--enviro-borde); border-radius: 10px; background: var(--enviro-panel); box-shadow: 0 2px 10px #0b132b12; }
+#resultados-focos { position: absolute; right: 16px; top: 70px; width: 340px; max-height: calc(100% - 190px); overflow: auto; z-index: 402; padding: 16px; border: 1px solid var(--enviro-borde); border-radius: 10px; background: var(--enviro-panel); box-shadow: 0 2px 10px #0b132b12; }
 #resultados-focos .contexto-consulta { display: block; margin: 0 0 14px; }
 .contexto-consulta h2 { font-size: 22px; font-weight: 500; }
 .obtencion { text-align: left; margin-top: 10px; max-width: none; }

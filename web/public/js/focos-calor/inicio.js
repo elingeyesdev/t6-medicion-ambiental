@@ -68,7 +68,7 @@ function iniciar() {
                 }
             }
             document.getElementById('campos-filtros').disabled = false;
-            document.getElementById('estado-catalogo').textContent = 'Límites de referencia OCHA/HDX · catálogo en revisión. Las autonomías conservan su denominación.';
+            document.getElementById('estado-catalogo').textContent = 'Límites de referencia: OCHA/HDX.';
             if (consultaEnUrl) {
                 const preseleccion = Object.fromEntries(['desde', 'hasta', 'provincia', 'municipio', 'confianza'].filter(k => parametros.has(k)).map(k => [k, parametros.get(k)]));
                 // Una URL desconocida no se transforma silenciosamente en el departamento completo.

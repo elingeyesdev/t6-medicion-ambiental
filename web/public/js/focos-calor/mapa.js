@@ -119,7 +119,8 @@ export class MapaFocos {
             const derecha = escritorio && !resultados?.hidden ? resultados.offsetWidth + 32 : 18;
             // Con poco espacio se muestra el contorno completo y se pueden plegar los filtros.
             const cabenPaneles = ancho - izquierda - derecha > 200;
-            this.mapa?.fitBounds(this.limite.getBounds(), { paddingTopLeft: [cabenPaneles ? izquierda : 18, 65], paddingBottomRight: [cabenPaneles ? derecha : 18, 100], maxZoom: 11, animate: false });
+            const arriba = escritorio && !controles?.open ? (document.querySelector('.enviro-controles')?.offsetHeight ?? 35) + 40 : 65;
+            this.mapa?.fitBounds(this.limite.getBounds(), { paddingTopLeft: [cabenPaneles ? izquierda : 18, arriba], paddingBottomRight: [cabenPaneles ? derecha : 18, 100], maxZoom: 11, animate: false });
         }
         else if (this.marcadores.size) this.mapa?.fitBounds(window.L.featureGroup([...this.marcadores.values()]).getBounds(), { padding: [25, 25], maxZoom: 10, animate: false });
     }

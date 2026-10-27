@@ -46,7 +46,7 @@ function renderizar(e) {
     $('sq-estado').dataset.fase = e.fase;
     $('sq-resultados').hidden = !e.actual;
     $('sq-resultados').setAttribute('aria-busy', String(e.fase === 'cargando'));
-    $('sq-vigencia').textContent = anterior ? 'RESULTADO ANTERIOR · NO CORRESPONDE A UNA NUEVA CONSULTA' : 'CONSULTA APLICADA';
+    $('sq-vigencia').textContent = anterior ? 'RESULTADO ANTERIOR' : 'CONSULTA APLICADA';
     $('sq-restaurar').hidden = !e.actual || (!e.borrador && e.fase !== 'error');
     $('sq-reintentar').hidden = !['error', 'anterior'].includes(e.fase) || (!e.pendiente && !e.error);
     const titulos = { cargando: 'Consultando las muestras preparadas…', error: 'No se pudo completar la consulta', anterior: 'Resultado anterior', inicial: 'Elige territorio y mes', listo: 'Consulta disponible' };
@@ -59,15 +59,15 @@ function renderizar(e) {
             PERIODO_NO_DISPONIBLE: 'La publicación de este período no está disponible o ha vencido. Puedes reintentar cuando se renueve.',
             DATOS_INVALIDOS: 'No se pudo verificar la integridad de la publicación. Informa al equipo y reintenta más tarde.',
         };
-        mensaje = (explicaciones[e.error.codigo] ?? e.error.message) + (e.actual ? ' Lo visible corresponde a la consulta anterior, con su período original.' : ' No se muestran índices inventados.');
-    } else if (e.borrador) mensaje = 'Cambiaste los filtros. Pulsa Consultar sequías para aplicarlos o restaura la selección anterior.';
-    else if (e.fase === 'cargando') mensaje = 'La visita lee resultados publicados; no descarga historia ni recalcula el indicador. Los resultados anteriores, si existen, siguen identificados.';
+        mensaje = (explicaciones[e.error.codigo] ?? e.error.message) + (e.actual ? ' Se conserva la consulta anterior.' : '');
+    } else if (e.borrador) mensaje = 'Aplica los cambios o restaura la consulta anterior.';
+    else if (e.fase === 'cargando') mensaje = 'Consultando datos publicados.';
     else if (e.fase === 'listo') {
         const r = e.actual?.respuesta;
         if (r && !r.datos.length) { titulo = 'Sin resultados'; mensaje = 'La respuesta válida no contiene muestras publicadas.'; }
         else if (r && !r.resumen.muestrasConIndice) { titulo = 'Muestras publicadas sin índice calculable'; mensaje = 'Consulta el motivo en cada ficha. Sin índice no significa normal ni cero.'; }
-        else mensaje = r?.cobertura.estadoDatos === 'parcial' ? 'Hay muestras pendientes. El resumen y el mapa solo describen las publicadas.' : 'Los resultados corresponden al período mostrado, no necesariamente a condiciones actuales.';
-    } else mensaje = 'Elige un mes completo. Un valor ausente nunca se interpreta como normal.';
+        else mensaje = r?.cobertura.estadoDatos === 'parcial' ? 'Cobertura parcial: hay muestras pendientes.' : 'Datos del período seleccionado.';
+    } else mensaje = 'Elige territorio y mes.';
     $('sq-titulo-estado').textContent = titulo; $('sq-mensaje-estado').textContent = mensaje;
     if (e.actual && e.actual !== renderizado) {
         renderizado = e.actual; vista.mostrar(e.actual.respuesta);
