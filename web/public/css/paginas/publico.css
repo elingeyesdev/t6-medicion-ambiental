@@ -53,7 +53,7 @@
     .portada-mapa img { height: 300px; }
     .portada-modulos { padding: 28px 20px; }
     .portada-pie { flex-direction: column; padding-inline: 20px; }
-    .acceso-distribucion { grid-template-columns: 1fr; }
+    .acceso-distribucion { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
     .acceso-referencia { min-height: 0; padding: 24px; }
     .acceso-referencia > img, .acceso-referencia > div { display: none; }
     .acceso-formulario { padding: 24px; align-items: start; }
