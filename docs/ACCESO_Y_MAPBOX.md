@@ -4,15 +4,19 @@ Josué indicó el 27/10 que el acceso, la paleta y el mapa gris no correspondía
 
 ## Plantilla y apariencia
 
-El acceso y el registro usan la composición oficial **Sign in with cover de Tabler**: fila sin separaciones, columna de formulario `col-12 col-lg-6 col-xl-4`, borde superior primario, `container-tight` y cubierta `col-lg-6 col-xl-8`. Referencia: https://preview.tabler.io/sign-in-cover.html. Tabler 1.7.1 permanece local y sin editar; su licencia e integridad están en `web/public/vendor/tabler/`.
+La base es **Tabler 1.7.1**, la distribución libre de `@tabler/core`, sobre Bootstrap 5. Aporta controles, formularios, tarjetas y rejilla. Sus archivos originales y licencia siguen intactos en `web/public/vendor/tabler/`.
 
-Las adaptaciones propias son el nombre/logo, los campos Laravel, los textos breves, el verde de la marca y la fotografía real de Amboró. No se usa el fondo financiero de la demostración de Tabler. Fuente y licencia de la foto: `web/public/img/amboro/LEEME.md`. El diseño se reduce a una columna en celular; no se mantiene un mapa decorativo gigante junto al formulario.
+El acceso partió del ejemplo Sign in with cover. En #57 se conserva una composición propia de formulario: tarjeta clara y foto lateral en escritorio. Comparte cabecera, pie, colores y botones con el inicio; no repite su portada. La portada y la disposición actual del formulario son una adaptación propia de GeoCruz con componentes de Tabler, no una página copiada sin cambios del catálogo. No hay dos templates distintos.
 
-- `layouts/acceso.blade.php`: composición de cubierta.
-- `acceso/entrar.blade.php` y `acceso/registro.blade.php`: formularios con validación y CSRF.
-- `public/css/paginas/publico.css`: base pública y cubierta de acceso.
-- `public/css/paginas/inicio.css`: portada, foto y tarjetas de consultas, separadas del acceso.
-- `public/css/panel/panel.css`: colores y controles compartidos.
+- `components/publico/cabecera.blade.php`, `paisaje.blade.php` y `pie.blade.php`: cabecera y pie comunes; paisaje reservado para la portada.
+- `layouts/acceso.blade.php`: organiza la tarjeta del formulario y su foto lateral.
+- `acceso/entrar.blade.php` y `acceso/registro.blade.php`: campos y validación Laravel, con CSRF.
+- `public/css/paginas/publico.css`: botones, cabecera, foto, pie y acceso compartidos.
+- `public/css/paginas/inicio.css`: solo presentación y tarjetas de la portada.
+
+Sobre fondo blanco la acción principal es verde; sobre la fotografía es blanca con texto verde, como el inicio elegido. Las acciones secundarias sobre la foto tienen borde. Los botones comparten tamaño de texto de 16 px, altura mínima de 48 px y esquinas de 6 px. El logo y los verdes son de GeoCruz; la interfaz usa Segoe UI con alternativas Arial/sans-serif, sin cargar Space Grotesk. La foto es real de Amboró, con su procedencia en `web/public/img/amboro/LEEME.md` y crédito en el pie.
+
+Referencias oficiales: [Tabler](https://tabler.io/admin-template), [botones](https://docs.tabler.io/ui/components/button) y [ejemplo de acceso original](https://preview.tabler.io/sign-in-cover.html).
 
 ## Mapa base
 
@@ -44,8 +48,21 @@ En este PC: http://127.0.0.1:5791/login, con la misma cuenta demo local. Comprob
 
 ## Lectura y portada revisadas · 27/10
 
-Se quitaron los rótulos decorativos en mayúsculas, la explicación repetida de los colores y la tarjeta inicial sin resultados. Los filtros usan etiquetas de 15 px y campos de 16 px. Resultados, leyenda y ayudas usan 14 px como mínimo, sin modificar los créditos obligatorios de las teselas. El aviso de una consulta normal se conserva para lectores de pantalla; los estados de carga, error, filtros modificados, vacío y cobertura parcial siguen visibles.
+Se quitaron los rótulos decorativos en mayúsculas, la explicación repetida de los colores y la tarjeta inicial sin resultados. Los filtros usan etiquetas y campos de 16 px. Resultados, leyenda y ayudas usan 16 px como base, sin modificar los créditos obligatorios de las teselas. El aviso de una consulta normal se conserva para lectores de pantalla; los estados de carga, error, filtros modificados, vacío y cobertura parcial siguen visibles.
 
-Fuentes, interpretación y reglas de fechas están en Acerca de esta consulta / Fuente y detalles. La leyenda se titula Confianza. El período mantiene el límite final excluido; no cambia la API. La portada usa la misma fotografía real a mayor tamaño, acciones breves y tarjetas Tabler diferenciadas por consulta. No se añaden cifras, fuentes nuevas ni pantallas pendientes.
+Fuentes, interpretación y reglas de fechas están en Acerca de esta consulta / Fuente y detalles. La leyenda identifica las detecciones de calor; la confianza aparece en cada registro. El período mantiene el límite final excluido; no cambia la API. La portada usa la misma fotografía real a mayor tamaño, acciones breves y tarjetas Tabler diferenciadas por consulta. No se añaden cifras, fuentes nuevas ni pantallas pendientes.
 
-La apariencia de inicio está en `css/paginas/inicio.css`; la cubierta y los estilos públicos comunes siguen en `css/paginas/publico.css`. Los archivos de Tabler no se editan.
+La apariencia de inicio está en `css/paginas/inicio.css`; el acceso y los estilos públicos comunes siguen en `css/paginas/publico.css`. Los archivos de Tabler no se editan.
+
+
+## Lectura y mapa de calor · #58
+
+El aviso visible es Cargando. Fuentes, potencia radiativa y demás datos técnicos se conservan en Fuente y detalles / Más información. El resumen destaca las detecciones y la confianza alta; el encabezado es verde y los indicadores tienen fondos diferenciados. Las filas muestran municipio abreviado, fecha, confianza y Ver detalle. La denominación oficial completa permanece en el detalle y en la descripción accesible.
+
+El texto del visor usa 16 px como base, sin encabezados pequeños en mayúsculas. Las detecciones se dibujan con una llama naranja derivada del SVG flame de Tabler, y los grupos con llama y cantidad. El naranja identifica calor; no representa confianza ni confirma un incendio. La confianza se muestra con su etiqueta, no como un punto verde.
+
+Se habilita `scrollWheelZoom` de Leaflet en focos y sequías. El manejo se limita al mapa: no se desactiva el zoom del navegador en el resto de la página. Comprobación real en focos: la rueda cambió las teselas del nivel 6 al 10, con escala de página 1, mismo devicePixelRatio y scroll de página 0. El SVG cambia la representación, no las coordenadas ni la agrupación de datos.
+
+Código de las filas y símbolos: `js/focos-calor/elementos.js`; nombres breves y agrupación: `representacion.js`; interacción cartográfica: `mapa.js`. Las pruebas verifican selección de registros coincidentes, teclado y preservación de coordenadas.
+
+Para nuevas pantallas se mantiene texto normal de 16 px, controles reconocibles y títulos breves. Los nombres de proveedores, métricas y detalles de procedencia van en los apartados de información; el aviso de espera es Cargando. Compartir componentes no obliga a repetir la distribución de la portada en los formularios.
