@@ -1,6 +1,5 @@
 /* Recorrido público y acceso de EnviroSense, con componentes Tabler.
    Reinterpreta LandingHeader/Hero y la distribución split de AuthHero/Auth.css. */
-.marca-envirosense { display: inline-flex; gap: 12px; align-items: center; color: var(--enviro-texto); }
 .pagina-publica a { text-decoration: none; }
 .pagina-publica .btn { border-radius: 6px; min-height: 42px; gap: 10px; }
 .pagina-publica .btn-primary { background: #287b79; border-color: #287b79; }

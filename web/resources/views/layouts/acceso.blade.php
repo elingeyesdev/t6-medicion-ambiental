@@ -3,7 +3,7 @@
 @section('contenido')
 <div class="acceso-distribucion">
     <aside class="acceso-referencia">
-        <a href="{{ route('inicio') }}" aria-label="Volver al inicio de EnviroSense"><x-panel.marca /></a>
+        <a href="{{ route('inicio') }}" aria-label="Volver al inicio de GeoCruz"><x-panel.marca /></a>
         <img src="{{ asset('img/envirosense/santa-cruz.svg') }}" alt="Provincias de Santa Cruz" width="560" height="610">
         <div><p class="etiqueta">Santa Cruz · Bolivia</p><h2>Observación ambiental</h2><p>Mapa, datos y consultas.</p></div>
     </aside>
