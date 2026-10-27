@@ -10,13 +10,13 @@
                     <h1>@yield('encabezado')</h1>
                     @yield('formulario')
                 </section>
-                <aside class="col-lg-6 acceso-foto d-none d-lg-block" aria-label="Parque Nacional Amboró">
-                    <img src="{{ asset('img/amboro/selva-amboro.jpg') }}" alt="Selva del Parque Nacional Amboró, Santa Cruz" width="1280" height="960">
-                    <span>Parque Nacional Amboró</span>
+                <aside class="col-lg-6 acceso-foto d-none d-lg-block" aria-label="Lomas de Arena">
+                    <img src="{{ asset('img/lomas-arena/lomas-arena.jpg') }}" alt="Dunas y laguna de Lomas de Arena, Santa Cruz" width="1280" height="960">
+                    <span>Lomas de Arena · Santa Cruz</span>
                 </aside>
             </div>
         </div>
     </div>
 </main>
-<x-publico.pie />
+<x-publico.pie fotografia="lomas" />
 @endsection
