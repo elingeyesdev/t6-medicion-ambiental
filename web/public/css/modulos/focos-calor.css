@@ -68,11 +68,19 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 .llama-interior { fill: #fde68a; }
 .marcador-calor { background: transparent; border: 0; }
 .marcador-calor:focus-visible { outline: 3px solid #166534; outline-offset: 3px; }
+.seleccion-foco { background: transparent; border: 0; pointer-events: none; }
+.seleccion-calor { display: block; position: relative; width: 64px; height: 64px; }
+.seleccion-calor .marco-seleccion { position: absolute; inset: 0; width: 64px; height: 64px; overflow: visible; filter: drop-shadow(0 1px 3px #000a); stroke-linecap: round; stroke-linejoin: round; }
+.marco-contraste { stroke: #fff; stroke-width: 7px; }
+.marco-color { stroke: #c9530c; stroke-width: 3px; }
+.seleccion-calor > .simbolo-calor { position: absolute; left: 15px; top: 13px; width: 34px; height: 38px; }
 .agrupacion-focos { border: 2px solid #fff; border-radius: 7px; background: #b94b13; color: #fff; box-shadow: 0 1px 4px #45210c55; }
 .agrupacion-focos .simbolo-calor svg { width: 24px; height: 30px; filter: none; }
 .agrupacion-focos .simbolo-calor strong { font: 700 17px/1 'Segoe UI',Arial,sans-serif; }
 .agrupacion-focos:focus-visible, .opcion-grupo:focus-visible { outline: 3px solid #166534; outline-offset: 3px; }
 .etiqueta-deteccion { font: 16px/1.5 var(--tblr-font-sans-serif); width: 290px; max-width: calc(100vw - 80px); white-space: normal; line-height: 1.5; }
+.etiqueta-deteccion strong, .etiqueta-deteccion span > span { display: block; }
+.etiqueta-deteccion strong { color: #88400e; font-weight: 600; }
 .grupo-focos { padding: 14px; }
 .grupo-focos h4 { margin: 0; }
 #lista-grupo { display: grid; gap: 8px; max-height: 220px; overflow: auto; }

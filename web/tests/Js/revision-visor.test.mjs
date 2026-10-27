@@ -57,31 +57,71 @@ test('etiqueta comprensible conserva fecha Bolivia, municipio, confianza y FRP, 
     assert.match(etiquetaDeteccion({ ...foco, atributos: { ...foco.atributos, potenciaRadiativa: null } }), /Municipio no determinado.*Sin dato/);
 });
 
-test('cambiar de selección y cerrar detalle elimina etiqueta y anillo anteriores en sus coordenadas reales', () => {
-    const ventanaAnterior = globalThis.window, documentoAnterior = globalThis.document;
+test('cada elección centra su coordenada y sustituye el marco y etiqueta, incluso con ubicaciones repetidas', () => {
+    const anteriores = { window: globalThis.window, document: globalThis.document, matchMedia: globalThis.matchMedia };
     const capas = new Set();
     const capa = (tipo, posicion) => ({ tipo, posicion, addTo() { capas.add(this); return this; }, remove() { capas.delete(this); }, setLatLng(p) { this.posicion = p; return this; }, setContent(c) { this.contenido = c.textContent; return this; } });
-    globalThis.window = { L: { circleMarker: p => capa('anillo', p), tooltip: () => capa('etiqueta') } };
-    globalThis.document = { createElement: () => ({ textContent: '' }) };
+    globalThis.window = { L: { marker: p => capa('seleccion', p), divIcon: o => o, latLngBounds: p => p, tooltip: () => capa('etiqueta') } };
+    globalThis.document = { createElement: () => ({ textContent: '', append(...n) { this.textContent += n.map(e => e.textContent).join(' '); } }), getElementById: () => null };
+    globalThis.matchMedia = () => ({ matches: false });
     try {
         const mapa = Object.create(MapaFocos.prototype);
-        mapa.datos = [deteccion('A', -63, 0), deteccion('B', -62, 5)];
-        mapa.mapa = { panInside() {} };
+        mapa.datos = [deteccion('A', -63, 0), deteccion('B', -62, 5), deteccion('C', -62, 6)];
+        const encuadres = [];
+        mapa.mapa = { getZoom: () => 8, fitBounds(p, o) { encuadres.push({ p, o }); } };
+        mapa.panelGrupo = { hidden: false };
         mapa.listaGrupo = { querySelectorAll: () => [] };
         mapa.nombreMunicipio = () => 'Cotoca';
         mapa.seleccionar('A');
+        assert.equal(mapa.panelGrupo.hidden, true);
         const anterior = mapa.etiquetaActual;
+        const marcoAnterior = mapa.seleccionActual;
         assert.deepEqual(anterior.posicion, [-17.7, -63]);
         mapa.seleccionar('B');
         assert.equal(capas.has(anterior), false);
+        assert.equal(capas.has(marcoAnterior), false);
         assert.equal([...capas].filter(c => c.tipo === 'etiqueta').length, 1);
+        assert.equal([...capas].filter(c => c.tipo === 'seleccion').length, 1);
         assert.deepEqual(mapa.etiquetaActual.posicion, [-17.7, -62]);
+        assert.deepEqual(mapa.seleccionActual.posicion, [-17.7, -62]);
         assert.match(mapa.etiquetaActual.contenido, /Cotoca/);
         assert.doesNotMatch(mapa.etiquetaActual.contenido, /FRP/);
+        assert.deepEqual(encuadres.map(e => e.p), [[[-17.7, -63], [-17.7, -63]], [[-17.7, -62], [-17.7, -62]]]);
+        assert.ok(encuadres.every(e => e.o.maxZoom === 16));
+        mapa.seleccionar('C');
+        assert.deepEqual(mapa.seleccionActual.posicion, [-17.7, -62]);
+        assert.match(mapa.etiquetaActual.contenido, /Detección 3 de 3/);
+        // Un zoom manual redibuja la selección, sin volver a encuadrar ni fijar el zoom.
+        mapa.actualizarSeleccion();
+        assert.equal(encuadres.length, 3);
         mapa.seleccionar(null);
         assert.equal(capas.size, 0);
         assert.equal(mapa.etiquetaActual, null);
-    } finally { globalThis.window = ventanaAnterior; globalThis.document = documentoAnterior; }
+        assert.equal(mapa.seleccionActual, null);
+    } finally { Object.assign(globalThis, anteriores); }
+});
+
+test('la selección deja sitio a los paneles y libera el grupo si la ventana es estrecha, sin alejar un zoom mayor', () => {
+    const anteriores = { window: globalThis.window, document: globalThis.document, matchMedia: globalThis.matchMedia };
+    const controles = { open: true }, resultados = { hidden: false, offsetWidth: 360 };
+    globalThis.window = { L: { latLngBounds: p => p } };
+    globalThis.document = { getElementById: id => ({ 'controles-mapa': controles, 'resultados-focos': resultados })[id] };
+    globalThis.matchMedia = () => ({ matches: true });
+    try {
+        const mapa = Object.create(MapaFocos.prototype), encuadres = [];
+        let ancho = 1208;
+        mapa.panelGrupo = { hidden: false, offsetWidth: 316 };
+        mapa.mapa = { getSize: () => ({ x: ancho }), getZoom: () => 18, fitBounds(p, o) { encuadres.push(o); } };
+        mapa.centrarDeteccion(deteccion('A', -63, 0));
+        assert.equal(controles.open, false);
+        assert.deepEqual(encuadres[0].paddingTopLeft, [352, 100]);
+        assert.deepEqual(encuadres[0].paddingBottomRight, [392, 80]);
+        assert.equal(encuadres[0].maxZoom, 18);
+        ancho = 800;
+        mapa.centrarDeteccion(deteccion('A', -63, 0));
+        assert.equal(mapa.panelGrupo.hidden, true);
+        assert.deepEqual(encuadres[1].paddingTopLeft, [32, 100]);
+    } finally { Object.assign(globalThis, anteriores); }
 });
 
 test('la fila abrevia municipios largos sin modificar la denominación ni la etiqueta completa', () => {

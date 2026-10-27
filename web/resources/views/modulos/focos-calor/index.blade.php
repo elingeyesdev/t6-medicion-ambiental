@@ -12,7 +12,7 @@
     @include('modulos.focos-calor.mapa')
     <div class="enviro-controles">
         <details class="enviro-consulta" id="controles-mapa" open>
-            <summary class="enviro-consulta-titulo"><x-panel.icono nombre="flame" /><h1>Focos de calor</h1><span class="enviro-plegar" aria-hidden="true">⌃</span></summary>
+            <summary class="enviro-consulta-titulo"><x-panel.icono nombre="flame" /><h1>Focos de calor</h1><span class="enviro-plegar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg></span></summary>
             <div class="enviro-consulta-cuerpo">
                 @include('modulos.focos-calor.filtros')
             </div>

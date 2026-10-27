@@ -16,6 +16,14 @@ export function crearSimboloCalor(cantidad = null) {
     return simbolo;
 }
 
+export function crearSeleccionCalor() {
+    const seleccion = document.createElement('span');
+    seleccion.className = 'seleccion-calor';
+    seleccion.innerHTML = '<svg class="marco-seleccion" viewBox="0 0 64 64" fill="none" aria-hidden="true"><path class="marco-contraste" d="M22 6H6v16M42 6h16v16M58 42v16H42M22 58H6V42"/><path class="marco-color" d="M22 6H6v16M42 6h16v16M58 42v16H42M22 58H6V42"/></svg>';
+    seleccion.append(crearSimboloCalor());
+    return seleccion;
+}
+
 export function crearContenidoFoco(foco, municipio) {
     const nodo = (tipo, texto, clase) => {
         const e = document.createElement(tipo); e.textContent = texto; e.className = clase; return e;

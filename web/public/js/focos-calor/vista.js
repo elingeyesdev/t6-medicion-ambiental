@@ -116,7 +116,6 @@ export class VistaFocos {
         const f = r?.datos.find(foco => foco.identificador === id);
         if (!f) return;
         this.origenDetalle = origen;
-        this.mapa.seleccionar(id);
         document.querySelectorAll('.fila-foco').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.foco === id)));
         const campos = document.getElementById('campos-detalle'); campos.replaceChildren();
         const extras = document.getElementById('campos-detalle-extra'); extras.replaceChildren();
@@ -132,7 +131,9 @@ export class VistaFocos {
         valores.forEach(([nombre, valor]) => { const grupo = nodo('div'); grupo.append(nodo('dt', nombre), nodo('dd', valor)); (principales.has(nombre) ? campos : extras).append(grupo); });
         texto('faltantes-detalle', f.faltantes.length ? `Faltantes: ${f.faltantes.map(x => `${x.campo}: ${x.motivo}`).join(' · ')}` : 'Sin faltantes declarados en los atributos del registro. Un foco térmico no confirma un incendio.');
         document.getElementById('detalle-foco').hidden = false;
+        texto('titulo-detalle', `Detección ${r.datos.indexOf(f) + 1} de ${r.datos.length}`);
+        this.mapa.seleccionar(id);
         document.getElementById('titulo-detalle').focus({ preventScroll: true });
-        document.getElementById('detalle-foco').scrollIntoView({ block: 'nearest', behavior: 'instant' });
+        if (matchMedia('(max-width: 767.98px)').matches) document.getElementById(this.mapa.contenedor).scrollIntoView({ block: 'center', behavior: 'instant' });
     }
 }

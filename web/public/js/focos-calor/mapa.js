@@ -1,6 +1,6 @@
 import { agruparProximos, etiquetaDeteccion, etiquetaBreveDeteccion } from './representacion.js';
 import { iniciarMapaBase } from '../mapas/base.js';
-import { crearSimboloCalor, crearContenidoFoco } from './elementos.js';
+import { crearSimboloCalor, crearContenidoFoco, crearSeleccionCalor } from './elementos.js';
 
 
 /** Leaflet representa la página actual; no recalcula pertenencia ni métricas. */
@@ -131,22 +131,50 @@ export class MapaFocos {
 
     seleccionar(id) {
         this.idSeleccionado = id;
+        const foco = this.datos.find(f => f.identificador === id);
+        if (this.mapa && foco) this.centrarDeteccion(foco);
         this.actualizarSeleccion();
         this.listaGrupo.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.focoGrupo === id)));
     }
 
+    centrarDeteccion(foco) {
+        const posicion = [foco.geometria.coordinates[1], foco.geometria.coordinates[0]];
+        const escritorio = matchMedia('(min-width: 768px)').matches;
+        const controles = document.getElementById('controles-mapa');
+        const resultados = document.getElementById('resultados-focos');
+        if (escritorio && controles) controles.open = false;
+        if (!escritorio) this.panelGrupo.hidden = true;
+        let izquierda = escritorio && !this.panelGrupo.hidden ? this.panelGrupo.offsetWidth + 36 : 32;
+        const derecha = escritorio && resultados && !resultados.hidden ? resultados.offsetWidth + 32 : 32;
+        // Si no cabe la selección entre paneles, se libera el lateral del grupo.
+        if (escritorio && this.mapa.getSize().x - izquierda - derecha < 180) {
+            this.panelGrupo.hidden = true;
+            izquierda = 32;
+        }
+        // A diferencia de panInside, cada elección centra y acerca su posición real.
+        this.mapa.fitBounds(window.L.latLngBounds([posicion, posicion]), {
+            paddingTopLeft: [izquierda, 100], paddingBottomRight: [derecha, 80],
+            maxZoom: Math.max(16, this.mapa.getZoom()), animate: false,
+        });
+    }
+
     actualizarSeleccion() {
-        // Una sola etiqueta administrada por el visor; cambiar o cerrar elimina la anterior.
+        // Solo dibujar: zoomend no debe volver a mover el mapa por una selección antigua.
         this.etiquetaActual?.remove(); this.etiquetaActual = null;
-        this.anilloActual?.remove(); this.anilloActual = null;
+        this.seleccionActual?.remove(); this.seleccionActual = null;
         const foco = this.datos.find(f => f.identificador === this.idSeleccionado);
         if (!this.mapa || !foco) return;
         const [x, y] = foco.geometria.coordinates;
         const posicion = [y, x];
-        // Dejar espacio a la etiqueta sin cambiar la coordenada de la detección.
-        this.mapa.panInside(posicion, { paddingTopLeft: [135, 110], paddingBottomRight: [135, 30], animate: false });
-        this.anilloActual = window.L.circleMarker(posicion, { radius: 15, color: '#173d2e', weight: 3, fill: false, interactive: false, pane: 'seleccionFocos' }).addTo(this.mapa);
-        const contenido = document.createElement('span'); contenido.textContent = etiquetaBreveDeteccion(foco, this.nombreMunicipio(foco.territorio.municipio));
-        this.etiquetaActual = window.L.tooltip({ direction: 'top', offset: [0, -16], className: 'etiqueta-deteccion' }).setLatLng(posicion).setContent(contenido).addTo(this.mapa);
+        // El marco rodea el centro visual de la llama; su pie conserva la coordenada.
+        this.seleccionActual = window.L.marker(posicion, {
+            icon: window.L.divIcon({ html: crearSeleccionCalor(), className: 'seleccion-foco', iconSize: [64, 64], iconAnchor: [32, 46] }),
+            interactive: false, keyboard: false, pane: 'seleccionFocos',
+        }).addTo(this.mapa);
+        const contenido = document.createElement('span');
+        const orden = document.createElement('strong'); orden.textContent = `Detección ${this.datos.indexOf(foco) + 1} de ${this.datos.length}`;
+        const lugar = document.createElement('span'); lugar.textContent = etiquetaBreveDeteccion(foco, this.nombreMunicipio(foco.territorio.municipio));
+        contenido.append(orden, lugar);
+        this.etiquetaActual = window.L.tooltip({ direction: 'top', offset: [0, -52], className: 'etiqueta-deteccion' }).setLatLng(posicion).setContent(contenido).addTo(this.mapa);
     }
 }
