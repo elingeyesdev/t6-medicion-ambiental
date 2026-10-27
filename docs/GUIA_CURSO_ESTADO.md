@@ -28,6 +28,8 @@ Revisión del 26/10/2026 de las 61 páginas de `gitub para equipos en xp.pdf`. S
 
 ## Convención práctica desde este cambio
 
+Actualización del 27/10, #50 / #54: las comprobaciones web y de comparación de clientes aceptan también PR con base `refactor/**`; la comparación acepta `feature/**` como la comprobación web. Esto permite revisar cambios dependientes como #54 sobre la base candidata #51 sin saltarse CI. Se conservan filtros por archivos y permisos de solo lectura. No otorga permisos administrativos ni sustituye la aprobación del compañero.
+
 1. Issue y criterios listos, con EDT/actividad y responsable; trabajar en su rama desde develop actualizado o declarar la dependencia candidata.
 2. Cambios pequeños, pruebas reales y PR a develop con qué cambió, cómo probar y evidencia de esa versión.
 3. El compañero prueba y aprueba; resolver fallos antes de integrar. Borrar ramas fusionadas cuando ya no sean necesarias, sin eliminar worktrees con trabajo pendiente.
