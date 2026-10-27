@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/panel/marca.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('img/marca/geocruz-simbolo.png') }}">
     <link rel="stylesheet" href="{{ asset('css/paginas/publico.css') }}">
+    @stack('estilos')
 </head>
 <body class="pagina-publica @yield('clase-publica')">
     <a class="saltar" href="#contenido">Saltar al contenido</a>
