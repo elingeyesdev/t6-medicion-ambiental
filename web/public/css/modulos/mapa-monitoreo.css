@@ -4,10 +4,8 @@
 #visor-focos { position: relative; height: calc(100dvh - 60px); min-height: 640px; isolation: isolate; }
 #visor-focos .panel-mapa { position: absolute; inset: 0; border: 0; border-radius: 0; overflow: hidden; }
 #mapa-focos { position: absolute; inset: 0; height: 100%; background: #ecf0ee; }
-#mapa-focos .leaflet-tile-pane { filter: grayscale(1); opacity: .8; }
 [data-bs-theme="dark"] #mapa-focos { background: #0b132b; }
-[data-bs-theme="dark"] #mapa-focos .leaflet-tile-pane { filter: grayscale(1) invert(1); opacity: .7; }
-.panel-mapa > .encabezado-panel { position: absolute; top: 18px; right: 16px; z-index: 401; background: var(--enviro-panel); border: 1px solid var(--enviro-borde); border-radius: 6px; padding: 5px 12px; }
+.panel-mapa > .encabezado-panel { position: absolute; top: 18px; right: 16px; z-index: 401; display: flex; gap: 12px; background: var(--enviro-panel); border: 1px solid var(--enviro-borde); border-radius: 6px; padding: 5px 8px; }
 .panel-mapa > .encabezado-panel h3 { display: none; }
 .panel-mapa > .encabezado-panel button { text-decoration: none; color: var(--enviro-secundario); }
 .panel-mapa .leaflet-top.leaflet-left { left: 350px; top: 8px; }
@@ -38,8 +36,8 @@
 .enviro-consulta select { padding-right: 30px; }
 .enviro-consulta label { font-size: 11px; font-weight: 500; color: var(--enviro-secundario); }
 .enviro-consulta label small { font-size: 10px; color: var(--enviro-secundario); }
-.boton-principal { background: var(--enviro-acento); color: #0b132b; border-color: var(--enviro-acento); }
-.boton-principal:hover { background: #49abaa; border-color: #49abaa; }
+.boton-principal { background: #15803d; color: #fff; border-color: #15803d; }
+.boton-principal:hover { background: #116630; border-color: #116630; }
 .boton-suave { background: var(--enviro-panel); color: var(--enviro-secundario); border-color: var(--enviro-borde); }
 .acciones-filtros { gap: 6px; }
 .acciones-filtros .boton-principal { width: 100%; margin-top: 3px; font-size: 12px; }

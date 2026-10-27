@@ -40,7 +40,7 @@
         <p class="sq-cobertura" id="sq-cobertura"></p>
         <div class="sq-rejilla-visor">
             <section class="sq-panel" aria-labelledby="sq-titulo-mapa">
-                <div class="sq-encabezado"><h3 id="sq-titulo-mapa">Mapa de muestras</h3><button class="sq-texto" type="button" id="sq-centrar">Centrar</button></div>
+                <div class="sq-encabezado"><h3 id="sq-titulo-mapa">Mapa de muestras</h3><label class="selector-base"><span class="visually-hidden">Vista del mapa</span><select class="form-select" id="base-mapa-sequias" disabled><option value="relieve">Relieve</option><option value="satelite">Satélite</option><option value="calles">Calles</option></select></label><button class="sq-texto" type="button" id="sq-centrar">Centrar</button></div>
                 <div id="sq-mapa" aria-label="Mapa de las celdas publicadas de ERA5" tabindex="-1"></div>
                 <p id="sq-error-mapa" class="sq-ayuda" role="status" hidden></p>
                 <div class="sq-leyenda"><span><i style="--color:#9a382d"></i>Extremadamente seco</span><span><i style="--color:#bc673b"></i>Muy seco</span><span><i style="--color:#bd9842"></i>Moderadamente seco</span><span><i style="--color:#547d6e"></i>Normal</span><span><i style="--color:#3c7c99"></i>Húmedo*</span><span><i style="--color:#7d8183"></i>Sin índice</span></div>

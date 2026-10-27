@@ -1,4 +1,5 @@
 import { agruparProximos, etiquetaDeteccion } from './representacion.js';
+import { iniciarMapaBase } from '../mapas/base.js';
 
 const colores = { alta: '#bd671d', nominal: '#25856b', baja: '#ad9a53', desconocida: '#788084' };
 
@@ -26,9 +27,7 @@ export class MapaFocos {
         const L = window.L;
         // Sin desvanecimiento: retirar una etiqueta debe ser inmediato al cambiar de selección.
         this.mapa = L.map(this.contenedor, { scrollWheelZoom: false, fadeAnimation: false, zoomAnimation: !matchMedia('(prefers-reduced-motion: reduce)').matches }).setView([-17.5, -61.5], 6);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).on('tileerror', () => this.avisar('Algunas imágenes del mapa base no pudieron cargarse. Los límites, puntos y el listado siguen disponibles.')).addTo(this.mapa);
+        this.baseVisual = iniciarMapaBase(this.mapa, mensaje => this.avisar(mensaje), 'base-mapa-focos');
         this.mapa.createPane('seleccionFocos').style.zIndex = '625';
         this.puntos = L.layerGroup().addTo(this.mapa);
         this.mapa.on('zoomend', () => this.reagrupar());

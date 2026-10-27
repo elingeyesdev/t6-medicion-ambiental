@@ -1,5 +1,5 @@
 <section class="panel-mapa" aria-labelledby="titulo-mapa">
-    <div class="encabezado-panel"><h3 id="titulo-mapa">Mapa de detecciones</h3><button type="button" id="centrar-territorio" class="boton-texto">Centrar territorio</button></div>
+    <div class="encabezado-panel"><h3 id="titulo-mapa">Mapa de detecciones</h3><label class="selector-base"><span class="solo-lector">Vista del mapa</span><select class="form-select" id="base-mapa-focos" disabled><option value="relieve">Relieve</option><option value="satelite">Satélite</option><option value="calles">Calles</option></select></label><button type="button" id="centrar-territorio" class="boton-texto">Centrar territorio</button></div>
     <p id="alcance-mapa" class="nota-pagina"></p>
     <div id="mapa-focos" tabindex="-1" aria-label="Mapa interactivo de las detecciones de la página actual"></div>
     <p class="nota-pagina">Pulsa un grupo para ver sus detecciones.</p>

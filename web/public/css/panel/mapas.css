@@ -1,0 +1,6 @@
+.selector-base { display: inline-flex; align-items: center; margin: 0; }
+.selector-base .form-select { min-width: 112px; min-height: 36px; padding-block: 6px; font-size: 12px; color: var(--enviro-texto); background-color: var(--enviro-panel); border-color: var(--enviro-borde); }
+.mapbox-wordmark { display: block; width: 88px; height: 24px; }
+.mapbox-wordmark img { display: block; width: 88px; height: 24px; }
+.pagina-focos .leaflet-bottom.leaflet-left { left: 350px; }
+@media (max-width: 767.98px) { .pagina-focos .leaflet-bottom.leaflet-left { left: 0; } }

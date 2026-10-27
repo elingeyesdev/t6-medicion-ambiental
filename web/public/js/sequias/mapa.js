@@ -1,4 +1,5 @@
 import { categorias, categoria, numero, pedirJson } from './contrato.js';
+import { iniciarMapaBase } from '../mapas/base.js';
 
 /** Puntos en el centro de celda y contornos sin relleno. No interpola ni clasifica SPI. */
 export class MapaSequias {
@@ -13,8 +14,7 @@ export class MapaSequias {
         const L = window.L;
         if (!this.mapa) {
             this.mapa = L.map('sq-mapa', { scrollWheelZoom: false, zoomAnimation: false, fadeAnimation: false }).setView([-17.5, -61.5], 6);
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' })
-                .on('tileerror', () => this.avisar('No se cargaron algunas imágenes del mapa base. Los puntos, contorno y lista siguen disponibles.')).addTo(this.mapa);
+            this.baseVisual = iniciarMapaBase(this.mapa, mensaje => this.avisar(mensaje), 'base-mapa-sequias');
             this.puntos = L.layerGroup().addTo(this.mapa);
         }
         this.puntos.clearLayers(); this.porId.clear(); this.limite?.remove(); this.limite = null;

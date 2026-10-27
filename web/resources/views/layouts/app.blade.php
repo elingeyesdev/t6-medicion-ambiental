@@ -10,6 +10,7 @@
     @stack('estilos')
     <link rel="stylesheet" href="{{ asset('css/panel/panel.css') }}">
     <link rel="stylesheet" href="{{ asset('css/panel/marca.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/panel/mapas.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('img/marca/geocruz-simbolo.png') }}">
 </head>
 <body class="@yield('clase-cuerpo')">
@@ -25,6 +26,7 @@
 </div>
 <script src="{{ asset('vendor/tabler/tabler.min.js') }}" defer></script>
 <script src="{{ asset('js/panel/navegacion.js') }}" defer></script>
+<script type="application/json" id="configuracion-mapa">@json(\App\Support\ConfiguracionMapa::paraWeb())</script>
 @stack('scripts')
 </body>
 </html>
