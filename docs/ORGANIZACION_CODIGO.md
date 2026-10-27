@@ -31,6 +31,7 @@ web/
     css/paginas/inicio.css            portada, foto y accesos a consultas
     img/marca/                        logotipo y símbolo aprobados
     img/amboro/                       fotografía real, fuente y licencia
+    img/lomas-arena/                  fotografía del ingreso/registro, fuente y licencia
     css/modulos/                     estilos particulares de cada consulta
     js/panel/                        tema claro/oscuro y navegación compartida
     js/mapas/base.js                  base Mapbox común, sin cálculos ambientales
@@ -57,7 +58,7 @@ Tabler se actualiza como dependencia: conservar licencia, versión e integridad 
 
 **Inicio, acceso y mapa:** `/` es la portada de GeoCruz. `/login` y `/register` recuperan su acceso con sesiones de Laravel. `/mapa` y `/modulos/` requieren sesión; comparten layout y consultas. `/mapa` reutiliza el visor de focos sin una segunda API. `focos-calor.css` define componentes de resultados y `mapa-monitoreo.css` su distribución sobre el mapa. `filtros.blade.php`, `mapa.blade.php`, `estado.blade.php` y `resultados.blade.php` mantienen cada parte localizable. La geometría inicial es contexto territorial; los resultados ambientales aparecen al consultar. `js/panel/preferencias.js` recupera el tema antes de dibujar; `navegacion.js` maneja menú contraíble, tema y teclado, sin cálculos ambientales. El acceso se explica en [ACCESO_ENVIROSENSE.md](ACCESO_ENVIROSENSE.md).
 
-La letra activa del panel es Segoe UI/Arial, con texto de consulta de 16 px. `js/focos-calor/elementos.js` comparte filas y símbolos entre el mapa y el listado.
+La letra activa del panel es Segoe UI/Arial, con texto de consulta de 16 px. `js/focos-calor/elementos.js` comparte filas y símbolos entre el mapa y el listado; también construye el marco de selección. `MapaFocos.centrarDeteccion()` encuadra la elección; `actualizarSeleccion()` solo la dibuja para no bloquear el zoom manual. El pie público recibe la fotografía correspondiente y muestra su crédito: Amboró en inicio, Lomas de Arena en acceso.
 
 Los JavaScript de cada visor siguen separados por función: `contrato.js` interpreta parámetros y respuestas; `consulta.js` controla solicitudes y estados; `mapa.js` dibuja; `vista.js` presenta los resultados; `inicio.js` conecta esas partes. No existe una segunda fórmula ambiental en el cliente.
 

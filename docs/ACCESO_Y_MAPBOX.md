@@ -14,7 +14,7 @@ El acceso partió del ejemplo Sign in with cover. En #57 se conserva una composi
 - `public/css/paginas/publico.css`: botones, cabecera, foto, pie y acceso compartidos.
 - `public/css/paginas/inicio.css`: solo presentación y tarjetas de la portada.
 
-Sobre fondo blanco la acción principal es verde; sobre la fotografía es blanca con texto verde, como el inicio elegido. Las acciones secundarias sobre la foto tienen borde. Los botones comparten tamaño de texto de 16 px, altura mínima de 48 px y esquinas de 6 px. El logo y los verdes son de GeoCruz; la interfaz usa Segoe UI con alternativas Arial/sans-serif, sin cargar Space Grotesk. La foto es real de Amboró, con su procedencia en `web/public/img/amboro/LEEME.md` y crédito en el pie.
+Sobre fondo blanco la acción principal es verde; sobre la fotografía es blanca con texto verde, como el inicio elegido. Las acciones secundarias sobre la foto tienen borde. Los botones comparten tamaño de texto de 16 px, altura mínima de 48 px y esquinas de 6 px. El logo y los verdes son de GeoCruz; la interfaz usa Segoe UI con alternativas Arial/sans-serif, sin cargar Space Grotesk. El inicio conserva la foto de Amboró. Ingreso y registro muestran Lomas de Arena, con un crédito propio. La procedencia está en `web/public/img/amboro/LEEME.md` y `web/public/img/lomas-arena/LEEME.md`.
 
 Referencias oficiales: [Tabler](https://tabler.io/admin-template), [botones](https://docs.tabler.io/ui/components/button) y [ejemplo de acceso original](https://preview.tabler.io/sign-in-cover.html).
 
@@ -66,3 +66,13 @@ Se habilita `scrollWheelZoom` de Leaflet en focos y sequías. El manejo se limit
 Código de las filas y símbolos: `js/focos-calor/elementos.js`; nombres breves y agrupación: `representacion.js`; interacción cartográfica: `mapa.js`. Las pruebas verifican selección de registros coincidentes, teclado y preservación de coordenadas.
 
 Para nuevas pantallas se mantiene texto normal de 16 px, controles reconocibles y títulos breves. Los nombres de proveedores, métricas y detalles de procedencia van en los apartados de información; el aviso de espera es Cargando. Compartir componentes no obliga a repetir la distribución de la portada en los formularios.
+
+## Segunda revisión de acceso y selección · #57 / #58
+
+El acceso muestra una foto de Lomas de Arena, de Gabriel Millos (CC BY-SA 2.0); el inicio conserva Amboró. Cada pantalla presenta su propio crédito. Tabler sigue siendo la base y no se modifica la portada aprobada.
+
+Al elegir una detección en la lista o en un grupo, el mapa centra su coordenada y acerca hasta nivel 16, conservando un acercamiento mayor si ya lo había. Se reserva espacio para los paneles y, en celular, se muestra el mapa sin el grupo encima. La selección es un marco blanco y naranja alrededor de la llama, sin desplazar su posición geográfica. La etiqueta y la ficha indican el número del registro de la página. Si dos registros comparten coordenadas, muestran el mismo lugar y conservan sus propios datos.
+
+El zoom manual solo redibuja la selección; no vuelve a centrarla ni fuerza el nivel anterior. Cambiar de registro reemplaza el marco y la etiqueta; cerrar el detalle los elimina. El control de filtros usa un chevrón SVG dentro de un recuadro, con estados abierto, cerrado, foco y tema oscuro.
+
+Evidencias de esta revisión: `docs/evidencias/ux57-lomas/` y `docs/evidencias/ux58-seleccion/`.
