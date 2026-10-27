@@ -14,7 +14,7 @@ class BaseWebTest extends TestCase
 
         $response->assertOk()
             ->assertSee('lang="es"', false)
-            ->assertSee('Explora los focos de calor')
+            ->assertSee('Explora focos de calor y sequías')
             ->assertSee('css/geocruz.css')
             ->assertDontSee('45 focos')
             ->assertDontSee('api_key');
@@ -44,7 +44,6 @@ class BaseWebTest extends TestCase
     public static function modulos(): array
     {
         return [
-            ['sequias', 'Sequías'],
             ['inundaciones', 'Inundaciones'],
             ['deforestacion', 'Deforestación'],
             ['calidad-aire', 'Calidad del aire'],

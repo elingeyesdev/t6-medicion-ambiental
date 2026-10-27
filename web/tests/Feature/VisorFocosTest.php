@@ -22,8 +22,8 @@ class VisorFocosTest extends TestCase
 
     public function test_el_inicio_diferencia_el_modulo_disponible_de_los_pendientes(): void
     {
-        $this->get('/')->assertOk()->assertSee('Consulta disponible')->assertSee('Los otros cuatro módulos siguen en preparación');
-        $this->get('/modulos/sequias')->assertOk()->assertSee('Este módulo está en preparación');
+        $this->get('/')->assertOk()->assertSee('Consulta disponible')->assertSee('los otros tres módulos siguen en preparación');
+        $this->get('/modulos/sequias')->assertOk()->assertSee('id="sq-formulario"', false)->assertDontSee('Este módulo está en preparación');
         Http::assertNothingSent();
     }
 
