@@ -5,32 +5,20 @@
 <link rel="stylesheet" href="{{ asset('css/paginas/inicio.css') }}">
 @endpush
 @section('contenido')
-<header class="portada-cabecera">
-    <a href="{{ route('inicio') }}" aria-label="GeoCruz, inicio"><x-panel.marca /></a>
-    <nav aria-label="Navegación de inicio">
-        <a href="#explorar">Qué puedes consultar</a>
-        @auth
-            <a class="btn btn-primary" href="{{ route('mapa') }}">Ir al mapa</a>
-        @else
-            <a class="btn btn-primary" href="{{ route('login') }}">Ingresar</a>
-        @endauth
-    </nav>
-</header>
+<x-publico.cabecera />
 <main id="contenido" tabindex="-1">
-    <section class="portada-hero">
-        <img class="portada-paisaje" src="{{ asset('img/amboro/selva-amboro.jpg') }}" alt="Selva del Parque Nacional Amboró, Santa Cruz" width="1280" height="960" fetchpriority="high">
+    <x-publico.paisaje class="portada-hero">
         <div class="container-xl portada-presentacion">
             <h1>Explora<br>Santa Cruz.</h1>
             <p>Focos de calor y sequías.<br>Consulta tu provincia o municipio en el mapa.</p>
-            <div class="portada-acciones">
-                <a class="btn btn-primary btn-lg" href="{{ route('mapa') }}">Entrar al mapa <x-panel.icono nombre="arrow-right" /></a>
+            <div class="acciones-publicas">
+                <a class="btn btn-primary" href="{{ route('mapa') }}">Entrar al mapa <x-panel.icono nombre="arrow-right" /></a>
                 @guest
-                    <a class="btn btn-outline-light btn-lg" href="{{ route('register') }}">Crear cuenta</a>
+                    <a class="btn btn-outline-light" href="{{ route('register') }}">Crear cuenta</a>
                 @endguest
             </div>
         </div>
-        <div class="portada-lugar"><x-panel.icono nombre="map-pin" /><span>Parque Nacional Amboró</span></div>
-    </section>
+    </x-publico.paisaje>
     <section class="container-xl portada-modulos" id="explorar" aria-labelledby="titulo-explorar">
         <h2 id="titulo-explorar">Qué quieres consultar</h2>
         <div class="row g-4">
@@ -55,11 +43,5 @@
         </div>
     </section>
 </main>
-<footer class="portada-pie">
-    <span>GeoCruz · Santa Cruz, Bolivia</span>
-    <details class="portada-credito">
-        <summary>Sobre la fotografía</summary>
-        <p>Parque Nacional Amboró · <x-panel.credito-foto /></p>
-    </details>
-</footer>
+<x-publico.pie />
 @endsection
