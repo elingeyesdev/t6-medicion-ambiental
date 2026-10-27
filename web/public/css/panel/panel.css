@@ -14,6 +14,8 @@
     --enviro-secundario: #d1d5db; --enviro-borde: #3a506b; --enviro-suave: #173d49;
 }
 body { margin: 0; font-family: var(--tblr-font-sans-serif); color: var(--enviro-texto); background: var(--enviro-fondo); }
+.marca-envirosense { display: inline-flex; gap: 12px; align-items: center; color: var(--enviro-texto); }
+.enviro-avatar { display: grid; place-items: center; width: 32px; height: 32px; flex-shrink: 0; border-radius: 6px; background: var(--enviro-acento); color: #0b132b; font-weight: 600; }
 [hidden] { display: none !important; }
 .enviro-layout { min-height: 100dvh; }
 .enviro-lateral { position: fixed; inset: 0 auto 0 0; width: var(--enviro-ancho); z-index: 1000; display: flex; flex-direction: column; background: var(--enviro-panel); border-right: 1px solid var(--enviro-borde); transition: width .2s; }

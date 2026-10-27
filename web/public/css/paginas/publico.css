@@ -1,0 +1,62 @@
+/* Recorrido público y acceso de EnviroSense, con componentes Tabler.
+   Reinterpreta LandingHeader/Hero y la distribución split de AuthHero/Auth.css. */
+.marca-envirosense { display: inline-flex; gap: 12px; align-items: center; color: var(--enviro-texto); }
+.pagina-publica a { text-decoration: none; }
+.pagina-publica .btn { border-radius: 6px; min-height: 42px; gap: 10px; }
+.pagina-publica .btn-primary { background: #287b79; border-color: #287b79; }
+.pagina-publica .btn-primary:hover { background: #206462; border-color: #206462; }
+.portada-cabecera { min-height: 86px; padding: 20px max(24px,calc((100vw - 1160px)/2)); display: flex; align-items: center; justify-content: space-between; gap: 20px; background: #fff; }
+.portada-cabecera nav { display: flex; align-items: center; gap: 28px; font-size: 14px; }
+.portada-cabecera nav > a:not(.btn) { color: #3a506b; }
+.portada-hero { background: #0b132b; color: #fff; display: grid; grid-template-columns: 1fr 1fr; padding: 42px max(24px,calc((100vw - 1160px)/2)); gap: 40px; align-items: center; min-height: 580px; }
+.portada-presentacion .etiqueta { color: #5bc0be; font-size: 11px; letter-spacing: .16em; margin-bottom: 22px; }
+.portada-presentacion h1 { color: #fff; font-size: clamp(42px,5.2vw,72px); line-height: 1.08; font-weight: 500; letter-spacing: -2px; margin: 0 0 24px; }
+.portada-presentacion > p:not(.etiqueta) { max-width: 360px; font-size: 17px; line-height: 1.6; color: #c6cfdb; }
+.portada-acciones { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+.portada-acciones .btn-primary { background: #5bc0be; border-color: #5bc0be; color: #0b132b; }
+.portada-mapa { margin: 0; border: 1px solid #3a506b; border-radius: 8px; background: #142039; padding: 18px; }
+.portada-mapa img { width: 100%; height: 390px; object-fit: contain; }
+.portada-mapa figcaption { text-align: center; color: #b5c3d0; font-size: 10px; padding-top: 12px; }
+.portada-modulos { max-width: 1160px; margin: auto; padding: 36px 0 40px; }
+.portada-modulos h2 { font-size: 22px; font-weight: 500; margin-bottom: 18px; }
+.modulo-publico { color: #0b132b; border-radius: 6px; border-color: #d1d5db; box-shadow: none; }
+.modulo-publico:hover { border-color: #287b79; color: #0b132b; }
+.modulo-publico .card-body { display: flex; gap: 16px; align-items: center; }
+.modulo-publico .card-body > .icono-panel:first-child { color: #287b79; }
+.modulo-publico .card-body > .icono-panel:last-child { margin-left: auto; }
+.modulo-publico h3 { font-size: 17px; font-weight: 500; margin: 0 0 4px; }
+.modulo-publico p { font-size: 12px; color: #3a506b; margin: 0; }
+.portada-pie { padding: 20px max(24px,calc((100vw - 1160px)/2)); display: flex; gap: 12px; justify-content: space-between; border-top: 1px solid #d1d5db; color: #3a506b; font-size: 11px; }
+.acceso-distribucion { min-height: 100dvh; display: grid; grid-template-columns: 1.05fr 1fr; background: white; }
+.acceso-referencia { padding: 38px 48px; background: #edf1ef; display: flex; flex-direction: column; position: relative; overflow: hidden; min-height: 720px; }
+.acceso-referencia > a, .acceso-referencia > div { position: relative; z-index: 1; }
+.acceso-referencia > img { position: absolute; inset: 95px 0 auto; width: 100%; height: calc(100% - 230px); object-fit: contain; opacity: .75; }
+.acceso-referencia > div { margin-top: auto; padding-top: 300px; }
+.acceso-referencia h2 { font-size: 30px; font-weight: 500; letter-spacing: -.5px; margin-bottom: 8px; }
+.acceso-referencia p { color: #3a506b; }
+.acceso-formulario { display: flex; align-items: center; justify-content: center; padding: 50px 40px; }
+.acceso-caja { width: 100%; max-width: 360px; }
+.acceso-volver { display: inline-block; color: #3a506b; font-size: 12px; margin-bottom: 42px; }
+.acceso-caja h1 { font-size: 32px; font-weight: 500; letter-spacing: -.7px; margin-bottom: 30px; }
+.acceso-caja .form-label { font-size: 13px; font-weight: 500; }
+.acceso-caja .form-control { min-height: 44px; border-radius: 6px; }
+.acceso-caja .form-control:focus { border-color: #287b79; box-shadow: 0 0 0 3px #287b791a; }
+.acceso-alternativa { text-align: center; font-size: 12px; color: #3a506b; margin-top: 24px; }
+.acceso-alternativa a { color: #287b79; text-decoration: underline; }
+@media (max-width: 1200px) { .portada-modulos { padding-inline: 24px; } }
+@media (max-width: 767.98px) {
+    .portada-cabecera { padding: 18px; flex-wrap: wrap; }
+    .portada-cabecera nav { gap: 20px; width: 100%; justify-content: space-between; }
+    .portada-cabecera .enviro-marca-texto strong { font-size: 23px; }
+    .portada-hero { padding: 34px 20px; grid-template-columns: 1fr; gap: 30px; min-height: 0; }
+    .portada-presentacion h1 { font-size: 48px; }
+    .portada-mapa img { height: 300px; }
+    .portada-modulos { padding: 28px 20px; }
+    .portada-pie { flex-direction: column; padding-inline: 20px; }
+    .acceso-distribucion { grid-template-columns: 1fr; }
+    .acceso-referencia { min-height: 0; padding: 24px; }
+    .acceso-referencia > img, .acceso-referencia > div { display: none; }
+    .acceso-formulario { padding: 24px; align-items: start; }
+    .acceso-volver { margin-bottom: 24px; }
+    .acceso-caja h1 { font-size: 29px; }
+}

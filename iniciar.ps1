@@ -16,6 +16,8 @@ Push-Location $directorioWeb
 try {
     & $ejecutorPhp scripts/preparar.php
     if ($LASTEXITCODE -ne 0) { throw 'No se pudo preparar la configuración local.' }
+    & $ejecutorPhp artisan migrate --force
+    if ($LASTEXITCODE -ne 0) { throw 'No se pudo preparar la base de datos. Revise la configuración de web/.env.' }
     Write-Host "GeoCruz oficial: http://127.0.0.1:$Puerto" -ForegroundColor Green
     Write-Host "API de salud: http://127.0.0.1:$Puerto/api/salud"
     & $ejecutorPhp artisan serve "--host=$Direccion" "--port=$Puerto" --no-reload

@@ -2,15 +2,22 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class BaseWebTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAs(User::factory()->make(['id' => 1]));
+    }
+
     public function test_el_panel_publica_solo_consultas_disponibles_sin_datos_inventados(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('/mapa');
 
         $response->assertOk()
             ->assertSee('lang="es"', false)
@@ -71,7 +78,7 @@ class BaseWebTest extends TestCase
 
     public function test_los_componentes_comparten_menu_accesible_sin_consultar_proveedores(): void
     {
-        foreach (['/', '/modulos/focos-calor', '/modulos/sequias'] as $ruta) {
+        foreach (['/mapa', '/modulos/focos-calor', '/modulos/sequias'] as $ruta) {
             $this->get($ruta)->assertOk()
                 ->assertSee('aria-label="Navegación principal"', false)
                 ->assertSee('aria-controls="menu-panel"', false)

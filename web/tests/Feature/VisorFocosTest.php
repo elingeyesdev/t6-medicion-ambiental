@@ -2,11 +2,18 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class VisorFocosTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAs(User::factory()->make(['id' => 1]));
+    }
+
     public function test_visores_html_no_consultan_nasa_y_ofrecen_el_recorrido_accesible(): void
     {
         config(['focos.clave' => 'secretoLocalSoloParaProbar']);

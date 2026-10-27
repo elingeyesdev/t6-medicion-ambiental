@@ -2,11 +2,18 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class VisorSequiasTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAs(User::factory()->make(['id' => 1]));
+    }
+
     public function test_la_pantalla_no_descarga_lluvia_ni_publica_indices_al_abrirse(): void
     {
         Http::preventStrayRequests();

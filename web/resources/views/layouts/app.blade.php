@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="EnviroSense, adaptación GeoCruz para consultar información ambiental de Santa Cruz.">
+    <meta name="description" content="EnviroSense: monitoreo ambiental de Santa Cruz, Bolivia.">
     <title>@yield('titulo', 'Mapa de Monitoreo') · EnviroSense</title>
     <script src="{{ asset('js/panel/preferencias.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('vendor/tabler/tabler.min.css') }}">
