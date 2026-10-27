@@ -1,10 +1,12 @@
-# Inicio, acceso y mapa de EnviroSense
+# Inicio, acceso y mapa de GeoCruz
 
 Seguimiento #53 y #47, PR #51. Cambio solicitado por Josué el 27/10/2026: conservar el recorrido de EnviroSense y añadir los módulos de GeoCruz dentro de él. La aprobación de Jaziel para #45 ya quedó integrada en develop; esta ampliación necesita su propia revisión.
 
+Después, Josué eligió **GeoCruz** como marca visible y el emblema ambiental de Santa Cruz. #54 aplica esa decisión sin cambiar el recorrido de la adaptación: [marca y cuenta demo](MARCA_Y_DEMO.md). Las menciones a EnviroSense en las decisiones anteriores identifican el origen del trabajo.
+
 ## Recorrido
 
-`/` es la portada de EnviroSense. Desde **Entrar al mapa**, una visita sin sesión pasa a `/login`; puede crear su cuenta en `/register`. Al entrar se recupera la consulta que intentaba abrir o se llega a `/mapa`. La cabecera muestra la cuenta y permite **Cerrar sesión**. Focos y sequías mantienen sus direcciones y consultas.
+`/` es la portada de GeoCruz. Desde **Entrar al mapa**, una visita sin sesión pasa a `/login`; puede crear su cuenta en `/register`. Al entrar se recupera la consulta que intentaba abrir o se llega a `/mapa`. La cabecera muestra la cuenta y permite **Cerrar sesión**. Focos y sequías mantienen sus direcciones y consultas.
 
 El sistema conserva el nombre, símbolo, tipografía, turquesa, cabecera y navegación del referente. La portada adapta LandingHeader/LandingHero y el acceso adapta AuthHero/Auth.css. Se usa **Tabler 1.7.1** para formularios, botones, tarjetas y diseño responsive; sus archivos originales, versión y licencia están en `web/public/vendor/tabler/`. Los ajustes propios están separados. No se presentan cifras globales, funciones vacías ni resultados de demostración del proyecto anterior.
 

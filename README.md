@@ -1,9 +1,10 @@
-# EnviroSense
+# GeoCruz
 
-Adaptación de EnviroSense a Laravel/Blade y Flutter, con los módulos ambientales de GeoCruz integrados en su recorrido de inicio, acceso y mapa. La interfaz conserva su identidad y usa Tabler 1.7.1 para los componentes. Solo se muestran las consultas disponibles.
+Adaptación de EnviroSense a Laravel/Blade y Flutter, con consultas ambientales de Santa Cruz integradas en su recorrido de inicio, acceso y mapa. La marca elegida por Josué es **GeoCruz**. La interfaz usa Tabler 1.7.1 y solo muestra las consultas disponibles.
 
 - [Dónde está cada parte del código y la plantilla](docs/ORGANIZACION_CODIGO.md).
 - [Inicio, registro, acceso y cómo probar el mapa](docs/ACCESO_ENVIROSENSE.md).
+- [Marca GeoCruz, navegación y cuenta demo local](docs/MARCA_Y_DEMO.md).
 - [Qué conservamos, adaptamos y dejamos fuera de EnviroSense](docs/REINGENIERIA_ENVIROSENSE_M3.md).
 - [Revisión de la guía GitHub del curso y pendientes reales](docs/GUIA_CURSO_ESTADO.md).
 
