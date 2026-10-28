@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AccesoController;
+use App\Http\Controllers\AlertasController;
+use App\Http\Controllers\AvisosController;
 use App\Http\Controllers\CuentaController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MapaMonitoreoController;
@@ -23,6 +25,14 @@ Route::middleware('guest')->group(function (): void {
     Route::post('/restablecer-acceso', [RecuperacionController::class, 'restablecer'])->middleware('throttle:cuentas-restablecer')->name('password.update');
 });
 Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
+    Route::middleware('can:datos.consultar')->group(function (): void {
+        Route::get('/alertas', [AlertasController::class, 'index'])->name('alertas');
+        Route::get('/umbrales', [AlertasController::class, 'umbrales'])->name('umbrales');
+        Route::get('/avisos', [AvisosController::class, 'index'])->name('avisos');
+        Route::put('/avisos/preferencias', [AvisosController::class, 'preferencias'])->name('avisos.preferencias');
+        Route::patch('/avisos/{id}/leer', [AvisosController::class, 'leer'])->name('avisos.leer');
+    });
+    Route::patch('/alertas/{id}/reconocer', [AlertasController::class, 'reconocer'])->middleware('can:alertas.gestionar')->name('alertas.reconocer');
     Route::middleware('can:reportes.ver')->group(function (): void {
         Route::get('/reportes', [ReportesController::class, 'index'])->name('reportes');
         Route::get('/reportes/{id}', [ReportesController::class, 'mostrar'])->name('reportes.mostrar');
