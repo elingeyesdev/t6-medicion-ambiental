@@ -14,4 +14,3 @@
 </div>
 @endsection
 @push('scripts')<script id="datos-reporte" type="application/json">@json($reporte->contenido['filas'])</script><script type="module" src="{{ asset('js/reportes/grafico.js') }}"></script>@endpush
-
