@@ -21,7 +21,7 @@ function actualizarMunicipios(elegido = $('sq-municipio').value) {
 }
 function actualizarMuestras(elegido = $('sq-muestra').value) {
     const provincia = $('sq-provincia').value, municipio = $('sq-municipio').value;
-    opciones($('sq-muestra'), catalogos.muestras.filter(m => (!provincia || m.provincia === provincia) && (!municipio || m.municipio === municipio)).map(m => [m.identificador, vista.etiquetaMuestra(m.identificador)]), 'Todas las muestras del territorio', elegido);
+    opciones($('sq-muestra'), catalogos.muestras.filter(m => (!provincia || m.provincia === provincia) && (!municipio || m.municipio === municipio)).map(m => [m.identificador, vista.etiquetaMuestra(m.identificador)]), 'Todos los puntos del territorio', elegido);
 }
 function aplicarFormulario(f) {
     const muestra = catalogos.muestras.find(m => m.identificador === f.muestra);
@@ -46,22 +46,22 @@ function renderizar(e) {
     $('sq-estado').dataset.fase = e.fase;
     $('sq-resultados').hidden = !e.actual;
     $('sq-resultados').setAttribute('aria-busy', String(e.fase === 'cargando'));
-    $('sq-vigencia').textContent = anterior ? 'RESULTADO ANTERIOR' : 'CONSULTA APLICADA';
+    $('sq-vigencia').textContent = anterior ? 'Resultado anterior' : 'Resultados';
     $('sq-restaurar').hidden = !e.actual || (!e.borrador && e.fase !== 'error');
     $('sq-reintentar').hidden = !['error', 'anterior'].includes(e.fase) || (!e.pendiente && !e.error);
-    const titulos = { cargando: 'Consultando las muestras preparadas…', error: 'No se pudo completar la consulta', anterior: 'Resultado anterior', inicial: 'Elige territorio y mes', listo: 'Consulta disponible' };
+    const titulos = { cargando: 'Cargando…', error: 'No se pudo completar la consulta', anterior: 'Resultado anterior', inicial: 'Elige territorio y mes', listo: 'Consulta disponible' };
     let titulo = titulos[e.fase], mensaje = '';
     if (e.error) {
-        if (e.error.codigo === 'MUESTRAS_NO_DISPONIBLES') titulo = 'Sin muestras preparadas para este mes';
-        if (e.error.codigo === 'PERIODO_NO_DISPONIBLE') titulo = 'Publicación no disponible o vencida';
+        if (e.error.codigo === 'MUESTRAS_NO_DISPONIBLES') titulo = 'Sin datos para este mes';
+        if (e.error.codigo === 'PERIODO_NO_DISPONIBLE') titulo = 'Datos no disponibles';
         const explicaciones = {
             MUESTRAS_NO_DISPONIBLES: 'No hay datos publicados para el territorio y el mes elegidos. Prueba otro territorio o período.',
-            PERIODO_NO_DISPONIBLE: 'La publicación de este período no está disponible o ha vencido. Puedes reintentar cuando se renueve.',
-            DATOS_INVALIDOS: 'No se pudo verificar la integridad de la publicación. Informa al equipo y reintenta más tarde.',
+            PERIODO_NO_DISPONIBLE: 'Los datos de este período no están disponibles. Prueba otras fechas o reintenta más tarde.',
+            DATOS_INVALIDOS: 'No se pudo leer la información. Reintenta más tarde.',
         };
         mensaje = (explicaciones[e.error.codigo] ?? e.error.message) + (e.actual ? ' Se conserva la consulta anterior.' : '');
     } else if (e.borrador) mensaje = 'Aplica los cambios o restaura la consulta anterior.';
-    else if (e.fase === 'cargando') mensaje = 'Consultando datos publicados.';
+    else if (e.fase === 'cargando') mensaje = 'Espera unos segundos.';
     else if (e.fase === 'listo') {
         const r = e.actual?.respuesta;
         if (r && !r.datos.length) { titulo = 'Sin resultados'; mensaje = 'La respuesta válida no contiene muestras publicadas.'; }

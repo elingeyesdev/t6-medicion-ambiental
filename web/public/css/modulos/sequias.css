@@ -18,7 +18,7 @@
 }
 .sq-intro p:not(.etiqueta){
     color:var(--texto-suave);
-    font-size:14px;
+    font-size:16px;
     margin:0
 }
 .sq-fuente{
@@ -26,11 +26,11 @@
     border:1px solid var(--borde);
     border-radius:20px;
     padding:9px 15px;
-    font-size:12px;
+    font-size:16px;
     white-space:nowrap
 }
 .sq-interpretacion{
-    font-size:12px;
+    font-size:16px;
     line-height:1.8;
     color:#5a665b;
     border-left:3px solid #bc9842;
@@ -55,12 +55,12 @@
     margin-bottom:15px
 }
 .sq-encabezado h2,.sq-encabezado h3{
-    font-size:15px;
+    font-size:16px;
     font-weight:650;
     margin:0
 }
 .sq-encabezado>span{
-    font-size:11px;
+    font-size:16px;
     color:var(--texto-suave)
 }
 .sq-rejilla-filtros{
@@ -69,7 +69,7 @@
     gap:16px
 }
 .sq-rejilla-filtros label{
-    font-size:12px;
+    font-size:16px;
     font-weight:600
 }
 .sq-rejilla-filtros select,.sq-rejilla-filtros input{
@@ -94,7 +94,7 @@
 }
 .pagina-sequias button{
     cursor:pointer;
-    font:600 12px 'Segoe UI',sans-serif;
+    font:600 16px 'Segoe UI',Arial,sans-serif;
     min-height:40px
 }
 .pagina-sequias button:disabled{
@@ -107,8 +107,8 @@
     padding:10px 15px
 }
 .sq-boton{
-    background:#15694f;
-    border-color:#15694f;
+    background:#15803d;
+    border-color:#15803d;
     color:#fff
 }
 .sq-secundario{
@@ -124,14 +124,14 @@
     color:#126b55;
     text-decoration:underline;
     text-underline-offset:3px;
-    font-size:12px
+    font-size:16px
 }
 .pagina-sequias :is(button,input,select,summary):focus-visible{
     outline:3px solid #b57624;
     outline-offset:3px
 }
 .sq-ayuda{
-    font-size:11px;
+    font-size:16px;
     line-height:1.7;
     color:var(--texto-suave);
     margin:12px 0
@@ -142,7 +142,7 @@
     border-radius:10px;
     padding:16px 20px;
     margin-bottom:23px;
-    font-size:13px;
+    font-size:16px;
     line-height:1.7
 }
 .sq-estado p{
@@ -168,12 +168,12 @@
     margin:7px 0
 }
 .sq-contexto p{
-    font-size:12px;
+    font-size:16px;
     color:var(--texto-suave);
     margin:0
 }
 .sq-obtencion{
-    font-size:11px;
+    font-size:16px;
     line-height:1.7;
     text-align:right;
     color:var(--texto-suave);
@@ -181,7 +181,7 @@
 }
 .sq-indicadores{
     display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
+    grid-template-columns:repeat(3,minmax(0,1fr));
     gap:12px
 }
 .sq-indicadores article{
@@ -191,7 +191,7 @@
     padding:18px 16px
 }
 .sq-indicadores span{
-    font-size:11px;
+    font-size:16px;
     color:var(--texto-suave);
     display:block
 }
@@ -204,12 +204,12 @@
 }
 .sq-indicadores small{
     display:block;
-    font-size:10px;
+    font-size:16px;
     color:var(--texto-suave);
     line-height:1.6
 }
 .sq-cobertura{
-    font-size:12px;
+    font-size:16px;
     line-height:1.8;
     background:#f4f0e3;
     border-left:3px solid #b89849;
@@ -234,7 +234,7 @@
     display:flex;
     flex-wrap:wrap;
     gap:9px 13px;
-    font-size:10px;
+    font-size:16px;
     margin-top:16px
 }
 .sq-leyenda i{
@@ -263,10 +263,10 @@
     display:block
 }
 .sq-fila strong{
-    font-size:13px
+    font-size:16px
 }
 .sq-fila span{
-    font-size:11px;
+    font-size:16px;
     font-weight:400
 }
 .sq-categoria{
@@ -289,19 +289,19 @@
     min-width:0
 }
 .sq-datos dt{
-    font-size:11px;
+    font-size:16px;
     color:var(--texto-suave);
     margin-bottom:5px
 }
 .sq-datos dd{
-    font-size:13px;
+    font-size:16px;
     margin:0;
     line-height:1.7;
     overflow-wrap:anywhere
 }
 .sq-procedencia{
     margin-top:16px;
-    font-size:12px;
+    font-size:16px;
     line-height:1.8
 }
 .sq-procedencia summary{
@@ -359,11 +359,11 @@
         font-size:33px
     }
     .sq-fuente{
-        font-size:10px;
+        font-size:16px;
         padding:7px 10px
     }
     .sq-intro p:not(.etiqueta){
-        font-size:12px
+        font-size:16px
     }
     .sq-encabezado{
         align-items:start;

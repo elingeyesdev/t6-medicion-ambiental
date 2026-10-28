@@ -1,6 +1,6 @@
 <section id="resultados-focos" hidden aria-labelledby="titulo-resultados" aria-busy="false">
     <div class="contexto-consulta resultados-cabecera">
-        <span id="etiqueta-vigencia">Resultados</span>
+        <div class="resultados-acciones"><span id="etiqueta-vigencia">Resultados</span><button type="button" id="cerrar-resultados" class="cerrar-resultados" aria-label="Cerrar resultados" title="Cerrar resultados"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button></div>
         <h2 id="titulo-resultados">Santa Cruz</h2>
         <p id="periodo-aplicado"></p>
     </div>
@@ -16,16 +16,14 @@
     <section id="detalle-foco" class="panel-detalle" aria-labelledby="titulo-detalle" hidden>
         <div class="encabezado-panel"><h3 id="titulo-detalle" tabindex="-1">Detección seleccionada</h3><button type="button" id="cerrar-detalle" aria-label="Cerrar detalle" class="boton-suave">Cerrar</button></div>
         <dl id="campos-detalle" class="campos-detalle"></dl>
-        <details class="detalle-extra"><summary>Más información</summary>
+        <details class="detalle-extra"><summary>Ubicación y fuente</summary>
             <dl id="campos-detalle-extra" class="campos-detalle"></dl>
             <p id="faltantes-detalle" class="ayuda-filtros"></p>
         </details>
     </section>
-    <details class="procedencia"><summary>Fuente y detalles</summary>
-        <div class="metadatos-resumen"><p>Potencia radiativa máxima: <strong id="frp-maxima">—</strong></p><p>Registros incompletos: <strong id="total-faltantes">—</strong></p></div>
-        <div class="obtencion"><strong id="tipo-obtencion"></strong><span id="fecha-obtencion"></span></div>
-        <p class="cobertura" id="estado-cobertura"></p><p id="frp-validos"></p>
-        <p>La confianza no expresa gravedad. FRP es potencia radiativa, no superficie quemada. Los faltantes no equivalen a cero.</p>
+    <details class="procedencia"><summary>Sobre estos datos</summary>
+        <p class="cobertura" id="estado-cobertura"></p>
+        <p>Un punto de calor no confirma un incendio. El nivel de confianza no indica su gravedad.</p>
         <div id="procedencia-consulta"></div>
     </details>
 </section>

@@ -21,6 +21,9 @@ final class ConsultaFocos
         if ($desde >= $hasta || $hasta->getTimestamp() - $desde->getTimestamp() > 7 * 86400) {
             throw new ErrorConsulta('FILTROS_INVALIDOS', 'El período debe ser positivo y de un máximo de 168 horas.');
         }
+        if ($hasta->getTimestamp() > now()->timestamp) {
+            throw new ErrorConsulta('FILTROS_INVALIDOS', 'Elige fechas hasta el momento actual. No se pueden consultar días futuros.');
+        }
         if (isset($p['confianza']) && ! in_array($p['confianza'], ['alta', 'nominal', 'baja', 'desconocida'], true)) {
             throw new ErrorConsulta('FILTROS_INVALIDOS', 'Confianza VIIRS no admitida.');
         }

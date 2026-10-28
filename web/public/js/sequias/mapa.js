@@ -1,4 +1,4 @@
-import { categorias, categoria, numero, pedirJson } from './contrato.js';
+import { categorias, categoria, pedirJson } from './contrato.js';
 import { iniciarMapaBase } from '../mapas/base.js';
 
 /** Puntos en el centro de celda y contornos sin relleno. No interpola ni clasifica SPI. */
@@ -28,12 +28,12 @@ export class MapaSequias {
             const d = grupo[0]; const [lon, lat] = d.coordenadaCelda;
             const color = grupo.every(m => m.spi.categoria === d.spi.categoria) ? categorias[d.spi.categoria]?.[1] ?? '#7d8183' : '#7d8183';
             const marcador = L.circleMarker([lat, lon], { radius: grupo.length > 1 ? 10 : 8, color: '#fff', weight: 2, fillColor: color, fillOpacity: .95 }).addTo(this.puntos);
-            const titulo = grupo.length > 1 ? `${grupo.length} muestras comparten esta celda. Elegir muestra` : `${d.idMuestra}: SPI ${numero(d.spi.valor)}, ${categoria(d)}. Abrir detalle`;
+            const titulo = grupo.length > 1 ? `${grupo.length} puntos comparten esta ubicación. Elegir punto` : `Punto ${respuesta.datos.indexOf(d) + 1} · ${categoria(d)}. Abrir detalle`;
             const abrir = () => {
                 if (grupo.length === 1) { this.seleccionar(d.idMuestra, marcador.getElement()); return; }
                 const opciones = document.createElement('div');
                 for (const m of grupo) {
-                    const boton = document.createElement('button'); boton.type = 'button'; boton.className = 'sq-mapa-opcion'; boton.textContent = `${m.idMuestra} · ${categoria(m)}`;
+                    const boton = document.createElement('button'); boton.type = 'button'; boton.className = 'sq-mapa-opcion'; boton.textContent = `Punto ${respuesta.datos.indexOf(m) + 1} · ${categoria(m)}`;
                     boton.addEventListener('click', () => { this.seleccionar(m.idMuestra, marcador.getElement()); this.mapa.closePopup(); }); opciones.append(boton);
                 }
                 marcador.bindPopup(opciones).openPopup();

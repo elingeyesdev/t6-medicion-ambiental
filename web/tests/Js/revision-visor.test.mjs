@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { agruparProximos, etiquetaDeteccion, nombreCortoMunicipio } from '../../public/js/focos-calor/representacion.js';
-import { limitesPeriodo, ajustarCalendarios } from '../../public/js/focos-calor/periodo.js';
+import { limitesPeriodo, ajustarCalendarios, periodoReciente } from '../../public/js/focos-calor/periodo.js';
 import { validarPeriodoLocal } from '../../public/js/focos-calor/contrato.js';
 import { MapaFocos } from '../../public/js/focos-calor/mapa.js';
 
@@ -13,16 +13,38 @@ test('calendarios limitan ambos extremos a 168 horas, con intervalo positivo de 
 });
 
 test('limpiar y restaurar fechas elimina restricciones antiguas sin inventar otra fecha', () => {
+    const ahora = Date.parse('2026-10-27T21:19:30Z');
     const campo = value => ({ value, atributos: {}, setAttribute(k, v) { this.atributos[k] = v; }, removeAttribute(k) { delete this.atributos[k]; } });
     const desde = campo('2026-10-17T00:00'), hasta = campo('2026-10-18T00:00');
-    ajustarCalendarios(desde, hasta);
+    ajustarCalendarios(desde, hasta, ahora);
     assert.equal(hasta.atributos.max, '2026-10-24T00:00:00');
-    desde.value = ''; hasta.value = ''; ajustarCalendarios(desde, hasta);
-    assert.deepEqual(desde.atributos, {}); assert.deepEqual(hasta.atributos, {});
-    desde.value = '2026-10-01T00:00'; ajustarCalendarios(desde, hasta);
-    assert.deepEqual(desde.atributos, {});
+    desde.value = ''; hasta.value = ''; ajustarCalendarios(desde, hasta, ahora);
+    assert.deepEqual(desde.atributos, { max: '2026-10-27T17:19:30' }); assert.deepEqual(hasta.atributos, { max: '2026-10-27T17:19:30' });
+    desde.value = '2026-10-01T00:00'; ajustarCalendarios(desde, hasta, ahora);
+    assert.deepEqual(desde.atributos, { max: '2026-10-27T17:19:30' });
     assert.equal(hasta.atributos.max, '2026-10-08T00:00:00');
-    assert.deepEqual(limitesPeriodo('fecha inválida', '').hasta, { min: '', max: '' });
+    assert.deepEqual(limitesPeriodo('fecha inválida', '', ahora).hasta, { min: '', max: '2026-10-27T17:19:30' });
+});
+
+test('el período inicial y los accesos rápidos terminan ahora y respetan siete días al cruzar mes y año', () => {
+    for (const momento of ['2026-01-01T02:30:00Z', '2026-03-01T03:59:59Z']) {
+        const ahora = Date.parse(momento);
+        for (const dias of [1, 7]) {
+            const periodo = periodoReciente(dias, ahora);
+            assert.equal(Date.parse(periodo.hasta), ahora);
+            assert.equal(Date.parse(periodo.hasta) - Date.parse(periodo.desde), dias * 86400000);
+        }
+    }
+    assert.equal(periodoReciente(7, Date.parse('2026-10-27T21:19:30.999Z')).hasta, '2026-10-27T21:19:30.000Z');
+});
+
+test('el presente limita ambos calendarios y también la validación manual, sin alterar la selección', () => {
+    const ahora = Date.parse('2026-10-28T02:30:00Z');
+    const limites = limitesPeriodo('2026-10-27T20:00:00', '2026-10-28T00:00:00', ahora);
+    assert.equal(limites.desde.max, '2026-10-27T22:30:00');
+    assert.equal(limites.hasta.max, '2026-10-27T22:30:00');
+    assert.throws(() => validarPeriodoLocal('2026-10-27T20:00:00', '2026-10-27T22:30:01', ahora), /futuros/);
+    assert.deepEqual(validarPeriodoLocal('2026-10-20T22:30:00', '2026-10-27T22:30:00', ahora), { desde: '2026-10-21T02:30:00Z', hasta: '2026-10-28T02:30:00Z' });
 });
 
 test('la validación al consultar rechaza edición manual fuera de límites aunque no intervenga el calendario', () => {
@@ -49,12 +71,12 @@ test('acercar separa puntos próximos, pero coordenadas idénticas mantienen tod
 
 const deteccion = (id, longitud, potencia) => ({ identificador: id, geometria: { type: 'Point', coordinates: [longitud, -17.7] }, territorio: { municipio: 'BO070102' }, fechas: { observadoDesde: '2026-10-17T18:30:00Z' }, atributos: { confianza: 'nominal', potenciaRadiativa: potencia } });
 
-test('etiqueta comprensible conserva fecha Bolivia, municipio, confianza y FRP, sin ID técnico', () => {
+test('etiqueta comprensible conserva fecha Bolivia, municipio y confianza, sin datos internos', () => {
     const foco = deteccion('firms-identificador-tecnico', -63, 0);
     const etiqueta = etiquetaDeteccion(foco, 'Cotoca');
-    assert.match(etiqueta, /14:30/); assert.match(etiqueta, /Cotoca/); assert.match(etiqueta, /confianza nominal/); assert.match(etiqueta, /FRP 0 MW/);
+    assert.match(etiqueta, /14:30/); assert.match(etiqueta, /Cotoca/); assert.match(etiqueta, /confianza nominal/); assert.doesNotMatch(etiqueta, /FRP|MW/);
     assert.equal(etiqueta.includes(foco.identificador), false);
-    assert.match(etiquetaDeteccion({ ...foco, atributos: { ...foco.atributos, potenciaRadiativa: null } }), /Municipio no determinado.*Sin dato/);
+    assert.match(etiquetaDeteccion({ ...foco, atributos: { ...foco.atributos, potenciaRadiativa: null } }), /Municipio no determinado/);
 });
 
 test('cada elección centra su coordenada y sustituye el marco y etiqueta, incluso con ubicaciones repetidas', () => {

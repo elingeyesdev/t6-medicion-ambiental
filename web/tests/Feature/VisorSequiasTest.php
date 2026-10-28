@@ -25,8 +25,9 @@ class VisorSequiasTest extends TestCase
             ->assertSee('id="sq-resultados" hidden', false)
             ->assertSee('id="sq-detalle" hidden', false)
             ->assertSee('id="sq-lista"', false)->assertSee('id="sq-mapa"', false)
-            ->assertSee('max="2026-09"', false)->assertSee('calendario UTC')
-            ->assertSee('no es una estación')->assertSee('no se rellena')
+            ->assertSee('max="2026-09"', false)->assertSee('1991–2020')
+            ->assertSee('no todo el municipio')->assertSee('no confirman daños')
+            ->assertDontSee('Vigencia técnica')->assertDontSee('SHA-256')
             ->assertDontSee('secretoSoloBackend')->assertDontSee('-0.641048');
 
         preg_match('/<script id="sq-catalogos" type="application\/json">(.*?)<\/script>/s', $respuesta->getContent(), $partes);

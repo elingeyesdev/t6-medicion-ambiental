@@ -14,6 +14,7 @@ const nodo = (tipo, contenido, clase) => {
 export class VistaFocos {
     constructor() {
         this.nombres = new Map();
+        this.resultadosOcultos = false;
         this.mapa = new MapaFocos('mapa-focos', (id, origen) => this.detalle(id, origen), mensaje => {
             texto('error-mapa', mensaje ?? ''); document.getElementById('error-mapa').hidden = !mensaje;
         }, id => this.nombres.get(id));
@@ -22,6 +23,11 @@ export class VistaFocos {
             if (boton) this.detalle(boton.dataset.foco, boton);
         });
         document.getElementById('centrar-territorio').addEventListener('click', () => this.mapa.centrar());
+        document.getElementById('cerrar-resultados').addEventListener('click', () => {
+            this.mostrarPanelResultados(false);
+            document.getElementById('mostrar-resultados').focus({ preventScroll: true });
+        });
+        document.getElementById('mostrar-resultados').addEventListener('click', () => this.mostrarPanelResultados(this.resultadosOcultos));
         document.getElementById('cerrar-detalle').addEventListener('click', () => {
             document.getElementById('detalle-foco').hidden = true;
             this.mapa.seleccionar(null);
@@ -30,12 +36,24 @@ export class VistaFocos {
         });
     }
 
+    mostrarPanelResultados(mostrar) {
+        this.resultadosOcultos = !mostrar;
+        const disponible = Boolean(this.actual?.respuesta);
+        document.getElementById('resultados-focos').hidden = !disponible || !mostrar;
+        const boton = document.getElementById('mostrar-resultados');
+        boton.hidden = !disponible;
+        boton.setAttribute('aria-expanded', String(disponible && mostrar));
+        boton.textContent = mostrar ? 'Ocultar resultados' : `Ver resultados (${numero(this.actual?.respuesta.resumen.totalRegistros)})`;
+    }
+
     mostrar(estado) {
         const r = estado.actual?.respuesta;
         const cargando = estado.fase === 'cargando';
         const anterior = Boolean(r && (cargando || estado.fase === 'error' || estado.borrador));
         const resultados = document.getElementById('resultados-focos');
-        resultados.hidden = !r;
+        if (r && this.ultimaRespuesta !== r) this.resultadosOcultos = false;
+        this.actual = estado.actual;
+        this.mostrarPanelResultados(!this.resultadosOcultos);
         resultados.setAttribute('aria-busy', String(cargando));
         resultados.classList.toggle('resultados-anteriores', anterior);
         texto('etiqueta-vigencia', anterior ? 'Resultados anteriores' : 'Resultados');
@@ -78,17 +96,11 @@ export class VistaFocos {
         const territorio = r.consulta.territorio;
         texto('titulo-resultados', this.nombres.get(territorio.identificador) ?? territorio.identificador);
         texto('periodo-aplicado', `${fechaBolivia(r.consulta.periodo.desde)} → ${fechaBolivia(r.consulta.periodo.hasta)} · Bolivia`);
-        const obt = r.consulta.obtencion;
-        texto('tipo-obtencion', obt.tipo === 'cache' ? `Caché · ${numero(Math.floor(obt.antiguedadSegundos / 60))} min al consultar` : 'NASA FIRMS · consulta directa');
-        texto('fecha-obtencion', `Recuperación: ${fechaBolivia(obt.fechaRecuperacion)} · Bolivia`);
         const indicador = codigo => r.resumen.indicadores.find(i => i.codigo === codigo);
         texto('total-focos', numero(r.resumen.totalRegistros));
         texto('confianza-alta', numero(indicador('focosConfianzaAlta')?.valor));
-        texto('frp-maxima', numero(indicador('potenciaMaxima')?.valor, 'MW'));
-        texto('frp-validos', `${numero(indicador('potenciaMaxima')?.registrosValidos)} FRP disponibles en el conjunto`);
-        texto('total-faltantes', numero(r.resumen.registrosConFaltantes));
-        const cobertura = { desconocida: 'Cobertura desconocida', parcial: 'Cobertura parcial', sin_cobertura: 'Sin cobertura comprobada', disponible: 'Datos disponibles con límites del producto' };
-        texto('estado-cobertura', `${cobertura[r.cobertura.estado] ?? 'Cobertura no informada'}. ${r.cobertura.fundamento}`);
+        const cobertura = { desconocida: 'El mapa puede no incluir todas las detecciones.', parcial: 'Solo hay datos para parte de la consulta.', sin_cobertura: 'No hay datos disponibles para estas fechas.', disponible: 'Datos disponibles para la consulta.' };
+        texto('estado-cobertura', cobertura[r.cobertura.estado] ?? cobertura.desconocida);
         texto('alcance-mapa', `Mapa: ${numero(r.datos.length)} de ${numero(r.paginacion.total)} detecciones · página ${r.paginacion.pagina}`);
         texto('conteo-pagina', `${numero(r.datos.length)} en esta página`);
         texto('pagina-actual', `Página ${r.paginacion.pagina} de ${Math.max(1, Math.ceil(r.paginacion.total / r.paginacion.tamanioPagina))}`);
@@ -102,34 +114,29 @@ export class VistaFocos {
         }
         document.getElementById('detalle-foco').hidden = true;
         const procedencia = document.getElementById('procedencia-consulta'); procedencia.replaceChildren();
-        for (const fuente of r.fuentes) {
-            procedencia.append(nodo('p', `${fuente.proveedor} · ${fuente.producto} · versión ${fuente.version ?? 'no informada'} · ${fuente.naturaleza === 'observacion' ? 'Observación satelital' : fuente.naturaleza}. ${fuente.resolucion?.descripcion ?? ''}`));
-        }
-        procedencia.append(nodo('p', `Consulta del backend: ${fechaBolivia(r.consulta.fechaConsulta)} (Bolivia). Recuperación original: ${fechaBolivia(obt.fechaRecuperacion)}. Actualización del producto: ${fechaBolivia(obt.fechaActualizacion)}. Conjunto retenido hasta ${fechaBolivia(obt.expiraEn)}.`));
-        procedencia.append(nodo('p', `Catálogo territorial: ${territorio.fuenteCatalogo}, ${territorio.versionCatalogo}. Geometrías de referencia de 2013; no constituyen deslinde legal. Ministerio de Desarrollo Rural y Tierras; OCHA FIS / HDX · CC BY 3.0 IGO. Adopción del catálogo pendiente de revisión.`));
-        if (r.cobertura.periodoDisponible) procedencia.append(nodo('p', `Disponibilidad temporal del producto (UTC): ${r.cobertura.periodoDisponible.desde} → ${r.cobertura.periodoDisponible.hasta}. No demuestra observación completa de todo el territorio.`));
-        r.advertencias.forEach(a => procedencia.append(nodo('p', a.mensaje)));
+        procedencia.append(nodo('p', `Fuente: ${[...new Set(r.fuentes.map(f => f.proveedor))].join(' · ')}.`));
+        procedencia.append(nodo('p', 'Límites de referencia: OCHA/HDX · CC BY 3.0 IGO.'));
+        if (r.resumen.registrosConFaltantes > 0) procedencia.append(nodo('p', 'Algunos puntos tienen información incompleta.'));
     }
 
     detalle(id, origen) {
         const r = this.actual?.respuesta;
         const f = r?.datos.find(foco => foco.identificador === id);
         if (!f) return;
+        this.mostrarPanelResultados(true);
         this.origenDetalle = origen;
         document.querySelectorAll('.fila-foco').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.foco === id)));
         const campos = document.getElementById('campos-detalle'); campos.replaceChildren();
         const extras = document.getElementById('campos-detalle-extra'); extras.replaceChildren();
         const coordenadas = f.geometria?.type === 'Point' ? `${f.geometria.coordinates[1]}, ${f.geometria.coordinates[0]} (latitud, longitud)` : 'No informadas';
         const valores = [
-            ['Identificador', f.identificador], ['Fecha y hora (Bolivia)', fechaBolivia(f.fechas.observadoDesde)], ['Adquisición · UTC', f.fechas.observadoDesde],
-            ['Confianza de detección', f.atributos.confianza], ['Confianza original', f.atributos.confianzaOriginal ?? 'No informada'], ['Potencia radiativa · FRP', numero(f.atributos.potenciaRadiativa, 'MW')],
-            ['Municipio', this.nombres.get(f.territorio.municipio) ?? 'No determinado'], ['Provincia', this.nombres.get(f.territorio.provincia) ?? 'No determinada'], ['Coordenadas · WGS84', coordenadas],
-            ['Satélite / instrumento', `${f.atributos.satelite ?? 'No informado'} / ${f.atributos.instrumento ?? 'No informado'}`], ['Naturaleza', f.naturaleza === 'observacion' ? 'Observación satelital' : f.naturaleza], ['Fuente / producto', r.fuentes.map(s => `${s.proveedor} · ${s.producto}`).join('; ')],
-            ['Versión del registro', f.atributos.versionOriginal ?? 'No informada'], ['Recuperación · Bolivia', fechaBolivia(r.consulta.obtencion.fechaRecuperacion)], ['Consulta · Bolivia', fechaBolivia(r.consulta.fechaConsulta)],
+            ['Fecha y hora (Bolivia)', fechaBolivia(f.fechas.observadoDesde)], ['Nivel de confianza', f.atributos.confianza],
+            ['Municipio', this.nombres.get(f.territorio.municipio) ?? 'No determinado'], ['Provincia', this.nombres.get(f.territorio.provincia) ?? 'No determinada'],
+            ['Ubicación', coordenadas], ['Fuente', [...new Set(r.fuentes.map(s => s.proveedor))].join(' · ')],
         ];
-        const principales = new Set(['Municipio', 'Provincia', 'Fecha y hora (Bolivia)', 'Confianza de detección']);
+        const principales = new Set(['Municipio', 'Provincia', 'Fecha y hora (Bolivia)', 'Nivel de confianza']);
         valores.forEach(([nombre, valor]) => { const grupo = nodo('div'); grupo.append(nodo('dt', nombre), nodo('dd', valor)); (principales.has(nombre) ? campos : extras).append(grupo); });
-        texto('faltantes-detalle', f.faltantes.length ? `Faltantes: ${f.faltantes.map(x => `${x.campo}: ${x.motivo}`).join(' · ')}` : 'Sin faltantes declarados en los atributos del registro. Un foco térmico no confirma un incendio.');
+        texto('faltantes-detalle', f.faltantes.length ? 'Este punto tiene información incompleta.' : '');
         document.getElementById('detalle-foco').hidden = false;
         texto('titulo-detalle', `Detección ${r.datos.indexOf(f) + 1} de ${r.datos.length}`);
         this.mapa.seleccionar(id);

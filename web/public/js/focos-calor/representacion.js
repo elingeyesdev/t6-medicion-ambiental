@@ -1,7 +1,7 @@
-import { fechaBolivia, numero } from './contrato.js';
+import { fechaBolivia } from './contrato.js';
 
 export function etiquetaDeteccion(foco, nombreMunicipio) {
-    return `${fechaBolivia(foco.fechas.observadoDesde)} · ${nombreMunicipio || 'Municipio no determinado'} · confianza ${foco.atributos.confianza} · FRP ${numero(foco.atributos.potenciaRadiativa, 'MW')}`;
+    return `${fechaBolivia(foco.fechas.observadoDesde)} · ${nombreMunicipio || 'Municipio no determinado'} · confianza ${foco.atributos.confianza}`;
 }
 
 /** Grupos de proximidad visual de UNA página; no alteran coordenadas ni métricas. */
