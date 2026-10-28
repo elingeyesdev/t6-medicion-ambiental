@@ -176,8 +176,8 @@ class SimulacionesTest extends TestCase
         $u = User::factory()->create(['rol' => 'analista']);
         $this->actingAs($u);
         $this->get('/simulaciones')->assertOk()->assertSee('Simulaciones')->assertSee('Zonas a comparar')->assertSee('Calidad del aire')->assertDontSee('en preparación');
-        $sesion = app(SimularEscenario::class)->crear($this->parametros(),$u->id);
+        $sesion = app(SimularEscenario::class)->crear($this->parametros(), $u->id);
         $this->get('/simulaciones?sesion='.$sesion->id)->assertOk()->assertSee('Reproducir')->assertSee('Reiniciar')->assertSee('Guardar lecturas pasadas');
-        $this->assertDatabaseCount('simulaciones',1);
+        $this->assertDatabaseCount('simulaciones', 1);
     }
 }
