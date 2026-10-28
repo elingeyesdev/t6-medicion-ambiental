@@ -99,6 +99,10 @@ class TiempoTest extends TestCase
     public function test_respuestas_malformadas_fechas_antiguas_unidades_y_vectores_incoherentes_se_rechazan(): void
     {
         $this->cliente();
+        $r = null;
+        Http::fake(function () use (&$r) {
+            return Http::response($r);
+        });
         foreach (['unidad', 'antiguo', 'horas', 'valor', 'zona', 'repetida', 'json'] as $caso) {
             Cache::flush();
             $r = $this->respuesta();
@@ -123,7 +127,6 @@ class TiempoTest extends TestCase
             if ($caso === 'json') {
                 $r = 'No es JSON';
             }
-            Http::fake(['api.open-meteo.com/*' => Http::response($r)]);
             $this->getJson('/api/v1/tiempo?latitud=0&longitud=0')->assertStatus(503);
         }
     }
@@ -134,6 +137,16 @@ class TiempoTest extends TestCase
         Http::assertNothingSent();
         Http::fake(['api.open-meteo.com/*' => Http::response($this->respuesta())]);
         $this->getJson('/mapa/tiempo?latitud=-17.8&longitud=-63.2')->assertOk();
+    }
+
+    public function test_error_del_proveedor_en_web_conserva_el_mismo_estado_y_mensaje_de_la_api(): void
+    {
+        $this->actingAs(User::factory()->create());
+        Http::fake(['api.open-meteo.com/*' => Http::response(['message' => 'detalle privado'], 429)]);
+        $this->getJson('/mapa/tiempo?latitud=0&longitud=0')->assertStatus(503)
+            ->assertJsonPath('error.codigo', 'PRONOSTICO_NO_DISPONIBLE')->assertDontSee('detalle privado');
+        $this->getJson('/mapa/tiempo?latitud=91&longitud=0')->assertUnprocessable()
+            ->assertJsonPath('error.codigo', 'FILTROS_INVALIDOS');
     }
 
     public function test_cuenta_inactiva_y_limite_de_consultas(): void

@@ -29,7 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->dontReport([ErrorConsulta::class]);
         $exceptions->render(function (Throwable $e, Request $request) {
-            if (! $request->is('api/v1/*', 'mapa/puntos')) {
+            if (! $request->is('api/v1/*', 'mapa/puntos', 'mapa/tiempo', 'mapa/buscar')) {
                 return null;
             }
             $estado = 500;
@@ -80,6 +80,6 @@ return Application::configure(basePath: dirname(__DIR__))
             return $respuesta;
         });
         $exceptions->shouldRenderJsonWhen(
-            fn (Request $request): bool => $request->is('api/*', 'mapa/puntos') || $request->expectsJson()
+            fn (Request $request): bool => $request->is('api/*', 'mapa/puntos', 'mapa/tiempo', 'mapa/buscar') || $request->expectsJson()
         );
     })->create();
