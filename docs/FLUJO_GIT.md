@@ -30,6 +30,12 @@ La fusión a `main` se hace después de su aprobación expresa. Un tag de versi�
 
 ## Propuesta de referencia original / MIG-01
 
+### Publicación comprobada de M2 · 27/10/2026
+
+PR #59 publicó el corte aprobado `e9a591c313f988d1649d3ccaa8086795491298f7` en main (`851a79f`). Se compararon ambos árboles: contienen exactamente los mismos archivos. Pasaron los once controles. Tag y Release: `v0.2.0`. El APK firmado continúa pendiente en #50; no hay despliegue público.
+
+Esta recuperación usó `release/50-entrega-m2` fijada al corte aprobado porque develop ya contenía M3. Es una excepción registrada para publicar la entrega atrasada, sin retroceder develop, forzar el historial ni dar la aprobación de M2 a M3. Las próximas entregas vuelven al flujo normal develop → main con aprobación de su versión concreta.
+
 La rama `feature/29-base-envirosense` parte del `main` existente en `6895946e20df0abdd1510e8daae54a553eaff4a8` y añade la referencia completa bajo `referencias/envirosense/`. Su PR a `main` se prepara **en borrador**, a la espera de confirmar y aprobar el orden académico. No incorpora automáticamente las funciones de M2.
 
 La rama `feature/29-adaptacion-geocruz` parte del `develop` existente en `202df8fb77ace56eebc81d5b135ef6dd1d509fd7`, incluye la misma referencia y documenta su correspondencia con Laravel/Blade/Flutter. Se sincronizó posteriormente con `develop` en `5fd724cd1b4360e296896538f658522bfe6c8c21`, incluyendo consulta móvil y QA ya aceptadas. Se revisa mediante un PR independiente hacia `develop`.

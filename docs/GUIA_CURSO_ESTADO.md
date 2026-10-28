@@ -1,5 +1,7 @@
 # Guía GitHub del curso: estado y acciones
 
+**Actualización del 27/10:** M2 ya está publicada mediante PR #59 y versión `v0.2.0`, con contenido idéntico al corte aprobado y once controles correctos. La afirmación histórica de que no había tags/Releases queda sustituida para M2. APK firmado, protecciones del propietario y publicación siguen pendientes. Josué pidió trabajar en local. El alcance vigente es [GeoSur con todas las funciones de EnviroSense](REINGENIERIA_GEOSUR.md); el jueves corresponde a M2 y M3 no tiene fecha confirmada.
+
 Revisión del 26/10/2026 de las 61 páginas de `gitub para equipos en xp.pdf`. Seguimiento #50. Josué aceptó mantener GitHub Projects y ProjectLibre en lugar de añadir Microsoft Planner; el resto del flujo se toma como base del trabajo nuevo. Este registro no presenta como implementado un permiso, servidor o APK que todavía falta comprobar.
 
 ## Planificación y diseño (páginas 3-21)

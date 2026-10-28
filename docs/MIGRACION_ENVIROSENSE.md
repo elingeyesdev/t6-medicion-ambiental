@@ -1,5 +1,7 @@
 # Adaptación de EnviroSense a GeoCruz
 
+**Alcance vigente del 27/10:** [GeoSur recupera todas las funciones de EnviroSense](REINGENIERIA_GEOSUR.md). Esta selección histórica de cinco funciones queda reemplazada. M2 se revisa el jueves 29/10; la fecha de M3 no está confirmada.
+
 **Revisión posterior a la defensa, 26/10/2026:** el enfoque vigente está en [REINGENIERIA_ENVIROSENSE_M3.md](REINGENIERIA_ENVIROSENSE_M3.md). El ingeniero pidió adaptar el sistema de origen según el Planner; Josué confirmó conservar Laravel/Blade y Flutter y retirar pantallas pendientes. Este documento conserva el corte del 21/10 como antecedente. La adaptación activa y su organización se describen en [ORGANIZACION_CODIGO.md](ORGANIZACION_CODIGO.md), con Tabler y navegación de EnviroSense/GeoCruz. Los estados y las rutas de archivos siguientes corresponden a su versión histórica.
 
 Actualización del corte: 21/10/2026. Seguimiento: [MIG-01 / #29](https://github.com/elingeyesdev/t6-medicion-ambiental/issues/29). La propuesta inicial del 20/10 partió de `202df8fb77ace56eebc81d5b135ef6dd1d509fd7`; ahora incorpora `develop` en `5fd724cd1b4360e296896538f658522bfe6c8c21`, que ya incluye MOV-02 y QA-01. Esta incorporación conserva esa implementación y añade la referencia y su trazabilidad; no implementa nuevos módulos ambientales.

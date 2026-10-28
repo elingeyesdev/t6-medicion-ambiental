@@ -1,5 +1,7 @@
 # Marca GeoCruz y demostración local
 
+**Cambio posterior, #61:** la marca visible ahora es GeoSur y usa `web/public/img/marca/geosur-simbolo.svg`, una silueta continental ilustrativa. Los PNG y la descripción de GeoCruz de abajo se conservan como historia. La cuenta demo existente y su contraseña se conservan; cambiar el nombre no modifica credenciales. Ver [alcance vigente](REINGENIERIA_GEOSUR.md).
+
 Trabajo de #54. Josué eligió el segundo emblema ambiental el 27/10/2026: Santa Cruz con vegetación, un curso de agua y suelo seco. La marca visible pasa a **GeoCruz**. EnviroSense sigue identificado como origen de la adaptación, con su referencia histórica intacta.
 
 El inicio usa **Explorar** y **Qué quieres consultar**; el menú del mapa usa **Explorar**, Focos de calor y Sequías. No se cambian las rutas `/modulos/...`, el contrato de Flutter ni los nombres internos de las carpetas por cambiar un rótulo.
