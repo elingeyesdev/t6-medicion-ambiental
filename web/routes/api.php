@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\FocosCalorController;
+use App\Http\Controllers\Api\PaisesController;
 use App\Http\Controllers\Api\SequiasController;
 use App\Http\Controllers\Api\TerritoriosController;
 use App\Http\Controllers\SaludController;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/salud', SaludController::class)->name('api.salud');
 
 Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
+    Route::get('/paises', PaisesController::class);
     Route::get('/territorios', [TerritoriosController::class, 'index']);
     Route::get('/territorios/{identificador}/limite', [TerritoriosController::class, 'limite']);
     Route::get('/focos-calor', FocosCalorController::class);
