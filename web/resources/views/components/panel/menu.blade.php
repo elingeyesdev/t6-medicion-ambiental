@@ -1,6 +1,6 @@
 @props(['modulos'])
-<aside class="enviro-lateral" id="menu-panel" aria-label="Panel de GeoCruz">
-    <a class="enviro-marca" href="{{ route('inicio') }}" aria-label="GeoCruz, inicio">
+<aside class="enviro-lateral" id="menu-panel" aria-label="Panel de GeoSur">
+    <a class="enviro-marca" href="{{ route('inicio') }}" aria-label="GeoSur, inicio">
         <x-panel.marca />
     </a>
     <button class="enviro-contraer" id="contraer-menu" type="button" aria-controls="menu-panel" aria-expanded="true" aria-label="Contraer menú"><span aria-hidden="true">‹</span></button>

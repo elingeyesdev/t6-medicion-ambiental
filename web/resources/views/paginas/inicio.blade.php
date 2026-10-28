@@ -9,8 +9,8 @@
 <main id="contenido" tabindex="-1">
     <x-publico.paisaje class="portada-hero">
         <div class="container-xl portada-presentacion">
-            <h1>Explora<br>Santa Cruz.</h1>
-            <p>Focos de calor y sequías.<br>Consulta tu provincia o municipio en el mapa.</p>
+            <h1>Explora<br>el territorio.</h1>
+            <p>Focos de calor y sequías.<br>Consulta disponible en Santa Cruz, Bolivia.</p>
             <div class="acciones-publicas">
                 <a class="btn btn-primary" href="{{ route('mapa') }}">Entrar al mapa <x-panel.icono nombre="arrow-right" /></a>
                 @guest

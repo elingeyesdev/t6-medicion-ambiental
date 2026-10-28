@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="GeoCruz: monitoreo ambiental de Santa Cruz, Bolivia.">
-    <title>@yield('titulo', 'Monitoreo ambiental') · GeoCruz</title>
+    <meta name="description" content="GeoSur: monitoreo ambiental de Santa Cruz, Bolivia.">
+    <title>@yield('titulo', 'Monitoreo ambiental') · {{ config('geocruz.nombre') }}</title>
     <link rel="stylesheet" href="{{ asset('vendor/tabler/tabler.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/panel/panel.css') }}">
     <link rel="stylesheet" href="{{ asset('css/panel/marca.css') }}">
-    <link rel="icon" type="image/png" href="{{ asset('img/marca/geocruz-simbolo.png') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('img/marca/geosur-simbolo.svg') }}">
     <link rel="stylesheet" href="{{ asset('css/paginas/publico.css') }}">
     @stack('estilos')
 </head>

@@ -1,5 +1,5 @@
 <header class="portada-cabecera">
-    <a href="{{ route('inicio') }}" aria-label="GeoCruz, inicio"><x-panel.marca /></a>
+    <a href="{{ route('inicio') }}" aria-label="GeoSur, inicio"><x-panel.marca /></a>
     <nav aria-label="Navegación de inicio">
         <a href="{{ request()->routeIs('inicio') ? '#explorar' : route('inicio').'#explorar' }}">Qué puedes consultar</a>
         @auth

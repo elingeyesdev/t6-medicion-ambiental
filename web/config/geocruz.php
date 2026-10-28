@@ -1,7 +1,8 @@
 <?php
 
 return [
-    // El plan conserva cinco módulos; el panel publica solo pantallas funcionales.
+    'nombre' => 'GeoSur',
+    // #61 conserva todo EnviroSense como alcance. Publicar cada recorrido al migrarlo.
     'modulos' => [
         'focos-calor' => [
             'nombre' => 'Focos de calor',
