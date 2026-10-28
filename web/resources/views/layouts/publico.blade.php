@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/tabler/tabler.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/panel/panel.css') }}">
     <link rel="stylesheet" href="{{ asset('css/panel/marca.css') }}">
-    <link rel="icon" type="image/svg+xml" href="{{ asset('img/marca/geosur-simbolo.svg') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('img/marca/geosur-simbolo.svg') }}?v=gs-1">
     <link rel="stylesheet" href="{{ asset('css/paginas/publico.css') }}">
     @stack('estilos')
 </head>
