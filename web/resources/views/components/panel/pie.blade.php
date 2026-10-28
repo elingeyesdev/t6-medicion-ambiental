@@ -1,1 +1,1 @@
-<footer class="enviro-pie"><span>{{ config('geocruz.nombre') }}</span><span>Consulta de Santa Cruz, Bolivia</span></footer>
+<footer class="enviro-pie"><span>{{ config('geocruz.nombre') }}</span><span>{{ request()->routeIs('sensores*') ? 'Consulta de puntos ambientales' : 'Consulta de Santa Cruz, Bolivia' }}</span></footer>
