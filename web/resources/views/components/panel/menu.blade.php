@@ -15,6 +15,11 @@
                 <x-panel.icono :nombre="$item['icono']" /><span>{{ $item['nombre'] }}</span>
             </a>
         @endforeach
+        <div class="enviro-seccion">Cuenta</div>
+        <a class="enviro-enlace {{ request()->routeIs('cuenta*') ? 'activo' : '' }}" href="{{ route('cuenta') }}" title="Mi cuenta" @if(request()->routeIs('cuenta*')) aria-current="page" @endif><x-panel.icono nombre="map-pin" /><span>Mi cuenta</span></a>
+        @can('usuarios.administrar')
+            <a class="enviro-enlace {{ request()->routeIs('usuarios*') ? 'activo' : '' }}" href="{{ route('usuarios') }}" title="Usuarios" @if(request()->routeIs('usuarios*')) aria-current="page" @endif><x-panel.icono nombre="layout-dashboard" /><span>Usuarios</span></a>
+        @endcan
     </nav>
     <div class="enviro-territorio"><x-panel.icono nombre="map-pin" /><span>Santa Cruz<small>Bolivia</small></span></div>
 </aside>

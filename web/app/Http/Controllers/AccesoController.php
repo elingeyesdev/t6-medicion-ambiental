@@ -20,12 +20,13 @@ class AccesoController extends Controller
         if (RateLimiter::tooManyAttempts($clave, 5)) {
             throw ValidationException::withMessages(['email' => 'Espera un minuto y vuelve a intentarlo.']);
         }
-        if (! Auth::attempt($request->safe()->only(['email', 'password']))) {
+        if (! Auth::attempt($request->safe()->only(['email', 'password']) + ['activo' => true])) {
             RateLimiter::hit($clave, 60);
             throw ValidationException::withMessages(['email' => 'El correo o la contraseña no coinciden.']);
         }
         RateLimiter::clear($clave);
         $request->session()->regenerate();
+        $request->session()->put('cuenta_version', $request->user()->sesion_version);
 
         return redirect()->intended(route('mapa', absolute: false));
     }
@@ -36,6 +37,7 @@ class AccesoController extends Controller
         event(new Registered($usuario));
         Auth::login($usuario);
         $request->session()->regenerate();
+        $request->session()->put('cuenta_version', $usuario->sesion_version);
 
         return redirect()->intended(route('mapa', absolute: false));
     }

@@ -2,6 +2,7 @@
 @section('titulo', 'Ingresar')
 @section('encabezado', 'Ingresa a GeoSur')
 @section('formulario')
+@if(session('estado'))<div class="alert alert-success" role="status">{{ session('estado') }}</div>@endif
 <form method="post" action="{{ route('acceso.entrar') }}">
     @csrf
     <div class="mb-3"><label class="form-label" for="email">Correo electrónico</label><input class="form-control @error('email') is-invalid @enderror" id="email" name="email" type="email" autocomplete="username" value="{{ old('email') }}" maxlength="254" required autofocus @error('email') aria-invalid="true" aria-describedby="error-email" @enderror>@error('email')<div id="error-email" class="invalid-feedback" role="alert">{{ $message }}</div>@enderror</div>
@@ -11,4 +12,5 @@
         <a href="{{ route('register') }}" class="btn btn-outline-primary">Crear cuenta</a>
     </div>
 </form>
+<p class="mt-4 mb-0"><a href="{{ route('password.request') }}">Olvidé mi contraseña</a></p>
 @endsection

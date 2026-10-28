@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Enums\RolCuenta;
+use App\Models\User;
 use App\Services\Sequias\AlmacenPublicacionesSequias;
 use App\Services\Sequias\Experimental\CatalogoMuestrasSequias;
 use App\Services\Sequias\LectorJsonLocal;
@@ -10,6 +12,10 @@ use App\Services\Sequias\RepositorioSeriesPrecipitacion;
 use App\Services\Sequias\ValidadorSeriePrecipitacion;
 use App\Services\Territorios\CatalogoTerritorial;
 use App\Services\Territorios\GeometriaTerritorial;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -37,6 +43,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        foreach (['cuentas-ingreso' => 15, 'cuentas-registro' => 5, 'cuentas-recuperacion' => 5, 'cuentas-restablecer' => 5] as $nombre => $maximo) {
+            RateLimiter::for($nombre, fn (Request $request) => Limit::perMinute($maximo)->by($request->ip()));
+        }
+        foreach (RolCuenta::Administrador->permisos() as $permiso) {
+            Gate::define($permiso, fn (User $usuario): bool => $usuario->activo && in_array($permiso, $usuario->rol->permisos(), true));
+        }
     }
 }

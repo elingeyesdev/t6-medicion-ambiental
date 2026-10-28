@@ -1,0 +1,28 @@
+.pagina-cuentas .contenido-panel { overflow-y: auto; background: #f3f7f4; }
+.cuentas-contenido { max-width: 1200px; margin: 0 auto; padding: 32px; font-size: 16px; }
+.cuentas-contenido h1 { font-size: 30px; margin-bottom: 24px; }
+.cuentas-columnas { display: grid; grid-template-columns: 1fr 1.4fr; gap: 24px; align-items: start; }
+.cuenta-tarjeta { border: 1px solid #d5e3d9; box-shadow: none; }
+.cuenta-tarjeta .card-header { background: #e4f2e8; gap: 16px; flex-wrap: wrap; }
+.cuenta-tarjeta h2, .cuenta-tarjeta .card-title { font-size: 21px; margin: 0; }
+.cuenta-tarjeta .form-label, .cuenta-tarjeta .btn, .cuenta-busqueda .btn, .cuenta-paginacion .btn, .cuenta-tarjeta .form-control, .cuenta-tarjeta .form-select { font-size: 16px; }
+.cuenta-correo { overflow-wrap: anywhere; margin: 12px 0 24px; }
+.cuenta-rol, .cuenta-estado { background: #d7efdf; color: #155c31; border-radius: 5px; padding: 6px 10px; font-size: 16px; }
+.cuenta-estado.suspendida { background: #ffe9e5; color: #9f291c; }
+.cuenta-fila { display: flex; justify-content: space-between; gap: 16px; align-items: center; flex-wrap: wrap; }
+.cuenta-acciones, .cuenta-controles, .cuenta-rol-form, .cuenta-busqueda, .cuenta-paginacion { display: flex; gap: 16px; align-items: end; flex-wrap: wrap; }
+.cuenta-controles { justify-content: space-between; }
+.cuenta-rol-form > div { min-width: 180px; }
+.cuenta-busqueda { margin-bottom: 24px; }
+.cuenta-busqueda > div { flex: 1; max-width: 500px; }
+.cuenta-lista { display: grid; gap: 16px; }
+.cuenta-paginacion { justify-content: center; align-items: center; margin-top: 24px; }
+#cuenta-mapa { height: 320px; border: 1px solid #bdd4c4; border-radius: 6px; z-index: 0; }
+.punto-cuenta span { display: block; width: 22px; height: 22px; border: 3px solid white; background: #15803d; border-radius: 50%; box-shadow: 0 0 0 3px #155c31; }
+[data-bs-theme="dark"] .pagina-cuentas .contenido-panel { background: var(--enviro-fondo); }
+[data-bs-theme="dark"] .cuenta-tarjeta { border-color: var(--enviro-borde); }
+[data-bs-theme="dark"] .cuenta-tarjeta .card-header { background: #214830; }
+[data-bs-theme="dark"] .cuenta-rol, [data-bs-theme="dark"] .cuenta-estado { background: #214830; color: #c4f2d1; }
+[data-bs-theme="dark"] .cuenta-estado.suspendida { background: #542d26; color: #ffd0c7; }
+@media (max-width: 900px) { .cuentas-columnas { grid-template-columns: 1fr; } .cuentas-contenido { padding: 24px 16px; } }
+@media (max-width: 480px) { .cuenta-acciones .btn { width: 100%; } .cuenta-rol-form { width: 100%; } .cuenta-rol-form > div { flex: 1; min-width: 140px; } }
