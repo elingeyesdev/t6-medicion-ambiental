@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CuentaController;
 use App\Http\Controllers\Api\FocosCalorController;
 use App\Http\Controllers\Api\PaisesController;
+use App\Http\Controllers\Api\SensoresController;
 use App\Http\Controllers\Api\SequiasController;
 use App\Http\Controllers\Api\TerritoriosController;
 use App\Http\Controllers\Api\UsuariosController;
@@ -20,6 +21,17 @@ Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
     Route::post('/cuenta/restablecer', [RecuperacionController::class, 'restablecer'])->middleware('throttle:cuentas-restablecer');
     Route::post('/cuenta/ingresar', [CuentaController::class, 'entrar'])->middleware('throttle:cuentas-ingreso');
     Route::middleware(['auth:sanctum', 'cuenta.activa', 'abilities:cuenta'])->group(function (): void {
+        Route::middleware('can:datos.consultar')->group(function (): void {
+            Route::get('/sensores/catalogo', [SensoresController::class, 'catalogo']);
+            Route::get('/sensores/cercanos', [SensoresController::class, 'cercanos']);
+            Route::get('/sensores', [SensoresController::class, 'index']);
+            Route::get('/sensores/{punto:codigo}/lecturas', [SensoresController::class, 'historial']);
+        });
+        Route::middleware('can:datos.gestionar')->group(function (): void {
+            Route::post('/sensores', [SensoresController::class, 'guardar']);
+            Route::post('/sensores/lecturas', [SensoresController::class, 'importar']);
+            Route::patch('/sensores/{punto:codigo}/estado', [SensoresController::class, 'estado']);
+        });
         Route::get('/cuenta', [CuentaController::class, 'mostrar']);
         Route::put('/cuenta/nombre', [CuentaController::class, 'nombre']);
         Route::put('/cuenta/preferencias', [CuentaController::class, 'preferencias']);

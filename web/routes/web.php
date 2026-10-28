@@ -4,6 +4,7 @@ use App\Http\Controllers\AccesoController;
 use App\Http\Controllers\CuentaController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\RecuperacionController;
+use App\Http\Controllers\SensoresController;
 use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,13 @@ Route::middleware('guest')->group(function (): void {
     Route::post('/restablecer-acceso', [RecuperacionController::class, 'restablecer'])->middleware('throttle:cuentas-restablecer')->name('password.update');
 });
 Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
+    Route::get('/sensores', [SensoresController::class, 'index'])->middleware('can:datos.consultar')->name('sensores');
+    Route::middleware('can:datos.gestionar')->group(function (): void {
+        Route::post('/sensores', [SensoresController::class, 'guardar'])->name('sensores.guardar');
+        Route::post('/sensores/importar', [SensoresController::class, 'importar'])->name('sensores.importar');
+        Route::post('/sensores/{punto:codigo}/lecturas', [SensoresController::class, 'registrar'])->name('sensores.registrar');
+        Route::patch('/sensores/{punto:codigo}/estado', [SensoresController::class, 'estado'])->name('sensores.estado');
+    });
     Route::get('/mapa', [InicioController::class, 'index'])->name('mapa');
     Route::get('/modulos/{modulo}', [InicioController::class, 'modulo'])->name('modulos.mostrar');
     Route::post('/logout', [AccesoController::class, 'salir'])->name('logout');

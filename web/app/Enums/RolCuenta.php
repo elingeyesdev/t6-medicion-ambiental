@@ -18,9 +18,9 @@ enum RolCuenta: string
     public function permisos(): array
     {
         return match ($this) {
-            self::Administrador => ['mapa.ver', 'reportes.ver', 'reportes.crear', 'simulaciones.gestionar', 'alertas.gestionar', 'usuarios.administrar'],
-            self::Analista => ['mapa.ver', 'reportes.ver', 'reportes.crear', 'simulaciones.gestionar', 'alertas.gestionar'],
-            self::Visualizador => ['mapa.ver', 'reportes.ver'],
+            self::Administrador => ['mapa.ver', 'reportes.ver', 'reportes.crear', 'simulaciones.gestionar', 'alertas.gestionar', 'usuarios.administrar', 'datos.consultar', 'datos.gestionar'],
+            self::Analista => ['mapa.ver', 'reportes.ver', 'reportes.crear', 'simulaciones.gestionar', 'alertas.gestionar', 'datos.consultar', 'datos.gestionar'],
+            self::Visualizador => ['mapa.ver', 'reportes.ver', 'datos.consultar'],
         };
     }
 }
