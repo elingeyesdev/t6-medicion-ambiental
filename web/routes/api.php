@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\CuentaController;
 use App\Http\Controllers\Api\FocosCalorController;
 use App\Http\Controllers\Api\PaisesController;
 use App\Http\Controllers\Api\SequiasController;
 use App\Http\Controllers\Api\TerritoriosController;
+use App\Http\Controllers\Api\UsuariosController;
+use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\SaludController;
 use App\Services\Api\ErrorConsulta;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +15,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/salud', SaludController::class)->name('api.salud');
 
 Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
+    Route::post('/cuenta/registrar', [CuentaController::class, 'registrar'])->middleware('throttle:cuentas-registro');
+    Route::post('/cuenta/recuperar', [RecuperacionController::class, 'solicitar'])->middleware('throttle:cuentas-recuperacion');
+    Route::post('/cuenta/restablecer', [RecuperacionController::class, 'restablecer'])->middleware('throttle:cuentas-restablecer');
+    Route::post('/cuenta/ingresar', [CuentaController::class, 'entrar'])->middleware('throttle:cuentas-ingreso');
+    Route::middleware(['auth:sanctum', 'cuenta.activa', 'abilities:cuenta'])->group(function (): void {
+        Route::get('/cuenta', [CuentaController::class, 'mostrar']);
+        Route::put('/cuenta/nombre', [CuentaController::class, 'nombre']);
+        Route::put('/cuenta/preferencias', [CuentaController::class, 'preferencias']);
+        Route::post('/cuenta/salir', [CuentaController::class, 'salir']);
+        Route::middleware('can:usuarios.administrar')->group(function (): void {
+            Route::get('/usuarios', [UsuariosController::class, 'index']);
+            Route::patch('/usuarios/{usuario}/rol', [UsuariosController::class, 'rol']);
+            Route::patch('/usuarios/{usuario}/estado', [UsuariosController::class, 'estado']);
+        });
+    });
     Route::get('/paises', PaisesController::class);
     Route::get('/territorios', [TerritoriosController::class, 'index']);
     Route::get('/territorios/{identificador}/limite', [TerritoriosController::class, 'limite']);
