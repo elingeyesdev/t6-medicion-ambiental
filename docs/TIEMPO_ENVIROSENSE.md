@@ -26,6 +26,8 @@ Se contrastó con el servicio conservado `referencias/envirosense/codigo/Backend
 
 Pruebas específicas: siete pruebas y 58 comprobaciones sobre permisos, coordenadas cero/inválidas, faltantes, unidades, zonas horarias, fechas, caché, fallo, respuesta malformada y frecuencia. La suite completa pasó: 357 pruebas y 3342 comprobaciones. Se hizo además una consulta real de Santa Cruz (168 horas, siete días) y una comprobación en la ficha del mapa. Ver [evidencias/tiempo66](evidencias/tiempo66/README.md).
 
+El candidato está en el PR #78, sobre #77. #79 corrige los filtros de los controles de GitHub para que se ejecuten también cuando el destino es una rama `fix/`, `hotfix/`, `docs/` o `test/`, conservando sus permisos de lectura y sus filtros de archivos.
+
 Pendiente: capas raster y su línea temporal/comparación del original, buscador mundial, integración del pronóstico en los reportes atmosféricos y cliente Flutter. Esta recuperación del servicio no declara terminadas #62/#66 ni toda la migración.
 
 ## Alcance actualizado

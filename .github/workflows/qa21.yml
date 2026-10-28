@@ -2,7 +2,7 @@ name: QA-01 comparación web y Flutter
 
 on:
   pull_request:
-    branches: [develop, main, 'feature/**', 'refactor/**']
+    branches: [develop, main, 'feature/**', 'refactor/**', 'fix/**', 'hotfix/**', 'docs/**', 'test/**']
     paths: ['web/**', 'movil/**', 'compartido/**', 'herramientas/verificar_qa21.py', '.github/workflows/qa21.yml']
   push:
     branches: [develop]

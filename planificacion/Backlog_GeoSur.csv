@@ -19,3 +19,4 @@ Issue,Tarea,Fase,Responsable,DependeDe,Estado,FechaRevisionConfirmada,Estimacion
 48,Adaptar recorridos del original a Flutter,Transversal,Jaziel/Josue,38/62/63/64/65/66,Pendiente,,
 49,Publicar con PostgreSQL y Railway,Publicación pospuesta,Josue/Jaziel,,Seguir en local por decisión de Josue,,
 76,Actualizar librería de correo,Mantenimiento,Josue/Jaziel,65,Candidato #77; auditoría limpia y pruebas pasadas; falta revisión,,
+79,Ejecutar controles en ramas de correcciones,Mantenimiento,Josue/Jaziel,76,Preparado en #78; comprobar controles y pedir revisión,,
