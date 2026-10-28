@@ -1,6 +1,7 @@
 import { iniciarMapaBase } from './base.js';
 import { consultaMonitoreo } from './consulta-monitoreo.js';
 import { crearConsultaTiempo } from './tiempo.js';
+import { iniciarBuscadorLugar } from './buscador.js';
 
 const configuracion = JSON.parse(document.getElementById('configuracion-monitoreo').textContent);
 const formulario = document.getElementById('consulta-monitoreo');
@@ -13,6 +14,9 @@ const L = window.L;
 const mapa = L.map('mapa-monitoreo', { scrollWheelZoom: true, zoomAnimation: false, fadeAnimation: false }).setView([-20, -60], 3);
 const marcadores = L.layerGroup().addTo(mapa);
 const limites = L.geoJSON(null, {style:{color:'#f59e0b',weight:3,fillColor:'#fef3c7',fillOpacity:0.08},interactive:false}).addTo(mapa);
+mapa.on('moveend', () => {
+    document.getElementById('mon-fuente-limite').hidden = !limites.getLayers().length || !mapa.getBounds().intersects(limites.getBounds());
+});
 const porCodigo = new Map();
 let redimension = null;
 new ResizeObserver(() => {
@@ -174,6 +178,14 @@ botonTiempo.addEventListener('click', () => {
     const superficie = document.getElementById('mapa-monitoreo'); superficie.classList.toggle('elegir-tiempo', modoTiempo);
     avisar(modoTiempo ? 'Pulsa un lugar del mapa. Con teclado, mueve el mapa y pulsa Enter.' : 'Selecciona un punto para consultar sus datos.');
     if (modoTiempo) { superficie.focus({preventScroll: true}); superficie.scrollIntoView({block: 'nearest'}); }
+});
+iniciarBuscadorLugar(configuracion.buscar, lugar => {
+    abrirTiempo(lugar.latitud, lugar.longitud, lugar.nombre);
+    if (lugar.limites) {
+        const [oeste, sur, este, norte] = lugar.limites;
+        const lateral = matchMedia('(min-width: 768px)').matches ? Math.min(detalle.offsetWidth + 32, mapa.getSize().x * 0.55) : 24;
+        mapa.fitBounds([[sur, oeste], [norte, este]], {paddingTopLeft: [24, 80], paddingBottomRight: [lateral, 90], maxZoom: 12, animate: false});
+    }
 });
 mapa.on('click', e => { if (modoTiempo) abrirTiempo(e.latlng.lat, e.latlng.lng); });
 document.getElementById('mapa-monitoreo').addEventListener('keydown', e => {

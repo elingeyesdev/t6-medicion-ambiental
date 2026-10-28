@@ -10,6 +10,15 @@
 #consulta-monitoreo p { margin: 0; color: var(--enviro-secundario); }
 .monitoreo-estado { margin: 0; padding: 18px 22px; background: var(--enviro-suave); border-block: 1px solid var(--enviro-borde); }
 .monitoreo-tiempo { margin: 0 22px 18px; }
+.monitoreo-buscador { padding: 18px 22px; border-top: 1px solid var(--enviro-borde); }
+.buscador-acciones { display: flex; gap: 12px; margin-top: 12px; }
+#estado-buscador:empty { display: none; }
+#estado-buscador { margin-block: 14px; }
+#lugares-encontrados { list-style: none; padding: 0; margin: 0; max-height: 300px; overflow-y: auto; }
+.lugar-resultado { display: grid; gap: 6px; text-align: left; width: 100%; border: 1px solid var(--enviro-borde); padding: 12px; margin-block: 8px; border-radius: 4px; background: var(--enviro-panel); color: var(--enviro-texto); font-size: 16px; }
+.lugar-resultado:hover, .lugar-resultado:focus-visible { border-color: #15803d; background: var(--enviro-suave); outline: 2px solid #15803d; outline-offset: 1px; }
+.lugar-resultado strong { font-size: 18px; }
+.buscador-fuente { display: inline-block; margin-top: 10px; font-size: 16px; color: var(--enviro-secundario); }
 .elegir-tiempo { cursor: crosshair; }
 .mon-tiempo { margin-top: 20px; border-top: 1px solid var(--enviro-borde); padding-top: 18px; }
 .mon-tiempo h3 { font-size: 21px; margin-top: 20px; }

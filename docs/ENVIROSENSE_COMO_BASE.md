@@ -43,7 +43,7 @@ El original usa React y Node/Express. Sus pantallas y recorridos se adaptan a La
 
 Antes de declarar el software convertido se deben probar los recorridos originales completos, con los roles correspondientes, y comparar sus resultados con EnviroSense. Siguen pendientes:
 
-- Mapa original: buscador mundial, capas meteorológicas, límites, unidades, línea de tiempo, comparaciones y controles; #62.
+- Mapa original: capas meteorológicas, unidades, línea de tiempo, comparaciones y controles; #62. Los límites y el buscador geográfico mundial ya tienen candidatos; la búsqueda de establecimientos/POI sigue pendiente.
 - Sensores conectados, MQTT, radar, cargas ETL y datos históricos originales saneados; #66.
 - Simulaciones: el recorrido por punto/región y sus escenarios ya tiene candidato Laravel/Blade y API en #52; faltan modo continuo global/sockets, Flutter y revisión. Detalle en [SIMULACIONES_ENVIROSENSE.md](SIMULACIONES_ENVIROSENSE.md).
 - Reportes, gráficos, PDF/Excel y plantillas con condiciones tienen candidato en #64; faltan las variables meteorológicas adicionales, Flutter y revisión. Detalle en [REPORTES_ENVIROSENSE.md](REPORTES_ENVIROSENSE.md).
@@ -62,3 +62,5 @@ Al elegir país y región, el mapa dibuja el límite y filtra puntos por su posi
 ## Consulta meteorológica recuperada
 
 El servicio de pronóstico del original se adaptó a Laravel/API y a la ficha del mapa, con datos actuales, por hora y por día de Open-Meteo. Conserva estimaciones y faltantes; no los transforma en observaciones. Detalle y pendientes del mapa completo en [TIEMPO_ENVIROSENSE.md](TIEMPO_ENVIROSENSE.md).
+
+El buscador de Mapbox también tiene candidato Laravel/API y formulario en el mapa. Permite distinguir lugares con el mismo nombre y navegar fuera de Sudamérica, sin crear estaciones ni guardar respuestas temporales. Se comprobó Tokio y selección con teclado en Quito. Ver [BUSCADOR_ENVIROSENSE.md](BUSCADOR_ENVIROSENSE.md).
