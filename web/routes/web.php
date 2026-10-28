@@ -5,6 +5,7 @@ use App\Http\Controllers\CuentaController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MapaMonitoreoController;
 use App\Http\Controllers\RecuperacionController;
+use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\SensoresController;
 use App\Http\Controllers\SimulacionesController;
 use App\Http\Controllers\UsuariosController;
@@ -22,6 +23,18 @@ Route::middleware('guest')->group(function (): void {
     Route::post('/restablecer-acceso', [RecuperacionController::class, 'restablecer'])->middleware('throttle:cuentas-restablecer')->name('password.update');
 });
 Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
+    Route::middleware('can:reportes.ver')->group(function (): void {
+        Route::get('/reportes', [ReportesController::class, 'index'])->name('reportes');
+        Route::get('/reportes/{id}', [ReportesController::class, 'mostrar'])->name('reportes.mostrar');
+        Route::get('/reportes/{id}/descargar/{formato}', [ReportesController::class, 'descargar'])->where('formato', 'pdf|xlsx')->name('reportes.descargar');
+        Route::get('/plantillas', [ReportesController::class, 'plantillas'])->name('plantillas');
+    });
+    Route::middleware('can:reportes.crear')->group(function (): void {
+        Route::post('/reportes', [ReportesController::class, 'guardar'])->name('reportes.guardar');
+        Route::post('/plantillas', [ReportesController::class, 'guardarPlantilla'])->name('plantillas.guardar');
+        Route::patch('/plantillas/{id}', [ReportesController::class, 'guardarPlantilla'])->name('plantillas.actualizar');
+        Route::delete('/plantillas/{id}', [ReportesController::class, 'archivarPlantilla'])->name('plantillas.archivar');
+    });
     Route::middleware('can:simulaciones.gestionar')->group(function (): void {
         Route::get('/simulaciones', [SimulacionesController::class, 'index'])->name('simulaciones');
         Route::post('/simulaciones', [SimulacionesController::class, 'guardar'])->name('simulaciones.guardar');
