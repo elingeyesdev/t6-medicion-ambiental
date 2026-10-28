@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\TerritoriosController;
 use App\Http\Controllers\Api\UsuariosController;
 use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\SaludController;
+use App\Http\Controllers\SimulacionesController;
 use App\Services\Api\ErrorConsulta;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,14 @@ Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
     Route::post('/cuenta/restablecer', [RecuperacionController::class, 'restablecer'])->middleware('throttle:cuentas-restablecer');
     Route::post('/cuenta/ingresar', [CuentaController::class, 'entrar'])->middleware('throttle:cuentas-ingreso');
     Route::middleware(['auth:sanctum', 'cuenta.activa', 'abilities:cuenta'])->group(function (): void {
+        Route::middleware('can:simulaciones.gestionar')->group(function (): void {
+            Route::get('/simulaciones/catalogo', [SimulacionesController::class, 'catalogo']);
+            Route::get('/simulaciones', [SimulacionesController::class, 'index']);
+            Route::post('/simulaciones', [SimulacionesController::class, 'guardar']);
+            Route::get('/simulaciones/{id}', [SimulacionesController::class, 'mostrar']);
+            Route::post('/simulaciones/{id}/accion', [SimulacionesController::class, 'accion']);
+            Route::post('/simulaciones/{id}/historial', [SimulacionesController::class, 'publicar']);
+        });
         Route::middleware('can:datos.consultar')->group(function (): void {
             Route::get('/mapa/puntos', MapaMonitoreoController::class);
             Route::get('/sensores/catalogo', [SensoresController::class, 'catalogo']);

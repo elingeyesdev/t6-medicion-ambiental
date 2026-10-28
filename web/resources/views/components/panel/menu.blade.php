@@ -12,6 +12,9 @@
         @can('datos.consultar')
             <a class="enviro-enlace {{ request()->routeIs('sensores*') ? 'activo' : '' }}" href="{{ route('sensores') }}" title="Mediciones" @if(request()->routeIs('sensores*')) aria-current="page" @endif><x-panel.icono nombre="layout-dashboard" /><span>Mediciones</span></a>
         @endcan
+        @can('simulaciones.gestionar')
+            <a class="enviro-enlace {{ request()->routeIs('simulaciones*') ? 'activo' : '' }}" href="{{ route('simulaciones') }}" title="Simulaciones"><x-panel.icono nombre="world" /><span>Simulaciones</span></a>
+        @endcan
         <div class="enviro-seccion enviro-seccion-modulos">Análisis del territorio</div>
         @foreach($modulos as $id => $item)
             <a class="enviro-enlace {{ request()->route('modulo') === $id ? 'activo' : '' }}" href="{{ route('modulos.mostrar', $id) }}" title="{{ $item['nombre'] }}" aria-label="Abrir {{ $item['nombre'] }}" @if(request()->route('modulo') === $id) aria-current="page" @endif>

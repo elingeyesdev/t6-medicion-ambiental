@@ -1,0 +1,208 @@
+{
+  "procedencia": {
+    "archivo": "referencias/envirosense/codigo/Backend/Src/modules/simulacion-zona/escenarios.data.js",
+    "sha256": "5bcce4ba92da00f6e8aea5adf3be3aba9d3a89bb80bd9de712f7b267c58efaf2"
+  },
+  "metricas": {
+    "temperatura": [
+      {
+        "id": "frio",
+        "nombre": "Caso Frío",
+        "curva": "lineal",
+        "niveles": {
+          "bajo": {
+            "inicio": 18.0,
+            "fin": 12.0
+          },
+          "medio": {
+            "inicio": 8.0,
+            "fin": 2.0
+          },
+          "alto": {
+            "inicio": 2.0,
+            "fin": -10.0
+          }
+        }
+      },
+      {
+        "id": "calor",
+        "nombre": "Caso Calor",
+        "curva": "pico",
+        "niveles": {
+          "bajo": {
+            "inicio": 22.0,
+            "fin": 26.0
+          },
+          "medio": {
+            "inicio": 26.0,
+            "fin": 32.0
+          },
+          "alto": {
+            "inicio": 28.0,
+            "fin": 41.0
+          }
+        }
+      }
+    ],
+    "aqi": [
+      {
+        "id": "incendio",
+        "nombre": "Caso Incendio / Chaqueo",
+        "curva": "exponencial",
+        "niveles": {
+          "bajo": {
+            "inicio": 15.0,
+            "fin": 45.0
+          },
+          "medio": {
+            "inicio": 45.0,
+            "fin": 140.0
+          },
+          "alto": {
+            "inicio": 50.0,
+            "fin": 320.0
+          }
+        }
+      },
+      {
+        "id": "estancamiento",
+        "nombre": "Caso Estancamiento",
+        "curva": "lineal",
+        "niveles": {
+          "bajo": {
+            "inicio": 20.0,
+            "fin": 45.0
+          },
+          "medio": {
+            "inicio": 45.0,
+            "fin": 95.0
+          },
+          "alto": {
+            "inicio": 60.0,
+            "fin": 180.0
+          }
+        }
+      }
+    ],
+    "ica": [
+      {
+        "id": "vertido",
+        "nombre": "Caso Vertido Industrial",
+        "curva": "lineal",
+        "niveles": {
+          "bajo": {
+            "inicio": 95.0,
+            "fin": 85.0
+          },
+          "medio": {
+            "inicio": 80.0,
+            "fin": 60.0
+          },
+          "alto": {
+            "inicio": 78.0,
+            "fin": 22.0
+          }
+        }
+      },
+      {
+        "id": "sequia",
+        "nombre": "Caso Escasez / Sequía",
+        "curva": "lineal",
+        "niveles": {
+          "bajo": {
+            "inicio": 90.0,
+            "fin": 75.0
+          },
+          "medio": {
+            "inicio": 72.0,
+            "fin": 55.0
+          },
+          "alto": {
+            "inicio": 70.0,
+            "fin": 38.0
+          }
+        }
+      }
+    ],
+    "ruido": [
+      {
+        "id": "manifestacion",
+        "nombre": "Caso Manifestación",
+        "curva": "pico",
+        "niveles": {
+          "bajo": {
+            "inicio": 35.0,
+            "fin": 50.0
+          },
+          "medio": {
+            "inicio": 50.0,
+            "fin": 68.0
+          },
+          "alto": {
+            "inicio": 55.0,
+            "fin": 98.0
+          }
+        }
+      },
+      {
+        "id": "construccion",
+        "nombre": "Caso Construcción Nocturna",
+        "curva": "lineal",
+        "niveles": {
+          "bajo": {
+            "inicio": 30.0,
+            "fin": 45.0
+          },
+          "medio": {
+            "inicio": 45.0,
+            "fin": 60.0
+          },
+          "alto": {
+            "inicio": 40.0,
+            "fin": 78.0
+          }
+        }
+      }
+    ],
+    "humedad": [
+      {
+        "id": "saturacion",
+        "nombre": "Caso Saturación",
+        "curva": "lineal",
+        "niveles": {
+          "bajo": {
+            "inicio": 45.0,
+            "fin": 65.0
+          },
+          "medio": {
+            "inicio": 60.0,
+            "fin": 79.0
+          },
+          "alto": {
+            "inicio": 68.0,
+            "fin": 98.0
+          }
+        }
+      },
+      {
+        "id": "sequia",
+        "nombre": "Caso Sequedad Crítica",
+        "curva": "lineal",
+        "niveles": {
+          "bajo": {
+            "inicio": 45.0,
+            "fin": 35.0
+          },
+          "medio": {
+            "inicio": 35.0,
+            "fin": 20.0
+          },
+          "alto": {
+            "inicio": 35.0,
+            "fin": 8.0
+          }
+        }
+      }
+    ]
+  }
+}
