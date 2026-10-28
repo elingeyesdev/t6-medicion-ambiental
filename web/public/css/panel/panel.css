@@ -13,6 +13,7 @@
     --enviro-secundario: #d1d5db; --enviro-borde: #3a506b; --enviro-suave: #173a2c;
 }
 body { margin: 0; font-family: var(--tblr-font-sans-serif); font-size: 16px; line-height: 1.5; color: var(--enviro-texto); background: var(--enviro-fondo); }
+.contenido-panel .table thead th { font-size: 16px; text-transform: none; letter-spacing: normal; }
 .enviro-avatar { display: grid; place-items: center; width: 32px; height: 32px; flex-shrink: 0; border-radius: 6px; background: var(--enviro-acento); color: #0b132b; font-weight: 600; }
 [hidden] { display: none !important; }
 .enviro-layout { min-height: 100dvh; }

@@ -23,7 +23,7 @@
     <section class="card mt-4">
         <div class="card-header"><h2>{{ $p->nombre }}</h2></div>
         <div class="card-body">
-            <p>{{ $tipos[$p->configuracion['tipo'] ?? 'PERSONALIZADA'] }} · {{ count($p->configuracion['condiciones'] ?? []) }} filtros</p>
+            <p>{{ $tipos[$p->configuracion['tipo'] ?? 'PERSONALIZADA'] }} · {{ count($p->configuracion['condiciones'] ?? []) }} {{ count($p->configuracion['condiciones'] ?? []) === 1 ? 'filtro' : 'filtros' }}</p>
             <p>{{ implode(' · ', array_map(fn($c) => $columnas[$c], $p->configuracion['columnas'])) }}</p>
             @can('reportes.crear')
             @unless($archivadas)
