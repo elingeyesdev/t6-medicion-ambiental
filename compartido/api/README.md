@@ -4,6 +4,8 @@ Contrato implementado **`1.0-m2-candidata`**, basado en DOC-12. API y catálogo 
 
 Para conectar Flutter al backend existente, seguir [Desarrollo compartido](../DESARROLLO.md). La referencia React/Express de EnviroSense no cambia estas rutas ni exige rehacer el cliente móvil.
 
+La recuperación del sistema principal de GeoSur añade una [consulta privada del mapa ambiental](mapa-monitoreo.md), con las cuentas y los datos de #63/#66. Usa token de cuenta para Flutter; sus requisitos no cambian las consultas públicas de M2 descritas abajo.
+
 ## Operaciones de lectura
 
 - `GET /api/v1/territorios`: `tipo` (departamento/provincia/municipio), `padre`, `pagina`, `tamanioPagina`. Los tres primeros filtros son opcionales; sin filtros devuelve el catálogo. Una página fuera del rango devuelve `datos=[]` conservando el total.

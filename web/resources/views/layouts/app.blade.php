@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="GeoSur: monitoreo ambiental de Santa Cruz, Bolivia.">
+    <meta name="description" content="GeoSur: monitoreo ambiental y análisis del territorio.">
     <title>@yield('titulo', 'Mapa de Monitoreo') · {{ config('geocruz.nombre') }}</title>
     <script src="{{ asset('js/panel/preferencias.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('vendor/tabler/tabler.min.css') }}">

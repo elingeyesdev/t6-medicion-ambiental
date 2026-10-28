@@ -1,0 +1,4584 @@
+{
+  "version": "envirosense-ab4f93a",
+  "datos": [
+    {
+      "codigo": "AR-abae76824035",
+      "pais": "AR",
+      "nombre": "Buenos Aires",
+      "nivel": "provincia",
+      "caja": [
+        -63.4185,
+        -41.0339,
+        -56.6415,
+        -30.1518
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "7e990d773ef4832b666f6aea4254432c54b76f745768c871b942a90546507362"
+    },
+    {
+      "codigo": "AR-be65ede4a475",
+      "pais": "AR",
+      "nombre": "Catamarca",
+      "nivel": "provincia",
+      "caja": [
+        -69.1141,
+        -30.1161,
+        -64.8395,
+        -25.1292
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "338d8ef709d4bb1275b9046f78b4d2612dedd1ad5fd326e9aa465cbad1bc1897"
+    },
+    {
+      "codigo": "AR-a494636080ef",
+      "pais": "AR",
+      "nombre": "Chaco",
+      "nivel": "provincia",
+      "caja": [
+        -63.2716,
+        -28.0206,
+        -58.3164,
+        -24.1644
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "3974a6d5a70f7cf77638f3234b5e6da78c39aa3a8ac7eafe47b2862442f2a684"
+    },
+    {
+      "codigo": "AR-4174a44bb245",
+      "pais": "AR",
+      "nombre": "Chubut",
+      "nivel": "provincia",
+      "caja": [
+        -72.146,
+        -46.0043,
+        -63.5766,
+        -41.9693
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "7a8e8a9795be1066eed244cc9fb9908e141a21a955dc5847abfc7cc47b42fdb8"
+    },
+    {
+      "codigo": "AR-6b90a34ed704",
+      "pais": "AR",
+      "nombre": "Ciudad Autónoma de Buenos Aires",
+      "nivel": "provincia",
+      "caja": [
+        -58.7494,
+        -34.7965,
+        -58.3395,
+        -34.4101
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "1014562635eecdd3e4235c48000e124972fabace71a74068649dfbbe4229f464"
+    },
+    {
+      "codigo": "AR-ccdd75551751",
+      "pais": "AR",
+      "nombre": "Corrientes",
+      "nivel": "provincia",
+      "caja": [
+        -59.6209,
+        -30.5913,
+        -55.6099,
+        -27.3015
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "2cef06351ee5ee7087e38812177ab75485eb55496849d0fe98de4553120288fa"
+    },
+    {
+      "codigo": "AR-263bcb39796e",
+      "pais": "AR",
+      "nombre": "Córdoba",
+      "nivel": "provincia",
+      "caja": [
+        -65.7029,
+        -35.0104,
+        -61.801,
+        -29.4275
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "087a0d35c9104e7f45d3e3cf59befc31cee2764c08483257dc54a5d519221006"
+    },
+    {
+      "codigo": "AR-c13a00bc01b5",
+      "pais": "AR",
+      "nombre": "Formosa",
+      "nivel": "provincia",
+      "caja": [
+        -62.3137,
+        -26.9078,
+        -57.542,
+        -22.5125
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "e1e86ef2632064651b2bb10786607c8249e79f3456fdbc6c0864212bbc563994"
+    },
+    {
+      "codigo": "AR-d16b27b00d06",
+      "pais": "AR",
+      "nombre": "Jujuy",
+      "nivel": "provincia",
+      "caja": [
+        -67.1976,
+        -24.5891,
+        -64.0799,
+        -21.8056
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "5e81c99bab461a5b8213529524c292cdf3b8a9d54f744d0306e3bf9965321317"
+    },
+    {
+      "codigo": "AR-eaede78f2035",
+      "pais": "AR",
+      "nombre": "La Pampa",
+      "nivel": "provincia",
+      "caja": [
+        -68.1769,
+        -39.3642,
+        -63.341,
+        -34.9965
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "7b84ec9110bf9e129796d23678ffdc19e082b534c262183b97f548ba860478f9"
+    },
+    {
+      "codigo": "AR-fe20d0939616",
+      "pais": "AR",
+      "nombre": "La Roja",
+      "nivel": "provincia",
+      "caja": [
+        -69.6341,
+        -31.9212,
+        -65.3213,
+        -27.7297
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "a9e6a152a237eb84813bb2879e4f0d4b23636d838619baa084731145a4ea4599"
+    },
+    {
+      "codigo": "AR-053c8714516d",
+      "pais": "AR",
+      "nombre": "Mendoza",
+      "nivel": "provincia",
+      "caja": [
+        -70.5379,
+        -37.5273,
+        -66.4506,
+        -31.9599
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "4cac277a44472f1539897deabcb0e6b84c4cb034f2aa587b8bc1154e42329653"
+    },
+    {
+      "codigo": "AR-e34d74b9f5cf",
+      "pais": "AR",
+      "nombre": "Misiones",
+      "nivel": "provincia",
+      "caja": [
+        -55.9685,
+        -28.1388,
+        -53.6013,
+        -25.5484
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "893b3797a3fa972ffb3ae237c15a0d5235a17c29346d6946c60894d990d92b56"
+    },
+    {
+      "codigo": "AR-9f8d39a6ed07",
+      "pais": "AR",
+      "nombre": "Neuquén",
+      "nivel": "provincia",
+      "caja": [
+        -71.9575,
+        -41.1026,
+        -68.1459,
+        -36.171
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "556db38634e6f66d6945a198f5e26243e8b773e95c0bf644a35d87bd430e0232"
+    },
+    {
+      "codigo": "AR-a732f6039697",
+      "pais": "AR",
+      "nombre": "Río Negro",
+      "nivel": "provincia",
+      "caja": [
+        -71.9396,
+        -42.0026,
+        -62.7833,
+        -37.5404
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "5328ba6f5b9888b6b3442da1c8c00fa1929ff8860f9593e5e2f77469add37490"
+    },
+    {
+      "codigo": "AR-fb397a42956c",
+      "pais": "AR",
+      "nombre": "Salta",
+      "nivel": "provincia",
+      "caja": [
+        -68.5756,
+        -26.3112,
+        -62.2752,
+        -22.0008
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "44694aeda0265a18b187adb20f12e789488f7725aa465251776c107b4d89adea"
+    },
+    {
+      "codigo": "AR-0c754c271376",
+      "pais": "AR",
+      "nombre": "San Juan",
+      "nivel": "provincia",
+      "caja": [
+        -70.5567,
+        -32.3701,
+        -66.7131,
+        -28.4206
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "dfabfaf84ea353b6a94d5d660ac05dfaa5bf129efc73c6e95fcf5bb04edd9e20"
+    },
+    {
+      "codigo": "AR-1a2c700216d1",
+      "pais": "AR",
+      "nombre": "San Luis",
+      "nivel": "provincia",
+      "caja": [
+        -67.3237,
+        -36.0002,
+        -64.8339,
+        -31.8217
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "a4be81425bee205ccc74a9fa1765d7091f87e34391a33776d9a29fb7f6574525"
+    },
+    {
+      "codigo": "AR-a4325a3451e7",
+      "pais": "AR",
+      "nombre": "Santa Cruz",
+      "nivel": "provincia",
+      "caja": [
+        -73.5312,
+        -52.3663,
+        -65.7393,
+        -45.9677
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "99b802ac3b03bf8fe325390588b982e7588cb58a603dfd0b59665403b6eceb17"
+    },
+    {
+      "codigo": "AR-852f6017a9b0",
+      "pais": "AR",
+      "nombre": "Santa Fe",
+      "nivel": "provincia",
+      "caja": [
+        -62.8725,
+        -34.3846,
+        -58.8072,
+        -28.0092
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "7259b76f48cda14da08c30dbdca7222078bbfd411a589d1e58d943386bba75dc"
+    },
+    {
+      "codigo": "AR-fbe81ba4b75e",
+      "pais": "AR",
+      "nombre": "Santiago del Estero",
+      "nivel": "provincia",
+      "caja": [
+        -65.0578,
+        -30.1207,
+        -61.6272,
+        -25.5794
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "a59abfddaacc36c23214e800139b2372258d37f3c185fd8b2eba0a8643b5ef52"
+    },
+    {
+      "codigo": "AR-4c304a8c625c",
+      "pais": "AR",
+      "nombre": "Tierra del Fuego",
+      "nivel": "provincia",
+      "caja": [
+        -68.5596,
+        -54.844,
+        -63.7874,
+        -52.7591
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "487da57389c680af5cb08ca875f1c17109f10d2db495e674a2ee131ee00417d6"
+    },
+    {
+      "codigo": "AR-a534912fcd79",
+      "pais": "AR",
+      "nombre": "Tucumán",
+      "nivel": "provincia",
+      "caja": [
+        -66.0646,
+        -27.9498,
+        -64.3688,
+        -26.0778
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/argentina_geojson.sql",
+        "sha256": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+        "fuente": "geoBoundaries.org  (ARG-ADM1-19177384)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "4066d831e9055d228462ee23757c0b1bf4a640c399941e80b47a85d55850c9af"
+    },
+    {
+      "codigo": "BO-e776a1916738",
+      "pais": "BO",
+      "nombre": "Beni",
+      "nivel": "departamento",
+      "caja": [
+        -67.5622,
+        -16.4917,
+        -61.5279,
+        -10.3812
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/bolivia_geojson.sql",
+        "sha256": "40676aab6e6afcebe3b8a603d6e061ed60f3b44231cfb0eaa51e88fa112edd76",
+        "fuente": "geoBoundaries.org  (BOL-ADM1-26024454)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "092c696a3524a6427ff6ad3a3b4267bdb823160c4bd60a6425d26414fc01165b"
+    },
+    {
+      "codigo": "BO-2813c3e580a3",
+      "pais": "BO",
+      "nombre": "Chuquisaca",
+      "nivel": "departamento",
+      "caja": [
+        -65.6955,
+        -21.5173,
+        -62.1794,
+        -18.3473
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/bolivia_geojson.sql",
+        "sha256": "40676aab6e6afcebe3b8a603d6e061ed60f3b44231cfb0eaa51e88fa112edd76",
+        "fuente": "geoBoundaries.org  (BOL-ADM1-26024454)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "f580161eb2fc08c6095b138cb1fbb2ddb677cb954f9f1ea45aaf650ffa079119"
+    },
+    {
+      "codigo": "BO-7a4023b596b0",
+      "pais": "BO",
+      "nombre": "Cochabamba",
+      "nivel": "departamento",
+      "caja": [
+        -67.0057,
+        -18.6818,
+        -64.2341,
+        -15.7799
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/bolivia_geojson.sql",
+        "sha256": "40676aab6e6afcebe3b8a603d6e061ed60f3b44231cfb0eaa51e88fa112edd76",
+        "fuente": "geoBoundaries.org  (BOL-ADM1-26024454)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "acb4862b7c702df677e7dae6fa382429d303b942839a89438c50080c37e87bc2"
+    },
+    {
+      "codigo": "BO-cb6a0d8131c8",
+      "pais": "BO",
+      "nombre": "La Paz",
+      "nivel": "departamento",
+      "caja": [
+        -69.6452,
+        -18.0469,
+        -66.7321,
+        -11.8497
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/bolivia_geojson.sql",
+        "sha256": "40676aab6e6afcebe3b8a603d6e061ed60f3b44231cfb0eaa51e88fa112edd76",
+        "fuente": "geoBoundaries.org  (BOL-ADM1-26024454)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "f178be47a4821a0ca2e32b5869087389b47c3841da22ed117c9e5c72f222e150"
+    },
+    {
+      "codigo": "BO-4231eb8f1c88",
+      "pais": "BO",
+      "nombre": "Oruro",
+      "nivel": "departamento",
+      "caja": [
+        -69.1423,
+        -19.8867,
+        -66.0861,
+        -17.324
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/bolivia_geojson.sql",
+        "sha256": "40676aab6e6afcebe3b8a603d6e061ed60f3b44231cfb0eaa51e88fa112edd76",
+        "fuente": "geoBoundaries.org  (BOL-ADM1-26024454)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "7eb945307503aecdbc33442d43fd5fd705cec2b0a3a492d3acd3cffb67f40d59"
+    },
+    {
+      "codigo": "BO-51a118b55c17",
+      "pais": "BO",
+      "nombre": "Pando",
+      "nivel": "departamento",
+      "caja": [
+        -69.5747,
+        -12.4984,
+        -65.2868,
+        -9.6696
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/bolivia_geojson.sql",
+        "sha256": "40676aab6e6afcebe3b8a603d6e061ed60f3b44231cfb0eaa51e88fa112edd76",
+        "fuente": "geoBoundaries.org  (BOL-ADM1-26024454)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "6cd2f3c49676c14f9ae3534bb578090e8a2a0f2909e8bcf3beae1f9fa2a8e4ae"
+    },
+    {
+      "codigo": "BO-16fe2ffbce13",
+      "pais": "BO",
+      "nombre": "Potosí",
+      "nivel": "departamento",
+      "caja": [
+        -68.7739,
+        -22.9066,
+        -64.7144,
+        -17.8071
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/bolivia_geojson.sql",
+        "sha256": "40676aab6e6afcebe3b8a603d6e061ed60f3b44231cfb0eaa51e88fa112edd76",
+        "fuente": "geoBoundaries.org  (BOL-ADM1-26024454)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "c63ffd4b1d8c2e652538ef915080ee4eb87459f1d50e63b62f890e3041aba040"
+    },
+    {
+      "codigo": "BO-a4325a3451e7",
+      "pais": "BO",
+      "nombre": "Santa Cruz",
+      "nivel": "departamento",
+      "caja": [
+        -64.8424,
+        -20.4732,
+        -57.4544,
+        -13.4758
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/bolivia_geojson.sql",
+        "sha256": "40676aab6e6afcebe3b8a603d6e061ed60f3b44231cfb0eaa51e88fa112edd76",
+        "fuente": "geoBoundaries.org  (BOL-ADM1-26024454)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "cd6e63de9d2f29dd5efec9f8ff00d91d79e2e012321efde265eac8f64221d8bb"
+    },
+    {
+      "codigo": "BO-ea7f26bccda4",
+      "pais": "BO",
+      "nombre": "Tarija",
+      "nivel": "departamento",
+      "caja": [
+        -65.4199,
+        -22.8828,
+        -62.2607,
+        -20.8859
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/bolivia_geojson.sql",
+        "sha256": "40676aab6e6afcebe3b8a603d6e061ed60f3b44231cfb0eaa51e88fa112edd76",
+        "fuente": "geoBoundaries.org  (BOL-ADM1-26024454)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "d987ba3fa0e08a05cc7c5c2a62beff1983b11f5824e0941da828392eef9ad183"
+    },
+    {
+      "codigo": "BR-009d492f0f15",
+      "pais": "BR",
+      "nombre": "Acre",
+      "nivel": "estado",
+      "caja": [
+        -74.0401,
+        -11.1403,
+        -66.6047,
+        -7.1121
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "ae8ba3a35f7b3e9a70043aa89092daae61aa50f2388a28a43e7c24b23db31542"
+    },
+    {
+      "codigo": "BR-ddebcc400244",
+      "pais": "BR",
+      "nombre": "Alagoas",
+      "nivel": "estado",
+      "caja": [
+        -38.1742,
+        -10.4446,
+        -35.0124,
+        -8.8094
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "887cea0814c9ad4df9fa883777d166204fcd8e544999eaaec8e6a9015a682f93"
+    },
+    {
+      "codigo": "BR-3e7bb070b9c0",
+      "pais": "BR",
+      "nombre": "Amapa",
+      "nivel": "estado",
+      "caja": [
+        -54.9129,
+        -1.2822,
+        -49.9208,
+        4.2827
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "8baf9964506d9e61e50f811608936716cd65cd5bc402a5bbaedf2da6b6e50874"
+    },
+    {
+      "codigo": "BR-21a02fb6a7e1",
+      "pais": "BR",
+      "nombre": "Amazonas",
+      "nivel": "estado",
+      "caja": [
+        -73.8491,
+        -9.7668,
+        -56.1283,
+        2.2595
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "c2cb7cd45a9272ac4a413bfcc4377caed6a5e251fec1e1bc6cb3815910f54b1a"
+    },
+    {
+      "codigo": "BR-5fa8d0794093",
+      "pais": "BR",
+      "nombre": "Bahia",
+      "nivel": "estado",
+      "caja": [
+        -46.6035,
+        -18.3155,
+        -37.3535,
+        -8.5696
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "3bc8c1012db6a6388a1792f565761870c6100464b849463d787cc0d17319fc0b"
+    },
+    {
+      "codigo": "BR-c9449ea301cb",
+      "pais": "BR",
+      "nombre": "Ceara",
+      "nivel": "estado",
+      "caja": [
+        -41.4316,
+        -7.8856,
+        -37.237,
+        -2.871
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "7d71bbd48d223928a115f8791cc621a80911bba337e1cb933f0f159a7d4956ce"
+    },
+    {
+      "codigo": "BR-4902bdcdfd9f",
+      "pais": "BR",
+      "nombre": "Distrito Federal",
+      "nivel": "estado",
+      "caja": [
+        -48.284,
+        -16.0453,
+        -47.3215,
+        -15.5333
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "51220aa91f7803a16fbb0ecccae684670b7d083e7eac0845d7aa93f6bcc3f5a2"
+    },
+    {
+      "codigo": "BR-0aaf0f2384a7",
+      "pais": "BR",
+      "nombre": "Espirito Santo",
+      "nivel": "estado",
+      "caja": [
+        -41.9009,
+        -21.2947,
+        -39.6392,
+        -17.9111
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "1487ac51c81c673eb4f9ee3698edf84530caf06abb95257c4a6586d680cbe246"
+    },
+    {
+      "codigo": "BR-16a3b6e8b7ff",
+      "pais": "BR",
+      "nombre": "Goias",
+      "nivel": "estado",
+      "caja": [
+        -53.2452,
+        -19.521,
+        -45.9003,
+        -12.453
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "96ec2bd95c385195b4e55650e33d8192c71347dfa2a6d34e51755d5fc5343906"
+    },
+    {
+      "codigo": "BR-f3ad085850da",
+      "pais": "BR",
+      "nombre": "Maranhao",
+      "nivel": "estado",
+      "caja": [
+        -48.5247,
+        -10.2325,
+        -41.8218,
+        -1.1757
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "e4f27261950c4df7c9987fab0ced8222e163c8ebe29cdccc793316f345d3ccac"
+    },
+    {
+      "codigo": "BR-5a6f395da32c",
+      "pais": "BR",
+      "nombre": "Mato Grosso",
+      "nivel": "estado",
+      "caja": [
+        -61.5949,
+        -18.0762,
+        -50.2403,
+        -7.3093
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "502437a6dbcb675d4f753e4e458892b1f18960b13cf50e921c00365427493318"
+    },
+    {
+      "codigo": "BR-d20bbce95f59",
+      "pais": "BR",
+      "nombre": "Mato Grosso do Sul",
+      "nivel": "estado",
+      "caja": [
+        -58.1303,
+        -24.0837,
+        -50.9408,
+        -17.1817
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "d2ecd5b0c087f6b2d09e519ad4f9428dc217bfacf87055689e285a6899eaa607"
+    },
+    {
+      "codigo": "BR-a7372fe3f099",
+      "pais": "BR",
+      "nombre": "Minas Gerais",
+      "nivel": "estado",
+      "caja": [
+        -51.0522,
+        -22.9545,
+        -39.8358,
+        -14.2748
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "9a12fc9bc2697bef264a6af2d0b64355f00273ef00d15bb23db29e50d1bddfc9"
+    },
+    {
+      "codigo": "BR-237b14cbb480",
+      "pais": "BR",
+      "nombre": "Para",
+      "nivel": "estado",
+      "caja": [
+        -58.8785,
+        -9.8468,
+        -46.044,
+        2.5325
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "b76f5ec501f054f3e6cd71e4b70a843b2e1fd9771300b067a3d233a36bde6c50"
+    },
+    {
+      "codigo": "BR-ad248e86bd33",
+      "pais": "BR",
+      "nombre": "Paraiba",
+      "nivel": "estado",
+      "caja": [
+        -38.7058,
+        -8.3315,
+        -34.6994,
+        -6.0616
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "f556ff64e4e16f26442de34b9323065b655f10d3937b5cbc6bfb10baaeb0dd43"
+    },
+    {
+      "codigo": "BR-03b5571a3c4a",
+      "pais": "BR",
+      "nombre": "Parana",
+      "nivel": "estado",
+      "caja": [
+        -54.6244,
+        -26.7282,
+        -48.1272,
+        -22.5567
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "d97b075b3e620e152d5e5ce3e735c8e2fa5d93202ad90a3445ed272ecf73e7b9"
+    },
+    {
+      "codigo": "BR-b7f6335f7cb7",
+      "pais": "BR",
+      "nombre": "Pernambuco",
+      "nivel": "estado",
+      "caja": [
+        -41.3327,
+        -9.508,
+        -34.6566,
+        -7.2974
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "2d4ab3a605e1ea13c22a722112512a6243279a156858fb06af1a47e0e9e8ab46"
+    },
+    {
+      "codigo": "BR-53a7fe2cebaf",
+      "pais": "BR",
+      "nombre": "Piaui",
+      "nivel": "estado",
+      "caja": [
+        -46.0179,
+        -10.9274,
+        -40.379,
+        -2.8602
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "dcfa3d17dade335770fded1f99d10a738d301a716a7ead22b5b9a0614f3f50a9"
+    },
+    {
+      "codigo": "BR-671252e1bad5",
+      "pais": "BR",
+      "nombre": "Rio Granda do Norte",
+      "nivel": "estado",
+      "caja": [
+        -38.5231,
+        -6.9907,
+        -34.8749,
+        -4.8826
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "0995c632c3b80ab0fbb53192cc74e8c29f0faa5286a2144d731f25a1d259f406"
+    },
+    {
+      "codigo": "BR-808d8400fe29",
+      "pais": "BR",
+      "nombre": "Rio Grande do Sul",
+      "nivel": "estado",
+      "caja": [
+        -57.4918,
+        -33.7347,
+        -49.7641,
+        -27.1104
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "0fba535ff92c8a5af5a062eb14dde502ac33a8468067d58171136fe8611a8c37"
+    },
+    {
+      "codigo": "BR-4521c675506b",
+      "pais": "BR",
+      "nombre": "Rio de Jeneiro",
+      "nivel": "estado",
+      "caja": [
+        -44.9254,
+        -23.4406,
+        -40.9638,
+        -20.8375
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "8c24cde3ff21895b1c33dc702ad43ff2001000dbff32763bac5af5deb7764c96"
+    },
+    {
+      "codigo": "BR-2367f2fdd43e",
+      "pais": "BR",
+      "nombre": "Rondonia",
+      "nivel": "estado",
+      "caja": [
+        -66.7716,
+        -13.6893,
+        -59.7737,
+        -7.8941
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "c7370fd230c4fdcf6878e2faa0990a1661f4cca30e53a578358aabdbf7a0e480"
+    },
+    {
+      "codigo": "BR-f7e54b89cda2",
+      "pais": "BR",
+      "nombre": "Roraima",
+      "nivel": "estado",
+      "caja": [
+        -64.8112,
+        -1.4288,
+        -58.8772,
+        5.1797
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "6427b491c8653234d90fc987096bda377c96eb6a8e7172fa76ec1e75e60f03fb"
+    },
+    {
+      "codigo": "BR-8e54486a867a",
+      "pais": "BR",
+      "nombre": "Santa Catarina",
+      "nivel": "estado",
+      "caja": [
+        -53.802,
+        -29.3789,
+        -48.4199,
+        -26.043
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "85df25f76e4c1fbd5f5b5586a03b2e9a36c25ec1c9bd02c0d0fb7269d30ec0fa"
+    },
+    {
+      "codigo": "BR-2634143df302",
+      "pais": "BR",
+      "nombre": "Sao Paulo",
+      "nivel": "estado",
+      "caja": [
+        -53.1344,
+        -25.3402,
+        -44.2411,
+        -19.8096
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "bb5263b4cbaa63883610f9ab3b491e323f2a004a90bc775bb2aaadd682ba249a"
+    },
+    {
+      "codigo": "BR-8ce8d21f3e3b",
+      "pais": "BR",
+      "nombre": "Sergipe",
+      "nivel": "estado",
+      "caja": [
+        -38.18,
+        -11.5544,
+        -36.3004,
+        -9.5612
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "e407ffbd119992dd1ae9b296a3800caf27838c80d541a7d6a94fd4a6b05cdf4d"
+    },
+    {
+      "codigo": "BR-87f9d68c8a17",
+      "pais": "BR",
+      "nombre": "Tocantins",
+      "nivel": "estado",
+      "caja": [
+        -50.7471,
+        -13.4406,
+        -45.6683,
+        -5.1888
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/brasil_geojson.sql",
+        "sha256": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+        "fuente": "geoBoundaries.org  (BRA-ADM1-14911670)",
+        "licenciaDeclarada": "Creative Commons Attribution 2.5 Generic"
+      },
+      "sha256": "26b0f7b2f6e37ca64492a8ac09d35ef9239f4c79754afaaca811f7d587ab7d25"
+    },
+    {
+      "codigo": "CL-a80639af2648",
+      "pais": "CL",
+      "nombre": "Antofagasta",
+      "nivel": "region",
+      "caja": [
+        -70.7379,
+        -26.0615,
+        -66.9902,
+        -20.9345
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "18481c7bd45fe32932859b15e6bf0dacd9ef6d17275d40068421bb93d2ed95bb"
+    },
+    {
+      "codigo": "CL-f31df3bda3f8",
+      "pais": "CL",
+      "nombre": "Arica y Parinacota",
+      "nivel": "region",
+      "caja": [
+        -70.3791,
+        -19.2293,
+        -68.9117,
+        -17.4984
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "598bb943a9517f8e1d90a56e6102bc22eaf464b1913dfc6b19f985700d724fb2"
+    },
+    {
+      "codigo": "CL-4edbab814367",
+      "pais": "CL",
+      "nombre": "Atacama",
+      "nivel": "region",
+      "caja": [
+        -71.5256,
+        -29.5352,
+        -68.2632,
+        -25.2858
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "04039ebd72f5e0b5fafc7dc17b07842377da369c3d4546a015785ac08b4160be"
+    },
+    {
+      "codigo": "CL-c9f8b50f5a4c",
+      "pais": "CL",
+      "nombre": "AysÃ©n del Gral.IbaÃ±ez del Campo",
+      "nivel": "region",
+      "caja": [
+        -75.6548,
+        -49.2117,
+        -71.0917,
+        -43.6381
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "8b1cc1ffb24673d3f3cd61bf2f9aa97c86c3bca9f53ee727cd4ae2c238037b8f"
+    },
+    {
+      "codigo": "CL-b30cb5508353",
+      "pais": "CL",
+      "nombre": "BÃ­o-BÃ­o",
+      "nivel": "region",
+      "caja": [
+        -73.9614,
+        -38.4923,
+        -70.9833,
+        -36.4433
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "f8fedfb094754a4827a49f052c3e02f4d00ffc4210b75330d14f06214b97c66b"
+    },
+    {
+      "codigo": "CL-e232a7c5d8d3",
+      "pais": "CL",
+      "nombre": "Coquimbo",
+      "nivel": "region",
+      "caja": [
+        -71.7175,
+        -32.2822,
+        -69.8091,
+        -29.0379
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "3ea19ce7309e3b45635c75a7f0dd4aae608516bae0ac9e1fa253330336fc2eca"
+    },
+    {
+      "codigo": "CL-b64711d66cff",
+      "pais": "CL",
+      "nombre": "La AraucanÃ­a",
+      "nivel": "region",
+      "caja": [
+        -73.519,
+        -39.6371,
+        -70.8274,
+        -37.5817
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "b997134ddcdd8dccc9e11fe43c06ee8d2f965070ff012abb36f01c15e66c33af"
+    },
+    {
+      "codigo": "CL-47a2f42104ab",
+      "pais": "CL",
+      "nombre": "Libertador Bernardo O'Higgins",
+      "nivel": "region",
+      "caja": [
+        -72.0563,
+        -35.0053,
+        -70.0093,
+        -33.8506
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "32cf62305f26ea639439d06126ef0a98e4edb642111a2b94d88b250d9047fb30"
+    },
+    {
+      "codigo": "CL-38c19d568c5b",
+      "pais": "CL",
+      "nombre": "Los Lagos",
+      "nivel": "region",
+      "caja": [
+        -74.8464,
+        -44.067,
+        -71.581,
+        -40.2366
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "03bc09f8613cdf934b971b602b2ad44ad979355edd1d8ac7a40958a701d1501b"
+    },
+    {
+      "codigo": "CL-ca0b156b7b6f",
+      "pais": "CL",
+      "nombre": "Los RÃ­os",
+      "nivel": "region",
+      "caja": [
+        -73.7249,
+        -40.6812,
+        -71.5921,
+        -39.2879
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "39ea5f7888f241670db064eda0be14a03a64b329c3fb258e124dba368be7275a"
+    },
+    {
+      "codigo": "CL-5dc6e41221a0",
+      "pais": "CL",
+      "nombre": "Magallanes y AntÃ¡rtica Chilena",
+      "nivel": "region",
+      "caja": [
+        -75.7215,
+        -55.98,
+        -66.4182,
+        -48.5956
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "9d794410cd427c72b3872b9d35c17df364fec8980e04fbe5a966537d6193eec0"
+    },
+    {
+      "codigo": "CL-0e594efe47d5",
+      "pais": "CL",
+      "nombre": "Maule",
+      "nivel": "region",
+      "caja": [
+        -72.7859,
+        -36.5433,
+        -70.3117,
+        -34.6846
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "b3473073ee70be77e7b9587e45671f984735a12fb19c26f24ba1a005a8ecec35"
+    },
+    {
+      "codigo": "CL-02b44bfcae9e",
+      "pais": "CL",
+      "nombre": "Metropolitana de Santiago",
+      "nivel": "region",
+      "caja": [
+        -71.7145,
+        -34.2907,
+        -69.7698,
+        -32.9225
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "2cd7e49cb0b527e6ea8dee824c6b67a9df156aed2393d7daa530d071bdac0422"
+    },
+    {
+      "codigo": "CL-2a2ac45c9600",
+      "pais": "CL",
+      "nombre": "TarapacÃ¡",
+      "nivel": "region",
+      "caja": [
+        -70.2853,
+        -21.6298,
+        -68.4049,
+        -18.9367
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "a874ea28dee40813aa9218b9a4ece42d09a4084ee2492dfe38656f5a0d7edb34"
+    },
+    {
+      "codigo": "CL-c0351ae548e0",
+      "pais": "CL",
+      "nombre": "ValparaÃ­so",
+      "nivel": "region",
+      "caja": [
+        -109.4549,
+        -33.9559,
+        -69.9893,
+        -26.2862
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "037f3d8c3e50d29fe08fb9333706c53b780e491d7fecc87d6eb95dc598717706"
+    },
+    {
+      "codigo": "CL-63f2ae36c9f3",
+      "pais": "CL",
+      "nombre": "Ãuble",
+      "nivel": "region",
+      "caja": [
+        -72.884,
+        -37.1975,
+        -71.0074,
+        -36.0056
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/chile_geojson.sql",
+        "sha256": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+        "fuente": "geoBoundaries.org  (CHL-ADM1-47653553)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "1131a6f328ee9cacecb2ab8898a4cdc0a2217273521e13ff08a97fdf766703c6"
+    },
+    {
+      "codigo": "CO-21a02fb6a7e1",
+      "pais": "CO",
+      "nombre": "Amazonas",
+      "nivel": "departamento",
+      "caja": [
+        -74.3899,
+        -4.2317,
+        -69.3952,
+        0.1118
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "94f9393f60cf330bb5e83710945894151859c6eba40f6a61391482b84f217f84"
+    },
+    {
+      "codigo": "CO-19e409b29a33",
+      "pais": "CO",
+      "nombre": "Antioquia",
+      "nivel": "departamento",
+      "caja": [
+        -77.1271,
+        5.4186,
+        -73.8796,
+        8.8897
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "771e4b835aa47d0020ed764c0bfee262b3045d7fa4d859c1e124f0ff76a810d6"
+    },
+    {
+      "codigo": "CO-b57295d73fe2",
+      "pais": "CO",
+      "nombre": "Arauca",
+      "nivel": "departamento",
+      "caja": [
+        -72.3682,
+        6.0384,
+        -69.4305,
+        7.1044
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "1945f8efd2520e426918e8f32dc582765870480959fadad89f0a216c30b46d7d"
+    },
+    {
+      "codigo": "CO-9b5ded012f9d",
+      "pais": "CO",
+      "nombre": "Archipiélago de San Andrés, Providencia y Santa Catalina",
+      "nivel": "departamento",
+      "caja": [
+        -81.7357,
+        12.4802,
+        -81.3491,
+        13.3946
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "3636cdc2373510227f93a37f13f269940ee733d88543f293ed826dba6b8c5186"
+    },
+    {
+      "codigo": "CO-3a5bdd0cc402",
+      "pais": "CO",
+      "nombre": "Atlántico",
+      "nivel": "departamento",
+      "caja": [
+        -75.2671,
+        10.2532,
+        -74.7134,
+        11.1066
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "939b77cfc99220df79487d12ec4a3ba71292ff49bf500bbb744242260f8c3c17"
+    },
+    {
+      "codigo": "CO-8a972733cfaf",
+      "pais": "CO",
+      "nombre": "Bogota Capital District",
+      "nivel": "departamento",
+      "caja": [
+        -74.4517,
+        3.7284,
+        -73.9963,
+        4.837
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "fe913453d8a8ef0933d8e4b0923bbf36a0f9411aa04f120bda82aec40c6afae7"
+    },
+    {
+      "codigo": "CO-23bcefc9dc5c",
+      "pais": "CO",
+      "nombre": "Bolívar",
+      "nivel": "departamento",
+      "caja": [
+        -76.1905,
+        6.9998,
+        -73.7478,
+        10.8006
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "321596ede4b6b67f7a6016ddfd1f0f184a18e2da46787ddad71764bda8923a7d"
+    },
+    {
+      "codigo": "CO-74e90317333f",
+      "pais": "CO",
+      "nombre": "Boyacá",
+      "nivel": "departamento",
+      "caja": [
+        -74.6593,
+        4.6559,
+        -71.946,
+        7.0548
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "bf7aa4c30aaec93fae01b6637f32164a89682f0c5a57531ee34e9474adc09373"
+    },
+    {
+      "codigo": "CO-4e8017f2bb57",
+      "pais": "CO",
+      "nombre": "Caldas",
+      "nivel": "departamento",
+      "caja": [
+        -75.9226,
+        4.8025,
+        -74.6234,
+        5.779
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "a0bb556a9385ae3d70b56405fb38bfb75794bacc73f026589fc75895de8765b2"
+    },
+    {
+      "codigo": "CO-34e2caaf9a54",
+      "pais": "CO",
+      "nombre": "Caquetá",
+      "nivel": "departamento",
+      "caja": [
+        -76.3058,
+        -0.7066,
+        -71.3204,
+        2.9332
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "bc8322ba62d315ba136d566694392e76bc2a0a9cd8666d3d95599ef7d33e5a1c"
+    },
+    {
+      "codigo": "CO-ab2326e1f8ca",
+      "pais": "CO",
+      "nombre": "Casanare",
+      "nivel": "departamento",
+      "caja": [
+        -73.0739,
+        4.286,
+        -69.8265,
+        6.3067
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "acb8c1d463e6242e4702cc13bdef296d3a942f920edceafbc0fa62e01d223b43"
+    },
+    {
+      "codigo": "CO-ab738e491034",
+      "pais": "CO",
+      "nombre": "Cauca",
+      "nivel": "departamento",
+      "caja": [
+        -77.9279,
+        0.9586,
+        -75.7475,
+        3.329
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "bd223eb00729001bc2123d97e6d351f9eb3f8277acec6613acdc0d25bd68c294"
+    },
+    {
+      "codigo": "CO-41b5d26595bb",
+      "pais": "CO",
+      "nombre": "Cesar",
+      "nivel": "departamento",
+      "caja": [
+        -74.1398,
+        7.6764,
+        -72.8858,
+        10.8674
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "46f225b3195f78c982addefa93989b1f02048834ac1c0762c78143a5031bd0b7"
+    },
+    {
+      "codigo": "CO-c8e90a53b307",
+      "pais": "CO",
+      "nombre": "Chocó",
+      "nivel": "departamento",
+      "caja": [
+        -77.8935,
+        3.9647,
+        -76.0026,
+        8.6754
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "32ebed67aad606767b96def1a20f1ed4e266be3d09e668923ea327f7fb88fa18"
+    },
+    {
+      "codigo": "CO-9671289a9946",
+      "pais": "CO",
+      "nombre": "Cundinamarca",
+      "nivel": "departamento",
+      "caja": [
+        -74.8907,
+        3.7243,
+        -73.0508,
+        5.8367
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "274dcace4105cb40f11e2b6bf6a52a04287087f5a5435edb9688a4018c058733"
+    },
+    {
+      "codigo": "CO-263bcb39796e",
+      "pais": "CO",
+      "nombre": "Córdoba",
+      "nivel": "departamento",
+      "caja": [
+        -76.5099,
+        7.3572,
+        -74.7851,
+        9.4477
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "13d70c397b6c2b9d99e7dba26567d02ec358ca6e583bb93505dfafe0b38c14da"
+    },
+    {
+      "codigo": "CO-c86451ffa6b2",
+      "pais": "CO",
+      "nombre": "Guainía",
+      "nivel": "departamento",
+      "caja": [
+        -70.9425,
+        1.167,
+        -66.8512,
+        4.0474
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "b79e2babd9db6794d866c6083b7299ca17f332c1bd9ddab690223a0334b63e20"
+    },
+    {
+      "codigo": "CO-c403976edbe9",
+      "pais": "CO",
+      "nombre": "Guaviare",
+      "nivel": "departamento",
+      "caja": [
+        -73.6612,
+        0.6543,
+        -69.9945,
+        2.9248
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "b626d4a1576e61193e3436030183d9a55059d97785ff19b37107d28417d30b18"
+    },
+    {
+      "codigo": "CO-137022d402e6",
+      "pais": "CO",
+      "nombre": "Huila",
+      "nivel": "departamento",
+      "caja": [
+        -76.6243,
+        1.5555,
+        -74.4128,
+        3.8448
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "682a89275905019f6c6e53daca9fa3e9605b67b522515122bc22d5453eb3e7cc"
+    },
+    {
+      "codigo": "CO-28aafe5a3970",
+      "pais": "CO",
+      "nombre": "La Guajira",
+      "nivel": "departamento",
+      "caja": [
+        -73.6646,
+        10.3967,
+        -71.1133,
+        12.4573
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "9b385523910b647fb9cdfd6b49fe871aa9dcac03fe709c5997fb404a5df9ea6b"
+    },
+    {
+      "codigo": "CO-691fb4029db3",
+      "pais": "CO",
+      "nombre": "Magdalena",
+      "nivel": "departamento",
+      "caja": [
+        -74.9456,
+        8.9171,
+        -73.5421,
+        11.3491
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "26d7fe82f570683b7a614732ae7f78b5efda47df96ace8e5bbf0aaf0942b9bef"
+    },
+    {
+      "codigo": "CO-4f749de7c24f",
+      "pais": "CO",
+      "nombre": "Meta",
+      "nivel": "departamento",
+      "caja": [
+        -74.9339,
+        1.6018,
+        -71.0774,
+        4.9251
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "870521c1c674dce72916f162d56394f019aecf4b6558317f3e194a16a57107af"
+    },
+    {
+      "codigo": "CO-142109aaee15",
+      "pais": "CO",
+      "nombre": "Nariño",
+      "nivel": "departamento",
+      "caja": [
+        -79.0078,
+        0.3616,
+        -76.8342,
+        2.6835
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "56f8209e1a51e702785ed47a6cbc4c201e807e4bae1c371d9b6df238b79f8880"
+    },
+    {
+      "codigo": "CO-83e2fc76dfad",
+      "pais": "CO",
+      "nombre": "Norte de Santander",
+      "nivel": "departamento",
+      "caja": [
+        -73.6374,
+        6.8731,
+        -72.0476,
+        9.2913
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "0fd4842d75ab2c11ea932c47c751189689dab6459c627bcb78cb6f0a77ccd3b6"
+    },
+    {
+      "codigo": "CO-fcf829ce1d7f",
+      "pais": "CO",
+      "nombre": "Putumayo",
+      "nivel": "departamento",
+      "caja": [
+        -77.1868,
+        -0.5599,
+        -73.8413,
+        1.4673
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "ffcd363d2516d4419e622991106b52d8dc46b6a1b57c007faba2692d41c7d5d0"
+    },
+    {
+      "codigo": "CO-2555b78a0b4a",
+      "pais": "CO",
+      "nombre": "Quindío",
+      "nivel": "departamento",
+      "caja": [
+        -75.8956,
+        4.0741,
+        -75.3845,
+        4.7213
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "6b113c29d9b4de851a4984c4a32a4d94a61aee4f1e16ae27e66baa077fece81b"
+    },
+    {
+      "codigo": "CO-09ca97194cd3",
+      "pais": "CO",
+      "nombre": "Risaralda",
+      "nivel": "departamento",
+      "caja": [
+        -76.2115,
+        4.6646,
+        -75.3753,
+        5.568
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "d596608b98579d02f2cc14b38c3d3c8f7d49d4cdf293a789af010bd26cb929d4"
+    },
+    {
+      "codigo": "CO-4a82cd3e8f77",
+      "pais": "CO",
+      "nombre": "Santander",
+      "nivel": "departamento",
+      "caja": [
+        -74.5264,
+        5.7068,
+        -72.4765,
+        8.1434
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "1b9aa46b0380a29c166e08a03407cabe8968a78ffd7dd5bf9ebaaa1e1ffa2e3d"
+    },
+    {
+      "codigo": "CO-2c9eff44bcfe",
+      "pais": "CO",
+      "nombre": "Sucre",
+      "nivel": "departamento",
+      "caja": [
+        -75.7118,
+        8.276,
+        -74.5332,
+        10.1485
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "9cc4635ead1c0e6a30d11609e08cfe905b5aa3edf095ded454cf01d9f6c29fc6"
+    },
+    {
+      "codigo": "CO-22fbabfab72e",
+      "pais": "CO",
+      "nombre": "Tolima",
+      "nivel": "departamento",
+      "caja": [
+        -76.1085,
+        2.8705,
+        -74.4755,
+        5.319
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "00f68b656448caa7a11f0de4b9e32124833b339034491a039b1183ba0e3cb224"
+    },
+    {
+      "codigo": "CO-e07e008cbc73",
+      "pais": "CO",
+      "nombre": "Valle del Cauca",
+      "nivel": "departamento",
+      "caja": [
+        -77.5439,
+        3.0911,
+        -75.7049,
+        5.0369
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "48bbc9d99c7e7c90532ed66f36ae04e1438391334d5c479d6d3f4b56b2b71dd0"
+    },
+    {
+      "codigo": "CO-c61e98aadaa8",
+      "pais": "CO",
+      "nombre": "Vaupés",
+      "nivel": "departamento",
+      "caja": [
+        -72.0329,
+        -1.2277,
+        -69.1156,
+        2.0798
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "819f934078d454e48f3d72a48577ce7ae37f5d9bf270d2aa4a796e6142fa5406"
+    },
+    {
+      "codigo": "CO-72730070714b",
+      "pais": "CO",
+      "nombre": "Vichada",
+      "nivel": "departamento",
+      "caja": [
+        -71.0776,
+        2.7368,
+        -67.4101,
+        6.3243
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/colombia_geojson.sql",
+        "sha256": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+        "fuente": "geoBoundaries.org  (COL-ADM1-13589884)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "7f536a4d31ab266aee20a0a2c8b7bca8771b0762a710bf265e76cb2291cbfab5"
+    },
+    {
+      "codigo": "EC-54fd1004d80f",
+      "pais": "EC",
+      "nombre": "Azuay",
+      "nivel": "provincia",
+      "caja": [
+        -79.7604,
+        -3.6254,
+        -78.4235,
+        -2.5626
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "5ef53ad36331872fabe1cf2483399df065599437dcca84bc71b0832f9f17c12f"
+    },
+    {
+      "codigo": "EC-23bcefc9dc5c",
+      "pais": "EC",
+      "nombre": "Bolívar",
+      "nivel": "provincia",
+      "caja": [
+        -79.3935,
+        -2.1948,
+        -78.8458,
+        -1.1496
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "03c0799113f87a5bda1949818e9ae107a12823c9e4240eaa4515345ae296debd"
+    },
+    {
+      "codigo": "EC-f397806f5900",
+      "pais": "EC",
+      "nombre": "Carchi",
+      "nivel": "provincia",
+      "caja": [
+        -78.5445,
+        0.3629,
+        -77.5589,
+        1.2024
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "b7e6f5868d4ae47558784890994104c0cd2a6e12f1111edc096912faf028a697"
+    },
+    {
+      "codigo": "EC-68124a9fceb0",
+      "pais": "EC",
+      "nombre": "Cañar",
+      "nivel": "provincia",
+      "caja": [
+        -79.5228,
+        -2.8412,
+        -78.5684,
+        -2.2362
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "13bd08c62d44042599a3dad507c65517da2efaee514bec9a7653370f6cf1779d"
+    },
+    {
+      "codigo": "EC-23286e7d2632",
+      "pais": "EC",
+      "nombre": "Chimborazo",
+      "nivel": "provincia",
+      "caja": [
+        -79.251,
+        -2.5539,
+        -78.3596,
+        -1.4307
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "474d96c4d257de153aa0b664c105446effc5cde447132ad995bfd5d7e184493b"
+    },
+    {
+      "codigo": "EC-277cad883f1c",
+      "pais": "EC",
+      "nombre": "Cotopaxi",
+      "nivel": "provincia",
+      "caja": [
+        -79.3364,
+        -1.2149,
+        -78.3907,
+        -0.3356
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "d97f7e472a7c78f9200b943549d8ab68725e054548435347462845b2ea3c9f72"
+    },
+    {
+      "codigo": "EC-ba36df757561",
+      "pais": "EC",
+      "nombre": "El Oro",
+      "nivel": "provincia",
+      "caja": [
+        -80.3032,
+        -3.8948,
+        -79.3603,
+        -3.0482
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "f3f3d70622aa680c372e082852a1f0df0e8ab6af6aa125a4c9f5aed9bbbd40b5"
+    },
+    {
+      "codigo": "EC-d23919631210",
+      "pais": "EC",
+      "nombre": "Esmeraldas",
+      "nivel": "provincia",
+      "caja": [
+        -80.1051,
+        0.0754,
+        -78.4289,
+        1.4596
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "7268e94b49d4c09a0e51111ab803c85b59dd5d4d09f3893b938cf109ab35a98c"
+    },
+    {
+      "codigo": "EC-36813647e00a",
+      "pais": "EC",
+      "nombre": "Galápagos",
+      "nivel": "provincia",
+      "caja": [
+        -92.0093,
+        -1.3979,
+        -89.2442,
+        1.6817
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "67eafd79356f1d97e4de03d5e624b7b79bd8468f695438ab98565eeb4674310c"
+    },
+    {
+      "codigo": "EC-eb147d477ad7",
+      "pais": "EC",
+      "nombre": "Guayas",
+      "nivel": "provincia",
+      "caja": [
+        -80.5613,
+        -3.1956,
+        -79.1182,
+        -0.8342
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "bb9bb7d0d757da6689a6b2680f6dcce55b316af1d938502bebb34430ac6cd7a4"
+    },
+    {
+      "codigo": "EC-6e28da564c67",
+      "pais": "EC",
+      "nombre": "Imbabura",
+      "nivel": "provincia",
+      "caja": [
+        -79.2751,
+        0.1268,
+        -77.81,
+        0.887
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "fcd1ee8314f4c4187051ee504d59a6ad215385767f0bbb12167af51a19d45308"
+    },
+    {
+      "codigo": "EC-70feed55e97f",
+      "pais": "EC",
+      "nombre": "Loja",
+      "nivel": "provincia",
+      "caja": [
+        -80.4756,
+        -4.7433,
+        -79.0977,
+        -3.3358
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "e8fcef8351fda5fd6225831478c7ff19d059c696eab5d0ee327a28189ba4e431"
+    },
+    {
+      "codigo": "EC-8b08e5567e87",
+      "pais": "EC",
+      "nombre": "Los Ríos",
+      "nivel": "provincia",
+      "caja": [
+        -79.8756,
+        -2.1318,
+        -79.0898,
+        -0.5398
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "dba3638db15972d67a14278c18e90a515a597a6fe34377ec3d78c893bbfc3f0d"
+    },
+    {
+      "codigo": "EC-353a80a7524d",
+      "pais": "EC",
+      "nombre": "Manabi",
+      "nivel": "provincia",
+      "caja": [
+        -81.0837,
+        -1.954,
+        -79.4006,
+        0.4054
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "2d6d35d5fdbbe01d773786fd6f179e10d239243573d9d6798b78f18329de4860"
+    },
+    {
+      "codigo": "EC-fb75f90a8be7",
+      "pais": "EC",
+      "nombre": "Morona Santiago",
+      "nivel": "provincia",
+      "caja": [
+        -78.9453,
+        -3.5865,
+        -76.6962,
+        -1.4454
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "e094874a7983d8f3307c22284fb5be1669072a54eb343125debe0fd1764a645e"
+    },
+    {
+      "codigo": "EC-7b5f497446b5",
+      "pais": "EC",
+      "nombre": "Napo",
+      "nivel": "provincia",
+      "caja": [
+        -78.4253,
+        -1.2422,
+        -77.0347,
+        0.0392
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "30778d437aab756d001cf113e4697f8b664f32fbe6d2d4eb32a1cbf2609277a5"
+    },
+    {
+      "codigo": "EC-d0f94c3ee10f",
+      "pais": "EC",
+      "nombre": "Orellana",
+      "nivel": "provincia",
+      "caja": [
+        -77.6201,
+        -1.5652,
+        -75.1886,
+        -0.0363
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "ae38da267888bf1070a1d86b1aa525a03c429a842c52929d03d95756e444b7e5"
+    },
+    {
+      "codigo": "EC-8ff0c1451557",
+      "pais": "EC",
+      "nombre": "Pastaza",
+      "nivel": "provincia",
+      "caja": [
+        -78.1751,
+        -2.6109,
+        -75.5793,
+        -0.9971
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "61f7558c61a104c2df9592553adf1af75cb469f718f83632f572fbb26002c7c1"
+    },
+    {
+      "codigo": "EC-0d676cb8b86e",
+      "pais": "EC",
+      "nombre": "Pichincha",
+      "nivel": "provincia",
+      "caja": [
+        -79.375,
+        -0.7114,
+        -77.8433,
+        0.3294
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "50cd5a9fe1f47a3d28f8b755b935d3320d6244957a0c884eb6dc53fa871682bb"
+    },
+    {
+      "codigo": "EC-6ba5c6957a34",
+      "pais": "EC",
+      "nombre": "Santa Elena",
+      "nivel": "provincia",
+      "caja": [
+        -81.0083,
+        -2.5081,
+        -80.2269,
+        -1.6656
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "e37b9999ddd2a7e2cdfcc51f316ec6c080d9b634494ce7994c19ad50295a5111"
+    },
+    {
+      "codigo": "EC-28737d4a6bb5",
+      "pais": "EC",
+      "nombre": "Santo Domingo de los Tsáchilas",
+      "nivel": "provincia",
+      "caja": [
+        -79.6271,
+        -0.6953,
+        -78.7443,
+        0.1265
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "153f9bc9026078c9490ef6e2012edca6de485a583f72ed1980d6c5ecafb2bd27"
+    },
+    {
+      "codigo": "EC-c0488c8bd846",
+      "pais": "EC",
+      "nombre": "Sucumbios",
+      "nivel": "provincia",
+      "caja": [
+        -77.972,
+        -0.6466,
+        -75.2149,
+        0.6632
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "cd757d6e4561793d14b23298f8d4a93b9ca91b5ef21c7004ae06069733c92c19"
+    },
+    {
+      "codigo": "EC-ed86f8e370df",
+      "pais": "EC",
+      "nombre": "Tungurahua",
+      "nivel": "provincia",
+      "caja": [
+        -78.9402,
+        -1.5178,
+        -78.1163,
+        -0.994
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "3ed9fee8f3b8271c333feff285d3f0cf4da8352c11f33d7dcd1e5c6bfd1d2555"
+    },
+    {
+      "codigo": "EC-25cd49521d51",
+      "pais": "EC",
+      "nombre": "Zamora Chinchipe",
+      "nivel": "provincia",
+      "caja": [
+        -79.4351,
+        -5.0115,
+        -78.3703,
+        -3.3436
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/ecuador_geojson.sql",
+        "sha256": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+        "fuente": "geoBoundaries.org  (ECU-ADM1-780006)",
+        "licenciaDeclarada": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication"
+      },
+      "sha256": "88aa0a5d71334bcee013a94b602bfb8a16ba145cff85e4f63e7fec61e3e345ae"
+    },
+    {
+      "codigo": "GF-d49f6f93342e",
+      "pais": "GF",
+      "nombre": "Cayenne",
+      "nivel": "departamento",
+      "caja": [
+        -54.5418,
+        2.1287,
+        -51.6059,
+        5.751
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/guayana_francesa_geojson.sql",
+        "sha256": "aa8d79e80075bfb5cb34da0cda9e9d9053f352f12a40642291aeae1e5c610f23",
+        "fuente": "GADM 4.1 (GUF_0)",
+        "licenciaDeclarada": "No declarada en el seed; se conserva la procedencia original."
+      },
+      "sha256": "04fee9327588664ab205c1dfc3046bf9b56d426d9b33754959c3888c6e8d659b"
+    },
+    {
+      "codigo": "GY-bb271a332091",
+      "pais": "GY",
+      "nombre": "Barina-Waini",
+      "nivel": "region",
+      "caja": [
+        -60.7204,
+        6.9615,
+        -58.7993,
+        8.5284
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/guyana_geojson.sql",
+        "sha256": "acbbad33a6cfa762d6f5da3c9e36e8dfd457fd322648f107aac81ae3c52a5c92",
+        "fuente": "geoBoundaries.org  (GUY-ADM1-73500413)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "4179f49205cebf0917db0c2510018b34af3690dbea16ef2948da6c847b8f2d81"
+    },
+    {
+      "codigo": "GY-382066a91108",
+      "pais": "GY",
+      "nombre": "Cuyuni-Mazaruni",
+      "nivel": "region",
+      "caja": [
+        -61.4149,
+        5.1726,
+        -58.5702,
+        7.2026
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/guyana_geojson.sql",
+        "sha256": "acbbad33a6cfa762d6f5da3c9e36e8dfd457fd322648f107aac81ae3c52a5c92",
+        "fuente": "geoBoundaries.org  (GUY-ADM1-73500413)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "b4d14afeacd9e05896038f9a2398dcc1fccb0cfbf57bccea5c02d0c27f5137b0"
+    },
+    {
+      "codigo": "GY-1c9bfaca71b6",
+      "pais": "GY",
+      "nombre": "Demerara-Mahaica",
+      "nivel": "region",
+      "caja": [
+        -58.3143,
+        6.0841,
+        -57.8773,
+        6.8274
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/guyana_geojson.sql",
+        "sha256": "acbbad33a6cfa762d6f5da3c9e36e8dfd457fd322648f107aac81ae3c52a5c92",
+        "fuente": "geoBoundaries.org  (GUY-ADM1-73500413)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "a13ca1ea62b6a4bab667038ae395f114a88070726c9a39a9a26d4f3dc6e7db4e"
+    },
+    {
+      "codigo": "GY-f8dcc421ec58",
+      "pais": "GY",
+      "nombre": "East Berbice-Corentyne",
+      "nivel": "region",
+      "caja": [
+        -58.514,
+        1.456,
+        -56.469,
+        6.3202
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/guyana_geojson.sql",
+        "sha256": "acbbad33a6cfa762d6f5da3c9e36e8dfd457fd322648f107aac81ae3c52a5c92",
+        "fuente": "geoBoundaries.org  (GUY-ADM1-73500413)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "6da8ab982e443a17abb7c4de26b8826c5f77951a4ba7cdd1ae2ffdb8b11eda64"
+    },
+    {
+      "codigo": "GY-1c9a45fc1636",
+      "pais": "GY",
+      "nombre": "Essequibo Islands-West Demerara",
+      "nivel": "region",
+      "caja": [
+        -58.8559,
+        6.0952,
+        -58.1728,
+        7.0945
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/guyana_geojson.sql",
+        "sha256": "acbbad33a6cfa762d6f5da3c9e36e8dfd457fd322648f107aac81ae3c52a5c92",
+        "fuente": "geoBoundaries.org  (GUY-ADM1-73500413)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "0d2a53465ad7e3723b975b03dfba4d11b454fd5ac625f6bd39fb9586a6e174bf"
+    },
+    {
+      "codigo": "GY-702f174903bb",
+      "pais": "GY",
+      "nombre": "Mahaica-Berbice",
+      "nivel": "region",
+      "caja": [
+        -58.1597,
+        5.8443,
+        -57.5296,
+        6.708
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/guyana_geojson.sql",
+        "sha256": "acbbad33a6cfa762d6f5da3c9e36e8dfd457fd322648f107aac81ae3c52a5c92",
+        "fuente": "geoBoundaries.org  (GUY-ADM1-73500413)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "b7971bc7a0dcc98be0edbf2f2059ccecd5aa084b9a4400f8fae39a54a5c418d5"
+    },
+    {
+      "codigo": "GY-8b3b1514d511",
+      "pais": "GY",
+      "nombre": "Pomeroon-Supenaam",
+      "nivel": "region",
+      "caja": [
+        -59.2104,
+        6.7308,
+        -58.4736,
+        7.679
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/guyana_geojson.sql",
+        "sha256": "acbbad33a6cfa762d6f5da3c9e36e8dfd457fd322648f107aac81ae3c52a5c92",
+        "fuente": "geoBoundaries.org  (GUY-ADM1-73500413)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "33f790062cea064682a4ece6083e11d3f78447db9ec4faa3f7b47238204cdf4c"
+    },
+    {
+      "codigo": "GY-725cf66b8e40",
+      "pais": "GY",
+      "nombre": "Potaro-Siparuni",
+      "nivel": "region",
+      "caja": [
+        -60.1613,
+        3.9991,
+        -58.3161,
+        5.7256
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/guyana_geojson.sql",
+        "sha256": "acbbad33a6cfa762d6f5da3c9e36e8dfd457fd322648f107aac81ae3c52a5c92",
+        "fuente": "geoBoundaries.org  (GUY-ADM1-73500413)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "553020d8f0cd77e8063bb7145cc622ddfc4b85135b5f38a31a470b0873820937"
+    },
+    {
+      "codigo": "GY-37ae793b391d",
+      "pais": "GY",
+      "nombre": "Upper Demerara-Berbice",
+      "nivel": "region",
+      "caja": [
+        -58.9065,
+        4.6166,
+        -57.6311,
+        6.5018
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/guyana_geojson.sql",
+        "sha256": "acbbad33a6cfa762d6f5da3c9e36e8dfd457fd322648f107aac81ae3c52a5c92",
+        "fuente": "geoBoundaries.org  (GUY-ADM1-73500413)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "bfae7fb361318659c40ed8720991182b479963f5754e32c07946b6fe78b747ac"
+    },
+    {
+      "codigo": "GY-8e0579e4c5d0",
+      "pais": "GY",
+      "nombre": "Upper Takutu-Upper Essequibo",
+      "nivel": "region",
+      "caja": [
+        -59.9933,
+        1.171,
+        -57.9493,
+        4.5201
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/guyana_geojson.sql",
+        "sha256": "acbbad33a6cfa762d6f5da3c9e36e8dfd457fd322648f107aac81ae3c52a5c92",
+        "fuente": "geoBoundaries.org  (GUY-ADM1-73500413)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "6f4d9b6b900741e196c662805d9dd60cf657c8922dabd58e1d9b6cae4e7a1894"
+    },
+    {
+      "codigo": "PE-21a02fb6a7e1",
+      "pais": "PE",
+      "nombre": "Amazonas",
+      "nivel": "region",
+      "caja": [
+        -78.7149,
+        -6.9745,
+        -77.1332,
+        -2.9807
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "f6b132ec2d423548690d531b0b6a5e7eb7ead2b5ce2c038b3d364a8a3507c59c"
+    },
+    {
+      "codigo": "PE-410109563d06",
+      "pais": "PE",
+      "nombre": "Ancash",
+      "nivel": "region",
+      "caja": [
+        -78.6603,
+        -10.7693,
+        -76.7342,
+        -8.0562
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "755d31a395792fb1de244979437d956936b3c674ad4cae0e2f3a7f8680e24ff2"
+    },
+    {
+      "codigo": "PE-40da973fb404",
+      "pais": "PE",
+      "nombre": "Apurímac",
+      "nivel": "region",
+      "caja": [
+        -73.8432,
+        -14.8593,
+        -72.0465,
+        -13.1776
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "d37acf78f3547da5f9d58d08fbfac52cbd7764cbeea039ce741abfe563226ed4"
+    },
+    {
+      "codigo": "PE-abd1ee3615d2",
+      "pais": "PE",
+      "nombre": "Arequipa",
+      "nivel": "region",
+      "caja": [
+        -75.1029,
+        -17.2974,
+        -70.7944,
+        -14.6555
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "d1bc60e6b74f00cc88cf65cbb80c4be7c8e6e6b67aa611a883fcf4d46bf80af8"
+    },
+    {
+      "codigo": "PE-59729232fbf7",
+      "pais": "PE",
+      "nombre": "Ayacucho",
+      "nivel": "region",
+      "caja": [
+        -75.12,
+        -15.6354,
+        -72.8324,
+        -12.1835
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "bb0bd30f243811693b7c716c45c952846878efec0fd23ac4032f43bf27bdd7de"
+    },
+    {
+      "codigo": "PE-ee07bd8e3ef4",
+      "pais": "PE",
+      "nombre": "Cajamarca",
+      "nivel": "region",
+      "caja": [
+        -79.4619,
+        -7.7336,
+        -77.7596,
+        -4.61
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "6415d24c69759e622b88a9e1c6776ffb0d8573169ce99c7ba4363e96f8071fc1"
+    },
+    {
+      "codigo": "PE-03e9cddce95a",
+      "pais": "PE",
+      "nombre": "Cusco",
+      "nivel": "region",
+      "caja": [
+        -73.9792,
+        -15.4719,
+        -70.3518,
+        -11.2385
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "bb7995859e5f47163d0dfdcca6e7e34527040ba4135187d4f18940eade7eb945"
+    },
+    {
+      "codigo": "PE-71226acdfd44",
+      "pais": "PE",
+      "nombre": "El Callao",
+      "nivel": "region",
+      "caja": [
+        -77.2668,
+        -12.1469,
+        -77.0831,
+        -11.8168
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "453497b406ac49d43c3d6e447398e5213587572a954a174accabab053c61a559"
+    },
+    {
+      "codigo": "PE-5da34454f343",
+      "pais": "PE",
+      "nombre": "Huancavelica",
+      "nivel": "region",
+      "caja": [
+        -75.795,
+        -14.1117,
+        -74.2756,
+        -11.9899
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "8e8e4838c70b3bfba158f17f0e8eea7e2234f23a26bd9a69d6cebbef2872cf2f"
+    },
+    {
+      "codigo": "PE-0f87ba765f2b",
+      "pais": "PE",
+      "nombre": "Huánuco",
+      "nivel": "region",
+      "caja": [
+        -77.3218,
+        -10.483,
+        -74.5007,
+        -8.3141
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "3ebe36316deb9b7fee948510d73064d8459237899bd3f06f2676e1b53079b88c"
+    },
+    {
+      "codigo": "PE-82e86390bda8",
+      "pais": "PE",
+      "nombre": "Ica",
+      "nivel": "region",
+      "caja": [
+        -76.4677,
+        -15.4333,
+        -74.6645,
+        -13.0062
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "c410b8fbb3a6788aa7a102846409d5034a477e76a430bb3d4d6140f58dff1d22"
+    },
+    {
+      "codigo": "PE-61dd6a182f00",
+      "pais": "PE",
+      "nombre": "Junín",
+      "nivel": "region",
+      "caja": [
+        -76.5149,
+        -12.6703,
+        -73.366,
+        -10.665
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "65291a7ac0e96fc08b22464c647b43a4690766a05ed0ca394515019812d020fa"
+    },
+    {
+      "codigo": "PE-6fbe0aacb716",
+      "pais": "PE",
+      "nombre": "La Libertad",
+      "nivel": "region",
+      "caja": [
+        -79.6989,
+        -8.9561,
+        -76.9108,
+        -6.9348
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "c344eb83fd0c622c3d6a60f4ed3ce288e6e61357b5644d2c5b346c730dbee528"
+    },
+    {
+      "codigo": "PE-18e87b3a2f73",
+      "pais": "PE",
+      "nombre": "Lambayeque",
+      "nivel": "region",
+      "caja": [
+        -80.6391,
+        -7.1329,
+        -79.1368,
+        -5.4855
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "730f98d766788f4e1ce0f389e2383a35ff8134e876b344c80fe699ffd39f7824"
+    },
+    {
+      "codigo": "PE-aaf2d054d5f7",
+      "pais": "PE",
+      "nombre": "Lima",
+      "nivel": "region",
+      "caja": [
+        -77.9002,
+        -13.3335,
+        -75.5217,
+        -10.2861
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "ca34154804cf51701521654781c19b0990ffd0542ba6c57c234ceafceab62c14"
+    },
+    {
+      "codigo": "PE-449e4627bada",
+      "pais": "PE",
+      "nombre": "Loreto",
+      "nivel": "region",
+      "caja": [
+        -77.8263,
+        -8.7012,
+        -69.95,
+        -0.0141
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "5a6788e49f469d5b69727d853ce24bfe5ab71cab4fde2d4970bd8026db7c2419"
+    },
+    {
+      "codigo": "PE-7ce447a3c3ea",
+      "pais": "PE",
+      "nombre": "Madre de Dios",
+      "nivel": "region",
+      "caja": [
+        -72.3995,
+        -13.373,
+        -68.6428,
+        -9.9504
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "d4f8759785baa2c5430fe24e0501f674131366cb879b6257dfa81b8f2a69ff98"
+    },
+    {
+      "codigo": "PE-0369d36b0f90",
+      "pais": "PE",
+      "nombre": "Moquegua",
+      "nivel": "region",
+      "caja": [
+        -71.4762,
+        -17.8294,
+        -69.9914,
+        -16.0091
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "583f68f0e45b8498e6d9504b4640c8c77142fb4517009cfc8453b41cce055a3a"
+    },
+    {
+      "codigo": "PE-895c6c56c46b",
+      "pais": "PE",
+      "nombre": "Municipalidad Metropolitana de Lima",
+      "nivel": "region",
+      "caja": [
+        -77.2066,
+        -12.4188,
+        -76.6322,
+        -11.5835
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "bf488fdcf042f9e3396fd5b84011bb8654b7d1f9f55a3e769769c60d80448757"
+    },
+    {
+      "codigo": "PE-578fa7d491db",
+      "pais": "PE",
+      "nombre": "Pasco",
+      "nivel": "region",
+      "caja": [
+        -76.7368,
+        -11.1542,
+        -74.1261,
+        -9.4308
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "1fadfa95c37c7dc7a22cb1457b524d6654e5c5ca3a824c49725bbfbf1bf606d9"
+    },
+    {
+      "codigo": "PE-2eeb669e57f8",
+      "pais": "PE",
+      "nombre": "Piura",
+      "nivel": "region",
+      "caja": [
+        -81.3277,
+        -6.3562,
+        -79.223,
+        -4.0729
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "8c58bc91d46ad01a4fc820c94f9c01ee040d9792945f87e863baec0b9a758484"
+    },
+    {
+      "codigo": "PE-eaa2b06926bc",
+      "pais": "PE",
+      "nombre": "Puno",
+      "nivel": "region",
+      "caja": [
+        -71.094,
+        -17.3145,
+        -68.8241,
+        -13.0059
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "bbae8142a491760da81734dedddabbab86612dc62d5f26950931881b06a18fa8"
+    },
+    {
+      "codigo": "PE-98860b5cc8e1",
+      "pais": "PE",
+      "nombre": "San Martín",
+      "nivel": "region",
+      "caja": [
+        -77.7895,
+        -8.785,
+        -75.4968,
+        -5.3775
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "f0237ccd5deb97d8c4f9cbe038ff9b6d4b3c7f1bcc05994e2d49947a4b0229cf"
+    },
+    {
+      "codigo": "PE-3c9ea4112c2e",
+      "pais": "PE",
+      "nombre": "Tacna",
+      "nivel": "region",
+      "caja": [
+        -71.1441,
+        -18.3594,
+        -69.464,
+        -16.7896
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "023bf420275905f9eec20110b4b6f9375a09acc6caa3b3029e2dcdb8659d5d87"
+    },
+    {
+      "codigo": "PE-8eb2e7db27bc",
+      "pais": "PE",
+      "nombre": "Tumbes",
+      "nivel": "region",
+      "caja": [
+        -81.0556,
+        -4.2085,
+        -80.1599,
+        -3.3888
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "f4c10882daad189b2182ef99a0a512fe347a508d1adeb3e7e752f5e2f0d587c2"
+    },
+    {
+      "codigo": "PE-2200872cfccf",
+      "pais": "PE",
+      "nombre": "Ucayali",
+      "nivel": "region",
+      "caja": [
+        -75.9535,
+        -11.4362,
+        -70.4903,
+        -7.2788
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/peru_geojson.sql",
+        "sha256": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+        "fuente": "geoBoundaries.org  (PER-ADM1-1875124)",
+        "licenciaDeclarada": "Public Domain"
+      },
+      "sha256": "5b8de860dba7ce382e929b07a062b50594f9ac2589ccdb7c21214258df69c2dd"
+    },
+    {
+      "codigo": "PY-c28f08015958",
+      "pais": "PY",
+      "nombre": "Alto Paraguay",
+      "nivel": "departamento",
+      "caja": [
+        -61.9224,
+        -22.3991,
+        -57.8173,
+        -19.2896
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "265ec0c1fdb9f6731c05504acf6e2b677f46ffa798babfbe69b56138df8622cf"
+    },
+    {
+      "codigo": "PY-45453bd99fa9",
+      "pais": "PY",
+      "nombre": "Alto Parana",
+      "nivel": "departamento",
+      "caja": [
+        -55.5506,
+        -26.2569,
+        -54.3458,
+        -24.4762
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "94ec403f08cdc353bd1b3881bb039c6405c869a2deea73d83008f3ea82a7bfc0"
+    },
+    {
+      "codigo": "PY-8056d2fac4ba",
+      "pais": "PY",
+      "nombre": "Amambay",
+      "nivel": "departamento",
+      "caja": [
+        -56.8261,
+        -23.8309,
+        -55.5043,
+        -22.0745
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "ac39327174024f7488258c46d01705b6105d671e85556366a8ba8153a0d6c938"
+    },
+    {
+      "codigo": "PY-c8da958feba1",
+      "pais": "PY",
+      "nombre": "Asuncion",
+      "nivel": "departamento",
+      "caja": [
+        -57.6739,
+        -25.3804,
+        -57.5278,
+        -25.2239
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "2de2488dc3aef278e91a1a2c0f26cecb64d8d2ef5a8abc9b4452ffde687e2189"
+    },
+    {
+      "codigo": "PY-1553b6d35654",
+      "pais": "PY",
+      "nombre": "Boqueron",
+      "nivel": "departamento",
+      "caja": [
+        -62.6446,
+        -23.8854,
+        -59.3366,
+        -20.0892
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "a94697233fe7eae17db5c0b35c04d92c79720244d97b92d6714d41f1e47c23ef"
+    },
+    {
+      "codigo": "PY-38521a9b3825",
+      "pais": "PY",
+      "nombre": "Caaguazu",
+      "nivel": "departamento",
+      "caja": [
+        -56.8564,
+        -25.7083,
+        -54.9232,
+        -24.4655
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "8bd1604b412268aaf69eb923ad716f02af3e3321b04eb6687f59fc1cb7e02121"
+    },
+    {
+      "codigo": "PY-6149cc395b9c",
+      "pais": "PY",
+      "nombre": "Caazapa",
+      "nivel": "departamento",
+      "caja": [
+        -56.8491,
+        -26.7944,
+        -55.2482,
+        -25.5237
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "db3229fa4d68d921edaac6096d68056751918a6aeadc82296300ed77670ce450"
+    },
+    {
+      "codigo": "PY-ff32bf52b932",
+      "pais": "PY",
+      "nombre": "Canindeyu",
+      "nivel": "departamento",
+      "caja": [
+        -56.1725,
+        -24.784,
+        -54.2589,
+        -23.5233
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "9c322f85960c555627c3b21257cdbabaa33435222f3eb96b497340eeda94d14f"
+    },
+    {
+      "codigo": "PY-0200f0d078fc",
+      "pais": "PY",
+      "nombre": "Central",
+      "nivel": "departamento",
+      "caja": [
+        -57.8267,
+        -26.0251,
+        -57.193,
+        -25.0967
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "095dbb629cec3f3a7008f93b2898675b8afcf768e7b3ccc88a848c585481f580"
+    },
+    {
+      "codigo": "PY-348b7c3337c2",
+      "pais": "PY",
+      "nombre": "Concepcion",
+      "nivel": "departamento",
+      "caja": [
+        -57.9934,
+        -23.5095,
+        -56.1258,
+        -22.0791
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "32bb90c97b6dab52ac66461a515428d3c5de24ca3baf33bebad40110d0b5bdf6"
+    },
+    {
+      "codigo": "PY-464b9b1ad681",
+      "pais": "PY",
+      "nombre": "Cordillera",
+      "nivel": "departamento",
+      "caja": [
+        -57.4783,
+        -25.669,
+        -56.5614,
+        -24.8433
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "61a1786b4b3641dd28c1210179928b217dd8274677c92b88f21f5506d76ecc9d"
+    },
+    {
+      "codigo": "PY-248e22b4d5bb",
+      "pais": "PY",
+      "nombre": "Guaira",
+      "nivel": "departamento",
+      "caja": [
+        -56.7477,
+        -26.1971,
+        -55.6336,
+        -25.5648
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "7218ed809c3c13f55e8767dacee2eec2eab7951d5faff43b2b08a915b6037704"
+    },
+    {
+      "codigo": "PY-400d3af483f3",
+      "pais": "PY",
+      "nombre": "Itapua",
+      "nivel": "departamento",
+      "caja": [
+        -56.8848,
+        -27.5918,
+        -54.6482,
+        -26.0922
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "6dae16b9489cea0293e8e1ca94046c7b725543feab9b63e0d1b364c2456c78b6"
+    },
+    {
+      "codigo": "PY-e34d74b9f5cf",
+      "pais": "PY",
+      "nombre": "Misiones",
+      "nivel": "departamento",
+      "caja": [
+        -57.7431,
+        -27.4861,
+        -56.6259,
+        -26.3761
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "ec71d211a8c586ba5b9b22202dd290e1f096a6cecbe9f7c4565a845a89917d09"
+    },
+    {
+      "codigo": "PY-f54af08382d3",
+      "pais": "PY",
+      "nombre": "Paraguari",
+      "nivel": "departamento",
+      "caja": [
+        -57.7494,
+        -26.6196,
+        -56.6076,
+        -25.4018
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "0f07e8f84e2e78c75c5a379d1b38f6b2b617f979ded77007c9677ebb3eeebf7d"
+    },
+    {
+      "codigo": "PY-6d8c52f00da8",
+      "pais": "PY",
+      "nombre": "Presidente Hayes",
+      "nivel": "departamento",
+      "caja": [
+        -60.7854,
+        -25.3538,
+        -57.1493,
+        -22.0762
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "b77d48b39aae7a804004b09f65c55d663e6acc118341ecb02a57d79960d7b955"
+    },
+    {
+      "codigo": "PY-c930a1881cbe",
+      "pais": "PY",
+      "nombre": "San Pedro",
+      "nivel": "departamento",
+      "caja": [
+        -57.4735,
+        -25.019,
+        -55.702,
+        -23.3007
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "1d24c3ff951ceccc6f6f327bbbb68a85a61dc74687e0e1c407bf759811591211"
+    },
+    {
+      "codigo": "PY-49ee1bf1c1fd",
+      "pais": "PY",
+      "nombre": "Ñeembucu",
+      "nivel": "departamento",
+      "caja": [
+        -58.6648,
+        -27.444,
+        -57.1821,
+        -25.7672
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/paraguay_geojson.sql",
+        "sha256": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+        "fuente": "geoBoundaries.org  (PRY-ADM1-63826900)",
+        "licenciaDeclarada": "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+      },
+      "sha256": "15bbc401843ae67ca520ee62c27cf0a04707e99f1a0ac2915f3259d333190e17"
+    },
+    {
+      "codigo": "SR-320987d14403",
+      "pais": "SR",
+      "nombre": "Brokopondo",
+      "nivel": "region",
+      "caja": [
+        -55.4941,
+        4.0268,
+        -54.7143,
+        5.334
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/surinam_geojson.sql",
+        "sha256": "edc4f948ca26af9b6d6a2082847cadea993ae566bad1b0ed6ab62e8660e61bd5",
+        "fuente": "geoBoundaries.org  (SUR-ADM1-93550828)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "77e351d0a3c186c4ef5c93ce11d6365d6a63f0b45755f7985792924adad514c8"
+    },
+    {
+      "codigo": "SR-47cd5b3093d4",
+      "pais": "SR",
+      "nombre": "Commewijne",
+      "nivel": "region",
+      "caja": [
+        -55.1661,
+        5.5377,
+        -54.607,
+        5.9951
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/surinam_geojson.sql",
+        "sha256": "edc4f948ca26af9b6d6a2082847cadea993ae566bad1b0ed6ab62e8660e61bd5",
+        "fuente": "geoBoundaries.org  (SUR-ADM1-93550828)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "9504cb0cb43bc1a0dd55271df10d273101b8a0ad69579193edd974a37021728d"
+    },
+    {
+      "codigo": "SR-f0936a73a6fc",
+      "pais": "SR",
+      "nombre": "Coronie",
+      "nivel": "region",
+      "caja": [
+        -56.6045,
+        5.3181,
+        -55.8887,
+        5.9575
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/surinam_geojson.sql",
+        "sha256": "edc4f948ca26af9b6d6a2082847cadea993ae566bad1b0ed6ab62e8660e61bd5",
+        "fuente": "geoBoundaries.org  (SUR-ADM1-93550828)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "4e2c89457f8a73be47f33f64be1f7cca8c17ee72245b6a8c37629fd491231046"
+    },
+    {
+      "codigo": "SR-9180d96f2840",
+      "pais": "SR",
+      "nombre": "Marowijne",
+      "nivel": "region",
+      "caja": [
+        -54.7299,
+        5.2343,
+        -53.9747,
+        5.9783
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/surinam_geojson.sql",
+        "sha256": "edc4f948ca26af9b6d6a2082847cadea993ae566bad1b0ed6ab62e8660e61bd5",
+        "fuente": "geoBoundaries.org  (SUR-ADM1-93550828)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "8aec4bfe52a2e2a7d026bc85500dbbf81956cb549411c604bdf544f775020b0f"
+    },
+    {
+      "codigo": "SR-6254a4b7d9a7",
+      "pais": "SR",
+      "nombre": "Nickerie",
+      "nivel": "region",
+      "caja": [
+        -57.3378,
+        5.2226,
+        -56.4554,
+        6.0107
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/surinam_geojson.sql",
+        "sha256": "edc4f948ca26af9b6d6a2082847cadea993ae566bad1b0ed6ab62e8660e61bd5",
+        "fuente": "geoBoundaries.org  (SUR-ADM1-93550828)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "6f60c20411253d189954188113da42851df903add7867da2c33d163ac84dc405"
+    },
+    {
+      "codigo": "SR-237b14cbb480",
+      "pais": "SR",
+      "nombre": "Para",
+      "nivel": "region",
+      "caja": [
+        -56.0046,
+        4.989,
+        -54.5906,
+        5.702
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/surinam_geojson.sql",
+        "sha256": "edc4f948ca26af9b6d6a2082847cadea993ae566bad1b0ed6ab62e8660e61bd5",
+        "fuente": "geoBoundaries.org  (SUR-ADM1-93550828)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "243512736a4b8bb93de72d99893d3ab57afcfc4d7c1c7a8a4fd1094a44981394"
+    },
+    {
+      "codigo": "SR-af1c0ccbf5d6",
+      "pais": "SR",
+      "nombre": "Paramaribo",
+      "nivel": "region",
+      "caja": [
+        -55.2452,
+        5.7666,
+        -55.089,
+        5.9102
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/surinam_geojson.sql",
+        "sha256": "edc4f948ca26af9b6d6a2082847cadea993ae566bad1b0ed6ab62e8660e61bd5",
+        "fuente": "geoBoundaries.org  (SUR-ADM1-93550828)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "b82dabfc54a2b1b3c2981e6345542f1a4c3e1830ed32debf76cf8ff08b943cfb"
+    },
+    {
+      "codigo": "SR-0625c3620516",
+      "pais": "SR",
+      "nombre": "Saramacca",
+      "nivel": "region",
+      "caja": [
+        -55.9705,
+        5.3923,
+        -55.2463,
+        6.0004
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/surinam_geojson.sql",
+        "sha256": "edc4f948ca26af9b6d6a2082847cadea993ae566bad1b0ed6ab62e8660e61bd5",
+        "fuente": "geoBoundaries.org  (SUR-ADM1-93550828)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "6cc82d586fdd3ab693ff803b45591cf7048256c1b09acedcd973488d8aa30379"
+    },
+    {
+      "codigo": "SR-719590305621",
+      "pais": "SR",
+      "nombre": "Sipaliwini",
+      "nivel": "region",
+      "caja": [
+        -58.0708,
+        1.8313,
+        -53.98,
+        5.5443
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/surinam_geojson.sql",
+        "sha256": "edc4f948ca26af9b6d6a2082847cadea993ae566bad1b0ed6ab62e8660e61bd5",
+        "fuente": "geoBoundaries.org  (SUR-ADM1-93550828)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "4eba5bfec781f153435c38257559936d813fac3ea2576ed2801e106f1fa7b11e"
+    },
+    {
+      "codigo": "SR-9db17523a507",
+      "pais": "SR",
+      "nombre": "Wanica",
+      "nivel": "region",
+      "caja": [
+        -55.3583,
+        5.6633,
+        -55.0682,
+        5.9119
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/surinam_geojson.sql",
+        "sha256": "edc4f948ca26af9b6d6a2082847cadea993ae566bad1b0ed6ab62e8660e61bd5",
+        "fuente": "geoBoundaries.org  (SUR-ADM1-93550828)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "24a8fd7c29af7f0e3733294e630607f68a7551ee740d1c7c49cdf49c863c1713"
+    },
+    {
+      "codigo": "UY-11ad9798a0d8",
+      "pais": "UY",
+      "nombre": "Artigas",
+      "nivel": "departamento",
+      "caja": [
+        -57.8927,
+        -31.0827,
+        -55.9896,
+        -30.0855
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "aefc2632a0e0fa7d52a45df2f80cdee702fb0e541207ca4401f1c30c5be5230d"
+    },
+    {
+      "codigo": "UY-41c2503996de",
+      "pais": "UY",
+      "nombre": "Canelones",
+      "nivel": "departamento",
+      "caja": [
+        -56.494,
+        -34.8796,
+        -55.3937,
+        -34.2068
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "0ccb5428b22b2dc4c5859c474244e06a5da2a46c57181f89268b7364b55fb8dd"
+    },
+    {
+      "codigo": "UY-e75c2add30c4",
+      "pais": "UY",
+      "nombre": "Cerro Largo",
+      "nivel": "departamento",
+      "caja": [
+        -55.3535,
+        -33.0294,
+        -53.1823,
+        -31.6513
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "05bb4bf10d6255e02de90d95e0863869ffeb53e11353fdf1f4e4bdeee437e2dc"
+    },
+    {
+      "codigo": "UY-d00604e6d1c6",
+      "pais": "UY",
+      "nombre": "Colonia",
+      "nivel": "departamento",
+      "caja": [
+        -58.432,
+        -34.4762,
+        -56.9823,
+        -33.7646
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "4470bd79a20a5236958c58070fca9435d1524541f71f463df2804ee7450f9406"
+    },
+    {
+      "codigo": "UY-44788bd719e4",
+      "pais": "UY",
+      "nombre": "Durazno",
+      "nivel": "departamento",
+      "caja": [
+        -57.2003,
+        -33.5073,
+        -55.0058,
+        -32.409
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "f8af674934ed2c503c7638d375623dfc8f284e7853a90ee4f8107b8a262771cb"
+    },
+    {
+      "codigo": "UY-c57a18347626",
+      "pais": "UY",
+      "nombre": "Flores",
+      "nivel": "departamento",
+      "caja": [
+        -57.3609,
+        -33.9848,
+        -56.3963,
+        -33.119
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "0b67b8886c54d12a4d83f02981e5ba7cb58ce16cb6f5d74334e52452f82155c3"
+    },
+    {
+      "codigo": "UY-8e9e26c2ef86",
+      "pais": "UY",
+      "nombre": "Florida",
+      "nivel": "departamento",
+      "caja": [
+        -56.5364,
+        -34.4264,
+        -55.0982,
+        -33.1019
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "ccf168cde230371a7508385be2ae908b073d0ab659ab5599598f5c8afa7899a5"
+    },
+    {
+      "codigo": "UY-cb3a92f469d8",
+      "pais": "UY",
+      "nombre": "Lavalleja",
+      "nivel": "departamento",
+      "caja": [
+        -55.6242,
+        -34.6355,
+        -54.1291,
+        -33.3194
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "e4891e3e13fb7b5e3b0271f56f345b248f095cbc3a6af7aa9a7984d70ddd88ee"
+    },
+    {
+      "codigo": "UY-8d5c884a19b2",
+      "pais": "UY",
+      "nombre": "Maldonado",
+      "nivel": "departamento",
+      "caja": [
+        -55.4843,
+        -34.9739,
+        -54.4639,
+        -33.929
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "73bd6313e7b814598a91cd62821f1b85483c484ee270f3d641a65bf8f179915f"
+    },
+    {
+      "codigo": "UY-8e50cacf563c",
+      "pais": "UY",
+      "nombre": "Montevideo",
+      "nivel": "departamento",
+      "caja": [
+        -56.4312,
+        -34.9381,
+        -56.0225,
+        -34.7019
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "21750e5af565f9bffe20399edee3c3dc81da2442f54e36478c252924b89d76d2"
+    },
+    {
+      "codigo": "UY-388c69bbfa5c",
+      "pais": "UY",
+      "nombre": "Paysandú",
+      "nivel": "departamento",
+      "caja": [
+        -58.2068,
+        -32.5956,
+        -56.2385,
+        -31.4525
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "9f40212217b0c38ebde56ca715aeb391cad4e6cf241e2fa9962ad4ab85215af2"
+    },
+    {
+      "codigo": "UY-1506384d1ef0",
+      "pais": "UY",
+      "nombre": "Rivera",
+      "nivel": "departamento",
+      "caja": [
+        -56.185,
+        -32.1104,
+        -54.4516,
+        -30.8331
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "41beb1de33c05708c95335d544f6e9b44f2543615e4c41af75738415b4aa0fb7"
+    },
+    {
+      "codigo": "UY-7506e51284b5",
+      "pais": "UY",
+      "nombre": "Rocha",
+      "nivel": "departamento",
+      "caja": [
+        -54.5791,
+        -34.8018,
+        -53.3694,
+        -33.1508
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "776090eaccfb7a154e281a5989c1290c216c3f4caf2fe643757f937e628a83fd"
+    },
+    {
+      "codigo": "UY-a732f6039697",
+      "pais": "UY",
+      "nombre": "Río Negro",
+      "nivel": "departamento",
+      "caja": [
+        -58.4427,
+        -33.4414,
+        -56.5464,
+        -32.3426
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "c6c4de0b437579a84f28343a39afd0b9edc6ec2e86b088ccdaee7995ea22e6b2"
+    },
+    {
+      "codigo": "UY-b73999eafb1a",
+      "pais": "UY",
+      "nombre": "Salto",
+      "nivel": "departamento",
+      "caja": [
+        -58.0834,
+        -31.8713,
+        -56.0099,
+        -30.7415
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "b3a96763620f96bfa0c67c70c6f70b33386050bb42a2ee7a7f78b5a60521eebc"
+    },
+    {
+      "codigo": "UY-21573c7445c3",
+      "pais": "UY",
+      "nombre": "San José",
+      "nivel": "departamento",
+      "caja": [
+        -57.1526,
+        -34.7841,
+        -56.3415,
+        -33.8321
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "dcf010ad462536c30fcf0058ea3354c83fdc3e9f03fcc3ce662fac2745d11608"
+    },
+    {
+      "codigo": "UY-775fd689350c",
+      "pais": "UY",
+      "nombre": "Soriano",
+      "nivel": "departamento",
+      "caja": [
+        -58.4948,
+        -33.9556,
+        -57.0892,
+        -33.0001
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "e54fe8ac84889221b845930cc66b9cf75821ab0485611114fbbf784672407a28"
+    },
+    {
+      "codigo": "UY-91b474319992",
+      "pais": "UY",
+      "nombre": "Tacuarembó",
+      "nivel": "departamento",
+      "caja": [
+        -56.6833,
+        -32.8665,
+        -54.6674,
+        -31.2307
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "7a119b3997e0335613a6c1acc36c98d7f4d60df743d7b53d8363236a66e385c2"
+    },
+    {
+      "codigo": "UY-9bcaa4bd7acb",
+      "pais": "UY",
+      "nombre": "Treinta y Tres",
+      "nivel": "departamento",
+      "caja": [
+        -55.1588,
+        -33.4602,
+        -53.2929,
+        -32.6983
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/uruguay_geojson.sql",
+        "sha256": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+        "fuente": "geoBoundaries.org  (URY-ADM1-27058087)",
+        "licenciaDeclarada": "Open Data Commons Open Database License 1.0"
+      },
+      "sha256": "e1d2612cd78cd7bb9cb46875bfcff82e1835f27ed0070be61de2f2aa18794416"
+    },
+    {
+      "codigo": "VE-21a02fb6a7e1",
+      "pais": "VE",
+      "nombre": "Amazonas",
+      "nivel": "estado",
+      "caja": [
+        -67.8641,
+        0.6346,
+        -63.3495,
+        6.1974
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "fc344828cb1438060aa55698a965e479d28cb428701e08b253cb78a50ff5fdce"
+    },
+    {
+      "codigo": "VE-0341d990e014",
+      "pais": "VE",
+      "nombre": "Anzoátegui",
+      "nivel": "estado",
+      "caja": [
+        -65.7235,
+        7.6585,
+        -62.6798,
+        10.3118
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "325ef7b17f01354d809fa84310f3624b67ec092b6b5b6144c60378b084926cde"
+    },
+    {
+      "codigo": "VE-2cb0ffc6b693",
+      "pais": "VE",
+      "nombre": "Apure",
+      "nivel": "estado",
+      "caja": [
+        -72.4138,
+        6.0796,
+        -66.3284,
+        8.0684
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "5d4f5c580c191f1682e226ffa16de7c88aed3945886441f1c77dc843886ff8e3"
+    },
+    {
+      "codigo": "VE-ce6f3640729e",
+      "pais": "VE",
+      "nombre": "Aragua",
+      "nivel": "estado",
+      "caja": [
+        -67.8818,
+        9.2518,
+        -66.5461,
+        10.5365
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "2828dd46b0cb29bc599e4bb1c42d4fc56aaffd8a533139b925b71a809c6ee834"
+    },
+    {
+      "codigo": "VE-2c499d9dba38",
+      "pais": "VE",
+      "nombre": "Barinas",
+      "nivel": "estado",
+      "caja": [
+        -71.8833,
+        7.2864,
+        -67.5011,
+        9.0615
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "357c8a2692893f0b58e13b19b2f7f65c9b4e9ab646088f05b53be7206721b434"
+    },
+    {
+      "codigo": "VE-23bcefc9dc5c",
+      "pais": "VE",
+      "nombre": "Bolívar",
+      "nivel": "estado",
+      "caja": [
+        -67.44,
+        3.5505,
+        -60.2725,
+        8.4434
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "f08eaa647794b7f53d06f6475309e952c8ba3296f85a36f185b0e0776885e920"
+    },
+    {
+      "codigo": "VE-2f2b80a51bf3",
+      "pais": "VE",
+      "nombre": "Carabobo",
+      "nivel": "estado",
+      "caja": [
+        -68.4278,
+        9.8113,
+        -67.5173,
+        10.5835
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "73dcc14c227ca8b2dc41a2111e4fea90fcec18485010de6f1aa32999de6ad070"
+    },
+    {
+      "codigo": "VE-6b9f1922a6ea",
+      "pais": "VE",
+      "nombre": "Cojedes",
+      "nivel": "estado",
+      "caja": [
+        -68.9877,
+        8.5329,
+        -67.7527,
+        10.0854
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "0527389fd7fd01898c14709b0fae0a7e3d0c6650aab4c10425a831452308e307"
+    },
+    {
+      "codigo": "VE-d53a7ac61201",
+      "pais": "VE",
+      "nombre": "Delta Amacuro",
+      "nivel": "estado",
+      "caja": [
+        -62.6116,
+        7.7534,
+        -59.7411,
+        10.018
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "8ca41b01bcb2939926131e198515e8563a8160ea03c50bba3c54e7a8fa06024b"
+    },
+    {
+      "codigo": "VE-09756f248ff1",
+      "pais": "VE",
+      "nombre": "Dependencias Federales",
+      "nivel": "estado",
+      "caja": [
+        -70.9269,
+        10.636,
+        -61.8547,
+        12.4988
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "eef05a451669d5f339d2d344a9decb4f2cec50d870532c05ad3b00b713a26f2a"
+    },
+    {
+      "codigo": "VE-f001d10e4260",
+      "pais": "VE",
+      "nombre": "Distrito Capital",
+      "nivel": "estado",
+      "caja": [
+        -67.1634,
+        10.3832,
+        -66.8614,
+        10.5625
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "8e842be846ad58798b5993552f4215f6579d5c2ab5dc627f7f2ff02634dda4b1"
+    },
+    {
+      "codigo": "VE-f4c4d4189222",
+      "pais": "VE",
+      "nombre": "Falcón",
+      "nivel": "estado",
+      "caja": [
+        -71.315,
+        10.3011,
+        -68.2179,
+        12.1951
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "274c205c5dd5a828cefe782a0b799982ebe1198ca1d76a0ea08c41ef7451b849"
+    },
+    {
+      "codigo": "VE-5c1e94b36d18",
+      "pais": "VE",
+      "nombre": "Guárico",
+      "nivel": "estado",
+      "caja": [
+        -68.0302,
+        7.6233,
+        -64.7744,
+        10.0405
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "6c51c9636228b087e7038235ab8571ebd6509463847ee1238ea992332ff0d451"
+    },
+    {
+      "codigo": "VE-86ad136364e9",
+      "pais": "VE",
+      "nombre": "La Guaira",
+      "nivel": "estado",
+      "caja": [
+        -67.4129,
+        10.3876,
+        -66.3095,
+        10.6322
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "7ad847329d8c0a04d7a85935062232d5e80ec21e5cfe6bf3ad2da6e5317bf2b6"
+    },
+    {
+      "codigo": "VE-2ca74c87d6c7",
+      "pais": "VE",
+      "nombre": "Lara",
+      "nivel": "estado",
+      "caja": [
+        -70.8826,
+        9.3992,
+        -68.8749,
+        10.7453
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "fae8de0ca05f821b966d04c9010bba7b92333e06daff1f23d037ecb58f2040fb"
+    },
+    {
+      "codigo": "VE-c9b5d704902a",
+      "pais": "VE",
+      "nombre": "Miranda",
+      "nivel": "estado",
+      "caja": [
+        -67.2205,
+        9.9351,
+        -65.4282,
+        10.6499
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "ac42fcd132835197531401fc048665169ef3d5ecd66c2e2cc720b2bb8c277ad3"
+    },
+    {
+      "codigo": "VE-b57410e6a44a",
+      "pais": "VE",
+      "nombre": "Monagas",
+      "nivel": "estado",
+      "caja": [
+        -64.0629,
+        8.3824,
+        -61.9968,
+        10.3207
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "12333c3404ffad0b69e4a626a1f210f22a567a296588c500d9db19bbedc85c72"
+    },
+    {
+      "codigo": "VE-cfacb84fd296",
+      "pais": "VE",
+      "nombre": "Mérida",
+      "nivel": "estado",
+      "caja": [
+        -71.9151,
+        7.6622,
+        -70.5438,
+        9.1979
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "6393137b2ebd9559cfe8928914c75cc45a5a99e8048486f6c283e54ab886eb97"
+    },
+    {
+      "codigo": "VE-b808a2cd5351",
+      "pais": "VE",
+      "nombre": "Nueva Esparta",
+      "nivel": "estado",
+      "caja": [
+        -64.4096,
+        10.7305,
+        -63.7764,
+        11.1797
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "124e3a066749e3476dfe2da7090b17049552faa9016615a79626d02dd2680a1b"
+    },
+    {
+      "codigo": "VE-920b87352077",
+      "pais": "VE",
+      "nombre": "Portuguesa",
+      "nivel": "estado",
+      "caja": [
+        -70.2021,
+        8.0913,
+        -68.5115,
+        9.8459
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "491df0b95cfab255faea26c9e3d8205eec2a443a99a1ba81fc97add254f351ec"
+    },
+    {
+      "codigo": "VE-2c9eff44bcfe",
+      "pais": "VE",
+      "nombre": "Sucre",
+      "nivel": "estado",
+      "caja": [
+        -64.5307,
+        10.0332,
+        -61.8478,
+        10.7653
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "1ed4c87d24635929401f5111e8aa4bdad3fbf9fee017603faae8ba02f19be8b7"
+    },
+    {
+      "codigo": "VE-be2cf13210aa",
+      "pais": "VE",
+      "nombre": "Trujillo",
+      "nivel": "estado",
+      "caja": [
+        -71.092,
+        8.9521,
+        -69.9959,
+        10.0392
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "16e6a1af6f91354b52a744bc47700764ff37cfb2924803cbab691903a03b0761"
+    },
+    {
+      "codigo": "VE-0af0f80da308",
+      "pais": "VE",
+      "nombre": "Táchira",
+      "nivel": "estado",
+      "caja": [
+        -72.4898,
+        7.3611,
+        -71.3168,
+        8.6485
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "618915c295cff341f49cd05088a3a9ff51a8eb022d26a1c40d29bc7401b0bdd7"
+    },
+    {
+      "codigo": "VE-81cc878c42b2",
+      "pais": "VE",
+      "nombre": "Yaracuy",
+      "nivel": "estado",
+      "caja": [
+        -69.2083,
+        9.8344,
+        -68.2487,
+        10.7741
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "b15e58fc3125279a0bfeb6be63624b1e87e19d52acc54296723ea5e1f6141984"
+    },
+    {
+      "codigo": "VE-0c1ea521e70d",
+      "pais": "VE",
+      "nombre": "Zulia",
+      "nivel": "estado",
+      "caja": [
+        -73.3691,
+        8.363,
+        -70.6676,
+        11.8431
+      ],
+      "procedencia": {
+        "archivo": "referencias/envirosense/codigo/database/seeds/geojson/venezuela_geojson.sql",
+        "sha256": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+        "fuente": "geoBoundaries.org  (VEN-ADM1-42786344)",
+        "licenciaDeclarada": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)"
+      },
+      "sha256": "776e1fde390c97d5541672621e86766eded1c11137b38d555a5b9af966199cba"
+    }
+  ]
+}

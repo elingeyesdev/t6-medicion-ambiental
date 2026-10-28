@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CuentaController;
 use App\Http\Controllers\Api\FocosCalorController;
+use App\Http\Controllers\Api\MapaMonitoreoController;
 use App\Http\Controllers\Api\PaisesController;
 use App\Http\Controllers\Api\SensoresController;
 use App\Http\Controllers\Api\SequiasController;
@@ -22,6 +23,7 @@ Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
     Route::post('/cuenta/ingresar', [CuentaController::class, 'entrar'])->middleware('throttle:cuentas-ingreso');
     Route::middleware(['auth:sanctum', 'cuenta.activa', 'abilities:cuenta'])->group(function (): void {
         Route::middleware('can:datos.consultar')->group(function (): void {
+            Route::get('/mapa/puntos', MapaMonitoreoController::class);
             Route::get('/sensores/catalogo', [SensoresController::class, 'catalogo']);
             Route::get('/sensores/cercanos', [SensoresController::class, 'cercanos']);
             Route::get('/sensores', [SensoresController::class, 'index']);

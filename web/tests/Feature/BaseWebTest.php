@@ -22,9 +22,10 @@ class BaseWebTest extends TestCase
         $response->assertOk()
             ->assertSee('lang="es"', false)
             ->assertSee('Mapa de Monitoreo')
-            ->assertSee('id="mapa-focos"', false)
-            ->assertSee('id="filtros-focos"', false)
-            ->assertSee('id="resultados-focos" hidden', false)
+            ->assertSee('id="mapa-monitoreo"', false)
+            ->assertSee('id="filtros-monitoreo"', false)
+            ->assertSee('id="mon-detalle"', false)
+            ->assertDontSee('id="mapa-focos"', false)
             ->assertSee('js/panel/navegacion.js')
             ->assertSee('GeoSur')
             ->assertSee('img/marca/geosur-simbolo.svg')
@@ -40,7 +41,7 @@ class BaseWebTest extends TestCase
             if ($modulo['habilitado']) {
                 $response->assertSee($modulo['nombre'])->assertSee(route('modulos.mostrar', $id), false);
             } else {
-                $response->assertDontSee($modulo['nombre'])->assertDontSee(route('modulos.mostrar', $id), false);
+                $response->assertDontSee('aria-label="Abrir '.$modulo['nombre'].'"', false)->assertDontSee(route('modulos.mostrar', $id), false);
             }
         }
 

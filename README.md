@@ -1,6 +1,10 @@
 # GeoSur
 
-Reingeniería de EnviroSense a Laravel/Blade y Flutter. Josué confirmó el 27/10 conservar **todas las funciones del origen** bajo el nombre **GeoSur**, además de las funciones ambientales trabajadas. La recuperación completa está en curso: las consultas activas siguen cubriendo Santa Cruz. La interfaz usa Tabler 1.7.1 y solo muestra recorridos funcionales.
+**GeoSur es la adaptación del sistema completo de EnviroSense**; focos, sequías y los otros análisis de la pareja se incorporan dentro de ese software. Sus cuentas, mapa, datos, simulaciones, reportes, alertas, notificaciones y asistente son la base del producto. La migración está incompleta y no se acredita por conservar una copia del original.
+
+El mapa principal de esta rama tiene países/territorios y puntos ambientales; focos y sequías conservan su cobertura probada de Santa Cruz. Se mantiene la tecnología comprobada en el Planner: Laravel/Blade, JavaScript y API compartida, con Flutter para móvil. La plantilla web es Tabler 1.7.1. Las funciones originales se adaptan a esa tecnología.
+
+- [Corrección de enfoque, alcance geográfico y funciones originales que faltan](docs/ENVIROSENSE_COMO_BASE.md).
 
 - [Alcance vigente, funciones originales y orden de recuperación](docs/REINGENIERIA_GEOSUR.md).
 - [Backlog para replanificar, sin fechas ni duraciones inventadas](planificacion/Backlog_GeoSur.csv).
@@ -11,12 +15,12 @@ El jueves 29/10 corresponde a la revisión de **M2**, ya publicada en `main` com
 - [Inicio, registro, acceso y cómo probar el mapa](docs/ACCESO_ENVIROSENSE.md).
 - [Marca GeoCruz, navegación y cuenta demo local](docs/MARCA_Y_DEMO.md).
 - [Acceso con cubierta de Tabler y mapa base Mapbox](docs/ACCESO_Y_MAPBOX.md).
-- [Qué conservamos, adaptamos y dejamos fuera de EnviroSense](docs/REINGENIERIA_ENVIROSENSE_M3.md).
+- [Antecedente de la adaptación M3; sus exclusiones anteriores ya no son el alcance vigente](docs/REINGENIERIA_ENVIROSENSE_M3.md).
 - [Revisión de la guía GitHub del curso y pendientes reales](docs/GUIA_CURSO_ESTADO.md).
 
 Los apartados siguientes conservan instrucciones y resultados de la base integrada; el estado vigente de adaptación se sigue en #29, #47-50 y #53.
 
-Sistema de consulta ambiental para el departamento de Santa Cruz, sus provincias y municipios. Proyecto de Sistemas III, UNIVALLE, gestión 2026. Integrantes: Josué Padilla y Jaziel Díaz.
+La primera implementación y M2 se centraron en el departamento de Santa Cruz, sus provincias y municipios; ese corte histórico no limita el software completo de EnviroSense. Proyecto de Sistemas III, UNIVALLE, gestión 2026. Integrantes: Josué Padilla y Jaziel Díaz.
 
 Repositorio oficial: https://github.com/elingeyesdev/t6-medicion-ambiental
 

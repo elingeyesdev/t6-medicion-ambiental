@@ -3,10 +3,10 @@ name: Base web y API
 on:
   pull_request:
     branches: [develop, main, 'feature/**', 'refactor/**']
-    paths: ['web/**', 'compartido/api/**', 'compartido/sequias/**', 'compartido/sensores/**', 'compartido/territorios/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'docs/evidencias/api02-http/**', 'herramientas/sequias/**', 'herramientas/datos/**', '.github/workflows/web.yml']
+    paths: ['web/**', 'compartido/api/**', 'compartido/sequias/**', 'compartido/sensores/**', 'compartido/geografia/**', 'compartido/territorios/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'docs/evidencias/api02-http/**', 'herramientas/sequias/**', 'herramientas/datos/**', '.github/workflows/web.yml']
   push:
     branches: [develop, main]
-    paths: ['web/**', 'compartido/api/**', 'compartido/sequias/**', 'compartido/sensores/**', 'compartido/territorios/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'docs/evidencias/api02-http/**', 'herramientas/sequias/**', 'herramientas/datos/**', '.github/workflows/web.yml']
+    paths: ['web/**', 'compartido/api/**', 'compartido/sequias/**', 'compartido/sensores/**', 'compartido/geografia/**', 'compartido/territorios/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'docs/evidencias/api02-http/**', 'herramientas/sequias/**', 'herramientas/datos/**', '.github/workflows/web.yml']
 
 permissions:
   contents: read
@@ -87,7 +87,9 @@ jobs:
       - name: Verificar contrato y evidencia HTTP de sequías sin red
         run: python herramientas/sequias/test_contrato_http.py
       - name: Reproducir el catálogo de puntos del referente
-        run: python herramientas/datos/recuperar-catalogo.py --comprobar
+        run: |
+          python herramientas/datos/recuperar-catalogo.py --comprobar
+          python herramientas/datos/recuperar-regiones.py --comprobar
 
   visor-web:
     runs-on: ubuntu-latest

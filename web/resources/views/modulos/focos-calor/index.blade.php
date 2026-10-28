@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('titulo', !empty($esInicio) ? 'Mapa de Monitoreo' : 'Focos de calor')
+@section('titulo', 'Focos de calor')
 @section('clase-cuerpo', 'pagina-focos')
 @push('estilos')
 <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">

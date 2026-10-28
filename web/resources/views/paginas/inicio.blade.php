@@ -10,7 +10,7 @@
     <x-publico.paisaje class="portada-hero">
         <div class="container-xl portada-presentacion">
             <h1>Explora<br>el territorio.</h1>
-            <p>Focos de calor y sequías.<br>Consulta disponible en Santa Cruz, Bolivia.</p>
+            <p>Consulta el mapa y las mediciones ambientales.<br>Explora los puntos y su historial.</p>
             <div class="acciones-publicas">
                 <a class="btn btn-primary" href="{{ route('mapa') }}">Entrar al mapa <x-panel.icono nombre="arrow-right" /></a>
                 @guest
@@ -21,6 +21,26 @@
     </x-publico.paisaje>
     <section class="container-xl portada-modulos" id="explorar" aria-labelledby="titulo-explorar">
         <h2 id="titulo-explorar">Qué quieres consultar</h2>
+        <div class="row g-4 mb-5">
+            <div class="col-md-6">
+                <a class="card modulo-publico consulta-monitoreo" href="{{ route('mapa') }}">
+                    <div class="card-body">
+                        <span class="consulta-icono"><x-panel.icono nombre="world" /></span>
+                        <div><h3>Mapa de Monitoreo</h3><p>Explora puntos, variables y datos disponibles por país.</p><span class="consulta-enlace">Abrir mapa <x-panel.icono nombre="arrow-right" /></span></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a class="card modulo-publico consulta-monitoreo" href="{{ route('sensores') }}">
+                    <div class="card-body">
+                        <span class="consulta-icono"><x-panel.icono nombre="layout-dashboard" /></span>
+                        <div><h3>Mediciones e historial</h3><p>Revisa registros y su evolución a lo largo del tiempo.</p><span class="consulta-enlace">Ver mediciones <x-panel.icono nombre="arrow-right" /></span></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <h2>Análisis del territorio</h2>
+        <p class="portada-cobertura">Focos de calor y sequías disponibles para Santa Cruz, Bolivia.</p>
         <div class="row g-4">
             @foreach(config('geocruz.modulos') as $id => $modulo)
                 @if($modulo['habilitado'])

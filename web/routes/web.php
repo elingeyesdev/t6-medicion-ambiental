@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccesoController;
 use App\Http\Controllers\CuentaController;
 use App\Http\Controllers\InicioController;
+use App\Http\Controllers\MapaMonitoreoController;
 use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\SensoresController;
 use App\Http\Controllers\UsuariosController;
@@ -27,7 +28,8 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
         Route::post('/sensores/{punto:codigo}/lecturas', [SensoresController::class, 'registrar'])->name('sensores.registrar');
         Route::patch('/sensores/{punto:codigo}/estado', [SensoresController::class, 'estado'])->name('sensores.estado');
     });
-    Route::get('/mapa', [InicioController::class, 'index'])->name('mapa');
+    Route::get('/mapa', MapaMonitoreoController::class)->middleware('can:mapa.ver')->name('mapa');
+    Route::get('/mapa/puntos', App\Http\Controllers\Api\MapaMonitoreoController::class)->middleware('can:datos.consultar')->name('mapa.puntos');
     Route::get('/modulos/{modulo}', [InicioController::class, 'modulo'])->name('modulos.mostrar');
     Route::post('/logout', [AccesoController::class, 'salir'])->name('logout');
     Route::get('/cuenta', [CuentaController::class, 'index'])->name('cuenta');
