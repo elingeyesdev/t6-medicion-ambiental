@@ -1,5 +1,7 @@
 # Inicio, acceso y mapa de GeoCruz
 
+**Estado vigente del 28/10:** la marca es GeoSur y EnviroSense completo es el sistema principal. `/mapa` tiene un recorrido separado de monitoreo ambiental; ya no reutiliza Focos de calor. Se mantiene Laravel/Blade, API compartida y Flutter según el Planner. La recuperación completa continúa en [EnviroSense como base](ENVIROSENSE_COMO_BASE.md); los apartados siguientes conservan el historial de los cambios de acceso.
+
 Seguimiento #53 y #47, PR #51. Cambio solicitado por Josué el 27/10/2026: conservar el recorrido de EnviroSense y añadir los módulos de GeoCruz dentro de él. La aprobación de Jaziel para #45 ya quedó integrada en develop; esta ampliación necesita su propia revisión.
 
 Después, Josué eligió **GeoCruz** como marca visible y el emblema ambiental de Santa Cruz. #54 aplica esa decisión sin cambiar el recorrido de la adaptación: [marca y cuenta demo](MARCA_Y_DEMO.md). Las menciones a EnviroSense en las decisiones anteriores identifican el origen del trabajo.

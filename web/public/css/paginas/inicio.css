@@ -10,6 +10,8 @@
 .consulta-icono { width: 56px; height: 56px; display: grid; place-items: center; flex-shrink: 0; border-radius: 8px; background: #fff0df; color: #a94b14; }
 .consulta-icono svg { width: 30px; height: 30px; }
 .consulta-sequias .consulta-icono { background: #e5effa; color: #236b9d; }
+.consulta-monitoreo .consulta-icono { background: #e3f2e8; color: #146b3b; }
+.portada-cobertura { font-size: 16px; margin: -10px 0 24px; color: #43574b; }
 .modulo-publico h3 { margin: 0 0 8px; font-size: 24px; font-weight: 600; letter-spacing: -.4px; }
 .modulo-publico p { margin: 0 0 20px; color: #43574b; font-size: 16px; line-height: 1.6; }
 .consulta-enlace { display: inline-flex; gap: 10px; align-items: center; font-size: 16px; font-weight: 600; color: #116632; }

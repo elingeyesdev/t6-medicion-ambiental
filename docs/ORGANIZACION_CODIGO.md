@@ -14,7 +14,8 @@ web/
     layouts/app.blade.php             estructura compartida del panel
     components/panel/                 menú, cabecera, pie e iconos compartidos
     components/publico/               cabecera/pie comunes y paisaje de la portada
-    modulos/focos-calor/index.blade.php  mapa de monitoreo e inicio
+    mapa/index.blade.php              mapa principal de monitoreo ambiental
+    modulos/focos-calor/index.blade.php  análisis incorporado de focos de calor
     modulos/focos-calor/              filtros, mapa, estado y resultados separados
     modulos/sequias/index.blade.php
     errors/404.blade.php              página genérica para direcciones inexistentes
@@ -29,12 +30,15 @@ web/
     css/panel/mapas.css               selector y atribución de mapas
     css/paginas/publico.css           botones, cabecera, paisaje, pie y acceso comunes
     css/paginas/inicio.css            portada, foto y accesos a consultas
+    css/paginas/monitoreo.css         distribución del mapa principal
     img/marca/                        logotipo y símbolo aprobados
     img/amboro/                       fotografía real, fuente y licencia
     img/lomas-arena/                  fotografía del ingreso/registro, fuente y licencia
     css/modulos/                     estilos particulares de cada consulta
     js/panel/                        tema claro/oscuro y navegación compartida
     js/mapas/base.js                  base Mapbox común, sin cálculos ambientales
+    js/mapas/monitoreo.js             selección y consulta del mapa principal
+    js/mapas/consulta-monitoreo.js     fechas y parámetros de ese mapa
     js/focos-calor/                   interacción del visor de focos
     js/sequias/                       interacción del visor de sequías
   app/
@@ -42,6 +46,7 @@ web/
     Http/Controllers/Api/                  recibe consultas HTTP del sistema
     Support/ConfiguracionMapa.php          publica solo configuración pública válida
     Services/Territorios/                  catálogo, filtros y geometrías
+    Services/Datos/PanoramaAmbiental.php    últimas lecturas por punto y procedencia
     Services/FocosCalor/                   proveedor y reglas de focos
     Services/Sequias/                      series, publicaciones y cálculo
   config/geocruz.php                  nombres y disponibilidad de pantallas
@@ -56,7 +61,7 @@ web/
 
 Tabler se actualiza como dependencia: conservar licencia, versión e integridad en `procedencia.json`. No editar sus archivos minificados para personalizar un botón. El acceso partió de Sign in with cover y en #57 tiene tarjeta de formulario propia, con controles de Tabler y colores compartidos con el inicio. Los ajustes propios quedan en `css/paginas/publico.css`, `components/publico/` y `css/panel/`. El símbolo de GeoCruz está en `img/marca/` y se usa desde `components/panel/marca.blade.php`. Los iconos de controles están limitados a una lista fija en `components/panel/icono.blade.php`, sin rutas proporcionadas por usuarios.
 
-**Inicio, acceso y mapa:** `/` es la portada de GeoCruz. `/login` y `/register` recuperan su acceso con sesiones de Laravel. `/mapa` y `/modulos/` requieren sesión; comparten layout y consultas. `/mapa` reutiliza el visor de focos sin una segunda API. `focos-calor.css` define componentes de resultados y `mapa-monitoreo.css` su distribución sobre el mapa. `filtros.blade.php`, `mapa.blade.php`, `estado.blade.php` y `resultados.blade.php` mantienen cada parte localizable. La geometría inicial es contexto territorial; los resultados ambientales aparecen al consultar. `js/panel/preferencias.js` recupera el tema antes de dibujar; `navegacion.js` maneja menú contraíble, tema y teclado, sin cálculos ambientales. El acceso se explica en [ACCESO_ENVIROSENSE.md](ACCESO_ENVIROSENSE.md).
+**Inicio, acceso y mapa:** `/` es la portada de GeoCruz. `/login` y `/register` recuperan su acceso con sesiones de Laravel. `/mapa` y `/modulos/` requieren sesión; comparten layout y consultas. `/mapa` tiene su propia vista `mapa/index.blade.php` y consulta `PanoramaAmbiental`, por sesión web en `/mapa/puntos` o token móvil en `/api/v1/mapa/puntos`. Focos conserva su visor separado en `/modulos/focos-calor`; no sustituye el mapa del sistema principal. `focos-calor.css` define componentes de resultados y `mapa-monitoreo.css` su distribución sobre el mapa. `filtros.blade.php`, `mapa.blade.php`, `estado.blade.php` y `resultados.blade.php` mantienen cada parte localizable. La geometría inicial es contexto territorial; los resultados ambientales aparecen al consultar. `js/panel/preferencias.js` recupera el tema antes de dibujar; `navegacion.js` maneja menú contraíble, tema y teclado, sin cálculos ambientales. El acceso se explica en [ACCESO_ENVIROSENSE.md](ACCESO_ENVIROSENSE.md).
 
 La letra activa del panel es Segoe UI/Arial, con texto de consulta de 16 px. `js/focos-calor/elementos.js` comparte filas y símbolos entre el mapa y el listado; también construye el marco de selección. `MapaFocos.centrarDeteccion()` encuadra la elección; `actualizarSeleccion()` solo la dibuja para no bloquear el zoom manual. El pie público recibe la fotografía correspondiente y muestra su crédito: Amboró en inicio, Lomas de Arena en acceso.
 

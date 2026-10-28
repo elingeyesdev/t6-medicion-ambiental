@@ -5,24 +5,24 @@
     </a>
     <button class="enviro-contraer" id="contraer-menu" type="button" aria-controls="menu-panel" aria-expanded="true" aria-label="Contraer menú"><span aria-hidden="true">‹</span></button>
     <nav class="enviro-navegacion" aria-label="Navegación principal">
-        <div class="enviro-seccion">Navegación</div>
+        <div class="enviro-seccion">Monitoreo</div>
         <a class="enviro-enlace {{ request()->routeIs('mapa') ? 'activo' : '' }}" href="{{ route('mapa') }}" title="Mapa de Monitoreo" @if(request()->routeIs('mapa')) aria-current="page" @endif>
             <x-panel.icono nombre="world" /><span>Mapa de Monitoreo</span>
         </a>
-        <div class="enviro-seccion enviro-seccion-modulos">Explorar</div>
+        @can('datos.consultar')
+            <a class="enviro-enlace {{ request()->routeIs('sensores*') ? 'activo' : '' }}" href="{{ route('sensores') }}" title="Mediciones" @if(request()->routeIs('sensores*')) aria-current="page" @endif><x-panel.icono nombre="layout-dashboard" /><span>Mediciones</span></a>
+        @endcan
+        <div class="enviro-seccion enviro-seccion-modulos">Análisis del territorio</div>
         @foreach($modulos as $id => $item)
             <a class="enviro-enlace {{ request()->route('modulo') === $id ? 'activo' : '' }}" href="{{ route('modulos.mostrar', $id) }}" title="{{ $item['nombre'] }}" aria-label="Abrir {{ $item['nombre'] }}" @if(request()->route('modulo') === $id) aria-current="page" @endif>
                 <x-panel.icono :nombre="$item['icono']" /><span>{{ $item['nombre'] }}</span>
             </a>
         @endforeach
-        @can('datos.consultar')
-            <a class="enviro-enlace {{ request()->routeIs('sensores*') ? 'activo' : '' }}" href="{{ route('sensores') }}" title="Mediciones" @if(request()->routeIs('sensores*')) aria-current="page" @endif><x-panel.icono nombre="layout-dashboard" /><span>Mediciones</span></a>
-        @endcan
         <div class="enviro-seccion">Cuenta</div>
         <a class="enviro-enlace {{ request()->routeIs('cuenta*') ? 'activo' : '' }}" href="{{ route('cuenta') }}" title="Mi cuenta" @if(request()->routeIs('cuenta*')) aria-current="page" @endif><x-panel.icono nombre="map-pin" /><span>Mi cuenta</span></a>
         @can('usuarios.administrar')
             <a class="enviro-enlace {{ request()->routeIs('usuarios*') ? 'activo' : '' }}" href="{{ route('usuarios') }}" title="Usuarios" @if(request()->routeIs('usuarios*')) aria-current="page" @endif><x-panel.icono nombre="layout-dashboard" /><span>Usuarios</span></a>
         @endcan
     </nav>
-    <div class="enviro-territorio"><x-panel.icono nombre="map-pin" /><span>@if(request()->routeIs('sensores*'))Sudamérica<small>Puntos ambientales</small>@else Santa Cruz<small>Bolivia</small>@endif</span></div>
+    <div class="enviro-territorio"><x-panel.icono nombre="map-pin" /><span>@if(request()->routeIs('mapa', 'sensores*'))Sudamérica<small>Monitoreo ambiental</small>@else Santa Cruz<small>Bolivia</small>@endif</span></div>
 </aside>

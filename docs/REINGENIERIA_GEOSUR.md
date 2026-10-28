@@ -1,5 +1,7 @@
 # GeoSur: recuperación completa de EnviroSense
 
+**Aclaración del 28/10:** EnviroSense completo es el sistema principal y nuestros análisis se incorporan dentro de él. La migración sigue incompleta: conservar sus archivos no equivale a convertirlo. Se corrigió `/mapa`, que abría Focos de calor, y se documentaron las funciones originales que aún faltan en [ENVIROSENSE_COMO_BASE.md](ENVIROSENSE_COMO_BASE.md). Se comprobó la tecnología registrada en el Planner y confirmada por Josué: Laravel/Blade, API compartida y Flutter. Se adaptan las funciones originales a esa tecnología.
+
 Decisión de Josué del 27/10/2026, seguimiento #61. **GeoSur conserva todas las funciones de EnviroSense** y añade las funciones ambientales trabajadas por la pareja. Esto reemplaza la selección anterior de solo cinco funciones; no se continúa construyendo un producto independiente del referente.
 
 La tecnología sigue siendo Laravel/Blade, API común y Flutter. Tabler **1.7.1** es la plantilla web real, guardada con su licencia en `web/public/vendor/tabler/`; las adaptaciones viven en vistas, componentes y estilos propios. Flutter conserva Material 3. Se mantiene la referencia de origen sin modificar para comparar cada recorrido.

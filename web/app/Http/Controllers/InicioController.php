@@ -8,11 +8,6 @@ use Illuminate\Contracts\View\View;
 
 class InicioController extends Controller
 {
-    public function index(): View
-    {
-        return view('modulos.focos-calor.index', ['modulos' => $this->modulosDisponibles(), 'esInicio' => true]);
-    }
-
     public function modulo(string $modulo, CatalogoTerritorial $territorios, CatalogoMuestrasSequias $muestras): View
     {
         $modulos = $this->modulosDisponibles();
