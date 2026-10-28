@@ -1,0 +1,2126 @@
+{
+  "repositorioOriginal": "https://github.com/elingeyesdev/equipo11",
+  "commitOriginal": "ab4f93a48c2b8a082909feb3310db35296f6cbaa",
+  "fechaImportacion": "2026-10-20",
+  "archivoDescargadoSha256": "0154ceb18fca3e5c4e7a102701b8ace610ad6fe61cecaec26d5b85d181cad398",
+  "descripcion": "Copia de referencia con sustituciones declaradas, no copia idéntica ni aplicación activa de GeoCruz.",
+  "archivos": [
+    {
+      "ruta": ".gitignore",
+      "blobOriginalGit": "879584d52ba9c4690ebfba6a9e8a1abf37e24e3e",
+      "sha256Referencia": "a65b1345b536a4a7fabf447d896c0b2dd030b3a4dda1a3e6a7d586294fda314d",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/.dockerignore",
+      "blobOriginalGit": "228ce9c466755a59d71f7715615c51858776a670",
+      "sha256Referencia": "5d6e7efdc34044908e0091d3bceadb079f251a3fd2bebe3fe6549492e1aef475",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/.env.example",
+      "blobOriginalGit": "3c27d2665596b22c943d339b44f072ac49d8d90e",
+      "sha256Referencia": "2135387fdab06efa69532ef8094e6bd9d0b4676aee820e12a8ec74c533586354",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Dockerfile",
+      "blobOriginalGit": "7ad9558d6f7021378a15503a64e526bb19c53c5f",
+      "sha256Referencia": "eff86aa9318b489d7c82cf7d2affec580c0e757efe6ed0b93b3a6cf3b4a49e2f",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/app.js",
+      "blobOriginalGit": "5df9e1e4ceb94c0d0293013fd1cdcf4c2121ebc4",
+      "sha256Referencia": "73593a12344ee0158acc86fee18c6bb69ce3f63a916feda1a0df0c9f02f5e27a",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/config/db.js",
+      "blobOriginalGit": "ec267de16d9896f05794fef7431a4a8ad5ca4a58",
+      "sha256Referencia": "b3a58ce512ff64c3df3947a210ce8b4c51714fdfbb1794b0b51b27a8169c839c",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/config/env.js",
+      "blobOriginalGit": "22af5b5beac12682c9a4c714e0d38770c24e498d",
+      "sha256Referencia": "9ad356451c79af1bb96303d874dbca561ccfe3945d9a9c8c291ab6fc288bbf44",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/config/init.sql",
+      "blobOriginalGit": "562a71811413f04d28438cd17598c58ecdfebdc1",
+      "sha256Referencia": "848948d62b3bb0ac6e43a504c910abaa7ea176bb1a259b3c6d72437128ac77af",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/config/initDb.js",
+      "blobOriginalGit": "1764efc7c311c0883c328e956f57caccbd7629fa",
+      "sha256Referencia": "52a863ba97a195390e71587845fd740208df53cea20baa57c61506b6b26215d6",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/config/setup_notifications.js",
+      "blobOriginalGit": "92f7465331c2d6d6f511a0d4549f6801d5074cef",
+      "sha256Referencia": "0409b6000345f04b42f1e7ead8eeb108452b6a0420a3492e05fe0d83cc558f8c",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/config/whatsappClient.js",
+      "blobOriginalGit": "3549f09ff7d3a32855126f3ee68c5c048aaeeb31",
+      "sha256Referencia": "ee3e04a11111fa8089d24555c0d8f515a9e7faa68edc6bd3af93e5fb5611d259",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/constants/metricas.js",
+      "blobOriginalGit": "30105105d3cac5b7252a660ec317c30fe65ea98f",
+      "sha256Referencia": "ea0980288c92e056f09f5750e08eb579f68a5e765d495209bbeefcff33ddab21",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/middleware/cacheHeaders.js",
+      "blobOriginalGit": "997cd1a37b3837446549158a63b422e7c010c626",
+      "sha256Referencia": "0752cdd62909ee1edc0c3e3e534655695793bab41ec8e33ae2840bf844b4a06f",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/middleware/errorHandler.js",
+      "blobOriginalGit": "37c67bde703763d7cb0e85c9e2ec805472636039",
+      "sha256Referencia": "62c94c75a53f29d93c207d20e1ed35e1964a94605979c7be5756b9a44183d7fd",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/middleware/rateLimiter.js",
+      "blobOriginalGit": "2c39620533136936e4fcd6d6fcbe7a511586a471",
+      "sha256Referencia": "373aeed1ebe7e350e60029286b4e80921eae3eff6cac2081e4ae481b43daff60",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/middleware/validate.js",
+      "blobOriginalGit": "b2ab0b9467e57e1add9759506a0bd4cf64619387",
+      "sha256Referencia": "a580c41713a304b54e9babaee1b6aeade56ba768ed558bf223b35a9b09fd4ef7",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/alertas/alertas.routes.js",
+      "blobOriginalGit": "503e4e5b88dffadbf9e4b25929ade6c303096a68",
+      "sha256Referencia": "2200b4fec211ec26d8ec471088f1bcb73d6e2e3df417448713469c6a7be18075",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/alertas/alertas.schema.js",
+      "blobOriginalGit": "43f2027f74416ae017399f0f909b2de5ffadd968",
+      "sha256Referencia": "884c4b182041ef5e7b85bf7d7ab98471a36f6023fa6638f8c88d023bf46efb9f",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/alertas/alertas.service.js",
+      "blobOriginalGit": "af80e4d36c0b810bcae9b3379b80aa6abac30cfa",
+      "sha256Referencia": "5056ae4bb0b0ba41e99f58c2a20e2838b9ec266032190c96376cd1a2d94b8e1c",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/auth/auth.controller.js",
+      "blobOriginalGit": "e827b9da001a0ca5804dd0b89af025d30803cc41",
+      "sha256Referencia": "36529a99fb840b76100bf875e1288cf71872e04f7c02ff538343368bd955d3ee",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/auth/auth.middleware.js",
+      "blobOriginalGit": "0db7fe5cc72156d7a5df8b3b1a8c45069899365e",
+      "sha256Referencia": "9ff3fb44d965472c48483d2a7e140d261ff3237b3a313bdac0920706e2899f57",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/auth/auth.model.js",
+      "blobOriginalGit": "53c464afe2cd211dd52ef902cb406536c30a0871",
+      "sha256Referencia": "ca37961add98a4db457a51f087ca28d25b73179fab0c7350d32bd1135c18a382",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/auth/auth.routes.js",
+      "blobOriginalGit": "3e50ef2adf968a1daa7259575c4f891143bd6117",
+      "sha256Referencia": "49e15a6ec697e63ab93caa30a19bd99a0de9a684c26e9fef47b72c96636f6515",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/auth/auth.schema.js",
+      "blobOriginalGit": "5e27d675c5ba48a5c83075ecf5be740d5e6616e6",
+      "sha256Referencia": "64e655bde04527cd91074f76c873a9f54af370ec3f62feccf6a0597d25473a08",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/auth/auth.service.js",
+      "blobOriginalGit": "5b8975e8fd5e611d89e59c18cd770e6521007215",
+      "sha256Referencia": "d02ab38e03d26cbe96ace7104d0e8dd17d4657f7809dbc1607c79a7169a2db21",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/geografia/geografia.routes.js",
+      "blobOriginalGit": "1fd939ac471ddf12649414b474e4925787f81a1e",
+      "sha256Referencia": "482b8459f1ec7d17624a107c7c6999a3d7c24f4b0f2c94673f709ac0f98e56b6",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/geografia/geografia.service.js",
+      "blobOriginalGit": "0fd8d13e23e6c0cba80c6dc0ae099acad35f539e",
+      "sha256Referencia": "0c8e8dcf5e66bd8516340fdb59f95b3a9599ce9c44c2886ca98003797e1278d6",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/historial/historial.controller.js",
+      "blobOriginalGit": "aefe23bd335ee06472c47e0da2003ea9f8ba96b0",
+      "sha256Referencia": "9015c55c558a902f821d9dae23f8ec7bf0be95f835926de57cb3abeda9e1af0e",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/historial/historial.routes.js",
+      "blobOriginalGit": "2536ddf2100d33e375247cd58a4fbfda8f25b63f",
+      "sha256Referencia": "9b9e9ebdc9fbf392ede41d9b02056f9eaa2aa3cf545a1d2d4b9a41c093c5b5ce",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/historial/historial.schema.js",
+      "blobOriginalGit": "b959cdd44d831581d0ed7263578edc4f07f7d0e8",
+      "sha256Referencia": "3fcf462765c28218d4afbf33e5210f9f8fb56e4075947031aa6c9e33c4906744",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/historial/historial.service.js",
+      "blobOriginalGit": "b974a32bb11208eac31a713ac3dbbe97787f7340",
+      "sha256Referencia": "448c415c2dad59df7767387b88fcfe78453ab03ea4e49ac0970658bf4a5dce05",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/ia/ia.controller.js",
+      "blobOriginalGit": "82ac7da4ef17ac3e31278ced8b27ebe75624a421",
+      "sha256Referencia": "d0ce8aab2b229405f84b2c7bb21a48faf56a67efea77e0a36f53ce831b308cf0",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/ia/ia.routes.js",
+      "blobOriginalGit": "a448d2eb4f508b29a992ccc93f7664cf16dbf2be",
+      "sha256Referencia": "6149c5a877aa3b590a3f054bac9aef9c8984cf5c002cbc9a94bf4589812513a6",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/ia/ia.service.js",
+      "blobOriginalGit": "1e4d6d4c324f93c2a2f9894c4508717a63ce76a9",
+      "sha256Referencia": "3b13953ab5002569cbd4ee53e1a826e41a2a596e6d25ece12f870d5f37d874f6",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/notificaciones/notificaciones.controller.js",
+      "blobOriginalGit": "da5cc6bd046953188ea9ecd2886b70452032973b",
+      "sha256Referencia": "6149c34fc29a8aa5926bc8bb304d4fc940370f85724741207cc36e5aa19746d9",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/notificaciones/notificaciones.routes.js",
+      "blobOriginalGit": "be5934358da4c2168b08b7d0e06ea3d8d860d974",
+      "sha256Referencia": "d5cea9c9f962ddbefe2cf46968356eb13e296e8c0dd49de29e8084b843356420",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/notificaciones/notificaciones.service.js",
+      "blobOriginalGit": "a868babee7a8c3d5251515b0b7053d7430af3c75",
+      "sha256Referencia": "6d41c972a48d05c287206be1797519d3d4628007ea64d805b34fd3e697273eb5",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/notificaciones/telegram.listener.js",
+      "blobOriginalGit": "b4132b6f619c13e326b54edf8cd07937e04720ee",
+      "sha256Referencia": "1db3bd7ad4aa2e17bf14b09bbf1f00ae72b0bd0c22ed1272fa1cdc099826af65",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/notifications/notification.model.js",
+      "blobOriginalGit": "7ae0e92dd08b4acd8b660dc6b32db414094eb210",
+      "sha256Referencia": "852912625a7eaf53ac97dcaddce2cdf2cb050a02fa2b5b646184ec2504551225",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/notifications/notification.service.js",
+      "blobOriginalGit": "3b98eeec21fd28749d9056a920742072fa770a6d",
+      "sha256Referencia": "08c887f349beeeb984a389659c9ce6c23abe8357eb219ff99e294a3da61571a5",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/pipeline/pipeline.controller.js",
+      "blobOriginalGit": "91273669323f5332d93dec8f00acac56d7070b81",
+      "sha256Referencia": "b3c5526e3b36dec6d3d46f8e0d95dd3d566cebe32a12d4f9324528c0b87dfa7d",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/plantillas/plantillas.controller.js",
+      "blobOriginalGit": "cc922dea65b9496da8628c375115403ede7cedab",
+      "sha256Referencia": "d20a49a9c7ad2148dc784e39d6d30e5f19ef4a06325d73cf0cee77d76f58a925",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/plantillas/plantillas.routes.js",
+      "blobOriginalGit": "2fd55b92af932d4408b70c8e900462f0ed039dfe",
+      "sha256Referencia": "69d26db2a68ee8eeffa2ffbd2bc38e1db1a0c9ccde6a288243586ac7d2a95638",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/plantillas/plantillas.schema.js",
+      "blobOriginalGit": "094d84773eaba2c00d425f79307e6c731bbe90cf",
+      "sha256Referencia": "6510ec86590d36a76ae564526ff136b854a95faed4cdf89e5e912ff5e108989e",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/radar/radar.routes.js",
+      "blobOriginalGit": "ad7310b75a235bbe2ce7c049d13d12b985174529",
+      "sha256Referencia": "3c1523ef9ceb6d0dfd3f76eae7afb9766b91c4cd5064d5ba8f63b549be3f6432",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/radar/radar.service.js",
+      "blobOriginalGit": "b5034375dffe30e2ff07017ad77aec6ce9720f97",
+      "sha256Referencia": "0d43279e74b0f22a08d34b5d0b619e29dec99728e7364edc2ec47289f7b954fd",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/reportes/meteoro.service.js",
+      "blobOriginalGit": "a69c91b46acb345f413855a60627dc7a09178509",
+      "sha256Referencia": "491f676ee8af156462c97be6414e0768ba45080dad947ccdec3fd43c8f402b50",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/reportes/meteoro.tools.js",
+      "blobOriginalGit": "406d835333202c8b38b953c3917e0f108f22aab8",
+      "sha256Referencia": "f188ec2d52f30ecb0fd1e2090b5abb143b17caca13ce2915166b20660ea17fe5",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/reportes/reportes.ai.js",
+      "blobOriginalGit": "43151ef000632b96af3b8f79f583f3c38433f6cb",
+      "sha256Referencia": "df872e2197c3bedbb3551989b4d1724ac090cbdbdc446c240d215949485d0b66",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/reportes/reportes.controller.js",
+      "blobOriginalGit": "a66b06b01743564b6d0ca9f7ab2e7283348b5bc4",
+      "sha256Referencia": "f8f7d75d3c5e2a0a58cc7147ab49bc1daff59cb84fd0b309f649ac5b86029327",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/reportes/reportes.routes.js",
+      "blobOriginalGit": "f9be0a0e29dcdd5a04e4ce800d54acaecfd878b3",
+      "sha256Referencia": "359bcd6672cfdc31603d2e0adbf08ac13819d82408f25f6419f0e418f7639463",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/reportes/reportes.schema.js",
+      "blobOriginalGit": "cebe003a429f710842fd3193e90e58f293394bcf",
+      "sha256Referencia": "212004d327e5de3ff883b9128044f84fca4f6f1f2418203c90f3c7131d474af4",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/sensores/mqtt.service.js",
+      "blobOriginalGit": "7ee4c9e6b8e63e0c3e727bf371a8bdc2f6f5dc4f",
+      "sha256Referencia": "d0ed665e3a106f3739470a1823b44634d39b4433c106a8d9ccce8cb960bc0d83",
+      "cambios": [
+        "username: literal original sustituido por process.env.MQTT_USERNAME",
+        "password: literal original sustituido por process.env.MQTT_PASSWORD"
+      ]
+    },
+    {
+      "ruta": "Backend/Src/modules/sensores/sensores.routes.js",
+      "blobOriginalGit": "4c19dd5ea1a0303cb17dcda7008a27116479b0b3",
+      "sha256Referencia": "f827279c95a269726a905be024872f6ffa6e92d58994bbae85cb18c6de4f96ce",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/sensores/sensores.service.js",
+      "blobOriginalGit": "48597570847abcecca7b6e21f29c80b3a141c34b",
+      "sha256Referencia": "f005f3ec232fbd7398d9276d788ff87de5638346dba4700129202f63a1b6df78",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/simulacion-zona/escenarios.data.js",
+      "blobOriginalGit": "264d3056ef6864a2607dae6fdec76aa38eea50aa",
+      "sha256Referencia": "5bcce4ba92da00f6e8aea5adf3be3aba9d3a89bb80bd9de712f7b267c58efaf2",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/simulacion-zona/simulacion-zona.service.js",
+      "blobOriginalGit": "265f1df5bcf9b71e2a4dabdfd8e6229df53c2e58",
+      "sha256Referencia": "0236375053562e273fb69a24e5a7a36e6dfc700724bd4c6be4fb8306744b7ba8",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/simulacion-zona/simulacion-zona.socket.js",
+      "blobOriginalGit": "2d96ab64cff4625c32e4f149f0e2776770313074",
+      "sha256Referencia": "4139b94a596b461dfa393ef47b677cf27dd8b7415a1e8a668bbfc33e322f1250",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/simulacion/departamentos.data.js",
+      "blobOriginalGit": "aa646a6490ca09f616703615a87b6be56d22f4d3",
+      "sha256Referencia": "5743faa8d3b18e092243abcf73c088441d8560dfc8e18987ede9821ec3df5abb",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/simulacion/localidades.data.js",
+      "blobOriginalGit": "f08a38ab83a6ce7faaa0cb048b4b189829d9d4e5",
+      "sha256Referencia": "20237ca2fd5c9fd665e3a6038c5e999cf556a42464b65cb37005e7a23a5ca011",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/simulacion/simulacion.controller.js",
+      "blobOriginalGit": "5ca5c9433436a5e6d729571c9de416553556e4ef",
+      "sha256Referencia": "eccd3d2d441039768e9a914e4506e2dd6cb2372ef2b8457c8cfab7d084800a47",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/simulacion/simulacion.routes.js",
+      "blobOriginalGit": "4b7e2e96b5aa1a98b128544e154d50d84e40eefa",
+      "sha256Referencia": "7b894061b7e087b0172d9ad005fdc0bc3c3ca4191833f8c56b2de0c6cd6ec77e",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/simulacion/simulacion.schema.js",
+      "blobOriginalGit": "85f8ee2f615211239312561f79bf899751a25ab0",
+      "sha256Referencia": "d1bfe1dbc11454fa9aaad479066579dc7de2ddfc36b398ab7efc384a7f97acf8",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/simulacion/simulacion.service.js",
+      "blobOriginalGit": "80da4584a1f0d3ac02d73b7ce5e4ff43890ab337",
+      "sha256Referencia": "1b37eac41755f4aa6a85582227e37f0d71853990f8a9da6d849f75f76e9ce7db",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/simulacion/simulacion.socket.js",
+      "blobOriginalGit": "bd6a10a7c04048d8c97fc319d67c9db1cb38bd64",
+      "sha256Referencia": "b997c7bf0c71bfd116f50ad7a97ec7fc5c8e1fd6a34ee4520cb76f7f7097a1f2",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/umbrales/umbrales.routes.js",
+      "blobOriginalGit": "12d02e743c46fdf6167ccdf21ae8a68112945b39",
+      "sha256Referencia": "bdd55db5f96c43bcb537aba05074c05ddd553f2b3249073f4feb85c10aa24043",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/usuarios/usuarios.controller.js",
+      "blobOriginalGit": "1dcef4a55dc856fe16b65efbec977dd09703e314",
+      "sha256Referencia": "6a0a5073e4e782a212eea1f6edad83dd0eb02ea32383f6c69869778cdf80c14c",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/usuarios/usuarios.routes.js",
+      "blobOriginalGit": "48bfd6f11f83b16d4f23a91bb32e03e0a39f6ea0",
+      "sha256Referencia": "19a26a984b5ddbf1c3d10c304eced53a47f3d2219c57fae56df2b2606e1ede44",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/modules/usuarios/usuarios.schema.js",
+      "blobOriginalGit": "ee68756bed1e2e1d43eefb789ba5936c73729ce5",
+      "sha256Referencia": "2ba55d5d3c28163bf6bbbff08da9de751a45d5a60c3a517c925a445ab6ed772c",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/scripts/generate_historial.js",
+      "blobOriginalGit": "f67e87cf869f8cbf84489a2fba000a10640f8643",
+      "sha256Referencia": "d088eb2d1f1d4fdd9b96c4756a25f274fd53b21a563f774d332d0d6686d2f610",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/utils/aqiMath.js",
+      "blobOriginalGit": "a80b30fe581547d6b910888567e2a0c2d5762aef",
+      "sha256Referencia": "7f5cd22fae60d471ecde2a6e3d0a222f586557a2dfef739e5cb099ad2136c2d7",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/utils/dbMapping.js",
+      "blobOriginalGit": "aeb875607b85a705c676ce2e909353fc520ad5a1",
+      "sha256Referencia": "6a6c09cda87d2e180dafb03296a600153b26232416eebb940f0291e6dcf3d496",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/utils/emailTemplates.js",
+      "blobOriginalGit": "02219fe57bdebb24af496e7114d8cad0e58064d7",
+      "sha256Referencia": "d6d20394a368c082e32770f1484aec9be89a484db7a6e3601cb3d099eb45bb1d",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/utils/estimadores.js",
+      "blobOriginalGit": "8624d8f9f51a65c87942fdfa15972a3c73708393",
+      "sha256Referencia": "54c28c53792c4759cbb31e66ae300e3372aaa657b558acce1ce439752e7d7813",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/utils/logger.js",
+      "blobOriginalGit": "fe3f16d56a3af847e86b686d014dfdbfb143bf35",
+      "sha256Referencia": "a60d412bb6904cfa405acd15c68f199fb942bd62e6e6e734fef826708919c666",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/utils/mailer.js",
+      "blobOriginalGit": "2726f57187ace3620dbd7a9c660b1701754ac769",
+      "sha256Referencia": "7895ffe3887dfea1f90fd59d37f9ec94692a16e535cc5ac0f3d2dc5b1714d308",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/utils/math.js",
+      "blobOriginalGit": "8d86895f9020daa1e1104b367c1c26b08e0d3b44",
+      "sha256Referencia": "3bb933d68a4c95146a3541619cc93cc3214b59c7cc63b5f7b660c86f3198a8e5",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/utils/response.js",
+      "blobOriginalGit": "6fe3c6dc573db05a9b423a946c955135caab6620",
+      "sha256Referencia": "3a3db99213225c488f344cd6dfd343f2f4da6d814cf54aef7308a09fc43fa064",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/utils/telegram.js",
+      "blobOriginalGit": "a771794c019949fe239bd1e5f1567f6271c43ddd",
+      "sha256Referencia": "ab3141de80f6540d0f7a7563b2a1021a8227790fa6f3830a8fe3ffc034256e14",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/Src/utils/whatsapp.js",
+      "blobOriginalGit": "f0d2bcf52a8ff48b7d203042c6eaef556a8ab046",
+      "sha256Referencia": "07248cfaa45cae5986dee2796c8b7d366880cfb6b1e5cd9a23f03fc41ca4e377",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/index.js",
+      "blobOriginalGit": "0cf1622f5b8ea99dfb2dd32b5782321455c6d987",
+      "sha256Referencia": "91116964911acb598d2b4b9d92d7f2095456623bf4579a621f666edde3ec417e",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/package.json",
+      "blobOriginalGit": "2fe747f22ee700e1cdfdb185ead278a355a9e60f",
+      "sha256Referencia": "d540f9b43ccac468ed838aff3ef9f26d287d70277cc2388b1fa003f9f2e9d126",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/pnpm-lock.yaml",
+      "blobOriginalGit": "f7b0df822a2844c6f39c47feae6322490f03afe6",
+      "sha256Referencia": "9fbe71061650d7d376f0715a6bfb42bb87c040d7c912d6dd1940c5e1ed40a8c4",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/pnpm-workspace.yaml",
+      "blobOriginalGit": "dc59d491037fd6053314b794ac6004ffb59cc5b3",
+      "sha256Referencia": "8c14b83a66087a8e4fb5140ce2efdfa46f7c657a8e308283cf104a04154d4811",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/services/data_pipeline/fetch_copernicus.py",
+      "blobOriginalGit": "d28abf4788120cea3c21598785390177b91c68a7",
+      "sha256Referencia": "8e716819a46c52978dea13ab6376319462011c379c40038e7fec47ed28a80b44",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/services/data_pipeline/fetch_noaa_gfs.py",
+      "blobOriginalGit": "59ab72d54960ab9791b509f8f053408535bbe8fc",
+      "sha256Referencia": "f8240f648800ab3a0c259d336358aff86677da8340de79830bf9addb69e1fdb2",
+      "cambios": []
+    },
+    {
+      "ruta": "Backend/services/data_pipeline/generate_raster.py",
+      "blobOriginalGit": "1877cc05a3567462d7e47f0410de000670c2fb94",
+      "sha256Referencia": "8230b95a4854690285195e88a140f52cf92ca528c45ddb0bf2c5708a7abb5633",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/Dockerfile",
+      "blobOriginalGit": "c7734f79ac037a5fcd25a82775375c5d2624ae46",
+      "sha256Referencia": "bb36386e9eaf4ada46131af721d04d3d5e087629e80b7ef8fb2a11677c89d1dd",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/docker-compose.yml",
+      "blobOriginalGit": "39ced6598a69995054f75653e0f48f4e0c6dc5c5",
+      "sha256Referencia": "f8b779a7190c2314f55a67dc74218bde9627fa288e06b5ef9f38bdf87e7cc2fa",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/etl_copernicus_rayos.py",
+      "blobOriginalGit": "6b053de5052f920dab7397e545d6bb0c83c7a442",
+      "sha256Referencia": "eb609fe7e382610ec6e42d3086331ab35e7748f5cda86b815d6ce3206d961f87",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/etl_historico_evaporacion.py",
+      "blobOriginalGit": "d0a5df1fd7ac2d3b0857c1e6d7a7197c82c013cb",
+      "sha256Referencia": "078f8d71c86066cd81850edc735a6f6d612068dd5981a6e21562e8df9a77590e",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/etl_historico_humedad.py",
+      "blobOriginalGit": "3384f1be062cdf2af5e33803d8ab1505a81a61f9",
+      "sha256Referencia": "7f7cfcbaab39b5002f765cd46d7d6ac439f98ff5d7759ea54fbb1684219f7d35",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/etl_historico_isobaras.py",
+      "blobOriginalGit": "e442fa9646eb159c4cdf632c629a2f4319e23e2a",
+      "sha256Referencia": "7b499423f4a6a70d619f03bb9e08e8e8faa0d23f231b168fc8e04d0d82036fcc",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/etl_historico_lluvia.py",
+      "blobOriginalGit": "3be0998986441f8192ba5f94ac40047d5545a05a",
+      "sha256Referencia": "c0b760c32a61d6383d032153b18efb605e328edf69a2ce20715a6dcb4efc36b5",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/etl_historico_nieve.py",
+      "blobOriginalGit": "ea27636042485a931235e2cdcaf968a52f02f534",
+      "sha256Referencia": "660013804f219f98954d8fc7536fe973e83ff125313ce06443fdf986b8c21e9c",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/etl_historico_temperatura.py",
+      "blobOriginalGit": "8d38ae97e62fab5649d2c95f7d55515ec547ab05",
+      "sha256Referencia": "c1299b7ca6a7dc27693cfafcb4aa4f5596e50484fe5fa00bff4be9bdca32b53f",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/etl_historico_uv.py",
+      "blobOriginalGit": "1946b2b3e247344216f962a89e22ec013f158451",
+      "sha256Referencia": "e97c92f3dce994bfeb239c9258ac83829351335343a86640fba8a94d765ef219",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/etl_historico_viento.py",
+      "blobOriginalGit": "4465c92c060ed36a2ff55beaf36ca4d6ccbed7c8",
+      "sha256Referencia": "240f13ea7629dd84ee73958ffd7344ba3265be7765a835d06bbb8cbf2cca4f2c",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/etl_historico_visibilidad.py",
+      "blobOriginalGit": "dae50fb073ad7e7041da682b1c062a913a53bbf6",
+      "sha256Referencia": "04608a3d9eeae64ddf193eded91fe4e5221633fd28785a0e2c1218c3f6598ede",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/etl_huracanes.py",
+      "blobOriginalGit": "fc91c28056c4764bb6e7df78bfe816c29c02f1ed",
+      "sha256Referencia": "ac2e2779f1b270bc84cce223dd6f3b2ae5bb1580522bf9d8c774ff3b7ef850b4",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/etl_noaa_operacional.py",
+      "blobOriginalGit": "f4df2fe4f2db99765426117aec586fe7b700d0bf",
+      "sha256Referencia": "4db4acfb8beb3c666aa8fc881fd1ab6460d30fe9662fbf68b8e654b38320f5f2",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/etl_noaa_rayos_full.py",
+      "blobOriginalGit": "e40c53e833927068555a69aee17510e291d58a29",
+      "sha256Referencia": "84dc10c5e349cb3b943674cac43293688103de16670b046e7a1c0e3e535d164f",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/temp_rayos.grib2.5b7b6.idx",
+      "blobOriginalGit": "1908b4f4125ffa654d94945a82f0eff97b8b7b1f",
+      "sha256Referencia": "731093bc39123a796089416e8a1f1b3ea9ac46debe08fad4c0d463a989ccc594",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/temp_vis.grib2.5b7b6.idx",
+      "blobOriginalGit": "383f88bb1934436958fdaed9ef0268d183aa7b3d",
+      "sha256Referencia": "d985126451669bfa5486c86f29d9884afd97773a452eba809e39f8e760cde855",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/temp_vis_actualizador.grib2.5b7b6.idx",
+      "blobOriginalGit": "3612d2efe417cdbcf56f34c42bf0f71f4e66b9f9",
+      "sha256Referencia": "f640be8258673e98d4cbc5436c0447cf251dbf31e8407c769de27a52f6c77c93",
+      "cambios": []
+    },
+    {
+      "ruta": "ETL/temp_vis_full.grib2.5b7b6.idx",
+      "blobOriginalGit": "78e1182256478b89f39dbe6fd31a148582b2deb1",
+      "sha256Referencia": "0a3d92ac4bc7c6ab5975205b3d1ea09e516f37697c17ffaf5891a94970921949",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/.dockerignore",
+      "blobOriginalGit": "aa16f001e56106310aeeca3baab48e201bd67e8a",
+      "sha256Referencia": "acf1f406f384b38f425fde7d31bfacec29632d55e795fa73fea3f5195d590876",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/.gitignore",
+      "blobOriginalGit": "a547bf36d8d11a4f89c59c144f24795749086dd1",
+      "sha256Referencia": "fe718e7babb14f3cbad2d97f08889b9ce5215ed3fe0e43b2b8cfbfb3b9b844e8",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/.npmrc",
+      "blobOriginalGit": "9d1cbe1ead3c9fa61ca2c83804578dda53eefed6",
+      "sha256Referencia": "4034aa5232596ad95f74ea50265a2bcfbd65e602660bf6b70d5b9384c5286097",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/Dockerfile",
+      "blobOriginalGit": "8728a3df73b3b7522d8d412195de7272581a5a4c",
+      "sha256Referencia": "4e52da0275317c57b182db4ce6ae16bf88637f12ef948d8218a5edee6feed3e8",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/Dockerfile.prod",
+      "blobOriginalGit": "c01e4d32f71a880dc3e01d69dc2d3933734528d4",
+      "sha256Referencia": "df5753f12c0d81dba6ac94363dcc38d02ae8e6994c8324246a919300e10a928c",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/README.md",
+      "blobOriginalGit": "a36934d874c7fbc51aecd1c66dffc106f60693a9",
+      "sha256Referencia": "a460b4dc7e6392e76aa54d844c9261b8db0adb7f967ba8300526456f1dcf5fb4",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/eslint.config.js",
+      "blobOriginalGit": "4fa125da29e01fa85529cfa06a83a7c0ce240d55",
+      "sha256Referencia": "da0cbf3213f2994741024e2aa5165d017e0345f389dcd2f8a0db97fee7289d1b",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/index.html",
+      "blobOriginalGit": "93dbdeb9b2e8101c853ab8c4cdf94377a5ebb480",
+      "sha256Referencia": "57a4e22cbea2724ab14c4529313b3ea655918e95bcf569b0267e8531b04898d9",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/package.json",
+      "blobOriginalGit": "2c60ac19a64a200abb8262e92ac94f4949ce56cf",
+      "sha256Referencia": "778c40ee00b41a025a1fe2bc07d3a5498cc85e9d735ae91863821c06d1455d12",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/pnpm-lock.yaml",
+      "blobOriginalGit": "b509c7b9e59671b82cac21646e5ac99e6940fde0",
+      "sha256Referencia": "557bd2ca6acfbde9f02194d07ba9209dd7525c7e436897cca6e116e4ba279d3d",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/pnpm-workspace.yaml",
+      "blobOriginalGit": "067ed78be76dfab30edeac3ed2d060cd5e8bc1c0",
+      "sha256Referencia": "071400e76cb1503efacffee901b5787f3bc406c6d0b2a8cdff9960a3ee35ce53",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/postcss.config.js",
+      "blobOriginalGit": "2e7af2b7f1a6f391da1631d93968a9d487ba977d",
+      "sha256Referencia": "190c877db466995bf1482f4a16abd06e04a89ede3119341e2a86ff96e1737b27",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/public/MeteoAdvance.png",
+      "blobOriginalGit": "cbbbe3867b7df146eb88e636003ca19fcef00ce8",
+      "sha256Referencia": "e2680269d2f64db6cd05420ad3ef3f79baa24d440c4bbaaa33bc86935b182868",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/public/favicon.svg",
+      "blobOriginalGit": "6893eb13237060adc0c968a690149a49faa2d7d3",
+      "sha256Referencia": "61bc9a161de58248288e6905425d7180f0624c2865007b97d763fdac12043a66",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/public/firebase-messaging-sw.js",
+      "blobOriginalGit": "6c589c2361d78112dab9ceb6e14460cef75845b4",
+      "sha256Referencia": "691b74f55c76fa6ec50a4404ea3d949bcce57d25391135e31188f014d64e0bd6",
+      "cambios": [
+        "apiKey: valor original retirado; cadena vacía en esta referencia no operativa"
+      ]
+    },
+    {
+      "ruta": "Frontend/public/hero-meteo.png",
+      "blobOriginalGit": "2b7a92fbf84cd50c2e2962f61a6f42f172827c9f",
+      "sha256Referencia": "5331ea4d227fb4212f6a576138747ce927dfda491d5cbdbbc9bc41c9b521975a",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/public/icons.svg",
+      "blobOriginalGit": "e9522193d9f796a9748e9ad8c952a5df73c87db9",
+      "sha256Referencia": "b45fa506195cfcdef406ba9f0c77b36ddc1a7c224040926ec70abc2fdea7b93a",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/public/icons/icon-192.png",
+      "blobOriginalGit": "fa2041975cf5f9c540df330f4e4f1112ceabae0b",
+      "sha256Referencia": "88109f4955c10660133a4d8fe7cb129274275db7f2383051d84c9afc07939a46",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/public/icons/icon-512.png",
+      "blobOriginalGit": "fa2041975cf5f9c540df330f4e4f1112ceabae0b",
+      "sha256Referencia": "88109f4955c10660133a4d8fe7cb129274275db7f2383051d84c9afc07939a46",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/App.css",
+      "blobOriginalGit": "cf040dce1d218d79398a7934a250ba4eaec88f6c",
+      "sha256Referencia": "b521c4eefb611255cde50eb10329eceff8b1a2bfaa4dc9ab4e5442d7b6ec4f15",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/App.jsx",
+      "blobOriginalGit": "e39c744773fc589bc8e643a6a249efad9872b288",
+      "sha256Referencia": "5d6a5faa5d3b380765eb734f25ca9058afd26d28cb4d1431400f1f5a473b46e3",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/assets/AQI.png",
+      "blobOriginalGit": "f265fd60d53040d08df63e4586c54a0183a3b264",
+      "sha256Referencia": "c4c04e23931f65ffbc73ba6f395ae90a215274e8be80bb7cc0849dd78a0dc771",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/assets/CalidadAire.png",
+      "blobOriginalGit": "fa54cc9ecd34c5add5a682fdb08b6db5cd267361",
+      "sha256Referencia": "0d1a44ab740e31f4a529252b806b7d019d224649c3c2f9e6bebdca1099396dec",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/assets/Temperatura.png",
+      "blobOriginalGit": "856ccf88516bdc613d94af48302c761c3254acc0",
+      "sha256Referencia": "1ebdb03cf3e9eac1e52ff4bec9ab628bd15d595f91445d29d404173b0991ef3b",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/assets/hero.png",
+      "blobOriginalGit": "cc51a3d20ad4bc961b596a6adfd686685cd84bb0",
+      "sha256Referencia": "72a860570eddf1dd9988f26c7106c67be286bc9f2fd3303c465ce87edb1ae6cd",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/assets/humedad.png",
+      "blobOriginalGit": "7d742810bbe61961144d653e8ed4aaf3ad21af70",
+      "sha256Referencia": "de7fecf5ffab6e4615cbaf9e723c56c222b84e9ad739795be1dcbd22fb2b0d89",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/assets/mapa_login.png",
+      "blobOriginalGit": "e2a2bc0d4bb4640fcc54cce0dd1fdbcaa57dab15",
+      "sha256Referencia": "240da30f0c6ef0f7c366786bd335dd830975d1a948d9ea0981f73991ef725011",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/assets/meteoro.png",
+      "blobOriginalGit": "25308d63dfb5fa68ff0f8105d853e0684d756936",
+      "sha256Referencia": "a3623ac3423171d5e15341b241e3bd572c2c25dd3d8fa6e5849cbd5656562c41",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/assets/react.svg",
+      "blobOriginalGit": "6c87de9bb3358469122cc991d5cf578927246184",
+      "sha256Referencia": "35ef61ed53b323ae94a16a8ec659b3d0af3880698791133f23b084085ab1c2e5",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/assets/ruido.png",
+      "blobOriginalGit": "f87ff9f7dc50898387c58dd27d5c4da8b9f63a63",
+      "sha256Referencia": "b5a951b7c13d96a77941dfcbffbd79a734b3e0c1d337fc1fd0ba732c41bf6f1f",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/assets/vite.svg",
+      "blobOriginalGit": "5101b674df391399da71c767aa5c976426c9dc7a",
+      "sha256Referencia": "5be21acd42eb7b896e517f4e0f0f11eb5c5d9e54fbbcebe9453f033008fcca6f",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/AlertaNotificacion/AlertaNotificacion.css",
+      "blobOriginalGit": "613e73f9c76caba3dbec88240f3cb367c87e7d3e",
+      "sha256Referencia": "26697f80e2cb4979e48a630978d0edfae7ffcb08b51130edc6324459e34541f3",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/AlertaNotificacion/AlertaNotificacion.jsx",
+      "blobOriginalGit": "72ca692eb01b3724bc91293564321cc0cf5c67af",
+      "sha256Referencia": "bd8da69b0b12140ec47f8887d6792a3e0722734d93a4916228a621b590aa6be6",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/Draggable/Draggable.jsx",
+      "blobOriginalGit": "ca725688247ac5911fff1fb4ac2576e45051e30d",
+      "sha256Referencia": "69122ca3159bb3dd3f942f401a957cdce9800bac0956eed0da43f3617d43e1a7",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/ErrorBoundary/ErrorBoundary.css",
+      "blobOriginalGit": "555c8410843c74e22ee406524a0dd2c68c3dba5d",
+      "sha256Referencia": "d97a6215fb2941f7851c568c7bc25cad66eef84d78e401f79f741d356e69e54c",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/ErrorBoundary/ErrorBoundary.jsx",
+      "blobOriginalGit": "5ca454881cc7e48781c54760b569c468eeb215ca",
+      "sha256Referencia": "aa15ee96ad8d01fc34493183d62f927f4b9a046f1dd1f17934605ecc06fe7be3",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/FronterasPanel/FronterasPanel.css",
+      "blobOriginalGit": "e806b0a7f53bbeeff3de4bd95874f72998104535",
+      "sha256Referencia": "5378e74fc171ea2f7abaa295c41f7e26d97cc9b20c18142fc35925f4ebf19171",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/FronterasPanel/FronterasPanel.jsx",
+      "blobOriginalGit": "568d0b3798d466d4e17617444b3dab9b026617e0",
+      "sha256Referencia": "fff4b7997522433387a06abbb80327a4a334b74dd7c87a0f39a8f5395701c5f7",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/GridRadarLayer/GridRadarLayer.jsx",
+      "blobOriginalGit": "b7f30be4d6f268437a12a58d5dd0deb7f88daec0",
+      "sha256Referencia": "d45e48b2012ba9b5d369c994e6de1d40dd0ebade1e0aa0574f76c2a389873504",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/Layout/Layout.css",
+      "blobOriginalGit": "0f853006df7869bec312094e9d8606914c2d2947",
+      "sha256Referencia": "0dc1bc8a0b01d639cbabf3b54f02c2259f4b830ce3ee9e6aafa13e01bc4edc30",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/Layout/Layout.jsx",
+      "blobOriginalGit": "3a4eff4fee481e021431739e8f9c565a9563f885",
+      "sha256Referencia": "5133360c554caf993d0369e746cca8f22bac47020715c07e8756cb93874f59c5",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/LoadingScreen/LoadingScreen.css",
+      "blobOriginalGit": "25499ba3229e33a5b0d4b6aac5eba0972d28d6ef",
+      "sha256Referencia": "8e864a060d659fa3c2e59ed4c19591903b5d254480d3c67facdbe2273d3c6a34",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/LoadingScreen/LoadingScreen.jsx",
+      "blobOriginalGit": "3118203706d2139d132ef4e83023c5c7b0cf732c",
+      "sha256Referencia": "03b95c39011d3ca7a683dcaf9c39a974436f8e8964d73f763db8e724d90d318b",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/CityHistoryPanel.css",
+      "blobOriginalGit": "335c757bf5d20a1d2f8e36d7ea35c28575fed33d",
+      "sha256Referencia": "65c90b333b4174460cee29ed4c91036cb3dfeb9ba9ba6886829bf526066b43cc",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/CityHistoryPanel.jsx",
+      "blobOriginalGit": "0599c139cc90b291878d0b162d81b0961c74a43b",
+      "sha256Referencia": "464911e282087c99de7a36b3ac6f0161ab164cb959148a89e0ab7fce6ba6632f",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/CompareConfigMenu.css",
+      "blobOriginalGit": "1434a2a8989d5ba3794f77754941a0a35a3473f4",
+      "sha256Referencia": "e2e3176833769fd7f59b5763ea1ca70e1ba4fcd5c184dec59b299866909bdc9a",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/CompareConfigMenu.jsx",
+      "blobOriginalGit": "0672a3ceaba179eb98d45c49a4ec553939ba3c39",
+      "sha256Referencia": "f80187ef0ec39efb3231ff938a2ae7b99a45f1860c6722221b39966b143f2c21",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/ComparePanel.css",
+      "blobOriginalGit": "f8ee5d178cd4958028f1bb9f50f1cc2099c2d179",
+      "sha256Referencia": "c381a9fc919741e7e75cedb7047abc63997bf45a5a566202fb43ef860a1be442",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/ComparePanel.jsx",
+      "blobOriginalGit": "92e7d44beea943424e198353f39ad7e764e6a3e2",
+      "sha256Referencia": "cec0a23284b3e08bfe4aa27b833a0e3ddc73daba5b21fee4682a0c3024f09d94",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/ControlPanel.jsx",
+      "blobOriginalGit": "586a217b65da937edb05b11fb28115c80e138882",
+      "sha256Referencia": "1c37345e6ddb2688b56cda16713fecdaa2d07a6cb577ef0160cd84c8d401b70b",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/GeocoderSearch.css",
+      "blobOriginalGit": "c166315a254b2e17ccb9ee5c9abb89f0e31c1060",
+      "sha256Referencia": "b8244825285647c46d8f57e0583e5cc12effb9ba981b615fd069a16e7d8df0f3",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/GeocoderSearch.jsx",
+      "blobOriginalGit": "01a56926f3666dc67e6424e9793d67e227c399bf",
+      "sha256Referencia": "89e5d2611503fa421dbd38726c3fbdab29c840b6cc15a05c6dd39d000c716aa2",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/HistoricalWindParticles.jsx",
+      "blobOriginalGit": "9d0e95629bdbf7fa462733c674a01e0bdb7a8b55",
+      "sha256Referencia": "83bf4a35b2c4d67c93bdc75537faa6f40961f30a7570dd907d0484d49528022a",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/MapLayers.jsx",
+      "blobOriginalGit": "94814870ebf649e6122760b9b3e4cf4e23b1e57f",
+      "sha256Referencia": "179dcfb3611ecece3820c6387fb71f3a47e845782ff09d728055f135f813a177",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/MapLegend.css",
+      "blobOriginalGit": "af45c3ecdeff522c97548089810d71a40d76aa06",
+      "sha256Referencia": "3dab85f38f4e7fbad0c8ced51d65cbff1a90d39a174bbf7db445e301f532418f",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/MapLegend.jsx",
+      "blobOriginalGit": "16fca1af336285ad5a04597db8d2f8f53e042276",
+      "sha256Referencia": "22aed961e5ef6b36bc679575fa710acb18d309b6b1869ecc3bb835ea6d7ee3f0",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/SimulationStatus.jsx",
+      "blobOriginalGit": "9a8c34ba8d92f8df27d037a07396107f9c60b057",
+      "sha256Referencia": "cbdf5089ae0dc2f8d9c60d91d2d5f13c04c1cc938d9cca22539abb42306bfd64",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MapaMonitoreo/WeatherOverlay.jsx",
+      "blobOriginalGit": "6feaf002aec5392cf826ef7e16589cbe8e5f1e85",
+      "sha256Referencia": "090041608eb7cf01762c9fe6441b8006fa0827fbeca25182ccdaf4d3ca777f4d",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MeteoroAssistant/MeteoroAssistant.css",
+      "blobOriginalGit": "4794915e638c3dc8fbfc02f95b56ce4715aca5b9",
+      "sha256Referencia": "16516255e8edcb0f66a081983ff900717d8726ec6f2211592f4324308ce72047",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MeteoroAssistant/MeteoroAssistant.jsx",
+      "blobOriginalGit": "da51451016ac261fb519eac09320bc2058a0f398",
+      "sha256Referencia": "2acd1b78dbe4f5d52e48cca7c477bff1275ebd210544e44384e830bef249add1",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MobileCards/LoadingSkeleton.jsx",
+      "blobOriginalGit": "940666e6c6a85515c7c02ae28130ba69d3d00e21",
+      "sha256Referencia": "970fea0c8d1d035325171e8fe1801f5acbb945c5d23502e4c9d29bbb90e8a428",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MobileCards/LocationError.jsx",
+      "blobOriginalGit": "f2ae7ddc69284d31ad0c500679a76bf7deb43253",
+      "sha256Referencia": "c9904dedffbecdde2808b24babd7312fb45a9ddeb2a0468a19a1dfa8b906c5e1",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MobileCards/LocationHeader.jsx",
+      "blobOriginalGit": "ed77f3fe9fed9a5b0eb3de0ccf1417607a5992b4",
+      "sha256Referencia": "78c29b8122b1a74a959f423afcd03de1c8b4f71c3fb046d58b7205cbd20cc899",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MobileCards/OfflineIndicator.jsx",
+      "blobOriginalGit": "329798437b6190222e65e89b6c4ec8312861d366",
+      "sha256Referencia": "0a2bd4e45e143888dc222adc636772bf565c0ab3dc4d16c4b002fc5b053a1be3",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MobileCards/PushSubscriptionManager.css",
+      "blobOriginalGit": "d6dc9d91bcd1cdac1241c1953880337e0aa44153",
+      "sha256Referencia": "0766ecf3f4710d689d8ea1027b8efb02a2c06e342f30e5b30f0bf675245023f0",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MobileCards/PushSubscriptionManager.jsx",
+      "blobOriginalGit": "580f420e3ce516ee6f67a0ad8d7ab357f57cc87c",
+      "sha256Referencia": "62364200781f531d6f3304f29fbb2f31802a8987e9008fbb413c89e4d9aee8bc",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MobileCards/QuickMetricCard.jsx",
+      "blobOriginalGit": "eaeb4a0078138edc21936691f8e80f186e44f12a",
+      "sha256Referencia": "af6fad728bef6e170da1caf2b54613f947f1655bbd177c026eab7f22eca6279c",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MobileLayout/BottomNav.jsx",
+      "blobOriginalGit": "a39348a44b8badc8ec593be910ab4892d8ae286a",
+      "sha256Referencia": "dbf7ebbdacf782b5d44724881b6b254791be7d7ab8cb9f29598e299446a69e4d",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MobileLayout/MobileLayout.css",
+      "blobOriginalGit": "5a32072901b18a3c5ffe7be9f9e31f917d181427",
+      "sha256Referencia": "1936aae9cbce842b828d299778821887318f5136e9a1783f1bfa0beb99dabd62",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/MobileLayout/MobileLayout.jsx",
+      "blobOriginalGit": "7a7309dbcdbaa4b3fdd114c4333c0f8446c12890",
+      "sha256Referencia": "e5b39cd26439ceada1d9bd7d3eaacdee50dc35fae088431ff86991f13fe03ebf",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/ModalInyeccion/ModalInyeccion.css",
+      "blobOriginalGit": "f3ab0aa3c9d42bf9560c0b491f9618b9dfd53dea",
+      "sha256Referencia": "29ed23d20baf11165fb378a2ba68517e0cae4ffb7c04dbb2ba236fc2ea9023ec",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/ModalInyeccion/ModalInyeccion.jsx",
+      "blobOriginalGit": "409d00b295548788b89bbcfdcf6dfa6b22f03ec2",
+      "sha256Referencia": "60c215269ba97767dedb32d9f430dc5815b83743377cda489e7fb10feeb74b65",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/ModalIoT/ModalIoT.css",
+      "blobOriginalGit": "e4bedd5d5a6c4f27fc9a6c1de6f4e23930f7b4ab",
+      "sha256Referencia": "0d95b696352fc7b47032b27e2743fad5f785a20138e9f1db0557d86a841bdef4",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/ModalIoT/ModalIoT.jsx",
+      "blobOriginalGit": "ee7e39f80959ec17375c077e5176916889ebe3b7",
+      "sha256Referencia": "96b57d2d2e39993bc7bba0d20af7eb0e8d4073557e4a34cdacb99a94456c4438",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/ModalSimulacion/ModalSimulacion.css",
+      "blobOriginalGit": "364d104822d20c856515de2d4b3d5e8616264b51",
+      "sha256Referencia": "13d5101be70d49389406f7cd75fd9a45b5140a677cd0e8a617a2bfae51940785",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/ModalSimulacion/ModalSimulacion.jsx",
+      "blobOriginalGit": "62f030ccba85c1b7777c6aec23f037851070e26f",
+      "sha256Referencia": "ee0a7e3ad9fa4a307890daf5f8b9f19c1976c97805babaee997f274bf931bc89",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/ModalSimulacion/escenarios.frontend.js",
+      "blobOriginalGit": "574a561cd79a05653c4f75e38ee83391be62a09a",
+      "sha256Referencia": "a648826bd1443b5e5aa310b4205a1084bd8a6c8174ef2b9a868830bcd42b7959",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/Navbar/Navbar.css",
+      "blobOriginalGit": "c92319b52908fe033d55cb3df6fe4735afce164a",
+      "sha256Referencia": "306804be066c8ba1b21303775aeeec3b290f53ef90bbb08ac9b3e932ee48662a",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/Navbar/Navbar.jsx",
+      "blobOriginalGit": "a389b5aa2f2bfe98c6999c9372ce1485038520ce",
+      "sha256Referencia": "f0266d4eacb6a5e938f4faa3bc110e4623c71a0c54611d59f42e665f2e182e91",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/Sidebar/Sidebar.css",
+      "blobOriginalGit": "b421205468d9eb6e87f2c173c4deeb8342f94086",
+      "sha256Referencia": "c3ec7c6d7a8d5355414fe52b757f0411b2a5c5510e3e56893027b6edaa3e23ba",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/Sidebar/Sidebar.jsx",
+      "blobOriginalGit": "6b5c5d6c104889f498f7135fa08c66ad7e2e021f",
+      "sha256Referencia": "064b4750a6fe2ada219d58b6bb56a8bb0736e6b75ce2d5fc34570881336cb215",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/TimePlayer/TimePlayer.css",
+      "blobOriginalGit": "077a5269e9e988b3dd8a86980bfe858601dfa513",
+      "sha256Referencia": "a7a8665002ffc9182e9fffc917d6aa29b43971f639aaf7f543ff2bf244236372",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/TimePlayer/TimePlayer.jsx",
+      "blobOriginalGit": "45840883e043b994900158b86d5a8497966973e9",
+      "sha256Referencia": "c1bda45899a42de0013f696b4f05512743b5cadc9d92a0edc8783b757d242a42",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/Timeline/Timeline.css",
+      "blobOriginalGit": "670b2b4d497d16acaa386e1eabec4ed0ab3ee247",
+      "sha256Referencia": "80522e002b9c529ea3b685289d8d6e4998bc6c23c627797286e070719975065c",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/Timeline/Timeline.jsx",
+      "blobOriginalGit": "f9c2b5367035a46382d9bc563b746108f8770240",
+      "sha256Referencia": "f5c29c2f7d69eae7c6be4cc229805ad35efe9baf734271c87543d7009895568c",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/Toast/Toast.css",
+      "blobOriginalGit": "85beeee83631ccfc649dea7a6bd29bb78fc44f37",
+      "sha256Referencia": "1d881f1e2ba9bace4a3d391bd0437fed0e935ff8b90a9abffaf13dccbe9dc1b9",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/Toast/Toast.jsx",
+      "blobOriginalGit": "2d9b8ede7657fec04c55098e4dafbf77067d1cc7",
+      "sha256Referencia": "5dc89e467a6c8230df6f458aa781837a30760b1f1f4d9188538b1e25884c0364",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/UI/AtmosphericDatePicker.css",
+      "blobOriginalGit": "a35b69c688e788b71e1e8ad33bae1d2df7720eb9",
+      "sha256Referencia": "146a04dca9f8217c8e52a78146f1992d98d1feb50103efe47e2a0ddcc2ed7796",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/UI/AtmosphericDatePicker.jsx",
+      "blobOriginalGit": "4cb247ec304491bc96a82377727d029ce14ccd27",
+      "sha256Referencia": "7e39e91bbebfe4982666d60304ad0cd98fba27958a60ccd7c09f0f87c5df184c",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/Utils/SilentErrorBoundary.jsx",
+      "blobOriginalGit": "1f4109e50ee0f6ca3b0d3852967f86e12d2fd5dd",
+      "sha256Referencia": "06ebe538ecbac584a235228333275eebe21da79dda6467a43443a5816cbd29f4",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/WeatherWidget/AiWeatherAnalysis.css",
+      "blobOriginalGit": "72f8c05927cde73d3e59325e16f7979847b88f4c",
+      "sha256Referencia": "e213751fe4637c93f8bf5d53b6a3435e3a50d83891e6378c61389bfd151486a0",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/WeatherWidget/AiWeatherAnalysis.jsx",
+      "blobOriginalGit": "bd2118b0bfe089355b76c46d13bfea5b92b037e1",
+      "sha256Referencia": "343249fefd1c95a0905731abba365e7f78e39634ef89a8231494853fca1e40c6",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/WeatherWidget/WeatherWidget.css",
+      "blobOriginalGit": "13aa9d25a6ad00a28edd328e43d30120d63c025e",
+      "sha256Referencia": "d7ab2afe6848e6c9ebff6aa452cc812f920c7c31ec446987c4a40baa3c391519",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/WeatherWidget/WeatherWidget.jsx",
+      "blobOriginalGit": "cbe4b1b2f59c6aecbb9900854c609df7187d0a48",
+      "sha256Referencia": "4a4fbe4da396905cfc874e00ca17759b5ff81bdb42d9a6fa9d358154e929dd43",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/WeatherWidget/WeatherWidgetContainer.jsx",
+      "blobOriginalGit": "5d7a68161c0132b300b08a6e225ffd6915826048",
+      "sha256Referencia": "4324f10c2cb83fd1ba22b9b47974849e0e877383734d3204bef695163fdf071b",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/Footer.jsx",
+      "blobOriginalGit": "2aa61da7f0e6307b7fdf17cc402a700416b26f44",
+      "sha256Referencia": "b326a13399a7c5fb4802287522abd35f21208ce249fe264632503ae2cbde9a18",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/Header.jsx",
+      "blobOriginalGit": "56b482f03c11af67c1165c6cc3a3f9b0f9f2139b",
+      "sha256Referencia": "a9c9056143901fe0b9bb7de88d0efc29b504624beb80a7f0ac2cf95307afa4d7",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/Hero.jsx",
+      "blobOriginalGit": "1ab21a589dc583c1cc37fa546a4b6454dccb77de",
+      "sha256Referencia": "c1f1b7e461a4973a928d8e5e94c2378a281849004435ea196997b260844ff25b",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/LandingCTA.jsx",
+      "blobOriginalGit": "bfeb523cf7b7a8c45ba012320aaf75495c8df7de",
+      "sha256Referencia": "3fa4a23bf7266941bc7ced91f81f225c8814773020ce38893207dc91f07013a3",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/LandingFeatures.jsx",
+      "blobOriginalGit": "347c62aa621e45aa0064067923cc29679dcef1bc",
+      "sha256Referencia": "44aeeb62cdf2f25a033addf90f7fe0dbe4fc6a9d179ca552a103f1d17eab8ff3",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/LandingFooter.jsx",
+      "blobOriginalGit": "98e957438dcbcc3aa99e4d010cff6218a033a4bb",
+      "sha256Referencia": "1ac1ea79811cdd924f28d422750f9019f9acd98d9e7cadee10db4deffbf74457",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/LandingHeader.jsx",
+      "blobOriginalGit": "e9c888d1a00c67d1267b8aeb0eddd640a5b7d609",
+      "sha256Referencia": "8ce097d304f77677f5bf384937636247430288f5295c69bebde116172555f07a",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/LandingHero.jsx",
+      "blobOriginalGit": "95dbf60cccd928d33e7ccfaa38bdbbee09aa1b3d",
+      "sha256Referencia": "d31e966c2ae6c5cf081ac94f1bb2bbc09b674f3d2cf55fbf6262f21ff3c08eff",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/LandingMap.jsx",
+      "blobOriginalGit": "913874c630051e7ce13c3159d95b922799411983",
+      "sha256Referencia": "69bdf177944064535d828989cc3fce8d7049d3b735ace62a7618c393677a79af",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/LandingMetrics.jsx",
+      "blobOriginalGit": "84be341c1dc530e9bb93368b67ab273afdbdfe4d",
+      "sha256Referencia": "2d7cd6a2ca4cc73f4de311a0811665168356ccd90b48688364ff2acf41207863",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/LandingSources.jsx",
+      "blobOriginalGit": "6a37bf8ea66d15faf3cc081ab1838b53914d625c",
+      "sha256Referencia": "6add7f4e6d8fde40abe346b6a8adfdf6ec7571f5b273976984a1652c8c8aae1b",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/LandingUseCases.jsx",
+      "blobOriginalGit": "cfb3ce07586edf91e2cdedb15000e0d3042407f4",
+      "sha256Referencia": "a2ecf5e0a9fb23e74e101448aecff7fc6f7c22a8e450e0019e9f4cc7e323933d",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/LandingWhy.jsx",
+      "blobOriginalGit": "ebb2a51cc68151cdb8fd9f0916f5075ffd9c36a3",
+      "sha256Referencia": "d5b2bf7d92feb7532c4527389ad5cf19aac64280ff9156142732f72de23471d6",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/Stats.jsx",
+      "blobOriginalGit": "9875e1741bbd7849f291104cee28f8fe49327454",
+      "sha256Referencia": "7aa1ce5c6d55627c6468eb23e918128fd8531c5c8535fc8bf7c4b2d87933796c",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/VariableCard.jsx",
+      "blobOriginalGit": "454f5ac5f6dfefde932fa2b6a66d09e70b4f8307",
+      "sha256Referencia": "4192dd54cc055858dadb03e9a59290a358161a4a580b92ff9088ffde00571553",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/components/landing/VariableGrid.jsx",
+      "blobOriginalGit": "f103ed86abcb5171c75969562eca1464c093fc06",
+      "sha256Referencia": "6d3edee25f24d11b0de871fb9fa11c5954f942263961b3635a0c26d54f7b3cc8",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/config/api.js",
+      "blobOriginalGit": "ed847f0777445af8e146dce27113da659da1e333",
+      "sha256Referencia": "0e746cdfa096e5b480cdcee4cade0fff7463bf2d619eb686cb64f01c4c4983b3",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/config/httpClient.js",
+      "blobOriginalGit": "cb59240566feed3cead3153a1af0f1815aa78896",
+      "sha256Referencia": "80cc92bafcf7f5b3fc07862b5e1d29b49001d0b4a7652a8d6cb8d34376a5003e",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/context/MapVisualsContext.jsx",
+      "blobOriginalGit": "c933f5e40e3b66177a84c0066475f231b6b66971",
+      "sha256Referencia": "c4c1b673c4d518ca9e9ebc3e11fbd260cb137124f083cb3a53439f18a448512c",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/context/PwaContext.jsx",
+      "blobOriginalGit": "1aadb59425a6c3cec0c02c547a2efbce2512fbc1",
+      "sha256Referencia": "9028e01428a6cb5d75c2c5e442868e9428c104a25a84af87d10550d3e1f97b7b",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/context/SimulacionContext.jsx",
+      "blobOriginalGit": "698631997abc93e829a2d34c74236ca5e79a8d7f",
+      "sha256Referencia": "1eb6e905e5de1a8650852a21d044ac78cc61ca4a1e8bec0d05066bea129c4358",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/context/ThemeContext.jsx",
+      "blobOriginalGit": "bf36cdc58d8b9f7633e2b6eca9fe930abf0232e3",
+      "sha256Referencia": "5f0e99453ed8a1d00c74f6cba510a268f85c052a0fd5d35005cb5bcddb331642",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/context/ZonaSimContext.jsx",
+      "blobOriginalGit": "c8fa15c5866e1352d783882e0469413c697dabd9",
+      "sha256Referencia": "3db039ec95a3d741c2e86b661efd6db3049c4c3d6487608cb7e9f72a555b164d",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/data/fallbackData.js",
+      "blobOriginalGit": "91bf37953d11aa7f6d52868c89ae995a2492500c",
+      "sha256Referencia": "a4bf8d6cf42912ce028d29b55a154d1bf4d63ed6f389ecb6a9d20e00aaa56ce3",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/firebase.js",
+      "blobOriginalGit": "4d8c4b56963bee7f0ee5402eaff31a46d4ee6d2e",
+      "sha256Referencia": "da124b9060fb2209b853e86ddc42d75cc7045fa2c3c6c6dae86f496e356cc9f8",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/hooks/useCityHistory.js",
+      "blobOriginalGit": "3b5ed9e0c7362353e83ce91d357ef08329bf5ae0",
+      "sha256Referencia": "49d37d29a8474ab6a30c19caea6cff55c069388c2149848676abc42f7897159c",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/hooks/useForecastData.js",
+      "blobOriginalGit": "8a694d0c426d38f5cd3c4e659de20e6afd5ddf09",
+      "sha256Referencia": "96f731006dabadd890de45b7e06b6290327a30b19c8ddc7936c262b1fa9142f7",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/hooks/useFronteras.js",
+      "blobOriginalGit": "c24975bf4aa2629e9c39503a427ab237a419520c",
+      "sha256Referencia": "fa249a89b063bbe28a69da5c900ebccf9aef67d34e9143732e073816e550922d",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/hooks/useGeolocation.js",
+      "blobOriginalGit": "ee4f3c7ec1781c4383e9eaf4fffd8793c035d6bc",
+      "sha256Referencia": "f354e720d235b47aa2b909bfbeb10c71a2bb177e6ef9485c94d54d89d22d89fc",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/hooks/useMultiForecastData.js",
+      "blobOriginalGit": "0820d29cdd1ac16f2e53d1166db6854561146072",
+      "sha256Referencia": "c32377ff9796973e750538fb047b982f45692f9cf5cbb76a30bdfde8619801ea",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/hooks/useNearestCity.js",
+      "blobOriginalGit": "89045b761958b06b96bde72ae047b11f0bca1e3b",
+      "sha256Referencia": "b2a5b4c2fad8917a835d368affa41639c60594b8e091b8c4e65f2729623da024",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/hooks/usePushPermission.js",
+      "blobOriginalGit": "470008419f29fad52b133c7f036f9bbf8b318cb4",
+      "sha256Referencia": "690d1fefbaf04c126a84181ccde09de1d23f3af0416e314a3bad82f0bf83f161",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/hooks/useRadarData.js",
+      "blobOriginalGit": "e5ca55c32e54d6541205acf93b6bb54b26be87b8",
+      "sha256Referencia": "2ee6f25d8f1f4740cbeb7cd4606a3fcff5482fe98860a415e3695da454c699c5",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/hooks/useRadarSampling.js",
+      "blobOriginalGit": "93bc0540dcc497462f401a3d90003cc487ae7c6d",
+      "sha256Referencia": "f5c0477653b82e63a24894e6893c5db9f6d50c92e7714c0486ee3a47793211a6",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/hooks/useRadarTimeSeries.js",
+      "blobOriginalGit": "6aab510fa07e4ca64250443af14e734cd3e311b8",
+      "sha256Referencia": "12dcf0ac9cfee2f0b11642fa010149b1aabf9e10078c95c5666a015168fae4d7",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/hooks/useSensors.js",
+      "blobOriginalGit": "13f07fdc01aba70afbe6c59ac12e8d1c4206120b",
+      "sha256Referencia": "f7da4a678d31a92667faeea91d8b031c75ccba9ac28114684ff0c44cf7937341",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/hooks/useTimeBuffer.js",
+      "blobOriginalGit": "f0748fafbe85a0ac2154f72bf3cabba816dd70af",
+      "sha256Referencia": "18694b77ef2a430115199f22e1b2c06522b5e35f018341c47366364c97c308eb",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/hooks/useUmbrales.js",
+      "blobOriginalGit": "c34154e6c0e4b611af412f8e0e46c8b8b6fc2da3",
+      "sha256Referencia": "093d631e292a472d622f17f822cd9633cfecb530769488d0ccb0122ff4131aad",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/hooks/useUnidades.js",
+      "blobOriginalGit": "b56aaef791c06dcc06535c90ba5092b77d920ac8",
+      "sha256Referencia": "7696c841a22faa4b862426e323cb2696dd459af22c31fab365659a5c60be9a42",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/index.css",
+      "blobOriginalGit": "ba03b4e8f80e9ebc971dc75f028507ab10ad2a0e",
+      "sha256Referencia": "b3247aa6a0ca1ce76b83fea9130342ee79364636e271bb7817eb68db840b4739",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/aqiColor/AqiColorLayer.js",
+      "blobOriginalGit": "152db81dbec3502bba76f929b1f0d81ead5e75f0",
+      "sha256Referencia": "a1714240f1b19221bd0ae9ffb7b8fd3d55832417be965ba8d13f5a8b9ce9dcde",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/aqiColor/AqiDataTexture.js",
+      "blobOriginalGit": "2e625f2059d5cb7cd295f8ad87711fe100f78621",
+      "sha256Referencia": "65ed36c8060afa5e9f18a9b7f0058504edcec618dcb6e20312ce86a394e0ae85",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/aqiColor/colorRamps_aqi.js",
+      "blobOriginalGit": "1fa70d88118ef2a72a290153dc00d4b31217acfc",
+      "sha256Referencia": "765820c440a3a86cecfcb5f2af1c02a6ac936542247c453716beca50969d0adb",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/aqiColor/layerManager_aqi.js",
+      "blobOriginalGit": "2ef79529ecf3cc1ecaf07f2e4fb5e95cb1684cb3",
+      "sha256Referencia": "4bf533ff89036fa0cd35342c74c5f4ae1e95ed636ff172a6d4beed34c34dcd92",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/aqiColor/shaders_aqi.js",
+      "blobOriginalGit": "73709806c3edd42f0ac36546f0db686aaf547371",
+      "sha256Referencia": "04a8ab907d354b408aedacdb881a2dc6ae087d89d6c4cf194d59a12cf12cfaa6",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/glUtils.js",
+      "blobOriginalGit": "7b4b37bc3966200ca87d158a871583c90bb958bf",
+      "sha256Referencia": "8ea07eb25fff9fad5c0c205668c7b811725ff7453a7cff20e67b20dc52487c3a",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/glsl/common.glsl.js",
+      "blobOriginalGit": "1aeb08f5bbec99bbda83e12442579356445f75aa",
+      "sha256Referencia": "9b0760bcb2453025334482104bc64205ccc9a48231ac98675dbbd933bdeab1e7",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/historical/HistoricalWebGL.js",
+      "blobOriginalGit": "2ff02bae6979624fd24069d2d76c75f3fdffdee3",
+      "sha256Referencia": "405016fbd43a5394a0269d019340cdf950d239d8126b62cda87e5ca68f14eff2",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/rainColor/RainColorLayer.js",
+      "blobOriginalGit": "8dcb0f403a08123d62931ddcea4b7b2f10c60397",
+      "sha256Referencia": "91e37c9afd4042dfaf7ddb2455834513c0a4718e13b76afa72e92c8bda4caf12",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/rainColor/RainDataTexture.js",
+      "blobOriginalGit": "dee55936c12a396a3d95f746af1d9d8b6724c4ee",
+      "sha256Referencia": "c4e8ffb7eafd96e29081c5d4810a4f85030063ba117a8d06092cb90e333cfb99",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/rainColor/colorRamps_rain.js",
+      "blobOriginalGit": "82237d45d4ca8c409e507faab05b1c3bcca8a262",
+      "sha256Referencia": "670153963b23c417f9348cd45bbba9afad5e6ddaa0b63420125ae81ac191fa5c",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/rainColor/layerManager_rain.js",
+      "blobOriginalGit": "c3f38b72586640f3330095c60d4f0afc15d8fd45",
+      "sha256Referencia": "621a88dbf86691ca82fe2590b8991fcd3f2bb9c2e42e3cc355769e03d3cc4bb0",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/rainColor/shaders_rain.js",
+      "blobOriginalGit": "6beea6b16a016671c76de47533e67b26f5103f7d",
+      "sha256Referencia": "a01a39a893f07bee5264b65876fcbe167508c48287d65f1fae1e54970e25673a",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/snowColor/SnowColorLayer.js",
+      "blobOriginalGit": "128f389e1d45e507f8583b3f9fa020426c7aea3f",
+      "sha256Referencia": "0ddbca454e0f167e495d0d926e54b05ce8b870e75f95c530a9c5312e0ea93dec",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/snowColor/SnowDataTexture.js",
+      "blobOriginalGit": "6e765c5e333c2113124579b9d6652e438cbcff8c",
+      "sha256Referencia": "7d3ac14635bc297525d52eec785a77cf8299aa3b360c4f640766caa2d89abb45",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/snowColor/colorRamps_snow.js",
+      "blobOriginalGit": "95bdec20075af66551d009419a882c24d1a2b45e",
+      "sha256Referencia": "1d734625c1f0f89f2718d312d3595c3a88fcf7f473367bcf5238e82a3db24115",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/snowColor/layerManager_snow.js",
+      "blobOriginalGit": "24bf5f98091c494b1905d3c0a76716e011a309d1",
+      "sha256Referencia": "d882c0c73da467899619da1cd2426f1727c998521304af210d38d7105a1d0d39",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/snowColor/shaders_snow.js",
+      "blobOriginalGit": "8ed037a8f863fa0316781d37735ed728b26f710d",
+      "sha256Referencia": "21df326904a29f80a41b88ed146a382273a6af9001ca996a0046b5c82b278631",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/tempColor/TempColorLayer.js",
+      "blobOriginalGit": "adcb0792218da0356c990cb3dbbe98a1e543a205",
+      "sha256Referencia": "8bcab7db36663d05837a72064caf8958d75a78f91a53ef3d93f5081f354d5053",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/tempColor/TempDataTexture.js",
+      "blobOriginalGit": "991d5aa2375f134fa7a00a03cfe4e25bfc36a142",
+      "sha256Referencia": "dc5f493727884afb6642cf7a4fb179d652ce53e765f18e6040a41307b9d5ea2a",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/tempColor/shaders_temp.js",
+      "blobOriginalGit": "63c9a55f818981abf0c6d35ac82f7825971d5c48",
+      "sha256Referencia": "7ab019046eaf94eddae72569b7ca7e3280fc3626bbe7b49e4308bd6788fa2cb9",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/visibilityColor/VisibilityColorLayer.js",
+      "blobOriginalGit": "2e2dc3c6524503648e079301d94af636ceaaf641",
+      "sha256Referencia": "05be440f4cacd6bfcf3fd491ff7f61416a0d0cc274ed8cfaa1397f307579a9aa",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/visibilityColor/VisibilityDataTexture.js",
+      "blobOriginalGit": "3a7960ebf18fef815d5bc90645cd0fd64c5e7b73",
+      "sha256Referencia": "a33061fb5d33ad5c64cd28bd5f870059b29f33b420114a828fda5b63813a21fe",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/visibilityColor/colorRamps_vis.js",
+      "blobOriginalGit": "d93779db821218f901a103df09988a0833ca03ca",
+      "sha256Referencia": "a5185bd9ced0c733b6558c651ca020dd9fe6c1969bf21a5bc413bc4f76170ee1",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/visibilityColor/layerManager_visibility.js",
+      "blobOriginalGit": "94af0d178dcf319ed7fb886d5858479e0a5c7747",
+      "sha256Referencia": "db2c24a4804f36bb616911341d6baa4c9bf7255737c67c93cfcf1b86f49eead3",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/visibilityColor/shaders_visibility.js",
+      "blobOriginalGit": "4767955d006e10875f7c4474db2a1d29cbab2425",
+      "sha256Referencia": "2e97e722499e9622663f7e3df7fb234b5f02b75e56bde9178c2c942144e2cd40",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/windColor/WindColorLayer.js",
+      "blobOriginalGit": "4c515202523ea0f7e728a3a66503cc32b0b0f9ed",
+      "sha256Referencia": "be1ebde0b41902e9e9fde2620d22a37d1563fc93e5651e7f74fd9f1c96068a68",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/windColor/WindDataTexture.js",
+      "blobOriginalGit": "e311f2d48f7ab68ce3097d074946d648cf623907",
+      "sha256Referencia": "af78c34ee1e734ca91534f14c619110ae08931b7eabda8dd3bb9c731b37b8321",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/windColor/colorRamps.js",
+      "blobOriginalGit": "9cf5109f5089e0091d63061016642717b76541b7",
+      "sha256Referencia": "a5926a19ae0afa35cb8024963be29eeb1e111f6d9e6fa74915faebef7a8a10d3",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/windColor/layerManager.js",
+      "blobOriginalGit": "432cd0655be22fdf9400cfaf0bceaad5aace4ad2",
+      "sha256Referencia": "098bbf6cefbbf4a1ffb294f9b10832b9f47c10bd5ff41f731257ae10257fa650",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/layers/windColor/shaders.js",
+      "blobOriginalGit": "737931832db7e0137741979590f387ff71913e90",
+      "sha256Referencia": "76344a30d7df72ca919ca2b035927d31b397515fc229cbf445eb0014799dab89",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/main.jsx",
+      "blobOriginalGit": "5d421de318c78088282dce17fbaed5806f73a2e6",
+      "sha256Referencia": "6b25b9be8e2b67d66b399f6c4d49e4c21c801a5fad9fcd17f3012ffb76b55f77",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Alertas/Alertas.css",
+      "blobOriginalGit": "7f7049e6e8bcbf712376d2ee70be914a6667a1b3",
+      "sha256Referencia": "45a446a74ee7db799511cbd499a06d5dd5969302fd6094ba23fd5f5664b0ce8f",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Alertas/Alertas.jsx",
+      "blobOriginalGit": "e2bdea7bf66c1be4f05f46c312d011f14c55c920",
+      "sha256Referencia": "515227d1d0a2a8059f5b289db1c949d9d747016f91af8b580a7ad5a550a5adde",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/LandingPage.jsx",
+      "blobOriginalGit": "9ae7e1f8348f3bd0e60796ca1a970dc721f200d7",
+      "sha256Referencia": "995966b56bf164257acf7a51eeb0455d1e2ed1f46295738288842ba32b353f78",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/MapaMonitoreo/MapaMonitoreo.css",
+      "blobOriginalGit": "9a42913b6dd219f41269853bf99d805a25e5ef05",
+      "sha256Referencia": "4b7eb5ed41ebebd896704f7e8abea03ab4803f5c71bd1ff7dc7847f56c84316c",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/MapaMonitoreo/MapaMonitoreo.jsx",
+      "blobOriginalGit": "c78d23178c51f994f83d519952878c2862e392ec",
+      "sha256Referencia": "c1f0d98693fb7e7b27457718a4f96facc418d3b0a877f9d7b4443b6bce06df8d",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/MapaMonitoreo/components/HeatmapLegend.jsx",
+      "blobOriginalGit": "3cc78a96649c59bc793f262d22ae0af881a1baad",
+      "sha256Referencia": "23a476e376b652fd5e7f8b92980c84ee968d2109e5ac066ae1c0e5eab104bc7f",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/MapaMonitoreo/layers/ChoroplethLayer.jsx",
+      "blobOriginalGit": "53fc2e26f09c8f2d2ce9833cdd643632b6839277",
+      "sha256Referencia": "ac3c99d5a37432d75753a8a7b1f95352d2054d7cb7c2492866343aa3e60549be",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/MapaMonitoreo/layers/MarkersLayer.jsx",
+      "blobOriginalGit": "240fe4846041ea8d8aa9c9174822a0ea4e6a0446",
+      "sha256Referencia": "ba9fd5f4779a4f956f00de566ead3e01c59a9b7397c04cad9c3c2d8d0ede36fb",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/MapaMonitoreo/layers/SimulationZoneLayer.jsx",
+      "blobOriginalGit": "9678f5174565253804df4d1cfe8b3337bdaf84d6",
+      "sha256Referencia": "1ed11c48674596ed857f598549fb5669e3e49872196fb85d1eb5b1b6698009dc",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/MapaMonitoreo/layers/VoronoiLayer.jsx",
+      "blobOriginalGit": "7c7f058ef36bb17778218c33547aed435c40702c",
+      "sha256Referencia": "974e8072e18351de0341aa7d93d27b1a4e3a2a1a6e9d972d89649cecc2d92cd3",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Notificaciones/Notificaciones.css",
+      "blobOriginalGit": "52b45025a11f24ae0303e98aaeb7b1ba58168fd7",
+      "sha256Referencia": "6c4cd3b48aa8011b4d46fa5680c9a969d2a329a0bb50835ae86eb120df1a6c20",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Notificaciones/Notificaciones.jsx",
+      "blobOriginalGit": "e0395f1de4c2e6103abd43e494bc87793372f00d",
+      "sha256Referencia": "ba2152a73bd3ddc5871b709e497d664b39f12b8447af74f7cfff99d26cfc07ac",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/PagePlaceholder.css",
+      "blobOriginalGit": "341fe005e5c0df2e218a5f6f1bcd10de22c1e2c3",
+      "sha256Referencia": "dfe76256bca126427e01c097682aad2198e6a3a659b0d666b8ac3ebd49bf441b",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/PanelSimulacion/PanelSimulacion.css",
+      "blobOriginalGit": "0f338fe87a566118b691e8273acbb6001181907a",
+      "sha256Referencia": "550a7761c74a57b1b9753db0f6ad565b1c5a5422c2591153d62d578ad02650db",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/PanelSimulacion/PanelSimulacion.jsx",
+      "blobOriginalGit": "430d6bee7034315c1f7f4ff33749945e38c6e3be",
+      "sha256Referencia": "0fdb75ec73943804c10635b3a2fe1778c5d14b416c55c98abfcb758220cd1f15",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Reportes/AtmosfericoTab.jsx",
+      "blobOriginalGit": "62e5176a403f1515d5353ffe11964ba53a32dd4d",
+      "sha256Referencia": "8a044d32c0a8d66bb4fd305f8dbcd557f0ef1ac4e316fa7166736e70632c9b4a",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Reportes/BarChart.jsx",
+      "blobOriginalGit": "179c5deb76932feab7e09ca55e745a5b332db235",
+      "sha256Referencia": "ef00e366b96f1681ce1d4e5e0bfe7d17804bf2b4fe38364de2f41a7e46c58d6b",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Reportes/KpiCard.jsx",
+      "blobOriginalGit": "f98ad9127ddbf435c8f95aee5ffc7ddab97c3fc1",
+      "sha256Referencia": "30f7c77d79298d1c779a70abd8316d2ce4eb7ba976635148ee6ba8f558f40e7b",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Reportes/LineChart.jsx",
+      "blobOriginalGit": "88026b6d19f79f69ccb1134c7ce9126c45050a35",
+      "sha256Referencia": "63fde44c5f13316a8e602cd534912d59a20012efedefacf8ea2454a1c6e2d4b2",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Reportes/ReportModuleTest.jsx",
+      "blobOriginalGit": "24ee83e9ac9d282922c76de1bf7c29b331edc7c2",
+      "sha256Referencia": "c146cd6717d61d346ad384d12b29d63d63dde2b03089fbe22f39e622b7d7c17a",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Reportes/ReportTemplateBuilder.jsx",
+      "blobOriginalGit": "bdef4bb3b358c9cd79973fb6a35bb7d1d6a0f28a",
+      "sha256Referencia": "9d1309aa6de0aa1acd07ebd0f758c29d100363ced9cee5c1b5b9ca54f5113735",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Reportes/Reportes.css",
+      "blobOriginalGit": "b92bfbb0efbe66b40e4866e44c65aced72e5f948",
+      "sha256Referencia": "6aa8153201eaefb1d1dbd668cc8083d2d404fc1f045e6953bd3bf2777b616209",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Reportes/Reportes.jsx",
+      "blobOriginalGit": "21779f0573fcfd58b08f9f506cd925a8f8d25f79",
+      "sha256Referencia": "7eb814f33341e279ed05affce2f1943f0834e41669cf8259cb2a79d9e1870e44",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Reportes/constants.jsx",
+      "blobOriginalGit": "297cd8ec9acd1b9d887de54e37bb3cb56847c91e",
+      "sha256Referencia": "3c34547889e55e467c2c87ba01a19ede5874ba069122265840ae277c41e0c9fa",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Usuarios/Usuarios.css",
+      "blobOriginalGit": "33ebb9caa1efc0c7fc92924a4561091e7ad9f20b",
+      "sha256Referencia": "ba4d99b9b6decc48f23d1c8ccfc717a5ff2303798fea174466819df17d7ec5db",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/Usuarios/Usuarios.jsx",
+      "blobOriginalGit": "f507c79f86b755d2060673714be9c92896b5e66c",
+      "sha256Referencia": "f3b8214d9d268e23e6a7fae7dc71a1a5c6d4e09077ce91a49bb6330a46454158",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/auth/Auth.css",
+      "blobOriginalGit": "ff32756c2a3c5da4faebb57fb24a53114c4ab837",
+      "sha256Referencia": "e893d147c2481ce704bbeae893139a3495ae3df7b07fdde25a6a2ed1f3feed79",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/auth/AuthHero.jsx",
+      "blobOriginalGit": "10c862c85cf7321234ff0d7338bf59d60823c3f5",
+      "sha256Referencia": "64ce0c33f59fbfc7f2d182341501aaf6042ab4fd9e5ca97c75a0509010994223",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/auth/Login.jsx",
+      "blobOriginalGit": "951d16d99aba86808c557eb5e2d46370d2ead0c6",
+      "sha256Referencia": "2bf39d9440a080b55a5e1601cb347aefcbc566068e069e35fb00c1bd559d9688",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/auth/Register.jsx",
+      "blobOriginalGit": "af4050b0acca4598cc6fc59638e969f335a4bc31",
+      "sha256Referencia": "ab9b4e808172ad08b52786f789340eb57cac95362c37b2f82b16b21a8baabf99",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/mobile/AlertHistoryView.css",
+      "blobOriginalGit": "6a3f8c36ccd658d22a3da060942840d1a1756933",
+      "sha256Referencia": "52267669ad99eec49b9b6e5c348da172916590802dbfc18c636a808247b91968",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/mobile/AlertHistoryView.jsx",
+      "blobOriginalGit": "6a58bf731123bda186e202c0ba1b324970da8bb4",
+      "sha256Referencia": "42c7252f359f94d5c8d9954bc66f28839d1921decabf4eb3668cfc293bc4f1b7",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/mobile/LocationDashboard.css",
+      "blobOriginalGit": "53ed6c9df812f01a861a128ecc97eb68429e40d7",
+      "sha256Referencia": "ed4f191cb4b2d7c1376c65d9c0fd0cd2e8ff108c7e71476a850e106c1df8e20b",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/mobile/LocationDashboard.jsx",
+      "blobOriginalGit": "6a169aecd60ef6efb8d20399095efd69193e8426",
+      "sha256Referencia": "267d9a6c13ad5e4a04093c872cf67c344596aa607a00c0eef2f21aedec866147",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/mobile/MobileMapView.css",
+      "blobOriginalGit": "a54bf7d6313d08070b673c991cc65908bf050f32",
+      "sha256Referencia": "f3f5e824fb2a9d54c111d91a8b706e16f075c848ba8330eaa53cc5976cfc9c7f",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/mobile/MobileMapView.jsx",
+      "blobOriginalGit": "5255473ca0e04ee430aeff3e8623cbb559f46cd2",
+      "sha256Referencia": "36c89aeaae948097b06836926624a93f642e5f121659b960ef5991a8078cd589",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/mobile/MobileProfile.css",
+      "blobOriginalGit": "cb81533663cc3d7962a645d223789f690a2aedf2",
+      "sha256Referencia": "28491f3e351b3477d826969502f7ab7e7add9b1d28c06e1aaaabb5b3c2b39895",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/pages/mobile/MobileProfile.jsx",
+      "blobOriginalGit": "580318ee39a00840a3ac429e8f2ac1a4e409a908",
+      "sha256Referencia": "65943605108ebaf97326841d0b2f75ea1d53e2611a21e7f73e25e199cd82d6b6",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/services/exportService.js",
+      "blobOriginalGit": "948dad86bd1e053c8386e60539486cb7706cfa36",
+      "sha256Referencia": "bd3824be2889a3859329a1799c317aa4b8a433c87c4750793e8c81ab642e56a9",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/sw.js",
+      "blobOriginalGit": "a79280df402cda898b01a27aa97f6b663d6b7c01",
+      "sha256Referencia": "1d1c22b0dc9a04957176e37ab56119dd8774f3381f1d8370d34416cd9d79a508",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/utils/auth.js",
+      "blobOriginalGit": "b8742e8033237743e81fa88bf1bda55f48550343",
+      "sha256Referencia": "69919e096c4304fe32d551dbc5e872319dc06108772b8908e32a8ba7bd0f4dfd",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/utils/convexHull.js",
+      "blobOriginalGit": "ecc560b1aaeaf9706f41f5399e16d38373c82efd",
+      "sha256Referencia": "4ccd03bb3c9da6ff364b150a57200eb1ca7441e537ab4f031448a83ededa4892",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/utils/formatters.js",
+      "blobOriginalGit": "314bee8ff1644b9ee3cdf3ff3b56c58fd47fc394",
+      "sha256Referencia": "7e9aa8e12a154d17eecd8c640a64f53d440fde10121984ffd65d598babe50967",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/utils/geo.js",
+      "blobOriginalGit": "b24962123a1bdd088eb2d811e3b2a0af463cb718",
+      "sha256Referencia": "9e56fa63066cc3341ec067a66df3c37fcd355eedbe55eddb76b33172f8a01cef",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/utils/globalCities.js",
+      "blobOriginalGit": "88f48460ebf4513c251ce04fef6517241415b605",
+      "sha256Referencia": "0ef40465cc4282c407e2169cde411ee02f1e00ba133c7f7d98a6c1c7f27087db",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/utils/logger.js",
+      "blobOriginalGit": "b393ce4aa42f62d1433b68ca185a87c532179b2a",
+      "sha256Referencia": "147b6b09b478ec2aa868084e8759537984c12e70dc909e230d95e7a6b8a5c120",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/utils/metricIcons.js",
+      "blobOriginalGit": "4622cc34d73394cb643d20d33a31eb5d192eba1f",
+      "sha256Referencia": "010db66f87721e5f8b9ee6c27094957f5ab6227725c19a3701104e321bc9199b",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/utils/unidades.js",
+      "blobOriginalGit": "f7ada3bce7d2dda34a56387f621992c8176ede30",
+      "sha256Referencia": "213c1b823cf5166ec396c58a508444d19ca9b59fa386b94494788a16feebbed7",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/utils/weatherApi.js",
+      "blobOriginalGit": "5219fe03008bc02c8237581cb026304c84b24ee9",
+      "sha256Referencia": "873d3d823056880d9fe2a34ffa413197b3f491a1b59486c8c956f2dc7a8eb615",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/utils/weatherIcons.js",
+      "blobOriginalGit": "30de60607d59a923c9d8183e43a890cfe88e147d",
+      "sha256Referencia": "c471ccd5d10232b67796b6ef3ab0589fa76f840ca813263634e6af9a789d085c",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/utils/windMath.js",
+      "blobOriginalGit": "dbf4cf9e38cfbf0cad0bf8df2ce4eb7c024f27b3",
+      "sha256Referencia": "ae1759b7b6a0a8390a48afebc662ef400549135a6ab6c5ded451afd4b165a521",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/src/workers/weatherWorker.js",
+      "blobOriginalGit": "14fb674a2a85b995e9d84897ccab84d2c9a7b1e6",
+      "sha256Referencia": "319cba1757ed58f2ab5ab74e2a9ea7b226d7703783a833a8b468c6aac7ab19e7",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/tailwind.config.js",
+      "blobOriginalGit": "b9281798257402c015fe6f0d5e756d3080c80011",
+      "sha256Referencia": "e09f23581af672a98adda6da557d205e15f84d11efcfb257f0b457755d4324fd",
+      "cambios": []
+    },
+    {
+      "ruta": "Frontend/vite.config.js",
+      "blobOriginalGit": "a86c63789ad0fd2d7028aab37d261962a667148c",
+      "sha256Referencia": "7d76a0fd822f1237c6af6fa75f4d7c68f2f5d6f948b00e59b4189f87090c2270",
+      "cambios": []
+    },
+    {
+      "ruta": "GUIA_MIGRACION_PNPM.md",
+      "blobOriginalGit": "2bdc6c319765794bb90ddf61de94712d972c52bf",
+      "sha256Referencia": "c6ad3d9bd6f1505c7466346ae27442bb028f122a7369469f4644b986375bcf4c",
+      "cambios": []
+    },
+    {
+      "ruta": "data-worker/Dockerfile",
+      "blobOriginalGit": "cea7739c609c27c861d00df8c68dc69482d55c19",
+      "sha256Referencia": "28a81ba91d0b757b95c229b4733e3af3588c25668a3dea7d836ca84de7e0546c",
+      "cambios": []
+    },
+    {
+      "ruta": "database/esquema_envirosense.sql",
+      "blobOriginalGit": "322e36b493153e4bb62a12dbb57fbc5afffeeec1",
+      "sha256Referencia": "748cc52e5abf85b31e270f5eaebd9e7eadece74da72f377ab4c77e64d8fcecc3",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/01_geografia.sql",
+      "blobOriginalGit": "65080edc7fce08667f210de448fda6413085bf9b",
+      "sha256Referencia": "1679fca3d9cdfaf7ea26c9b186ba860ee11cf034e32efc7d544e619ee60c2ab6",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/01_sudamerica.sql",
+      "blobOriginalGit": "934dd53d5919bad511f1bc24dea634c431d53578",
+      "sha256Referencia": "0eb35c280c7366e764f0fa3bbb9e6b055b8fa1b1581a712ce8f10f63238aa7f7",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/02_umbrales.sql",
+      "blobOriginalGit": "f9d420972102029ad41c896e5d2b4a5906a50261",
+      "sha256Referencia": "f18ec059d5edf4211cd2cfa664373799239385a9ff2fb65aa8e288dcffc6a2c1",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/generate_geojson_seeds.js",
+      "blobOriginalGit": "33c0d9a9743574c03e2f1d639c5761d016d6487c",
+      "sha256Referencia": "cd6eecfa4e917de1bee082bab2f997ece27a484cb4e53d2cf57279fae29f2c8d",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/generate_historial.js",
+      "blobOriginalGit": "58aea3b639a9599417b5dc5e4d19ff38b0eff3a5",
+      "sha256Referencia": "77d45fb36529fb8ed30446f4bb2f9499205ddd9831ae2d955d7f5c054a956ffe",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/geojson/argentina_geojson.sql",
+      "blobOriginalGit": "a931391bde711bb91df5c485d968afebd517252b",
+      "sha256Referencia": "8a3e9e2aec6898912c1ea60fc9615cd77124691c6cb3fe55e9f3856a5a39accb",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/geojson/bolivia_geojson.sql",
+      "blobOriginalGit": "ba22d81efe6fa06b8ad5eed36bf6f6a04aab926e",
+      "sha256Referencia": "40676aab6e6afcebe3b8a603d6e061ed60f3b44231cfb0eaa51e88fa112edd76",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/geojson/brasil_geojson.sql",
+      "blobOriginalGit": "3febd9b310c6f8243d3fff3e504c133d6e8db3c9",
+      "sha256Referencia": "6ad50f84ac9206b8a00ab298b26d0d5550b4700f8877ba68cea74f44f979f272",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/geojson/chile_geojson.sql",
+      "blobOriginalGit": "f77c199cee5be7519e43f1ba69a3e03344cc338d",
+      "sha256Referencia": "cf37c92a8a47a34dff60e87a3a9d49ef1eb4d732e0c87c32d97a8259ef5579b1",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/geojson/colombia_geojson.sql",
+      "blobOriginalGit": "aeebd9d530d16f50d26ac074f5d28a435f308450",
+      "sha256Referencia": "bb646a552ab60fe28b9dd810c9070e014239415bbc68a849f0b16f8351194b61",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/geojson/ecuador_geojson.sql",
+      "blobOriginalGit": "bccb38e500e99bf0810efd8a1e77241972304de9",
+      "sha256Referencia": "8ad1e98914a0e595a83f40339539b19bef056f748b350629e5f111a1e8288a4e",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/geojson/guayana_francesa_geojson.sql",
+      "blobOriginalGit": "ab38c43350e71df9f8ff5c603ec868a5dcb6721a",
+      "sha256Referencia": "aa8d79e80075bfb5cb34da0cda9e9d9053f352f12a40642291aeae1e5c610f23",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/geojson/guyana_geojson.sql",
+      "blobOriginalGit": "0cd7780b0d1f66371273817bc4bd630ca344167d",
+      "sha256Referencia": "acbbad33a6cfa762d6f5da3c9e36e8dfd457fd322648f107aac81ae3c52a5c92",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/geojson/paraguay_geojson.sql",
+      "blobOriginalGit": "c7779a637ab458ac513c87c770968d47be575029",
+      "sha256Referencia": "6a47d5ec6b490a160ed13b97e570000de9cfc57c46264084b8345351f62d2a45",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/geojson/peru_geojson.sql",
+      "blobOriginalGit": "306f93f841d90e03567bc19f0aab799775df9e20",
+      "sha256Referencia": "5517a16aaacca719aed9b2739bf7b9db9e7be041d96b4ca39903f40358ea45ac",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/geojson/surinam_geojson.sql",
+      "blobOriginalGit": "54161f4456e93170fdcda4d8de58a9ea93636f29",
+      "sha256Referencia": "edc4f948ca26af9b6d6a2082847cadea993ae566bad1b0ed6ab62e8660e61bd5",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/geojson/uruguay_geojson.sql",
+      "blobOriginalGit": "19b13d5b6b76983d151f8e703504e84dcce2323b",
+      "sha256Referencia": "3e8047007c6058801570f99eb6344adef9ee4597f4506091d34208d084e10c5d",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/geojson/venezuela_geojson.sql",
+      "blobOriginalGit": "2ddf182da4051cbb72f659ee752d385ef0428457",
+      "sha256Referencia": "b008b7107597eb199a5888b35d65000a1daf9346409385dea36c4dc7de6eae36",
+      "cambios": []
+    },
+    {
+      "ruta": "database/seeds/load_geojson.sh",
+      "blobOriginalGit": "5bac5fb13845aec4ff15b1b2b2fbf3baacdb3280",
+      "sha256Referencia": "fd650ce302b228752cf5f89021a3cbeff0d2a0727368839aa44ffa4e6b3280f4",
+      "cambios": []
+    },
+    {
+      "ruta": "docker-compose.prod.yml",
+      "blobOriginalGit": "c068cb8d1070741b2762e103b3bc152846caf6ea",
+      "sha256Referencia": "32520cf80870590a9fbd7aecf122048e602f36c43ff78b2f0fa2594a70151ad3",
+      "cambios": []
+    },
+    {
+      "ruta": "docker-compose.yml",
+      "blobOriginalGit": "6576c553bca893e8055a0a6f0a136ae19de87e20",
+      "sha256Referencia": "8335ac23656f0e0e1f99de0557e66b4a46159cd8b6a9be9dd3326351f842f42a",
+      "cambios": []
+    },
+    {
+      "ruta": "nginx.conf",
+      "blobOriginalGit": "612cc60e729532292dabcca3639198f02ac8a2b6",
+      "sha256Referencia": "3610a024a180c80deb6614599987fd27398e3ecb275a40c1de187ff5459f7016",
+      "cambios": []
+    }
+  ]
+}

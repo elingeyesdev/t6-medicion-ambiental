@@ -1,0 +1,7 @@
+CORRECTO: 1 departamento, 15 provincias y 56 unidades de nivel municipal.
+CORRECTO: 72 geometrías, 323254 posiciones longitud/latitud y huellas SHA256 verificadas.
+CORRECTO: 244 comprobaciones de catálogo y filtros, incluidas las 56 relaciones municipales.
+Ejemplo válido: BO0701 + BO070101 = Santa Cruz de la Sierra.
+Ejemplo incompatible: BO0701 + BO070201 = FILTROS_INCOMPATIBLES.
+Estado: propuesta pendiente de revisión de Jaziel.
+La validez geométrica y cobertura completa se recalculan con herramientas/validar_geometrias.py.

@@ -1,0 +1,155 @@
+/* ==========================================================
+   PageHeader · placeholders · compartido
+   ========================================================== */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* ─── Page header editorial ─── */
+.page-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: end;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.page-eyebrow {
+  font: 600 10.5px/1 'Space Grotesk', sans-serif;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.page-eyebrow::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+}
+
+.page-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.page-heading em { font-style: italic; color: var(--accent); }
+
+.page-desc {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  max-width: 620px;
+}
+
+.page-tag {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-panel);
+  color: var(--text-secondary);
+  font: 600 10px/1 'Space Grotesk', sans-serif;
+  padding: 6px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+/* ─── Placeholder card (editorial) ─── */
+.placeholder-card {
+  background-color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 72px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  box-shadow: none;
+  position: relative;
+  overflow: hidden;
+}
+.placeholder-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent);
+}
+
+.placeholder-icon {
+  font-size: 42px;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+.placeholder-card h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.placeholder-card h3 em { font-style: italic; color: var(--accent); }
+
+.placeholder-card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 520px;
+  line-height: 1.6;
+}
+
+.placeholder-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.chip {
+  font: 500 11px/1 'Space Grotesk', sans-serif;
+  padding: 6px 11px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+  background: var(--bg-app);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.chip--air     { background: #3A506B;   color: var(--text-secondary);  border-color: transparent; }
+.chip--water   { background: var(--river-soft);  color: var(--text-secondary);          border-color: transparent; }
+.chip--noise   { background: var(--amber-soft);  color: var(--text-secondary);          border-color: transparent; }
+.chip--climate { background: var(--violet-soft); color: var(--text-secondary);          border-color: transparent; }
+
+.placeholder-pending {
+  margin-top: 8px;
+  font: 500 11px/1 'Space Grotesk', sans-serif;
+  color: var(--text-secondary);
+  background: var(--bg-app);
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px dashed var(--border-color);
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 700px) {
+  .page-heading { font-size: 30px; }
+  .page-header { grid-template-columns: 1fr; }
+  .placeholder-card { padding: 48px 20px; }
+}

@@ -1,0 +1,24 @@
+GeoCruz - Demostracion de la API real de NASA
+Consulta al backend: http://127.0.0.1:8002/api/v1/focos-calor?desde=2026-10-17T00:00:00Z&hasta=2026-10-18T00:00:00Z&tamanioPagina=500&confianza=alta
+Esperando respuesta externa o una instantanea vigente del backend...
+
+Fuente: NASA FIRMS; producto: VIIRS_SNPP_NRT; naturaleza: observacion
+Territorio: Santa Cruz completo; ID BO07
+Periodo UTC: 2026-10-17T00:00:00Z incluido -> 2026-10-18T00:00:00Z excluido
+Equivalente Bolivia UTC-4: 2026-10-16 20:00 -> 2026-10-17 20:00
+Filtro de confianza: alta
+Obtencion: cache; recuperacion UTC: 2026-10-18T06:22:28Z
+Antiguedad al responder: 71 segundos; vence: 2026-10-18T06:37:28Z
+Actualizacion del producto: Sin dato
+Detecciones en todo el conjunto filtrado: 0
+Confianza alta: 0
+FRP maxima: Sin dato MW
+Registros con faltantes: 0
+Pagina actual: 1; registros recibidos: 0; alcance del mapa: pagina
+Cobertura: desconocida
+Fundamento: Disponibilidad temporal publicada; las detecciones no acreditan observación completa de cada municipio. Filas inválidas y períodos no disponibles se advierten.
+Sin detecciones en esta pagina. No demuestra ausencia de incendios.
+
+Interpretacion: detecciones termicas, no incendios confirmados. Confianza no es gravedad; MW no mide superficie quemada.
+Recuperacion no equivale a adquisicion. Catalogo y contrato candidatos: revision del equipo pendiente.
+La API devuelve JSON; el mapa web corresponde a #19.

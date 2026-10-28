@@ -1,0 +1,14 @@
+{
+  "fechaUtc": "2026-10-16T12:37:47+00:00",
+  "tipo": "verificacion_documental_y_salud_local",
+  "enlacesLocalesResueltos": 25,
+  "evidenciasOriginalesConHuellasCorrectas": 10,
+  "urlSalud": "http://127.0.0.1:8003/api/salud",
+  "salud": {
+    "servicio": "GeoCruz",
+    "estado": "disponible",
+    "alcance": "aplicacion",
+    "fecha": "2026-10-16T12:37:47+00:00"
+  },
+  "alcance": "No se ejecuta Flutter ni una comparación web/móvil; no se repiten las suites heredadas ni una consulta NASA."
+}

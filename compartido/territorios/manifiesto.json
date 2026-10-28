@@ -1,0 +1,12 @@
+{
+  "versionCatalogo": "scz-codab-v02-1.0.0-propuesta",
+  "archivos": {
+    "datos/catalogo.json": "4144d8ecc598d5cdacb4ef5d14c9dbf96f29ff5d7482fe3c660c192459d2c2c8",
+    "datos/limites/departamentos.geojson": "9b04b7a4b8b75dd1e7cbe5abd95da68d1ae6368ce629e3aa7397968d65cf547b",
+    "datos/limites/municipios.geojson": "d9293e6f8805fced5eca24b9b90882bc461c5a1390ddac4cd1cfc4a1dd06c83d",
+    "datos/limites/provincias.geojson": "d544dbb1defe2cd10cd0e6c9b46aebf645f97411a9b94c905c45abbdc72f4d47",
+    "fuentes/conciliacion_nombres.json": "c06b426978161bbe3389b123e57948c083dc8fb21eb62ae2bb2678df863664ca",
+    "fuentes/fuentes.json": "7d6463eff649d735c10c63cc20f6927290bc6e1f2c422829dd6579de8a0cf09e",
+    "fuentes/nombres_ine_2024.json": "36563d03ed3ed77629e9169b573e72adb05c211032549bac17eecb90adfe273f"
+  }
+}

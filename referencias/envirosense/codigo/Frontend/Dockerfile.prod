@@ -1,0 +1,59 @@
+# ==========================================
+# Etapa 1: Builder
+# ==========================================
+FROM node:22-alpine AS builder
+
+WORKDIR /app
+
+# Variables de entorno requeridas para Vite en tiempo de build
+ARG VITE_MAPBOX_TOKEN
+ARG VITE_FIREBASE_API_KEY
+ARG VITE_FIREBASE_AUTH_DOMAIN
+ARG VITE_FIREBASE_PROJECT_ID
+ARG VITE_FIREBASE_MESSAGING_SENDER_ID
+ARG VITE_FIREBASE_APP_ID
+ARG VITE_FIREBASE_VAPID_KEY
+ARG VITE_API_URL
+ARG VITE_MAP_DATA_URL
+
+# Las exportamos como ENV para que Vite las lea durante el "pnpm run build"
+ENV VITE_MAPBOX_TOKEN=$VITE_MAPBOX_TOKEN \
+    VITE_FIREBASE_API_KEY=$VITE_FIREBASE_API_KEY \
+    VITE_FIREBASE_AUTH_DOMAIN=$VITE_FIREBASE_AUTH_DOMAIN \
+    VITE_FIREBASE_PROJECT_ID=$VITE_FIREBASE_PROJECT_ID \
+    VITE_FIREBASE_MESSAGING_SENDER_ID=$VITE_FIREBASE_MESSAGING_SENDER_ID \
+    VITE_FIREBASE_APP_ID=$VITE_FIREBASE_APP_ID \
+    VITE_FIREBASE_VAPID_KEY=$VITE_FIREBASE_VAPID_KEY \
+    VITE_API_URL=$VITE_API_URL \
+    VITE_MAP_DATA_URL=$VITE_MAP_DATA_URL
+
+# Copiar archivos de dependencias
+COPY package.json pnpm-lock.yaml ./
+
+ENV CI=true
+RUN npm install -g pnpm@11.4.0 && \
+    pnpm install --no-frozen-lockfile --ignore-scripts
+
+# Copiar el código fuente
+COPY . .
+
+# Compilar la aplicación React/Vite
+RUN pnpm run build
+
+# ==========================================
+# Etapa 2: Producción (Nginx)
+# ==========================================
+FROM nginx:1.25-alpine
+
+# Limpiar configuración por defecto
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copiar los archivos estáticos desde el builder
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Configurar Nginx: no hace falta sobreescribir default.conf aquí, 
+# usaremos el nginx.conf montado en docker-compose.prod.yml
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

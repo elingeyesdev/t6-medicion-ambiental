@@ -1,0 +1,1372 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "GeoCruz API compartida M2",
+    "version": "1.0-m2-candidata",
+    "description": "Implementación de #18 basada en DOC-12. Revisión y adopción territorial pendientes. Consulta pública; claves NASA solo en backend. Ver README.md para filtros, cobertura, caché, límites e interpretación."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8002",
+      "description": "Desarrollo local de #18; en despliegue usar su host HTTPS."
+    }
+  ],
+  "paths": {
+    "/api/v1/territorios": {
+      "get": {
+        "operationId": "listarTerritorios",
+        "summary": "Catálogo candidato de #16",
+        "parameters": [
+          {
+            "name": "tipo",
+            "in": "query",
+            "required": false,
+            "description": "",
+            "schema": {
+              "enum": [
+                "departamento",
+                "provincia",
+                "municipio"
+              ]
+            }
+          },
+          {
+            "name": "padre",
+            "in": "query",
+            "required": false,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000000,
+              "default": 1
+            }
+          },
+          {
+            "name": "tamanioPagina",
+            "in": "query",
+            "required": false,
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500,
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resultado válido; puede estar vacío o ser parcial.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespuestaCatalogo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conjunto expirado o filtros cambiados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Filtros inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Límite de solicitudes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno controlado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Proveedor, módulo o catálogo no disponible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/territorios/{identificador}/limite": {
+      "get": {
+        "operationId": "obtenerLimite",
+        "parameters": [
+          {
+            "name": "identificador",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resultado válido; puede estar vacío o ser parcial.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespuestaLimite"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conjunto expirado o filtros cambiados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Filtros inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Límite de solicitudes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno controlado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Proveedor, módulo o catálogo no disponible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/focos-calor": {
+      "get": {
+        "operationId": "consultarFocosCalor",
+        "summary": "VIIRS_SNPP_NRT externo, máximo 168 horas, final excluido",
+        "parameters": [
+          {
+            "name": "desde",
+            "in": "query",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "hasta",
+            "in": "query",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "provincia",
+            "in": "query",
+            "required": false,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "municipio",
+            "in": "query",
+            "required": false,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "confianza",
+            "in": "query",
+            "required": false,
+            "description": "",
+            "schema": {
+              "enum": [
+                "alta",
+                "nominal",
+                "baja",
+                "desconocida"
+              ]
+            }
+          },
+          {
+            "name": "modo",
+            "in": "query",
+            "required": false,
+            "description": "demostracion devuelve 503; no hay sustitución ficticia.",
+            "schema": {
+              "enum": [
+                "externo",
+                "demostracion"
+              ],
+              "default": "externo"
+            }
+          },
+          {
+            "name": "versionConjunto",
+            "in": "query",
+            "required": false,
+            "description": "Obligatorio desde pagina 2. UUID recibido; mismos filtros; expira a los 15 minutos.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000000,
+              "default": 1
+            }
+          },
+          {
+            "name": "tamanioPagina",
+            "in": "query",
+            "required": false,
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500,
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resultado válido; puede estar vacío o ser parcial.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespuestaFocos"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conjunto expirado o filtros cambiados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Filtros inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Límite de solicitudes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno controlado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Proveedor, módulo o catálogo no disponible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sequias": {
+      "get": {
+        "summary": "Integración pendiente; responde 503",
+        "responses": {
+          "503": {
+            "description": "Proveedor, módulo o catálogo no disponible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/inundaciones": {
+      "get": {
+        "summary": "Integración pendiente; responde 503",
+        "responses": {
+          "503": {
+            "description": "Proveedor, módulo o catálogo no disponible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/deforestacion": {
+      "get": {
+        "summary": "Integración pendiente; responde 503",
+        "responses": {
+          "503": {
+            "description": "Proveedor, módulo o catálogo no disponible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/calidad-aire": {
+      "get": {
+        "summary": "Integración pendiente; responde 503",
+        "responses": {
+          "503": {
+            "description": "Proveedor, módulo o catálogo no disponible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Territorio": {
+        "type": "object",
+        "required": [
+          "identificador",
+          "tipo",
+          "departamento",
+          "provincia",
+          "municipio",
+          "fuenteCatalogo",
+          "versionCatalogo",
+          "motivoAsignacion"
+        ],
+        "properties": {
+          "identificador": {
+            "type": "string"
+          },
+          "tipo": {
+            "enum": [
+              "departamento",
+              "provincia",
+              "municipio"
+            ]
+          },
+          "departamento": {
+            "type": "string"
+          },
+          "provincia": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "municipio": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "fuenteCatalogo": {
+            "type": "string"
+          },
+          "versionCatalogo": {
+            "type": "string"
+          },
+          "motivoAsignacion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "Paginacion": {
+        "type": "object",
+        "required": [
+          "pagina",
+          "tamanioPagina",
+          "total",
+          "siguiente",
+          "versionConjunto"
+        ],
+        "properties": {
+          "pagina": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "tamanioPagina": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "siguiente": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "versionConjunto": {
+            "type": "string"
+          }
+        }
+      },
+      "Faltante": {
+        "type": "object",
+        "required": [
+          "campo",
+          "motivo"
+        ],
+        "properties": {
+          "campo": {
+            "type": "string"
+          },
+          "motivo": {
+            "type": "string"
+          }
+        }
+      },
+      "Indicador": {
+        "type": "object",
+        "required": [
+          "codigo",
+          "valor",
+          "unidad",
+          "registrosValidos",
+          "metodo",
+          "naturaleza"
+        ],
+        "properties": {
+          "codigo": {
+            "type": "string"
+          },
+          "valor": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "unidad": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "registrosValidos": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "metodo": {
+            "type": "string"
+          },
+          "naturaleza": {
+            "const": "observacion"
+          }
+        }
+      },
+      "Foco": {
+        "type": "object",
+        "required": [
+          "identificador",
+          "territorio",
+          "geometria",
+          "referenciaCapa",
+          "fechas",
+          "naturaleza",
+          "fuentesRef",
+          "metodo",
+          "atributos",
+          "faltantes"
+        ],
+        "properties": {
+          "identificador": {
+            "type": "string"
+          },
+          "territorio": {
+            "$ref": "#/components/schemas/Territorio"
+          },
+          "geometria": {
+            "type": "object",
+            "required": [
+              "type",
+              "coordinates"
+            ],
+            "properties": {
+              "type": {
+                "const": "Point"
+              },
+              "coordinates": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "prefixItems": [
+                  {
+                    "type": "number",
+                    "minimum": -180,
+                    "maximum": 180
+                  },
+                  {
+                    "type": "number",
+                    "minimum": -90,
+                    "maximum": 90
+                  }
+                ]
+              }
+            }
+          },
+          "referenciaCapa": {
+            "type": "null"
+          },
+          "fechas": {
+            "type": "object",
+            "required": [
+              "observadoDesde",
+              "observadoHasta",
+              "procesadoEn",
+              "emitidoEn"
+            ],
+            "properties": {
+              "observadoDesde": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "observadoHasta": {
+                "type": "null"
+              },
+              "procesadoEn": {
+                "type": "null"
+              },
+              "emitidoEn": {
+                "type": "null"
+              }
+            }
+          },
+          "naturaleza": {
+            "const": "observacion"
+          },
+          "fuentesRef": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "metodo": {
+            "type": "null"
+          },
+          "atributos": {
+            "type": "object",
+            "required": [
+              "satelite",
+              "instrumento",
+              "confianza",
+              "confianzaOriginal",
+              "potenciaRadiativa",
+              "unidadPotenciaRadiativa",
+              "versionOriginal"
+            ],
+            "properties": {
+              "satelite": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "instrumento": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "confianza": {
+                "enum": [
+                  "alta",
+                  "nominal",
+                  "baja",
+                  "desconocida"
+                ]
+              },
+              "confianzaOriginal": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "potenciaRadiativa": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "unidadPotenciaRadiativa": {
+                "const": "MW"
+              },
+              "versionOriginal": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "faltantes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Faltante"
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "codigo",
+              "mensaje",
+              "identificadorConsulta",
+              "campos"
+            ],
+            "properties": {
+              "codigo": {
+                "type": "string"
+              },
+              "mensaje": {
+                "type": "string"
+              },
+              "identificadorConsulta": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "campos": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Faltante"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RespuestaFocos": {
+        "type": "object",
+        "required": [
+          "versionContrato",
+          "datos",
+          "consulta",
+          "fuentes",
+          "resumen",
+          "cobertura",
+          "advertencias",
+          "paginacion",
+          "representacionMapa"
+        ],
+        "properties": {
+          "versionContrato": {
+            "const": "1.0-m2-candidata"
+          },
+          "datos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Foco"
+            }
+          },
+          "consulta": {
+            "type": "object",
+            "required": [
+              "identificador",
+              "modulo",
+              "modo",
+              "filtrosSolicitados",
+              "filtrosEfectivos",
+              "territorio",
+              "periodo",
+              "fechaConsulta",
+              "obtencion"
+            ],
+            "properties": {
+              "identificador": {
+                "type": "string"
+              },
+              "modulo": {
+                "const": "focos-calor"
+              },
+              "modo": {
+                "const": "externo"
+              },
+              "filtrosSolicitados": {
+                "type": "object"
+              },
+              "filtrosEfectivos": {
+                "type": "object"
+              },
+              "territorio": {
+                "$ref": "#/components/schemas/Territorio"
+              },
+              "periodo": {
+                "type": "object",
+                "required": [
+                  "desde",
+                  "hasta",
+                  "resolucion",
+                  "regla"
+                ],
+                "properties": {
+                  "desde": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "hasta": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "resolucion": {
+                    "type": "string"
+                  },
+                  "regla": {
+                    "const": "final_excluido"
+                  }
+                }
+              },
+              "fechaConsulta": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "obtencion": {
+                "type": "object",
+                "required": [
+                  "tipo",
+                  "fechaRecuperacion",
+                  "fechaActualizacion",
+                  "antiguedadSegundos",
+                  "expiraEn"
+                ],
+                "properties": {
+                  "tipo": {
+                    "enum": [
+                      "consulta_proveedor",
+                      "cache"
+                    ]
+                  },
+                  "fechaRecuperacion": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "fechaActualizacion": {
+                    "type": "null"
+                  },
+                  "antiguedadSegundos": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "expiraEn": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          },
+          "fuentes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "identificador",
+                "proveedor",
+                "producto",
+                "version",
+                "referencia",
+                "naturaleza",
+                "resolucion"
+              ],
+              "properties": {
+                "identificador": {
+                  "type": "string"
+                },
+                "proveedor": {
+                  "type": "string"
+                },
+                "producto": {
+                  "type": "string"
+                },
+                "version": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "referencia": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "naturaleza": {
+                  "const": "observacion"
+                },
+                "resolucion": {
+                  "type": "object",
+                  "required": [
+                    "valor",
+                    "unidad",
+                    "descripcion"
+                  ],
+                  "properties": {
+                    "valor": {
+                      "type": "number"
+                    },
+                    "unidad": {
+                      "type": "string"
+                    },
+                    "descripcion": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "resumen": {
+            "type": "object",
+            "required": [
+              "totalRegistros",
+              "registrosValidos",
+              "registrosConFaltantes",
+              "indicadores"
+            ],
+            "properties": {
+              "totalRegistros": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "registrosValidos": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "registrosConFaltantes": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "indicadores": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Indicador"
+                }
+              }
+            }
+          },
+          "cobertura": {
+            "type": "object",
+            "required": [
+              "estado",
+              "fundamento",
+              "referenciaEvidencia",
+              "periodoDisponible",
+              "ambitoDisponible"
+            ],
+            "properties": {
+              "estado": {
+                "enum": [
+                  "desconocida",
+                  "parcial",
+                  "sin_cobertura"
+                ]
+              },
+              "fundamento": {
+                "type": "string"
+              },
+              "referenciaEvidencia": {
+                "type": "string",
+                "format": "uri"
+              },
+              "periodoDisponible": {
+                "type": "object",
+                "required": [
+                  "desde",
+                  "hasta"
+                ],
+                "properties": {
+                  "desde": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "hasta": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              },
+              "ambitoDisponible": {
+                "type": "string"
+              }
+            }
+          },
+          "advertencias": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "codigo",
+                "mensaje"
+              ],
+              "properties": {
+                "codigo": {
+                  "type": "string"
+                },
+                "mensaje": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "paginacion": {
+            "$ref": "#/components/schemas/Paginacion"
+          },
+          "representacionMapa": {
+            "type": "object",
+            "required": [
+              "alcance",
+              "descripcion",
+              "referenciaCapa"
+            ],
+            "properties": {
+              "alcance": {
+                "const": "pagina"
+              },
+              "descripcion": {
+                "type": "string"
+              },
+              "referenciaCapa": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      },
+      "ElementoCatalogo": {
+        "type": "object",
+        "required": [
+          "identificador",
+          "nombre",
+          "tipo",
+          "padre"
+        ],
+        "properties": {
+          "identificador": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "tipo": {
+            "enum": [
+              "departamento",
+              "provincia",
+              "municipio"
+            ]
+          },
+          "padre": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "RespuestaCatalogo": {
+        "type": "object",
+        "required": [
+          "versionContrato",
+          "datos",
+          "catalogo",
+          "consulta",
+          "paginacion"
+        ],
+        "properties": {
+          "versionContrato": {
+            "const": "1.0-m2-candidata"
+          },
+          "datos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ElementoCatalogo"
+            }
+          },
+          "catalogo": {
+            "type": "object",
+            "required": [
+              "fuente",
+              "version",
+              "estado",
+              "fechaActualizacion",
+              "fechaGeometrias",
+              "licencia",
+              "atribucion"
+            ],
+            "properties": {
+              "fuente": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "estado": {
+                "type": "string"
+              },
+              "fechaActualizacion": {
+                "type": "null"
+              },
+              "fechaGeometrias": {
+                "type": "string",
+                "format": "date"
+              },
+              "licencia": {
+                "type": "string"
+              },
+              "atribucion": {
+                "type": "string"
+              }
+            }
+          },
+          "consulta": {
+            "type": "object",
+            "required": [
+              "tipo",
+              "padre",
+              "fechaConsulta"
+            ],
+            "properties": {
+              "tipo": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "padre": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "fechaConsulta": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "paginacion": {
+            "$ref": "#/components/schemas/Paginacion"
+          }
+        }
+      },
+      "RespuestaLimite": {
+        "type": "object",
+        "required": [
+          "versionContrato",
+          "territorio",
+          "limite",
+          "procedencia"
+        ],
+        "properties": {
+          "versionContrato": {
+            "const": "1.0-m2-candidata"
+          },
+          "territorio": {
+            "$ref": "#/components/schemas/Territorio"
+          },
+          "limite": {
+            "type": "object",
+            "required": [
+              "type",
+              "geometry",
+              "properties"
+            ],
+            "properties": {
+              "type": {
+                "const": "Feature"
+              },
+              "geometry": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "coordinates"
+                ],
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "Polygon",
+                      "MultiPolygon"
+                    ]
+                  },
+                  "coordinates": {
+                    "type": "array"
+                  }
+                }
+              },
+              "properties": {
+                "type": "object"
+              }
+            }
+          },
+          "procedencia": {
+            "type": "object",
+            "required": [
+              "fuente",
+              "version",
+              "estado",
+              "fechaActualizacion",
+              "fechaGeometrias",
+              "licencia",
+              "referencia",
+              "atribucion"
+            ],
+            "properties": {
+              "fuente": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "estado": {
+                "type": "string"
+              },
+              "fechaActualizacion": {
+                "type": "null"
+              },
+              "fechaGeometrias": {
+                "type": "string",
+                "format": "date"
+              },
+              "licencia": {
+                "type": "string"
+              },
+              "referencia": {
+                "type": "string",
+                "format": "uri"
+              },
+              "atribucion": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
