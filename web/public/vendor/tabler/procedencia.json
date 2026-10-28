@@ -1,0 +1,22 @@
+{
+  "paquete": "@tabler/core",
+  "version": "1.7.1",
+  "fuente": "https://github.com/tabler/tabler/releases/tag/%40tabler/core%401.7.1",
+  "distribucion": "https://registry.npmjs.org/@tabler/core/-/core-1.7.1.tgz",
+  "integridadNpm": "sha512-sC42sr/uslr7kIZwyBPESWJKRm1E4hYAMMZyLDoyG0ZlEOlglRW0L5c1gf8x6i+QApT+AtHm10fDP1j2WgQJpg==",
+  "licencia": "https://api.github.com/repos/tabler/tabler/contents/LICENSE?ref=%40tabler%2Fcore%401.7.1",
+  "archivos": [
+    {
+      "archivo": "tabler.min.css",
+      "sha256": "dcf84d7b4319c29ab33450bfe2a7bbf607458d994ef71023f7509e912cafdbd5"
+    },
+    {
+      "archivo": "tabler.min.js",
+      "sha256": "2a3b9ecae44d821b21ba4521da33fca1bdc692454745536418c4e078e8ba6abf"
+    },
+    {
+      "archivo": "LICENSE",
+      "sha256": "4f88a82d13be3c5c63a12c5631eae914aa4381b6dc17641bf1ab85f3f8f6c8a5"
+    }
+  ]
+}

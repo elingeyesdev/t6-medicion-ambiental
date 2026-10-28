@@ -22,6 +22,7 @@
 **/storage/framework/cache/data/*
 **/storage/framework/sessions/*
 **/storage/framework/views/*.php
+**/storage/framework/views-pruebas/
 **/bootstrap/cache/*.php
 **/android/local.properties
 **/android/key.properties

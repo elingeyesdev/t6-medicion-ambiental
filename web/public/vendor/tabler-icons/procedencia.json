@@ -1,0 +1,36 @@
+{
+  "paquete": "@tabler/icons",
+  "version": "3.49.0",
+  "distribucion": "https://registry.npmjs.org/@tabler/icons/-/icons-3.49.0.tgz",
+  "integridadNpm": "sha512-l+GnSkFETx0U26icxv1VUFnxxiTqXfCcVRiRAnyMwibupM2S2L/hSaZ9gmSgz01rkrsH/93NvLsxykqdanc6lw==",
+  "archivos": [
+    {
+      "archivo": "arrow-right.svg",
+      "sha256": "fbd84a5780a8b2c6d4efc5f3376675e999d11eb43fadf7b9cbf2848b3120a7da"
+    },
+    {
+      "archivo": "cloud-rain.svg",
+      "sha256": "c931ec03c39df776f5dd9e57d17eeac38ec2488593f60ca5bbf7467d0f93a857"
+    },
+    {
+      "archivo": "flame.svg",
+      "sha256": "79132f59cc962ad34e7cc863def86b8b1e425058dc80dd10dd231b2c02379b5e"
+    },
+    {
+      "archivo": "layout-dashboard.svg",
+      "sha256": "8be5a8c5feb592d921b87a1bd17024e65f57b6de78fe83c5a1af93eaeafa403d"
+    },
+    {
+      "archivo": "LICENSE",
+      "sha256": "b740a1d46122672da62833e97f7e7c8a13fa85cbc7445b584b297cc00dde93db"
+    },
+    {
+      "archivo": "map-pin.svg",
+      "sha256": "4ca0c252b79ea1dd51d6ad73e4187427a32db8b5d8b5225b40c3b5e132c4824c"
+    },
+    {
+      "archivo": "world.svg",
+      "sha256": "25fd225860a3fefe84a028c0dc88b9335c9fca1d8e4b72f5f441f2e9c81c4a68"
+    }
+  ]
+}

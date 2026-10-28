@@ -21,7 +21,7 @@ export class VistaSequias {
         poner('sq-obtencion', `Publicación preparada · fuente recuperada ${fecha(c.obtencion.obtenidoEn)}. Vigencia técnica hasta ${fecha(c.obtencion.vigenteHasta)}; no indica condiciones actuales.`);
         poner('sq-total', numero(s.totalMuestras)); poner('sq-seleccionadas', `de ${numero(cobertura.muestrasSeleccionadas)} muestras seleccionadas`);
         poner('sq-minimo', numero(s.spiMinimo)); poner('sq-sin-indice', numero(s.muestrasSinIndice)); poner('sq-pendientes', numero(cobertura.muestrasSinPreparar.length));
-        poner('sq-cobertura', `${cobertura.estadoDatos === 'parcial' ? 'Cobertura parcial. ' : ''}Municipios con muestras publicadas: ${cobertura.municipiosConDatos} de ${cobertura.municipiosEnFiltro}. Celdas únicas: ${cobertura.celdasUnicas}. No representa superficie ni promedio municipal. Un SPI normal en una muestra no descarta daños en otros lugares.`);
+        poner('sq-cobertura', `${cobertura.estadoDatos === 'parcial' ? 'Cobertura parcial · ' : ''}${cobertura.municipiosConDatos}/${cobertura.municipiosEnFiltro} municipios · ${cobertura.celdasUnicas} celdas publicadas.`);
         const lista = document.getElementById('sq-lista'); lista.replaceChildren();
         poner('sq-conteo', `${r.datos.length} en el conjunto`);
         for (const d of r.datos) {

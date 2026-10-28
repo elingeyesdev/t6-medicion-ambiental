@@ -2,11 +2,18 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class VisorFocosTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAs(User::factory()->make(['id' => 1]));
+    }
+
     public function test_visores_html_no_consultan_nasa_y_ofrecen_el_recorrido_accesible(): void
     {
         config(['focos.clave' => 'secretoLocalSoloParaProbar']);
@@ -22,7 +29,7 @@ class VisorFocosTest extends TestCase
 
     public function test_el_inicio_diferencia_el_modulo_disponible_de_los_pendientes(): void
     {
-        $this->get('/')->assertOk()->assertSee('Consulta disponible')->assertSee('los otros tres módulos siguen en preparación');
+        $this->get('/')->assertOk()->assertSee('Abrir Focos de calor')->assertDontSee('en preparación');
         $this->get('/modulos/sequias')->assertOk()->assertSee('id="sq-formulario"', false)->assertDontSee('Este módulo está en preparación');
         Http::assertNothingSent();
     }

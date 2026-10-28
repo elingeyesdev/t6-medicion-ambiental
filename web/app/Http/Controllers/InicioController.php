@@ -10,12 +10,12 @@ class InicioController extends Controller
 {
     public function index(): View
     {
-        return view('inicio', ['modulos' => config('geocruz.modulos')]);
+        return view('modulos.focos-calor.index', ['modulos' => $this->modulosDisponibles(), 'esInicio' => true]);
     }
 
     public function modulo(string $modulo, CatalogoTerritorial $territorios, CatalogoMuestrasSequias $muestras): View
     {
-        $modulos = config('geocruz.modulos');
+        $modulos = $this->modulosDisponibles();
         abort_unless(array_key_exists($modulo, $modulos), 404);
 
         $datos = [
@@ -33,9 +33,13 @@ class InicioController extends Controller
         }
 
         return view(match ($modulo) {
-            'focos-calor' => 'focos-calor.index',
-            'sequias' => 'sequias.index',
-            default => 'modulo',
+            'focos-calor' => 'modulos.focos-calor.index',
+            'sequias' => 'modulos.sequias.index',
         }, $datos);
+    }
+
+    private function modulosDisponibles(): array
+    {
+        return array_filter(config('geocruz.modulos'), fn (array $modulo): bool => $modulo['habilitado']);
     }
 }

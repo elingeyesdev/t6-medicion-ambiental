@@ -2,11 +2,18 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class VisorSequiasTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAs(User::factory()->make(['id' => 1]));
+    }
+
     public function test_la_pantalla_no_descarga_lluvia_ni_publica_indices_al_abrirse(): void
     {
         Http::preventStrayRequests();
@@ -34,9 +41,9 @@ class VisorSequiasTest extends TestCase
 
     public function test_la_navegacion_diferencia_sequias_por_muestras_y_modulos_pendientes(): void
     {
-        $this->get('/')->assertOk()->assertSee('Cobertura por muestras')->assertSee('los otros tres módulos siguen en preparación');
+        $this->get('/')->assertOk()->assertSee('Abrir Sequías')->assertDontSee('en preparación');
         foreach (['inundaciones', 'deforestacion', 'calidad-aire'] as $id) {
-            $this->get('/modulos/'.$id)->assertOk()->assertSee('Este módulo está en preparación');
+            $this->get('/modulos/'.$id)->assertNotFound();
         }
     }
 }
