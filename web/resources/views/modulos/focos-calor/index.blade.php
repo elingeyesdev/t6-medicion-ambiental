@@ -12,11 +12,9 @@
     @include('modulos.focos-calor.mapa')
     <div class="enviro-controles">
         <details class="enviro-consulta" id="controles-mapa" open>
-            <summary class="enviro-consulta-titulo"><x-panel.icono nombre="flame" /><span><small>Monitoreo ambiental</small><h1>Focos de calor</h1></span><span class="enviro-plegar" aria-hidden="true">⌃</span></summary>
+            <summary class="enviro-consulta-titulo"><x-panel.icono nombre="flame" /><h1>Focos de calor</h1><span class="enviro-plegar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg></span></summary>
             <div class="enviro-consulta-cuerpo">
-                <span class="fuente-insignia">NASA FIRMS · VIIRS</span>
                 @include('modulos.focos-calor.filtros')
-                <p class="nota-interpretacion">Una detección térmica <strong>no confirma un incendio</strong>.</p>
             </div>
         </details>
         @include('modulos.focos-calor.estado')

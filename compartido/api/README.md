@@ -70,3 +70,7 @@ El navegador muestra JSON; el mapa y la pantalla funcional corresponden a #19. F
 - [NASA disponibilidad por producto](https://firms.modaps.eosdis.nasa.gov/api/data_availability/).
 - [Atributos oficiales VIIRS: UTC, confianza y FRP](https://firms.modaps.eosdis.nasa.gov/content/descriptions/FIRMS_VIIRS_Firehotspots.html).
 - [Procedencia, fechas y licencia del catálogo](../territorios/README.md).
+
+## Cambio de validación en M3 · #60
+
+Las consultas de focos conservan un período positivo de máximo 168 horas y ahora rechazan `hasta` posterior al instante actual del servidor, antes de llamar al proveedor, con 422 / `FILTROS_INVALIDOS`. Web abre con los últimos siete días y ofrece 24 horas/siete días. Flutter debe aplicar la misma restricción y conservar el mensaje de error; no cambia el formato UTC de las respuestas ni la interpretación de faltantes.

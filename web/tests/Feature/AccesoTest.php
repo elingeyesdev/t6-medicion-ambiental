@@ -14,7 +14,9 @@ class AccesoTest extends TestCase
 
     public function test_el_inicio_conserva_marca_acceso_y_modulos_sin_cifras_ficticias(): void
     {
-        $this->get('/')->assertOk()->assertSee('EnviroSense')->assertSee('Ingresar')
+        $this->get('/')->assertOk()->assertSee('GeoSur')->assertSee('Ingresar')
+            ->assertSee('Qué quieres consultar')->assertSee('href="#explorar"', false)
+            ->assertDontSeeText('Módulos')->assertDontSeeText('EnviroSense')
             ->assertSee(route('register'), false)->assertSee('Entrar al mapa')
             ->assertSee('vendor/tabler/tabler.min.css')->assertDontSee('45K+')
             ->assertDontSee('en preparación');

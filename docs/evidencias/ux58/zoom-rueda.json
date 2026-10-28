@@ -1,0 +1,18 @@
+{
+  "antes": {
+    "dpr": 1.0000000298023224,
+    "escala": 1,
+    "niveles": [
+      6
+    ],
+    "pagina": 0
+  },
+  "despues": {
+    "dpr": 1.0000000298023224,
+    "escala": 1,
+    "niveles": [
+      10
+    ],
+    "pagina": 0
+  }
+}

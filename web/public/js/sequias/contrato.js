@@ -25,7 +25,7 @@ export class ErrorConsulta extends Error {
 export async function pedirJson(url, signal) {
     let respuesta;
     try { respuesta = await fetch(url, { signal, headers: { Accept: 'application/json' }, credentials: 'same-origin', cache: 'no-store' }); }
-    catch (e) { if (signal?.aborted) throw e; throw new ErrorConsulta('No se pudo conectar con GeoCruz. Revisa la conexión y reintenta.'); }
+    catch (e) { if (signal?.aborted) throw e; throw new ErrorConsulta('No se pudo conectar con GeoSur. Revisa la conexión y reintenta.'); }
     let datos;
     try { datos = await respuesta.json(); }
     catch { throw new ErrorConsulta('El servidor no devolvió JSON legible.', 'RESPUESTA_INVALIDA'); }

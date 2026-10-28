@@ -1,9 +1,16 @@
-# EnviroSense
+# GeoSur
 
-Adaptación de EnviroSense a Laravel/Blade y Flutter, con los módulos ambientales de GeoCruz integrados en su recorrido de inicio, acceso y mapa. La interfaz conserva su identidad y usa Tabler 1.7.1 para los componentes. Solo se muestran las consultas disponibles.
+Reingeniería de EnviroSense a Laravel/Blade y Flutter. Josué confirmó el 27/10 conservar **todas las funciones del origen** bajo el nombre **GeoSur**, además de las funciones ambientales trabajadas. La recuperación completa está en curso: las consultas activas siguen cubriendo Santa Cruz. La interfaz usa Tabler 1.7.1 y solo muestra recorridos funcionales.
+
+- [Alcance vigente, funciones originales y orden de recuperación](docs/REINGENIERIA_GEOSUR.md).
+- [Backlog para replanificar, sin fechas ni duraciones inventadas](planificacion/Backlog_GeoSur.csv).
+
+El jueves 29/10 corresponde a la revisión de **M2**, ya publicada en `main` como `v0.2.0` mediante #59. M3 no tiene fecha confirmada. Se trabaja en local; Railway está pospuesto. Los documentos anteriores conservan la historia y no reemplazan este ajuste.
 
 - [Dónde está cada parte del código y la plantilla](docs/ORGANIZACION_CODIGO.md).
 - [Inicio, registro, acceso y cómo probar el mapa](docs/ACCESO_ENVIROSENSE.md).
+- [Marca GeoCruz, navegación y cuenta demo local](docs/MARCA_Y_DEMO.md).
+- [Acceso con cubierta de Tabler y mapa base Mapbox](docs/ACCESO_Y_MAPBOX.md).
 - [Qué conservamos, adaptamos y dejamos fuera de EnviroSense](docs/REINGENIERIA_ENVIROSENSE_M3.md).
 - [Revisión de la guía GitHub del curso y pendientes reales](docs/GUIA_CURSO_ESTADO.md).
 

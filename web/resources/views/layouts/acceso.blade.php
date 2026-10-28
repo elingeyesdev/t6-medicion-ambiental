@@ -1,18 +1,16 @@
 @extends('layouts.publico')
 @section('clase-publica', 'pagina-acceso')
 @section('contenido')
-<div class="acceso-distribucion">
-    <aside class="acceso-referencia">
-        <a href="{{ route('inicio') }}" aria-label="Volver al inicio de EnviroSense"><x-panel.marca /></a>
-        <img src="{{ asset('img/envirosense/santa-cruz.svg') }}" alt="Provincias de Santa Cruz" width="560" height="610">
-        <div><p class="etiqueta">Santa Cruz · Bolivia</p><h2>Observación ambiental</h2><p>Mapa, datos y consultas.</p></div>
-    </aside>
-    <main class="acceso-formulario" id="contenido" tabindex="-1">
-        <div class="acceso-caja">
-            <a class="acceso-volver" href="{{ route('inicio') }}">← Inicio</a>
+<x-publico.cabecera />
+<main id="contenido" tabindex="-1" class="acceso-cuerpo">
+    <img class="acceso-fondo" src="{{ asset('img/lomas-arena/lomas-arena.jpg') }}" alt="" aria-hidden="true" width="1280" height="960" fetchpriority="high">
+    <div class="container-xl">
+        <section class="card acceso-panel acceso-formulario">
             <h1>@yield('encabezado')</h1>
             @yield('formulario')
-        </div>
-    </main>
-</div>
+        </section>
+    </div>
+    <span class="acceso-lugar"><x-panel.icono nombre="map-pin" /> Lomas de Arena · Santa Cruz</span>
+</main>
+<x-publico.pie fotografia="lomas" />
 @endsection

@@ -1,4 +1,5 @@
-import { categorias, categoria, numero, pedirJson } from './contrato.js';
+import { categorias, categoria, pedirJson } from './contrato.js';
+import { iniciarMapaBase } from '../mapas/base.js';
 
 /** Puntos en el centro de celda y contornos sin relleno. No interpola ni clasifica SPI. */
 export class MapaSequias {
@@ -12,9 +13,8 @@ export class MapaSequias {
         if (!window.L) { this.avisar('No se pudo iniciar el mapa. Consulta las mismas muestras en la lista.'); return; }
         const L = window.L;
         if (!this.mapa) {
-            this.mapa = L.map('sq-mapa', { scrollWheelZoom: false, zoomAnimation: false, fadeAnimation: false }).setView([-17.5, -61.5], 6);
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' })
-                .on('tileerror', () => this.avisar('No se cargaron algunas imágenes del mapa base. Los puntos, contorno y lista siguen disponibles.')).addTo(this.mapa);
+            this.mapa = L.map('sq-mapa', { scrollWheelZoom: true, zoomAnimation: false, fadeAnimation: false }).setView([-17.5, -61.5], 6);
+            this.baseVisual = iniciarMapaBase(this.mapa, mensaje => this.avisar(mensaje), 'base-mapa-sequias');
             this.puntos = L.layerGroup().addTo(this.mapa);
         }
         this.puntos.clearLayers(); this.porId.clear(); this.limite?.remove(); this.limite = null;
@@ -28,12 +28,12 @@ export class MapaSequias {
             const d = grupo[0]; const [lon, lat] = d.coordenadaCelda;
             const color = grupo.every(m => m.spi.categoria === d.spi.categoria) ? categorias[d.spi.categoria]?.[1] ?? '#7d8183' : '#7d8183';
             const marcador = L.circleMarker([lat, lon], { radius: grupo.length > 1 ? 10 : 8, color: '#fff', weight: 2, fillColor: color, fillOpacity: .95 }).addTo(this.puntos);
-            const titulo = grupo.length > 1 ? `${grupo.length} muestras comparten esta celda. Elegir muestra` : `${d.idMuestra}: SPI ${numero(d.spi.valor)}, ${categoria(d)}. Abrir detalle`;
+            const titulo = grupo.length > 1 ? `${grupo.length} puntos comparten esta ubicación. Elegir punto` : `Punto ${respuesta.datos.indexOf(d) + 1} · ${categoria(d)}. Abrir detalle`;
             const abrir = () => {
                 if (grupo.length === 1) { this.seleccionar(d.idMuestra, marcador.getElement()); return; }
                 const opciones = document.createElement('div');
                 for (const m of grupo) {
-                    const boton = document.createElement('button'); boton.type = 'button'; boton.className = 'sq-mapa-opcion'; boton.textContent = `${m.idMuestra} · ${categoria(m)}`;
+                    const boton = document.createElement('button'); boton.type = 'button'; boton.className = 'sq-mapa-opcion'; boton.textContent = `Punto ${respuesta.datos.indexOf(m) + 1} · ${categoria(m)}`;
                     boton.addEventListener('click', () => { this.seleccionar(m.idMuestra, marcador.getElement()); this.mapa.closePopup(); }); opciones.append(boton);
                 }
                 marcador.bindPopup(opciones).openPopup();

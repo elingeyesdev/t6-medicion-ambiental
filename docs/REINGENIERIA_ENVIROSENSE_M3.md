@@ -1,5 +1,7 @@
 # Adaptación de EnviroSense en M3
 
+**Decisión posterior del 27/10:** Josué confirmó GeoSur y conservar todas las funciones originales. El alcance vigente y las fechas corregidas están en [REINGENIERIA_GEOSUR.md](REINGENIERIA_GEOSUR.md). El jueves 29/10 es M2; M3 no tiene fecha confirmada. La selección de cinco funciones y sus exclusiones, descritas debajo, quedan como antecedente reemplazado.
+
 Actualización del 27/10/2026, después de la defensa de M1 y M2. Seguimiento: #29, #47, #48, #49, #50 y #53. Josué confirmó que el ingeniero aceptó las dos entregas y pidió continuar modificando EnviroSense con el stack acordado: Laravel/Blade, API común y Flutter.
 
 ## Qué cambiamos del enfoque anterior

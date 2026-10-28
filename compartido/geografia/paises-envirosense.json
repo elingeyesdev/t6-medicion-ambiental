@@ -1,0 +1,80 @@
+{
+  "version": "1.0",
+  "fuentes": [
+    {
+      "archivo": "referencias/envirosense/codigo/database/seeds/01_geografia.sql",
+      "sha256": "1679fca3d9cdfaf7ea26c9b186ba860ee11cf034e32efc7d544e619ee60c2ab6"
+    },
+    {
+      "archivo": "referencias/envirosense/codigo/database/seeds/01_sudamerica.sql",
+      "sha256": "0eb35c280c7366e764f0fa3bbb9e6b055b8fa1b1581a712ce8f10f63238aa7f7"
+    }
+  ],
+  "datos": [
+    {
+      "codigo": "AR",
+      "nombre": "Argentina",
+      "tipo": "pais"
+    },
+    {
+      "codigo": "BO",
+      "nombre": "Bolivia",
+      "tipo": "pais"
+    },
+    {
+      "codigo": "BR",
+      "nombre": "Brasil",
+      "tipo": "pais"
+    },
+    {
+      "codigo": "CL",
+      "nombre": "Chile",
+      "tipo": "pais"
+    },
+    {
+      "codigo": "CO",
+      "nombre": "Colombia",
+      "tipo": "pais"
+    },
+    {
+      "codigo": "EC",
+      "nombre": "Ecuador",
+      "tipo": "pais"
+    },
+    {
+      "codigo": "GF",
+      "nombre": "Guyana Francesa",
+      "tipo": "territorio"
+    },
+    {
+      "codigo": "GY",
+      "nombre": "Guyana",
+      "tipo": "pais"
+    },
+    {
+      "codigo": "PE",
+      "nombre": "Perú",
+      "tipo": "pais"
+    },
+    {
+      "codigo": "PY",
+      "nombre": "Paraguay",
+      "tipo": "pais"
+    },
+    {
+      "codigo": "SR",
+      "nombre": "Surinam",
+      "tipo": "pais"
+    },
+    {
+      "codigo": "UY",
+      "nombre": "Uruguay",
+      "tipo": "pais"
+    },
+    {
+      "codigo": "VE",
+      "nombre": "Venezuela",
+      "tipo": "pais"
+    }
+  ]
+}
