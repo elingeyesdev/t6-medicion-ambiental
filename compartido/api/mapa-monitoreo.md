@@ -9,6 +9,7 @@ Avance de #62 sobre las cuentas y datos de #63/#66. Es el mapa ambiental del sis
 Parámetros opcionales, una vez cada uno:
 
 - `pais`: código del catálogo `compartido/geografia/paises-envirosense.json`. Omitido: todos los puntos activos del catálogo.
+- `region`: identificador de `compartido/geografia/regiones/indice.json`; requiere `pais` coincidente. Filtra por las coordenadas actuales del punto dentro del polígono original.
 - `metrica`: `temperatura` (predeterminada), `humedad`, `aqi`, `ica` o `ruido`.
 - `origen`: `observado`, `estimado`, `simulado` o `todos`. Omitido: observados y estimados; excluye simulados.
 - `desde` y `hasta`: instantes ISO 8601 con zona horaria. Desde incluido, hasta excluido; máximo 168 horas, sin futuro. Por defecto, los últimos siete días.
@@ -18,7 +19,7 @@ Ejemplo sin credenciales: `/api/v1/mapa/puntos?pais=BO&metrica=humedad&origen=es
 
 ## Respuesta
 
-Devuelve `metrica`, `unidad`, `desde`/`hasta` en UTC, `origen`, `datos`, `pagina`, `ultimaPagina`, `total` y `aviso`. El origen predeterminado se identifica como `sin-simulaciones`.
+Devuelve `metrica`, `unidad`, `desde`/`hasta` en UTC, `origen`, `datos`, `pagina`, `ultimaPagina`, `total` , `aviso` y `limite` (Feature GeoJSON de la región elegida, o null). El origen predeterminado se identifica como `sin-simulaciones`.
 
 Cada punto contiene `codigo`, `nombre`, `pais`, `latitud`, `longitud`, `tipo` y `lecturas`. Las lecturas incluyen `valor`, `instante` UTC, `origen`, `fuente` y sus coordenadas históricas. Se devuelve la última dentro del período **para cada origen y fuente por separado**. No se promedian observaciones, estimaciones y simulaciones. Los puntos sin datos tienen `lecturas: []`; cero sigue siendo un valor válido. Los puntos archivados se excluyen.
 

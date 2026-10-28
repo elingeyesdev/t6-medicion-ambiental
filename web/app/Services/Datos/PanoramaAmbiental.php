@@ -6,17 +6,20 @@ use App\Models\LecturaAmbiental;
 use App\Models\PuntoAmbiental;
 use App\Services\Api\ErrorConsulta;
 use App\Services\Api\ParametrosConsulta;
+use App\Services\Territorios\GeometriaTerritorial;
+use App\Services\Territorios\RegionesEnvirosense;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 final class PanoramaAmbiental
 {
-    public function __construct(private CatalogoAmbiental $catalogo) {}
+    public function __construct(private CatalogoAmbiental $catalogo, private RegionesEnvirosense $regiones, private GeometriaTerritorial $geometria) {}
 
     public function consultar(array $filtros): array
     {
         $datos = Validator::make($filtros, [
             'pais' => ['sometimes', Rule::in(array_column($this->catalogo->paises(), 'codigo'))],
+            'region' => ['sometimes', 'string', 'max:80'],
             'metrica' => ['sometimes', Rule::in(array_keys($this->catalogo->metricas()))],
             'origen' => ['sometimes', Rule::in([...array_keys(CatalogoAmbiental::ORIGENES), 'todos'])],
             'desde' => ['sometimes', 'string'], 'hasta' => ['sometimes', 'string'],
@@ -28,9 +31,22 @@ final class PanoramaAmbiental
             throw new ErrorConsulta('FILTROS_INVALIDOS', 'Elige hasta siete días, sin fechas futuras.');
         }
         $metrica = $datos['metrica'] ?? 'temperatura';
-        $pagina = PuntoAmbiental::where('activo', true)
-            ->when(isset($datos['pais']), fn ($consulta) => $consulta->where('pais', $datos['pais']))
-            ->orderBy('codigo')->paginate(250, ['*'], 'pagina', $datos['pagina'] ?? 1);
+        $limite = isset($datos['region']) ? $this->regiones->limite($datos['region']) : null;
+        $puntos = PuntoAmbiental::where('activo', true)
+            ->when(isset($datos['pais']), fn ($consulta) => $consulta->where('pais', $datos['pais']));
+        if ($limite) {
+            if (($datos['pais'] ?? null) !== $limite['properties']['pais']) {
+                throw new ErrorConsulta('FILTROS_INVALIDOS', 'La región debe pertenecer al país elegido.');
+            }
+            [$oeste, $sur, $este, $norte] = $limite['properties']['caja'];
+            $candidatos = (clone $puntos)->whereBetween('longitud', [$oeste, $este])->whereBetween('latitud', [$sur, $norte])->limit(10001)->get();
+            if ($candidatos->count() > 10000) {
+                throw new ErrorConsulta('FILTROS_INVALIDOS', 'Hay demasiados puntos para esta región.');
+            }
+            $ids = $candidatos->filter(fn ($p) => $this->geometria->contiene($limite['geometry'], $p->longitud, $p->latitud))->pluck('id');
+            $puntos->whereIn('id', $ids);
+        }
+        $pagina = $puntos->orderBy('codigo')->paginate(250, ['*'], 'pagina', $datos['pagina'] ?? 1);
         $lecturas = LecturaAmbiental::whereIn('punto_id', $pagina->getCollection()->pluck('id'))
             ->where('metrica', $metrica)
             ->where('instante', '>=', $desde->format('Y-m-d H:i:s'))
@@ -68,6 +84,7 @@ final class PanoramaAmbiental
             'metrica' => $metrica, 'unidad' => $this->catalogo->metricas()[$metrica]['unidad'],
             'desde' => ParametrosConsulta::utc($desde), 'hasta' => ParametrosConsulta::utc($hasta),
             'origen' => $datos['origen'] ?? 'sin-simulaciones',
+            'limite' => $limite,
             'datos' => $pagina->getCollection()->map(function (PuntoAmbiental $punto) use ($porPunto): array {
                 return $punto->only(['codigo', 'nombre', 'pais', 'latitud', 'longitud', 'tipo']) + [
                     'lecturas' => ($porPunto->get($punto->id) ?? collect())->map(fn (LecturaAmbiental $lectura) => [

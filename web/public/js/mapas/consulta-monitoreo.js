@@ -19,7 +19,7 @@ export function consultaMonitoreo(valores, ahora = Date.now()) {
         desde: new Date(desde).toISOString().replace('.000Z', 'Z'),
         hasta: new Date(hasta).toISOString().replace('.000Z', 'Z'),
     });
-    for (const campo of ['pais', 'origen']) {
+    for (const campo of ['pais', 'region', 'origen']) {
         if (valores[campo]) consulta.set(campo, valores[campo]);
     }
     return consulta;

@@ -29,3 +29,8 @@ JavaScript: **53 pruebas** correctas. Incluyen cinco para conversión de fecha d
 ## Límite del avance
 
 Este mapa de puntos es una recuperación parcial. No acredita recuperar todas las regiones, geometrías, capas meteorológicas, línea de tiempo, comparaciones y buscador del original. Tampoco recupera por sí solo simulaciones, reportes, alertas, asistente o integraciones conectadas. El seguimiento completo está en `docs/ENVIROSENSE_COMO_BASE.md`; estas funciones permanecen como trabajo principal pendiente.
+
+## Ampliación de regiones
+
+Recuperadas 241 regiones en trece países/territorios. Tres pruebas adicionales verifican todas las geometrías y sus huellas, el filtro espacial, la relación país/región, códigos inválidos y regiones sin puntos. La extracción conserva polígonos, huecos y multipolígonos sin simplificar. Siguen pendientes las capas meteorológicas y los demás controles originales.
+`nCaptura de la ampliación: [Región de Santa Cruz](regiones-santa-cruz.png).

@@ -11,6 +11,7 @@ const paises = new Map(configuracion.paises.map(pais => [pais.codigo, pais.nombr
 const L = window.L;
 const mapa = L.map('mapa-monitoreo', { scrollWheelZoom: true, zoomAnimation: false, fadeAnimation: false }).setView([-20, -60], 3);
 const marcadores = L.layerGroup().addTo(mapa);
+const limites = L.geoJSON(null, {style:{color:'#f59e0b',weight:3,fillColor:'#fef3c7',fillOpacity:0.08},interactive:false}).addTo(mapa);
 const porCodigo = new Map();
 let redimension = null;
 new ResizeObserver(() => {
@@ -38,6 +39,15 @@ if (matchMedia('(max-width: 767.98px)').matches) {
     document.getElementById('filtros-monitoreo').open = false;
 }
 const inicial = new URL(location.href).searchParams;
+function cargarRegiones(elegida = '') {
+    const control = formulario.elements.namedItem('region');
+    control.replaceChildren(new Option('Todas las regiones', ''));
+    for (const region of configuracion.regiones.filter(r => r.pais === formulario.elements.namedItem('pais').value)) {
+        control.add(new Option(region.nombre, region.codigo));
+    }
+    control.value = elegida;
+    if (control.selectedIndex < 0) control.value = '';
+}
 for (const campo of ['pais', 'metrica', 'origen', 'desde', 'hasta']) {
     const control = formulario.elements.namedItem(campo);
     const valor = inicial.get(campo);
@@ -45,6 +55,8 @@ for (const campo of ['pais', 'metrica', 'origen', 'desde', 'hasta']) {
         control.value = valor;
     }
 }
+cargarRegiones(inicial.get('region') ?? '');
+formulario.elements.namedItem('pais').addEventListener('change', () => cargarRegiones());
 puntoSeleccionado = inicial.get('punto');
 
 iniciarMapaBase(mapa, mensaje => avisar(mensaje, true), 'mon-base');
@@ -137,6 +149,10 @@ function seleccionar(punto) {
 }
 
 function centrarPuntos() {
+    if (limites.getLayers().length) {
+        mapa.fitBounds(limites.getBounds(), {padding:[35,70],maxZoom:9,animate:false});
+        return;
+    }
     if (!respuestaActual?.datos.length) {
         mapa.setView([-20, -60], 3);
         return;
@@ -147,6 +163,13 @@ function centrarPuntos() {
 }
 
 function dibujar() {
+    limites.clearLayers();
+    const fuenteLimite = document.getElementById('mon-fuente-limite');
+    fuenteLimite.hidden = !respuestaActual.limite;
+    if (respuestaActual.limite) {
+        limites.addData(respuestaActual.limite);
+        fuenteLimite.textContent = 'Límites de referencia: ' + respuestaActual.limite.properties.procedencia.fuente;
+    }
     marcadores.clearLayers();
     porCodigo.clear();
     const simbolo = '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + iconos[respuestaActual.metrica] + '</svg>';
@@ -180,6 +203,8 @@ async function consultar(pagina = 1) {
     } catch (error) {
         cerrarDetalle();
         marcadores.clearLayers();
+        limites.clearLayers();
+        document.getElementById('mon-fuente-limite').hidden = true;
         porCodigo.clear();
         respuestaActual = null;
         document.getElementById('paginacion-monitoreo').hidden = true;
@@ -204,6 +229,8 @@ async function consultar(pagina = 1) {
     if (marcaLectura) mapa.removeLayer(marcaLectura);
     marcaLectura = null;
     marcadores.clearLayers();
+    limites.clearLayers();
+    document.getElementById('mon-fuente-limite').hidden = true;
     porCodigo.clear();
     respuestaActual = null;
     document.getElementById('paginacion-monitoreo').hidden = true;

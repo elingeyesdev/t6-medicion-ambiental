@@ -34,6 +34,7 @@
 .monitoreo-leyenda { position: absolute; bottom: 42px; left: 16px; right: 16px; width: fit-content; max-width: calc(100% - 32px); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; background: var(--enviro-panel); border: 1px solid var(--enviro-borde); border-radius: 6px; padding: 12px; font-size: 16px; }
 .mon-punto { display: inline-block; width: 14px; height: 14px; border: 2px solid #fff; outline: 1px solid #64748b; background: #64748b; border-radius: 3px; }
 .mon-punto.con-datos { background: #08788e; outline-color: #08788e; }
+.monitoreo-procedencia { position:absolute; left:16px; bottom:8px; margin:0; background:var(--enviro-panel); padding:4px 8px; max-width:calc(100% - 32px); }
 .monitoreo-marcador span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 5px; border: 2px solid #fff; background: #64748b; color: #fff; box-shadow: 0 1px 5px #1236; }
 .monitoreo-marcador svg { width: 19px; height: 19px; }
 .monitoreo-marcador.con-datos span { background: #08788e; }
@@ -53,4 +54,5 @@
     .monitoreo-herramientas .btn { padding-inline: 10px; }
     .monitoreo-detalle { position: static; width: 100%; max-height: none; margin-top: 0; box-shadow: none; }
     .monitoreo-leyenda { top: calc(65dvh - 125px); bottom: auto; }
+    .monitoreo-procedencia { top:calc(65dvh - 60px); bottom:auto; }
 }

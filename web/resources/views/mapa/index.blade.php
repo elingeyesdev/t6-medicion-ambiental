@@ -20,6 +20,10 @@
                     </select>
                 </div>
                 <div>
+                    <label class="form-label" for="mon-region">Región</label>
+                    <select id="mon-region" name="region" class="form-select"><option value="">Todas las regiones</option></select>
+                </div>
+                <div>
                     <label class="form-label" for="mon-metrica">Variable</label>
                     <select id="mon-metrica" name="metrica" class="form-select">
                         @foreach($metricas as $clave => $metrica)<option value="{{ $clave }}">{{ $metrica['nombre'] }}</option>@endforeach
@@ -69,6 +73,7 @@
             <button id="mon-centrar" class="btn btn-outline-primary" type="button">Centrar puntos</button>
         </div>
         <div class="monitoreo-leyenda"><span class="mon-punto con-datos" aria-hidden="true"></span>Con datos<span class="mon-punto" aria-hidden="true"></span>Sin datos del período</div>
+        <p id="mon-fuente-limite" class="monitoreo-procedencia" hidden></p>
         <aside id="mon-detalle" class="card monitoreo-detalle" aria-label="Punto seleccionado" hidden>
             <div class="card-header"><h2 id="mon-nombre"></h2><button id="mon-cerrar" class="btn btn-outline-primary" type="button" aria-label="Cerrar punto seleccionado">×</button></div>
             <div class="card-body" id="mon-informacion"></div>

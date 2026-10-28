@@ -25,11 +25,11 @@ Sudamérica sí está contemplada. No se deben recortar los servicios globales q
 
 ## Corrección funcional de esta rama
 
-`/mapa` tiene un recorrido propio de monitoreo: países/territorios del catálogo recuperado, temperatura, humedad, aire, agua y ruido; puntos, selección, fecha de lectura, origen y enlace al historial. Focos conserva `/modulos/focos-calor` y sequías `/modulos/sequias`, con su cobertura visible. La portada y el menú presentan primero el monitoreo y las mediciones.
+`/mapa` tiene un recorrido propio de monitoreo: países/territorios y 241 regiones con las geometrías originales recuperadas, temperatura, humedad, aire, agua y ruido; puntos, selección, fecha de lectura, origen y enlace al historial. Focos conserva `/modulos/focos-calor` y sequías `/modulos/sequias`, con su cobertura visible. La portada y el menú presentan primero el monitoreo y las mediciones.
 
 El mapa consulta almacenamiento local mediante `PanoramaAmbiental`. Elige la última lectura dentro del período para cada punto, variable, origen y fuente; conserva sus coordenadas históricas y no promedia orígenes. Excluye simulados hasta elegirlos expresamente. No genera mediciones al abrirse ni llama a proveedores. Un punto sin lecturas se muestra como tal.
 
-Rutas: `/mapa/puntos` usa la sesión web; `/api/v1/mapa/puntos` usa autenticación Sanctum para Flutter. Admiten `pais`, `metrica`, `origen`, `desde`, `hasta` y `pagina`. Desde incluido, hasta excluido, siete días como máximo, sin futuro; sin origen se excluye simulación, `todos` la incluye explícitamente. Devuelven 250 puntos por página y últimas lecturas separadas por procedencia. Los accesos requieren cuenta activa y permisos; las respuestas no se guardan en caché compartida.
+Rutas: `/mapa/puntos` usa la sesión web; `/api/v1/mapa/puntos` usa autenticación Sanctum para Flutter. Admiten `pais`, `region`, `metrica`, `origen`, `desde`, `hasta` y `pagina`. Desde incluido, hasta excluido, siete días como máximo, sin futuro; sin origen se excluye simulación, `todos` la incluye explícitamente. Devuelven 250 puntos por página y últimas lecturas separadas por procedencia. Los accesos requieren cuenta activa y permisos; las respuestas no se guardan en caché compartida.
 
 Las fechas de la web son de Bolivia, convertidas a UTC en la consulta. Los enlaces antiguos de focos con `modo`, `confianza` o `territorio` van a su pantalla. El mapa puede navegar fuera del continente; el catálogo recuperado no se presenta como una recuperación completa de las regiones o del buscador mundial original.
 
@@ -43,7 +43,7 @@ El original usa React y Node/Express. Sus pantallas y recorridos se adaptan a La
 
 Antes de declarar el software convertido se deben probar los recorridos originales completos, con los roles correspondientes, y comparar sus resultados con EnviroSense. Siguen pendientes:
 
-- Mapa original: regiones/geometrías, buscador mundial, capas meteorológicas, límites, unidades, línea de tiempo, comparaciones y controles; #62.
+- Mapa original: buscador mundial, capas meteorológicas, límites, unidades, línea de tiempo, comparaciones y controles; #62.
 - Sensores conectados, MQTT, radar, cargas ETL y datos históricos originales saneados; #66.
 - Simulaciones por punto/zona y sus escenarios; #52.
 - Reportes, gráficos, exportaciones y plantillas de usuario; #64.
@@ -52,3 +52,9 @@ Antes de declarar el software convertido se deben probar los recorridos original
 - Revisión de cuentas/permisos de #63 e integración equivalente en Flutter; #48. La PWA original tampoco equivale a la aplicación Flutter.
 
 Estos puntos son trabajo principal pendiente. El orden es completar la base de EnviroSense e incorporar los análisis nuevos dentro de ella. No se borran los avances útiles ni se reemplaza `main`: allí permanece M2. M3 y la migración completa necesitan revisión propia; M3 sigue sin fecha confirmada.
+
+## Regiones recuperadas
+
+Se extrajeron las 241 geometrías de los trece seeds conservados, sin ejecutar SQL, descargar datos ni simplificar los polígonos. `herramientas/datos/recuperar-regiones.py --comprobar` reproduce sus bytes. El índice conserva país, nivel, nombre, caja, fuente, licencia declarada y huellas. Los identificadores dependen del país y nombre originales. La procedencia de Guyana Francesa es GADM 4.1 ADM0; su seed no declara licencia, y no se atribuye una licencia de geoBoundaries a ese archivo. Las regiones son referencias del origen, no certificación administrativa actual.
+
+Al elegir país y región, el mapa dibuja el límite y filtra puntos por su posición actual en el polígono, incluidos sus huecos y partes. No reasigna las coordenadas históricas de las lecturas. Una región sin puntos conserva su límite y muestra que no hay puntos activos. Se rechazan regiones de otro país y códigos ajenos al catálogo.
