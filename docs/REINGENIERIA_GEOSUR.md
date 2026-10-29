@@ -57,4 +57,4 @@ Las pantallas muestran lenguaje corriente y texto normal de al menos 16 px. Fech
 
 El servicio meteorológico del original ya tiene candidato Laravel/API y ficha dentro del mapa: datos actuales, 168 horas y siete días de Open-Meteo cuando están disponibles. No se almacenan como observaciones. Ver `TIEMPO_ENVIROSENSE.md`.
 
-Simulaciones #73, Reportes #74 y Alertas #75 pasaron las comprobaciones de GitHub. #77 corrige la dependencia de correo; su auditoría no encuentra avisos conocidos. Las ramas siguen pendientes de revisión propia después de #51.
+Simulaciones #73, Reportes #74 y Alertas #75 pasaron las comprobaciones de GitHub. #77 corrige la dependencia de correo; su auditoría no encuentra avisos conocidos. El pronóstico está en #78 y el buscador geográfico tiene candidato en `BUSCADOR_ENVIROSENSE.md`. Las ramas siguen pendientes de revisión propia después de #51.

@@ -51,6 +51,16 @@
                 <button class="btn btn-primary" type="submit">Consultar mapa</button>
             </form>
         </details>
+        <section class="monitoreo-buscador" aria-label="Buscar lugar">
+            <form id="buscar-lugar" role="search">
+                <label for="nombre-lugar" class="form-label">Buscar lugar</label>
+                <input id="nombre-lugar" name="texto" class="form-control" type="search" placeholder="País, ciudad o lugar" minlength="2" maxlength="120" required autocomplete="off">
+                <div class="buscador-acciones"><button type="submit" class="btn btn-primary">Buscar</button><button type="reset" class="btn btn-outline-primary">Limpiar</button></div>
+            </form>
+            <p id="estado-buscador" role="status" aria-live="polite"></p>
+            <ul id="lugares-encontrados" aria-label="Lugares encontrados"></ul>
+            <a class="buscador-fuente" href="https://www.mapbox.com/about/maps/" target="_blank" rel="noopener noreferrer">Mapbox</a>
+        </section>
         <button id="mon-tiempo" type="button" class="btn btn-outline-primary monitoreo-tiempo" aria-pressed="false">Tiempo de un lugar</button>
         <p id="estado-monitoreo" class="monitoreo-estado" role="status" aria-live="polite">Cargando…</p>
         <div id="paginacion-monitoreo" class="monitoreo-paginacion" hidden>

@@ -1,2 +1,2 @@
-Tests:    357 passed (3342 assertions)
-  Duration: 65.15s
+Tests:    365 passed (3410 assertions)
+Duration: 55.17s
