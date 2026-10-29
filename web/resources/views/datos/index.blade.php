@@ -11,6 +11,7 @@
 <div class="datos-contenido">
     <h1>Mediciones ambientales</h1>
     @include('cuentas.estado')
+    <x-datos.selector-unidades />
     @include('datos.filtros')
     @if($punto)
         @include('datos.consulta')
@@ -24,6 +25,7 @@
 @endsection
 
 @push('scripts')
+@include('cuentas.configuracion-unidades')
 <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
 <script type="application/json" id="datos-mediciones">@json($datosMapa)</script>
 <script type="module" src="{{ asset('js/datos/mediciones.js') }}"></script>

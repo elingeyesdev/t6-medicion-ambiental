@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../../core/network/geocruz_api_client.dart';
+import '../../../core/formatters/bolivia_time.dart';
+import '../../../core/formatters/consultation_period.dart';
 import '../../../core/theme/geocruz_theme.dart';
 import '../../../core/widgets/geosur_brand.dart';
 import '../model/monitoring_models.dart';
@@ -21,11 +23,13 @@ class MonitoringScreen extends StatefulWidget {
   const MonitoringScreen({
     required this.api,
     required this.onUnauthorized,
+    this.repository,
     super.key,
   });
 
   final GeoCruzApiClient api;
   final VoidCallback onUnauthorized;
+  final MonitoringRepository? repository;
 
   @override
   State<MonitoringScreen> createState() => _MonitoringScreenState();
@@ -47,16 +51,9 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
   @override
   void initState() {
     super.initState();
-    _repository = MonitoringRepository(widget.api);
-    final now = DateTime.now();
-    _filters = MonitoringFilters(
-      from: DateTime(
-        now.year,
-        now.month,
-        now.day,
-      ).subtract(const Duration(days: 6)),
-      until: now,
-    );
+    _repository = widget.repository ?? MonitoringRepository(widget.api);
+    final period = ConsultationPeriod.lastSevenDays();
+    _filters = MonitoringFilters(from: period.from, until: period.until);
     _initialize();
   }
 
@@ -87,6 +84,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
       _error = null;
     });
     try {
+      ConsultationPeriod.validate(_filters.from, _filters.until);
       final result = await _repository.query(_filters.copyWith(page: page));
       if (!mounted) return;
       setState(() {
@@ -112,54 +110,33 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
   }
 
   Future<void> _choosePeriod() async {
-    final now = DateTime.now();
+    final now = DateTime.now().toUtc();
+    final today = ConsultationPeriod.boliviaDay(now);
+    final initialEnd = ConsultationPeriod.boliviaDay(_filters.until.subtract(const Duration(seconds: 1)));
+    final initialStart = ConsultationPeriod.boliviaDay(_filters.from);
     final selected = await showDateRangePicker(
       context: context,
-      firstDate: now.subtract(const Duration(days: 365 * 5)),
-      lastDate: DateTime(now.year, now.month, now.day),
+      firstDate: DateTime(today.year - 5, today.month, today.day),
+      lastDate: today,
       initialDateRange: DateTimeRange(
-        start: DateTime(
-          _filters.from.year,
-          _filters.from.month,
-          _filters.from.day,
-        ),
-        end: DateTime(
-          _filters.until.subtract(const Duration(seconds: 1)).year,
-          _filters.until.subtract(const Duration(seconds: 1)).month,
-          _filters.until.subtract(const Duration(seconds: 1)).day,
-        ),
+        start: initialEnd.difference(initialStart).inDays > 6 ? DateTime(initialEnd.year, initialEnd.month, initialEnd.day - 6) : initialStart,
+        end: initialEnd,
       ),
       helpText: 'Elige un período de hasta 7 días',
       saveText: 'Aplicar período',
     );
     if (!mounted || selected == null) return;
-    final inclusiveDays = selected.end.difference(selected.start).inDays + 1;
-    if (inclusiveDays > 7) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('El período máximo es de 7 días.')),
-      );
-      return;
+    try {
+      final period = ConsultationPeriod.selectedDays(selected.start, selected.end);
+      setState(() {
+        _filters = _filters.copyWith(from: period.from, until: period.until, page: 1);
+      });
+    } on FormatException catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.message)));
     }
-    setState(() {
-      _filters = _filters.copyWith(
-        from: DateTime(
-          selected.start.year,
-          selected.start.month,
-          selected.start.day,
-        ),
-        until: DateTime(
-          selected.end.year,
-          selected.end.month,
-          selected.end.day + 1,
-        ),
-        page: 1,
-      );
-    });
   }
 
-  String _periodLabel() =>
-      '${DateFormat('dd/MM/yyyy').format(_filters.from)} – '
-      '${DateFormat('dd/MM/yyyy').format(_filters.until)} · Bolivia';
+  String _periodLabel() => '${BoliviaTime.interval(_filters.from, _filters.until)} · Bolivia';
 
   String _countryName(String? code) =>
       _countries
@@ -267,6 +244,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
               children: [
                 Expanded(
                   child: DropdownButtonFormField<String?>(
+                    key: const Key('monitoring-country'),
                     initialValue: _filters.country,
                     isExpanded: true,
                     decoration: const InputDecoration(labelText: 'País'),
@@ -300,6 +278,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: DropdownButtonFormField<String?>(
+                    key: ValueKey('monitoring-region-${_filters.country ?? 'sur'}'),
                     initialValue: _filters.region,
                     isExpanded: true,
                     decoration: const InputDecoration(labelText: 'Región'),
@@ -368,6 +347,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: DropdownButtonFormField<String?>(
+                    key: const Key('monitoring-origin'),
                     initialValue: _filters.origin,
                     isExpanded: true,
                     decoration: const InputDecoration(labelText: 'Origen'),
@@ -384,6 +364,8 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                         value: 'estimado',
                         child: Text('Estimado'),
                       ),
+                      DropdownMenuItem<String?>(value: 'simulado', child: Text('Solo simulados')),
+                      DropdownMenuItem<String?>(value: 'todos', child: Text('Todos, incluidos simulados')),
                     ],
                     onChanged: _loading
                         ? null

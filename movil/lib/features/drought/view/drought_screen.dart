@@ -13,12 +13,14 @@ class DroughtScreen extends StatefulWidget {
     required this.apiClient,
     this.initialMonth = '2024-09',
     this.showAppBar = true,
+    this.repository,
     super.key,
   });
 
   final GeoCruzApiClient apiClient;
   final String initialMonth;
   final bool showAppBar;
+  final DroughtRepository? repository;
 
   @override
   State<DroughtScreen> createState() => _DroughtScreenState();
@@ -37,11 +39,12 @@ class _DroughtScreenState extends State<DroughtScreen> {
   bool _catalogLoading = false;
   String? _errorMessage;
   bool _mapReady = false;
+  int _request = 0;
 
   @override
   void initState() {
     super.initState();
-    _repository = DroughtRepository(widget.apiClient);
+    _repository = widget.repository ?? DroughtRepository(widget.apiClient);
     _filters = DroughtFilters(mesFinal: widget.initialMonth);
     _loadCatalogAndQuery();
   }
@@ -60,45 +63,52 @@ class _DroughtScreenState extends State<DroughtScreen> {
       if (mounted) setState(() => _catalogLoading = false);
     }
 
-    await _executeQuery();
+    if (mounted) await _executeQuery();
   }
 
   Future<void> _executeQuery() async {
+    if (!mounted) return;
+    final request = ++_request;
     setState(() {
       _loading = true;
       _errorMessage = null;
       _selectedSample = null;
+      _mapReady = false;
     });
 
     try {
       final res = await _repository.query(_filters);
-      if (!mounted) return;
+      if (!mounted || request != _request) return;
       setState(() {
         _response = res;
         _loading = false;
       });
-      if (_mapReady && res.datos.isNotEmpty) {
-        _fitBounds(res.datos);
-      }
     } on FormatException catch (e) {
-      if (!mounted) return;
+      if (!mounted || request != _request) return;
       setState(() {
         _errorMessage = e.message;
         _loading = false;
       });
     } on GeoCruzApiException catch (e) {
-      if (!mounted) return;
+      if (!mounted || request != _request) return;
       setState(() {
         _errorMessage = e.message;
         _loading = false;
       });
-    } catch (e) {
-      if (!mounted) return;
+    } catch (_) {
+      if (!mounted || request != _request) return;
       setState(() {
-        _errorMessage = 'No se pudo conectar con el servidor: $e';
+        _errorMessage = 'No se pudo cargar la consulta. Inténtalo otra vez.';
         _loading = false;
       });
     }
+  }
+
+  @override
+  void dispose() {
+    _request++;
+    _mapController.dispose();
+    super.dispose();
   }
 
   void _fitBounds(List<DroughtSample> datos) {
@@ -128,7 +138,8 @@ class _DroughtScreenState extends State<DroughtScreen> {
     );
   }
 
-  String _territoryName(String pcode) {
+  String _territoryName(String? pcode) {
+    if (pcode == null) return 'Sin municipio identificado';
     for (final t in _territories) {
       if (t.identifier == pcode) return t.name;
     }
@@ -188,7 +199,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
                         style: TextStyle(
                           color: category.color,
                           fontWeight: FontWeight.bold,
-                          fontSize: 13,
+                          fontSize: 14,
                         ),
                       ),
                     ),
@@ -211,7 +222,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
                     child: Text(
                       'Advertencia: El centro de celda (${sample.municipioDelCentroCelda}) cae fuera de ${sample.territorioContexto}. Se conserva el municipio solicitado.',
                       style: TextStyle(
-                          fontSize: 12, color: Colors.amber.shade900),
+                          fontSize: 14, color: Colors.amber.shade900),
                     ),
                   ),
                 _detailRow(
@@ -253,7 +264,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 color: Colors.black54,
-                fontSize: 13,
+                fontSize: 14,
               ),
             ),
           ),
@@ -262,7 +273,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
               value,
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
-                fontSize: 13,
+                fontSize: 14,
               ),
             ),
           ),
@@ -276,6 +287,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
     String? selectedProv = _filters.provincia;
     String? selectedMun = _filters.municipio;
     String selectedMonth = _filters.mesFinal;
+    String? validationError;
 
     await showModalBottomSheet<void>(
       context: context,
@@ -315,7 +327,8 @@ class _DroughtScreenState extends State<DroughtScreen> {
                           ),
                     ),
                     const SizedBox(height: 16),
-                    TextField(
+                    TextFormField(
+                      initialValue: selectedMonth,
                       decoration: const InputDecoration(
                         labelText: 'Mes final (AAAA-MM)',
                         hintText: 'Ej. 2024-09',
@@ -324,11 +337,12 @@ class _DroughtScreenState extends State<DroughtScreen> {
                         prefixIcon: Icon(Icons.calendar_month_outlined),
                         border: OutlineInputBorder(),
                       ),
-                      controller: TextEditingController(text: selectedMonth),
                       onChanged: (val) => selectedMonth = val.trim(),
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<String?>(
+                      key: const Key('drought-province'),
+                      isExpanded: true,
                       initialValue: selectedProv,
                       isExpanded: true,
                       decoration: const InputDecoration(
@@ -356,6 +370,8 @@ class _DroughtScreenState extends State<DroughtScreen> {
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<String?>(
+                      key: ValueKey('drought-municipality-${selectedProv ?? 'all'}'),
+                      isExpanded: true,
                       initialValue: selectedMun,
                       isExpanded: true,
                       decoration: const InputDecoration(
@@ -379,18 +395,22 @@ class _DroughtScreenState extends State<DroughtScreen> {
                       },
                     ),
                     const SizedBox(height: 24),
+                    if (validationError != null)
+                      Text(validationError!, style: TextStyle(color: Theme.of(ctx).colorScheme.error)),
                     FilledButton.icon(
                       icon: const Icon(Icons.check),
                       label: const Text('Aplicar filtros'),
                       onPressed: () {
+                        final next = DroughtFilters(mesFinal: selectedMonth, provincia: selectedProv, municipio: selectedMun);
+                        try {
+                          next.validate(DateTime.now().toUtc());
+                        } on FormatException catch (error) {
+                          setSheetState(() => validationError = error.message);
+                          return;
+                        }
                         Navigator.of(ctx).pop();
-                        setState(() {
-                          _filters = DroughtFilters(
-                            mesFinal: selectedMonth,
-                            provincia: selectedProv,
-                            municipio: selectedMun,
-                          );
-                        });
+                        if (!mounted) return;
+                        setState(() => _filters = next);
                         _executeQuery();
                       },
                     ),
@@ -419,7 +439,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
               children: [
                 CircularProgressIndicator(),
                 SizedBox(height: 12),
-                Text('Consultando sequías...'),
+                Text('Cargando...'),
               ],
             ),
           )
@@ -480,7 +500,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
             ),
             Text(
               'Mes final ${_filters.mesFinal} · Ventana 3 meses',
-              style: const TextStyle(fontSize: 12, color: Colors.black54),
+              style: const TextStyle(fontSize: 14, color: Colors.black54),
             ),
           ],
         ),
@@ -516,7 +536,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
                 ),
                 const Text(
                   'Ventana de 3 meses · ERA5',
-                  style: TextStyle(fontSize: 11, color: Colors.black54),
+                  style: TextStyle(fontSize: 14, color: Colors.black54),
                 ),
               ],
             ),
@@ -563,8 +583,9 @@ class _DroughtScreenState extends State<DroughtScreen> {
               ],
             ),
             const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            Wrap(
+              spacing: 24,
+              runSpacing: 16,
               children: [
                 _metricItem(
                   '${summary.totalMuestras}',
@@ -590,6 +611,20 @@ class _DroughtScreenState extends State<DroughtScreen> {
                 ),
               ],
             ),
+            if (coverage != null) ...[
+              const SizedBox(height: 16),
+              Text(
+                'Datos para ${coverage.municipiosConDatos} de ${coverage.municipiosEnFiltro} municipios consultados.',
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                coverage.esParcial
+                    ? 'Cobertura parcial. Faltan datos; eso no significa que no haya sequía.'
+                    : 'Son puntos de referencia; no describen todo el municipio.',
+                style: const TextStyle(fontSize: 16),
+              ),
+            ],
           ],
         ),
       ),
@@ -610,7 +645,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
         const SizedBox(height: 2),
         Text(
           label,
-          style: const TextStyle(fontSize: 11, color: Colors.black54),
+          style: const TextStyle(fontSize: 14, color: Colors.black54),
         ),
       ],
     );
@@ -626,6 +661,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
         child: Stack(
           children: [
             FlutterMap(
+              key: ValueKey('drought-map-$_request'),
               mapController: _mapController,
               options: MapOptions(
                 initialCenter: const LatLng(-17.8, -63.1),
@@ -744,7 +780,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
               const SizedBox(width: 4),
               Text(
                 c.label,
-                style: const TextStyle(fontSize: 11, color: Colors.black87),
+                style: const TextStyle(fontSize: 14, color: Colors.black87),
               ),
             ],
           );
@@ -802,16 +838,16 @@ class _DroughtScreenState extends State<DroughtScreen> {
                   title: Text(
                     '${d.idMuestra} · ${_territoryName(d.territorioContexto)}',
                     style: const TextStyle(
-                        fontSize: 13, fontWeight: FontWeight.w600),
+                        fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                   subtitle: Text(
                     '${cat.label} · Lluvia: ${d.precipitacionAcumuladaMm?.toStringAsFixed(1) ?? '—'} mm',
-                    style: const TextStyle(fontSize: 11),
+                    style: const TextStyle(fontSize: 14),
                   ),
                   trailing: Text(
                     spiText,
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: cat.color,
                     ),
@@ -825,7 +861,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
                   'Mostrando 10 de ${datos.length} puntos. Toca un punto en el mapa para ver su ficha completa.',
-                  style: const TextStyle(fontSize: 11, color: Colors.black54),
+                  style: const TextStyle(fontSize: 14, color: Colors.black54),
                 ),
               ),
           ],
@@ -835,9 +871,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
   }
 
   Widget _buildWarningsSection(List<String> advertencias) {
-    final filtered = advertencias
-        .where((adv) => !adv.toLowerCase().contains('cobertura parcial'))
-        .toList();
+    final filtered = advertencias;
     if (filtered.isEmpty) return const SizedBox.shrink();
 
     return Padding(
@@ -845,7 +879,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
       child: ExpansionTile(
         title: const Text(
           'Sobre estos datos y advertencias',
-          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         ),
         leading: const Icon(Icons.info_outline, size: 20),
         children: [
@@ -856,7 +890,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
               children: [
                 const Text(
                   'Fuente: Open-Meteo ERA5 (reanálisis 0.25°, precipitation_sum en mm, licencia CC BY 4.0). Base de referencia 1991–2020.',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 8),
                 ...filtered.map(
@@ -871,7 +905,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
                           child: Text(
                             adv,
                             style: const TextStyle(
-                                fontSize: 12, color: Colors.black87),
+                                fontSize: 14, color: Colors.black87),
                           ),
                         ),
                       ],

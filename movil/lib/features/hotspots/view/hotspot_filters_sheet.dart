@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/formatters/bolivia_time.dart';
+import '../../../core/formatters/consultation_period.dart';
 import '../model/hotspot_models.dart';
 
 class HotspotFiltersSheet extends StatefulWidget {
@@ -51,6 +52,7 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
 
   Future<DateTime?> _chooseInstant(DateTime current) async {
     final currentWall = _boliviaWall(current);
+    final today = ConsultationPeriod.boliviaDay(DateTime.now());
     final date = await showDatePicker(
       context: context,
       initialDate: DateTime(
@@ -59,7 +61,7 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
         currentWall.day,
       ),
       firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+      lastDate: today,
       helpText: 'Fecha · hora de Bolivia',
     );
     if (!mounted || date == null) return null;
@@ -102,18 +104,10 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
   }
 
   void _apply() {
-    final duration = _until.toUtc().difference(_from.toUtc());
-    if (duration <= Duration.zero) {
-      setState(() {
-        _validationError = '“Hasta” debe ser posterior a “Desde”.';
-      });
-      return;
-    }
-    if (duration > const Duration(hours: 168)) {
-      setState(() {
-        _validationError =
-            'El período supera el máximo de 7 días. Acorta el rango seleccionado.';
-      });
+    try {
+      ConsultationPeriod.validate(_from, _until);
+    } on FormatException catch (error) {
+      setState(() => _validationError = error.message);
       return;
     }
     if (_provinceId != null &&
