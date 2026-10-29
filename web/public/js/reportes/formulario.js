@@ -1,0 +1,2 @@
+const base=document.getElementById('rep-base');
+if(base){function cambiar(){const simulacion=base.value==='simulacion';document.getElementById('rep-mediciones').hidden=simulacion;document.getElementById('rep-mediciones').disabled=simulacion;document.getElementById('rep-simulacion').hidden=!simulacion;document.getElementById('rep-sesion').disabled=!simulacion;}base.addEventListener('change',cambiar);cambiar();}

@@ -46,7 +46,7 @@ Antes de declarar el software convertido se deben probar los recorridos original
 - Mapa original: buscador mundial, capas meteorológicas, límites, unidades, línea de tiempo, comparaciones y controles; #62.
 - Sensores conectados, MQTT, radar, cargas ETL y datos históricos originales saneados; #66.
 - Simulaciones: el recorrido por punto/región y sus escenarios ya tiene candidato Laravel/Blade y API en #52; faltan modo continuo global/sockets, Flutter y revisión. Detalle en [SIMULACIONES_ENVIROSENSE.md](SIMULACIONES_ENVIROSENSE.md).
-- Reportes, gráficos, exportaciones y plantillas de usuario; #64.
+- Reportes, gráficos, PDF/Excel y plantillas con condiciones tienen candidato en #64; faltan las variables meteorológicas adicionales, Flutter y revisión. Detalle en [REPORTES_ENVIROSENSE.md](REPORTES_ENVIROSENSE.md).
 - Alertas, umbrales y notificaciones, probadas primero en local sin envíos externos; #65.
 - Asistente y contexto, con proveedor/límites configurados; #67.
 - Revisión de cuentas/permisos de #63 e integración equivalente en Flutter; #48. La PWA original tampoco equivale a la aplicación Flutter.
