@@ -79,16 +79,16 @@ def generar(salida):
     p('La ficha distingue Santa Cruz de La Sierra, municipio solicitado, de Porongo, donde cae el centro de la celda. El resultado es puntual; no acredita sequía de todo el municipio.', 'NotaM3')
 
     pagina('Capas reales en el mapa')
-    p('Se recuperó el productor de temperatura y se probaron dos recortes pequeños de GFS/NOAA: ciclo 29/10/2026 06 UTC, plazos 000 y 003. Cada entrada ocupa 88 308 bytes. Las fechas válidas son 06 y 09 UTC, equivalentes a 02 y 05 en Bolivia.')
-    p('Cada cuadro contiene 193 × 281 nodos. El PNG conserva geografía, máscara de ausencia, escala y huella. El visor proyecta la rejilla y permite comparar dos fechas. Se muestran datos modelados, sin presentarlos como lecturas de estaciones.')
-    foto('docs/entrega-m3/evidencias/mapa-temperatura-noaa.png', 'Recorrido local real: cuadros de temperatura de NOAA, comparación A/B y fecha de cada lado.', 340)
-    p('El productor local ERA5 se probó con un NetCDF controlado; no se descargó ERA5 ni se creó una cuenta CDS. Los otros productos raster todavía requieren productores e insumos verificados. La captura de temperatura no acredita todas las variables ni un histórico completo.', 'NotaM3')
+    p('Se recuperaron ocho capas GFS/NOAA: temperatura, humedad, viento, presión, visibilidad, nieve equivalente de agua, precipitación acumulada e intensidad de precipitación. Se verificaron dos conjuntos pequeños del ciclo 29/10/2026 06 UTC: plazos 003 y 006, de aproximadamente 1 MB cada uno.')
+    p('Cada cuadro contiene 193 × 281 nodos. Hay 17 PNG reales publicados: ocho capas de las 09 y 12 UTC y temperatura de las 06 UTC. Conservan geografía, máscara, escala y huella. El visor permite leer valores y comparar capas o fechas; son datos modelados, no lecturas de estaciones.')
+    foto('docs/entrega-m3/evidencias/mapa-ocho-capas-noaa.png', 'Viento y precipitación reales: comparación A/B, unidades y período del acumulado visibles.', 340)
+    p('La precipitación incluye fase líquida y sólida. El acumulado exige un período explícito. El productor de temperatura ERA5 se probó con NetCDF controlado; no se descargó ERA5. AQI y productos ambiguos de UV/evaporación siguen pendientes. No se acredita un histórico completo ni actualización automática.', 'NotaM3')
 
     pagina('Cómo repetir la presentación')
     for n, texto in enumerate([
         'Arrancar desde el checkout activo con su entorno local; abrir 127.0.0.1:5791. Conservar la base y aplicar únicamente las migraciones normales, después de respaldarla. No ejecutar migrate:fresh sobre la base del usuario.',
         'Ingresar con la cuenta demo ya entregada. Abrir Mapa y recorrer país, región, variable y punto. Diferenciar registros, estimaciones y simulados. Consultar historial y comparar sin mezclar fuentes.',
-        'En Capas del ambiente, activar Temperatura. Elegir las dos fechas publicadas, comparar A/B, pausar la reproducción y leer el centro. Los cuadros de esta evidencia son capturas fijas; no se actualizan al abrir el mapa.',
+        'En Capas del ambiente, activar una de las ocho variables disponibles. Elegir fechas, comparar A/B, pausar la reproducción y leer el centro. Para precipitación, revisar el período del acumulado. Los cuadros son capturas fijas; no se actualizan al abrir el mapa.',
         'Abrir Sequías y el ejemplo de septiembre de 2024. Mostrar la cobertura parcial, abrir la ficha y explicar por qué una celda no representa toda una superficie municipal. Si caduca la publicación, renovarla explícitamente; no alterar su fecha.',
         'Con una cuenta autorizada, probar Simulaciones, un corte en Reportes y su PDF/Excel. El Visualizador no se eleva para demostrar funciones reservadas. Las pruebas de permisos usan cuentas controladas en bases aisladas.',
         'Abrir Mis avisos y Mi cuenta. No activar ni demostrar un envío externo sin credenciales, consentimiento y destinatario autorizado. La recepción de un proveedor y la lectura por una persona son estados diferentes.',
@@ -97,11 +97,11 @@ def generar(salida):
     p('El código del referente se conserva inmutable en referencias/envirosense/codigo. No se ejecutó su SQL ni se copiaron sus bases, cuentas, contactos o claves.', 'NotaM3')
 
     pagina('Pruebas, GitHub y pendientes reales')
-    p('<b>Integración comprobada:</b> 477 pruebas PHP en SQLite, 5717 comprobaciones; 100 pruebas JavaScript. PostgreSQL 16.11 pasó 476 pruebas y 5707 comprobaciones, incluidas importaciones simultáneas y conflictos. El clúster aislado quedó detenido. Once pruebas del productor raster y cinco del normalizador; Pint correcto.')
+    p('<b>Integración comprobada:</b> 477 pruebas PHP en SQLite, 5717 comprobaciones; 101 pruebas JavaScript. PostgreSQL 16.11 pasó 476 pruebas y 5707 comprobaciones, incluidas importaciones simultáneas y conflictos. El clúster aislado quedó detenido. Veintidós pruebas del productor raster y cinco del normalizador; Pint correcto.')
     p('<b>Revisión cruzada:</b> PR #87 y #82 integrados después de revisión. Tareas #38, #48, #60, #81 y #85 cerradas por el trabajo aceptado. La recuperación móvil ampliada sigue con Jaziel en #89.')
     p('<b>PR #88:</b> la comparación de sequías está comprobada en web, API y evidencia móvil, pero Android falló por un conflicto entre manifiestos. Se dejó a Jaziel el ajuste concreto. No se aprueba ni se cierra #39 con ese check fallido.')
-    p('<b>Candidatos web:</b> #90 flujo del curso, #91 cargas e historial, #92 simulación y reportes, #93 capas, #94 avisos/cuenta, #95 productor de temperatura y #96 paquete M3. Requieren la revisión de Jaziel; el autor no aprueba su propio PR. Se conserva el comando para fusionar y borrar la rama temporal.')
-    p('<b>Datos y servicios:</b> faltan las conexiones reales de sensores/MQTT y canales externos, histórico saneado y productores de las demás variables raster. La búsqueda de establecimientos depende del servicio configurado y no tiene cobertura probada en Bolivia. No se anuncia como conectada.')
+    p('<b>Candidatos web:</b> #90 flujo del curso, #91 cargas e historial, #92 simulación y reportes, #93 capas, #94 avisos/cuenta, #95 temperatura, #97 otros campos GFS y #96 paquete M3. Requieren la revisión de Jaziel; el autor no aprueba su propio PR. Se conserva el comando para fusionar y borrar la rama temporal.')
+    p('<b>Datos y servicios:</b> faltan sensores/MQTT y canales externos reales, histórico saneado, AQI y productos UV/evaporación verificados. La búsqueda de establecimientos depende del servicio configurado y no tiene cobertura probada en Bolivia. No se anuncia como conectada.')
     p('<b>Inundaciones:</b> #46 contiene propuesta, catálogo reproducible y once pruebas. Falta revisar objetivo/evento y pareja de escenas antes de procesar píxeles. No se publicó un mapa de agua como inundación confirmada.')
     p('<b>Entrega:</b> permanecen pendientes APK release de Jaziel, ajustes administrativos del propietario, revisión del cronograma ampliado, publicación pospuesta y aceptación académica M3. El candidato no sustituye esos pasos.')
 
