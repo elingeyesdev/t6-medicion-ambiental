@@ -1,158 +1,156 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocruz_movil/core/network/geocruz_api_client.dart';
 import 'package:geocruz_movil/core/theme/geocruz_theme.dart';
-import 'package:geocruz_movil/features/consultation/model/consulta_context.dart';
-import 'package:geocruz_movil/features/consultation/view/results_list_screen.dart';
-import 'package:geocruz_movil/features/home/view/home_shell.dart';
 import 'package:geocruz_movil/features/modules/model/ambient_module.dart';
+import 'package:geocruz_movil/features/modules/view/modules_screen.dart';
+import 'package:geocruz_movil/features/monitoring/model/monitoring_models.dart';
+import 'package:geocruz_movil/features/monitoring/model/monitoring_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 
 void main() {
-  group('navegación común GeoCruz', () {
-    testWidgets('muestra los cinco módulos sin resultados inventados', (
-      tester,
-    ) async {
-      await tester.pumpWidget(_app());
-      await tester.tap(find.text('Módulos'));
-      await tester.pumpAndSettle();
+  TestWidgetsFlutterBinding.ensureInitialized();
 
-      for (final module in ambientModules) {
-        await tester.scrollUntilVisible(
-          find.text(module.name),
-          240,
-          scrollable: find.byType(Scrollable).first,
-        );
-        expect(find.text(module.name), findsOneWidget);
-        expect(find.text(module.statusLabel), findsAtLeastNWidgets(1));
-      }
-      expect(find.textContaining('FRP'), findsNothing);
-      expect(find.textContaining('2026-10-'), findsNothing);
-    });
-
-    testWidgets(
-      'focos abre la consulta móvil y permite reintentar el catálogo',
-      (tester) async {
-        await tester.pumpWidget(_app());
-        await tester.tap(find.text('Módulos'));
-        await tester.pumpAndSettle();
-        await tester.tap(find.text('Focos de calor'));
-        await tester.pumpAndSettle();
-
-        expect(find.text('Focos de calor'), findsOneWidget);
-        expect(find.text('Reintentar catálogo'), findsOneWidget);
-        expect(find.text('Próximamente'), findsNothing);
-        expect(find.textContaining('resultados de ejemplo'), findsNothing);
-      },
+  testWidgets('solo ofrece el análisis móvil que ya está integrado', (
+    tester,
+  ) async {
+    AmbientModule? selected;
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: GeoCruzTheme.light(),
+        home: ModulesScreen(onModuleSelected: (module) => selected = module),
+      ),
     );
 
-    testWidgets('conserva territorio y período del listado al volver', (
-      tester,
-    ) async {
-      final context = ConsultaContext(
-        moduleId: 'focos-calor',
-        territoryId: 'BO07',
-        territoryName: 'Santa Cruz',
-        from: DateTime.utc(2026, 10, 10),
-        untilExclusive: DateTime.utc(2026, 10, 11),
-      );
-      await tester.pumpWidget(_resultsApp(context, const []));
+    expect(find.text('Focos de calor'), findsOneWidget);
+    expect(find.text('Sequías'), findsNothing);
+    expect(find.text('Inundaciones'), findsNothing);
+    expect(find.text('Deforestación'), findsNothing);
+    expect(find.text('Calidad del aire'), findsNothing);
+    expect(find.text('Próximamente'), findsNothing);
+    await tester.tap(find.text('Focos de calor'));
+    expect(selected?.id, 'focos-calor');
+  });
 
-      expect(find.text('Santa Cruz'), findsOneWidget);
-      expect(find.text(expectedPeriod), findsOneWidget);
-      expect(find.text('Próximamente'), findsOneWidget);
-      expect(find.text('Sin resultados para estos filtros'), findsNothing);
-    });
+  test('filtros del mapa siguen el contrato común de GeoSur', () {
+    final query = MonitoringFilters(
+      country: 'BO',
+      region: 'BO-SCZ',
+      metric: 'humedad',
+      origin: 'estimado',
+      from: DateTime.utc(2026, 10, 20),
+      until: DateTime.utc(2026, 10, 27),
+      page: 2,
+    ).toQuery();
 
-    testWidgets(
-      'pasa territorio, período e ID real al detalle y conserva lista',
-      (tester) async {
-        final context = ConsultaContext(
-          moduleId: 'focos-calor',
-          territoryId: 'BO070101',
-          territoryName: 'Municipio de prueba',
-          from: DateTime.utc(2026, 10, 10),
-          untilExclusive: DateTime.utc(2026, 10, 11),
-        );
-        const record = EnvironmentalRecord(
-          identifier: 'registro-control-test',
-          attributes: {'potenciaRadiativa': null},
-          source: 'fuente-control-test',
-          nature: 'observacion',
-        );
-        await tester.pumpWidget(
-          _resultsApp(context, const [
-            record,
-          ], availability: ResultsAvailability.ready),
-        );
-        expect(find.text('Municipio de prueba'), findsOneWidget);
-        await tester.scrollUntilVisible(
-          find.text('registro-control-test'),
-          250,
-          scrollable: find.byType(Scrollable).first,
-        );
-
-        await tester.tap(find.text('registro-control-test'));
-        await tester.pumpAndSettle();
-
-        expect(find.byKey(const Key('record-identifier')), findsOneWidget);
-        expect(find.text('Municipio de prueba'), findsOneWidget);
-        expect(find.text(expectedPeriod), findsOneWidget);
-        expect(find.text('registro-control-test'), findsAtLeastNWidgets(2));
-        expect(find.text('Sin dato'), findsOneWidget);
-
-        await tester.pageBack();
-        await tester.pumpAndSettle();
-        expect(find.text('Municipio de prueba'), findsOneWidget);
-        expect(find.text('registro-control-test'), findsOneWidget);
-      },
-    );
-
-    testWidgets('distingue resultado vacío de módulo no integrado', (
-      tester,
-    ) async {
-      const context = ConsultaContext(
-        moduleId: 'focos-calor',
-        territoryId: 'BO07',
-        territoryName: 'Santa Cruz',
-      );
-      await tester.pumpWidget(
-        _resultsApp(context, const [], availability: ResultsAvailability.ready),
-      );
-
-      expect(find.text('Sin resultados para estos filtros'), findsOneWidget);
-      expect(find.text('Próximamente'), findsNothing);
+    expect(query, {
+      'pais': 'BO',
+      'region': 'BO-SCZ',
+      'metrica': 'humedad',
+      'origen': 'estimado',
+      'desde': '2026-10-20T00:00:00Z',
+      'hasta': '2026-10-27T00:00:00Z',
+      'pagina': '2',
     });
   });
-}
 
-Widget _app() {
-  return MaterialApp(
-    theme: GeoCruzTheme.light(),
-    home: HomeShell(
-      apiClient: GeoCruzApiClient(
-        baseUrl: Uri.parse('http://localhost/api/v1/'),
-        client: MockClient((_) async => http.Response('{}', 200)),
+  test('el mapa conserva puntos vacíos y procedencia sin inventar ceros', () {
+    final response = MonitoringResponse.fromJson({
+      'metrica': 'temperatura',
+      'unidad': '°C',
+      'desde': '2026-10-20T00:00:00Z',
+      'hasta': '2026-10-27T00:00:00Z',
+      'origen': 'sin-simulaciones',
+      'datos': [
+        {
+          'codigo': 'punto-vacio',
+          'nombre': 'Sin lecturas',
+          'pais': 'BO',
+          'latitud': -17.7,
+          'longitud': -63.2,
+          'tipo': 'referencia',
+          'lecturas': [],
+        },
+        {
+          'codigo': 'punto-cero',
+          'nombre': 'Lectura observada',
+          'pais': 'BO',
+          'latitud': -17.8,
+          'longitud': -63.3,
+          'tipo': 'estacion',
+          'lecturas': [
+            {
+              'valor': 0,
+              'instante': '2026-10-26T12:00:00Z',
+              'origen': 'observado',
+              'fuente': 'prueba-controlada',
+              'latitud': -17.8,
+              'longitud': -63.3,
+            },
+          ],
+        },
+      ],
+      'pagina': 1,
+      'ultimaPagina': 1,
+      'total': 2,
+      'aviso': 'Puntos de referencia.',
+      'limite': null,
+    });
+
+    expect(response.points[0].hasData, isFalse);
+    expect(response.points[0].readings, isEmpty);
+    expect(response.points[1].readings.single.value, 0);
+    expect(response.points[1].readings.single.source, 'prueba-controlada');
+    expect(response.points[1].readings.single.origin, 'observado');
+  });
+
+  test('repositorio carga catálogos y envía token y filtros al mapa', () async {
+    http.Request? captured;
+    final api = GeoCruzApiClient(
+      baseUrl: Uri.parse('http://localhost/api/v1/'),
+      client: MockClient((request) async {
+        captured = request;
+        return http.Response(
+          jsonEncode({
+            'metrica': 'temperatura',
+            'unidad': '°C',
+            'desde': '2026-10-20T00:00:00Z',
+            'hasta': '2026-10-27T00:00:00Z',
+            'origen': 'sin-simulaciones',
+            'datos': <Object>[],
+            'pagina': 1,
+            'ultimaPagina': 1,
+            'total': 0,
+            'aviso': '',
+            'limite': null,
+          }),
+          200,
+          headers: const {'content-type': 'application/json'},
+        );
+      }),
+    )..bearerToken = 'test-token';
+    final repository = MonitoringRepository(api);
+
+    expect(
+      (await repository.loadCountries()).any((country) => country.code == 'BO'),
+      isTrue,
+    );
+    expect(await repository.loadRegions(), isNotEmpty);
+    await repository.query(
+      MonitoringFilters(
+        country: 'BO',
+        metric: 'temperatura',
+        from: DateTime.utc(2026, 10, 20),
+        until: DateTime.utc(2026, 10, 27),
       ),
-    ),
-  );
-}
+    );
 
-Widget _resultsApp(
-  ConsultaContext context,
-  List<EnvironmentalRecord> records, {
-  ResultsAvailability availability = ResultsAvailability.notIntegrated,
-}) {
-  return MaterialApp(
-    theme: GeoCruzTheme.light(),
-    home: ResultsListScreen(
-      module: ambientModules.first,
-      consulta: context,
-      records: records,
-      availability: availability,
-    ),
-  );
+    expect(captured?.url.path, '/api/v1/mapa/puntos');
+    expect(captured?.url.queryParameters['pais'], 'BO');
+    expect(captured?.headers['authorization'], 'Bearer test-token');
+    api.close();
+  });
 }
-
-const expectedPeriod = '09/10/2026 20:00 – 10/10/2026 20:00 (fin excluido)';
