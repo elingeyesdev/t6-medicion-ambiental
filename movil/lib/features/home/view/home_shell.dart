@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/network/geocruz_api_client.dart';
 import '../../auth/model/auth_repository.dart';
 import '../../account/view/account_screen.dart';
-import '../../hotspots/view/hotspots_screen.dart';
+import '../../consultation/view/environmental_consultation_screen.dart';
 import '../../monitoring/view/monitoring_screen.dart';
 
 class HomeShell extends StatefulWidget {
@@ -43,8 +43,8 @@ class _HomeShellState extends State<HomeShell> {
             )
           : const SizedBox.shrink(),
       _visitedTabs.contains(1)
-          ? HotspotsScreen(
-              key: const PageStorageKey('geosur-hotspots'),
+          ? EnvironmentalConsultationScreen(
+              key: const PageStorageKey('geosur-consultas'),
               apiClient: widget.apiClient,
             )
           : const SizedBox.shrink(),
@@ -76,9 +76,9 @@ class _HomeShellState extends State<HomeShell> {
             label: 'Mapa',
           ),
           NavigationDestination(
-            icon: Icon(Icons.local_fire_department_outlined),
-            selectedIcon: Icon(Icons.local_fire_department),
-            label: 'Focos',
+            icon: Icon(Icons.travel_explore_outlined),
+            selectedIcon: Icon(Icons.travel_explore),
+            label: 'Consultas',
           ),
           NavigationDestination(
             icon: Icon(Icons.account_circle_outlined),
