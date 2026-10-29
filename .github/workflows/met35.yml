@@ -2,7 +2,7 @@ name: MET-01 referencia SPI-3
 
 on:
   pull_request:
-    branches: [develop]
+    branches: [develop, main, 'feature/**', 'refactor/**', 'fix/**', 'hotfix/**', 'docs/**', 'test/**']
     paths: ['herramientas/met35/**', 'compartido/api/sequias-propuesta/**', 'docs/evidencias/met35/**', '.github/workflows/met35.yml']
   push:
     branches: [develop]

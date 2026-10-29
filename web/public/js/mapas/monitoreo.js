@@ -1,5 +1,6 @@
 import { iniciarMapaBase } from './base.js';
 import { consultaMonitoreo } from './consulta-monitoreo.js';
+import { crearConsultaTiempo } from './tiempo.js';
 
 const configuracion = JSON.parse(document.getElementById('configuracion-monitoreo').textContent);
 const formulario = document.getElementById('consulta-monitoreo');
@@ -34,6 +35,9 @@ let marcaLectura = null;
 let peticion = null;
 let secuencia = 0;
 let consultaBase = '';
+let modoTiempo = false;
+let cancelarTiempo = null;
+const botonTiempo = document.getElementById('mon-tiempo');
 
 if (matchMedia('(max-width: 767.98px)').matches) {
     document.getElementById('filtros-monitoreo').open = false;
@@ -87,6 +91,7 @@ function centrar(latitud, longitud, zoom = 8) {
 }
 
 function cerrarDetalle() {
+    cancelarTiempo?.(); cancelarTiempo = null;
     detalle.hidden = true;
     puntoSeleccionado = null;
     if (marcaLectura) mapa.removeLayer(marcaLectura);
@@ -98,6 +103,7 @@ function cerrarDetalle() {
 }
 
 function seleccionar(punto) {
+    if (modoTiempo) { abrirTiempo(punto.latitud, punto.longitud, punto.nombre); return; }
     if (!respuestaActual) return;
     cerrarDetalle();
     puntoSeleccionado = punto.codigo;
@@ -141,12 +147,38 @@ function seleccionar(punto) {
     const enlace = nodo('a', Object.hasOwn(origenes, respuestaActual.origen) ? 'Ver historial' : 'Ver historial completo', 'btn btn-primary');
     enlace.href = historial.href;
     informacion.append(enlace);
+    const tiempo = crearConsultaTiempo({url: configuracion.tiempo, latitud: punto.latitud, longitud: punto.longitud});
+    informacion.append(tiempo.elemento); cancelarTiempo = tiempo.cancelar;
     const url = new URL(location.href);
     url.searchParams.set('punto', punto.codigo);
     history.replaceState(null, '', url);
     centrar(punto.latitud, punto.longitud);
     if (matchMedia('(max-width: 767.98px)').matches) detalle.scrollIntoView({ block: 'nearest' });
 }
+
+function abrirTiempo(latitud, longitud, nombre = 'Tiempo del lugar') {
+    cerrarDetalle(); modoTiempo = false;
+    botonTiempo.setAttribute('aria-pressed', 'false'); botonTiempo.textContent = 'Tiempo de un lugar';
+    document.getElementById('mapa-monitoreo').classList.remove('elegir-tiempo');
+    detalle.hidden = false; document.getElementById('mon-nombre').textContent = nombre; informacion.replaceChildren();
+    const tiempo = crearConsultaTiempo({url: configuracion.tiempo, latitud, longitud, automatico: true});
+    informacion.append(tiempo.elemento); cancelarTiempo = tiempo.cancelar;
+    marcaLectura = L.marker([latitud, longitud], {title: nombre}).addTo(mapa); centrar(latitud, longitud);
+    avisar('Pronóstico del lugar elegido.');
+    if (matchMedia('(max-width: 767.98px)').matches) detalle.scrollIntoView({block: 'nearest'});
+}
+
+botonTiempo.addEventListener('click', () => {
+    modoTiempo = !modoTiempo; botonTiempo.setAttribute('aria-pressed', String(modoTiempo));
+    botonTiempo.textContent = modoTiempo ? 'Cancelar elección' : 'Tiempo de un lugar';
+    const superficie = document.getElementById('mapa-monitoreo'); superficie.classList.toggle('elegir-tiempo', modoTiempo);
+    avisar(modoTiempo ? 'Pulsa un lugar del mapa. Con teclado, mueve el mapa y pulsa Enter.' : 'Selecciona un punto para consultar sus datos.');
+    if (modoTiempo) { superficie.focus({preventScroll: true}); superficie.scrollIntoView({block: 'nearest'}); }
+});
+mapa.on('click', e => { if (modoTiempo) abrirTiempo(e.latlng.lat, e.latlng.lng); });
+document.getElementById('mapa-monitoreo').addEventListener('keydown', e => {
+    if (modoTiempo && e.key === 'Enter' && e.target.id === 'mapa-monitoreo') { e.preventDefault(); const centro = mapa.getCenter(); abrirTiempo(centro.lat, centro.lng); }
+});
 
 function centrarPuntos() {
     if (limites.getLayers().length) {
@@ -194,6 +226,7 @@ function dibujar() {
 }
 
 async function consultar(pagina = 1) {
+    cancelarTiempo?.();
     peticion?.abort();
     const turno = ++secuencia;
     peticion = new AbortController();

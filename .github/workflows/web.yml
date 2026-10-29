@@ -2,7 +2,7 @@ name: Base web y API
 
 on:
   pull_request:
-    branches: [develop, main, 'feature/**', 'refactor/**']
+    branches: [develop, main, 'feature/**', 'refactor/**', 'fix/**', 'hotfix/**', 'docs/**', 'test/**']
     paths: ['web/**', 'compartido/api/**', 'compartido/sequias/**', 'compartido/sensores/**', 'compartido/geografia/**', 'compartido/simulaciones/**', 'compartido/alertas/**', 'compartido/territorios/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'docs/evidencias/api02-http/**', 'herramientas/sequias/**', 'herramientas/datos/**', '.github/workflows/web.yml']
   push:
     branches: [develop, main]

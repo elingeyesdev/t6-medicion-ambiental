@@ -32,4 +32,4 @@ Dompdf 3.1.6 genera el PDF sin PHP, JavaScript ni recursos remotos. SimpleXLSXGe
 
 Pruebas: `../herramientas/php.ps1 artisan test --compact --filter=ReportesTest`, desde `web`. La evidencia se genera en la base aislada de pruebas con `GEOSUR_EVIDENCIA_REPORTES=1`; no usa cuentas ni mediciones del usuario. Ver [evidencias/reportes64](evidencias/reportes64/README.md).
 
-Pendiente: conexión de las capas meteorológicas adicionales, análisis asistido de #67 y pantallas/descargas equivalentes en Flutter #48. Esta recuperación no declara terminada toda la migración ni la tarea móvil. No se promovió a main.
+Pendiente: integración de las variables del pronóstico atmosférico, capas meteorológicas adicionales y pantallas/descargas equivalentes en Flutter #48. El chatbot fue retirado por decisión del usuario en #67 y no se activa análisis mediante un proveedor de IA. Esta recuperación no declara terminada toda la migración ni la tarea móvil. No se promovió a main.

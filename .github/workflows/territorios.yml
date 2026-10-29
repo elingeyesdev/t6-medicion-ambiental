@@ -2,7 +2,7 @@ name: Catálogo territorial
 
 on:
   pull_request:
-    branches: [develop, main]
+    branches: [develop, main, 'feature/**', 'refactor/**', 'fix/**', 'hotfix/**', 'docs/**', 'test/**']
     paths: ['compartido/territorios/**', 'compartido/api/**', 'docs/evidencias/api01/**', 'web/app/Services/Territorios/**', '.github/workflows/territorios.yml']
   push:
     branches: [develop, main]

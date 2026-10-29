@@ -51,6 +51,7 @@
                 <button class="btn btn-primary" type="submit">Consultar mapa</button>
             </form>
         </details>
+        <button id="mon-tiempo" type="button" class="btn btn-outline-primary monitoreo-tiempo" aria-pressed="false">Tiempo de un lugar</button>
         <p id="estado-monitoreo" class="monitoreo-estado" role="status" aria-live="polite">Cargando…</p>
         <div id="paginacion-monitoreo" class="monitoreo-paginacion" hidden>
             <button id="mon-anterior" class="btn btn-outline-primary" type="button">Anterior</button>

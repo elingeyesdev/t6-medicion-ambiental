@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\PaisesController;
 use App\Http\Controllers\Api\SensoresController;
 use App\Http\Controllers\Api\SequiasController;
 use App\Http\Controllers\Api\TerritoriosController;
+use App\Http\Controllers\Api\TiempoController;
 use App\Http\Controllers\Api\UsuariosController;
 use App\Http\Controllers\AvisosController;
 use App\Http\Controllers\RecuperacionController;
@@ -27,6 +28,7 @@ Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
     Route::post('/cuenta/ingresar', [CuentaController::class, 'entrar'])->middleware('throttle:cuentas-ingreso');
     Route::middleware(['auth:sanctum', 'cuenta.activa', 'abilities:cuenta'])->group(function (): void {
         Route::middleware('can:datos.consultar')->group(function (): void {
+            Route::get('/tiempo', TiempoController::class)->middleware('throttle:tiempo-consultas');
             Route::get('/alertas', [AlertasController::class, 'index']);
             Route::get('/umbrales', [AlertasController::class, 'umbrales']);
             Route::get('/avisos', [AvisosController::class, 'index']);

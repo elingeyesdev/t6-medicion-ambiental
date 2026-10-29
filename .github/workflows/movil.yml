@@ -2,7 +2,7 @@ name: Base Flutter
 
 on:
   pull_request:
-    branches: [develop, main]
+    branches: [develop, main, 'feature/**', 'refactor/**', 'fix/**', 'hotfix/**', 'docs/**', 'test/**']
     paths: ['movil/**', '.github/workflows/movil.yml']
   push:
     branches: [develop, main]
