@@ -81,7 +81,7 @@ export function iniciarMapaContinua(mapa, L, configuracion, consultaActual) {
         else { capa.clearLayers(); elegido = null; resumen.textContent = ''; texto.textContent = 'Activa la capa para consultar la simulación.'; }
     });
     variable.addEventListener('change', dibujar);
-    document.addEventListener('monitoreo-consulta-iniciada', () => { capa.clearLayers(); resumen.textContent = 'Cargando la selección del mapa…'; });
+    document.addEventListener('monitoreo-consulta-iniciada', () => { capa.clearLayers(); if (mostrar.checked) resumen.textContent = 'Cargando la selección del mapa…'; });
     document.addEventListener('monitoreo-actualizado', dibujar);
     document.addEventListener('unidades-cambiadas', dibujar);
     document.addEventListener('visibilitychange', () => { cancelar(); if (!document.hidden) consultar(); });

@@ -38,7 +38,7 @@
             </fieldset>
         </div>
     </details>
-    <details class="capas-poi">
+    <details class="capas-poi" @if(!config('capas.poi_habilitado')) hidden @endif>
         <summary>Buscar establecimientos</summary>
         <div class="capas-controles">
             <p>Disponible en algunos países de Estados Unidos, Canadá y Europa. Sin cobertura de Bolivia.</p>

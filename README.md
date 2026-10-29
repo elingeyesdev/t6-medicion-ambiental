@@ -1,6 +1,8 @@
 # GeoSur
 
-**GeoSur es la adaptación del sistema completo de EnviroSense**; focos, sequías y los otros análisis de la pareja se incorporan dentro de ese software. Sus cuentas, mapa, datos, simulaciones, reportes, alertas, notificaciones y asistente son la base del producto. La migración está incompleta y no se acredita por conservar una copia del original.
+**GeoSur adapta EnviroSense como sistema principal**; focos, sequías y los otros análisis de la pareja se incorporan dentro de ese software. Sus cuentas, mapa, datos, simulaciones, reportes, alertas y notificaciones son la base del producto. El chatbot quedó fuera por decisión de Josué.
+
+**Candidato M3 del 29/10:** [estado, PDF, pruebas y recorrido](docs/entrega-m3/README.md). El candidato web necesita revisión; las conexiones e insumos pendientes están identificados. Main conserva M2 y el trabajo móvil ampliado corresponde a Jaziel.
 
 El mapa principal de esta rama tiene países/territorios y puntos ambientales; focos y sequías conservan su cobertura probada de Santa Cruz. Se mantiene la tecnología comprobada en el Planner: Laravel/Blade, JavaScript y API compartida, con Flutter para móvil. La plantilla web es Tabler 1.7.1. Las funciones originales se adaptan a esa tecnología.
 
@@ -84,3 +86,4 @@ Las ramas preparadas para M2 parten de la misma base inicial. Cada implementaci�
 [Índice de demostración y evidencias M2](docs/entrega-m2/README.md): versiones, PR, arranque, recorrido web y pendientes de móvil/revisión. Preparación parcial de #22; no acredita entrega final ni aceptación del milestone.
 
 Los cinco módulos previstos son focos de calor, sequías, inundaciones, deforestación y calidad del aire. M2 desarrolla el primero y sus bases comunes. Las claves privadas de fuentes externas se configuran únicamente en el backend y nunca se incorporan a Git. Las demostraciones se identifican y no sustituyen consultas reales.
+

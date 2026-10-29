@@ -169,7 +169,7 @@ export function iniciarCapas(mapa, L = window.L) {
             if (datos.version !== 1 || !Array.isArray(datos.capas)) throw new Error('No se pudo leer la lista de capas.');
             catalogo = datos.capas; configurarPoi(datos.poi);
             for (const id of ['a', 'b']) {
-                selectores[id].capa.replaceChildren(...catalogo.map(c => {
+                selectores[id].capa.replaceChildren(...catalogo.filter(c => c.cuadros.length).map(c => {
                     const n = new Option(c.nombre + (c.cuadros.length ? '' : ' · sin imágenes'), c.id); n.disabled = !c.cuadros.length; return n;
                 }));
                 selectores[id].capa.value = catalogo.find(c => c.cuadros.length)?.id ?? '';
