@@ -48,9 +48,21 @@
                     <input id="mon-hasta" name="hasta" class="form-control" type="datetime-local" value="{{ now('America/La_Paz')->format('Y-m-d\TH:i') }}" max="{{ now('America/La_Paz')->format('Y-m-d\TH:i') }}" required>
                 </div>
                 <p>Hasta siete días · Hora de Bolivia.</p>
+                <label class="form-check"><input class="form-check-input" type="checkbox" name="por_momento"><span class="form-check-label">Ver por momento</span></label>
+                <div id="recorrido-mapa" class="recorrido-mapa" hidden>
+                    <label for="recorrido-momento" class="form-label">Momento de la consulta</label>
+                    <input id="recorrido-momento" name="momento" type="datetime-local" class="form-control" disabled>
+                    <label for="recorrido-barra" class="form-label">Recorrer el período</label>
+                    <input id="recorrido-barra" type="range" step="1" class="form-range">
+                    <div class="buscador-acciones"><button id="recorrido-anterior" type="button" class="btn btn-outline-primary">Una hora antes</button><button id="recorrido-siguiente" type="button" class="btn btn-outline-primary">Una hora después</button></div>
+                </div>
                 <button class="btn btn-primary" type="submit">Consultar mapa</button>
             </form>
         </details>
+        <section id="comparacion-fijada" class="comparacion-fijada" hidden aria-label="Referencia de comparación">
+            <strong id="comparacion-nombre"></strong><p>Elige otro punto o momento para comparar.</p>
+            <button id="quitar-comparacion" type="button" class="btn btn-outline-primary">Quitar comparación</button>
+        </section>
         <section class="monitoreo-buscador" aria-label="Buscar lugar">
             <form id="buscar-lugar" role="search">
                 <label for="nombre-lugar" class="form-label">Buscar lugar</label>

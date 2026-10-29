@@ -64,3 +64,5 @@ Al elegir país y región, el mapa dibuja el límite y filtra puntos por su posi
 El servicio de pronóstico del original se adaptó a Laravel/API y a la ficha del mapa, con datos actuales, por hora y por día de Open-Meteo. Conserva estimaciones y faltantes; no los transforma en observaciones. Detalle y pendientes del mapa completo en [TIEMPO_ENVIROSENSE.md](TIEMPO_ENVIROSENSE.md).
 
 El buscador de Mapbox también tiene candidato Laravel/API y formulario en el mapa. Permite distinguir lugares con el mismo nombre y navegar fuera de Sudamérica, sin crear estaciones ni guardar respuestas temporales. Se comprobó Tokio y selección con teclado en Quito. Ver [BUSCADOR_ENVIROSENSE.md](BUSCADOR_ENVIROSENSE.md).
+
+El recorrido de lecturas por momento y la comparación de puntos/fechas tienen candidato en `HISTORIAL_MAPA_ENVIROSENSE.md`. Usan registros guardados y mantienen separadas fuentes y procedencias. La reproducción y comparación de las capas raster del referente siguen pendientes.

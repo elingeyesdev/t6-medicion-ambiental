@@ -19,6 +19,11 @@ export function consultaMonitoreo(valores, ahora = Date.now()) {
         desde: new Date(desde).toISOString().replace('.000Z', 'Z'),
         hasta: new Date(hasta).toISOString().replace('.000Z', 'Z'),
     });
+    if (valores.por_momento === 'on') {
+        const momento = instanteBolivia(valores.momento);
+        if (momento < desde || momento >= hasta || momento > ahora) throw new Error('Elige un momento dentro del período consultado.');
+        consulta.set('momento', new Date(momento).toISOString().replace('.000Z', 'Z'));
+    }
     for (const campo of ['pais', 'region', 'origen']) {
         if (valores[campo]) consulta.set(campo, valores[campo]);
     }

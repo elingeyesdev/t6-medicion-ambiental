@@ -37,7 +37,7 @@ El código original se mantiene íntegro como referencia, pero **todavía no est
 ## Orden de trabajo y Planner
 
 - Mantener M2 y sus evidencias para la revisión del jueves.
-- #51 ya fue aprobado e integrado por Jaziel en develop el 28/10. Continuar la revisión de #55 y sus ramas dependientes; los candidatos no se aprueban por el mismo autor.
+- #51 y #55 ya fueron aprobados e integrados por Jaziel en develop el 28/10. Continuar la revisión de #68 y sus ramas dependientes; los candidatos no se aprueban por el mismo autor.
 - Completar sequías Flutter #38 y comparación #39 con Jaziel, conservando el piloto y los faltantes reales.
 - Revisar primero catálogo/contratos y persistencia (#62/#66); cuentas/permisos (#63) antes de las funciones que administren información de usuarios.
 - Recuperar Simulaciones (#52), Reportes (#64), Alertas/avisos (#65) (sin chatbot; #67 cancelada), cada uno con su prueba equivalente frente al referente y su cliente Flutter (#48).
@@ -57,4 +57,6 @@ Las pantallas muestran lenguaje corriente y texto normal de al menos 16 px. Fech
 
 El servicio meteorológico del original ya tiene candidato Laravel/API y ficha dentro del mapa: datos actuales, 168 horas y siete días de Open-Meteo cuando están disponibles. No se almacenan como observaciones. Ver `TIEMPO_ENVIROSENSE.md`.
 
-Simulaciones #73, Reportes #74 y Alertas #75 pasaron las comprobaciones de GitHub. #77 corrige la dependencia de correo; su auditoría no encuentra avisos conocidos. El pronóstico está en #78 y el buscador geográfico tiene candidato en `BUSCADOR_ENVIROSENSE.md`. Las ramas siguen pendientes de revisión propia después de #51.
+Simulaciones #73, Reportes #74 y Alertas #75 pasaron las comprobaciones de GitHub. #77 corrige la dependencia de correo; su auditoría no encuentra avisos conocidos. El pronóstico está en #78 y el buscador geográfico tiene candidato en `BUSCADOR_ENVIROSENSE.md`. Las ramas siguen pendientes de revisión propia después de #51 y #55, ya integrados.
+
+Jaziel aprobó e integró también #55 el 28/10, en `aa8aa7d`. La siguiente revisión de la cadena es #68. El historial por momento y comparación de puntos/fechas ya tienen candidato, explicado en `HISTORIAL_MAPA_ENVIROSENSE.md`; las capas raster y su reproducción siguen abiertas.
