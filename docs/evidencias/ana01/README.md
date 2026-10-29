@@ -2,6 +2,8 @@
 
 Esta evidencia registra acceso a catálogos y contexto territorial. **No acredita píxeles de agua, área inundada ni método aceptado.** No se descargaron imágenes satelitales; se conservaron dos respuestas JSON pequeñas y sus resúmenes. No son fixtures climáticos ni imágenes de una inundación.
 
+La repetición del 29/10 se guarda en `verificacion-2026-10-29.json`. El cuerpo de la consulta A coincide byte por byte con `mpc-A/respuesta.json` (SHA-256 `2d5d52cacb96ca52f22b7d1042656e1dbe921c630d35cd9ba140e8753afbdd2b`); por eso no se duplica el original. Registra disponibilidad de catálogo, sin lectura de agua.
+
 - `cdse-A/informe.json`: GET oficial CDSE, 21:36:23 UTC, HTTP 200 / text/html, 246 bytes. Rechazo identificado como `RESPUESTA_NO_JSON`; cantidad de escenas desconocida. Se conserva hash/diagnóstico, sin publicar el HTML con su identificador de soporte.
 - `mpc-A/respuesta.json` y `informe.json`: catálogo Microsoft Planetary Computer, 21:36:25 UTC, **8 fichas**, septiembre de 2024; sin siguiente página anunciada. Original de 122 405 bytes.
 - `mpc-B/respuesta.json` y `informe.json`: mismo catálogo, 21:36:27 UTC, **12 fichas de una primera página**, marzo de 2025; **hay paginación pendiente**. Original de 183 897 bytes. No es un inventario completo de marzo.

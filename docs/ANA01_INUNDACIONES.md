@@ -1,5 +1,9 @@
 # ANA-01 / #40 — preparación documental de agua e inundaciones
 
+**Actualización del 29/10 para M3.** Sincronicé esta rama con `develop` y repetí la consulta pública pequeña de septiembre de 2024. Vuelven a aparecer ocho fichas y el JSON tiene exactamente el mismo SHA-256 de la captura del 25/10. Las once pruebas del lector pasan. La nueva comprobación está en [verificacion-2026-10-29.json](evidencias/ana01/verificacion-2026-10-29.json); no sustituye ni cambia de fecha el original.
+
+Este es el avance parcial de adquisición que pide #40. No hay escenas locales ni un evento/referencia acordados para obtener un mapa de inundación válido. El siguiente paso es revisar con Jaziel la pareja y el objetivo de comparación; Josué preparará después el recorte y comprobará sus píxeles. La revisión de este método se pide en #46. El resto de G continúa abierto y no se muestra una pantalla vacía en GeoSur. La dependencia de aceptación #39 sigue vigente para ejecutar el análisis, aunque se haya adelantado esta preparación.
+
 **25/10/2026 · propuesta pendiente de Jaziel.** Se adelanta documentación, inventario y lectura de metadatos. La ejecución de G conserva la dependencia de #39 y sus fechas del Planner. No hay lectura de píxeles, cálculo de agua, mapa de inundaciones ni método aceptado. Las rutas actuales de inundaciones conservan su respuesta 503.
 
 ## Qué quedó comprobado
