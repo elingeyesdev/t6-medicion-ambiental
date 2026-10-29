@@ -291,18 +291,23 @@ class _DroughtScreenState extends State<DroughtScreen> {
                     (selectedProv == null || t.parentId == selectedProv))
                 .toList();
 
-            return Padding(
-              padding: EdgeInsets.only(
-                left: 20,
-                right: 20,
-                top: 8,
-                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
+            return SafeArea(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(ctx).size.height * 0.85,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 8,
+                    bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
                     Text(
                       'Filtros de sequías',
                       style: Theme.of(ctx).textTheme.titleLarge?.copyWith(
@@ -390,9 +395,11 @@ class _DroughtScreenState extends State<DroughtScreen> {
                   ],
                 ),
               ),
-            );
-          },
+            ),
+          ),
         );
+      },
+    );
       },
     );
   }

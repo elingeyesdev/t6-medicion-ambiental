@@ -179,19 +179,25 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
           ? _catalogFailure(context)
           : ListView(
               key: const PageStorageKey<String>('hotspots-scroll'),
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 30),
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 30),
               children: [
-                const _CoverageScopeCard(),
-                const SizedBox(height: 8),
-                if (response != null) _appliedContext(context, response),
-                const SizedBox(height: 8),
-                _searchButton(context),
-                const SizedBox(height: 8),
-                _queryStatus(context, response),
+                if (!widget.showAppBar && response != null)
+                  _buildTopControls(context, response),
+                if (response != null)
+                  _buildHotspotsSummaryCard(context, response),
+                if (widget.showAppBar) ...[
+                  const _CoverageScopeCard(),
+                  const SizedBox(height: 8),
+                  if (response != null) _appliedContext(context, response),
+                  const SizedBox(height: 8),
+                  _searchButton(context),
+                  const SizedBox(height: 8),
+                  _queryStatus(context, response),
+                ],
                 if (response != null) ...[
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   _detectionMap(context, response),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   _summary(context, response),
                 ],
               ],
@@ -524,6 +530,131 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
   Future<void> _changePage(Future<void> Function() change) async {
     setState(() => _selectedRecord = null);
     await change();
+  }
+
+  Widget _buildTopControls(BuildContext context, HotspotResponse response) {
+    final period = BoliviaTime.interval(
+      response.periodFrom,
+      response.periodUntil,
+    );
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 8, 0, 4),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _controller.territoryName(response.territoryId),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                ),
+                Text(
+                  period,
+                  style: const TextStyle(fontSize: 11, color: Colors.black54),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+          FilledButton.tonalIcon(
+            onPressed: _controller.loadingCatalog ? null : _openFilters,
+            icon: const Icon(Icons.tune, size: 18),
+            label: const Text('Filtros'),
+          ),
+          const SizedBox(width: 8),
+          IconButton.filledTonal(
+            onPressed: _controller.loading ? null : () => _controller.apply(_controller.filters),
+            icon: const Icon(Icons.refresh, size: 18),
+            tooltip: 'Recargar',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHotspotsSummaryCard(BuildContext context, HotspotResponse response) {
+    final highIndicator = response.indicator('focosConfianzaAlta');
+    final maxFrp = response.indicator('potenciaMaxima');
+
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(
+                  Icons.local_fire_department_outlined,
+                  color: GeoCruzColors.green,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  'Resumen de focos de calor',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _metricItem(
+                  response.total.toString(),
+                  'Detecciones',
+                  Colors.blueGrey.shade800,
+                ),
+                _metricItem(
+                  (highIndicator?['valor'] ?? 0).toString(),
+                  'Confianza alta',
+                  GeoCruzColors.green,
+                ),
+                _metricItem(
+                  maxFrp?['valor'] != null
+                      ? (maxFrp!['valor'] as num).toStringAsFixed(1)
+                      : '—',
+                  'FRP máx (MW)',
+                  const Color(0xFFBC673B),
+                ),
+                _metricItem(
+                  'VIIRS',
+                  'Satélite',
+                  Colors.grey.shade700,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _metricItem(String val, String label, Color color) {
+    return Column(
+      children: [
+        Text(
+          val,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 11, color: Colors.black54),
+        ),
+      ],
+    );
   }
 
   Widget _appliedContext(BuildContext context, HotspotResponse response) {
