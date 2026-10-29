@@ -237,21 +237,27 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
         overflow: TextOverflow.ellipsis,
       ),
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: DropdownButtonFormField<String?>(
-                    key: const Key('monitoring-country'),
-                    initialValue: _filters.country,
-                    isExpanded: true,
-                    decoration: const InputDecoration(labelText: 'País'),
+        Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: DropdownButtonFormField<String?>(
+                      key: const Key('monitoring-country'),
+                      initialValue: _filters.country,
+                      isExpanded: true,
+                      decoration: const InputDecoration(
+                        labelText: 'País',
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                      ),
                     items: [
                       const DropdownMenuItem<String?>(
                         value: null,
-                        child: Text('Sudamérica'),
+                        child: Text('Sudamérica', overflow: TextOverflow.ellipsis),
                       ),
                       ..._countries.map(
                         (item) => DropdownMenuItem<String?>(
@@ -281,11 +287,15 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                     key: ValueKey('monitoring-region-${_filters.country ?? 'sur'}'),
                     initialValue: _filters.region,
                     isExpanded: true,
-                    decoration: const InputDecoration(labelText: 'Región'),
+                    decoration: const InputDecoration(
+                      labelText: 'Región',
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                    ),
                     items: [
                       const DropdownMenuItem<String?>(
                         value: null,
-                        child: Text('Todas'),
+                        child: Text('Todas', overflow: TextOverflow.ellipsis),
                       ),
                       ..._regions
                           .where(
@@ -323,12 +333,16 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                   child: DropdownButtonFormField<String>(
                     initialValue: _filters.metric,
                     isExpanded: true,
-                    decoration: const InputDecoration(labelText: 'Variable'),
+                    decoration: const InputDecoration(
+                      labelText: 'Variable',
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                    ),
                     items: _metrics.entries
                         .map(
                           (entry) => DropdownMenuItem(
                             value: entry.key,
-                            child: Text(entry.value),
+                            child: Text(entry.value, overflow: TextOverflow.ellipsis),
                           ),
                         )
                         .toList(),
@@ -350,22 +364,32 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                     key: const Key('monitoring-origin'),
                     initialValue: _filters.origin,
                     isExpanded: true,
-                    decoration: const InputDecoration(labelText: 'Origen'),
+                    decoration: const InputDecoration(
+                      labelText: 'Origen',
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                    ),
                     items: const [
                       DropdownMenuItem<String?>(
                         value: null,
-                        child: Text('Registros y estimaciones'),
+                        child: Text('Registros y estimaciones', overflow: TextOverflow.ellipsis),
                       ),
                       DropdownMenuItem<String?>(
                         value: 'observado',
-                        child: Text('Observado'),
+                        child: Text('Observado', overflow: TextOverflow.ellipsis),
                       ),
                       DropdownMenuItem<String?>(
                         value: 'estimado',
-                        child: Text('Estimado'),
+                        child: Text('Estimado', overflow: TextOverflow.ellipsis),
                       ),
-                      DropdownMenuItem<String?>(value: 'simulado', child: Text('Solo simulados')),
-                      DropdownMenuItem<String?>(value: 'todos', child: Text('Todos, incluidos simulados')),
+                      DropdownMenuItem<String?>(
+                        value: 'simulado',
+                        child: Text('Solo simulados', overflow: TextOverflow.ellipsis),
+                      ),
+                      DropdownMenuItem<String?>(
+                        value: 'todos',
+                        child: Text('Todos, incluidos simulados', overflow: TextOverflow.ellipsis),
+                      ),
                     ],
                     onChanged: _loading
                         ? null
@@ -408,7 +432,8 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
             ),
           ],
         ),
-      ],
+      ),
+    ],
     ),
   );
 

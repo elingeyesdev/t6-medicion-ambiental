@@ -26,11 +26,15 @@ class HotspotsScreen extends StatefulWidget {
   State<HotspotsScreen> createState() => _HotspotsScreenState();
 }
 
-class _HotspotsScreenState extends State<HotspotsScreen> {
+class _HotspotsScreenState extends State<HotspotsScreen>
+    with AutomaticKeepAliveClientMixin {
   late final HotspotsViewModel _controller;
   final MapController _mapController = MapController();
   HotspotRecord? _selectedRecord;
   bool _mapReady = false;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -168,30 +172,72 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => AnimatedBuilder(
-    animation: _controller,
-    builder: (context, _) {
+  Widget build(BuildContext context) {
+    super.build(context);
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, _) {
       final response = _controller.response;
-      final body = _controller.loadingCatalog && _controller.territories.isEmpty
-          ? _catalogLoading(context)
-          : _controller.catalogError != null &&
-                _controller.territories.isEmpty
-          ? _catalogFailure(context)
-          : ListView(
-              key: const PageStorageKey<String>('hotspots-scroll'),
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 30),
+      final body = (_controller.loadingCatalog && _controller.territories.isEmpty) ||
+              (_controller.loading && response == null)
+          ? const Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 12),
+                  Text('Cargando focos de calor...'),
+                ],
+              ),
+            )
+          : _controller.catalogError != null && _controller.territories.isEmpty
+              ? _catalogFailure(context)
+              : _controller.queryError != null && response == null
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.warning_amber_rounded,
+                                size: 48, color: Colors.orange),
+                            const SizedBox(height: 12),
+                            Text(
+                              _controller.queryError!,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 15),
+                            ),
+                            const SizedBox(height: 16),
+                            FilledButton.icon(
+                              onPressed: () => _controller.apply(_controller.filters),
+                              icon: const Icon(Icons.refresh),
+                              label: const Text('Reintentar'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : ListView(
+                      key: const PageStorageKey<String>('hotspots-scroll'),
+                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 30),
               children: [
-                const _CoverageScopeCard(),
-                const SizedBox(height: 8),
-                if (response != null) _appliedContext(context, response),
-                const SizedBox(height: 8),
-                _searchButton(context),
-                const SizedBox(height: 8),
-                _queryStatus(context, response),
+                if (!widget.showAppBar && response != null)
+                  _buildTopControls(context, response),
+                if (response != null)
+                  _buildHotspotsSummaryCard(context, response),
+                if (widget.showAppBar) ...[
+                  const _CoverageScopeCard(),
+                  const SizedBox(height: 8),
+                  if (response != null) _appliedContext(context, response),
+                  const SizedBox(height: 8),
+                  _searchButton(context),
+                  const SizedBox(height: 8),
+                  _queryStatus(context, response),
+                ],
                 if (response != null) ...[
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   _detectionMap(context, response),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   _summary(context, response),
                 ],
               ],
@@ -216,23 +262,7 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
       );
     },
   );
-
-  Widget _catalogLoading(BuildContext context) => Center(
-    child: Padding(
-      padding: const EdgeInsets.all(28),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const CircularProgressIndicator(),
-          const SizedBox(height: 14),
-          Text(
-            'Cargando cobertura disponible…',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-        ],
-      ),
-    ),
-  );
+  }
 
   Widget _catalogFailure(BuildContext context) => Center(
     child: Padding(
@@ -526,6 +556,136 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
     await change();
   }
 
+  Widget _buildTopControls(BuildContext context, HotspotResponse response) {
+    final period = BoliviaTime.interval(
+      response.periodFrom,
+      response.periodUntil,
+    );
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  _controller.territoryName(response.territoryId),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              FilledButton.tonalIcon(
+                onPressed: _controller.loadingCatalog ? null : _openFilters,
+                icon: const Icon(Icons.tune, size: 18),
+                label: const Text('Filtros'),
+              ),
+              const SizedBox(width: 8),
+              IconButton.filledTonal(
+                onPressed: _controller.loading ? null : () => _controller.apply(_controller.filters),
+                icon: const Icon(Icons.refresh, size: 18),
+                tooltip: 'Recargar',
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            period,
+            style: const TextStyle(fontSize: 12, color: Colors.black54),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHotspotsSummaryCard(BuildContext context, HotspotResponse response) {
+    final highIndicator = response.indicator('focosConfianzaAlta');
+    final maxFrp = response.indicator('potenciaMaxima');
+
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(
+                  Icons.local_fire_department_outlined,
+                  color: GeoCruzColors.green,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  'Resumen de focos de calor',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _metricItem(
+                  response.total.toString(),
+                  'Detecciones',
+                  Colors.blueGrey.shade800,
+                ),
+                _metricItem(
+                  (highIndicator?['valor'] ?? 0).toString(),
+                  'Confianza alta',
+                  GeoCruzColors.green,
+                ),
+                _metricItem(
+                  maxFrp?['valor'] != null
+                      ? (maxFrp!['valor'] as num).toStringAsFixed(1)
+                      : '—',
+                  'FRP máx (MW)',
+                  const Color(0xFFBC673B),
+                ),
+                _metricItem(
+                  'VIIRS',
+                  'Satélite',
+                  Colors.grey.shade700,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _metricItem(String val, String label, Color color) {
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            val,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 11, color: Colors.black54),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _appliedContext(BuildContext context, HotspotResponse response) {
     final oldResults = _controller.loading || _controller.queryError != null;
     final obtainAt = response.fetchedAt;
@@ -735,6 +895,9 @@ class _CoverageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (response.coverageState == 'parcial') {
+      return const SizedBox.shrink();
+    }
     final (icon, color) = switch (response.coverageState) {
       'parcial' => (Icons.warning_amber_rounded, GeoCruzColors.amber),
       'sin_cobertura' => (

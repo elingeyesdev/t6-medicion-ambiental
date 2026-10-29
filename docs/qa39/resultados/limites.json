@@ -1,0 +1,16 @@
+{
+  "fechaUtc": "2026-10-29T10:02:00Z",
+  "base": "http://127.0.0.1:8002/api/v1/sequias",
+  "casos": [
+    {"caso": "consulta_valida_departamento", "entrada": "mesFinal=2024-09", "http": 200, "observado": "1 muestra, SPI -0.6413769540120462, categoría normal, lluvia 114.5 mm, cobertura parcial 1/56, 55 sin preparar"},
+    {"caso": "consulta_valida_piloto", "entrada": "mesFinal=2024-09&muestra=scz-piloto-01", "http": 200, "observado": "El mismo SPI y la misma lluvia; muestrasSinPreparar vacío porque el filtro ya es una sola muestra"},
+    {"caso": "mes_invalido", "entrada": "mesFinal=2024-13", "http": 422, "codigo": "FILTROS_INVALIDOS"},
+    {"caso": "mes_texto", "entrada": "mesFinal=invalido", "http": 422, "codigo": "FILTROS_INVALIDOS"},
+    {"caso": "mes_anterior_a_2021", "entrada": "mesFinal=2020-12", "http": 422, "codigo": "FILTROS_INVALIDOS"},
+    {"caso": "mes_no_cerrado", "entrada": "mesFinal=2026-10", "http": 422, "codigo": "FILTROS_INVALIDOS"},
+    {"caso": "municipio_sin_preparar", "entrada": "mesFinal=2024-09&municipio=BO070102", "http": 503, "codigo": "MUESTRAS_NO_DISPONIBLES"},
+    {"caso": "muestra_ausente", "entrada": "mesFinal=2024-09&muestra=no-existe", "http": 404, "codigo": "MUESTRA_NO_DISPONIBLE"},
+    {"caso": "territorio_incompatible", "entrada": "mesFinal=2024-09&provincia=BO0702&municipio=BO070101", "http": 422, "codigo": "FILTROS_INCOMPATIBLES"}
+  ],
+  "separacion": "Estos HTTP son la API real con la publicación local. Los casos de respuesta tardía, reintento y null que no equivalen a normal se ejecutaron con transporte controlado, sin otra descarga a Open-Meteo."
+}

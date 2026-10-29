@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -8,7 +7,7 @@ class GeoCruzApiClient {
   GeoCruzApiClient({
     required Uri baseUrl,
     http.Client? client,
-    this.timeout = const Duration(seconds: 20),
+    this.timeout = const Duration(seconds: 75),
   }) : _baseUrl = baseUrl,
        _client = client ?? http.Client();
 
@@ -77,15 +76,9 @@ class GeoCruzApiClient {
       throw ArgumentError.value(endpoint, 'endpoint', 'Ruta no válida.');
     }
 
-    final uri = _baseUrl
-        .resolve(normalizedEndpoint)
-        .replace(
-          queryParameters: queryParameters.isEmpty ? null : queryParameters,
-        );
     final headers = <String, String>{
       'Accept': 'application/json',
       'Accept-Encoding': 'identity',
-      'Connection': 'close',
     };
     if (body != null) headers['Content-Type'] = 'application/json';
     if (authenticated) {
@@ -99,21 +92,25 @@ class GeoCruzApiClient {
       }
       headers['Authorization'] = 'Bearer $token';
     }
-    final request = switch (method) {
-      'GET' => _client.get(uri, headers: headers),
-      'POST' => _client.post(
-        uri,
-        headers: headers,
-        body: jsonEncode(body ?? const <String, Object?>{}),
-      ),
-      'PUT' => _client.put(
-        uri,
-        headers: headers,
-        body: jsonEncode(body ?? const <String, Object?>{}),
-      ),
-      _ => throw ArgumentError.value(method, 'method', 'Método no admitido.'),
-    };
-    final response = await request.timeout(timeoutOverride ?? timeout);
+    final encodedBody = body != null ? jsonEncode(body) : jsonEncode(const <String, Object?>{});
+
+    Future<http.Response> sendTo(Uri base, Duration requestTimeout) {
+      final uri = base
+          .resolve(normalizedEndpoint)
+          .replace(
+            queryParameters: queryParameters.isEmpty ? null : queryParameters,
+          );
+      final request = switch (method) {
+        'GET' => _client.get(uri, headers: headers),
+        'POST' => _client.post(uri, headers: headers, body: encodedBody),
+        'PUT' => _client.put(uri, headers: headers, body: encodedBody),
+        _ => throw ArgumentError.value(method, 'method', 'Método no admitido.'),
+      };
+      return request.timeout(requestTimeout);
+    }
+
+    final targetTimeout = timeoutOverride ?? timeout;
+    final response = await sendTo(_baseUrl, targetTimeout);
 
     Object? payload;
     try {
