@@ -1,0 +1,21 @@
+{
+  "version": "ana01-exploracion-metadatos-0.1",
+  "proveedorCatalogo": "cdse",
+  "url": "https://stac.dataspace.copernicus.eu/v1/search?collections=sentinel-2-l2a&bbox=-62.99%2C-17.75%2C-62.9%2C-17.65&datetime=2024-09-01T00%3A00%3A00Z%2F2024-09-30T23%3A59%3A59Z&limit=12",
+  "ventana": "A",
+  "recuperadoEn": "2026-10-25T21:36:23.017582+00:00",
+  "http": {
+    "estado": 200,
+    "tipoContenido": "text/html; charset=utf-8",
+    "bytes": 246,
+    "sha256": "79e97eb3580da6ac62a0cdc1404af6c55372e14a1f2322ff0de3b02568018d53"
+  },
+  "rasterDescargado": false,
+  "pixelesAgua": null,
+  "superficieInundadaKm2": null,
+  "metodoAprobado": false,
+  "estado": "catalogo_no_verificado",
+  "motivo": "RESPUESTA_NO_JSON",
+  "escenas": null,
+  "tieneSiguientePagina": null
+}
