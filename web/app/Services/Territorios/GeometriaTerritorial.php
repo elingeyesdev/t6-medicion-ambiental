@@ -10,7 +10,7 @@ final class GeometriaTerritorial
 
     private array $municipios = [];
 
-    private ?string $firmaActiva = null;
+    private ?array $geometriaActiva = null;
 
     private ?array $indiceActivo = null;
 
@@ -109,31 +109,14 @@ final class GeometriaTerritorial
 
     private function indice(array $g): array
     {
-        $firma = $this->firma($g);
-        if ($this->firmaActiva === $firma && $this->indiceActivo !== null) {
+        if ($this->geometriaActiva === $g && $this->indiceActivo !== null) {
             return $this->indiceActivo;
         }
         $construido = $this->construir($g);
-        $this->firmaActiva = $firma;
+        $this->geometriaActiva = $g;
         $this->indiceActivo = $construido;
 
         return $construido;
-    }
-
-    private function firma(array $g): string
-    {
-        $poligonos = $g['type'] === 'Polygon' ? [$g['coordinates']] : $g['coordinates'];
-        $anillo = $poligonos[0][0] ?? [];
-        $n = count($anillo);
-        if ($n === 0) {
-            return $g['type'].'|0';
-        }
-        $muestras = '';
-        foreach ([0, intdiv($n, 4), intdiv($n, 2), intdiv(3 * $n, 4), $n - 1] as $i) {
-            $muestras .= '|'.$anillo[$i][0].'|'.$anillo[$i][1];
-        }
-
-        return $g['type'].'|'.count($poligonos).'|'.$n.$muestras;
     }
 
     private function construir(array $g): array

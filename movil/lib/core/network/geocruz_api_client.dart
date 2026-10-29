@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -12,7 +11,7 @@ class GeoCruzApiClient {
   }) : _baseUrl = baseUrl,
        _client = client ?? http.Client();
 
-  Uri _baseUrl;
+  final Uri _baseUrl;
   final http.Client _client;
   final Duration timeout;
 
@@ -110,29 +109,8 @@ class GeoCruzApiClient {
       return request.timeout(requestTimeout);
     }
 
-    final isLocalHost =
-        _baseUrl.host == '10.0.2.2' || _baseUrl.host == '127.0.0.1';
     final targetTimeout = timeoutOverride ?? timeout;
-
-    Future<http.Response> send() async {
-      if (!isLocalHost) {
-        return sendTo(_baseUrl, targetTimeout);
-      }
-      try {
-        return await sendTo(_baseUrl, targetTimeout);
-      } on TimeoutException {
-        rethrow;
-      } catch (_) {
-        final altBase = _baseUrl.replace(
-          host: _baseUrl.host == '10.0.2.2' ? '127.0.0.1' : '10.0.2.2',
-        );
-        final response = await sendTo(altBase, targetTimeout);
-        _baseUrl = altBase;
-        return response;
-      }
-    }
-
-    final response = await send();
+    final response = await sendTo(_baseUrl, targetTimeout);
 
     Object? payload;
     try {

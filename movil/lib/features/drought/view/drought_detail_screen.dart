@@ -39,10 +39,10 @@ class DroughtDetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'IDENTIFICADOR DE MUESTRA',
+                    'Muestra',
                     style: TextStyle(
                       color: GeoCruzColors.green,
-                      fontSize: 11,
+                      fontSize: 14,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 0.8,
                     ),
@@ -72,7 +72,7 @@ class DroughtDetailScreen extends StatelessWidget {
                           style: TextStyle(
                             color: cat.color,
                             fontWeight: FontWeight.bold,
-                            fontSize: 13,
+                            fontSize: 14,
                           ),
                         ),
                       ),
@@ -141,7 +141,7 @@ class DroughtDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           _InfoCard(
-            title: 'Fuente técnica',
+            title: 'Sobre estos datos',
             children: const [
               _InfoRow(
                 label: 'Proveedor',
@@ -213,7 +213,7 @@ class _InfoRow extends StatelessWidget {
             flex: 4,
             child: Text(
               label,
-              style: const TextStyle(fontSize: 13, color: Colors.black54),
+              style: const TextStyle(fontSize: 14, color: Colors.black54),
             ),
           ),
           const SizedBox(width: 8),
@@ -222,7 +222,7 @@ class _InfoRow extends StatelessWidget {
             child: Text(
               value,
               textAlign: TextAlign.end,
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
             ),
           ),
         ],

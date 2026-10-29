@@ -186,7 +186,7 @@ class _DroughtScreenState extends State<DroughtScreen>
               ),
               const SizedBox(height: 8),
               Text(
-                'Período trimestral · Bolivia',
+                'Trimestre hasta ${_filters.mesFinal}',
                 style: Theme.of(sheetContext).textTheme.bodyMedium,
               ),
               Text(
@@ -567,14 +567,14 @@ class _DroughtScreenState extends State<DroughtScreen>
               const SizedBox(height: 8),
               Text(
                 'Datos para ${coverage.municipiosConDatos} de ${coverage.municipiosEnFiltro} municipios consultados.',
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 4),
               Text(
                 coverage.esParcial
                     ? 'Cobertura parcial. Faltan datos; eso no significa que no haya sequía.'
                     : 'Son puntos de referencia; no describen todo el municipio.',
-                style: const TextStyle(fontSize: 11, color: Colors.black54),
+                style: const TextStyle(fontSize: 14, color: Colors.black54),
               ),
             ],
           ],
@@ -599,7 +599,7 @@ class _DroughtScreenState extends State<DroughtScreen>
           Text(
             label,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 11, color: Colors.black54),
+            style: const TextStyle(fontSize: 14, color: Colors.black54),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
@@ -859,7 +859,7 @@ class _DroughtScreenState extends State<DroughtScreen>
               const SizedBox(height: 8),
               const Text(
                 'Fuente: Open-Meteo ERA5 (reanálisis 0.25°, precipitation_sum en mm, licencia CC BY 4.0). Base de referencia 1991–2020.',
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 6),
               ...filtered.map(
@@ -872,7 +872,7 @@ class _DroughtScreenState extends State<DroughtScreen>
                       Expanded(
                         child: Text(
                           adv,
-                          style: const TextStyle(fontSize: 13, color: Colors.black87),
+                          style: const TextStyle(fontSize: 14, color: Colors.black87),
                         ),
                       ),
                     ],
