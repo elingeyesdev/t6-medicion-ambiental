@@ -32,6 +32,7 @@ Se publicaron dos PNG de temperatura GFS reales y sus metadatos en almacenamient
 - JavaScript integrado: **100 pruebas correctas**, incluidas las dos nuevas de filtro territorial y valores de la capa continua.
 - Productor raster: **11 pruebas correctas**, incluyendo GRIB/NetCDF controlados, máscaras, unidades, geografía, fallos HTTP y publicación PHP real. CI Linux también pasó ese contrato.
 - Normalizador: **5 pruebas Python**. SQLite concurrente: procesos independientes, con lotes repetidos y conflictos, modos DELETE y WAL.
+- PostgreSQL **16.11**: **476 pruebas, 5707 comprobaciones correctas**, incluyendo cuatro importaciones simultáneas y rollback del lote en conflicto. [Entorno aislado y reproducción](../POSTGRESQL_LOCAL_M3.md). El clúster quedó detenido y la demo sigue en SQLite.
 - Pint completo correcto. Se corrigió el formato de las rutas añadidas en los PR #92/#93 y de la salida de sesión en #94; sus verificaciones vuelven a ejecutarse después de cada push.
 - Sequías real: 114,5 mm; SPI Laravel `-0.6413769540120462`; SciPy `-0.6413769540120433`; diferencia `2.886579864025407e-15`. Cobertura parcial: 1 de 56 municipios. Una celda no acredita la condición de todo el municipio.
 - Navegador: demo, mapa continental, comparación de dos temperaturas reales y consulta de sequías con sesión. [Mapa real](evidencias/mapa-temperatura-noaa.png) y [detalle de sequías](../qa39/evidencias/web-sequias-detalle-2024-09.png).
@@ -52,7 +53,7 @@ El productor raster utiliza su entorno aislado; ver su guía. Las pruebas no acr
 
 1. Jaziel: corregir el conflicto de manifiestos Android en #88 y repetir CI; revisar el candidato web y los PR #90-95. El fallo se dejó comentado con el ajuste concreto. #39 no se cierra con Android fallido.
 2. Flutter: trabajo ampliado de EnviroSense en #89, con Jaziel. No se desarrolló móvil después de la instrucción de reservarle ese trabajo. APK release e instalación siguen pendientes.
-3. Datos: dispositivos/broker reales, importación de un historial saneado real, productores de las otras variables raster y prueba PostgreSQL. No se presenta el mapa de temperatura como recuperación de todos esos productos.
+3. Datos: dispositivos/broker reales, importación de un historial saneado real y productores de las otras variables raster. PostgreSQL local y su concurrencia ya están comprobados; esto no acredita un despliegue. No se presenta el mapa de temperatura como recuperación de todos esos productos.
 4. Servicios externos: correo, Telegram, WhatsApp, push y consultas atmosféricas configurables, apagados por defecto. Faltan credenciales y pruebas autorizadas. No se envían mensajes desde una prueba ni se usa el WhatsApp personal como integración.
 5. Inundaciones: revisar método, objetivo/evento y referencia de escenas antes de procesar; la adquisición parcial está documentada en #40/#46.
 6. Gestión: estimar el alcance ampliado y recalcular ProjectLibre conservando la línea base; propietario configura protecciones, rama predeterminada y borrado global. Railway/publicación siguen pospuestos por Josué.
