@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocruz_movil/core/network/geocruz_api_client.dart';
 import 'package:geocruz_movil/features/monitoring/view/monitoring_screen.dart';
+import 'package:geocruz_movil/features/monitoring/model/monitoring_models.dart';
+import 'package:geocruz_movil/features/monitoring/model/monitoring_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 
@@ -14,13 +15,6 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
-    // The large region asset decodes in an isolate outside the widget fake clock.
-    await tester.runAsync(() async {
-      await Future.wait([
-        rootBundle.loadString('assets/geografia/paises-envirosense.json'),
-        rootBundle.loadString('assets/geografia/regiones/indice.json'),
-      ]);
-    });
     Future<void> advance() async {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 400));
@@ -35,7 +29,7 @@ void main() {
       }), 200, headers: {'content-type': 'application/json'});
     }))..bearerToken = 'token-de-prueba';
     addTearDown(api.close);
-    await tester.pumpWidget(MaterialApp(home: MonitoringScreen(api: api, onUnauthorized: () {})));
+    await tester.pumpWidget(MaterialApp(home: MonitoringScreen(api: api, repository: _CatalogRepository(api), onUnauthorized: () {})));
     await advance();
     expect(queries, isNotEmpty);
 
@@ -67,4 +61,19 @@ void main() {
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump();
   });
+}
+
+class _CatalogRepository extends MonitoringRepository {
+  const _CatalogRepository(super.api);
+
+  @override
+  Future<List<CountryOption>> loadCountries() async => const [
+    CountryOption('BO', 'Bolivia'), CountryOption('AR', 'Argentina'),
+  ];
+
+  @override
+  Future<List<RegionOption>> loadRegions() async => const [
+    RegionOption(code: 'BO-SCZ', country: 'BO', name: 'Santa Cruz'),
+    RegionOption(code: 'AR-BA', country: 'AR', name: 'Buenos Aires'),
+  ];
 }

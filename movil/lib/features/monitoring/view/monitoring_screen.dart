@@ -23,11 +23,13 @@ class MonitoringScreen extends StatefulWidget {
   const MonitoringScreen({
     required this.api,
     required this.onUnauthorized,
+    this.repository,
     super.key,
   });
 
   final GeoCruzApiClient api;
   final VoidCallback onUnauthorized;
+  final MonitoringRepository? repository;
 
   @override
   State<MonitoringScreen> createState() => _MonitoringScreenState();
@@ -49,7 +51,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
   @override
   void initState() {
     super.initState();
-    _repository = MonitoringRepository(widget.api);
+    _repository = widget.repository ?? MonitoringRepository(widget.api);
     final period = ConsultationPeriod.lastSevenDays();
     _filters = MonitoringFilters(from: period.from, until: period.until);
     _initialize();
