@@ -13,9 +13,14 @@ import 'hotspot_detail_screen.dart';
 import 'hotspot_filters_sheet.dart';
 
 class HotspotsScreen extends StatefulWidget {
-  const HotspotsScreen({required this.apiClient, super.key});
+  const HotspotsScreen({
+    required this.apiClient,
+    this.showAppBar = true,
+    super.key,
+  });
 
   final GeoCruzApiClient apiClient;
+  final bool showAppBar;
 
   @override
   State<HotspotsScreen> createState() => _HotspotsScreenState();
@@ -167,6 +172,35 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
     animation: _controller,
     builder: (context, _) {
       final response = _controller.response;
+      final body = _controller.loadingCatalog && _controller.territories.isEmpty
+          ? _catalogLoading(context)
+          : _controller.catalogError != null &&
+                _controller.territories.isEmpty
+          ? _catalogFailure(context)
+          : ListView(
+              key: const PageStorageKey<String>('hotspots-scroll'),
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 30),
+              children: [
+                const _CoverageScopeCard(),
+                const SizedBox(height: 8),
+                if (response != null) _appliedContext(context, response),
+                const SizedBox(height: 8),
+                _searchButton(context),
+                const SizedBox(height: 8),
+                _queryStatus(context, response),
+                if (response != null) ...[
+                  const SizedBox(height: 10),
+                  _detectionMap(context, response),
+                  const SizedBox(height: 10),
+                  _summary(context, response),
+                ],
+              ],
+            );
+
+      if (!widget.showAppBar) {
+        return body;
+      }
+
       return Scaffold(
         appBar: AppBar(
           title: const Text('Focos de calor'),
@@ -178,30 +212,7 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
             ),
           ],
         ),
-        body: _controller.loadingCatalog && _controller.territories.isEmpty
-            ? _catalogLoading(context)
-            : _controller.catalogError != null &&
-                  _controller.territories.isEmpty
-            ? _catalogFailure(context)
-            : ListView(
-                key: const PageStorageKey<String>('hotspots-scroll'),
-                padding: const EdgeInsets.fromLTRB(16, 4, 16, 30),
-                children: [
-                  const _CoverageScopeCard(),
-                  const SizedBox(height: 8),
-                  if (response != null) _appliedContext(context, response),
-                  const SizedBox(height: 8),
-                  _searchButton(context),
-                  const SizedBox(height: 8),
-                  _queryStatus(context, response),
-                  if (response != null) ...[
-                    const SizedBox(height: 10),
-                    _detectionMap(context, response),
-                    const SizedBox(height: 10),
-                    _summary(context, response),
-                  ],
-                ],
-              ),
+        body: body,
       );
     },
   );
@@ -292,9 +303,7 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
     }
 
     final coverage = response.coverageState;
-    if (response.total > 0 &&
-        coverage != 'sin_cobertura' &&
-        coverage != 'parcial') {
+    if (response.total > 0 && coverage != 'sin_cobertura') {
       return const SizedBox.shrink();
     }
     final title = switch (coverage) {

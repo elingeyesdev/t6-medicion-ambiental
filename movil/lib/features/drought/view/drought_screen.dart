@@ -12,11 +12,13 @@ class DroughtScreen extends StatefulWidget {
   const DroughtScreen({
     required this.apiClient,
     this.initialMonth = '2024-09',
+    this.showAppBar = true,
     super.key,
   });
 
   final GeoCruzApiClient apiClient;
   final String initialMonth;
+  final bool showAppBar;
 
   @override
   State<DroughtScreen> createState() => _DroughtScreenState();
@@ -401,6 +403,63 @@ class _DroughtScreenState extends State<DroughtScreen> {
     final summary = response?.resumen;
     final coverage = response?.cobertura;
 
+    final body = _loading || _catalogLoading
+        ? const Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 12),
+                Text('Consultando sequías...'),
+              ],
+            ),
+          )
+        : _errorMessage != null
+            ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.warning_amber_rounded,
+                          size: 48, color: Colors.orange),
+                      const SizedBox(height: 12),
+                      Text(
+                        _errorMessage!,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                      const SizedBox(height: 16),
+                      FilledButton.icon(
+                        onPressed: _executeQuery,
+                        icon: const Icon(Icons.refresh),
+                        label: const Text('Reintentar'),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : response == null
+                ? const SizedBox.shrink()
+                : SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (!widget.showAppBar) _buildTopControls(),
+                        _buildSummaryCard(summary, coverage),
+                        _buildMapCard(response.datos),
+                        _buildLegend(),
+                        _buildSamplesList(response.datos),
+                        _buildWarningsSection(response.advertencias),
+                        const SizedBox(height: 24),
+                      ],
+                    ),
+                  );
+
+    if (!widget.showAppBar) {
+      return body;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Column(
@@ -429,57 +488,43 @@ class _DroughtScreenState extends State<DroughtScreen> {
           ),
         ],
       ),
-      body: _loading || _catalogLoading
-          ? const Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 12),
-                  Text('Consultando sequías...'),
-                ],
-              ),
-            )
-          : _errorMessage != null
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.warning_amber_rounded,
-                            size: 48, color: Colors.orange),
-                        const SizedBox(height: 12),
-                        Text(
-                          _errorMessage!,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 15),
-                        ),
-                        const SizedBox(height: 16),
-                        FilledButton.icon(
-                          onPressed: _executeQuery,
-                          icon: const Icon(Icons.refresh),
-                          label: const Text('Reintentar'),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              : response == null
-                  ? const SizedBox.shrink()
-                  : SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          _buildSummaryCard(summary, coverage),
-                          _buildMapCard(response.datos),
-                          _buildLegend(),
-                          _buildSamplesList(response.datos),
-                          _buildWarningsSection(response.advertencias),
-                          const SizedBox(height: 24),
-                        ],
-                      ),
-                    ),
+      body: body,
+    );
+  }
+
+  Widget _buildTopControls() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Mes final ${_filters.mesFinal}',
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                ),
+                const Text(
+                  'Ventana de 3 meses · ERA5',
+                  style: TextStyle(fontSize: 11, color: Colors.black54),
+                ),
+              ],
+            ),
+          ),
+          FilledButton.tonalIcon(
+            onPressed: _openFiltersDialog,
+            icon: const Icon(Icons.tune, size: 18),
+            label: const Text('Filtros'),
+          ),
+          const SizedBox(width: 8),
+          IconButton.filledTonal(
+            onPressed: _executeQuery,
+            icon: const Icon(Icons.refresh, size: 18),
+            tooltip: 'Recargar',
+          ),
+        ],
+      ),
     );
   }
 
@@ -506,23 +551,6 @@ class _DroughtScreenState extends State<DroughtScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                 ),
-                const Spacer(),
-                if (coverage?.esParcial ?? false)
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.amber.shade100,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      'Cobertura parcial',
-                      style: TextStyle(
-                          color: Colors.amber.shade900,
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
               ],
             ),
             const SizedBox(height: 12),
@@ -798,7 +826,10 @@ class _DroughtScreenState extends State<DroughtScreen> {
   }
 
   Widget _buildWarningsSection(List<String> advertencias) {
-    if (advertencias.isEmpty) return const SizedBox.shrink();
+    final filtered = advertencias
+        .where((adv) => !adv.toLowerCase().contains('cobertura parcial'))
+        .toList();
+    if (filtered.isEmpty) return const SizedBox.shrink();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -819,7 +850,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 8),
-                ...advertencias.map(
+                ...filtered.map(
                   (adv) => Padding(
                     padding: const EdgeInsets.symmetric(vertical: 2),
                     child: Row(
