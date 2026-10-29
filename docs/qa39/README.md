@@ -52,7 +52,14 @@ Ese número no es el del oráculo congelado (`−0.6410480784`). El oráculo usa
 - Teléfono, focos antes de la corrección: [movil-focos-error-antes.png](evidencias/movil-focos-error-antes.png). El texto es el que devuelve la API cuando PHP agota los 60 segundos.
 - Focos después de la corrección, misma API local: HTTP 200 en 8.3 s, 3381 detecciones, cobertura parcial. Registro en [focos.json](resultados/focos.json). Las pruebas Flutter de focos (`hotspot_repository_test.dart`) pasaron 8/8, incluido período inválido, respuesta tardía y FRP en cero.
 
-La página web `/modulos/sequias` exige sesión. El parser que usa esa página aceptó la misma respuesta que el teléfono. Falta la captura de Josué, o de esta cuenta con la sesión abierta, en `mesFinal=2024-09`.
+Josué repitió la consulta con sesión abierta en la web el 29/10 sobre `c8b6b7a`, en el servidor local 5791. Renovó explícitamente la captura pública ERA5 y su publicación, conservando versiones y fechas. La nueva entrada coincide con la usada por Jaziel: 114.5 mm, ventana de 1991 de 233.5 mm, SPI `−0.6413769540120462`. No se cambió la fecha de una publicación vencida para hacerla pasar por vigente.
+
+- [Cobertura web](evidencias/web-sequias-cobertura-2024-09.png): un punto disponible de 56 y cobertura parcial.
+- [Detalle web](evidencias/web-sequias-detalle-2024-09.png): trimestre, lluvia, condición normal y diferencia entre municipio solicitado y municipio del punto.
+- [Respuesta API del equipo de Josué](resultados/api-josue-2024-09.json): consulta general del mismo período, con resumen, fuente, coordenadas y los 55 faltantes.
+- [Contraste repetido por Josué](resultados/contraste-josue-2026-10-29.json): las treinta entradas, procedencia y resultado independiente de SciPy 1.18.1. La diferencia absoluta vuelve a ser `2.886579864025407e-15`, inferior a la tolerancia `1e-8`.
+
+Para repetir el contraste sin copiar la implementación PHP, instalar SciPy 1.18.1 en un entorno de pruebas y ejecutar `herramientas/sequias/contrastar-publicacion-qa39.py --entrada <salida-de-sequias:preparar-consulta> --salida <archivo-nuevo.json>`. Este ensayo conserva las treinta ventanas reales; los otros casos controlados siguen en el oráculo de MET-01.
 
 ## Defecto corregido en esta rama
 
@@ -61,4 +68,4 @@ La página web `/modulos/sequias` exige sesión. El parser que usa esa página a
 ## Participación
 
 - Jaziel Díaz: recorrido de esta comparación, evidencia de esta carpeta y corrección del tiempo de la consulta territorial.
-- Josué Padilla: API, visor web y correcciones de #38 en `a8e2678`. En el comentario del 29/10 indicó que #39 sigue abierta hasta revisar este recorrido repetido. Ese visto bueno todavía no está.
+- Josué Padilla: API, visor web, revisión de geometrías y repetición con sesión, captura pública renovada y SciPy. Laravel pasó 383 pruebas y 3733 comprobaciones; las ocho pruebas JavaScript de sequías también pasaron. La aprobación final del PR sigue pendiente de corregir la combinación de manifiestos Android que falló en CI; no se cierra #39 con una compilación fallida.

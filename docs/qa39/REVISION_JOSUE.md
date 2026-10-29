@@ -12,4 +12,6 @@ La configuración Android permite HTTP para los destinos locales declarados y co
 
 Corregí el rótulo del trimestre, que decía Bolivia aunque el cálculo usa meses UTC, y mejoré la lectura de la ficha. Los valores SPI, la lluvia, los faltantes y la cobertura no se alteraron.
 
-Las pruebas de Laravel, Flutter y la captura web deben quedar registradas antes de dar por aceptada #39. La matriz del SPI congelado y la publicación de Jaziel se conservan como entradas distintas.
+Completé la captura web con sesión y renové las dos entradas públicas de lluvia. La publicación del 29/10 coincide con la entrada de Jaziel y el contraste independiente SciPy 1.18.1: diferencia `2.886579864025407e-15`. Quedaron guardados los treinta acumulados, la respuesta general y las capturas en esta carpeta. La cobertura es un municipio con datos de 56; el resto conserva sus faltantes. El oráculo antiguo sigue separado.
+
+Laravel: 383 pruebas, 3733 comprobaciones correctas. JavaScript de sequías: ocho pruebas correctas. El análisis y las pruebas Flutter pasaron en CI, pero la compilación Android falló porque el manifiesto debug declara HTTP local y el atributo de main añadido en mi revisión entra en conflicto. Dejé a Jaziel el ajuste concreto en el PR; él conserva la responsabilidad del código móvil. Falta esa compilación correcta y revisar su siguiente commit para aprobar #88 y cerrar #39.
