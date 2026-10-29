@@ -1,6 +1,26 @@
-# GeoCruz
+# GeoSur
 
-Sistema de consulta ambiental para el departamento de Santa Cruz, sus provincias y municipios. Proyecto de Sistemas III, UNIVALLE, gestión 2026. Integrantes: Josué Padilla y Jaziel Díaz.
+**GeoSur es la adaptación del sistema completo de EnviroSense**; focos, sequías y los otros análisis de la pareja se incorporan dentro de ese software. Sus cuentas, mapa, datos, simulaciones, reportes, alertas, notificaciones y asistente son la base del producto. La migración está incompleta y no se acredita por conservar una copia del original.
+
+El mapa principal de esta rama tiene países/territorios y puntos ambientales; focos y sequías conservan su cobertura probada de Santa Cruz. Se mantiene la tecnología comprobada en el Planner: Laravel/Blade, JavaScript y API compartida, con Flutter para móvil. La plantilla web es Tabler 1.7.1. Las funciones originales se adaptan a esa tecnología.
+
+- [Corrección de enfoque, alcance geográfico y funciones originales que faltan](docs/ENVIROSENSE_COMO_BASE.md).
+
+- [Alcance vigente, funciones originales y orden de recuperación](docs/REINGENIERIA_GEOSUR.md).
+- [Backlog para replanificar, sin fechas ni duraciones inventadas](planificacion/Backlog_GeoSur.csv).
+
+El jueves 29/10 corresponde a la revisión de **M2**, ya publicada en `main` como `v0.2.0` mediante #59. M3 no tiene fecha confirmada. Se trabaja en local; Railway está pospuesto. Los documentos anteriores conservan la historia y no reemplazan este ajuste.
+
+- [Dónde está cada parte del código y la plantilla](docs/ORGANIZACION_CODIGO.md).
+- [Inicio, registro, acceso y cómo probar el mapa](docs/ACCESO_ENVIROSENSE.md).
+- [Marca GeoCruz, navegación y cuenta demo local](docs/MARCA_Y_DEMO.md).
+- [Acceso con cubierta de Tabler y mapa base Mapbox](docs/ACCESO_Y_MAPBOX.md).
+- [Antecedente de la adaptación M3; sus exclusiones anteriores ya no son el alcance vigente](docs/REINGENIERIA_ENVIROSENSE_M3.md).
+- [Revisión de la guía GitHub del curso y pendientes reales](docs/GUIA_CURSO_ESTADO.md).
+
+Los apartados siguientes conservan instrucciones y resultados de la base integrada; el estado vigente de adaptación se sigue en #29, #47-50 y #53.
+
+La primera implementación y M2 se centraron en el departamento de Santa Cruz, sus provincias y municipios; ese corte histórico no limita el software completo de EnviroSense. Proyecto de Sistemas III, UNIVALLE, gestión 2026. Integrantes: Josué Padilla y Jaziel Díaz.
 
 Repositorio oficial: https://github.com/elingeyesdev/t6-medicion-ambiental
 
@@ -18,7 +38,9 @@ La [referencia de EnviroSense](referencias/envirosense/README.md) conserva el c�
 - `docs/`: planificación, instrucciones y evidencias.
 - `referencias/envirosense/`: código de origen conservado para comparación; no forma parte del arranque de GeoCruz.
 
-La base Laravel/Blade, el catálogo, la API y el visor web están integrados mediante PR #23 a #26. Flutter y su consulta de focos se integraron mediante PR #28 y #32. QA-01 se revisó e integró mediante PR #33; sus 11 casos por cliente y comparación de 25 registros están en [QA-01](docs/qa21/README.md). Las cuatro consultas restantes y la aprobación académica siguen pendientes. M1 y sus evidencias están vinculados en los Issues #1 a #14.
+La base Laravel/Blade, el catálogo, la API y el visor web están integrados mediante PR #23 a #26. Flutter y su consulta de focos se integraron mediante PR #28 y #32. QA-01 se revisó e integró mediante PR #33; sus 11 casos por cliente y comparación de 25 registros están en [QA-01](docs/qa21/README.md). M1 y sus evidencias están vinculados en los Issues #1 a #14. Josué confirmó la aceptación académica de M1 y M2 el 26/10; la revisión de los cambios de M3 se realiza aparte.
+
+El [visor de sequías #37](docs/WEB02_VISOR_SEQUIAS.md) y la API #36 ya están integrados en develop mediante los PR #45 y #43. Muestra el piloto histórico preparado, sus faltantes y cobertura; no acredita las otras 55 series ni la integración móvil. El recorrido de inicio y acceso de esta rama sigue en revisión mediante PR #51. En esta copia, iniciar `./iniciar-web.ps1 -Puerto 5791` y abrir <http://127.0.0.1:5791/>; crear una cuenta para entrar al mapa y a las consultas. Los módulos de inundaciones, deforestación y calidad del aire siguen pendientes.
 
 API de #18: [contrato y pruebas manuales](compartido/api/README.md). En esta copia de trabajo puede iniciarse con `./iniciar-api.ps1` y probarse en http://127.0.0.1:8002/api/v1/territorios. La configuración privada está en `web/.env`, excluida de Git. [Resultados y evidencia](docs/API01_FOCOS_CALOR.md).
 

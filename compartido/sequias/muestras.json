@@ -1,0 +1,583 @@
+{
+  "version": "scz-muestras-sequias-0.1-propuesta",
+  "estado": "propuesta_pendiente_revision",
+  "versionCatalogoTerritorial": "scz-codab-v02-1.0.0-propuesta",
+  "crs": "OGC:CRS84",
+  "ordenCoordenadas": [
+    "longitud",
+    "latitud"
+  ],
+  "fuentesTerritorialesSha256": {
+    "datos/catalogo.json": "4144d8ecc598d5cdacb4ef5d14c9dbf96f29ff5d7482fe3c660c192459d2c2c8",
+    "datos/limites/municipios.geojson": "d9293e6f8805fced5eca24b9b90882bc461c5a1390ddac4cd1cfc4a1dd06c83d"
+  },
+  "generacion": {
+    "algoritmo": "punto_interior_y_piloto_conservado_v1",
+    "shapely": "2.1.2",
+    "geos": "3.13.1",
+    "numpy": "2.3.4"
+  },
+  "alcance": "Un punto candidato por unidad municipal del catálogo; no es estación, promedio municipal ni cobertura climática.",
+  "muestras": [
+    {
+      "identificador": "scz-piloto-01",
+      "municipio": "BO070101",
+      "provincia": "BO0701",
+      "coordenadaSolicitada": [
+        -63.1821,
+        -17.7833
+      ],
+      "seleccion": "piloto_met35_conservado"
+    },
+    {
+      "identificador": "scz-bo070102-01",
+      "municipio": "BO070102",
+      "provincia": "BO0701",
+      "coordenadaSolicitada": [
+        -62.899021,
+        -17.760018
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070103-01",
+      "municipio": "BO070103",
+      "provincia": "BO0701",
+      "coordenadaSolicitada": [
+        -63.361513,
+        -17.753034
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070104-01",
+      "municipio": "BO070104",
+      "provincia": "BO0701",
+      "coordenadaSolicitada": [
+        -63.231657,
+        -18.052432
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070105-01",
+      "municipio": "BO070105",
+      "provincia": "BO0701",
+      "coordenadaSolicitada": [
+        -63.433786,
+        -18.043856
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070201-01",
+      "municipio": "BO070201",
+      "provincia": "BO0702",
+      "coordenadaSolicitada": [
+        -63.051993,
+        -17.355462
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070202-01",
+      "municipio": "BO070202",
+      "provincia": "BO0702",
+      "coordenadaSolicitada": [
+        -62.832312,
+        -17.324891
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070301-01",
+      "municipio": "BO070301",
+      "provincia": "BO0703",
+      "coordenadaSolicitada": [
+        -61.023912,
+        -15.106351
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070302-01",
+      "municipio": "BO070302",
+      "provincia": "BO0703",
+      "coordenadaSolicitada": [
+        -61.269714,
+        -16.803472
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070303-01",
+      "municipio": "BO070303",
+      "provincia": "BO0703",
+      "coordenadaSolicitada": [
+        -60.199309,
+        -16.827006
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070401-01",
+      "municipio": "BO070401",
+      "provincia": "BO0704",
+      "coordenadaSolicitada": [
+        -63.814859,
+        -17.676764
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070402-01",
+      "municipio": "BO070402",
+      "provincia": "BO0704",
+      "coordenadaSolicitada": [
+        -63.698102,
+        -17.317702
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070403-01",
+      "municipio": "BO070403",
+      "provincia": "BO0704",
+      "coordenadaSolicitada": [
+        -64.458153,
+        -16.716733
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070404-01",
+      "municipio": "BO070404",
+      "provincia": "BO0704",
+      "coordenadaSolicitada": [
+        -64.025372,
+        -16.826797
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070501-01",
+      "municipio": "BO070501",
+      "provincia": "BO0705",
+      "coordenadaSolicitada": [
+        -60.442999,
+        -17.712752
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070502-01",
+      "municipio": "BO070502",
+      "provincia": "BO0705",
+      "coordenadaSolicitada": [
+        -61.977521,
+        -17.752067
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070503-01",
+      "municipio": "BO070503",
+      "provincia": "BO0705",
+      "coordenadaSolicitada": [
+        -59.660484,
+        -18.15371
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070601-01",
+      "municipio": "BO070601",
+      "provincia": "BO0706",
+      "coordenadaSolicitada": [
+        -63.41888,
+        -17.390799
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070602-01",
+      "municipio": "BO070602",
+      "provincia": "BO0706",
+      "coordenadaSolicitada": [
+        -63.862698,
+        -16.574092
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070603-01",
+      "municipio": "BO070603",
+      "provincia": "BO0706",
+      "coordenadaSolicitada": [
+        -63.30491,
+        -17.538502
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070701-01",
+      "municipio": "BO070701",
+      "provincia": "BO0707",
+      "coordenadaSolicitada": [
+        -63.625519,
+        -19.76874
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070702-01",
+      "municipio": "BO070702",
+      "provincia": "BO0707",
+      "coordenadaSolicitada": [
+        -61.240734,
+        -19.236193
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070703-01",
+      "municipio": "BO070703",
+      "provincia": "BO0707",
+      "coordenadaSolicitada": [
+        -63.318676,
+        -18.475827
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070704-01",
+      "municipio": "BO070704",
+      "provincia": "BO0707",
+      "coordenadaSolicitada": [
+        -63.520991,
+        -20.328912
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070705-01",
+      "municipio": "BO070705",
+      "provincia": "BO0707",
+      "coordenadaSolicitada": [
+        -63.515779,
+        -19.402166
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070706-01",
+      "municipio": "BO070706",
+      "provincia": "BO0707",
+      "coordenadaSolicitada": [
+        -63.488127,
+        -20.045263
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070707-01",
+      "municipio": "BO070707",
+      "provincia": "BO0707",
+      "coordenadaSolicitada": [
+        -63.019917,
+        -20.308116
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070801-01",
+      "municipio": "BO070801",
+      "provincia": "BO0708",
+      "coordenadaSolicitada": [
+        -63.969444,
+        -18.738469
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070802-01",
+      "municipio": "BO070802",
+      "provincia": "BO0708",
+      "coordenadaSolicitada": [
+        -64.135748,
+        -18.30271
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070803-01",
+      "municipio": "BO070803",
+      "provincia": "BO0708",
+      "coordenadaSolicitada": [
+        -64.348921,
+        -18.356689
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070804-01",
+      "municipio": "BO070804",
+      "provincia": "BO0708",
+      "coordenadaSolicitada": [
+        -63.797994,
+        -18.620026
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070805-01",
+      "municipio": "BO070805",
+      "provincia": "BO0708",
+      "coordenadaSolicitada": [
+        -64.193411,
+        -18.791258
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070901-01",
+      "municipio": "BO070901",
+      "provincia": "BO0709",
+      "coordenadaSolicitada": [
+        -63.729971,
+        -18.141803
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070902-01",
+      "municipio": "BO070902",
+      "provincia": "BO0709",
+      "coordenadaSolicitada": [
+        -64.163459,
+        -18.042539
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070903-01",
+      "municipio": "BO070903",
+      "provincia": "BO0709",
+      "coordenadaSolicitada": [
+        -63.982654,
+        -17.996782
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo070904-01",
+      "municipio": "BO070904",
+      "provincia": "BO0709",
+      "coordenadaSolicitada": [
+        -63.952635,
+        -18.349285
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071001-01",
+      "municipio": "BO071001",
+      "provincia": "BO0710",
+      "coordenadaSolicitada": [
+        -63.2429,
+        -17.34077
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071002-01",
+      "municipio": "BO071002",
+      "provincia": "BO0710",
+      "coordenadaSolicitada": [
+        -63.152251,
+        -17.141621
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071003-01",
+      "municipio": "BO071003",
+      "provincia": "BO0710",
+      "coordenadaSolicitada": [
+        -63.262206,
+        -17.054818
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071004-01",
+      "municipio": "BO071004",
+      "provincia": "BO0710",
+      "coordenadaSolicitada": [
+        -63.207475,
+        -16.868446
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071005-01",
+      "municipio": "BO071005",
+      "provincia": "BO0710",
+      "coordenadaSolicitada": [
+        -63.648243,
+        -16.503356
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071101-01",
+      "municipio": "BO071101",
+      "provincia": "BO0711",
+      "coordenadaSolicitada": [
+        -62.019879,
+        -15.401489
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071102-01",
+      "municipio": "BO071102",
+      "provincia": "BO0711",
+      "coordenadaSolicitada": [
+        -62.469326,
+        -16.209347
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071103-01",
+      "municipio": "BO071103",
+      "provincia": "BO0711",
+      "coordenadaSolicitada": [
+        -62.735037,
+        -16.834002
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071104-01",
+      "municipio": "BO071104",
+      "provincia": "BO0711",
+      "coordenadaSolicitada": [
+        -61.883296,
+        -16.780319
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071105-01",
+      "municipio": "BO071105",
+      "provincia": "BO0711",
+      "coordenadaSolicitada": [
+        -62.410161,
+        -16.589996
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071106-01",
+      "municipio": "BO071106",
+      "provincia": "BO0711",
+      "coordenadaSolicitada": [
+        -62.163123,
+        -17.265394
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071201-01",
+      "municipio": "BO071201",
+      "provincia": "BO0712",
+      "coordenadaSolicitada": [
+        -58.95697,
+        -17.188957
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071301-01",
+      "municipio": "BO071301",
+      "provincia": "BO0713",
+      "coordenadaSolicitada": [
+        -64.514831,
+        -17.828753
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071302-01",
+      "municipio": "BO071302",
+      "provincia": "BO0713",
+      "coordenadaSolicitada": [
+        -64.632373,
+        -18.041598
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071401-01",
+      "municipio": "BO071401",
+      "provincia": "BO0714",
+      "coordenadaSolicitada": [
+        -58.422046,
+        -19.069658
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071402-01",
+      "municipio": "BO071402",
+      "provincia": "BO0714",
+      "coordenadaSolicitada": [
+        -57.710401,
+        -18.551547
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071403-01",
+      "municipio": "BO071403",
+      "provincia": "BO0714",
+      "coordenadaSolicitada": [
+        -58.613583,
+        -18.418473
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071501-01",
+      "municipio": "BO071501",
+      "provincia": "BO0715",
+      "coordenadaSolicitada": [
+        -63.594693,
+        -15.238817
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071502-01",
+      "municipio": "BO071502",
+      "provincia": "BO0715",
+      "coordenadaSolicitada": [
+        -63.119551,
+        -14.913282
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    },
+    {
+      "identificador": "scz-bo071503-01",
+      "municipio": "BO071503",
+      "provincia": "BO0715",
+      "coordenadaSolicitada": [
+        -63.266862,
+        -16.157561
+      ],
+      "seleccion": "point_on_surface_redondeado_6_decimales"
+    }
+  ]
+}

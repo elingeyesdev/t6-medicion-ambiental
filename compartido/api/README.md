@@ -4,6 +4,8 @@ Contrato implementado **`1.0-m2-candidata`**, basado en DOC-12. API y catálogo 
 
 Para conectar Flutter al backend existente, seguir [Desarrollo compartido](../DESARROLLO.md). La referencia React/Express de EnviroSense no cambia estas rutas ni exige rehacer el cliente móvil.
 
+La recuperación del sistema principal de GeoSur añade una [consulta privada del mapa ambiental](mapa-monitoreo.md), con las cuentas y los datos de #63/#66. Usa token de cuenta para Flutter; sus requisitos no cambian las consultas públicas de M2 descritas abajo.
+
 ## Operaciones de lectura
 
 - `GET /api/v1/territorios`: `tipo` (departamento/provincia/municipio), `padre`, `pagina`, `tamanioPagina`. Los tres primeros filtros son opcionales; sin filtros devuelve el catálogo. Una página fuera del rango devuelve `datos=[]` conservando el total.
@@ -12,9 +14,9 @@ Para conectar Flutter al backend existente, seguir [Desarrollo compartido](../DE
 
 Las consultas son públicas, sin sesión ni clave NASA en el cliente. Se limita a 30 solicitudes/minuto por IP. Errores y respuestas JSON llevan `Cache-Control: no-store`; la caché de backend es independiente. La prueba de salud `/api/salud` mantiene el contrato de #15.
 
-Las rutas de sequías, inundaciones, deforestación y calidad del aire responden 503 `MODULO_NO_DISPONIBLE`; no son integraciones implementadas. Las rutas `/api/incendios`, `dias` y `fuente` de la demo no se trasladan ni se adaptan silenciosamente. No se añaden endpoints separados de detalle/resumen: ambos se obtienen de la misma respuesta de focos.
+Las rutas de inundaciones, deforestación y calidad del aire responden 503 `MODULO_NO_DISPONIBLE`. Las rutas `/api/incendios`, `dias` y `fuente` de la demo no se trasladan ni se adaptan silenciosamente. Focos conserva detalle/resumen dentro de su misma respuesta.
 
-Para M3 hay una [propuesta de método y contrato de sequías](sequias-propuesta/README.md) en revisión (#35). Conserva evidencia externa y una referencia reproducible; todavía no habilita una respuesta operativa de sequías ni modifica este contrato M2.
+M3 añade la [API de sequías y su OpenAPI separado](sequias/README.md): consulta, detalle y resumen con SPI-3 del método #35, aprobado por Jaziel en #42 el 25/10/2026. La implementación #43 queda para revisión, con publicaciones preparadas fuera de HTTP y cobertura parcial explícita. La [propuesta original](sequias-propuesta/README.md) se conserva como referencia; el OpenAPI M2 de focos permanece compatible.
 
 ## Filtros efectivos
 
@@ -70,3 +72,7 @@ El navegador muestra JSON; el mapa y la pantalla funcional corresponden a #19. F
 - [NASA disponibilidad por producto](https://firms.modaps.eosdis.nasa.gov/api/data_availability/).
 - [Atributos oficiales VIIRS: UTC, confianza y FRP](https://firms.modaps.eosdis.nasa.gov/content/descriptions/FIRMS_VIIRS_Firehotspots.html).
 - [Procedencia, fechas y licencia del catálogo](../territorios/README.md).
+
+## Cambio de validación en M3 · #60
+
+Las consultas de focos conservan un período positivo de máximo 168 horas y ahora rechazan `hasta` posterior al instante actual del servidor, antes de llamar al proveedor, con 422 / `FILTROS_INVALIDOS`. Web abre con los últimos siete días y ofrece 24 horas/siete días. Flutter debe aplicar la misma restricción y conservar el mensaje de error; no cambia el formato UTC de las respuestas ni la interpretación de faltantes.

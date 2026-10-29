@@ -24,6 +24,7 @@ class AmbientModule {
   };
 }
 
+// Solo se anuncian recorridos móviles que ya consultan datos reales.
 const ambientModules = <AmbientModule>[
   AmbientModule(
     id: 'focos-calor',
@@ -32,37 +33,5 @@ const ambientModules = <AmbientModule>[
         'Consulta de detecciones térmicas con su fuente, período y contexto.',
     icon: Icons.local_fire_department_outlined,
     availability: ModuleAvailability.available,
-  ),
-  AmbientModule(
-    id: 'sequias',
-    name: 'Sequías',
-    summary:
-        'Variables ambientales y evaluación cuando exista un método acordado.',
-    icon: Icons.water_drop_outlined,
-    availability: ModuleAvailability.comingSoon,
-  ),
-  AmbientModule(
-    id: 'inundaciones',
-    name: 'Inundaciones',
-    summary:
-        'Presencia o cambio de agua, sin confundirlo con una inundación confirmada.',
-    icon: Icons.waves_outlined,
-    availability: ModuleAvailability.comingSoon,
-  ),
-  AmbientModule(
-    id: 'deforestacion',
-    name: 'Deforestación',
-    summary:
-        'Pérdida de cobertura forestal según el producto y los años disponibles.',
-    icon: Icons.forest_outlined,
-    availability: ModuleAvailability.comingSoon,
-  ),
-  AmbientModule(
-    id: 'calidad-aire',
-    name: 'Calidad del aire',
-    summary:
-        'Concentraciones disponibles, identificando si son observadas o modeladas.',
-    icon: Icons.air_outlined,
-    availability: ModuleAvailability.comingSoon,
   ),
 ];

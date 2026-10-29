@@ -1,0 +1,21 @@
+{
+  "fechaLocal": "2026-10-28",
+  "repositorio": "elingeyesdev/t6-medicion-ambiental",
+  "remotasYaEliminadas": [
+    { "pr": 55, "rama": "feature/54-marca-geocruz", "mergeCommit": "aa8aa7dcf4c03acae2d033f18f6d8a9a4fc8d3ae" },
+    { "pr": 68, "rama": "feature/63-cuentas-envirosense", "mergeCommit": "ef179f0f79f49bf438ca0c77b2a87e39761fde74" },
+    { "pr": 71, "rama": "feature/66-sensores-historial", "mergeCommit": "41ae5f2fb7b888b1dbe3b922ada33f8991611d12" },
+    { "pr": 72, "rama": "feature/62-mapa-envirosense", "mergeCommit": "da5d4b60633c397b7fc49b3f0bd43cd9620fd6de" }
+  ],
+  "referenciasLocalesEliminadas": [
+    "feature/54-marca-geocruz",
+    "feature/63-cuentas-envirosense",
+    "feature/66-sensores-historial",
+    "feature/62-mapa-envirosense"
+  ],
+  "comprobacion": "Los commits de las referencias locales están contenidos en origin/develop; sus remotas ya no existen y no son base ni origen de PR abiertos. Se usó git branch -d y se conservaron los archivos.",
+  "totalRemotasEliminadas": 13,
+  "totalLocalesEliminadas": 20,
+  "main": "851a79f5c699249c284001114f76f994c9ce4335",
+  "develop": "da5d4b60633c397b7fc49b3f0bd43cd9620fd6de"
+}

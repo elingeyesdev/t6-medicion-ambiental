@@ -1,0 +1,30 @@
+/* Inicio: rejilla, tarjetas y botones de Tabler; fotografía e identidad de GeoCruz. */
+.portada-hero { min-height: 490px; }
+.portada-presentacion { width: 100%; padding: 56px 24px 76px; }
+.portada-presentacion h1 { margin: 0 0 24px; color: #fff; font-size: clamp(44px,5.2vw,72px); font-weight: 600; letter-spacing: -2px; line-height: 1.06; }
+.portada-presentacion > p { max-width: 480px; margin: 0; font-size: 20px; line-height: 1.6; color: #fff; }
+.portada-modulos { padding: 42px 24px 48px; scroll-margin-top: 20px; }
+.portada-modulos h2 { margin: 0 0 24px; font-size: 28px; font-weight: 600; letter-spacing: -.5px; }
+.modulo-publico { height: 100%; border-color: #d8e0da; box-shadow: none; color: #143728; }
+.modulo-publico .card-body { display: flex; gap: 24px; align-items: flex-start; padding: 28px; }
+.consulta-icono { width: 56px; height: 56px; display: grid; place-items: center; flex-shrink: 0; border-radius: 8px; background: #fff0df; color: #a94b14; }
+.consulta-icono svg { width: 30px; height: 30px; }
+.consulta-sequias .consulta-icono { background: #e5effa; color: #236b9d; }
+.consulta-monitoreo .consulta-icono { background: #e3f2e8; color: #146b3b; }
+.portada-cobertura { font-size: 16px; margin: -10px 0 24px; color: #43574b; }
+.modulo-publico h3 { margin: 0 0 8px; font-size: 24px; font-weight: 600; letter-spacing: -.4px; }
+.modulo-publico p { margin: 0 0 20px; color: #43574b; font-size: 16px; line-height: 1.6; }
+.consulta-enlace { display: inline-flex; gap: 10px; align-items: center; font-size: 16px; font-weight: 600; color: #116632; }
+.modulo-publico:hover { border-color: #15803d; color: #143728; }
+.modulo-publico:hover .consulta-enlace { text-decoration: underline; }
+@media (max-width: 767.98px) {
+    .portada-hero { min-height: 480px; }
+    .portada-presentacion { padding: 40px 24px 96px; }
+    .portada-presentacion h1 { font-size: 50px; letter-spacing: -1.5px; }
+    .portada-presentacion > p { font-size: 18px; }
+    .portada-modulos { padding-block: 32px; }
+    .portada-modulos h2 { font-size: 25px; }
+    .modulo-publico .card-body { gap: 16px; padding: 22px; }
+    .consulta-icono { width: 44px; height: 44px; }
+    .modulo-publico h3 { font-size: 22px; }
+}

@@ -1,0 +1,25 @@
+Comprobación local terminada el 29/10/2026, America/La_Paz.
+
+Laravel: 379 pruebas correctas, 3540 comprobaciones.
+JavaScript: 73 pruebas correctas.
+De ellas: 8 pruebas nuevas de unidades/cuenta y 10 de conversiones JavaScript.
+Pint: correcto para los archivos PHP cambiados.
+Sintaxis Node: correcta para unidades, mapa, pronóstico, Mediciones y Simulaciones.
+git diff --check: correcto.
+
+La base de pruebas es independiente de SQLite local. Antes de aplicar la columna
+de unidades en el equipo se comprobó un respaldo SQLite; no se publica.
+No se modificó la referencia original, las lecturas ni el rol de la demo.
+
+Comprobación en navegador:
+- Preferencias guardadas por cuenta: Fahrenheit/m/s, después Kelvin/mph.
+- Buenos Aires 23,6 °C y Santa Cruz 30,5 °C, ambos simulados existentes:
+  74,5 °F y 86,9 °F; diferencia +12,4 °F.
+- Kelvin: 296,75 K y 303,65 K; diferencia +6,9 K.
+- El pronóstico recibido conserva su fecha y fuente; adopta las unidades elegidas
+  en tarjetas, máximas/mínimas, selector, escala y tabla por hora.
+- Escala de viento comprobada: 2,3 a 20,13 mph.
+- Al abrir Mediciones, la preferencia Kelvin permanece en título, gráfico,
+  resumen y registros; una lectura de 30,5 °C se muestra como 303,65 K.
+
+Flutter sigue pendiente de sus controles de unidades; este resultado no los acredita.

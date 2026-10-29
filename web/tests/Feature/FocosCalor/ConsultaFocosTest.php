@@ -16,6 +16,7 @@ class ConsultaFocosTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->travelTo(new \DateTimeImmutable('2026-10-27T21:19:30Z'));
         config(['focos.clave' => 'claveFicticiaNoUtilizable1234567890']);
         Http::preventStrayRequests();
     }
@@ -26,6 +27,27 @@ class ConsultaFocosTest extends TestCase
             '*/data_availability/*' => fn () => Http::response("data_id,min_date,max_date\nVIIRS_SNPP_NRT,$desde,$hasta\n"),
             '*/area/*' => fn () => Http::response("latitude,longitude,acq_date,acq_time,satellite,instrument,confidence,frp,version\n".$filas),
         ]);
+    }
+
+    public function test_rechaza_fechas_futuras_antes_de_consultar_proveedor_incluso_con_otra_zona(): void
+    {
+        foreach (['2026-10-27T21:19:31Z', '2026-10-27T17:19:31-04:00', '2026-10-28T00:00:00Z'] as $fin) {
+            $url = '/api/v1/focos-calor?'.http_build_query(['desde' => '2026-10-27T00:00:00Z', 'hasta' => $fin]);
+            $this->getJson($url)->assertUnprocessable()->assertJsonPath('error.codigo', 'FILTROS_INVALIDOS');
+        }
+        Http::assertNothingSent();
+    }
+
+    public function test_admite_siete_dias_hasta_el_instante_actual_y_rechaza_un_segundo_mas(): void
+    {
+        $this->nasa('', '2026-10-01', '2026-10-27');
+        $parametros = ['desde' => '2026-10-20T17:19:30-04:00', 'hasta' => '2026-10-27T17:19:30-04:00'];
+        $this->getJson('/api/v1/focos-calor?'.http_build_query($parametros))->assertOk()
+            ->assertJsonPath('consulta.periodo.hasta', '2026-10-27T21:19:30Z');
+        Http::fake();
+        $parametros['desde'] = '2026-10-20T17:19:29-04:00';
+        $this->getJson('/api/v1/focos-calor?'.http_build_query($parametros))->assertUnprocessable();
+        Http::assertNothingSent();
     }
 
     public function test_catalogo_y_limite_sin_clave_ni_llamadas_a_nasa(): void
@@ -225,7 +247,7 @@ class ConsultaFocosTest extends TestCase
     {
         $this->postJson('/api/v1/focos-calor')->assertStatus(405)->assertJsonPath('error.codigo', 'METODO_NO_ADMITIDO');
         $this->getJson('/api/v1/no-existe')->assertNotFound()->assertJsonPath('error.codigo', 'RUTA_NO_ENCONTRADA');
-        $this->getJson('/api/v1/sequias')->assertStatus(503)->assertJsonPath('error.codigo', 'MODULO_NO_DISPONIBLE');
+        $this->getJson('/api/v1/inundaciones')->assertStatus(503)->assertJsonPath('error.codigo', 'MODULO_NO_DISPONIBLE');
         $this->getJson('/api/incendios')->assertNotFound();
         Http::assertNothingSent();
     }

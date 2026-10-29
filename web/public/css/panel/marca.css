@@ -1,0 +1,9 @@
+/* WEB-03 / #54: recursos de marca propios, separados de Tabler. */
+.marca-geocruz { display: inline-flex; align-items: center; gap: 10px; color: var(--enviro-texto); }
+.marca-simbolo { display: block; width: 44px; height: 44px; object-fit: contain; flex-shrink: 0; }
+.marca-geocruz .enviro-marca-texto strong { font-size: 25px; letter-spacing: -.8px; font-weight: 600; }
+.menu-contraido .marca-simbolo { width: 36px; height: 36px; }
+[data-bs-theme="dark"] .marca-simbolo { background: #f5faf6; padding: 3px; border-radius: 6px; }
+@media (max-width: 767.98px) {
+    .menu-contraido .marca-simbolo { width: 44px; height: 44px; }
+}

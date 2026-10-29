@@ -2,40 +2,59 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class BaseWebTest extends TestCase
 {
-    public function test_inicio_y_enlaces_de_los_cinco_modulos_sin_datos_inventados(): void
+    protected function setUp(): void
     {
-        $response = $this->get('/');
+        parent::setUp();
+        $this->actingAs(User::factory()->make(['id' => 1]));
+    }
+
+    public function test_el_panel_publica_solo_consultas_disponibles_sin_datos_inventados(): void
+    {
+        $response = $this->get('/mapa');
 
         $response->assertOk()
             ->assertSee('lang="es"', false)
-            ->assertSee('Explora los focos de calor')
-            ->assertSee('css/geocruz.css')
+            ->assertSee('Mapa de Monitoreo')
+            ->assertSee('id="mapa-monitoreo"', false)
+            ->assertSee('id="filtros-monitoreo"', false)
+            ->assertSee('id="mon-detalle"', false)
+            ->assertDontSee('id="mapa-focos"', false)
+            ->assertSee('js/panel/navegacion.js')
+            ->assertSee('GeoSur')
+            ->assertSee('img/marca/geosur-simbolo.svg')
+            ->assertDontSeeText('Módulos')->assertDontSeeText('EnviroSense')
+            ->assertSee('vendor/tabler/tabler.min.css')
+            ->assertSee('css/panel/panel.css')
+            ->assertDontSee('Próximamente')
+            ->assertDontSee('en preparación')
             ->assertDontSee('45 focos')
             ->assertDontSee('api_key');
 
         foreach (config('geocruz.modulos') as $id => $modulo) {
-            $response->assertSee($modulo['nombre'])
-                ->assertSee(route('modulos.mostrar', $id), false);
+            if ($modulo['habilitado']) {
+                $response->assertSee($modulo['nombre'])->assertSee(route('modulos.mostrar', $id), false);
+            } else {
+                $response->assertDontSee('aria-label="Abrir '.$modulo['nombre'].'"', false)->assertDontSee(route('modulos.mostrar', $id), false);
+            }
         }
 
         Http::assertNothingSent();
     }
 
     #[DataProvider('modulos')]
-    public function test_modulo_navegable_informa_que_la_consulta_esta_pendiente(string $id, string $nombre): void
+    public function test_las_pantallas_pendientes_tampoco_se_publican_por_url_directa(string $id, string $nombre): void
     {
         $this->get('/modulos/'.$id)
-            ->assertOk()
-            ->assertSee($nombre)
-            ->assertSee('Este módulo está en preparación')
-            ->assertSee('no representa una consulta sin resultados')
-            ->assertSee('aria-current="page"', false)
+            ->assertNotFound()
+            ->assertSee('Página no encontrada')
+            ->assertDontSee('en preparación')
             ->assertSee(route('inicio'), false);
 
         Http::assertNothingSent();
@@ -44,7 +63,6 @@ class BaseWebTest extends TestCase
     public static function modulos(): array
     {
         return [
-            ['sequias', 'Sequías'],
             ['inundaciones', 'Inundaciones'],
             ['deforestacion', 'Deforestación'],
             ['calidad-aire', 'Calidad del aire'],
@@ -58,6 +76,18 @@ class BaseWebTest extends TestCase
 
     public function test_no_se_publican_las_operaciones_ambientales_pendientes(): void
     {
-        $this->get('/api/v1/sequias')->assertStatus(503)->assertJsonPath('error.codigo', 'MODULO_NO_DISPONIBLE');
+        $this->get('/api/v1/inundaciones')->assertStatus(503)->assertJsonPath('error.codigo', 'MODULO_NO_DISPONIBLE');
+    }
+
+    public function test_los_componentes_comparten_menu_accesible_sin_consultar_proveedores(): void
+    {
+        foreach (['/mapa', '/modulos/focos-calor', '/modulos/sequias'] as $ruta) {
+            $this->get($ruta)->assertOk()
+                ->assertSee('aria-label="Navegación principal"', false)
+                ->assertSee('aria-controls="menu-panel"', false)
+                ->assertSee('href="#contenido"', false)
+                ->assertDontSee('Próximamente');
+        }
+        Http::assertNothingSent();
     }
 }

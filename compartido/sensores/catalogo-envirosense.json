@@ -1,0 +1,1821 @@
+{
+  "version": "envirosense-2026-10-28",
+  "fuentes": [
+    {
+      "archivo": "referencias/envirosense/codigo/Backend/Src/modules/simulacion/localidades.data.js",
+      "sha256": "20237ca2fd5c9fd665e3a6038c5e999cf556a42464b65cb37005e7a23a5ca011"
+    },
+    {
+      "archivo": "referencias/envirosense/codigo/Backend/Src/constants/metricas.js",
+      "sha256": "ea0980288c92e056f09f5750e08eb579f68a5e765d495209bbeefcff33ddab21"
+    },
+    {
+      "archivo": "referencias/envirosense/codigo/database/esquema_envirosense.sql",
+      "sha256": "748cc52e5abf85b31e270f5eaebd9e7eadece74da72f377ab4c77e64d8fcecc3"
+    }
+  ],
+  "nota": "Son puntos de referencia del sistema original, no estaciones físicas ni lecturas observadas. Los rangos solo se usan en simulaciones.",
+  "metricas": {
+    "temperatura": {
+      "nombre": "Temperatura",
+      "unidad": "°C",
+      "minimo": -40.0,
+      "maximo": 60.0
+    },
+    "aqi": {
+      "nombre": "Calidad del aire",
+      "unidad": "AQI",
+      "minimo": 0.0,
+      "maximo": 500.0
+    },
+    "ica": {
+      "nombre": "Índice de agua",
+      "unidad": "ICA",
+      "minimo": 0.0,
+      "maximo": 100.0
+    },
+    "ruido": {
+      "nombre": "Ruido",
+      "unidad": "dB",
+      "minimo": 0.0,
+      "maximo": 140.0
+    },
+    "humedad": {
+      "nombre": "Humedad",
+      "unidad": "%",
+      "minimo": 0.0,
+      "maximo": 100.0
+    }
+  },
+  "puntos": [
+    {
+      "codigo": "lapaz",
+      "nombre": "La Paz",
+      "pais": "BO",
+      "latitud": -16.4897,
+      "longitud": -68.1193,
+      "rangosSimulacion": {
+        "temperatura": [
+          -5.0,
+          18.0
+        ],
+        "aqi": [
+          30.0,
+          120.0
+        ],
+        "ica": [
+          60.0,
+          95.0
+        ],
+        "ruido": [
+          40.0,
+          80.0
+        ],
+        "humedad": [
+          25.0,
+          60.0
+        ]
+      }
+    },
+    {
+      "codigo": "cochabamba",
+      "nombre": "Cochabamba",
+      "pais": "BO",
+      "latitud": -17.3895,
+      "longitud": -66.1568,
+      "rangosSimulacion": {
+        "temperatura": [
+          16.0,
+          28.0
+        ],
+        "aqi": [
+          40.0,
+          150.0
+        ],
+        "ica": [
+          50.0,
+          90.0
+        ],
+        "ruido": [
+          45.0,
+          85.0
+        ],
+        "humedad": [
+          20.0,
+          55.0
+        ]
+      }
+    },
+    {
+      "codigo": "santacruz",
+      "nombre": "Santa Cruz",
+      "pais": "BO",
+      "latitud": -17.7833,
+      "longitud": -63.1812,
+      "rangosSimulacion": {
+        "temperatura": [
+          22.0,
+          35.0
+        ],
+        "aqi": [
+          50.0,
+          160.0
+        ],
+        "ica": [
+          40.0,
+          85.0
+        ],
+        "ruido": [
+          50.0,
+          90.0
+        ],
+        "humedad": [
+          50.0,
+          90.0
+        ]
+      }
+    },
+    {
+      "codigo": "oruro",
+      "nombre": "Oruro",
+      "pais": "BO",
+      "latitud": -17.9624,
+      "longitud": -67.1061,
+      "rangosSimulacion": {
+        "temperatura": [
+          -8.0,
+          15.0
+        ],
+        "aqi": [
+          20.0,
+          90.0
+        ],
+        "ica": [
+          65.0,
+          98.0
+        ],
+        "ruido": [
+          30.0,
+          60.0
+        ],
+        "humedad": [
+          15.0,
+          45.0
+        ]
+      }
+    },
+    {
+      "codigo": "potosi",
+      "nombre": "Potosí",
+      "pais": "BO",
+      "latitud": -19.5836,
+      "longitud": -65.7531,
+      "rangosSimulacion": {
+        "temperatura": [
+          -12.0,
+          14.0
+        ],
+        "aqi": [
+          15.0,
+          80.0
+        ],
+        "ica": [
+          70.0,
+          98.0
+        ],
+        "ruido": [
+          25.0,
+          55.0
+        ],
+        "humedad": [
+          10.0,
+          40.0
+        ]
+      }
+    },
+    {
+      "codigo": "sucre",
+      "nombre": "Sucre",
+      "pais": "BO",
+      "latitud": -19.0353,
+      "longitud": -65.2592,
+      "rangosSimulacion": {
+        "temperatura": [
+          12.0,
+          24.0
+        ],
+        "aqi": [
+          25.0,
+          100.0
+        ],
+        "ica": [
+          60.0,
+          95.0
+        ],
+        "ruido": [
+          35.0,
+          65.0
+        ],
+        "humedad": [
+          25.0,
+          55.0
+        ]
+      }
+    },
+    {
+      "codigo": "tarija",
+      "nombre": "Tarija",
+      "pais": "BO",
+      "latitud": -21.5355,
+      "longitud": -64.7296,
+      "rangosSimulacion": {
+        "temperatura": [
+          14.0,
+          30.0
+        ],
+        "aqi": [
+          20.0,
+          90.0
+        ],
+        "ica": [
+          55.0,
+          92.0
+        ],
+        "ruido": [
+          35.0,
+          70.0
+        ],
+        "humedad": [
+          30.0,
+          65.0
+        ]
+      }
+    },
+    {
+      "codigo": "trinidad",
+      "nombre": "Trinidad",
+      "pais": "BO",
+      "latitud": -14.8333,
+      "longitud": -64.9,
+      "rangosSimulacion": {
+        "temperatura": [
+          24.0,
+          36.0
+        ],
+        "aqi": [
+          30.0,
+          110.0
+        ],
+        "ica": [
+          35.0,
+          80.0
+        ],
+        "ruido": [
+          40.0,
+          75.0
+        ],
+        "humedad": [
+          60.0,
+          95.0
+        ]
+      }
+    },
+    {
+      "codigo": "cobija",
+      "nombre": "Cobija",
+      "pais": "BO",
+      "latitud": -11.0267,
+      "longitud": -68.7692,
+      "rangosSimulacion": {
+        "temperatura": [
+          22.0,
+          34.0
+        ],
+        "aqi": [
+          25.0,
+          100.0
+        ],
+        "ica": [
+          30.0,
+          78.0
+        ],
+        "ruido": [
+          35.0,
+          70.0
+        ],
+        "humedad": [
+          65.0,
+          95.0
+        ]
+      }
+    },
+    {
+      "codigo": "buenos_aires",
+      "nombre": "Buenos Aires",
+      "pais": "AR",
+      "latitud": -34.6037,
+      "longitud": -58.3816,
+      "rangosSimulacion": {
+        "temperatura": [
+          8.0,
+          35.0
+        ],
+        "aqi": [
+          40.0,
+          180.0
+        ],
+        "ica": [
+          45.0,
+          85.0
+        ],
+        "ruido": [
+          55.0,
+          95.0
+        ],
+        "humedad": [
+          50.0,
+          85.0
+        ]
+      }
+    },
+    {
+      "codigo": "cordoba_ar",
+      "nombre": "Córdoba",
+      "pais": "AR",
+      "latitud": -31.4135,
+      "longitud": -64.1811,
+      "rangosSimulacion": {
+        "temperatura": [
+          6.0,
+          33.0
+        ],
+        "aqi": [
+          35.0,
+          150.0
+        ],
+        "ica": [
+          50.0,
+          88.0
+        ],
+        "ruido": [
+          45.0,
+          85.0
+        ],
+        "humedad": [
+          40.0,
+          80.0
+        ]
+      }
+    },
+    {
+      "codigo": "rosario",
+      "nombre": "Rosario",
+      "pais": "AR",
+      "latitud": -32.9442,
+      "longitud": -60.6505,
+      "rangosSimulacion": {
+        "temperatura": [
+          8.0,
+          34.0
+        ],
+        "aqi": [
+          38.0,
+          160.0
+        ],
+        "ica": [
+          48.0,
+          82.0
+        ],
+        "ruido": [
+          50.0,
+          90.0
+        ],
+        "humedad": [
+          45.0,
+          82.0
+        ]
+      }
+    },
+    {
+      "codigo": "mendoza",
+      "nombre": "Mendoza",
+      "pais": "AR",
+      "latitud": -32.8908,
+      "longitud": -68.8272,
+      "rangosSimulacion": {
+        "temperatura": [
+          2.0,
+          36.0
+        ],
+        "aqi": [
+          20.0,
+          100.0
+        ],
+        "ica": [
+          55.0,
+          92.0
+        ],
+        "ruido": [
+          40.0,
+          78.0
+        ],
+        "humedad": [
+          20.0,
+          55.0
+        ]
+      }
+    },
+    {
+      "codigo": "tucuman",
+      "nombre": "Tucumán",
+      "pais": "AR",
+      "latitud": -26.8083,
+      "longitud": -65.2176,
+      "rangosSimulacion": {
+        "temperatura": [
+          10.0,
+          38.0
+        ],
+        "aqi": [
+          30.0,
+          130.0
+        ],
+        "ica": [
+          50.0,
+          88.0
+        ],
+        "ruido": [
+          45.0,
+          82.0
+        ],
+        "humedad": [
+          45.0,
+          85.0
+        ]
+      }
+    },
+    {
+      "codigo": "salta",
+      "nombre": "Salta",
+      "pais": "AR",
+      "latitud": -24.7821,
+      "longitud": -65.4232,
+      "rangosSimulacion": {
+        "temperatura": [
+          5.0,
+          32.0
+        ],
+        "aqi": [
+          20.0,
+          110.0
+        ],
+        "ica": [
+          58.0,
+          92.0
+        ],
+        "ruido": [
+          35.0,
+          75.0
+        ],
+        "humedad": [
+          30.0,
+          70.0
+        ]
+      }
+    },
+    {
+      "codigo": "bariloche",
+      "nombre": "Bariloche",
+      "pais": "AR",
+      "latitud": -41.1335,
+      "longitud": -71.3103,
+      "rangosSimulacion": {
+        "temperatura": [
+          -5.0,
+          22.0
+        ],
+        "aqi": [
+          10.0,
+          60.0
+        ],
+        "ica": [
+          70.0,
+          98.0
+        ],
+        "ruido": [
+          25.0,
+          60.0
+        ],
+        "humedad": [
+          45.0,
+          85.0
+        ]
+      }
+    },
+    {
+      "codigo": "ushuaia",
+      "nombre": "Ushuaia",
+      "pais": "AR",
+      "latitud": -54.8019,
+      "longitud": -68.303,
+      "rangosSimulacion": {
+        "temperatura": [
+          -8.0,
+          14.0
+        ],
+        "aqi": [
+          5.0,
+          40.0
+        ],
+        "ica": [
+          75.0,
+          99.0
+        ],
+        "ruido": [
+          20.0,
+          55.0
+        ],
+        "humedad": [
+          55.0,
+          90.0
+        ]
+      }
+    },
+    {
+      "codigo": "brasilia",
+      "nombre": "Brasilia",
+      "pais": "BR",
+      "latitud": -15.7801,
+      "longitud": -47.9292,
+      "rangosSimulacion": {
+        "temperatura": [
+          18.0,
+          32.0
+        ],
+        "aqi": [
+          35.0,
+          140.0
+        ],
+        "ica": [
+          50.0,
+          88.0
+        ],
+        "ruido": [
+          45.0,
+          85.0
+        ],
+        "humedad": [
+          35.0,
+          80.0
+        ]
+      }
+    },
+    {
+      "codigo": "sao_paulo",
+      "nombre": "São Paulo",
+      "pais": "BR",
+      "latitud": -23.5505,
+      "longitud": -46.6333,
+      "rangosSimulacion": {
+        "temperatura": [
+          14.0,
+          32.0
+        ],
+        "aqi": [
+          60.0,
+          220.0
+        ],
+        "ica": [
+          40.0,
+          78.0
+        ],
+        "ruido": [
+          60.0,
+          100.0
+        ],
+        "humedad": [
+          55.0,
+          90.0
+        ]
+      }
+    },
+    {
+      "codigo": "rio_de_janeiro",
+      "nombre": "Rio de Janeiro",
+      "pais": "BR",
+      "latitud": -22.9068,
+      "longitud": -43.1729,
+      "rangosSimulacion": {
+        "temperatura": [
+          20.0,
+          40.0
+        ],
+        "aqi": [
+          50.0,
+          190.0
+        ],
+        "ica": [
+          42.0,
+          80.0
+        ],
+        "ruido": [
+          58.0,
+          98.0
+        ],
+        "humedad": [
+          60.0,
+          92.0
+        ]
+      }
+    },
+    {
+      "codigo": "manaus",
+      "nombre": "Manaus",
+      "pais": "BR",
+      "latitud": -3.1019,
+      "longitud": -60.025,
+      "rangosSimulacion": {
+        "temperatura": [
+          24.0,
+          38.0
+        ],
+        "aqi": [
+          25.0,
+          120.0
+        ],
+        "ica": [
+          35.0,
+          78.0
+        ],
+        "ruido": [
+          40.0,
+          80.0
+        ],
+        "humedad": [
+          70.0,
+          98.0
+        ]
+      }
+    },
+    {
+      "codigo": "belem",
+      "nombre": "Belém",
+      "pais": "BR",
+      "latitud": -1.4558,
+      "longitud": -48.5044,
+      "rangosSimulacion": {
+        "temperatura": [
+          25.0,
+          36.0
+        ],
+        "aqi": [
+          30.0,
+          115.0
+        ],
+        "ica": [
+          38.0,
+          78.0
+        ],
+        "ruido": [
+          42.0,
+          82.0
+        ],
+        "humedad": [
+          72.0,
+          98.0
+        ]
+      }
+    },
+    {
+      "codigo": "fortaleza",
+      "nombre": "Fortaleza",
+      "pais": "BR",
+      "latitud": -3.7172,
+      "longitud": -38.5433,
+      "rangosSimulacion": {
+        "temperatura": [
+          24.0,
+          35.0
+        ],
+        "aqi": [
+          40.0,
+          160.0
+        ],
+        "ica": [
+          45.0,
+          82.0
+        ],
+        "ruido": [
+          50.0,
+          92.0
+        ],
+        "humedad": [
+          60.0,
+          90.0
+        ]
+      }
+    },
+    {
+      "codigo": "salvador",
+      "nombre": "Salvador",
+      "pais": "BR",
+      "latitud": -12.9714,
+      "longitud": -38.5014,
+      "rangosSimulacion": {
+        "temperatura": [
+          22.0,
+          34.0
+        ],
+        "aqi": [
+          35.0,
+          140.0
+        ],
+        "ica": [
+          48.0,
+          85.0
+        ],
+        "ruido": [
+          48.0,
+          88.0
+        ],
+        "humedad": [
+          62.0,
+          92.0
+        ]
+      }
+    },
+    {
+      "codigo": "porto_alegre",
+      "nombre": "Porto Alegre",
+      "pais": "BR",
+      "latitud": -30.0346,
+      "longitud": -51.2177,
+      "rangosSimulacion": {
+        "temperatura": [
+          8.0,
+          36.0
+        ],
+        "aqi": [
+          30.0,
+          130.0
+        ],
+        "ica": [
+          50.0,
+          88.0
+        ],
+        "ruido": [
+          48.0,
+          88.0
+        ],
+        "humedad": [
+          50.0,
+          88.0
+        ]
+      }
+    },
+    {
+      "codigo": "cuiaba",
+      "nombre": "Cuiabá",
+      "pais": "BR",
+      "latitud": -15.5989,
+      "longitud": -56.0949,
+      "rangosSimulacion": {
+        "temperatura": [
+          22.0,
+          40.0
+        ],
+        "aqi": [
+          35.0,
+          150.0
+        ],
+        "ica": [
+          40.0,
+          80.0
+        ],
+        "ruido": [
+          42.0,
+          80.0
+        ],
+        "humedad": [
+          40.0,
+          85.0
+        ]
+      }
+    },
+    {
+      "codigo": "santiago",
+      "nombre": "Santiago",
+      "pais": "CL",
+      "latitud": -33.4489,
+      "longitud": -70.6693,
+      "rangosSimulacion": {
+        "temperatura": [
+          3.0,
+          32.0
+        ],
+        "aqi": [
+          40.0,
+          180.0
+        ],
+        "ica": [
+          52.0,
+          90.0
+        ],
+        "ruido": [
+          50.0,
+          92.0
+        ],
+        "humedad": [
+          25.0,
+          70.0
+        ]
+      }
+    },
+    {
+      "codigo": "valparaiso",
+      "nombre": "Valparaíso",
+      "pais": "CL",
+      "latitud": -33.0472,
+      "longitud": -71.6127,
+      "rangosSimulacion": {
+        "temperatura": [
+          8.0,
+          28.0
+        ],
+        "aqi": [
+          30.0,
+          130.0
+        ],
+        "ica": [
+          55.0,
+          92.0
+        ],
+        "ruido": [
+          45.0,
+          85.0
+        ],
+        "humedad": [
+          50.0,
+          85.0
+        ]
+      }
+    },
+    {
+      "codigo": "concepcion",
+      "nombre": "Concepción",
+      "pais": "CL",
+      "latitud": -36.827,
+      "longitud": -73.0503,
+      "rangosSimulacion": {
+        "temperatura": [
+          4.0,
+          26.0
+        ],
+        "aqi": [
+          25.0,
+          120.0
+        ],
+        "ica": [
+          58.0,
+          92.0
+        ],
+        "ruido": [
+          40.0,
+          80.0
+        ],
+        "humedad": [
+          55.0,
+          90.0
+        ]
+      }
+    },
+    {
+      "codigo": "antofagasta",
+      "nombre": "Antofagasta",
+      "pais": "CL",
+      "latitud": -23.6509,
+      "longitud": -70.3975,
+      "rangosSimulacion": {
+        "temperatura": [
+          12.0,
+          28.0
+        ],
+        "aqi": [
+          20.0,
+          90.0
+        ],
+        "ica": [
+          60.0,
+          95.0
+        ],
+        "ruido": [
+          35.0,
+          72.0
+        ],
+        "humedad": [
+          5.0,
+          30.0
+        ]
+      }
+    },
+    {
+      "codigo": "punta_arenas",
+      "nombre": "Punta Arenas",
+      "pais": "CL",
+      "latitud": -53.1638,
+      "longitud": -70.9171,
+      "rangosSimulacion": {
+        "temperatura": [
+          -5.0,
+          14.0
+        ],
+        "aqi": [
+          8.0,
+          45.0
+        ],
+        "ica": [
+          72.0,
+          98.0
+        ],
+        "ruido": [
+          22.0,
+          58.0
+        ],
+        "humedad": [
+          50.0,
+          88.0
+        ]
+      }
+    },
+    {
+      "codigo": "iquique",
+      "nombre": "Iquique",
+      "pais": "CL",
+      "latitud": -20.2208,
+      "longitud": -70.1431,
+      "rangosSimulacion": {
+        "temperatura": [
+          14.0,
+          28.0
+        ],
+        "aqi": [
+          18.0,
+          85.0
+        ],
+        "ica": [
+          62.0,
+          95.0
+        ],
+        "ruido": [
+          35.0,
+          70.0
+        ],
+        "humedad": [
+          5.0,
+          35.0
+        ]
+      }
+    },
+    {
+      "codigo": "bogota",
+      "nombre": "Bogotá",
+      "pais": "CO",
+      "latitud": 4.711,
+      "longitud": -74.0721,
+      "rangosSimulacion": {
+        "temperatura": [
+          7.0,
+          20.0
+        ],
+        "aqi": [
+          45.0,
+          180.0
+        ],
+        "ica": [
+          48.0,
+          85.0
+        ],
+        "ruido": [
+          52.0,
+          92.0
+        ],
+        "humedad": [
+          55.0,
+          90.0
+        ]
+      }
+    },
+    {
+      "codigo": "medellin",
+      "nombre": "Medellín",
+      "pais": "CO",
+      "latitud": 6.2442,
+      "longitud": -75.5812,
+      "rangosSimulacion": {
+        "temperatura": [
+          16.0,
+          28.0
+        ],
+        "aqi": [
+          50.0,
+          200.0
+        ],
+        "ica": [
+          45.0,
+          82.0
+        ],
+        "ruido": [
+          55.0,
+          95.0
+        ],
+        "humedad": [
+          55.0,
+          88.0
+        ]
+      }
+    },
+    {
+      "codigo": "cali",
+      "nombre": "Cali",
+      "pais": "CO",
+      "latitud": 3.4516,
+      "longitud": -76.532,
+      "rangosSimulacion": {
+        "temperatura": [
+          20.0,
+          34.0
+        ],
+        "aqi": [
+          40.0,
+          170.0
+        ],
+        "ica": [
+          48.0,
+          85.0
+        ],
+        "ruido": [
+          50.0,
+          90.0
+        ],
+        "humedad": [
+          52.0,
+          88.0
+        ]
+      }
+    },
+    {
+      "codigo": "cartagena",
+      "nombre": "Cartagena",
+      "pais": "CO",
+      "latitud": 10.391,
+      "longitud": -75.4794,
+      "rangosSimulacion": {
+        "temperatura": [
+          26.0,
+          38.0
+        ],
+        "aqi": [
+          35.0,
+          145.0
+        ],
+        "ica": [
+          42.0,
+          80.0
+        ],
+        "ruido": [
+          48.0,
+          90.0
+        ],
+        "humedad": [
+          65.0,
+          95.0
+        ]
+      }
+    },
+    {
+      "codigo": "barranquilla",
+      "nombre": "Barranquilla",
+      "pais": "CO",
+      "latitud": 10.9639,
+      "longitud": -74.7964,
+      "rangosSimulacion": {
+        "temperatura": [
+          24.0,
+          38.0
+        ],
+        "aqi": [
+          38.0,
+          150.0
+        ],
+        "ica": [
+          42.0,
+          80.0
+        ],
+        "ruido": [
+          50.0,
+          92.0
+        ],
+        "humedad": [
+          60.0,
+          92.0
+        ]
+      }
+    },
+    {
+      "codigo": "leticia",
+      "nombre": "Leticia",
+      "pais": "CO",
+      "latitud": -4.2153,
+      "longitud": -69.9406,
+      "rangosSimulacion": {
+        "temperatura": [
+          24.0,
+          36.0
+        ],
+        "aqi": [
+          20.0,
+          100.0
+        ],
+        "ica": [
+          35.0,
+          78.0
+        ],
+        "ruido": [
+          35.0,
+          72.0
+        ],
+        "humedad": [
+          72.0,
+          98.0
+        ]
+      }
+    },
+    {
+      "codigo": "quito",
+      "nombre": "Quito",
+      "pais": "EC",
+      "latitud": -0.2295,
+      "longitud": -78.5243,
+      "rangosSimulacion": {
+        "temperatura": [
+          6.0,
+          22.0
+        ],
+        "aqi": [
+          30.0,
+          130.0
+        ],
+        "ica": [
+          55.0,
+          90.0
+        ],
+        "ruido": [
+          45.0,
+          85.0
+        ],
+        "humedad": [
+          45.0,
+          85.0
+        ]
+      }
+    },
+    {
+      "codigo": "guayaquil",
+      "nombre": "Guayaquil",
+      "pais": "EC",
+      "latitud": -2.1894,
+      "longitud": -79.8891,
+      "rangosSimulacion": {
+        "temperatura": [
+          22.0,
+          36.0
+        ],
+        "aqi": [
+          40.0,
+          160.0
+        ],
+        "ica": [
+          45.0,
+          82.0
+        ],
+        "ruido": [
+          52.0,
+          92.0
+        ],
+        "humedad": [
+          60.0,
+          92.0
+        ]
+      }
+    },
+    {
+      "codigo": "cuenca",
+      "nombre": "Cuenca",
+      "pais": "EC",
+      "latitud": -2.9001,
+      "longitud": -79.0059,
+      "rangosSimulacion": {
+        "temperatura": [
+          8.0,
+          22.0
+        ],
+        "aqi": [
+          20.0,
+          100.0
+        ],
+        "ica": [
+          58.0,
+          92.0
+        ],
+        "ruido": [
+          38.0,
+          75.0
+        ],
+        "humedad": [
+          50.0,
+          85.0
+        ]
+      }
+    },
+    {
+      "codigo": "lago_agrio",
+      "nombre": "Lago Agrio",
+      "pais": "EC",
+      "latitud": 0.0897,
+      "longitud": -76.8817,
+      "rangosSimulacion": {
+        "temperatura": [
+          22.0,
+          34.0
+        ],
+        "aqi": [
+          20.0,
+          95.0
+        ],
+        "ica": [
+          38.0,
+          78.0
+        ],
+        "ruido": [
+          32.0,
+          68.0
+        ],
+        "humedad": [
+          70.0,
+          98.0
+        ]
+      }
+    },
+    {
+      "codigo": "lima",
+      "nombre": "Lima",
+      "pais": "PE",
+      "latitud": -12.0464,
+      "longitud": -77.0428,
+      "rangosSimulacion": {
+        "temperatura": [
+          14.0,
+          30.0
+        ],
+        "aqi": [
+          40.0,
+          160.0
+        ],
+        "ica": [
+          50.0,
+          88.0
+        ],
+        "ruido": [
+          55.0,
+          95.0
+        ],
+        "humedad": [
+          70.0,
+          95.0
+        ]
+      }
+    },
+    {
+      "codigo": "cusco",
+      "nombre": "Cusco",
+      "pais": "PE",
+      "latitud": -13.5319,
+      "longitud": -71.9675,
+      "rangosSimulacion": {
+        "temperatura": [
+          -2.0,
+          20.0
+        ],
+        "aqi": [
+          20.0,
+          95.0
+        ],
+        "ica": [
+          62.0,
+          96.0
+        ],
+        "ruido": [
+          32.0,
+          68.0
+        ],
+        "humedad": [
+          25.0,
+          70.0
+        ]
+      }
+    },
+    {
+      "codigo": "arequipa",
+      "nombre": "Arequipa",
+      "pais": "PE",
+      "latitud": -16.409,
+      "longitud": -71.5375,
+      "rangosSimulacion": {
+        "temperatura": [
+          5.0,
+          25.0
+        ],
+        "aqi": [
+          25.0,
+          110.0
+        ],
+        "ica": [
+          58.0,
+          92.0
+        ],
+        "ruido": [
+          38.0,
+          78.0
+        ],
+        "humedad": [
+          20.0,
+          60.0
+        ]
+      }
+    },
+    {
+      "codigo": "trujillo",
+      "nombre": "Trujillo",
+      "pais": "PE",
+      "latitud": -8.112,
+      "longitud": -79.0288,
+      "rangosSimulacion": {
+        "temperatura": [
+          16.0,
+          30.0
+        ],
+        "aqi": [
+          30.0,
+          120.0
+        ],
+        "ica": [
+          48.0,
+          85.0
+        ],
+        "ruido": [
+          45.0,
+          82.0
+        ],
+        "humedad": [
+          60.0,
+          90.0
+        ]
+      }
+    },
+    {
+      "codigo": "iquitos",
+      "nombre": "Iquitos",
+      "pais": "PE",
+      "latitud": -3.7491,
+      "longitud": -73.2538,
+      "rangosSimulacion": {
+        "temperatura": [
+          24.0,
+          36.0
+        ],
+        "aqi": [
+          20.0,
+          100.0
+        ],
+        "ica": [
+          35.0,
+          78.0
+        ],
+        "ruido": [
+          35.0,
+          70.0
+        ],
+        "humedad": [
+          72.0,
+          98.0
+        ]
+      }
+    },
+    {
+      "codigo": "puno",
+      "nombre": "Puno",
+      "pais": "PE",
+      "latitud": -15.8402,
+      "longitud": -70.0219,
+      "rangosSimulacion": {
+        "temperatura": [
+          -8.0,
+          16.0
+        ],
+        "aqi": [
+          15.0,
+          80.0
+        ],
+        "ica": [
+          65.0,
+          96.0
+        ],
+        "ruido": [
+          25.0,
+          60.0
+        ],
+        "humedad": [
+          15.0,
+          55.0
+        ]
+      }
+    },
+    {
+      "codigo": "asuncion",
+      "nombre": "Asunción",
+      "pais": "PY",
+      "latitud": -25.2867,
+      "longitud": -57.647,
+      "rangosSimulacion": {
+        "temperatura": [
+          14.0,
+          40.0
+        ],
+        "aqi": [
+          35.0,
+          150.0
+        ],
+        "ica": [
+          45.0,
+          82.0
+        ],
+        "ruido": [
+          48.0,
+          88.0
+        ],
+        "humedad": [
+          45.0,
+          85.0
+        ]
+      }
+    },
+    {
+      "codigo": "ciudad_del_este",
+      "nombre": "Ciudad del Este",
+      "pais": "PY",
+      "latitud": -25.5097,
+      "longitud": -54.61,
+      "rangosSimulacion": {
+        "temperatura": [
+          16.0,
+          38.0
+        ],
+        "aqi": [
+          35.0,
+          145.0
+        ],
+        "ica": [
+          42.0,
+          80.0
+        ],
+        "ruido": [
+          50.0,
+          90.0
+        ],
+        "humedad": [
+          50.0,
+          88.0
+        ]
+      }
+    },
+    {
+      "codigo": "encarnacion",
+      "nombre": "Encarnación",
+      "pais": "PY",
+      "latitud": -27.3309,
+      "longitud": -55.866,
+      "rangosSimulacion": {
+        "temperatura": [
+          12.0,
+          36.0
+        ],
+        "aqi": [
+          25.0,
+          110.0
+        ],
+        "ica": [
+          48.0,
+          85.0
+        ],
+        "ruido": [
+          38.0,
+          75.0
+        ],
+        "humedad": [
+          48.0,
+          85.0
+        ]
+      }
+    },
+    {
+      "codigo": "montevideo",
+      "nombre": "Montevideo",
+      "pais": "UY",
+      "latitud": -34.9011,
+      "longitud": -56.1645,
+      "rangosSimulacion": {
+        "temperatura": [
+          8.0,
+          32.0
+        ],
+        "aqi": [
+          30.0,
+          130.0
+        ],
+        "ica": [
+          52.0,
+          90.0
+        ],
+        "ruido": [
+          48.0,
+          88.0
+        ],
+        "humedad": [
+          50.0,
+          85.0
+        ]
+      }
+    },
+    {
+      "codigo": "salto",
+      "nombre": "Salto",
+      "pais": "UY",
+      "latitud": -31.3833,
+      "longitud": -57.9667,
+      "rangosSimulacion": {
+        "temperatura": [
+          8.0,
+          36.0
+        ],
+        "aqi": [
+          20.0,
+          100.0
+        ],
+        "ica": [
+          55.0,
+          92.0
+        ],
+        "ruido": [
+          35.0,
+          72.0
+        ],
+        "humedad": [
+          45.0,
+          82.0
+        ]
+      }
+    },
+    {
+      "codigo": "rivera",
+      "nombre": "Rivera",
+      "pais": "UY",
+      "latitud": -30.9053,
+      "longitud": -55.5506,
+      "rangosSimulacion": {
+        "temperatura": [
+          8.0,
+          34.0
+        ],
+        "aqi": [
+          18.0,
+          95.0
+        ],
+        "ica": [
+          55.0,
+          92.0
+        ],
+        "ruido": [
+          30.0,
+          68.0
+        ],
+        "humedad": [
+          45.0,
+          82.0
+        ]
+      }
+    },
+    {
+      "codigo": "caracas",
+      "nombre": "Caracas",
+      "pais": "VE",
+      "latitud": 10.4806,
+      "longitud": -66.9036,
+      "rangosSimulacion": {
+        "temperatura": [
+          16.0,
+          30.0
+        ],
+        "aqi": [
+          45.0,
+          180.0
+        ],
+        "ica": [
+          45.0,
+          82.0
+        ],
+        "ruido": [
+          52.0,
+          92.0
+        ],
+        "humedad": [
+          55.0,
+          88.0
+        ]
+      }
+    },
+    {
+      "codigo": "maracaibo",
+      "nombre": "Maracaibo",
+      "pais": "VE",
+      "latitud": 10.6544,
+      "longitud": -71.6011,
+      "rangosSimulacion": {
+        "temperatura": [
+          26.0,
+          42.0
+        ],
+        "aqi": [
+          40.0,
+          175.0
+        ],
+        "ica": [
+          40.0,
+          78.0
+        ],
+        "ruido": [
+          50.0,
+          92.0
+        ],
+        "humedad": [
+          60.0,
+          90.0
+        ]
+      }
+    },
+    {
+      "codigo": "valencia_ve",
+      "nombre": "Valencia",
+      "pais": "VE",
+      "latitud": 10.1622,
+      "longitud": -67.9947,
+      "rangosSimulacion": {
+        "temperatura": [
+          20.0,
+          36.0
+        ],
+        "aqi": [
+          38.0,
+          165.0
+        ],
+        "ica": [
+          42.0,
+          80.0
+        ],
+        "ruido": [
+          48.0,
+          90.0
+        ],
+        "humedad": [
+          52.0,
+          88.0
+        ]
+      }
+    },
+    {
+      "codigo": "puerto_ayacucho",
+      "nombre": "Puerto Ayacucho",
+      "pais": "VE",
+      "latitud": 5.6638,
+      "longitud": -67.6235,
+      "rangosSimulacion": {
+        "temperatura": [
+          24.0,
+          38.0
+        ],
+        "aqi": [
+          20.0,
+          100.0
+        ],
+        "ica": [
+          38.0,
+          80.0
+        ],
+        "ruido": [
+          32.0,
+          68.0
+        ],
+        "humedad": [
+          62.0,
+          95.0
+        ]
+      }
+    },
+    {
+      "codigo": "georgetown",
+      "nombre": "Georgetown",
+      "pais": "GY",
+      "latitud": 6.8013,
+      "longitud": -58.1551,
+      "rangosSimulacion": {
+        "temperatura": [
+          24.0,
+          34.0
+        ],
+        "aqi": [
+          25.0,
+          110.0
+        ],
+        "ica": [
+          40.0,
+          80.0
+        ],
+        "ruido": [
+          38.0,
+          75.0
+        ],
+        "humedad": [
+          68.0,
+          95.0
+        ]
+      }
+    },
+    {
+      "codigo": "paramaribo",
+      "nombre": "Paramaribo",
+      "pais": "SR",
+      "latitud": 5.852,
+      "longitud": -55.2038,
+      "rangosSimulacion": {
+        "temperatura": [
+          24.0,
+          34.0
+        ],
+        "aqi": [
+          22.0,
+          100.0
+        ],
+        "ica": [
+          42.0,
+          82.0
+        ],
+        "ruido": [
+          38.0,
+          75.0
+        ],
+        "humedad": [
+          68.0,
+          95.0
+        ]
+      }
+    },
+    {
+      "codigo": "cayenne",
+      "nombre": "Cayenne",
+      "pais": "GF",
+      "latitud": 4.9224,
+      "longitud": -52.3135,
+      "rangosSimulacion": {
+        "temperatura": [
+          24.0,
+          34.0
+        ],
+        "aqi": [
+          20.0,
+          95.0
+        ],
+        "ica": [
+          42.0,
+          82.0
+        ],
+        "ruido": [
+          35.0,
+          72.0
+        ],
+        "humedad": [
+          70.0,
+          96.0
+        ]
+      }
+    }
+  ]
+}

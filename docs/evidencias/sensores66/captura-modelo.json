@@ -1,0 +1,29 @@
+{
+    "capturaDocumentada": "2026-10-28T13:02:35Z",
+    "proveedor": "Open-Meteo",
+    "aviso": "Valores de modelo, no mediciones de una estación. Una captura manual; no hay tarea programada.",
+    "capturaExternaHabilitadaPorDefecto": false,
+    "puntosReferenciaLocales": 61,
+    "lecturasSimuladasLocales": 360,
+    "lecturasObservadasLocales": 0,
+    "datos": [
+        {
+            "punto": "santacruz",
+            "metrica": "temperatura",
+            "valor": 17.3,
+            "unidad": "°C",
+            "instante": "2026-10-28T12:45:00Z",
+            "origen": "estimado",
+            "fuente": "open-meteo-modelo"
+        },
+        {
+            "punto": "santacruz",
+            "metrica": "humedad",
+            "valor": 95,
+            "unidad": "%",
+            "instante": "2026-10-28T12:45:00Z",
+            "origen": "estimado",
+            "fuente": "open-meteo-modelo"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+.sim-contenido { max-width:1280px; margin:auto; font-size:16px; }
+.sim-contenido .btn,.sim-contenido .form-label,.sim-contenido .form-control,.sim-contenido .form-select,.sim-contenido .badge,.sim-contenido table { font-size:16px; }
+.sim-contenido h1 { font-size:30px; }.sim-contenido h2 { font-size:24px; margin:0; }.sim-contenido h3 { font-size:21px; }
+.sim-aviso { background:#fff3e2; color:#743d13; border-left:4px solid #d97d18; padding:16px; }
+.sim-formulario { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.sim-zonas,.sim-enviar { grid-column:1/-1; }.sim-zonas { margin:0; padding:0; border:0; }.sim-zonas legend { font-size:22px; }
+.sim-zona { display:grid; grid-template-columns:2fr 1fr 1fr; gap:16px; border:1px solid var(--enviro-borde); padding:18px; margin-block:16px; border-radius:6px; }
+.sim-ajustes { grid-column:1/-1; }.sim-ajustes summary { cursor:pointer; color:#146b39; padding:8px 0; }.sim-parametros { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.sim-reproductor { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }.sim-resultado .card-header { justify-content:space-between; gap:12px; }
+.sim-vista { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:16px; }#sim-mapa { height:420px; border-radius:6px; z-index:0; }
+#sim-valores { display:flex; flex-wrap:wrap; gap:14px; }#sim-valores p { border-left:5px solid; padding:8px 14px; margin:0; }#sim-valores strong { display:block; font-size:25px; }
+#sim-grafico { width:100%; margin-block:16px; background:var(--enviro-suave); border:1px solid var(--enviro-borde); }
+.sim-guardada { display:flex; justify-content:space-between; gap:16px; color:var(--enviro-texto); padding:16px 0; border-bottom:1px solid var(--enviro-borde); text-decoration:none; }
+@media(max-width:900px) {.sim-formulario{grid-template-columns:1fr 1fr;}.sim-zona,.sim-vista{grid-template-columns:1fr;}#sim-mapa{height:330px;}}
+@media(max-width:600px) {.sim-formulario,.sim-parametros{grid-template-columns:1fr;}.sim-guardada{flex-direction:column;}}

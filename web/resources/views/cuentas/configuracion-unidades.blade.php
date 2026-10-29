@@ -1,0 +1,1 @@
+<script type="application/json" id="configuracion-unidades">@json(['preferencias' => app(\App\Services\Datos\UnidadesPresentacion::class)->preferencias(auth()->user()), 'catalogo' => config('unidades')])</script>

@@ -22,11 +22,12 @@ export function validarInstanteUrl(texto) {
     return texto;
 }
 
-export function validarPeriodoLocal(inicio, fin) {
+export function validarPeriodoLocal(inicio, fin, ahora = Date.now()) {
     const desde = aUtc(inicio);
     const hasta = aUtc(fin);
     const diferencia = new Date(hasta) - new Date(desde);
     if (diferencia <= 0 || diferencia > 7 * 86400000) throw new Error('Desde debe ser anterior a Hasta. El máximo es de 7 días (168 horas).');
+    if (new Date(hasta).getTime() > ahora) throw new Error('Elige fechas hasta el momento actual. No se pueden consultar días futuros.');
     return { desde, hasta };
 }
 
@@ -56,7 +57,7 @@ export class ErrorApi extends Error {
 export async function solicitarJson(url, signal, transporte = fetch) {
     let respuesta;
     try { respuesta = await transporte(url, { signal, headers: { Accept: 'application/json' }, cache: 'no-store', credentials: 'same-origin' }); }
-    catch (error) { if (signal?.aborted) throw error; throw new ErrorApi('No se pudo conectar con GeoCruz. Comprueba tu conexión y reintenta.'); }
+    catch (error) { if (signal?.aborted) throw error; throw new ErrorApi('No se pudo conectar con GeoSur. Comprueba tu conexión y reintenta.'); }
     let datos;
     try { datos = await respuesta.json(); }
     catch { throw new ErrorApi('El servidor no devolvió una respuesta legible. Reintenta más tarde.', 'RESPUESTA_INVALIDA', respuesta.status); }

@@ -1,0 +1,46 @@
+{
+    "versionInforme": "calidad-precipitacion-1.0",
+    "estado": "incompleta",
+    "aptoParaAgregacionMensual": false,
+    "periodo": {
+        "desde": "2024-06-01",
+        "hastaIncluido": "2024-06-30",
+        "zona": "UTC"
+    },
+    "unidad": "mm",
+    "resumen": {
+        "diasEsperados": 30,
+        "registrosRecibidos": 29,
+        "diasValidos": 28,
+        "diasAusentes": 1,
+        "diasNulos": 1,
+        "mesesEsperados": 1,
+        "mesesCompletos": 0,
+        "mesesIncompletos": 1
+    },
+    "meses": [
+        {
+            "mes": "2024-06",
+            "diasEsperados": 30,
+            "diasValidos": 28,
+            "diasAusentes": 1,
+            "diasNulos": 1,
+            "fechasAusentes": [
+                "2024-06-10"
+            ],
+            "fechasNulas": [
+                "2024-06-20"
+            ],
+            "estado": "incompleto",
+            "precipitacionAcumuladaMm": null
+        }
+    ],
+    "advertencias": [
+        "Meses con días ausentes o null conservan acumulado null; no se imputaron valores."
+    ],
+    "origen": {
+        "tipo": "archivo_local",
+        "sha256": "494516f66285992bbfcd6772de149ad6e70c64aab3bccf7c5b98943f5256733e",
+        "bytes": 882
+    }
+}

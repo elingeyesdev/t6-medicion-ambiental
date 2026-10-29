@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/formatters/bolivia_time.dart';
+import '../../../core/formatters/consultation_period.dart';
 import '../model/hotspot_models.dart';
 
 class HotspotFiltersSheet extends StatefulWidget {
@@ -51,6 +52,7 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
 
   Future<DateTime?> _chooseInstant(DateTime current) async {
     final currentWall = _boliviaWall(current);
+    final today = ConsultationPeriod.boliviaDay(DateTime.now());
     final date = await showDatePicker(
       context: context,
       initialDate: DateTime(
@@ -59,7 +61,7 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
         currentWall.day,
       ),
       firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+      lastDate: today,
       helpText: 'Fecha · hora de Bolivia',
     );
     if (!mounted || date == null) return null;
@@ -102,18 +104,10 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
   }
 
   void _apply() {
-    final duration = _until.toUtc().difference(_from.toUtc());
-    if (duration <= Duration.zero) {
-      setState(() {
-        _validationError = '“Hasta” debe ser posterior a “Desde”.';
-      });
-      return;
-    }
-    if (duration > const Duration(hours: 168)) {
-      setState(() {
-        _validationError =
-            'El período supera el máximo de 7 días. Acorta el rango seleccionado.';
-      });
+    try {
+      ConsultationPeriod.validate(_from, _until);
+    } on FormatException catch (error) {
+      setState(() => _validationError = error.message);
       return;
     }
     if (_provinceId != null &&
@@ -175,8 +169,21 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
               ),
               const SizedBox(height: 6),
               Text(
-                'Elige el período y, si quieres, un territorio.',
+                'Elige el período y acota la consulta dentro de la cobertura disponible.',
                 style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 14),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondaryContainer,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: const Text(
+                  'Por ahora, la API consulta focos solo en Santa Cruz, Bolivia. '
+                  'Los demás países de Sudamérica todavía no están habilitados para este análisis.',
+                ),
               ),
               const SizedBox(height: 14),
               Text(
@@ -226,11 +233,13 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
                     DropdownButtonFormField<String>(
                       isExpanded: true,
                       initialValue: _provinceId ?? '',
-                      decoration: const InputDecoration(labelText: 'Provincia'),
+                      decoration: const InputDecoration(
+                        labelText: 'Provincia de Santa Cruz',
+                      ),
                       items: [
                         const DropdownMenuItem(
                           value: '',
-                          child: Text('Todo Santa Cruz'),
+                          child: Text('Todo el departamento'),
                         ),
                         for (final province in widget.provinces)
                           DropdownMenuItem(

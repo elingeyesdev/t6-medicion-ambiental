@@ -1,0 +1,52 @@
+/* #57: identidad pública compartida. Controles y rejilla sobre Tabler 1.7.1. */
+.pagina-publica { background: #fff; }
+.pagina-publica a { text-decoration: none; }
+.pagina-publica .btn { min-height: 48px; padding: 12px 24px; gap: 10px; font-size: 16px; line-height: 22px; font-weight: 600; border-radius: 6px; }
+.pagina-publica .btn-primary { background: #15803d; border-color: #15803d; color: #fff; }
+.pagina-publica .btn-primary:hover { background: #116630; border-color: #116630; }
+.portada-cabecera { min-height: 88px; padding: 18px max(24px,calc((100vw - 1200px)/2)); display: flex; align-items: center; justify-content: space-between; gap: 24px; background: #fff; }
+.portada-cabecera nav { display: flex; align-items: center; gap: 32px; font-size: 16px; }
+.portada-cabecera nav > a:not(.btn) { color: #264333; }
+.portada-cabecera nav > a:not(.btn):hover { text-decoration: underline; }
+.paisaje-geocruz { position: relative; isolation: isolate; display: flex; align-items: center; background: #173d2e; color: #fff; overflow: hidden; }
+.paisaje-foto { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 54%; }
+.paisaje-geocruz::before { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg,rgba(5,29,19,.94),rgba(5,29,19,.72) 36%,rgba(5,29,19,.08) 76%); }
+.acciones-publicas { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 32px; }
+.paisaje-geocruz .btn-primary { background: #fff; border-color: #fff; color: #116632; }
+.paisaje-geocruz .btn-primary:hover { background: #e8f4eb; border-color: #e8f4eb; color: #084d23; }
+.paisaje-lugar { position: absolute; bottom: 24px; right: max(24px,calc((100vw - 1200px)/2)); display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: #102c1de8; color: #fff; border-radius: 4px; font-size: 16px; }
+.portada-pie { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; padding: 24px max(24px,calc((100vw - 1200px)/2)); border-top: 1px solid #d8e0da; background: #f4f7f4; font-size: 16px; color: #43574b; }
+.portada-credito { max-width: 430px; }
+.portada-credito summary { cursor: pointer; }
+.portada-credito p { margin: 12px 0 0; line-height: 1.6; }
+.portada-credito a { color: #116632; text-decoration: underline; }
+.pagina-publica .btn-outline-primary { color: #116632; border-color: #9abda5; background: #fff; }
+.pagina-publica .btn-outline-primary:hover { color: #0c5328; background: #edf6ef; border-color: #15803d; }
+.paisaje-geocruz .btn-outline-light { color: #fff; border-color: #b6cbbd; background: #102c1d80; }
+.paisaje-geocruz .btn-outline-light:hover { color: #fff; background: #264d35; }
+.acceso-cuerpo { position: relative; isolation: isolate; min-height: calc(100dvh - 164px); display: flex; align-items: flex-start; padding: clamp(40px,8vh,80px) 24px 100px; background: #d2d9ce; overflow: hidden; }
+.acceso-fondo { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 65%; }
+.acceso-cuerpo::before { content: ''; position: absolute; z-index: -1; inset: 0; background: #15332326; }
+.acceso-panel { width: 100%; max-width: 480px; margin: 0; border-color: #d7e0d8; overflow: hidden; box-shadow: 0 5px 24px #182d2326; }
+.acceso-formulario { padding: 44px 48px; }
+.acceso-formulario h1 { margin: 0 0 32px; color: #163b29; font-size: 32px; line-height: 1.2; font-weight: 600; letter-spacing: normal; }
+.acceso-formulario .form-label { color: #233f2e; font-size: 16px; margin-bottom: 8px; }
+.acceso-formulario .form-control { min-height: 48px; padding: 12px 14px; font-size: 16px; border-radius: 6px; color: #143728; background-color: #fff; border-color: #aebfb3; }
+.acceso-formulario .form-hint { font-size: 16px; color: #4b6253; }
+.acceso-formulario .invalid-feedback { font-size: 16px; color: #b42318; }
+.acceso-formulario .form-control.is-invalid { border-color: #b42318; }
+.acceso-lugar { position: absolute; right: 24px; bottom: 24px; display: flex; align-items: center; gap: 8px; padding: 10px 14px; color: #fff; background: #143c28ed; border-radius: 6px; font-size: 16px; }
+@media (max-width: 767.98px) {
+    .portada-cabecera { min-height: 76px; padding: 16px 20px; gap: 16px; }
+    .portada-cabecera nav { gap: 16px; }
+    .portada-cabecera nav > a:not(.btn) { display: none; }
+    .pagina-publica .btn { padding-inline: 18px; }
+    .paisaje-geocruz::before { background: rgba(5,29,19,.76); }
+    .acciones-publicas { gap: 12px; }
+    .paisaje-lugar { left: 24px; right: auto; bottom: 20px; }
+    .portada-pie { padding-inline: 24px; flex-direction: column; }
+    .acceso-cuerpo { padding: 24px 16px 88px; }
+    .acceso-cuerpo > .container-xl { padding-inline: 0; }
+    .acceso-formulario { padding: 28px 24px; }
+    .acceso-formulario h1 { font-size: 28px; }
+}

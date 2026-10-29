@@ -16,11 +16,57 @@ class GeoCruzApiClient {
   final http.Client _client;
   final Duration timeout;
 
+  String? bearerToken;
+
   Uri get baseUrl => _baseUrl;
 
   Future<Object?> getJson(
     String endpoint, {
     Map<String, String> queryParameters = const {},
+    Duration? timeoutOverride,
+    bool authenticated = false,
+  }) async {
+    return _requestJson(
+      'GET',
+      endpoint,
+      queryParameters: queryParameters,
+      timeoutOverride: timeoutOverride,
+      authenticated: authenticated,
+    );
+  }
+
+  Future<Object?> postJson(
+    String endpoint, {
+    Object? body,
+    bool authenticated = false,
+    Duration? timeoutOverride,
+  }) => _requestJson(
+    'POST',
+    endpoint,
+    body: body,
+    authenticated: authenticated,
+    timeoutOverride: timeoutOverride,
+  );
+
+  Future<Object?> putJson(
+    String endpoint, {
+    Object? body,
+    bool authenticated = false,
+    Duration? timeoutOverride,
+  }) => _requestJson(
+    'PUT',
+    endpoint,
+    body: body,
+    authenticated: authenticated,
+    timeoutOverride: timeoutOverride,
+  );
+
+  Future<Object?> _requestJson(
+    String method,
+    String endpoint, {
+    Map<String, String> queryParameters = const {},
+    Object? body,
+    bool authenticated = false,
     Duration? timeoutOverride,
   }) async {
     final normalizedEndpoint = endpoint.replaceFirst(RegExp(r'^/+'), '');
@@ -36,16 +82,38 @@ class GeoCruzApiClient {
         .replace(
           queryParameters: queryParameters.isEmpty ? null : queryParameters,
         );
-    final response = await _client
-        .get(
-          uri,
-          headers: const {
-            'Accept': 'application/json',
-            'Accept-Encoding': 'identity',
-            'Connection': 'close',
-          },
-        )
-        .timeout(timeoutOverride ?? timeout);
+    final headers = <String, String>{
+      'Accept': 'application/json',
+      'Accept-Encoding': 'identity',
+      'Connection': 'close',
+    };
+    if (body != null) headers['Content-Type'] = 'application/json';
+    if (authenticated) {
+      final token = bearerToken;
+      if (token == null || token.isEmpty) {
+        throw const GeoCruzApiException(
+          statusCode: 401,
+          message: 'Inicia sesión para consultar esta información.',
+          code: 'NO_AUTORIZADO',
+        );
+      }
+      headers['Authorization'] = 'Bearer $token';
+    }
+    final request = switch (method) {
+      'GET' => _client.get(uri, headers: headers),
+      'POST' => _client.post(
+        uri,
+        headers: headers,
+        body: jsonEncode(body ?? const <String, Object?>{}),
+      ),
+      'PUT' => _client.put(
+        uri,
+        headers: headers,
+        body: jsonEncode(body ?? const <String, Object?>{}),
+      ),
+      _ => throw ArgumentError.value(method, 'method', 'Método no admitido.'),
+    };
+    final response = await request.timeout(timeoutOverride ?? timeout);
 
     Object? payload;
     try {

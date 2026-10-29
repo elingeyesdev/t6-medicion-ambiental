@@ -31,7 +31,9 @@ El ZIP esperado es [el archivo del commit](https://codeload.github.com/elingeyes
 
 ## Relación con GeoCruz
 
-EnviroSense emplea React, Node/Express, servicios y base PostgreSQL/TimescaleDB. **No se convirtió JSX en PHP automáticamente.** GeoCruz adapta los patrones útiles mediante Laravel 12, Blade, JavaScript y una API común; Flutter es una aplicación separada. El código activo de GeoCruz vive en `web/`, `movil/` y `compartido/`, fuera de esta referencia.
+**Enfoque vigente del 28/10/2026:** el sistema completo de EnviroSense es la base de GeoSur y los análisis de la pareja se incorporan dentro de él. El enfoque anterior de adaptar solo patrones útiles quedó reemplazado. Conservar esta carpeta no acredita la migración funcional. Alcance y faltantes actuales: [EnviroSense como base](../../docs/ENVIROSENSE_COMO_BASE.md). La carpeta `codigo/` continúa sin cambios.
+
+EnviroSense emplea React, Node/Express, servicios y base PostgreSQL/TimescaleDB. **No se convirtió JSX en PHP automáticamente.** La implementación activa en Laravel, Blade, JavaScript y API común todavía es parcial; Flutter es una aplicación separada. El código activo vive en `web/`, `movil/` y `compartido/`, fuera de esta carpeta conservada. Josué confirmó seguir la tecnología del Planner, comprobada en sus documentos: Laravel/Blade, API compartida y Flutter. Las funciones del original se adaptan a esa tecnología.
 
 No ejecutar `docker compose up` ni instalar servicios desde esta carpeta para arrancar GeoCruz. La copia se conserva para comparar y revisar. Los scripts de arranque y las pruebas de GeoCruz siguen apuntando a sus carpetas activas.
 

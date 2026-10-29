@@ -1,7 +1,7 @@
 import { aLocal, filtrosDelFormulario, solicitarJson, validarInstanteUrl } from './contrato.js';
 import { ConsultaFocosWeb } from './consulta.js';
 import { VistaFocos } from './vista.js';
-import { ajustarCalendarios } from './periodo.js';
+import { ajustarCalendarios, periodoReciente } from './periodo.js';
 
 function iniciar() {
     const raiz = document.getElementById('visor-focos');
@@ -35,16 +35,14 @@ function iniciar() {
         if (filtros?.hasta) document.getElementById('hasta').value = aLocal(filtros.hasta);
         ajustarCalendarios(desde, hasta);
     };
-    const hoy = aLocal(new Date().toISOString()).slice(0, 10);
-    const fin = new Date(`${hoy}T00:00:00-04:00`);
-    const defecto = { desde: new Date(fin.getTime() - 86400000).toISOString(), hasta: fin.toISOString() };
+    const defecto = periodoReciente();
     restaurar(defecto);
     let inicial = { ...defecto };
     const parametros = new URLSearchParams(location.search);
     const consultaEnUrl = parametros.has('desde') && parametros.has('hasta');
 
     async function cargarCatalogo() {
-        document.getElementById('estado-catalogo').textContent = 'Cargando catálogo territorial…';
+        document.getElementById('estado-catalogo').textContent = 'Cargando…';
         document.getElementById('reintentar-catalogo').hidden = true;
         const control = new AbortController();
         const tiempo = setTimeout(() => control.abort(), 15000);
@@ -55,8 +53,20 @@ function iniciar() {
             vista.nombres = new Map(territorios.map(t => [t.identificador, t.nombre]));
             opciones(provincia, territorios.filter(t => t.tipo === 'provincia'), 'Todo Santa Cruz');
             actualizarMunicipios('');
+            // EnviroSense abre directamente el mapa, sin inventar detecciones iniciales.
+            // La geometría de contexto es local; NASA solo se consulta al aplicar filtros.
+            if (!consultaEnUrl && !consulta.estado.actual) {
+                try {
+                    const limite = await solicitarJson(`${raiz.dataset.api}/territorios/BO07/limite`, control.signal);
+                    if (limite.territorio?.identificador !== 'BO07' || limite.limite?.type !== 'Feature') throw new Error('Límite incompatible');
+                    // Una consulta iniciada mientras llega el límite no pierde sus puntos.
+                    if (!consulta.estado.actual) vista.mapa.mostrar([], limite.limite, null);
+                } catch {
+                    if (!consulta.estado.actual) vista.mapa.mostrar([], null, 'No se pudo cargar el contorno inicial de Santa Cruz. Puedes consultar los focos igualmente.');
+                }
+            }
             document.getElementById('campos-filtros').disabled = false;
-            document.getElementById('estado-catalogo').textContent = 'Límites de referencia OCHA/HDX · catálogo en revisión. Las autonomías conservan su denominación.';
+            document.getElementById('estado-catalogo').textContent = '';
             if (consultaEnUrl) {
                 const preseleccion = Object.fromEntries(['desde', 'hasta', 'provincia', 'municipio', 'confianza'].filter(k => parametros.has(k)).map(k => [k, parametros.get(k)]));
                 // Una URL desconocida no se transforma silenciosamente en el departamento completo.
@@ -83,14 +93,22 @@ function iniciar() {
     formulario.addEventListener('input', () => consulta.editar());
     formulario.addEventListener('change', () => consulta.editar());
     for (const fecha of [desde, hasta]) {
+        fecha.addEventListener('focus', () => ajustarCalendarios(desde, hasta));
         fecha.addEventListener('input', () => ajustarCalendarios(desde, hasta));
         fecha.addEventListener('change', () => ajustarCalendarios(desde, hasta));
+    }
+    for (const boton of document.querySelectorAll('[data-periodo-dias]')) {
+        boton.addEventListener('click', () => {
+            restaurar({ provincia: provincia.value, municipio: municipio.value, confianza: document.getElementById('confianza').value, ...periodoReciente(Number(boton.dataset.periodoDias)) });
+            consulta.editar();
+        });
     }
     document.getElementById('limpiar-periodo').addEventListener('click', () => {
         desde.value = ''; hasta.value = ''; ajustarCalendarios(desde, hasta); consulta.editar(); desde.focus();
     });
     formulario.addEventListener('submit', e => {
         e.preventDefault();
+        ajustarCalendarios(desde, hasta);
         try { consulta.consultar(filtrosDelFormulario(formulario)); }
         catch (error) { consulta.editar(); consulta.emitir({ fase: 'error', error, pendiente: null }); }
     });

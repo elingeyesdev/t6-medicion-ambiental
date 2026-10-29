@@ -1,32 +1,38 @@
 <?php
 
 return [
-    // Navegación inicial de DOC-11. Estas entradas no habilitan consultas.
+    'nombre' => 'GeoSur',
+    // #61 conserva todo EnviroSense como alcance. Publicar cada recorrido al migrarlo.
     'modulos' => [
         'focos-calor' => [
             'nombre' => 'Focos de calor',
             'descripcion' => 'Detecciones térmicas y su procedencia. Un foco de calor no confirma un incendio.',
-            'icono' => '01',
+            'icono' => 'flame',
+            'habilitado' => true,
         ],
         'sequias' => [
             'nombre' => 'Sequías',
-            'descripcion' => 'Variables ambientales e indicadores con su método y período de referencia.',
-            'icono' => '02',
+            'descripcion' => 'SPI-3 derivado de ERA5, con referencia 1991–2020 y cobertura explícita por muestras.',
+            'icono' => 'cloud-rain',
+            'habilitado' => true,
         ],
         'inundaciones' => [
             'nombre' => 'Inundaciones',
             'descripcion' => 'Presencia y cambios de agua, diferenciados de una inundación confirmada.',
-            'icono' => '03',
+            'icono' => 'waves',
+            'habilitado' => false,
         ],
         'deforestacion' => [
             'nombre' => 'Deforestación',
             'descripcion' => 'Pérdida de cobertura forestal con su producto, definición y año de publicación.',
-            'icono' => '04',
+            'icono' => 'trees',
+            'habilitado' => false,
         ],
         'calidad-aire' => [
             'nombre' => 'Calidad del aire',
             'descripcion' => 'Concentraciones disponibles, unidades, fecha y cobertura de cada fuente.',
-            'icono' => '05',
+            'icono' => 'wind',
+            'habilitado' => false,
         ],
     ],
 ];

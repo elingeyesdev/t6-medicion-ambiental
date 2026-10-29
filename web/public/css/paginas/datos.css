@@ -1,0 +1,41 @@
+.pagina-datos .contenido-panel { overflow-y: auto; }
+.datos-contenido { max-width: 1500px; margin: auto; padding: 28px; font-size: 16px; }
+.datos-contenido h1 { font-size: 30px; margin-bottom: 24px; }
+.datos-contenido h2 { font-size: 22px; margin: 0; }
+.datos-contenido .form-label, .datos-contenido .form-control, .datos-contenido .form-select, .datos-contenido .btn, .datos-tabla th { font-size: 16px; }
+.datos-filtros { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; padding: 22px; border-color: #bdd8c7; }
+.datos-consultar, .datos-titulo, .datos-paginacion, .datos-leyenda { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.datos-fecha { grid-column: span 2; min-width: 0; }
+.datos-consultar { grid-column: 1 / -1; }
+.datos-titulo { margin: 24px 0 16px; }
+.datos-etiqueta { display: inline-block; padding: 5px 10px; background: #e3f2e8; color: #155c31; border-radius: 5px; }
+.datos-etiqueta.simulado, .datos-aviso.simulado { background: #fff0dc; color: #8a450d; }
+.datos-etiqueta.estimado, .datos-aviso.estimado { background: #e2f0fa; color: #14547b; }
+.datos-aviso { padding: 14px 18px; border-left: 4px solid currentColor; }
+.datos-columnas { display: grid; grid-template-columns: minmax(300px, .8fr) minmax(0, 1.2fr); gap: 24px; }
+.datos-tarjeta { min-width: 0; border-color: var(--enviro-borde); box-shadow: none; }
+.datos-tarjeta .card-header { background: var(--enviro-suave); margin: 0; }
+#mapa-datos { height: 340px; z-index: 0; }
+.datos-ayuda { padding: 14px 18px; margin: 0; }
+.datos-resumen { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
+.datos-resumen > div { background: var(--enviro-suave); padding: 14px; border-radius: 6px; }
+.datos-resumen p { margin: 8px 0 0; }
+.datos-resumen strong { font-size: 19px; display: block; margin-top: 8px; }
+#grafico-datos { min-height: 245px; width: 100%; }
+#grafico-datos svg { display: block; max-width: 100%; }
+.datos-leyenda span { display: flex; gap: 8px; align-items: center; overflow-wrap: anywhere; }
+.datos-leyenda i { width: 16px; height: 5px; display: inline-block; }
+.pagina-datos .datos-tabla thead th { font-size: 16px; font-weight: 600; color: var(--enviro-texto); text-transform: none; letter-spacing: normal; background: var(--enviro-suave); }
+.datos-tabla td { padding: 16px; white-space: nowrap; }
+.datos-paginacion { justify-content: center; padding: 20px; }
+.datos-operacion summary { padding: 18px 22px; font-size: 19px; color: var(--enviro-texto); cursor: pointer; background: var(--enviro-suave); }
+.datos-formulario { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: end; }
+.datos-formulario .btn { justify-self: start; }
+.datos-vacio { padding: 20px 0; }
+.punto-ambiental span { width: 24px; height: 24px; display: grid; place-items: center; color: white; background: #155c43; border: 2px solid white; border-radius: 5px; box-shadow: 0 1px 5px #1238; }
+.punto-ambiental.seleccionado span { background: #bd5b25; outline: 3px solid #fff; }
+[data-bs-theme="dark"] .datos-etiqueta { background: #214830; color: #c4f2d1; }
+[data-bs-theme="dark"] .datos-etiqueta.simulado, [data-bs-theme="dark"] .datos-aviso.simulado { background: #513622; color: #ffdaaa; }
+[data-bs-theme="dark"] .datos-etiqueta.estimado, [data-bs-theme="dark"] .datos-aviso.estimado { background: #193e55; color: #c8eaff; }
+@media(max-width: 1050px) { .datos-filtros { grid-template-columns: repeat(2, minmax(0, 1fr)); } .datos-columnas { grid-template-columns: minmax(0, 1fr); } }
+@media(max-width: 560px) { .datos-contenido { padding: 22px 14px; } .datos-filtros, .datos-formulario { grid-template-columns: minmax(0, 1fr); } .datos-fecha, .datos-consultar { grid-column: 1; } .datos-consultar .btn { width: 100%; } #mapa-datos { height: 280px; } }

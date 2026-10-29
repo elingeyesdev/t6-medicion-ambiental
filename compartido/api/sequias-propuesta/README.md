@@ -1,6 +1,6 @@
 # Sequías: contrato candidato MET-01 / #35
 
-**No implementado. Pendiente de revisión de Jaziel.** [Método, evidencia y reproducción](../../../docs/MET01_METODO_SEQUIAS.md). El contrato M2 de [openapi.json](../openapi.json) continúa vigente: `/api/v1/sequias` aún responde 503 `MODULO_NO_DISPONIBLE`. Estos archivos no anuncian una respuesta HTTP 200 disponible.
+**Referencia histórica de la propuesta aprobada por Jaziel en #42 el 25/10/2026.** Sus esquemas/ejemplos conservan el estado original para reproducir la evidencia offline. La implementación #36 publica una [versión HTTP separada](../sequias/README.md), sujeta a revisión en #43. [Método, evidencia y reproducción](../../../docs/MET01_METODO_SEQUIAS.md). El contrato M2 de focos continúa vigente.
 
 ## Solicitud propuesta para #36
 

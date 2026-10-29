@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import '../../../core/network/geocruz_api_client.dart';
+import '../../../core/formatters/consultation_period.dart';
 import '../model/hotspot_models.dart';
 import '../model/hotspot_repository.dart';
 
@@ -11,15 +12,12 @@ class HotspotsViewModel extends ChangeNotifier {
   HotspotsViewModel(this.repository) : filters = defaultFilters();
 
   final HotspotRepository repository;
-  final Map<String, TerritoryBoundary> _boundaries = {};
 
   List<TerritoryOption> territories = const [];
   HotspotFilters filters;
   HotspotResponse? response;
-  TerritoryBoundary? boundary;
   String? catalogError;
   String? queryError;
-  String? mapError;
   bool loadingCatalog = false;
   bool loading = false;
   bool queryExpired = false;
@@ -124,15 +122,7 @@ class HotspotsViewModel extends ChangeNotifier {
   }
 
   HotspotFilters _validateAndNormalize(HotspotFilters value) {
-    final duration = value.untilUtc.toUtc().difference(value.fromUtc.toUtc());
-    if (duration <= Duration.zero) {
-      throw const FormatException('“Hasta” debe ser posterior a “Desde”.');
-    }
-    if (duration > const Duration(hours: 168)) {
-      throw const FormatException(
-        'El período supera el máximo de 7 días. Acorta el rango seleccionado.',
-      );
-    }
+    ConsultationPeriod.validate(value.fromUtc, value.untilUtc);
     var province = value.provinceId;
     final municipality = value.municipalityId;
     if (province != null && territoryById(province)?.type != 'provincia') {
@@ -175,7 +165,6 @@ class HotspotsViewModel extends ChangeNotifier {
     loading = true;
     queryError = null;
     queryExpired = false;
-    mapError = null;
     notifyListeners();
 
     try {
@@ -203,37 +192,8 @@ class HotspotsViewModel extends ChangeNotifier {
         );
       }
 
-      TerritoryBoundary? nextBoundary;
-      String? nextMapError;
-      if (boundary?.identifier == result.territoryId) {
-        nextBoundary = boundary;
-      } else {
-        try {
-          nextBoundary =
-              _boundaries[result.territoryId] ??
-              await repository.loadBoundary(result.territoryId);
-          final territory = result.raw['consulta']?['territorio'];
-          final expectedVersion = territory is Map
-              ? territory['versionCatalogo']?.toString()
-              : null;
-          if (expectedVersion != null &&
-              nextBoundary.catalogVersion != expectedVersion) {
-            throw const FormatException(
-              'El límite usa una versión de catálogo distinta a la consulta.',
-            );
-          }
-          _boundaries[result.territoryId] = nextBoundary;
-        } catch (error) {
-          debugPrint('No se pudo cargar el límite territorial: $error');
-          nextBoundary = null;
-          nextMapError =
-              'No se pudo cargar el límite territorial. El listado y los detalles siguen disponibles.';
-        }
-      }
       if (generation != _requestGeneration) return;
       response = result;
-      boundary = nextBoundary;
-      mapError = nextMapError;
       filters = requested;
       _pending = null;
       loading = false;
@@ -266,23 +226,12 @@ class HotspotsViewModel extends ChangeNotifier {
       return 'La consulta tardó demasiado. Comprueba la conexión y reintenta.';
     }
     if (error is FormatException) return error.message;
-    return 'No se pudo conectar con GeoCruz. Comprueba la API y reintenta.';
+    return 'No se pudo conectar con GeoSur. Comprueba la API y reintenta.';
   }
 
   static HotspotFilters defaultFilters({DateTime? now}) {
-    final boliviaNow = (now ?? DateTime.now()).toUtc().subtract(
-      const Duration(hours: 4),
-    );
-    final midnightBoliviaAsUtc = DateTime.utc(
-      boliviaNow.year,
-      boliviaNow.month,
-      boliviaNow.day,
-      4,
-    );
-    return HotspotFilters(
-      fromUtc: midnightBoliviaAsUtc.subtract(const Duration(days: 1)),
-      untilUtc: midnightBoliviaAsUtc,
-    );
+    final period = ConsultationPeriod.lastSevenDays(now: now);
+    return HotspotFilters(fromUtc: period.from, untilUtc: period.until);
   }
 }
 
