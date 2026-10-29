@@ -32,6 +32,8 @@ void main() {
     await tester.pumpWidget(MaterialApp(home: MonitoringScreen(api: api, repository: _CatalogRepository(api), onUnauthorized: () {})));
     await advance();
     expect(queries, isNotEmpty);
+    await tester.tap(find.text('Filtros'));
+    await advance();
 
     await tester.tap(find.byKey(const Key('monitoring-country')));
     await advance();
