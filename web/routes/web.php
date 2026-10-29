@@ -17,6 +17,15 @@ use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'paginas.inicio')->name('inicio');
+Route::middleware(['auth', 'cuenta.activa', 'can:mapa.ver', 'can:datos.consultar'])->group(function (): void {
+    Route::get('/mapa/capas', [\App\Http\Controllers\Mapas\CapasController::class, 'index'])
+        ->middleware('throttle:120,1,mapa-capas')->name('mapa.capas');
+    Route::get('/mapa/capas/cuadros/{cuadro}.png', [\App\Http\Controllers\Mapas\CapasController::class, 'imagen'])
+        ->where('cuadro', '[a-z0-9][a-z0-9_-]{0,79}')
+        ->middleware('throttle:120,1,mapa-imagenes')->name('mapa.capas.imagen');
+    Route::get('/mapa/poi', \App\Http\Controllers\Mapas\PoiController::class)
+        ->middleware('throttle:12,1,mapa-poi')->name('mapa.poi');
+});
 Route::middleware('guest')->group(function (): void {
     Route::view('/login', 'acceso.entrar')->name('login');
     Route::post('/login', [AccesoController::class, 'entrar'])->middleware('throttle:cuentas-ingreso')->name('acceso.entrar');
