@@ -28,6 +28,13 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(new \App\Services\Mapas\Capas\ErroresConsultaMapa);
+        $exceptions->render(static function (ErrorConsulta $e, Request $request) {
+            if ($request->is('avisos/novedades', 'avisos/canales', 'avisos/push', 'cuenta/clave') && $request->expectsJson()) {
+                return response()->json(['mensaje' => $e->getMessage()], $e->estado)->header('Cache-Control', 'no-store');
+            }
+
+            return null;
+        });
         $exceptions->dontReport([ErrorConsulta::class]);
         $exceptions->render(function (Throwable $e, Request $request) {
             if (! $request->is('api/v1/*', 'mapa/puntos', 'mapa/tiempo', 'mapa/buscar')) {

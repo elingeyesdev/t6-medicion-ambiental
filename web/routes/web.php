@@ -43,6 +43,13 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
         ->middleware(['can:simulaciones.gestionar', 'throttle:30,1']);
     Route::get('/simulaciones/{id}/estado', [SimulacionesController::class, 'mostrar'])
         ->middleware(['can:simulaciones.gestionar', 'throttle:120,1']);
+    Route::middleware('can:datos.consultar')->group(function (): void {
+        Route::put('/avisos/push', [AvisosController::class, 'push'])->middleware('throttle:10,1')->name('avisos.push');
+        Route::get('/avisos/servicio-push.js', [AvisosController::class, 'servicioPush'])->name('avisos.servicio-push');
+        Route::get('/avisos/novedades', [AvisosController::class, 'novedades'])->middleware('throttle:30,1')->name('avisos.novedades');
+        Route::put('/avisos/canales', [AvisosController::class, 'canales'])->middleware('throttle:10,1')->name('avisos.canales');
+    });
+    Route::put('/cuenta/clave', [CuentaController::class, 'clave'])->middleware('throttle:5,1')->name('cuenta.clave');
     Route::put('/cuenta/unidades', [UnidadesController::class, 'guardar'])->name('cuenta.unidades');
     Route::middleware('can:datos.consultar')->group(function (): void {
         Route::get('/mapa/buscar', BuscarLugarController::class)->middleware('throttle:mapa-busquedas')->name('mapa.buscar');

@@ -44,6 +44,7 @@ class AccesoController extends Controller
 
     public function salir(Request $request): RedirectResponse
     {
+        app(\App\Services\Notificaciones\GuardarPushAvisos::class)->ejecutar($request->user(), false);
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
