@@ -1,4 +1,4 @@
-# Ramas, revisión y aprobación de GeoCruz
+# Ramas, revisión y aprobación de GeoSur
 
 ## Función de cada rama
 
@@ -21,6 +21,27 @@ git pull --ff-only origin develop
 Después crear `feature/NUMERO-DESCRIPCION` para el Issue real, implementar, probar y registrar commits que describan cambios reales. Abrir PR con base `develop`, Issue, instrucciones y evidencias; solicitar revisión al compañero. Corregir observaciones importantes y fusionar cuando la revisión y comprobaciones estén completas. No cerrar una tarea solo por subir commits.
 
 Si se necesita avanzar en otra tarea antes de la aprobación, usar otra rama y hacer explícita su dependencia. No repetir en otro commit los cambios ajenos para simular avances.
+
+## Borrar la rama al aceptar un PR
+
+Cada PR de una tarea lleva su comando con el número real:
+
+```powershell
+gh pr merge NUMERO --repo elingeyesdev/t6-medicion-ambiental --merge --delete-branch
+```
+
+Se usa cuando el compañero ya aprobó el cambio y pasaron sus comprobaciones. `--delete-branch` elimina la rama al fusionar; no hay que dejarla abierta después de terminar la tarea. Para rellenar la descripción de cualquier PR nuevo, desde el repositorio:
+
+```powershell
+./herramientas/github/completar-pr.ps1 -Numero NUMERO -VistaPrevia
+./herramientas/github/completar-pr.ps1 -Numero NUMERO
+```
+
+La ayuda conserva el resto del texto y se puede repetir sin duplicar su sección. También deja el comando correcto en los PR encadenados. `main` y `develop` son permanentes: cuando una de ellas sea el origen del PR, la ayuda omite `--delete-branch`. La aprobación académica para main sigue siendo obligatoria.
+
+Pegar el comando en la descripción no lo ejecuta. El borrado también puede configurarse con el ajuste del repositorio **Automatically delete head branches**, pero requiere permisos de administración. El 28/10 GitHub no permitió activarlo con la cuenta de escritura actual; no se declara habilitado. Mientras tanto se usa el comando al fusionar o el botón Delete branch después de hacerlo desde GitHub.
+
+Para ramas ya integradas, comprobar el PR y que la rama no haya recibido trabajo nuevo. Si sigue siendo base de un PR abierto, revisar primero esa dependencia. La limpieza #81 conserva los commits integrados y las carpetas de trabajo; no borra ramas pendientes ni sustituye las revisiones.
 
 ## Preparación de una entrega estable
 

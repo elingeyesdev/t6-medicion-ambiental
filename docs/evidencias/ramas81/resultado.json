@@ -1,0 +1,168 @@
+{
+  "fecha": "2026-10-28",
+  "repositorio": "elingeyesdev/t6-medicion-ambiental",
+  "remotasEliminadas": [
+    {
+      "pr": 59,
+      "rama": "release/50-entrega-m2",
+      "sha": "e9a591c313f988d1649d3ccaa8086795491298f7"
+    },
+    {
+      "pr": 44,
+      "rama": "feature/34-integracion-movil-laravel",
+      "sha": "23b1eed6e6d648e19b786cb4a48a5cae77bc0ac2"
+    },
+    {
+      "pr": 43,
+      "rama": "feature/36-api-sequias",
+      "sha": "27d29341037265d38178a17425db994dfffc9934"
+    },
+    {
+      "pr": 42,
+      "rama": "feature/35-metodo-sequias",
+      "sha": "1d1865f9686a97c9a61a3ecccd07006040e2b7f5"
+    },
+    {
+      "pr": 33,
+      "rama": "feature/21-pruebas-integracion-focos",
+      "sha": "932211e26000d18bdc01a77f214185d81926fcc8"
+    },
+    {
+      "pr": 32,
+      "rama": "feature/20-flutter-focos-calor",
+      "sha": "13535fd0154831b182b0c2fcf28b7e8a52ce1444"
+    },
+    {
+      "pr": 31,
+      "rama": "feature/29-adaptacion-geocruz",
+      "sha": "fc70bde6bf9f07ad06f22718ad17f57cf74cc0f2"
+    },
+    {
+      "pr": 28,
+      "rama": "feature/17-base-flutter-navegacion",
+      "sha": "ca37392afec9a09ca4a1c1b839f5c6b41cc43648"
+    },
+    {
+      "pr": 27,
+      "rama": "feature/22-evidencias-entrega-m2",
+      "sha": "d37fdc99b6a001700e207d6a384b1f437bf8cd4f"
+    },
+    {
+      "pr": 26,
+      "rama": "feature/19-web-focos-calor",
+      "sha": "4702728f477df8c856a7f85aff5ce9986c84ec38"
+    },
+    {
+      "pr": 25,
+      "rama": "feature/18-api-focos-calor",
+      "sha": "c0f85517ae780f231e8a573ebf5b50021029901f"
+    },
+    {
+      "pr": 24,
+      "rama": "feature/16-catalogo-territorial",
+      "sha": "b59abbc4608b354bc7bd7285b81ff93e07f51bd6"
+    },
+    {
+      "pr": 23,
+      "rama": "feature/15-base-web-api",
+      "sha": "1a91f6241c9a2f07d81012d8bd774a1799f3eaed"
+    }
+  ],
+  "localesEliminadas": [
+    {
+      "pr": 23,
+      "rama": "feature/15-base-web-api",
+      "sha": "1a91f6241c9a2f07d81012d8bd774a1799f3eaed"
+    },
+    {
+      "pr": 24,
+      "rama": "feature/16-catalogo-territorial",
+      "sha": "b59abbc4608b354bc7bd7285b81ff93e07f51bd6"
+    },
+    {
+      "pr": 28,
+      "rama": "feature/17-base-flutter-navegacion",
+      "sha": "ca37392afec9a09ca4a1c1b839f5c6b41cc43648"
+    },
+    {
+      "pr": 25,
+      "rama": "feature/18-api-focos-calor",
+      "sha": "c0f85517ae780f231e8a573ebf5b50021029901f"
+    },
+    {
+      "pr": 26,
+      "rama": "feature/19-web-focos-calor",
+      "sha": "4702728f477df8c856a7f85aff5ce9986c84ec38"
+    },
+    {
+      "pr": 32,
+      "rama": "feature/20-flutter-focos-calor",
+      "sha": "6895946e20df0abdd1510e8daae54a553eaff4a8"
+    },
+    {
+      "pr": 33,
+      "rama": "feature/21-pruebas-integracion-focos",
+      "sha": "6895946e20df0abdd1510e8daae54a553eaff4a8"
+    },
+    {
+      "pr": 27,
+      "rama": "feature/22-evidencias-entrega-m2",
+      "sha": "d37fdc99b6a001700e207d6a384b1f437bf8cd4f"
+    },
+    {
+      "pr": 31,
+      "rama": "feature/29-adaptacion-geocruz",
+      "sha": "fc70bde6bf9f07ad06f22718ad17f57cf74cc0f2"
+    },
+    {
+      "pr": 42,
+      "rama": "feature/35-metodo-sequias",
+      "sha": "1d1865f9686a97c9a61a3ecccd07006040e2b7f5"
+    },
+    {
+      "pr": 43,
+      "rama": "feature/36-api-sequias",
+      "sha": "27d29341037265d38178a17425db994dfffc9934"
+    },
+    {
+      "pr": 45,
+      "rama": "feature/37-web-sequias",
+      "sha": "9acf6751578fb452e8f4ee91cff346dcf5259827"
+    },
+    {
+      "pr": 51,
+      "rama": "refactor/47-panel-envirosense",
+      "sha": "9820d785ced9b47630e18c44f2d37a4fa6558fe8"
+    },
+    {
+      "pr": 59,
+      "rama": "release/50-entrega-m2",
+      "sha": "e9a591c313f988d1649d3ccaa8086795491298f7"
+    },
+    {
+      "pr": 33,
+      "rama": "revision/21-integracion",
+      "sha": "932211e26000d18bdc01a77f214185d81926fcc8"
+    },
+    {
+      "pr": 32,
+      "rama": "revision/32-movil-focos",
+      "sha": "13535fd0154831b182b0c2fcf28b7e8a52ce1444"
+    }
+  ],
+  "yaEliminadasAntes": [
+    {
+      "rama": "refactor/47-panel-envirosense",
+      "motivo": "remota ya eliminada"
+    },
+    {
+      "rama": "feature/37-web-sequias",
+      "motivo": "remota ya eliminada"
+    }
+  ],
+  "main": "851a79f5c699249c284001114f76f994c9ce4335",
+  "develop": "98e428f33cf20231c564b1a58908d9020f9058fa",
+  "carpetasConservadas": true,
+  "ajusteBorradoAutomaticoGlobal": false,
+  "permisoActual": "WRITE"
+}
