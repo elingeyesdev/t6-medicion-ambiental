@@ -29,6 +29,10 @@ Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
     Route::post('/cuenta/restablecer', [RecuperacionController::class, 'restablecer'])->middleware('throttle:cuentas-restablecer');
     Route::post('/cuenta/ingresar', [CuentaController::class, 'entrar'])->middleware('throttle:cuentas-ingreso');
     Route::middleware(['auth:sanctum', 'cuenta.activa', 'abilities:cuenta'])->group(function (): void {
+        Route::get('/simulacion-continua/estado', [\App\Http\Controllers\SimulacionContinuaController::class, 'estado'])
+            ->withoutMiddleware('throttle:30,1')->middleware(['can:datos.consultar', 'throttle:120,1']);
+        Route::post('/simulacion-continua/accion', [\App\Http\Controllers\SimulacionContinuaController::class, 'accion'])
+            ->middleware('can:simulaciones.gestionar');
         Route::middleware('can:datos.consultar')->group(function (): void {
             Route::get('/mapa/buscar', BuscarLugarController::class)->middleware('throttle:mapa-busquedas');
             Route::get('/tiempo', TiempoController::class)->middleware('throttle:tiempo-consultas');

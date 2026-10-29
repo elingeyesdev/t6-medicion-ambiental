@@ -9,6 +9,7 @@
     <h1>Simulaciones</h1>
     <p class="sim-aviso">Prueba escenarios ambientales. Sus resultados son simulados, no observaciones ni pronósticos.</p>
     @include('cuentas.estado')
+    @include('simulaciones.continua')
     @if($sesion)
         @include('simulaciones.resultado')
     @endif
@@ -27,4 +28,5 @@
 <script id="catalogo-escenarios" type="application/json">@json($escenarios)</script>
 <script id="reproduccion-simulacion" type="application/json">@json($reproduccion)</script>
 <script type="module" src="{{ asset('js/simulaciones/inicio.js') }}"></script>
+<script type="module" src="{{ asset('js/simulaciones/continua.js') }}"></script>
 @endpush
