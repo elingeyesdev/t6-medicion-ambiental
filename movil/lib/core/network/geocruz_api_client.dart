@@ -15,7 +15,6 @@ class GeoCruzApiClient {
   Uri _baseUrl;
   final http.Client _client;
   final Duration timeout;
-  Future<void> _queue = Future<void>.value();
 
   String? bearerToken;
 
@@ -78,11 +77,6 @@ class GeoCruzApiClient {
       throw ArgumentError.value(endpoint, 'endpoint', 'Ruta no válida.');
     }
 
-    final uri = _baseUrl
-        .resolve(normalizedEndpoint)
-        .replace(
-          queryParameters: queryParameters.isEmpty ? null : queryParameters,
-        );
     final headers = <String, String>{
       'Accept': 'application/json',
       'Accept-Encoding': 'identity',
@@ -120,33 +114,25 @@ class GeoCruzApiClient {
         _baseUrl.host == '10.0.2.2' || _baseUrl.host == '127.0.0.1';
     final targetTimeout = timeoutOverride ?? timeout;
 
-    Future<http.Response> sendQueued() async {
-      final previous = _queue;
-      final gate = Completer<void>();
-      _queue = gate.future;
-      await previous;
+    Future<http.Response> send() async {
+      if (!isLocalHost) {
+        return sendTo(_baseUrl, targetTimeout);
+      }
       try {
-        if (!isLocalHost) {
-          return await sendTo(_baseUrl, targetTimeout);
-        }
-        try {
-          return await sendTo(_baseUrl, targetTimeout);
-        } on TimeoutException {
-          rethrow;
-        } catch (_) {
-          final altBase = _baseUrl.replace(
-            host: _baseUrl.host == '10.0.2.2' ? '127.0.0.1' : '10.0.2.2',
-          );
-          final response = await sendTo(altBase, targetTimeout);
-          _baseUrl = altBase;
-          return response;
-        }
-      } finally {
-        gate.complete();
+        return await sendTo(_baseUrl, targetTimeout);
+      } on TimeoutException {
+        rethrow;
+      } catch (_) {
+        final altBase = _baseUrl.replace(
+          host: _baseUrl.host == '10.0.2.2' ? '127.0.0.1' : '10.0.2.2',
+        );
+        final response = await sendTo(altBase, targetTimeout);
+        _baseUrl = altBase;
+        return response;
       }
     }
 
-    final response = await sendQueued();
+    final response = await send();
 
     Object? payload;
     try {

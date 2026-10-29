@@ -264,23 +264,6 @@ class _HotspotsScreenState extends State<HotspotsScreen>
   );
   }
 
-  Widget _catalogLoading(BuildContext context) => Center(
-    child: Padding(
-      padding: const EdgeInsets.all(28),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const CircularProgressIndicator(),
-          const SizedBox(height: 14),
-          Text(
-            'Cargando cobertura disponible…',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-        ],
-      ),
-    ),
-  );
-
   Widget _catalogFailure(BuildContext context) => Center(
     child: Padding(
       padding: const EdgeInsets.all(24),
