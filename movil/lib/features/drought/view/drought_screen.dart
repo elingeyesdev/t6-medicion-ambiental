@@ -330,6 +330,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
                     const SizedBox(height: 16),
                     DropdownButtonFormField<String?>(
                       initialValue: selectedProv,
+                      isExpanded: true,
                       decoration: const InputDecoration(
                         labelText: 'Provincia',
                         border: OutlineInputBorder(),
@@ -342,7 +343,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
                         ...provinces.map(
                           (p) => DropdownMenuItem<String?>(
                             value: p.identifier,
-                            child: Text(p.name),
+                            child: Text(p.name, overflow: TextOverflow.ellipsis),
                           ),
                         ),
                       ],
@@ -356,6 +357,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
                     const SizedBox(height: 16),
                     DropdownButtonFormField<String?>(
                       initialValue: selectedMun,
+                      isExpanded: true,
                       decoration: const InputDecoration(
                         labelText: 'Municipio',
                         border: OutlineInputBorder(),
@@ -368,7 +370,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
                         ...munList.map(
                           (m) => DropdownMenuItem<String?>(
                             value: m.identifier,
-                            child: Text(m.name),
+                            child: Text(m.name, overflow: TextOverflow.ellipsis),
                           ),
                         ),
                       ],
