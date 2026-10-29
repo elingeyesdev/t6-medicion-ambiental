@@ -1,6 +1,22 @@
 # Carga raster recuperada de EnviroSense (#66 / #62)
 
-29/10/2026. El productor convierte una temperatura GFS GRIB2 o un archivo ERA5 NetCDF local en un PNG de datos y una receta compatible con el publicador Laravel de #62. No ejecuta los scripts originales, no genera datos aleatorios y no transforma un pronóstico en una observación.
+29/10/2026. El productor convierte temperatura GFS/ERA5 local y ocho campos GFS explícitos en PNG de datos y recetas compatibles con el publicador Laravel de #62. No ejecuta los scripts originales, no genera datos aleatorios y no transforma un pronóstico en una observación.
+
+## Ampliación de los campos GFS
+
+Se capturaron dos conjuntos públicos del ciclo 29/10/2026 06 UTC, plazos 003 y 006: 987 693 y 1 001 251 bytes, doce mensajes por conjunto. Cada uno produjo temperatura a 2 m (°C), humedad relativa a 2 m (%), viento a 10 m (km/h), presión al nivel del mar (hPa), visibilidad (km), nieve en equivalente de agua (mm), precipitación acumulada (mm) e intensidad instantánea de precipitación (mm/h). Son estimaciones del modelo; precipitación incluye fase líquida y sólida. Los dieciséis PNG, recetas, metadatos y recibos están en `evidencias/raster66/campos/`.
+
+```powershell
+tmp/raster-venv/Scripts/python.exe herramientas/datos/raster/adquirir_gfs.py --ciclo 2026102906 --plazo 3 --campos-ambientales --destino tmp/captura-noaa/campos.grib2 --recibo tmp/captura-noaa/campos-recibo.json --consultar-noaa
+tmp/raster-venv/Scripts/python.exe herramientas/datos/raster/campos_gfs.py --entrada tmp/captura-noaa/campos.grib2 --salida tmp/captura-noaa/campos-lote --acumulado-desde 0
+./herramientas/php.ps1 docs/integracion62/publicar-capas.php tmp/captura-noaa/campos-lote tmp/captura-noaa/campos-lote/receta.json
+```
+
+El acumulado se pide desde una hora explícita del ciclo. Si NOAA entrega intervalos diferentes, el productor exige elegir uno; no mezcla 0–9 h con 6–9 h. Duplicados idénticos se registran y se deduplican; valores distintos del mismo intervalo abortan la publicación. Los otros campos pueden procesarse sin elegir un acumulado no solicitado. PRATE instantáneo se multiplica por 3600; su promedio no lo sustituye. APCP y WEASD conservan equivalente de agua: no se confunden con lluvia líquida exclusiva ni profundidad de nieve.
+
+Se aceptan procesos deterministas NCEP 96 y análisis 81 únicamente en plazo cero. U y V deben coincidir en rejilla y fecha. La nueva codificación `viento-uv127` conserva calma exacta con byte 127, sin cambiar la lectura de archivos antiguos. El error máximo de magnitud es 2,005 km/h. La humedad acepta una tolerancia de 0,00001 puntos porcentuales en los extremos por empaquetado GRIB; un valor realmente fuera de escala sigue siendo ausencia. Cada PNG informa su error y cantidad de faltantes. No se rellenan huecos.
+
+Hay 22 pruebas offline del productor y adquisición (11 de temperatura/NetCDF y 11 adicionales), más el contrato JavaScript del viento. Se comprobaron máscaras, conversiones, componentes, distintos acumulados, duplicados, proceso de análisis y la publicación de las ocho capas usando las clases PHP reales. Las pruebas controladas no se publican en el mapa del usuario.
 
 ## Lo comprobado con datos reales
 
@@ -35,7 +51,7 @@ La receta debe publicarse en el directorio privado configurado en `MAPAS_RASTER_
 
 ## Pruebas y límites
 
-Once pruebas verifican lectura GRIB/NetCDF controlada, fechas exactas, nivel/unidades, ejes, máscara, cero válido, error de cuantización, repetición, no sobrescritura, entradas dañadas, contrato con el publicador PHP real y límites/errores HTTP. Los fixtures están rotulados como controlados y requieren `--datos-controlados`; nunca se publicaron en el servidor del usuario.
+Las pruebas verifican lectura GRIB/NetCDF controlada, fechas exactas, nivel/unidades, ejes, máscara, cero válido, error de cuantización, repetición, no sobrescritura, entradas dañadas, contrato con el publicador PHP real y límites/errores HTTP. Los fixtures están rotulados como controlados y requieren `--datos-controlados`; nunca se publicaron en el servidor del usuario.
 
 ```powershell
 # PHP debe tener mbstring, como el entorno Laravel.
@@ -44,6 +60,6 @@ $env:RASTER_PHP = 'C:/ruta/php.exe'
 tmp/raster-venv/Scripts/python.exe -m unittest discover -s herramientas/datos/raster/tests -p 'test_*.py'
 ```
 
-Esta entrega recupera el productor de temperatura y la lectura local ERA5. No acredita productores operativos de viento, lluvia, humedad, presión, nieve, visibilidad o AQI, ni todas las fechas históricas. Sus codificaciones están en el visor, pero necesitan insumos verificados. Las salidas ambiguas de UV/evaporación del original no se renombran como productos científicos distintos. Quedan registradas como pendientes de #66; no se declara recuperación ambiental completa por mostrar dos cuadros de temperatura.
+Esta entrega recupera ocho capas GFS y la lectura de temperatura ERA5 local. No acredita un productor de AQI, todas las fechas históricas ni actualización automática. Las salidas ambiguas de UV/evaporación del original no se renombran como productos científicos distintos. Quedan registradas como pendientes de #66. Sensores y broker reales mantienen su validación independiente; un catálogo de imágenes no prueba su conexión.
 
 Fuentes primarias consultadas: [filtro NOMADS](https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl), [inventario GFS de NCEP](https://www.nco.ncep.noaa.gov/pmb/products/gfs/) y [ERA5 C3S](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels). Se conserva atribución NOAA/NWS/NCEP y Copernicus/ECMWF en cada producto correspondiente.
