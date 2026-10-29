@@ -1,11 +1,17 @@
 <?php
 
 use App\Http\Controllers\AccesoController;
+use App\Http\Controllers\AlertasController;
+use App\Http\Controllers\Api\BuscarLugarController;
+use App\Http\Controllers\Api\TiempoController;
+use App\Http\Controllers\AvisosController;
 use App\Http\Controllers\CuentaController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MapaMonitoreoController;
 use App\Http\Controllers\RecuperacionController;
+use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\SensoresController;
+use App\Http\Controllers\SimulacionesController;
 use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +27,34 @@ Route::middleware('guest')->group(function (): void {
     Route::post('/restablecer-acceso', [RecuperacionController::class, 'restablecer'])->middleware('throttle:cuentas-restablecer')->name('password.update');
 });
 Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
+    Route::middleware('can:datos.consultar')->group(function (): void {
+        Route::get('/mapa/buscar', BuscarLugarController::class)->middleware('throttle:mapa-busquedas')->name('mapa.buscar');
+        Route::get('/mapa/tiempo', TiempoController::class)->middleware('throttle:tiempo-consultas')->name('mapa.tiempo');
+        Route::get('/alertas', [AlertasController::class, 'index'])->name('alertas');
+        Route::get('/umbrales', [AlertasController::class, 'umbrales'])->name('umbrales');
+        Route::get('/avisos', [AvisosController::class, 'index'])->name('avisos');
+        Route::put('/avisos/preferencias', [AvisosController::class, 'preferencias'])->name('avisos.preferencias');
+        Route::patch('/avisos/{id}/leer', [AvisosController::class, 'leer'])->name('avisos.leer');
+    });
+    Route::patch('/alertas/{id}/reconocer', [AlertasController::class, 'reconocer'])->middleware('can:alertas.gestionar')->name('alertas.reconocer');
+    Route::middleware('can:reportes.ver')->group(function (): void {
+        Route::get('/reportes', [ReportesController::class, 'index'])->name('reportes');
+        Route::get('/reportes/{id}', [ReportesController::class, 'mostrar'])->name('reportes.mostrar');
+        Route::get('/reportes/{id}/descargar/{formato}', [ReportesController::class, 'descargar'])->where('formato', 'pdf|xlsx')->name('reportes.descargar');
+        Route::get('/plantillas', [ReportesController::class, 'plantillas'])->name('plantillas');
+    });
+    Route::middleware('can:reportes.crear')->group(function (): void {
+        Route::post('/reportes', [ReportesController::class, 'guardar'])->name('reportes.guardar');
+        Route::post('/plantillas', [ReportesController::class, 'guardarPlantilla'])->name('plantillas.guardar');
+        Route::patch('/plantillas/{id}', [ReportesController::class, 'guardarPlantilla'])->name('plantillas.actualizar');
+        Route::delete('/plantillas/{id}', [ReportesController::class, 'archivarPlantilla'])->name('plantillas.archivar');
+    });
+    Route::middleware('can:simulaciones.gestionar')->group(function (): void {
+        Route::get('/simulaciones', [SimulacionesController::class, 'index'])->name('simulaciones');
+        Route::post('/simulaciones', [SimulacionesController::class, 'guardar'])->name('simulaciones.guardar');
+        Route::post('/simulaciones/{id}/accion', [SimulacionesController::class, 'accion'])->name('simulaciones.accion');
+        Route::post('/simulaciones/{id}/historial', [SimulacionesController::class, 'publicar'])->name('simulaciones.publicar');
+    });
     Route::get('/sensores', [SensoresController::class, 'index'])->middleware('can:datos.consultar')->name('sensores');
     Route::middleware('can:datos.gestionar')->group(function (): void {
         Route::post('/sensores', [SensoresController::class, 'guardar'])->name('sensores.guardar');

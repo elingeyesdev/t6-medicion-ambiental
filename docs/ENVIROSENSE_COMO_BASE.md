@@ -2,7 +2,7 @@
 
 Corrección confirmada por Josué el 28/10/2026. Seguimiento #61 y #62.
 
-**GeoSur es la adaptación del software completo de EnviroSense.** Sus cuentas, mapa ambiental, datos, sensores, histórico, simulaciones, reportes, plantillas, alertas, notificaciones y asistente son la base del producto. Focos de calor, sequías y los otros análisis de la pareja se incorporan dentro de ese sistema. No sustituyen su mapa ni convierten las funciones originales en extras opcionales.
+**GeoSur es la adaptación del software completo de EnviroSense.** Sus cuentas, mapa ambiental, datos, sensores, histórico, simulaciones, reportes, plantillas, alertas y notificaciones son la base del producto. Focos de calor, sequías y los otros análisis de la pareja se incorporan dentro de ese sistema. No sustituyen su mapa ni convierten las funciones originales en extras opcionales.
 
 ## Qué salió mal
 
@@ -43,12 +43,12 @@ El original usa React y Node/Express. Sus pantallas y recorridos se adaptan a La
 
 Antes de declarar el software convertido se deben probar los recorridos originales completos, con los roles correspondientes, y comparar sus resultados con EnviroSense. Siguen pendientes:
 
-- Mapa original: buscador mundial, capas meteorológicas, límites, unidades, línea de tiempo, comparaciones y controles; #62.
+- Mapa original: capas meteorológicas, unidades, línea de tiempo, comparaciones y controles; #62. Los límites y el buscador geográfico mundial ya tienen candidatos; la búsqueda de establecimientos/POI sigue pendiente.
 - Sensores conectados, MQTT, radar, cargas ETL y datos históricos originales saneados; #66.
-- Simulaciones por punto/zona y sus escenarios; #52.
-- Reportes, gráficos, exportaciones y plantillas de usuario; #64.
-- Alertas, umbrales y notificaciones, probadas primero en local sin envíos externos; #65.
-- Asistente y contexto, con proveedor/límites configurados; #67.
+- Simulaciones: el recorrido por punto/región y sus escenarios ya tiene candidato Laravel/Blade y API en #52; faltan modo continuo global/sockets, Flutter y revisión. Detalle en [SIMULACIONES_ENVIROSENSE.md](SIMULACIONES_ENVIROSENSE.md).
+- Reportes, gráficos, PDF/Excel y plantillas con condiciones tienen candidato en #64; faltan las variables meteorológicas adicionales, Flutter y revisión. Detalle en [REPORTES_ENVIROSENSE.md](REPORTES_ENVIROSENSE.md).
+- Alertas, 29 niveles, reconocimiento e historial y avisos internos tienen candidato en #65; faltan los canales externos, tiempo real, Flutter y revisión. Ver [ALERTAS_ENVIROSENSE.md](ALERTAS_ENVIROSENSE.md).
+- Chatbot: retirado del alcance por Josué el 28/10; #67 cancelada, no implementada. No se requiere para dar por terminada la migración.
 - Revisión de cuentas/permisos de #63 e integración equivalente en Flutter; #48. La PWA original tampoco equivale a la aplicación Flutter.
 
 Estos puntos son trabajo principal pendiente. El orden es completar la base de EnviroSense e incorporar los análisis nuevos dentro de ella. No se borran los avances útiles ni se reemplaza `main`: allí permanece M2. M3 y la migración completa necesitan revisión propia; M3 sigue sin fecha confirmada.
@@ -58,3 +58,11 @@ Estos puntos son trabajo principal pendiente. El orden es completar la base de E
 Se extrajeron las 241 geometrías de los trece seeds conservados, sin ejecutar SQL, descargar datos ni simplificar los polígonos. `herramientas/datos/recuperar-regiones.py --comprobar` reproduce sus bytes. El índice conserva país, nivel, nombre, caja, fuente, licencia declarada y huellas. Los identificadores dependen del país y nombre originales. La procedencia de Guyana Francesa es GADM 4.1 ADM0; su seed no declara licencia, y no se atribuye una licencia de geoBoundaries a ese archivo. Las regiones son referencias del origen, no certificación administrativa actual.
 
 Al elegir país y región, el mapa dibuja el límite y filtra puntos por su posición actual en el polígono, incluidos sus huecos y partes. No reasigna las coordenadas históricas de las lecturas. Una región sin puntos conserva su límite y muestra que no hay puntos activos. Se rechazan regiones de otro país y códigos ajenos al catálogo.
+
+## Consulta meteorológica recuperada
+
+El servicio de pronóstico del original se adaptó a Laravel/API y a la ficha del mapa, con datos actuales, por hora y por día de Open-Meteo. Conserva estimaciones y faltantes; no los transforma en observaciones. Detalle y pendientes del mapa completo en [TIEMPO_ENVIROSENSE.md](TIEMPO_ENVIROSENSE.md).
+
+El buscador de Mapbox también tiene candidato Laravel/API y formulario en el mapa. Permite distinguir lugares con el mismo nombre y navegar fuera de Sudamérica, sin crear estaciones ni guardar respuestas temporales. Se comprobó Tokio y selección con teclado en Quito. Ver [BUSCADOR_ENVIROSENSE.md](BUSCADOR_ENVIROSENSE.md).
+
+El recorrido de lecturas por momento y la comparación de puntos/fechas tienen candidato en `HISTORIAL_MAPA_ENVIROSENSE.md`. Usan registros guardados y mantienen separadas fuentes y procedencias. La reproducción y comparación de las capas raster del referente siguen pendientes.

@@ -33,4 +33,5 @@ Este mapa de puntos es una recuperación parcial. No acredita recuperar todas la
 ## Ampliación de regiones
 
 Recuperadas 241 regiones en trece países/territorios. Tres pruebas adicionales verifican todas las geometrías y sus huellas, el filtro espacial, la relación país/región, códigos inválidos y regiones sin puntos. La extracción conserva polígonos, huecos y multipolígonos sin simplificar. Siguen pendientes las capas meteorológicas y los demás controles originales.
-`nCaptura de la ampliación: [Región de Santa Cruz](regiones-santa-cruz.png).
+
+Captura de la ampliación: [Región de Santa Cruz](regiones-santa-cruz.png).

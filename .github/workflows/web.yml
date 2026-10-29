@@ -2,11 +2,11 @@ name: Base web y API
 
 on:
   pull_request:
-    branches: [develop, main, 'feature/**', 'refactor/**']
-    paths: ['web/**', 'compartido/api/**', 'compartido/sequias/**', 'compartido/sensores/**', 'compartido/geografia/**', 'compartido/territorios/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'docs/evidencias/api02-http/**', 'herramientas/sequias/**', 'herramientas/datos/**', '.github/workflows/web.yml']
+    branches: [develop, main, 'feature/**', 'refactor/**', 'fix/**', 'hotfix/**', 'docs/**', 'test/**']
+    paths: ['web/**', 'compartido/api/**', 'compartido/sequias/**', 'compartido/sensores/**', 'compartido/geografia/**', 'compartido/simulaciones/**', 'compartido/alertas/**', 'compartido/territorios/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'docs/evidencias/api02-http/**', 'herramientas/sequias/**', 'herramientas/datos/**', '.github/workflows/web.yml']
   push:
     branches: [develop, main]
-    paths: ['web/**', 'compartido/api/**', 'compartido/sequias/**', 'compartido/sensores/**', 'compartido/geografia/**', 'compartido/territorios/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'docs/evidencias/api02-http/**', 'herramientas/sequias/**', 'herramientas/datos/**', '.github/workflows/web.yml']
+    paths: ['web/**', 'compartido/api/**', 'compartido/sequias/**', 'compartido/sensores/**', 'compartido/geografia/**', 'compartido/simulaciones/**', 'compartido/alertas/**', 'compartido/territorios/**', 'docs/evidencias/api01/**', 'docs/ejemplos/sequias/**', 'docs/evidencias/api02-preparacion/**', 'docs/evidencias/api02-fuente/**', 'docs/evidencias/api02-http/**', 'herramientas/sequias/**', 'herramientas/datos/**', '.github/workflows/web.yml']
 
 permissions:
   contents: read
@@ -90,6 +90,8 @@ jobs:
         run: |
           python herramientas/datos/recuperar-catalogo.py --comprobar
           python herramientas/datos/recuperar-regiones.py --comprobar
+          python herramientas/datos/recuperar-escenarios.py --comprobar
+          python herramientas/datos/recuperar-umbrales.py --comprobar
 
   visor-web:
     runs-on: ubuntu-latest

@@ -1,0 +1,11 @@
+{
+  "paginasPDF": 8,
+  "filasExcel": 100,
+  "hojasExcel": [
+    "Lecturas",
+    "Resumen"
+  ],
+  "formulasInyectadas": 0,
+  "cerosConservados": true,
+  "textoLiteralConservado": true
+}
