@@ -23,7 +23,17 @@ final class ExportarReporte
         $opciones->set('fontCache', $cache);
         $pdf = new Dompdf($opciones);
         $pdf->setPaper('A4', 'landscape');
-        $pdf->loadHtml(view('reportes.pdf', ['reporte' => $reporte, 'columnas' => PrepararReporte::COLUMNAS])->render(), 'UTF-8');
+        $graficos = [];
+        if ($reporte->contenido['grafico']) {
+            $motor = app(GraficoReporte::class);
+            foreach ($motor->series($reporte->contenido) as $serie) {
+                $svg = $motor->svg($serie);
+                if ($svg !== '') {
+                    $graficos[] = ['serie' => $serie, 'imagen' => 'data:image/svg+xml;base64,'.base64_encode($svg)];
+                }
+            }
+        }
+        $pdf->loadHtml(view('reportes.pdf', ['reporte' => $reporte, 'columnas' => PrepararReporte::COLUMNAS, 'graficos' => $graficos])->render(), 'UTF-8');
         $pdf->render();
 
         return $pdf->output();
@@ -41,7 +51,22 @@ final class ExportarReporte
         foreach ($reporte->contenido['resumen'] as $r) {
             $resumen[] = ["\0".$r['punto'], "\0".$r['variable'], "\0".$r['origenNombre'], "\0".$r['fuenteNombre'], $r['cantidad'], $r['minimo'], $r['maximo'], $r['promedio'], "\0".$r['unidad']];
         }
+        $resumen[] = [];
+        if (isset($reporte->contenido['atribucion'])) {
+            $resumen[] = ["\0".$reporte->contenido['atribucion']];
+        }
+        if (isset($reporte->parametros['corte'])) {
+            $resumen[] = ["\0".'Corte de simulación global', "\0".json_encode($reporte->parametros['corte'], JSON_UNESCAPED_UNICODE)];
+        }
+        $excel = SimpleXLSXGen::fromArray($filas, 'Lecturas')->addSheet($resumen, 'Resumen')->setDefaultFont('Arial')->setDefaultFontSize(12);
+        if (count($reporte->contenido['faltantes'] ?? [])) {
+            $faltantes = [['Zona', 'Fecha · Bolivia', 'Variable', 'Unidad', 'Origen', 'Fuente', 'Estado']];
+            foreach ($reporte->contenido['faltantes'] as $f) {
+                $faltantes[] = array_map(fn ($v) => "\0".$v, [$f['punto'], $f['fecha'], $f['variable'], $f['unidad'], $f['origenNombre'], $f['fuenteNombre'], 'Sin dato']);
+            }
+            $excel->addSheet($faltantes, 'No disponibles');
+        }
 
-        return (string) SimpleXLSXGen::fromArray($filas, 'Lecturas')->addSheet($resumen, 'Resumen')->setDefaultFont('Arial')->setDefaultFontSize(12);
+        return (string) $excel;
     }
 }

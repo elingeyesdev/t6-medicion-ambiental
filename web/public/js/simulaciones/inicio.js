@@ -59,23 +59,35 @@ function iniciar(config) {
         cursor.setAttribute('x1',20+posicion/Math.max(1,sesion.resultado.instantes.length-1)*600);cursor.setAttribute('x2',cursor.getAttribute('x1'));
     }
     function parar(){clearInterval(reloj);reloj=null;}
+    async function sincronizar() {
+        if(ocupado || document.hidden) return;
+        ocupado=true;
+        try {
+            const r=await fetch(config.estado,{headers:{Accept:'application/json'},credentials:'same-origin'});
+            if(!r.ok) throw new Error('No se pudo actualizar la simulación.');
+            sesion=await r.json();posicion=sesion.posicion;estado.textContent=sesion.estado;mostrar();
+        } catch(e) {estado.textContent='No se pudo actualizar la simulación. Se volverá a intentar.';}
+        finally {ocupado=false;}
+    }
     async function accion(tipo) {
         if(ocupado) return;
         ocupado=true;parar();
         try {
             const r=await fetch(config.accion,{method:'POST',headers:{Accept:'application/json','Content-Type':'application/json','X-CSRF-TOKEN':document.querySelector('input[name="_token"]').value},body:JSON.stringify({accion:tipo,revision:sesion.revision,posicion}),credentials:'same-origin'});
             const cuerpo=await r.json();
+            if(r.status===409) {ocupado=false;await sincronizar();return;}
             if(!r.ok) throw new Error(cuerpo.error?.mensaje??'No se pudo guardar el cambio. Vuelve a abrir la simulación.');
             sesion=cuerpo;posicion=sesion.posicion;estado.textContent=sesion.estado;mostrar();
-            if(tipo==='iniciar') reloj=setInterval(()=>{if(posicion<sesion.resultado.instantes.length-1){posicion++;mostrar();}else{parar();accion('finalizar');}},700);
         } catch(e){estado.textContent=e instanceof TypeError||e instanceof SyntaxError?'No se pudo conectar. Vuelve a abrir la simulación.':e.message;}
         finally{ocupado=false;}
     }
     for(const boton of document.querySelectorAll('[data-accion]')) boton.addEventListener('click',()=>accion(boton.dataset.accion));
     barra.addEventListener('input',()=>{parar();posicion=Number(barra.value);mostrar();});
-    barra.addEventListener('change',()=>{if(sesion.estado==='activa') accion('pausar');});
-    window.addEventListener('pagehide',parar);
+    barra.addEventListener('change',()=>accion(sesion.estado==='activa'?'pausar':'posicionar'));
+    let consulta=setInterval(sincronizar,1400);
+    window.addEventListener('pagehide',()=>{parar();clearInterval(consulta);});
+    window.addEventListener('pageshow',e=>{if(e.persisted){consulta=setInterval(sincronizar,1400);sincronizar();}});
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)sincronizar();});
     document.addEventListener('unidades-cambiadas',mostrar);
-    if(sesion.estado==='activa') estado.textContent='Lista para continuar';
     mostrar();
 }

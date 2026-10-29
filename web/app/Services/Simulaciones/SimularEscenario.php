@@ -124,7 +124,7 @@ final class SimularEscenario
 
     public function accion(string $id, int $usuario, array $datos): Simulacion
     {
-        $datos = Validator::make($datos, ['accion' => ['required', Rule::in(['iniciar', 'pausar', 'detener', 'reiniciar', 'finalizar'])],
+        $datos = Validator::make($datos, ['accion' => ['required', Rule::in(['iniciar', 'pausar', 'detener', 'reiniciar', 'finalizar', 'posicionar'])],
             'revision' => ['required', 'integer', 'min:0'], 'posicion' => ['required', 'integer', 'min:0']])->validate();
 
         return DB::transaction(function () use ($id, $usuario, $datos) {
@@ -142,12 +142,42 @@ final class SimularEscenario
             if ($datos['accion'] === 'finalizar' && (int) $datos['posicion'] !== $ultima) {
                 throw new ErrorConsulta('ESTADO_INVALIDO', 'La reproducción todavía no llegó al final.', 409);
             }
+            if ($datos['accion'] === 'iniciar' && in_array($sesion->estado, ['activa', 'finalizada'])) {
+                throw new ErrorConsulta('ESTADO_INVALIDO', 'Pausa o reinicia la simulación antes de reproducirla.', 409);
+            }
+            if ($datos['accion'] === 'posicionar' && $sesion->estado === 'activa') {
+                throw new ErrorConsulta('ESTADO_INVALIDO', 'Pausa la simulación antes de elegir un instante.', 409);
+            }
             $sesion->estado = match ($datos['accion']) {
-                'iniciar' => 'activa','pausar' => 'pausada','detener' => 'detenida','reiniciar' => 'lista','finalizar' => 'finalizada'
+                'iniciar' => 'activa','pausar' => 'pausada','detener' => 'detenida','reiniciar' => 'lista','finalizar' => 'finalizada', default => 'pausada'
             };
             $sesion->posicion = $datos['accion'] === 'reiniciar' ? 0 : $datos['posicion'];
+            $sesion->posicion_base = $sesion->posicion;
+            $sesion->reloj_ms = $sesion->estado === 'activa' ? (int) now()->getPreciseTimestamp(3) : null;
             $sesion->revision++;
             $sesion->save();
+
+            return $sesion;
+        });
+    }
+
+    public function estado(string $id, int $usuario): Simulacion
+    {
+        return DB::transaction(function () use ($id, $usuario) {
+            $sesion = Simulacion::whereKey($id)->where('usuario_id', $usuario)->lockForUpdate()->firstOrFail();
+            if ($sesion->estado === 'activa' && $sesion->reloj_ms !== null) {
+                $ultima = count($sesion->resultado['instantes']) - 1;
+                $transcurrido = max(0, (int) now()->getPreciseTimestamp(3) - $sesion->reloj_ms);
+                $sesion->posicion = min($ultima, $sesion->posicion_base + intdiv($transcurrido, max(100, (int) config('simulaciones.reproduccion_ms'))));
+                if ($sesion->posicion === $ultima) {
+                    $sesion->estado = 'finalizada';
+                    $sesion->reloj_ms = null;
+                    $sesion->revision++;
+                }
+                if ($sesion->isDirty()) {
+                    $sesion->save();
+                }
+            }
 
             return $sesion;
         });

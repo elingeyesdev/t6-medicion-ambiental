@@ -9,7 +9,7 @@ Candidato de #64, sobre Simulaciones #52. Usa Laravel/Blade, la misma base de le
 - PDF de varias páginas y Excel con hojas Lecturas/Resumen. Se preservan ceros, unidades, fechas de Bolivia y procedencia. El gráfico web permite elegir cada serie por zona, variable, origen y fuente.
 - Los datos y la plantilla se copian al generar el reporte: editar una lectura o plantilla después no cambia un reporte ya guardado.
 
-Los tipos Logística y Salud son categorías organizativas, como en el origen: allí se guardan con configuración vacía y no hay reglas estándar implementadas. No se inventan criterios sanitarios o logísticos. Las condiciones ahora se aplican: todas deben coincidir en el mismo punto, instante, origen y fuente. Una variable ausente no se trata como cero. Las variables disponibles son las cinco recuperadas del almacenamiento; las meteorológicas adicionales se incorporan al recuperar esas capas en #62.
+Los tipos Logística y Salud son categorías organizativas, como en el origen: allí se guardan con configuración vacía y no hay reglas estándar implementadas. No se inventan criterios sanitarios o logísticos. Las condiciones ahora se aplican: todas deben coincidir en el mismo punto, instante, origen y fuente. Una variable ausente no se trata como cero. El lote M3 añade un catálogo propio de variables meteorológicas para reportes y condiciones, sin editar Datos/Capas ni el catálogo común.
 
 ## API para Flutter
 
@@ -32,4 +32,4 @@ Dompdf 3.1.6 genera el PDF sin PHP, JavaScript ni recursos remotos. SimpleXLSXGe
 
 Pruebas: `../herramientas/php.ps1 artisan test --compact --filter=ReportesTest`, desde `web`. La evidencia se genera en la base aislada de pruebas con `GEOSUR_EVIDENCIA_REPORTES=1`; no usa cuentas ni mediciones del usuario. Ver [evidencias/reportes64](evidencias/reportes64/README.md).
 
-Pendiente: integración de las variables del pronóstico atmosférico, capas meteorológicas adicionales y pantallas/descargas equivalentes en Flutter #48. El chatbot fue retirado por decisión del usuario en #67 y no se activa análisis mediante un proveedor de IA. Esta recuperación no declara terminada toda la migración ni la tarea móvil. No se promovió a main.
+El lote local `feature/52-simulacion-continua` añade `base=atmosfera`, `base=continua`, faltantes separados de cero, líneas/barras web y gráficos PDF. Ver [contratos, snippets, configuración, pruebas y límites M3](INTEGRACION_M3_SIMULACIONES_REPORTES.md). Open-Meteo/CAMS se probaron con transporte controlado, sin conexión externa real, y quedan apagados por defecto. Pendientes fuera del lote: integración compartida y capas meteorológicas adicionales, pantallas/descargas equivalentes Flutter #48. El chatbot fue retirado por decisión del usuario en #67 y no se activa ningún proveedor de IA. No se promovió a main.
