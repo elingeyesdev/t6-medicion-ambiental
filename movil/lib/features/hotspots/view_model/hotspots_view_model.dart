@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import '../../../core/network/geocruz_api_client.dart';
+import '../../../core/formatters/consultation_period.dart';
 import '../model/hotspot_models.dart';
 import '../model/hotspot_repository.dart';
 
@@ -121,15 +122,7 @@ class HotspotsViewModel extends ChangeNotifier {
   }
 
   HotspotFilters _validateAndNormalize(HotspotFilters value) {
-    final duration = value.untilUtc.toUtc().difference(value.fromUtc.toUtc());
-    if (duration <= Duration.zero) {
-      throw const FormatException('“Hasta” debe ser posterior a “Desde”.');
-    }
-    if (duration > const Duration(hours: 168)) {
-      throw const FormatException(
-        'El período supera el máximo de 7 días. Acorta el rango seleccionado.',
-      );
-    }
+    ConsultationPeriod.validate(value.fromUtc, value.untilUtc);
     var province = value.provinceId;
     final municipality = value.municipalityId;
     if (province != null && territoryById(province)?.type != 'provincia') {
@@ -237,19 +230,8 @@ class HotspotsViewModel extends ChangeNotifier {
   }
 
   static HotspotFilters defaultFilters({DateTime? now}) {
-    final boliviaNow = (now ?? DateTime.now()).toUtc().subtract(
-      const Duration(hours: 4),
-    );
-    final midnightBoliviaAsUtc = DateTime.utc(
-      boliviaNow.year,
-      boliviaNow.month,
-      boliviaNow.day,
-      4,
-    );
-    return HotspotFilters(
-      fromUtc: midnightBoliviaAsUtc.subtract(const Duration(days: 1)),
-      untilUtc: midnightBoliviaAsUtc,
-    );
+    final period = ConsultationPeriod.lastSevenDays(now: now);
+    return HotspotFilters(fromUtc: period.from, untilUtc: period.until);
   }
 }
 
