@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocruz_movil/core/network/geocruz_api_client.dart';
 import 'package:geocruz_movil/features/monitoring/view/monitoring_screen.dart';
@@ -13,6 +14,13 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
+    // The large region asset decodes in an isolate outside the widget fake clock.
+    await tester.runAsync(() async {
+      await Future.wait([
+        rootBundle.loadString('assets/geografia/paises-envirosense.json'),
+        rootBundle.loadString('assets/geografia/regiones/indice.json'),
+      ]);
+    });
     final queries = <Uri>[];
     final api = GeoCruzApiClient(baseUrl: Uri.parse('http://localhost/api/v1/'), client: MockClient((request) async {
       queries.add(request.url);
