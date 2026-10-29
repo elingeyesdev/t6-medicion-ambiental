@@ -91,7 +91,7 @@ void main() {
   });
 
   group('MOV-02 contrato de focos', () {
-    test('carga catálogo, consulta y límite territorial de la API', () async {
+    test('carga catálogo y consulta de focos sin pedir el límite', () async {
       final requests = <http.Request>[];
       final api = GeoCruzApiClient(
         baseUrl: Uri.parse('http://localhost/api/v1/'),
@@ -126,9 +126,12 @@ void main() {
         'firms-prueba-001',
       );
       expect(controller.response?.records.single.coordinates?.latitude, -16.5);
-      expect(controller.boundary?.identifier, 'BO070101');
-      expect(controller.boundary?.polygons, hasLength(1));
-      expect(controller.mapError, isNull);
+      expect(controller.queryError, isNull);
+      expect(controller.queryExpired, isFalse);
+      expect(
+        requests.any((request) => request.url.path.endsWith('/limite')),
+        isFalse,
+      );
       final query = requests
           .singleWhere((request) => request.url.path.endsWith('/focos-calor'))
           .url
