@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\CuentaActiva;
 use App\Services\Api\ErrorConsulta;
+use App\Services\Mapas\Capas\ErroresConsultaMapa;
 use App\Services\Territorios\FiltroTerritorialInvalido;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
@@ -27,7 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias(['cuenta.activa' => CuentaActiva::class, 'abilities' => CheckAbilities::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->render(new \App\Services\Mapas\Capas\ErroresConsultaMapa);
+        $exceptions->render(new ErroresConsultaMapa);
         $exceptions->dontReport([ErrorConsulta::class]);
         $exceptions->render(function (Throwable $e, Request $request) {
             if (! $request->is('api/v1/*', 'mapa/puntos', 'mapa/tiempo', 'mapa/buscar')) {
