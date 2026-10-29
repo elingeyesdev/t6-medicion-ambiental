@@ -23,12 +23,24 @@ final class PanoramaAmbiental
             'metrica' => ['sometimes', Rule::in(array_keys($this->catalogo->metricas()))],
             'origen' => ['sometimes', Rule::in([...array_keys(CatalogoAmbiental::ORIGENES), 'todos'])],
             'desde' => ['sometimes', 'string'], 'hasta' => ['sometimes', 'string'],
+            'momento' => ['sometimes', 'string'],
             'pagina' => ['sometimes', 'integer', 'min:1', 'max:100000'],
         ])->validate();
         $hasta = isset($datos['hasta']) ? ParametrosConsulta::instante($datos['hasta']) : now('UTC')->toDateTimeImmutable();
         $desde = isset($datos['desde']) ? ParametrosConsulta::instante($datos['desde']) : $hasta->modify('-7 days');
         if ($desde >= $hasta || $hasta->getTimestamp() > now()->timestamp || $hasta->getTimestamp() - $desde->getTimestamp() > 7 * 86400) {
             throw new ErrorConsulta('FILTROS_INVALIDOS', 'Elige hasta siete días, sin fechas futuras.');
+        }
+        $momento = null;
+        if (isset($datos['momento'])) {
+            try {
+                $momento = ParametrosConsulta::instante($datos['momento']);
+            } catch (ErrorConsulta $e) {
+                throw new ErrorConsulta('FILTROS_INVALIDOS', 'Revisa la fecha y hora del momento elegido.');
+            }
+        }
+        if ($momento && ($momento < $desde || $momento >= $hasta || $momento->getTimestamp() > now()->timestamp)) {
+            throw new ErrorConsulta('FILTROS_INVALIDOS', 'Elige un momento dentro del período consultado.');
         }
         $metrica = $datos['metrica'] ?? 'temperatura';
         $limite = isset($datos['region']) ? $this->regiones->limite($datos['region']) : null;
@@ -51,6 +63,9 @@ final class PanoramaAmbiental
             ->where('metrica', $metrica)
             ->where('instante', '>=', $desde->format('Y-m-d H:i:s'))
             ->where('instante', '<', $hasta->format('Y-m-d H:i:s'));
+        if ($momento) {
+            $lecturas->where('instante', '<=', $momento->format('Y-m-d H:i:s'));
+        }
         if (! isset($datos['origen'])) {
             $lecturas->whereIn('origen', ['observado', 'estimado']);
         } elseif ($datos['origen'] !== 'todos') {
@@ -59,13 +74,14 @@ final class PanoramaAmbiental
 
         // La última lectura se elige dentro del período y de cada fuente/origen.
         // No se reemplaza una observación por una simulación ni se promedian ambas.
-        $lecturas->whereNotExists(function ($posteriores) use ($hasta): void {
+        $lecturas->whereNotExists(function ($posteriores) use ($hasta, $momento): void {
             $posteriores->selectRaw('1')->from('lecturas_ambientales as posterior')
                 ->whereColumn('posterior.punto_id', 'lecturas_ambientales.punto_id')
                 ->whereColumn('posterior.metrica', 'lecturas_ambientales.metrica')
                 ->whereColumn('posterior.origen', 'lecturas_ambientales.origen')
                 ->whereColumn('posterior.fuente', 'lecturas_ambientales.fuente')
                 ->where('posterior.instante', '<', $hasta->format('Y-m-d H:i:s'))
+                ->when($momento, fn ($q) => $q->where('posterior.instante', '<=', $momento->format('Y-m-d H:i:s')))
                 ->where(function ($masReciente): void {
                     $masReciente->whereColumn('posterior.instante', '>', 'lecturas_ambientales.instante')
                         ->orWhere(function ($mismoInstante): void {
@@ -83,6 +99,7 @@ final class PanoramaAmbiental
         return [
             'metrica' => $metrica, 'unidad' => $this->catalogo->metricas()[$metrica]['unidad'],
             'desde' => ParametrosConsulta::utc($desde), 'hasta' => ParametrosConsulta::utc($hasta),
+            'momento' => $momento ? ParametrosConsulta::utc($momento) : null,
             'origen' => $datos['origen'] ?? 'sin-simulaciones',
             'limite' => $limite,
             'datos' => $pagina->getCollection()->map(function (PuntoAmbiental $punto) use ($porPunto): array {

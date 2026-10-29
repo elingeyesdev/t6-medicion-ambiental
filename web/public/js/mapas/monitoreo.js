@@ -2,6 +2,7 @@ import { iniciarMapaBase } from './base.js';
 import { consultaMonitoreo } from './consulta-monitoreo.js';
 import { crearConsultaTiempo } from './tiempo.js';
 import { iniciarBuscadorLugar } from './buscador.js';
+import { compararLecturas, iniciarRecorrido } from './historial-mapa.js';
 
 const configuracion = JSON.parse(document.getElementById('configuracion-monitoreo').textContent);
 const formulario = document.getElementById('consulta-monitoreo');
@@ -14,6 +15,7 @@ const L = window.L;
 const mapa = L.map('mapa-monitoreo', { scrollWheelZoom: true, zoomAnimation: false, fadeAnimation: false }).setView([-20, -60], 3);
 const marcadores = L.layerGroup().addTo(mapa);
 const limites = L.geoJSON(null, {style:{color:'#f59e0b',weight:3,fillColor:'#fef3c7',fillOpacity:0.08},interactive:false}).addTo(mapa);
+const marcasComparacion = L.layerGroup().addTo(mapa);
 mapa.on('moveend', () => {
     document.getElementById('mon-fuente-limite').hidden = !limites.getLayers().length || !mapa.getBounds().intersects(limites.getBounds());
 });
@@ -41,6 +43,7 @@ let secuencia = 0;
 let consultaBase = '';
 let modoTiempo = false;
 let cancelarTiempo = null;
+let referenciaComparacion = null;
 const botonTiempo = document.getElementById('mon-tiempo');
 
 if (matchMedia('(max-width: 767.98px)').matches) {
@@ -56,13 +59,15 @@ function cargarRegiones(elegida = '') {
     control.value = elegida;
     if (control.selectedIndex < 0) control.value = '';
 }
-for (const campo of ['pais', 'metrica', 'origen', 'desde', 'hasta']) {
+for (const campo of ['pais', 'metrica', 'origen', 'desde', 'hasta', 'momento']) {
     const control = formulario.elements.namedItem(campo);
     const valor = inicial.get(campo);
     if (valor && (control.tagName !== 'SELECT' || [...control.options].some(opcion => opcion.value === valor))) {
         control.value = valor;
     }
 }
+formulario.elements.por_momento.checked = inicial.get('por_momento') === 'on' || inicial.has('momento');
+iniciarRecorrido(formulario, () => consultar());
 cargarRegiones(inicial.get('region') ?? '');
 formulario.elements.namedItem('pais').addEventListener('change', () => cargarRegiones());
 puntoSeleccionado = inicial.get('punto');
@@ -95,6 +100,7 @@ function centrar(latitud, longitud, zoom = 8) {
 }
 
 function cerrarDetalle() {
+    marcasComparacion.clearLayers();
     cancelarTiempo?.(); cancelarTiempo = null;
     detalle.hidden = true;
     puntoSeleccionado = null;
@@ -117,12 +123,13 @@ function seleccionar(punto) {
     informacion.replaceChildren();
     informacion.append(nodo('p', paises.get(punto.pais) ?? punto.pais));
     informacion.append(nodo('p', punto.tipo === 'referencia' ? 'Punto de referencia' : 'Punto de monitoreo'));
-    if (!punto.lecturas.length) {
+    const enComparacion = referenciaComparacion?.metrica === respuestaActual.metrica && referenciaComparacion?.unidad === respuestaActual.unidad;
+    if (!punto.lecturas.length && !enComparacion) {
         informacion.append(nodo('p', 'Sin registros para esta variable, origen y período.'));
-    } else {
-        informacion.append(nodo('p', 'Última lectura del período, por origen y fuente.'));
+    } else if (!enComparacion) {
+        informacion.append(nodo('p', respuestaActual.momento ? 'Lecturas disponibles hasta el momento elegido.' : 'Última lectura del período, por origen y fuente.'));
     }
-    for (const lectura of punto.lecturas) {
+    for (const lectura of enComparacion ? [] : punto.lecturas) {
         const ficha = nodo('section', undefined, 'mon-lectura ' + lectura.origen);
         ficha.append(nodo('span', origenes[lectura.origen]));
         ficha.append(nodo('strong', lectura.valor.toLocaleString('es-BO', { maximumFractionDigits: 2 }) + ' ' + respuestaActual.unidad));
@@ -143,6 +150,18 @@ function seleccionar(punto) {
     if (respuestaActual.metrica === 'ica') {
         informacion.append(nodo('p', 'Este índice no sustituye un análisis de laboratorio del agua.'));
     }
+    const actual = {codigo: punto.codigo, nombre: punto.nombre, metrica: respuestaActual.metrica, unidad: respuestaActual.unidad,
+        momento: respuestaActual.momento, lecturas: punto.lecturas.map(l => ({...l}))};
+    const fijar = nodo('button', referenciaComparacion ? 'Cambiar referencia' : 'Fijar para comparar', 'btn btn-outline-primary');
+    fijar.type = 'button';
+    fijar.addEventListener('click', () => {
+        referenciaComparacion = actual;
+        document.getElementById('comparacion-fijada').hidden = false;
+        document.getElementById('comparacion-nombre').textContent = actual.nombre + ' · ' + configuracion.metricas[actual.metrica].nombre;
+        seleccionar(punto);
+    });
+    informacion.append(fijar);
+    if (referenciaComparacion) informacion.append(fichaComparacion(actual));
     const historial = new URL(configuracion.historial, location.origin);
     historial.searchParams.set('punto', punto.codigo);
     historial.searchParams.set('metrica', respuestaActual.metrica);
@@ -159,6 +178,56 @@ function seleccionar(punto) {
     centrar(punto.latitud, punto.longitud);
     if (matchMedia('(max-width: 767.98px)').matches) detalle.scrollIntoView({ block: 'nearest' });
 }
+
+function fichaComparacion(actual) {
+    const seccion = nodo('section', undefined, 'mon-comparacion');
+    seccion.append(nodo('h3', 'Comparación'), nodo('p', referenciaComparacion.nombre + ' → ' + actual.nombre));
+    const filas = compararLecturas(referenciaComparacion, actual);
+    if (filas === null) {
+        seccion.append(nodo('p', 'Para comparar, elige ' + configuracion.metricas[referenciaComparacion.metrica].nombre + '.'));
+        return seccion;
+    }
+    if (!filas.length) seccion.append(nodo('p', 'No hay lecturas para comparar.'));
+    for (const fila of filas) {
+        const tarjeta = nodo('div', undefined, 'comparacion-serie');
+        tarjeta.append(nodo('h4', origenes[fila.origen] + ' · ' + nombreFuente(fila.fuente)));
+        const valores = nodo('div', undefined, 'comparacion-valores');
+        for (const [letra, lectura] of [['A', fila.a], ['B', fila.b]]) {
+            const valor = nodo('div', undefined, 'comparacion-valor comparacion-' + letra.toLowerCase());
+            valor.append(nodo('span', letra === 'A' ? 'Referencia' : 'Selección'));
+            valor.append(nodo('strong', lectura ? lectura.valor.toLocaleString('es-BO', {maximumFractionDigits: 2}) + ' ' + actual.unidad : 'Sin lectura'));
+            if (lectura) valor.append(nodo('p', formatoFecha.format(new Date(lectura.instante)) + ' · Bolivia'));
+            valores.append(valor);
+        }
+        tarjeta.append(valores);
+        if (fila.cambio !== null) {
+            tarjeta.append(nodo('p', 'Diferencia: ' + (fila.cambio > 0 ? '+' : '') + fila.cambio.toLocaleString('es-BO', {maximumFractionDigits: 2}) + ' ' + actual.unidad));
+            const ubicaciones = nodo('button', 'Ver ambas ubicaciones', 'btn btn-outline-primary');
+            ubicaciones.type = 'button';
+            ubicaciones.addEventListener('click', () => {
+                marcasComparacion.clearLayers();
+                const iguales = fila.a.latitud === fila.b.latitud && fila.a.longitud === fila.b.longitud;
+                for (const [letra, lectura] of iguales ? [['A/B', fila.a]] : [['A', fila.a], ['B', fila.b]]) {
+                    const icono = L.divIcon({className: 'comparacion-marca', html: '<span>' + letra + '</span>', iconSize: [36, 32], iconAnchor: [18, 16]});
+                    L.marker([lectura.latitud, lectura.longitud], {icon: icono, title: 'Lectura ' + letra}).addTo(marcasComparacion);
+                }
+                const lateral = matchMedia('(min-width: 768px)').matches ? Math.min(detalle.offsetWidth + 32, mapa.getSize().x * 0.55) : 24;
+                mapa.fitBounds([[fila.a.latitud, fila.a.longitud], [fila.b.latitud, fila.b.longitud]], {paddingTopLeft: [24, 80], paddingBottomRight: [lateral, 90], maxZoom: 11, animate: false});
+            });
+            tarjeta.append(ubicaciones);
+        }
+        seccion.append(tarjeta);
+    }
+    return seccion;
+}
+
+document.getElementById('quitar-comparacion').addEventListener('click', () => {
+    referenciaComparacion = null;
+    marcasComparacion.clearLayers();
+    document.getElementById('comparacion-fijada').hidden = true;
+    const punto = respuestaActual?.datos.find(p => p.codigo === puntoSeleccionado);
+    if (punto) seleccionar(punto);
+});
 
 function abrirTiempo(latitud, longitud, nombre = 'Tiempo del lugar') {
     cerrarDetalle(); modoTiempo = false;
@@ -227,7 +296,7 @@ function dibujar() {
         marcador.on('click', () => seleccionar(punto));
         marcador.addTo(marcadores);
         marcador.getElement()?.addEventListener('keydown', evento => {
-            if (evento.key === ' ') { evento.preventDefault(); seleccionar(punto); }
+            if (evento.key === ' ' || evento.key === 'Enter') { evento.preventDefault(); seleccionar(punto); }
         });
         porCodigo.set(punto.codigo, marcador);
     }
@@ -292,8 +361,9 @@ async function consultar(pagina = 1) {
         dibujar();
         const conDatos = cuerpo.datos.filter(punto => punto.lecturas.length).length;
         const simulados = ['simulado', 'todos'].includes(cuerpo.origen) ? ' Incluye datos simulados cuando los hay.' : '';
+        const momento = cuerpo.momento ? ' Hasta ' + formatoFecha.format(new Date(cuerpo.momento)) + ' · Bolivia.' : '';
         avisar(cuerpo.total
-            ? `${cuerpo.datos.length} de ${cuerpo.total} puntos · ${conDatos} con datos del período.${simulados}`
+            ? `${cuerpo.datos.length} de ${cuerpo.total} puntos · ${conDatos} con datos del período.${simulados}${momento}`
             : 'No hay puntos activos en esta selección.');
         document.getElementById('paginacion-monitoreo').hidden = cuerpo.ultimaPagina <= 1;
         document.getElementById('mon-anterior').disabled = cuerpo.pagina <= 1;

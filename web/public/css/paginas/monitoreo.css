@@ -19,6 +19,23 @@
 .lugar-resultado:hover, .lugar-resultado:focus-visible { border-color: #15803d; background: var(--enviro-suave); outline: 2px solid #15803d; outline-offset: 1px; }
 .lugar-resultado strong { font-size: 18px; }
 .buscador-fuente { display: inline-block; margin-top: 10px; font-size: 16px; color: var(--enviro-secundario); }
+.recorrido-mapa { display: grid; gap: 12px; padding: 14px; min-width: 0; background: var(--enviro-suave); border-left: 4px solid #15803d; }
+.recorrido-mapa[hidden] { display: none; }
+.recorrido-mapa .form-control { min-width: 0; }
+.recorrido-mapa .buscador-acciones { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.recorrido-mapa .btn { white-space: normal; padding-inline: 8px; }
+#consulta-monitoreo > * { min-width: 0; }
+.comparacion-fijada { padding: 18px 22px; background: var(--enviro-suave); border-block: 1px solid var(--enviro-borde); }
+.comparacion-fijada p { margin: 12px 0; }
+.mon-comparacion { margin-block: 20px; border-block: 1px solid var(--enviro-borde); padding-block: 18px; }
+.mon-comparacion h3 { font-size: 23px; }
+.comparacion-serie { margin-block: 16px; }
+.comparacion-serie h4 { font-size: 18px; }
+.comparacion-valores { display: grid; gap: 12px; }
+.comparacion-valor { padding: 12px; border-left: 4px solid #147eb4; background: var(--enviro-suave); }
+.comparacion-b { border-left-color: #cc6e18; }
+.comparacion-valor strong { display: block; font-size: 23px; margin-block: 8px; }
+.comparacion-marca span { display: grid; place-items: center; width: 36px; height: 32px; border: 2px solid #fff; border-radius: 4px; background: #175d3e; color: #fff; font-size: 16px; font-weight: 700; box-shadow: 0 1px 5px #1236; }
 .elegir-tiempo { cursor: crosshair; }
 .mon-tiempo { margin-top: 20px; border-top: 1px solid var(--enviro-borde); padding-top: 18px; }
 .mon-tiempo h3 { font-size: 21px; margin-top: 20px; }
