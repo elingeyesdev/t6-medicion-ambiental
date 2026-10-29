@@ -1,0 +1,7 @@
+{
+  "formato":"geosur.mqtt.v1",
+  "mensajes":[
+    {"tema":"geosur/ejemplo/temperatura","contenido":{"valor":25.5,"instante":"2026-10-27T12:00:00Z"}},
+    {"tema":"geosur/ejemplo/humedad","contenido":{"valor":65,"instante":"2026-10-27T12:00:00Z"}}
+  ]
+}
