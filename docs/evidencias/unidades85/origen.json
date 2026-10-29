@@ -1,0 +1,30 @@
+{
+  "fechaLocal": "2026-10-28",
+  "issue": 85,
+  "fuentesOriginales": [
+    {
+      "archivo": "referencias/envirosense/codigo/Frontend/src/utils/unidades.js",
+      "sha256": "213c1b823cf5166ec396c58a508444d19ca9b59fa386b94494788a16feebbed7"
+    },
+    {
+      "archivo": "referencias/envirosense/codigo/Frontend/src/hooks/useUnidades.js",
+      "sha256": "7696c841a22faa4b862426e323cb2696dd459af22c31fab365659a5c60be9a42"
+    },
+    {
+      "archivo": "referencias/envirosense/codigo/Frontend/src/components/MapaMonitoreo/ControlPanel.jsx",
+      "sha256": "1c37345e6ddb2688b56cda16713fecdaa2d07a6cb577ef0160cd84c8d401b70b"
+    }
+  ],
+  "catalogoCompartido": "compartido/unidades/presentacion.json",
+  "cambiosDeliberados": [
+    "Preferencia por cuenta en lugar de localStorage compartido entre sesiones.",
+    "Milla internacional exacta de 1.609344 km.",
+    "No se convierte AQI general en una concentración supuesta de PM2.5.",
+    "Las diferencias de temperatura omiten el desplazamiento."
+  ],
+  "referencias": [
+    "https://www.nist.gov/pml/owm/si-units-temperature",
+    "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8",
+    "https://www.epa.gov/outdoor-air-quality-data/about-airdata-reports"
+  ]
+}

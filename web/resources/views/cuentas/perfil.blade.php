@@ -10,6 +10,10 @@
     <h1>Mi cuenta</h1>
     @include('cuentas.estado')
     <div class="cuentas-columnas">
+        <section class="card cuenta-tarjeta" id="unidades">
+            <div class="card-header"><h2 class="card-title">Unidades de medida</h2></div>
+            <div class="card-body">@include('cuentas.unidades')</div>
+        </section>
         <section class="card cuenta-tarjeta">
             <div class="card-header"><h2 class="card-title">Tus datos</h2><span class="cuenta-rol">{{ $usuario->rol->nombre() }}</span></div>
             <div class="card-body">
@@ -40,6 +44,7 @@
 </div>
 @endsection
 @push('scripts')
+@include('cuentas.configuracion-unidades')
 <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
 <script type="module" src="{{ asset('js/cuentas/ubicacion.js') }}"></script>
 @endpush

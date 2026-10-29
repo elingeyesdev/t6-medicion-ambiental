@@ -27,6 +27,7 @@
 <script src="{{ asset('vendor/tabler/tabler.min.js') }}" defer></script>
 <script src="{{ asset('js/panel/navegacion.js') }}" defer></script>
 <script type="application/json" id="configuracion-mapa">@json(\App\Support\ConfiguracionMapa::paraWeb())</script>
+<script type="module" src="{{ asset('js/datos/unidades.js') }}"></script>
 @stack('scripts')
 </body>
 </html>

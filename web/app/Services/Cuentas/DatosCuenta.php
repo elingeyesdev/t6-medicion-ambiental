@@ -4,6 +4,7 @@ namespace App\Services\Cuentas;
 
 use App\Models\PreferenciasCuenta;
 use App\Models\User;
+use App\Services\Datos\UnidadesPresentacion;
 
 final class DatosCuenta
 {
@@ -16,6 +17,7 @@ final class DatosCuenta
 
     public static function preferencias(User $usuario): array
     {
-        return $usuario->preferencias?->only(array_keys(PreferenciasCuenta::vacias())) ?? PreferenciasCuenta::vacias();
+        return ($usuario->preferencias?->only(array_keys(PreferenciasCuenta::vacias())) ?? PreferenciasCuenta::vacias()) +
+            ['unidades' => app(UnidadesPresentacion::class)->preferencias($usuario)];
     }
 }

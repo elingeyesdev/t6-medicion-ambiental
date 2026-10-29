@@ -66,3 +66,5 @@ El servicio de pronóstico del original se adaptó a Laravel/API y a la ficha de
 El buscador de Mapbox también tiene candidato Laravel/API y formulario en el mapa. Permite distinguir lugares con el mismo nombre y navegar fuera de Sudamérica, sin crear estaciones ni guardar respuestas temporales. Se comprobó Tokio y selección con teclado en Quito. Ver [BUSCADOR_ENVIROSENSE.md](BUSCADOR_ENVIROSENSE.md).
 
 El recorrido de lecturas por momento y la comparación de puntos/fechas tienen candidato en `HISTORIAL_MAPA_ENVIROSENSE.md`. Usan registros guardados y mantienen separadas fuentes y procedencias. La reproducción y comparación de las capas raster del referente siguen pendientes.
+
+También se recupera el selector de unidades de temperatura y viento del original (#85), con preferencia por cuenta, mapa, diferencias, pronóstico, Mediciones y resultados de Simulaciones. No cambia lecturas ni archivos guardados. El contrato queda listo para Flutter; ver [UNIDADES_ENVIROSENSE.md](UNIDADES_ENVIROSENSE.md). Ese recorrido móvil sigue pendiente de adaptación y prueba.

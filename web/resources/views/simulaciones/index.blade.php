@@ -22,6 +22,7 @@
 </div>
 @endsection
 @push('scripts')
+@include('cuentas.configuracion-unidades')
 <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
 <script id="catalogo-escenarios" type="application/json">@json($escenarios)</script>
 <script id="reproduccion-simulacion" type="application/json">@json($reproduccion)</script>

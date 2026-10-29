@@ -16,6 +16,7 @@ use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\SaludController;
 use App\Http\Controllers\SimulacionesController;
+use App\Http\Controllers\UnidadesController;
 use App\Services\Api\ErrorConsulta;
 use Illuminate\Support\Facades\Route;
 
@@ -71,6 +72,8 @@ Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
             Route::patch('/sensores/{punto:codigo}/estado', [SensoresController::class, 'estado']);
         });
         Route::get('/cuenta', [CuentaController::class, 'mostrar']);
+        Route::get('/cuenta/unidades', [UnidadesController::class, 'mostrar']);
+        Route::put('/cuenta/unidades', [UnidadesController::class, 'guardar']);
         Route::put('/cuenta/nombre', [CuentaController::class, 'nombre']);
         Route::put('/cuenta/preferencias', [CuentaController::class, 'preferencias']);
         Route::post('/cuenta/salir', [CuentaController::class, 'salir']);
