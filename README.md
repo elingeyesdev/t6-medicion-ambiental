@@ -86,4 +86,3 @@ Las ramas preparadas para M2 parten de la misma base inicial. Cada implementaci�
 [Índice de demostración y evidencias M2](docs/entrega-m2/README.md): versiones, PR, arranque, recorrido web y pendientes de móvil/revisión. Preparación parcial de #22; no acredita entrega final ni aceptación del milestone.
 
 Los cinco módulos previstos son focos de calor, sequías, inundaciones, deforestación y calidad del aire. M2 desarrolla el primero y sus bases comunes. Las claves privadas de fuentes externas se configuran únicamente en el backend y nunca se incorporan a Git. Las demostraciones se identifican y no sustituyen consultas reales.
-
