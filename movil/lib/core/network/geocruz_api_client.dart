@@ -8,13 +8,14 @@ class GeoCruzApiClient {
   GeoCruzApiClient({
     required Uri baseUrl,
     http.Client? client,
-    this.timeout = const Duration(seconds: 20),
+    this.timeout = const Duration(seconds: 75),
   }) : _baseUrl = baseUrl,
        _client = client ?? http.Client();
 
-  final Uri _baseUrl;
+  Uri _baseUrl;
   final http.Client _client;
   final Duration timeout;
+  Future<void> _queue = Future<void>.value();
 
   String? bearerToken;
 
@@ -85,7 +86,6 @@ class GeoCruzApiClient {
     final headers = <String, String>{
       'Accept': 'application/json',
       'Accept-Encoding': 'identity',
-      'Connection': 'close',
     };
     if (body != null) headers['Content-Type'] = 'application/json';
     if (authenticated) {
@@ -99,21 +99,54 @@ class GeoCruzApiClient {
       }
       headers['Authorization'] = 'Bearer $token';
     }
-    final request = switch (method) {
-      'GET' => _client.get(uri, headers: headers),
-      'POST' => _client.post(
-        uri,
-        headers: headers,
-        body: jsonEncode(body ?? const <String, Object?>{}),
-      ),
-      'PUT' => _client.put(
-        uri,
-        headers: headers,
-        body: jsonEncode(body ?? const <String, Object?>{}),
-      ),
-      _ => throw ArgumentError.value(method, 'method', 'Método no admitido.'),
-    };
-    final response = await request.timeout(timeoutOverride ?? timeout);
+    final encodedBody = body != null ? jsonEncode(body) : jsonEncode(const <String, Object?>{});
+
+    Future<http.Response> sendTo(Uri base, Duration requestTimeout) {
+      final uri = base
+          .resolve(normalizedEndpoint)
+          .replace(
+            queryParameters: queryParameters.isEmpty ? null : queryParameters,
+          );
+      final request = switch (method) {
+        'GET' => _client.get(uri, headers: headers),
+        'POST' => _client.post(uri, headers: headers, body: encodedBody),
+        'PUT' => _client.put(uri, headers: headers, body: encodedBody),
+        _ => throw ArgumentError.value(method, 'method', 'Método no admitido.'),
+      };
+      return request.timeout(requestTimeout);
+    }
+
+    final isLocalHost =
+        _baseUrl.host == '10.0.2.2' || _baseUrl.host == '127.0.0.1';
+    final targetTimeout = timeoutOverride ?? timeout;
+
+    Future<http.Response> sendQueued() async {
+      final previous = _queue;
+      final gate = Completer<void>();
+      _queue = gate.future;
+      await previous;
+      try {
+        if (!isLocalHost) {
+          return await sendTo(_baseUrl, targetTimeout);
+        }
+        try {
+          return await sendTo(_baseUrl, targetTimeout);
+        } on TimeoutException {
+          rethrow;
+        } catch (_) {
+          final altBase = _baseUrl.replace(
+            host: _baseUrl.host == '10.0.2.2' ? '127.0.0.1' : '10.0.2.2',
+          );
+          final response = await sendTo(altBase, targetTimeout);
+          _baseUrl = altBase;
+          return response;
+        }
+      } finally {
+        gate.complete();
+      }
+    }
+
+    final response = await sendQueued();
 
     Object? payload;
     try {

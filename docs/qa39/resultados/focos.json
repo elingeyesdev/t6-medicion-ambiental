@@ -1,0 +1,11 @@
+{
+  "fechaUtc": "2026-10-29T10:08:00Z",
+  "entorno": "PHP 8.2.12, php -S 0.0.0.0:8002, código de este repositorio",
+  "consulta": "GET /api/v1/focos-calor últimos 7 días, modo externo, página 1, tamaño 25",
+  "http": 200,
+  "segundos": 8.27,
+  "total": 3381,
+  "cobertura": "parcial",
+  "defectoAnterior": "Maximum execution time of 60 seconds exceeded en GeometriaTerritorial::enAnillo. La app mostraba el mensaje de la API: No se pudo completar la consulta. Sequías esperaba en la misma cola de php -S.",
+  "correccion": "El punto se contrasta solo con las aristas cercanas. Misma regla de dentro, fuera y borde. 8000 consultas al departamento tardaron 0.6 s en el banco local."
+}

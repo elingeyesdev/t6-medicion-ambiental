@@ -234,7 +234,10 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
                       isExpanded: true,
                       initialValue: _provinceId ?? '',
                       decoration: const InputDecoration(
-                        labelText: 'Provincia de Santa Cruz',
+                        labelText: 'Provincia',
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                        isDense: true,
                       ),
                       items: [
                         const DropdownMenuItem(
@@ -266,7 +269,12 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
                     DropdownButtonFormField<String>(
                       isExpanded: true,
                       initialValue: _municipalityId ?? '',
-                      decoration: const InputDecoration(labelText: 'Municipio'),
+                      decoration: const InputDecoration(
+                        labelText: 'Municipio',
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                        isDense: true,
+                      ),
                       items: [
                         const DropdownMenuItem(
                           value: '',
@@ -297,7 +305,12 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
                     DropdownButtonFormField<String>(
                       isExpanded: true,
                       initialValue: _confidence ?? '',
-                      decoration: const InputDecoration(labelText: 'Confianza'),
+                      decoration: const InputDecoration(
+                        labelText: 'Confianza',
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                        isDense: true,
+                      ),
                       items: const [
                         DropdownMenuItem(value: '', child: Text('Todas')),
                         DropdownMenuItem(value: 'alta', child: Text('Alta')),

@@ -28,8 +28,8 @@
     {
       "parametro": "coordenadas_solicitadas_vs_celda",
       "definicion_met35": "Coordenada solicitada [-63.1821, -17.7833] asignada a celda ERA5 [-63.25, -17.75]",
-      "valor_web_blade": "solicitada: [-63.1821, -17.7833], celda: [-63.25, -17.75]",
-      "valor_movil_flutter": "solicitada: [-63.1821, -17.7833], celda: [-63.25, -17.75]",
+      "valor_web_blade": "solicitada: [-63.1821, -17.7833], celda: [-63.25, -17.75]; municipio pedido BO070101 y centro de celda BO070103",
+      "valor_movil_flutter": "solicitada: [-63.1821, -17.7833], celda: [-63.25, -17.75]; el detalle marca la discrepancia territorial",
       "equivalencia": "exacta",
       "estado": "verificado"
     },
@@ -84,8 +84,8 @@
     {
       "parametro": "faltantes_y_nulos",
       "definicion_met35": "55 muestras sin preparar reportadas explícitamente; valores ausentes con motivo, nunca reemplazados por 0 ni 'normal'",
-      "valor_web_blade": "55 muestrasSinPreparar, motivo BASE_INCOMPLETA",
-      "valor_movil_flutter": "55 pendientes, null conservado con motivo",
+      "valor_web_blade": "55 muestrasSinPreparar; la muestra preparada tiene motivo null",
+      "valor_movil_flutter": "55 pendientes; un null de SPI no se muestra como normal",
       "equivalencia": "exacta",
       "estado": "verificado"
     },
@@ -150,7 +150,7 @@
   ],
   "contrasteEjemploReferencia": {
     "metodo": "Ajuste Gamma MLE sobre precipitación acumulada de 3 meses (1991-2020)",
-    "scriptReferencia": "herramientas/datos/ensayar_spi3_referencia.py / scipy.stats.gamma",
+    "scriptReferencia": "SciPy 1.18.1, mismo ajuste que herramientas/sequias/generar-oraculo-spi.py, sobre las ventanas de la publicación del 2026-10-29",
     "celdaCoordenadas": [-63.25, -17.75],
     "parametrosReferencia": {
       "forma_alpha": 7.48415188,
@@ -167,13 +167,13 @@
       "precipitacionAcumuladaMm": 114.5,
       "spi": -0.6413769540120462
     },
-    "diferenciaAbsoluta": 0.0,
-    "conclusion": "El cálculo de Laravel implementa exactamente el algoritmo de referencia independiente de MET-01 sin discrepancia matemática."
+    "diferenciaAbsoluta": 2.886579864025407e-15,
+    "conclusion": "SciPy y Laravel coinciden en la publicación vigente. El oráculo congelado −0.641048 corresponde a otra captura y se conserva aparte."
   },
   "focosConservado": {
-    "pruebasPasando": 34,
-    "suite": "movil/test/",
-    "contrato": "focos-1.0",
-    "estado": "verificado sin regresiones"
+    "pruebasPasando": 8,
+    "suite": "movil/test/hotspot_repository_test.dart",
+    "consultaReal": "GET /api/v1/focos-calor 7 días: HTTP 200 en 8.27 s, 3381 detecciones",
+    "estado": "verificado el 2026-10-29 después de corregir el límite de 60 segundos"
   }
 }

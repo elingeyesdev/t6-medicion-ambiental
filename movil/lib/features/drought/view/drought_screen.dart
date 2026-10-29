@@ -7,6 +7,7 @@ import '../../../core/theme/geocruz_theme.dart';
 import '../../hotspots/model/hotspot_models.dart';
 import '../model/drought_models.dart';
 import '../model/drought_repository.dart';
+import 'drought_detail_screen.dart';
 
 class DroughtScreen extends StatefulWidget {
   const DroughtScreen({
@@ -26,9 +27,13 @@ class DroughtScreen extends StatefulWidget {
   State<DroughtScreen> createState() => _DroughtScreenState();
 }
 
-class _DroughtScreenState extends State<DroughtScreen> {
+class _DroughtScreenState extends State<DroughtScreen>
+    with AutomaticKeepAliveClientMixin {
   late final DroughtRepository _repository;
   final MapController _mapController = MapController();
+
+  @override
+  bool get wantKeepAlive => true;
 
   late DroughtFilters _filters;
   List<TerritoryOption> _territories = const [];
@@ -159,95 +164,70 @@ class _DroughtScreenState extends State<DroughtScreen> {
       context: context,
       useSafeArea: true,
       showDragHandle: true,
-      builder: (ctx) {
+      builder: (sheetContext) {
+        final place = _territoryName(sample.territorioContexto);
         final category = sample.spi.categoryInfo;
         final rainfall = sample.precipitacionAcumuladaMm != null
             ? '${sample.precipitacionAcumuladaMm!.toStringAsFixed(1)} mm'
             : 'Sin dato';
-        final spiVal = sample.spi.valor != null
-            ? sample.spi.valor!.toStringAsFixed(2)
+        final spiText = sample.spi.valor != null
+            ? 'SPI ${sample.spi.valor!.toStringAsFixed(2)}'
             : 'Sin índice';
 
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Muestra ${sample.idMuestra}',
-                        style: Theme.of(ctx).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: category.color.withValues(alpha: 0.15),
-                        border: Border.all(color: category.color),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        category.label,
-                        style: TextStyle(
-                          color: category.color,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ],
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                place,
+                style: Theme.of(sheetContext).textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Período trimestral · Bolivia',
+                style: Theme.of(sheetContext).textTheme.bodyMedium,
+              ),
+              Text(
+                '${category.label} · $spiText · Lluvia $rainfall',
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Reanálisis climático · Open-Meteo ERA5',
+                style: Theme.of(sheetContext).textTheme.bodySmall,
+              ),
+              const SizedBox(height: 14),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  onPressed: () {
+                    Navigator.of(sheetContext).pop();
+                    _openSampleDetails(sample);
+                  },
+                  icon: const Icon(Icons.article_outlined),
+                  label: const Text('Ver todos los datos'),
                 ),
-                const SizedBox(height: 12),
-                _detailRow('Territorio contexto',
-                    _territoryName(sample.territorioContexto)),
-                _detailRow('Centro de celda ERA5',
-                    _territoryName(sample.municipioDelCentroCelda)),
-                if (sample.centroDifiere)
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 6),
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.amber.shade50,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.amber.shade300),
-                    ),
-                    child: Text(
-                      'Advertencia: El centro de celda (${sample.municipioDelCentroCelda}) cae fuera de ${sample.territorioContexto}. Se conserva el municipio solicitado.',
-                      style: TextStyle(
-                          fontSize: 14, color: Colors.amber.shade900),
-                    ),
-                  ),
-                _detailRow(
-                  'Coordenada solicitada',
-                  '${sample.coordenadaSolicitada[0].toStringAsFixed(4)}, ${sample.coordenadaSolicitada[1].toStringAsFixed(4)}',
-                ),
-                _detailRow(
-                  'Coordenada celda',
-                  '${sample.coordenadaCelda[0].toStringAsFixed(4)}, ${sample.coordenadaCelda[1].toStringAsFixed(4)}',
-                ),
-                _detailRow('Precipitación 3 meses', rainfall),
-                _detailRow('Índice SPI-3', spiVal),
-                if (!sample.spi.hasValue && sample.spi.motivo != null)
-                  _detailRow('Motivo sin índice',
-                      DroughtMotives.describe(sample.spi.motivo)),
-                _detailRow('Años válidos referencia',
-                    '${sample.spi.aniosValidos} años (1991–2020)'),
-                _detailRow('Fuente de datos',
-                    'Open-Meteo ERA5 (reanálisis 0.25°, CC BY 4.0)'),
-                const SizedBox(height: 16),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
+    );
+  }
+
+  void _openSampleDetails(DroughtSample sample) {
+    final resp = _response;
+    if (resp == null) return;
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => DroughtDetailScreen(
+          sample: sample,
+          response: resp,
+          territoryName: _territoryName,
+        ),
+      ),
     );
   }
 
@@ -347,6 +327,8 @@ class _DroughtScreenState extends State<DroughtScreen> {
                       decoration: const InputDecoration(
                         labelText: 'Provincia',
                         border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                        isDense: true,
                       ),
                       items: [
                         const DropdownMenuItem<String?>(
@@ -375,6 +357,8 @@ class _DroughtScreenState extends State<DroughtScreen> {
                       decoration: const InputDecoration(
                         labelText: 'Municipio',
                         border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                        isDense: true,
                       ),
                       items: [
                         const DropdownMenuItem<String?>(
@@ -426,6 +410,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final response = _response;
     final summary = response?.resumen;
     final coverage = response?.cobertura;
@@ -581,13 +566,11 @@ class _DroughtScreenState extends State<DroughtScreen> {
               ],
             ),
             const SizedBox(height: 12),
-            Wrap(
-              spacing: 24,
-              runSpacing: 16,
+            Row(
               children: [
                 _metricItem(
                   '${summary.totalMuestras}',
-                  'Puntos evaluados',
+                  'Evaluados',
                   Colors.blueGrey.shade800,
                 ),
                 _metricItem(
@@ -602,7 +585,7 @@ class _DroughtScreenState extends State<DroughtScreen> {
                 ),
                 _metricItem(
                   '${summary.muestrasConDeficit}',
-                  'Con déficit (≤-1)',
+                  'Déficit (≤-1)',
                   summary.muestrasConDeficit > 0
                       ? const Color(0xFFBC673B)
                       : Colors.black54,
@@ -610,17 +593,19 @@ class _DroughtScreenState extends State<DroughtScreen> {
               ],
             ),
             if (coverage != null) ...[
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
+              const Divider(height: 1),
+              const SizedBox(height: 8),
               Text(
                 'Datos para ${coverage.municipiosConDatos} de ${coverage.municipiosEnFiltro} municipios consultados.',
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 4),
               Text(
                 coverage.esParcial
                     ? 'Cobertura parcial. Faltan datos; eso no significa que no haya sequía.'
                     : 'Son puntos de referencia; no describen todo el municipio.',
-                style: const TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 11, color: Colors.black54),
               ),
             ],
           ],
@@ -630,22 +615,27 @@ class _DroughtScreenState extends State<DroughtScreen> {
   }
 
   Widget _metricItem(String val, String label, Color color) {
-    return Column(
-      children: [
-        Text(
-          val,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: color,
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            val,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
           ),
-        ),
-        const SizedBox(height: 2),
-        Text(
-          label,
-          style: const TextStyle(fontSize: 14, color: Colors.black54),
-        ),
-      ],
+          const SizedBox(height: 2),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 11, color: Colors.black54),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
     );
   }
 
@@ -874,46 +864,55 @@ class _DroughtScreenState extends State<DroughtScreen> {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: ExpansionTile(
-        title: const Text(
-          'Sobre estos datos y advertencias',
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+      child: Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: BorderSide(color: Colors.grey.shade300),
         ),
-        leading: const Icon(Icons.info_outline, size: 20),
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Fuente: Open-Meteo ERA5 (reanálisis 0.25°, precipitation_sum en mm, licencia CC BY 4.0). Base de referencia 1991–2020.',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: 8),
-                ...filtered.map(
-                  (adv) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 2),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('• ',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                        Expanded(
-                          child: Text(
-                            adv,
-                            style: const TextStyle(
-                                fontSize: 14, color: Colors.black87),
-                          ),
-                        ),
-                      ],
+        child: Padding(
+          padding: const EdgeInsets.all(14),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Row(
+                children: [
+                  Icon(Icons.info_outline, size: 20, color: GeoCruzColors.green),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Sobre estos datos y advertencias',
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                   ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Fuente: Open-Meteo ERA5 (reanálisis 0.25°, precipitation_sum en mm, licencia CC BY 4.0). Base de referencia 1991–2020.',
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 6),
+              ...filtered.map(
+                (adv) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 2),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('• ', style: TextStyle(fontWeight: FontWeight.bold)),
+                      Expanded(
+                        child: Text(
+                          adv,
+                          style: const TextStyle(fontSize: 13, color: Colors.black87),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

@@ -69,8 +69,16 @@ class HotspotFilters {
     return values;
   }
 
-  static String _isoSeconds(DateTime value) =>
-      value.toUtc().toIso8601String().replaceFirst(RegExp(r'\.000Z$'), 'Z');
+  static String _isoSeconds(DateTime value) {
+    final utc = value.toUtc();
+    final y = utc.year.toString().padLeft(4, '0');
+    final m = utc.month.toString().padLeft(2, '0');
+    final d = utc.day.toString().padLeft(2, '0');
+    final h = utc.hour.toString().padLeft(2, '0');
+    final min = utc.minute.toString().padLeft(2, '0');
+    final s = utc.second.toString().padLeft(2, '0');
+    return '$y-$m-${d}T$h:$min:${s}Z';
+  }
 }
 
 class HotspotRecord {
