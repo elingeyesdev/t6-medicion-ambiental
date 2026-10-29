@@ -59,4 +59,6 @@ El servicio meteorológico del original ya tiene candidato Laravel/API y ficha d
 
 Simulaciones #73, Reportes #74 y Alertas #75 pasaron las comprobaciones de GitHub. #77 corrige la dependencia de correo; su auditoría no encuentra avisos conocidos. El pronóstico está en #78 y el buscador geográfico tiene candidato en `BUSCADOR_ENVIROSENSE.md`. Las ramas siguen pendientes de revisión propia después de #51 y #55, ya integrados.
 
-Jaziel aprobó e integró también #55 el 28/10, en `aa8aa7d`. La siguiente revisión de la cadena es #68. El historial por momento y comparación de puntos/fechas ya tienen candidato, explicado en `HISTORIAL_MAPA_ENVIROSENSE.md`; las capas raster y su reproducción siguen abiertas.
+Jaziel ya integró #55, #68, #71 y #72 en develop. La siguiente revisión de la cadena es #73. El historial por momento y comparación de puntos/fechas está en #83, explicado en `HISTORIAL_MAPA_ENVIROSENSE.md`; las capas raster y su reproducción siguen abiertas.
+
+#85 recupera las unidades de temperatura y viento, su elección por cuenta y aplicación a las consultas de la web. Detalle en `UNIDADES_ENVIROSENSE.md`. El PR #84 de Jaziel prepara parte del recorrido Flutter; no completa por sí solo todos los servicios y pantallas pendientes de #48.

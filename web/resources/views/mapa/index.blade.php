@@ -59,6 +59,10 @@
                 <button class="btn btn-primary" type="submit">Consultar mapa</button>
             </form>
         </details>
+        <details class="monitoreo-unidades">
+            <summary>Unidades de medida</summary>
+            @include('cuentas.unidades')
+        </details>
         <section id="comparacion-fijada" class="comparacion-fijada" hidden aria-label="Referencia de comparación">
             <strong id="comparacion-nombre"></strong><p>Elige otro punto o momento para comparar.</p>
             <button id="quitar-comparacion" type="button" class="btn btn-outline-primary">Quitar comparación</button>
@@ -107,6 +111,7 @@
 @endsection
 
 @push('scripts')
+@include('cuentas.configuracion-unidades')
 <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
 <script type="application/json" id="configuracion-monitoreo">@json($configuracionMonitoreo)</script>
 <script type="module" src="{{ asset('js/mapas/monitoreo.js') }}"></script>

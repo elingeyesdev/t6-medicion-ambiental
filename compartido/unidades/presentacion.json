@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "grupos": {
+    "temperatura": {
+      "nombre": "Temperatura", "base": "°C", "variables": ["temperatura", "sensacion", "maxima", "minima"], "defecto": "C",
+      "opciones": {
+        "C": {"nombre": "Celsius (°C)", "simbolo": "°C", "factor": 1, "divisor": 1, "desplazamiento": 0, "decimales": 1},
+        "F": {"nombre": "Fahrenheit (°F)", "simbolo": "°F", "factor": 1.8, "divisor": 1, "desplazamiento": 32, "decimales": 1},
+        "K": {"nombre": "Kelvin (K)", "simbolo": "K", "factor": 1, "divisor": 1, "desplazamiento": 273.15, "decimales": 2}
+      }
+    },
+    "viento": {
+      "nombre": "Viento", "base": "km/h", "variables": ["viento", "windSpeed"], "defecto": "km/h",
+      "opciones": {
+        "km/h": {"nombre": "Kilómetros por hora (km/h)", "simbolo": "km/h", "factor": 1, "divisor": 1, "desplazamiento": 0, "decimales": 1},
+        "m/s": {"nombre": "Metros por segundo (m/s)", "simbolo": "m/s", "factor": 1, "divisor": 3.6, "desplazamiento": 0, "decimales": 1},
+        "mph": {"nombre": "Millas por hora (mph)", "simbolo": "mph", "factor": 1, "divisor": 1.609344, "desplazamiento": 0, "decimales": 1}
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import { iniciarMapaBase } from '../mapas/base.js';
+import { presentacion } from './unidades.js';
 
 const contenido = JSON.parse(document.getElementById('datos-mediciones').textContent);
 const raizMapa = document.getElementById('mapa-datos');
@@ -68,7 +69,7 @@ function crearSvg(tipo, atributos) {
 function dibujarHistorial() {
     grafico.replaceChildren();
     leyenda.replaceChildren();
-    const datos = contenido.horas;
+    const datos = contenido.horas.map(d => ({...d, media: presentacion.numero(contenido.metrica, d.media, contenido.unidad)}));
     if (!datos.length) {
         const mensaje = document.createElement('p');
         mensaje.textContent = 'Sin registros para dibujar el gráfico.';
@@ -143,4 +144,5 @@ function dibujarHistorial() {
 
 if (grafico) {
     new ResizeObserver(dibujarHistorial).observe(grafico);
+    document.addEventListener('unidades-cambiadas', dibujarHistorial);
 }
