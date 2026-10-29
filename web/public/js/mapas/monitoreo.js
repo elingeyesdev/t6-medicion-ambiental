@@ -5,6 +5,7 @@ import { iniciarBuscadorLugar } from './buscador.js';
 import { compararLecturas, iniciarRecorrido } from './historial-mapa.js';
 import { medida } from '../datos/unidades.js';
 import { iniciarCapas } from './capas.js';
+import { iniciarMapaContinua } from './mapa-continua.js';
 
 const configuracion = JSON.parse(document.getElementById('configuracion-monitoreo').textContent);
 const formulario = document.getElementById('consulta-monitoreo');
@@ -310,6 +311,7 @@ function dibujar() {
 }
 
 async function consultar(pagina = 1) {
+    document.dispatchEvent(new CustomEvent('monitoreo-consulta-iniciada'));
     cancelarTiempo?.();
     peticion?.abort();
     const turno = ++secuencia;
@@ -362,6 +364,7 @@ async function consultar(pagina = 1) {
         if (!Array.isArray(cuerpo.datos)) throw new Error('No se pudo leer la consulta. Inténtalo otra vez.');
         respuestaActual = cuerpo;
         dibujar();
+        document.dispatchEvent(new CustomEvent('monitoreo-actualizado'));
         const conDatos = cuerpo.datos.filter(punto => punto.lecturas.length).length;
         const simulados = ['simulado', 'todos'].includes(cuerpo.origen) ? ' Incluye datos simulados cuando los hay.' : '';
         const momento = cuerpo.momento ? ' Hasta ' + formatoFecha.format(new Date(cuerpo.momento)) + ' · Bolivia.' : '';
@@ -382,4 +385,5 @@ document.getElementById('mon-centrar').addEventListener('click', () => { cerrarD
 document.getElementById('mon-cerrar').addEventListener('click', cerrarDetalle);
 document.getElementById('mon-anterior').addEventListener('click', () => consultar((respuestaActual?.pagina ?? 1) - 1));
 document.getElementById('mon-siguiente').addEventListener('click', () => consultar((respuestaActual?.pagina ?? 1) + 1));
+iniciarMapaContinua(mapa, L, configuracion, () => respuestaActual);
 consultar();

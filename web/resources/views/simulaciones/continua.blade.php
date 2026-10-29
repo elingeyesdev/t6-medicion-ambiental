@@ -1,3 +1,17 @@
+@if($compacto ?? false)
+<details class="monitoreo-unidades" data-simulacion-continua data-modo="compacto" data-estado="{{ url('/simulacion-continua/estado') }}">
+    <summary>Simulación continua <span class="badge bg-orange-lt">Simulado</span></summary>
+    <div class="p-3">
+        <label class="form-check"><input type="checkbox" class="form-check-input" data-mostrar-continua><span class="form-check-label">Mostrar puntos de simulación continua</span></label>
+        <label class="form-label mt-3" for="continua-variable">Variable simulada</label>
+        <select id="continua-variable" class="form-select" data-variable-continua>@foreach(array_intersect_key($metricas,array_flip(\App\Services\Simulaciones\MotorContinuo::METRICAS)) as $k=>$m)<option value="{{ $k }}">{{ $m['nombre'] }} ({{ $m['unidad'] }})</option>@endforeach</select>
+        <p class="mt-3" data-estado-texto role="status" aria-live="polite">Activa la capa para consultar la simulación.</p>
+        <p data-resumen-continua role="status" aria-live="polite"></p>
+        <p>Usa el país y la región elegidos. Consulta el mapa al cambiar de región. Los puntos naranjas «S» son simulados; su instante es independiente del historial.</p>
+        @can('simulaciones.gestionar')<a href="{{ route('simulaciones') }}">Abrir controles de simulación</a>@endcan
+    </div>
+</details>
+@else
 <section class="card mt-4" data-simulacion-continua data-estado="{{ url('/simulacion-continua/estado') }}" data-accion="{{ url('/simulacion-continua/accion') }}">
     <div class="card-header"><h2>Simulación continua global</h2><span class="badge bg-orange-lt">Simulado</span></div>
     <div class="card-body">
@@ -21,3 +35,4 @@
         <div class="table-responsive" style="max-height:24rem"><table class="table"><thead><tr><th>Localidad</th><th>Temperatura · °C</th><th>Humedad · %</th><th>Aire · AQI</th><th>Agua · ICA</th><th>Ruido · dB</th></tr></thead><tbody data-puntos></tbody></table></div>
     </div>
 </section>
+@endif
