@@ -342,7 +342,6 @@ class _DroughtScreenState extends State<DroughtScreen> {
                     const SizedBox(height: 16),
                     DropdownButtonFormField<String?>(
                       key: const Key('drought-province'),
-                      isExpanded: true,
                       initialValue: selectedProv,
                       isExpanded: true,
                       decoration: const InputDecoration(
@@ -371,7 +370,6 @@ class _DroughtScreenState extends State<DroughtScreen> {
                     const SizedBox(height: 16),
                     DropdownButtonFormField<String?>(
                       key: ValueKey('drought-municipality-${selectedProv ?? 'all'}'),
-                      isExpanded: true,
                       initialValue: selectedMun,
                       isExpanded: true,
                       decoration: const InputDecoration(
