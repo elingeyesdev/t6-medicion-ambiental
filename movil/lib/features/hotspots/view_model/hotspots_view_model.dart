@@ -11,15 +11,12 @@ class HotspotsViewModel extends ChangeNotifier {
   HotspotsViewModel(this.repository) : filters = defaultFilters();
 
   final HotspotRepository repository;
-  final Map<String, TerritoryBoundary> _boundaries = {};
 
   List<TerritoryOption> territories = const [];
   HotspotFilters filters;
   HotspotResponse? response;
-  TerritoryBoundary? boundary;
   String? catalogError;
   String? queryError;
-  String? mapError;
   bool loadingCatalog = false;
   bool loading = false;
   bool queryExpired = false;
@@ -175,7 +172,6 @@ class HotspotsViewModel extends ChangeNotifier {
     loading = true;
     queryError = null;
     queryExpired = false;
-    mapError = null;
     notifyListeners();
 
     try {
@@ -203,37 +199,8 @@ class HotspotsViewModel extends ChangeNotifier {
         );
       }
 
-      TerritoryBoundary? nextBoundary;
-      String? nextMapError;
-      if (boundary?.identifier == result.territoryId) {
-        nextBoundary = boundary;
-      } else {
-        try {
-          nextBoundary =
-              _boundaries[result.territoryId] ??
-              await repository.loadBoundary(result.territoryId);
-          final territory = result.raw['consulta']?['territorio'];
-          final expectedVersion = territory is Map
-              ? territory['versionCatalogo']?.toString()
-              : null;
-          if (expectedVersion != null &&
-              nextBoundary.catalogVersion != expectedVersion) {
-            throw const FormatException(
-              'El límite usa una versión de catálogo distinta a la consulta.',
-            );
-          }
-          _boundaries[result.territoryId] = nextBoundary;
-        } catch (error) {
-          debugPrint('No se pudo cargar el límite territorial: $error');
-          nextBoundary = null;
-          nextMapError =
-              'No se pudo cargar el límite territorial. El listado y los detalles siguen disponibles.';
-        }
-      }
       if (generation != _requestGeneration) return;
       response = result;
-      boundary = nextBoundary;
-      mapError = nextMapError;
       filters = requested;
       _pending = null;
       loading = false;
@@ -266,7 +233,7 @@ class HotspotsViewModel extends ChangeNotifier {
       return 'La consulta tardó demasiado. Comprueba la conexión y reintenta.';
     }
     if (error is FormatException) return error.message;
-    return 'No se pudo conectar con GeoCruz. Comprueba la API y reintenta.';
+    return 'No se pudo conectar con GeoSur. Comprueba la API y reintenta.';
   }
 
   static HotspotFilters defaultFilters({DateTime? now}) {

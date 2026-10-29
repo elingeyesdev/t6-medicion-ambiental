@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../../core/formatters/bolivia_time.dart';
 import '../../../core/network/geocruz_api_client.dart';
@@ -9,7 +11,6 @@ import '../model/hotspot_models.dart';
 import '../model/hotspot_repository.dart';
 import 'hotspot_detail_screen.dart';
 import 'hotspot_filters_sheet.dart';
-import 'hotspot_map_card.dart';
 
 class HotspotsScreen extends StatefulWidget {
   const HotspotsScreen({required this.apiClient, super.key});
@@ -22,7 +23,9 @@ class HotspotsScreen extends StatefulWidget {
 
 class _HotspotsScreenState extends State<HotspotsScreen> {
   late final HotspotsViewModel _controller;
-  bool _showMap = true;
+  final MapController _mapController = MapController();
+  HotspotRecord? _selectedRecord;
+  bool _mapReady = false;
 
   @override
   void initState() {
@@ -52,6 +55,7 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
     );
     if (!mounted || selected == null) return;
     try {
+      setState(() => _selectedRecord = null);
       await _controller.apply(selected);
     } on FormatException catch (error) {
       if (!mounted) return;
@@ -59,6 +63,91 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
         context,
       ).showSnackBar(SnackBar(content: Text(error.message)));
     }
+  }
+
+  void _selectRecord(HotspotRecord record) {
+    setState(() => _selectedRecord = record);
+    final point = record.coordinates;
+    if (_mapReady && point != null) {
+      _mapController.move(point, 8.5);
+    }
+    final response = _controller.response;
+    if (response == null) return;
+    showModalBottomSheet<void>(
+      context: context,
+      useSafeArea: true,
+      showDragHandle: true,
+      builder: (sheetContext) {
+        final place = _controller.territoryName(
+          record.territory['municipio']?.toString(),
+        );
+        final observed = record.observedAt == null
+            ? 'Fecha no informada'
+            : '${BoliviaTime.dateTime(DateTime.tryParse(record.observedAt!) ?? response.queryFetchedAt)} · Bolivia';
+        final frp = record.radiantPower == null
+            ? 'FRP sin dato'
+            : 'FRP ${_formatNumber(record.radiantPower)} ${record.radiantPowerUnit ?? 'MW'}';
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                place,
+                style: Theme.of(sheetContext).textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 8),
+              Text(observed),
+              Text('Confianza ${record.confidence ?? 'no informada'} · $frp'),
+              const SizedBox(height: 4),
+              Text(
+                'Detección satelital · NASA FIRMS',
+                style: Theme.of(sheetContext).textTheme.bodySmall,
+              ),
+              const SizedBox(height: 14),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  onPressed: () {
+                    Navigator.of(sheetContext).pop();
+                    _openRecord(record, response);
+                  },
+                  icon: const Icon(Icons.article_outlined),
+                  label: const Text('Ver todos los datos'),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _zoom(double amount) {
+    if (!_mapReady) return;
+    final camera = _mapController.camera;
+    _mapController.move(camera.center, (camera.zoom + amount).clamp(2, 18));
+  }
+
+  void _fitPage(List<HotspotRecord> records) {
+    if (!_mapReady) return;
+    final points = records
+        .map((record) => record.coordinates)
+        .whereType<LatLng>()
+        .toList(growable: false);
+    if (points.isEmpty) return;
+    if (points.length == 1) {
+      _mapController.move(points.single, 8);
+      return;
+    }
+    _mapController.fitCamera(
+      CameraFit.bounds(
+        bounds: LatLngBounds.fromPoints(points),
+        padding: const EdgeInsets.all(48),
+        maxZoom: 10,
+      ),
+    );
   }
 
   void _openRecord(HotspotRecord record, HotspotResponse response) {
@@ -95,37 +184,19 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
                   _controller.territories.isEmpty
             ? _catalogFailure(context)
             : ListView(
+                key: const PageStorageKey<String>('hotspots-scroll'),
                 padding: const EdgeInsets.fromLTRB(16, 4, 16, 30),
                 children: [
+                  const _CoverageScopeCard(),
+                  const SizedBox(height: 8),
+                  if (response != null) _appliedContext(context, response),
+                  const SizedBox(height: 8),
+                  _searchButton(context),
+                  const SizedBox(height: 8),
                   _queryStatus(context, response),
                   if (response != null) ...[
                     const SizedBox(height: 10),
-                    _appliedContext(context, response),
-                    const SizedBox(height: 10),
-                    _viewSelector(context),
-                    const SizedBox(height: 10),
-                    if (_showMap)
-                      HotspotMapCard(
-                        key: ValueKey(
-                          _controller.boundary?.identifier ??
-                              response.territoryId,
-                        ),
-                        records: response.records,
-                        boundary: _controller.boundary,
-                        territoryName: _controller.territoryName(
-                          response.territoryId,
-                        ),
-                        onOpenRecord: (record) => _openRecord(record, response),
-                      ),
-                    if (!_showMap) _results(context, response),
-                    if (_controller.mapError != null && _showMap)
-                      Padding(
-                        padding: const EdgeInsets.only(left: 4, top: 6),
-                        child: Text(
-                          'Límite territorial no disponible.',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ),
+                    _detectionMap(context, response),
                     const SizedBox(height: 10),
                     _summary(context, response),
                   ],
@@ -144,7 +215,7 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
           const CircularProgressIndicator(),
           const SizedBox(height: 14),
           Text(
-            'Cargando territorios de Santa Cruz…',
+            'Cargando cobertura disponible…',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
         ],
@@ -174,16 +245,23 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
 
   Widget _queryStatus(BuildContext context, HotspotResponse? response) {
     if (_controller.loading) {
-      return _StatusCard(
-        icon: Icons.sync_rounded,
-        title: response == null
-            ? 'Consultando focos de calor…'
-            : 'Actualizando consulta…',
-        message: response == null
-            ? 'La consulta se procesa desde GeoCruz con NASA FIRMS.'
-            : 'Se conservan los resultados anteriores y su contexto hasta recibir la nueva respuesta.',
-        tone: _StatusTone.loading,
-        progress: true,
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          child: Row(
+            children: [
+              const SizedBox.square(
+                dimension: 18,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                response == null ? 'Buscando detecciones…' : 'Actualizando…',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ],
+          ),
+        ),
       );
     }
     if (_controller.queryError != null) {
@@ -194,8 +272,7 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
         title: _controller.queryExpired
             ? 'El conjunto de resultados expiró'
             : 'No se pudo completar la consulta',
-        message:
-            '${_controller.queryError!}${response == null ? ' No se sustituyeron por datos de ejemplo.' : ' Se mantienen abajo los resultados anteriores con su período y filtros originales.'}',
+        message: _controller.queryError!,
         tone: _StatusTone.error,
         action: _controller.queryExpired
             ? () => _controller.restartExpiredQuery()
@@ -209,8 +286,7 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
       return const _StatusCard(
         icon: Icons.info_outline_rounded,
         title: 'Define una consulta',
-        message:
-            'Elige territorio, período y confianza para consultar los datos disponibles.',
+        message: 'Elige el territorio y el período.',
         tone: _StatusTone.neutral,
       );
     }
@@ -224,9 +300,10 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
     final title = switch (coverage) {
       'sin_cobertura' => 'Sin cobertura comprobada',
       'parcial' => 'Resultados con cobertura parcial',
-      _ => response.total == 0
-          ? 'Sin detecciones para estos filtros'
-          : 'Consulta lista',
+      _ =>
+        response.total == 0
+            ? 'Sin detecciones para estos filtros'
+            : 'Consulta lista',
     };
     final message = switch (coverage) {
       'sin_cobertura' =>
@@ -235,9 +312,10 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
       'parcial' =>
         'La cobertura es parcial; los resultados no describen todo el período. '
             '${response.coverage['fundamento'] ?? ''}',
-      _ => response.total == 0
-          ? 'La consulta respondió sin detecciones; revisa la cobertura publicada.'
-          : response.coverage['fundamento']?.toString() ?? '',
+      _ =>
+        response.total == 0
+            ? 'La consulta respondió sin detecciones; revisa la cobertura publicada.'
+            : response.coverage['fundamento']?.toString() ?? '',
     };
     final tone = coverage == 'sin_cobertura' || coverage == 'parcial'
         ? _StatusTone.warning
@@ -250,6 +328,193 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
       message: message,
       tone: tone,
     );
+  }
+
+  Widget _searchButton(BuildContext context) => SizedBox(
+    width: double.infinity,
+    child: FilledButton.icon(
+      onPressed: _controller.loadingCatalog ? null : _openFilters,
+      icon: const Icon(Icons.search_rounded),
+      label: const Text('Buscar focos'),
+    ),
+  );
+
+  Widget _detectionMap(BuildContext context, HotspotResponse response) {
+    final records = response.records
+        .where((record) => record.coordinates != null)
+        .toList(growable: false);
+    final center = records.isEmpty
+        ? const LatLng(-17.5, -63.2)
+        : records.first.coordinates!;
+    final pageCount = (response.total / response.pageSize).ceil();
+    final markers = records
+        .map((record) {
+          final selected = record.identifier == _selectedRecord?.identifier;
+          return Marker(
+            point: record.coordinates!,
+            width: 44,
+            height: 48,
+            child: Semantics(
+              button: true,
+              label: 'Detección ${record.identifier}, tocar para ver datos',
+              child: GestureDetector(
+                onTap: () => _selectRecord(record),
+                child: Icon(
+                  Icons.local_fire_department_rounded,
+                  size: selected ? 42 : 34,
+                  color: selected ? GeoCruzColors.clay : GeoCruzColors.green,
+                  shadows: const [Shadow(color: Colors.white, blurRadius: 5)],
+                ),
+              ),
+            ),
+          );
+        })
+        .toList(growable: false);
+
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(14, 12, 14, 8),
+            child: Row(
+              children: [
+                const Icon(Icons.local_fire_department_outlined),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Mapa de focos',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ),
+                Text('${response.total}'),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 330,
+            child: Stack(
+              children: [
+                FlutterMap(
+                  key: ValueKey(
+                    'hotspots-${response.setVersion}-${response.page}',
+                  ),
+                  mapController: _mapController,
+                  options: MapOptions(
+                    initialCenter: center,
+                    initialZoom: records.length == 1 ? 8 : 6,
+                    initialCameraFit: records.length > 1
+                        ? CameraFit.bounds(
+                            bounds: LatLngBounds.fromPoints(
+                              records.map((r) => r.coordinates!).toList(),
+                            ),
+                            padding: const EdgeInsets.all(44),
+                            maxZoom: 10,
+                          )
+                        : null,
+                    minZoom: 2,
+                    maxZoom: 18,
+                    onMapReady: () {
+                      _mapReady = true;
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (mounted) _fitPage(records);
+                      });
+                    },
+                  ),
+                  children: [
+                    TileLayer(
+                      urlTemplate:
+                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      userAgentPackageName: 'bo.edu.univalle.geocruz_movil',
+                      maxNativeZoom: 19,
+                    ),
+                    MarkerLayer(markers: markers),
+                    const RichAttributionWidget(
+                      alignment: AttributionAlignment.bottomRight,
+                      attributions: [
+                        TextSourceAttribution('© OpenStreetMap contributors'),
+                      ],
+                    ),
+                  ],
+                ),
+                Positioned(
+                  left: 8,
+                  top: 8,
+                  child: _MapControls(
+                    onZoomIn: () => _zoom(1),
+                    onZoomOut: () => _zoom(-1),
+                    onFit: () => _fitPage(records),
+                  ),
+                ),
+                if (records.isEmpty)
+                  Positioned.fill(
+                    child: IgnorePointer(
+                      child: Center(
+                        child: Card(
+                          color: Colors.white.withValues(alpha: 0.94),
+                          child: const Padding(
+                            padding: EdgeInsets.all(12),
+                            child: Text(
+                              'No hay coordenadas para mostrar en esta página.',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 10),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.touch_app_outlined,
+                  size: 18,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    records.isEmpty
+                        ? 'Sin puntos en esta página'
+                        : 'Toca un punto para ver sus datos',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
+                IconButton(
+                  tooltip: 'Página anterior',
+                  visualDensity: VisualDensity.compact,
+                  onPressed: !_controller.loading && response.page > 1
+                      ? () => _changePage(_controller.previousPage)
+                      : null,
+                  icon: const Icon(Icons.chevron_left),
+                ),
+                Text(
+                  '${response.page}/$pageCount',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+                IconButton(
+                  tooltip: 'Página siguiente',
+                  visualDensity: VisualDensity.compact,
+                  onPressed: response.nextPage != null && !_controller.loading
+                      ? () => _changePage(_controller.nextPage)
+                      : null,
+                  icon: const Icon(Icons.chevron_right),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _changePage(Future<void> Function() change) async {
+    setState(() => _selectedRecord = null);
+    await change();
   }
 
   Widget _appliedContext(BuildContext context, HotspotResponse response) {
@@ -297,33 +562,13 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
     );
   }
 
-  Widget _viewSelector(BuildContext context) {
-    return SegmentedButton<bool>(
-      segments: const [
-        ButtonSegment(
-          value: true,
-          icon: Icon(Icons.map_outlined),
-          label: Text('Mapa'),
-        ),
-        ButtonSegment(
-          value: false,
-          icon: Icon(Icons.list_alt_rounded),
-          label: Text('Lista'),
-        ),
-      ],
-      selected: {_showMap},
-      onSelectionChanged: (selection) =>
-          setState(() => _showMap = selection.first),
-      showSelectedIcon: false,
-    );
-  }
-
   Widget _summary(BuildContext context, HotspotResponse response) {
     final totalIndicator = response.indicator('totalFocos');
     final highIndicator = response.indicator('focosConfianzaAlta');
     final maxFrp = response.indicator('potenciaMaxima');
     return Card(
       child: ExpansionTile(
+        key: const PageStorageKey<String>('hotspots-summary'),
         leading: const Icon(Icons.info_outline_rounded),
         title: const Text('Datos de la consulta'),
         subtitle: Text('${_formatNumber(response.total)} detecciones'),
@@ -394,87 +639,55 @@ class _HotspotsScreenState extends State<HotspotsScreen> {
     );
   }
 
-  Widget _results(BuildContext context, HotspotResponse response) {
-    final pageCount = (response.total / response.pageSize).ceil();
+  String _formatNumber(Object? value) {
+    if (value == null) return 'Sin dato';
+    if (value is num) return NumberFormat('###,##0.##', 'es_BO').format(value);
+    return '$value';
+  }
+}
+
+/// Makes the difference between GeoSur's South America map and the currently
+/// supported fire-query territory visible before a user opens the filters.
+class _CoverageScopeCard extends StatelessWidget {
+  const _CoverageScopeCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     return Card(
+      color: colors.secondaryContainer,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 14, 16, 12),
-        child: Column(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    'Detecciones',
-                    style: Theme.of(context).textTheme.titleLarge,
+            Icon(Icons.public_rounded, color: colors.onSecondaryContainer),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Cobertura disponible',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: colors.onSecondaryContainer,
+                    ),
                   ),
-                ),
-                Text(
-                  '${response.records.length} en esta página',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ],
-            ),
-            const SizedBox(height: 3),
-            const SizedBox(height: 12),
-            if (response.records.isEmpty)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 24),
-                child: Text(
-                  response.total > 0
-                      ? 'Esta página no contiene registros. El total del conjunto se conserva en el resumen.'
-                      : 'La consulta respondió correctamente sin registros. Revisa el período y la cobertura publicada.',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              )
-            else
-              for (final record in response.records) ...[
-                _RecordTile(
-                  record: record,
-                  territoryName: _controller.territoryName(
-                    record.territory['municipio']?.toString(),
+                  const SizedBox(height: 3),
+                  Text(
+                    'Hoy la API de focos solo consulta Santa Cruz, Bolivia. '
+                    'El mapa general muestra referencias de otros países; no son detecciones de fuego ni lecturas actuales.',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: colors.onSecondaryContainer,
+                    ),
                   ),
-                  onTap: () => _openRecord(record, response),
-                ),
-                const Divider(height: 1),
-              ],
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                OutlinedButton.icon(
-                  onPressed: !_controller.loading && response.page > 1
-                      ? _controller.previousPage
-                      : null,
-                  icon: const Icon(Icons.chevron_left_rounded),
-                  label: const Text('Anterior'),
-                ),
-                Expanded(
-                  child: Text(
-                    'Página ${response.page} de ${pageCount == 0 ? 1 : pageCount}',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ),
-                OutlinedButton.icon(
-                  onPressed: !_controller.loading && response.nextPage != null
-                      ? _controller.nextPage
-                      : null,
-                  icon: const Icon(Icons.chevron_right_rounded),
-                  label: const Text('Siguiente'),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
       ),
     );
-  }
-
-  String _formatNumber(Object? value) {
-    if (value == null) return 'Sin dato';
-    if (value is num) return NumberFormat('###,##0.##', 'es_BO').format(value);
-    return '$value';
   }
 }
 
@@ -551,57 +764,49 @@ class _CoverageCard extends StatelessWidget {
   }
 }
 
-class _RecordTile extends StatelessWidget {
-  const _RecordTile({
-    required this.record,
-    required this.territoryName,
-    required this.onTap,
+class _MapControls extends StatelessWidget {
+  const _MapControls({
+    required this.onZoomIn,
+    required this.onZoomOut,
+    required this.onFit,
   });
 
-  final HotspotRecord record;
-  final String territoryName;
-  final VoidCallback onTap;
+  final VoidCallback onZoomIn;
+  final VoidCallback onZoomOut;
+  final VoidCallback onFit;
 
   @override
-  Widget build(BuildContext context) {
-    final confidence = switch (record.confidence) {
-      'alta' => 'Alta',
-      'nominal' => 'Nominal',
-      'baja' => 'Baja',
-      'desconocida' => 'Desconocida',
-      _ => 'No informada',
-    };
-    final date = record.observedAt == null
-        ? 'Fecha no informada'
-        : '${BoliviaTime.dateTime(DateTime.parse(record.observedAt!))} · Bolivia';
-    final power = record.radiantPower == null
-        ? 'FRP sin dato'
-        : 'FRP ${NumberFormat('###,##0.##', 'es_BO').format(record.radiantPower)} ${record.radiantPowerUnit ?? 'MW'}';
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
-      onTap: onTap,
-      title: Text(territoryName, style: Theme.of(context).textTheme.titleLarge),
-      subtitle: Padding(
-        padding: const EdgeInsets.only(top: 4),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('$date · Confianza $confidence'),
-            Text(power),
-            Text(
-              record.identifier,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
+  Widget build(BuildContext context) => Material(
+    color: Colors.white,
+    elevation: 2,
+    borderRadius: BorderRadius.circular(10),
+    clipBehavior: Clip.antiAlias,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          tooltip: 'Acercar',
+          onPressed: onZoomIn,
+          icon: const Icon(Icons.add),
         ),
-      ),
-      trailing: const Icon(Icons.chevron_right_rounded),
-    );
-  }
+        const SizedBox(width: 34, child: Divider(height: 1)),
+        IconButton(
+          tooltip: 'Alejar',
+          onPressed: onZoomOut,
+          icon: const Icon(Icons.remove),
+        ),
+        const SizedBox(width: 34, child: Divider(height: 1)),
+        IconButton(
+          tooltip: 'Ver todos los focos de esta página',
+          onPressed: onFit,
+          icon: const Icon(Icons.center_focus_strong),
+        ),
+      ],
+    ),
+  );
 }
 
-enum _StatusTone { neutral, loading, success, warning, error }
+enum _StatusTone { neutral, success, warning, error }
 
 class _StatusCard extends StatelessWidget {
   const _StatusCard({
@@ -609,7 +814,6 @@ class _StatusCard extends StatelessWidget {
     required this.title,
     required this.message,
     required this.tone,
-    this.progress = false,
     this.action,
     this.actionLabel,
   });
@@ -618,7 +822,6 @@ class _StatusCard extends StatelessWidget {
   final String title;
   final String message;
   final _StatusTone tone;
-  final bool progress;
   final VoidCallback? action;
   final String? actionLabel;
 
@@ -628,7 +831,6 @@ class _StatusCard extends StatelessWidget {
       _StatusTone.success => GeoCruzColors.green,
       _StatusTone.warning => GeoCruzColors.amber,
       _StatusTone.error => Theme.of(context).colorScheme.error,
-      _StatusTone.loading => GeoCruzColors.green,
       _StatusTone.neutral => GeoCruzColors.textSoft,
     };
     return Card(
@@ -660,10 +862,6 @@ class _StatusCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (progress) ...[
-              const SizedBox(height: 12),
-              const LinearProgressIndicator(),
-            ],
             if (action != null) ...[
               const SizedBox(height: 8),
               Align(

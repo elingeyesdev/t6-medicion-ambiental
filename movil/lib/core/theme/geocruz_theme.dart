@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 abstract final class GeoCruzColors {
-  static const green = Color(0xFF126B55);
-  static const greenDark = Color(0xFF183C38);
-  static const greenSoft = Color(0xFFE8F2ED);
+  static const green = Color(0xFF155B3D);
+  static const greenDark = Color(0xFF173B2C);
+  static const greenSoft = Color(0xFFE4F1E8);
+  static const teal = Color(0xFF08788E);
+  static const clay = Color(0xFFCB6738);
   static const greenLight = Color(0xFFC9EDB5);
   static const textSoft = Color(0xFF526963);
   static const border = Color(0xFFDBE5E0);
@@ -17,6 +19,8 @@ abstract final class GeoCruzTheme {
     final colorScheme = ColorScheme.fromSeed(
       seedColor: GeoCruzColors.green,
       primary: GeoCruzColors.green,
+      secondary: GeoCruzColors.teal,
+      tertiary: GeoCruzColors.clay,
       surface: Colors.white,
     );
 
@@ -74,6 +78,7 @@ abstract final class GeoCruzTheme {
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: Colors.white,
         indicatorColor: GeoCruzColors.greenSoft,
+        elevation: 2,
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           return TextStyle(
             color: states.contains(WidgetState.selected)
@@ -95,6 +100,20 @@ abstract final class GeoCruzTheme {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: GeoCruzColors.border),
+        ),
+      ),
+      chipTheme: ChipThemeData(
+        backgroundColor: GeoCruzColors.greenSoft,
+        selectedColor: GeoCruzColors.green.withValues(alpha: 0.16),
+        side: BorderSide.none,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          minimumSize: const Size(48, 48),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       ),
     );

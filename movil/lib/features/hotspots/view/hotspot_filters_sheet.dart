@@ -175,8 +175,21 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
               ),
               const SizedBox(height: 6),
               Text(
-                'Elige el período y, si quieres, un territorio.',
+                'Elige el período y acota la consulta dentro de la cobertura disponible.',
                 style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 14),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondaryContainer,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: const Text(
+                  'Por ahora, la API consulta focos solo en Santa Cruz, Bolivia. '
+                  'Los demás países de Sudamérica todavía no están habilitados para este análisis.',
+                ),
               ),
               const SizedBox(height: 14),
               Text(
@@ -226,11 +239,13 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
                     DropdownButtonFormField<String>(
                       isExpanded: true,
                       initialValue: _provinceId ?? '',
-                      decoration: const InputDecoration(labelText: 'Provincia'),
+                      decoration: const InputDecoration(
+                        labelText: 'Provincia de Santa Cruz',
+                      ),
                       items: [
                         const DropdownMenuItem(
                           value: '',
-                          child: Text('Todo Santa Cruz'),
+                          child: Text('Todo el departamento'),
                         ),
                         for (final province in widget.provinces)
                           DropdownMenuItem(

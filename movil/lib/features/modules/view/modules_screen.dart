@@ -18,12 +18,12 @@ class ModulesScreen extends StatelessWidget {
           sliver: SliverList.list(
             children: [
               Text(
-                'Módulos',
+                'Análisis disponibles',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 8),
               Text(
-                'Consulta lo disponible y conoce qué módulos llegarán después.',
+                'Solo aparecen recorridos que ya tienen una consulta móvil activa.',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 16),

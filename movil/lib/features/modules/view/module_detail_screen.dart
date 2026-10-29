@@ -11,7 +11,7 @@ class ModuleDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('GeoCruz')),
+      appBar: AppBar(title: const Text('GeoSur')),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 30),
         children: [
