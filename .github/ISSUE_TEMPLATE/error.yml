@@ -1,0 +1,40 @@
+name: Error encontrado
+description: Un problema que podamos repetir y comprobar al corregirlo.
+title: ""
+labels: [bug]
+body:
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Cómo aparece
+      description: Pasos desde que abres la aplicación, con filtros o período cuando corresponda. Sin contraseñas ni claves.
+    validations:
+      required: true
+  - type: textarea
+    id: esperado
+    attributes:
+      label: Qué debería pasar
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Qué pasó
+      description: Añade una captura o un resultado sin información privada.
+    validations:
+      required: true
+  - type: input
+    id: entorno
+    attributes:
+      label: Dónde lo probaste
+      placeholder: Navegador o teléfono, versión/commit y PR relacionado.
+    validations:
+      required: true
+  - type: textarea
+    id: aceptacion
+    attributes:
+      label: Comprobación de la corrección
+      value: |
+        - [ ] Se repite el caso que fallaba y ahora responde correctamente.
+        - [ ] No cambia los datos ni los permisos de otro usuario.
+        - [ ] El compañero revisó la corrección.
