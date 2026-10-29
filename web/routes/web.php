@@ -6,6 +6,7 @@ use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MapaMonitoreoController;
 use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\SensoresController;
+use App\Http\Controllers\SimulacionesController;
 use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,12 @@ Route::middleware('guest')->group(function (): void {
     Route::post('/restablecer-acceso', [RecuperacionController::class, 'restablecer'])->middleware('throttle:cuentas-restablecer')->name('password.update');
 });
 Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
+    Route::middleware('can:simulaciones.gestionar')->group(function (): void {
+        Route::get('/simulaciones', [SimulacionesController::class, 'index'])->name('simulaciones');
+        Route::post('/simulaciones', [SimulacionesController::class, 'guardar'])->name('simulaciones.guardar');
+        Route::post('/simulaciones/{id}/accion', [SimulacionesController::class, 'accion'])->name('simulaciones.accion');
+        Route::post('/simulaciones/{id}/historial', [SimulacionesController::class, 'publicar'])->name('simulaciones.publicar');
+    });
     Route::get('/sensores', [SensoresController::class, 'index'])->middleware('can:datos.consultar')->name('sensores');
     Route::middleware('can:datos.gestionar')->group(function (): void {
         Route::post('/sensores', [SensoresController::class, 'guardar'])->name('sensores.guardar');
