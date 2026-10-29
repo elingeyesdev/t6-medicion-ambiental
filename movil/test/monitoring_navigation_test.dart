@@ -21,6 +21,10 @@ void main() {
         rootBundle.loadString('assets/geografia/regiones/indice.json'),
       ]);
     });
+    Future<void> advance() async {
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+    }
     final queries = <Uri>[];
     final api = GeoCruzApiClient(baseUrl: Uri.parse('http://localhost/api/v1/'), client: MockClient((request) async {
       queries.add(request.url);
@@ -32,32 +36,35 @@ void main() {
     }))..bearerToken = 'token-de-prueba';
     addTearDown(api.close);
     await tester.pumpWidget(MaterialApp(home: MonitoringScreen(api: api, onUnauthorized: () {})));
-    await tester.pumpAndSettle();
+    await advance();
+    expect(queries, isNotEmpty);
 
     await tester.tap(find.byKey(const Key('monitoring-country')));
-    await tester.pumpAndSettle();
+    await advance();
     await tester.tap(find.text('Bolivia').last);
-    await tester.pumpAndSettle();
+    await advance();
     await tester.tap(find.byKey(const ValueKey('monitoring-region-BO')));
-    await tester.pumpAndSettle();
+    await advance();
     await tester.tap(find.text('Santa Cruz').last);
-    await tester.pumpAndSettle();
+    await advance();
     await tester.tap(find.byKey(const Key('monitoring-country')));
-    await tester.pumpAndSettle();
+    await advance();
     await tester.tap(find.text('Argentina').last);
-    await tester.pumpAndSettle();
+    await advance();
     expect(tester.takeException(), isNull);
     expect(find.byKey(const ValueKey('monitoring-region-AR')), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('monitoring-origin')));
-    await tester.pumpAndSettle();
+    await advance();
     await tester.tap(find.text('Solo simulados').last);
-    await tester.pumpAndSettle();
+    await advance();
     await tester.tap(find.text('Consultar mapa'));
-    await tester.pumpAndSettle();
+    await advance();
     expect(queries.last.queryParameters['pais'], 'AR');
     expect(queries.last.queryParameters.containsKey('region'), isFalse);
     expect(queries.last.queryParameters['origen'], 'simulado');
     expect(tester.takeException(), isNull);
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
   });
 }
