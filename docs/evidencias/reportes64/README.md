@@ -9,3 +9,5 @@ Se generan PDF y Excel desde peticiones autenticadas de pruebas, con SQLite aisl
 Reproducir desde `web`: establecer `GEOSUR_EVIDENCIA_REPORTES=1` y ejecutar `../herramientas/php.ps1 artisan test --compact --filter=ReportesTest`. Los binarios temporales quedan en `tmp/reporte64-*.pdf` y `.xlsx`, excluidos de Git.
 
 Falta la comprobación del recorrido completo en Flutter y la revisión de Jaziel. La cuenta demo conserva su rol Visualizador; no se amplió su permiso para tomar capturas.
+
+Comprobación adicional en el navegador: con una cuenta local temporal Analista se creó una plantilla con temperatura mayor a 30 °C y un reporte de dos zonas simuladas. Se obtuvieron cuatro lecturas válidas de diez; el selector cambia de gráfico y ambas descargas PDF/Excel terminaron correctamente. `reporte-filtrado-navegador.png` muestra el resultado. La cuenta demo no cambió de rol y la temporal se desactiva al cerrar la revisión.

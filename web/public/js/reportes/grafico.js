@@ -14,7 +14,7 @@ if(selector){
         const puntos=g.map(f=>[30+(Date.parse(f.instante)-desde)/Math.max(1,hasta-desde)*740,225-(f.valor-min)/Math.max(1,max-min)*195]);
         linea.setAttribute('points',puntos.map(p=>p.join(',')).join(' '));linea.setAttribute('fill','none');linea.setAttribute('stroke','#168042');linea.setAttribute('stroke-width','3');svg.append(linea);
         for(const p of puntos){const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',p[0]);c.setAttribute('cy',p[1]);c.setAttribute('r','4');c.setAttribute('fill','#168042');svg.append(c);}
-        document.getElementById('rep-escala').textContent=`Mínimo ${min} · Máximo ${max} ${g[0].unidad} · ${g.length} lecturas.`;
+        document.getElementById('rep-escala').textContent=`Mínimo ${min} · Máximo ${max} ${g[0].unidad} · ${g.length} ${g.length === 1 ? 'lectura' : 'lecturas'}.`;
         document.getElementById('rep-periodo').textContent=`${g[0].fecha} — ${g[g.length-1].fecha} · Hora de Bolivia.`;
     }
     selector.addEventListener('change',dibujar);dibujar();

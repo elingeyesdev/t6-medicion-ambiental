@@ -1,0 +1,251 @@
+{
+  "procedencia": {
+    "archivo": "referencias/envirosense/codigo/database/seeds/02_umbrales.sql",
+    "sha256": "f18ec059d5edf4211cd2cfa664373799239385a9ff2fb65aa8e288dcffc6a2c1"
+  },
+  "nota": "Reglas recuperadas del software original; no constituyen validación normativa ni recomendación sanitaria.",
+  "metricas": {
+    "aqi": [
+      {
+        "nivel": 1,
+        "nombre": "Bueno",
+        "minimo": 0.0,
+        "maximo": 50.0,
+        "color": "#00e400",
+        "severidad": "informativa"
+      },
+      {
+        "nivel": 2,
+        "nombre": "Moderado",
+        "minimo": 51.0,
+        "maximo": 100.0,
+        "color": "#ffff00",
+        "severidad": "informativa"
+      },
+      {
+        "nivel": 3,
+        "nombre": "Dañino para sensibles",
+        "minimo": 101.0,
+        "maximo": 150.0,
+        "color": "#ff7e00",
+        "severidad": "advertencia"
+      },
+      {
+        "nivel": 4,
+        "nombre": "No saludable",
+        "minimo": 151.0,
+        "maximo": 200.0,
+        "color": "#ff0000",
+        "severidad": "critica"
+      },
+      {
+        "nivel": 5,
+        "nombre": "Muy Insalubre",
+        "minimo": 201.0,
+        "maximo": 300.0,
+        "color": "#8f3f97",
+        "severidad": "critica"
+      },
+      {
+        "nivel": 6,
+        "nombre": "Peligroso",
+        "minimo": 301.0,
+        "maximo": 500.0,
+        "color": "#7e0023",
+        "severidad": "emergencia"
+      }
+    ],
+    "temperatura": [
+      {
+        "nivel": 1,
+        "nombre": "Frío extremo",
+        "minimo": -100.0,
+        "maximo": -10.0,
+        "color": "#08306b",
+        "severidad": "emergencia"
+      },
+      {
+        "nivel": 2,
+        "nombre": "Frío",
+        "minimo": -10.0,
+        "maximo": 5.0,
+        "color": "#2171b5",
+        "severidad": "advertencia"
+      },
+      {
+        "nivel": 3,
+        "nombre": "Fresco",
+        "minimo": 5.0,
+        "maximo": 18.0,
+        "color": "#6baed6",
+        "severidad": "informativa"
+      },
+      {
+        "nivel": 4,
+        "nombre": "Confortable",
+        "minimo": 18.0,
+        "maximo": 26.0,
+        "color": "#74c476",
+        "severidad": "informativa"
+      },
+      {
+        "nivel": 5,
+        "nombre": "Cálido",
+        "minimo": 26.0,
+        "maximo": 32.0,
+        "color": "#fee08b",
+        "severidad": "informativa"
+      },
+      {
+        "nivel": 6,
+        "nombre": "Calor",
+        "minimo": 32.0,
+        "maximo": 38.0,
+        "color": "#fd8d3c",
+        "severidad": "advertencia"
+      },
+      {
+        "nivel": 7,
+        "nombre": "Calor extremo",
+        "minimo": 38.0,
+        "maximo": 100.0,
+        "color": "#bd0026",
+        "severidad": "emergencia"
+      }
+    ],
+    "ica": [
+      {
+        "nivel": 1,
+        "nombre": "Muy mala",
+        "minimo": 0.0,
+        "maximo": 25.0,
+        "color": "#6d4c41",
+        "severidad": "emergencia"
+      },
+      {
+        "nivel": 2,
+        "nombre": "Mala",
+        "minimo": 26.0,
+        "maximo": 50.0,
+        "color": "#f57c00",
+        "severidad": "critica"
+      },
+      {
+        "nivel": 3,
+        "nombre": "Regular",
+        "minimo": 51.0,
+        "maximo": 70.0,
+        "color": "#fbc02d",
+        "severidad": "advertencia"
+      },
+      {
+        "nivel": 4,
+        "nombre": "Buena",
+        "minimo": 71.0,
+        "maximo": 90.0,
+        "color": "#1976d2",
+        "severidad": "informativa"
+      },
+      {
+        "nivel": 5,
+        "nombre": "Excelente",
+        "minimo": 91.0,
+        "maximo": 100.0,
+        "color": "#0d47a1",
+        "severidad": "informativa"
+      }
+    ],
+    "ruido": [
+      {
+        "nivel": 1,
+        "nombre": "Silencio",
+        "minimo": 0.0,
+        "maximo": 30.0,
+        "color": "#1a9850",
+        "severidad": "informativa"
+      },
+      {
+        "nivel": 2,
+        "nombre": "Tranquilo",
+        "minimo": 30.0,
+        "maximo": 55.0,
+        "color": "#91cf60",
+        "severidad": "informativa"
+      },
+      {
+        "nivel": 3,
+        "nombre": "Moderado",
+        "minimo": 55.0,
+        "maximo": 70.0,
+        "color": "#ffffbf",
+        "severidad": "informativa"
+      },
+      {
+        "nivel": 4,
+        "nombre": "Ruidoso",
+        "minimo": 70.0,
+        "maximo": 85.0,
+        "color": "#fc8d59",
+        "severidad": "advertencia"
+      },
+      {
+        "nivel": 5,
+        "nombre": "Dañino",
+        "minimo": 85.0,
+        "maximo": 100.0,
+        "color": "#d73027",
+        "severidad": "critica"
+      },
+      {
+        "nivel": 6,
+        "nombre": "Peligroso",
+        "minimo": 100.0,
+        "maximo": 200.0,
+        "color": "#7f0000",
+        "severidad": "emergencia"
+      }
+    ],
+    "humedad": [
+      {
+        "nivel": 1,
+        "nombre": "Muy seco",
+        "minimo": 0.0,
+        "maximo": 20.0,
+        "color": "#fdae61",
+        "severidad": "advertencia"
+      },
+      {
+        "nivel": 2,
+        "nombre": "Seco",
+        "minimo": 20.0,
+        "maximo": 40.0,
+        "color": "#fee090",
+        "severidad": "informativa"
+      },
+      {
+        "nivel": 3,
+        "nombre": "Confortable",
+        "minimo": 40.0,
+        "maximo": 60.0,
+        "color": "#abd9e9",
+        "severidad": "informativa"
+      },
+      {
+        "nivel": 4,
+        "nombre": "Húmedo",
+        "minimo": 60.0,
+        "maximo": 80.0,
+        "color": "#74add1",
+        "severidad": "informativa"
+      },
+      {
+        "nivel": 5,
+        "nombre": "Muy húmedo",
+        "minimo": 80.0,
+        "maximo": 100.0,
+        "color": "#313695",
+        "severidad": "advertencia"
+      }
+    ]
+  }
+}

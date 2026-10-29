@@ -1,7 +1,7 @@
 <section class="card sim-resultado">
     <div class="card-header"><h2>{{ $sesion->nombre }}</h2><span class="badge bg-orange-lt">Simulado</span></div>
     <div class="card-body">
-        <p>{{ $metricas[$sesion->configuracion['metrica']]['nombre'] }} · {{ $sesion->configuracion['dias'] }} días · Lecturas cada {{ $sesion->configuracion['intervalo'] }} minutos.</p>
+        <p>{{ $metricas[$sesion->configuracion['metrica']]['nombre'] }} · {{ $sesion->configuracion['dias'] }} {{ (int) $sesion->configuracion['dias'] === 1 ? 'día' : 'días' }} · Lecturas cada {{ $sesion->configuracion['intervalo'] }} minutos.</p>
         <div class="sim-reproductor"><button class="btn btn-primary" type="button" data-accion="iniciar">Reproducir</button><button class="btn btn-outline-primary" type="button" data-accion="pausar">Pausar</button><button class="btn btn-outline-primary" type="button" data-accion="detener">Detener</button><button class="btn btn-outline-primary" type="button" data-accion="reiniciar">Reiniciar</button><span id="sim-estado" role="status">{{ $sesion->estado }}</span></div>
         <label class="form-label mt-3" for="sim-tiempo">Recorrido de la simulación · <span id="sim-fecha"></span></label><input id="sim-tiempo" type="range" class="form-range" min="0" max="{{ count($sesion->resultado['instantes'])-1 }}" value="{{ $sesion->posicion }}">
         <div class="sim-vista"><div id="sim-mapa" role="region" aria-label="Zonas simuladas"></div><div><h3>Comparación</h3><div id="sim-valores"></div><svg id="sim-grafico" viewBox="0 0 640 220" role="img" aria-label="Evolución de los valores simulados por zona"></svg><p id="sim-rango"></p></div></div>

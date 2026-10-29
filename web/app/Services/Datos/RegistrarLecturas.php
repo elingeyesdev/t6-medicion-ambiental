@@ -4,6 +4,7 @@ namespace App\Services\Datos;
 
 use App\Models\LecturaAmbiental;
 use App\Models\PuntoAmbiental;
+use App\Services\Alertas\EvaluarAlertas;
 use App\Services\Api\ErrorConsulta;
 use App\Services\Api\ParametrosConsulta;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +42,7 @@ final class RegistrarLecturas
 
         return DB::transaction(function () use ($normalizadas, $actor): array {
             $nuevas = 0;
+            $paraAlertas = [];
             $puntos = PuntoAmbiental::whereIn('codigo', array_column($normalizadas, 'codigo'))->orderBy('id')->lockForUpdate()->get()->keyBy('codigo');
             foreach ($normalizadas as $fila) {
                 $punto = $puntos->get($fila['codigo']);
@@ -55,8 +57,10 @@ final class RegistrarLecturas
                 }
                 if ($lectura->wasRecentlyCreated) {
                     $nuevas++;
+                    $paraAlertas[] = $lectura->setRelation('punto', $punto);
                 }
             }
+            app(EvaluarAlertas::class)->ejecutar($paraAlertas);
 
             return ['nuevas' => $nuevas, 'repetidas' => count($normalizadas) - $nuevas];
         }, 3);
