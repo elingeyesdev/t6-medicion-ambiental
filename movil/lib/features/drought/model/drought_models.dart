@@ -6,6 +6,17 @@ Map<String, dynamic> _toMap(Object? value) {
   return const {};
 }
 
+List<double> _coordinates(Object? raw) {
+  if (raw is! List || raw.length != 2 || raw.any((v) => v is! num || !v.isFinite)) {
+    throw const FormatException('La ubicación recibida no es válida.');
+  }
+  final coordinates = raw.cast<num>().map((v) => v.toDouble()).toList();
+  if (coordinates[0].abs() > 180 || coordinates[1].abs() > 90) {
+    throw const FormatException('La ubicación recibida no es válida.');
+  }
+  return coordinates;
+}
+
 /// Categorías del índice SPI-3 según el contrato sequias-1.0-m3-candidata.
 class DroughtCategory {
   const DroughtCategory({
@@ -72,6 +83,8 @@ class DroughtCategory {
     moderadamenteSeco,
     normal,
     moderadamenteHumedo,
+    muyHumedo,
+    extremadamenteHumedo,
     sinIndice,
   ];
 
@@ -138,6 +151,10 @@ class SpiResult {
       hasValue ? DroughtCategory.fromId(categoria) : DroughtCategory.sinIndice;
 
   factory SpiResult.fromJson(Map<String, dynamic> json) {
+    final value = json['valor'];
+    if (!json.containsKey('valor') || (value != null && (value is! num || !value.isFinite))) {
+      throw const FormatException('El índice recibido no es válido.');
+    }
     return SpiResult(
       valor: (json['valor'] as num?)?.toDouble(),
       categoria: json['categoria'] as String?,
@@ -167,7 +184,7 @@ class DroughtSample {
 
   final String idMuestra;
   final String territorioContexto;
-  final String municipioDelCentroCelda;
+  final String? municipioDelCentroCelda;
   final List<double> coordenadaSolicitada;
   final List<double> coordenadaCelda;
   final String naturaleza;
@@ -182,12 +199,8 @@ class DroughtSample {
   bool get centroDifiere => municipioDelCentroCelda != territorioContexto;
 
   factory DroughtSample.fromJson(Map<String, dynamic> json) {
-    final sol = (json['coordenadaSolicitada'] as List<dynamic>)
-        .map((e) => (e as num).toDouble())
-        .toList();
-    final cel = (json['coordenadaCelda'] as List<dynamic>)
-        .map((e) => (e as num).toDouble())
-        .toList();
+    final sol = _coordinates(json['coordenadaSolicitada']);
+    final cel = _coordinates(json['coordenadaCelda']);
     final fuentes = (json['fuentesRef'] as List<dynamic>?)
             ?.map((e) => e.toString())
             .toList() ??
@@ -196,7 +209,7 @@ class DroughtSample {
     return DroughtSample(
       idMuestra: json['idMuestra'] as String,
       territorioContexto: json['territorioContexto'] as String,
-      municipioDelCentroCelda: json['municipioDelCentroCelda'] as String,
+      municipioDelCentroCelda: json['municipioDelCentroCelda'] as String?,
       coordenadaSolicitada: sol,
       coordenadaCelda: cel,
       naturaleza: json['naturaleza'] as String? ?? 'derivado_de_reanalisis',
@@ -264,7 +277,7 @@ class DroughtCoverage {
   final List<String> muestrasSinPreparar;
   final String estadoDatos;
 
-  bool get esParcial => muestrasSinPreparar.isNotEmpty;
+  bool get esParcial => muestrasSinPreparar.isNotEmpty || estadoDatos == 'parcial' || municipiosConDatos < municipiosEnFiltro;
 
   factory DroughtCoverage.fromJson(Map<String, dynamic> json) {
     final pendientes = (json['muestrasSinPreparar'] as List<dynamic>?)
@@ -312,6 +325,15 @@ class DroughtResponse {
 
   factory DroughtResponse.fromJson(Object? raw) {
     final json = _toMap(raw);
+    bool validCounts(Object? value, List<String> keys) => value is Map && keys.every((key) => value[key] is int && (value[key] as int) >= 0);
+    if (json['versionContrato'] != 'sequias-1.0-m3-candidata' ||
+        json['datos'] is! List || (json['datos'] as List).isEmpty ||
+        json['consulta'] is! Map || json['fuentes'] is! List || json['advertencias'] is! List ||
+        !validCounts(json['resumen'], ['totalMuestras', 'muestrasConIndice', 'muestrasSinIndice', 'muestrasConDeficit']) ||
+        !validCounts(json['cobertura'], ['municipiosEnFiltro', 'municipiosConMuestra', 'municipiosConDatos', 'municipiosConIndice', 'celdasUnicas', 'muestrasSeleccionadas']) ||
+        _toMap(json['cobertura'])['muestrasSinPreparar'] is! List) {
+      throw const FormatException('La consulta llegó incompleta. Inténtalo otra vez.');
+    }
     final datosList = (json['datos'] as List<dynamic>?)
             ?.map((e) => DroughtSample.fromJson(_toMap(e)))
             .toList() ??
@@ -320,6 +342,12 @@ class DroughtResponse {
             ?.map((e) => e.toString())
             .toList() ??
         const [];
+    final summary = _toMap(json['resumen']);
+    if (summary['totalMuestras'] != datosList.length ||
+        (summary['muestrasConIndice'] as int) + (summary['muestrasSinIndice'] as int) != datosList.length ||
+        !['parcial', 'completo_para_muestras_seleccionadas'].contains(_toMap(json['cobertura'])['estadoDatos'])) {
+      throw const FormatException('La consulta llegó incompleta. Inténtalo otra vez.');
+    }
 
     return DroughtResponse(
       versionContrato: json['versionContrato'] as String? ?? '',

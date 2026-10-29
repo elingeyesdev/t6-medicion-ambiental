@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:geocruz_movil/core/network/geocruz_api_client.dart';
 import 'package:geocruz_movil/features/drought/model/drought_models.dart';
 import 'package:geocruz_movil/features/drought/model/drought_repository.dart';
+import 'fixtures/drought_response.dart';
 
 class MockGeoCruzApiClient extends Fake implements GeoCruzApiClient {
   Object? nextResponse;
@@ -191,15 +192,7 @@ void main() {
     test('ejecuta consulta al endpoint sequias con parámetros correctos',
         () async {
       final mock = MockGeoCruzApiClient();
-      mock.nextResponse = {
-        'versionContrato': 'sequias-1.0-m3-candidata',
-        'datos': [],
-        'consulta': {},
-        'fuentes': [],
-        'resumen': {},
-        'cobertura': {},
-        'advertencias': [],
-      };
+      mock.nextResponse = droughtResponse();
 
       final repo = DroughtRepository(mock);
       const filters = DroughtFilters(mesFinal: '2024-09', municipio: 'BO070101');

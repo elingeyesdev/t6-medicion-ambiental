@@ -20,7 +20,11 @@ class DroughtRepository {
       throw const FormatException('La respuesta de sequías no es un objeto JSON válido.');
     }
 
-    return DroughtResponse.fromJson(payload);
+    final response = DroughtResponse.fromJson(payload);
+    if (response.consulta['mesFinal'] != filters.mesFinal) {
+      throw const FormatException('El resultado no corresponde al mes elegido. Inténtalo otra vez.');
+    }
+    return response;
   }
 
   /// Carga el catálogo territorial oficial de Santa Cruz.
