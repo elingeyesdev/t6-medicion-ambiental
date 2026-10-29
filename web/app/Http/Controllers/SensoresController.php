@@ -48,7 +48,7 @@ class SensoresController extends Controller
 
         return view('datos.index', ['modulos' => array_filter(config('geocruz.modulos'), fn ($m) => $m['habilitado']),
             'puntos' => $puntos, 'punto' => $punto, 'resultado' => $resultado, 'metricas' => $catalogo->metricas(), 'paises' => $catalogo->paises(), 'origenes' => CatalogoAmbiental::ORIGENES,
-            'datosMapa' => ['puntos' => $puntos->map->only(['codigo', 'nombre', 'latitud', 'longitud'])->values(), 'seleccionado' => $punto?->only(['codigo', 'nombre', 'latitud', 'longitud']), 'horas' => $resultado['horas'] ?? [], 'origenes' => CatalogoAmbiental::ORIGENES],
+            'datosMapa' => ['puntos' => $puntos->map->only(['codigo', 'nombre', 'latitud', 'longitud'])->values(), 'seleccionado' => $punto?->only(['codigo', 'nombre', 'latitud', 'longitud']), 'horas' => $resultado['horas'] ?? [], 'metrica' => $datos['metrica'] ?? 'temperatura', 'unidad' => $catalogo->metricas()[$datos['metrica'] ?? 'temperatura']['unidad'], 'origenes' => CatalogoAmbiental::ORIGENES],
             'metrica' => $datos['metrica'] ?? 'temperatura', 'desde' => CarbonImmutable::parse($resultado['desde'] ?? now()->subDays(7))->setTimezone('America/La_Paz')->format('Y-m-d\TH:i'),
             'hasta' => CarbonImmutable::parse($resultado['hasta'] ?? now())->setTimezone('America/La_Paz')->format('Y-m-d\TH:i')]);
     }

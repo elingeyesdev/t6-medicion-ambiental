@@ -3,6 +3,7 @@ import { consultaMonitoreo } from './consulta-monitoreo.js';
 import { crearConsultaTiempo } from './tiempo.js';
 import { iniciarBuscadorLugar } from './buscador.js';
 import { compararLecturas, iniciarRecorrido } from './historial-mapa.js';
+import { medida } from '../datos/unidades.js';
 
 const configuracion = JSON.parse(document.getElementById('configuracion-monitoreo').textContent);
 const formulario = document.getElementById('consulta-monitoreo');
@@ -132,7 +133,7 @@ function seleccionar(punto) {
     for (const lectura of enComparacion ? [] : punto.lecturas) {
         const ficha = nodo('section', undefined, 'mon-lectura ' + lectura.origen);
         ficha.append(nodo('span', origenes[lectura.origen]));
-        ficha.append(nodo('strong', lectura.valor.toLocaleString('es-BO', { maximumFractionDigits: 2 }) + ' ' + respuestaActual.unidad));
+        const cifra = nodo('strong'); cifra.append(medida(respuestaActual.metrica, lectura.valor, respuestaActual.unidad)); ficha.append(cifra);
         ficha.append(nodo('p', formatoFecha.format(new Date(lectura.instante)) + ' · Bolivia'));
         ficha.append(nodo('p', nombreFuente(lectura.fuente)));
         if (lectura.origen === 'estimado') ficha.append(nodo('p', 'Estimación de modelo, no medición de una estación.'));
@@ -195,13 +196,13 @@ function fichaComparacion(actual) {
         for (const [letra, lectura] of [['A', fila.a], ['B', fila.b]]) {
             const valor = nodo('div', undefined, 'comparacion-valor comparacion-' + letra.toLowerCase());
             valor.append(nodo('span', letra === 'A' ? 'Referencia' : 'Selección'));
-            valor.append(nodo('strong', lectura ? lectura.valor.toLocaleString('es-BO', {maximumFractionDigits: 2}) + ' ' + actual.unidad : 'Sin lectura'));
+            const cifra = nodo('strong'); cifra.append(lectura ? medida(actual.metrica, lectura.valor, actual.unidad) : document.createTextNode('Sin lectura')); valor.append(cifra);
             if (lectura) valor.append(nodo('p', formatoFecha.format(new Date(lectura.instante)) + ' · Bolivia'));
             valores.append(valor);
         }
         tarjeta.append(valores);
         if (fila.cambio !== null) {
-            tarjeta.append(nodo('p', 'Diferencia: ' + (fila.cambio > 0 ? '+' : '') + fila.cambio.toLocaleString('es-BO', {maximumFractionDigits: 2}) + ' ' + actual.unidad));
+            const diferencia = nodo('p', 'Diferencia: ' + (fila.cambio > 0 ? '+' : '')); diferencia.append(medida(actual.metrica, fila.cambio, actual.unidad, true)); tarjeta.append(diferencia);
             const ubicaciones = nodo('button', 'Ver ambas ubicaciones', 'btn btn-outline-primary');
             ubicaciones.type = 'button';
             ubicaciones.addEventListener('click', () => {

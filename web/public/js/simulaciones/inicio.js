@@ -1,4 +1,5 @@
 import { iniciarMapaBase } from '../mapas/base.js';
+import { presentacion } from '../datos/unidades.js';
 
 const catalogo=JSON.parse(document.getElementById('catalogo-escenarios').textContent);
 const metrica=document.getElementById('sim-metrica');
@@ -45,13 +46,14 @@ function iniciar(config) {
         linea.setAttribute('points',serie.valores.map((v,j)=>`${20+j/Math.max(1,serie.valores.length-1)*600},${195-(v-minimo)/Math.max(1,maximo-minimo)*170}`).join(' '));
         linea.setAttribute('fill','none');linea.setAttribute('stroke',colores[i]);linea.setAttribute('stroke-width','3');svg.append(linea);
     }
-    document.getElementById('sim-rango').textContent=`Valores simulados entre ${minimo} y ${maximo} ${sesion.resultado.unidad}.`;
+    const cifra = v => presentacion.texto(sesion.configuracion.metrica, v, sesion.resultado.unidad);
     const cursor=document.createElementNS('http://www.w3.org/2000/svg','line');cursor.setAttribute('y1','10');cursor.setAttribute('y2','210');cursor.setAttribute('stroke','#344556');cursor.setAttribute('stroke-dasharray','4');svg.append(cursor);
     function mostrar() {
         barra.value=posicion;
+        document.getElementById('sim-rango').textContent='Valores simulados entre '+cifra(minimo)+' y '+cifra(maximo)+'.';
         document.getElementById('sim-fecha').textContent=fecha.format(new Date(sesion.resultado.instantes[posicion]))+' · Bolivia';
         for(const [i,serie] of sesion.resultado.series.entries()) {
-            valores.children[i].querySelector('strong').textContent=serie.valores[posicion]+' '+sesion.resultado.unidad;
+            valores.children[i].querySelector('strong').textContent=cifra(serie.valores[posicion]);
             marcadores[i].setRadius(8+(serie.valores[posicion]-minimo)/Math.max(1,maximo-minimo)*12);
         }
         cursor.setAttribute('x1',20+posicion/Math.max(1,sesion.resultado.instantes.length-1)*600);cursor.setAttribute('x2',cursor.getAttribute('x1'));
@@ -73,6 +75,7 @@ function iniciar(config) {
     barra.addEventListener('input',()=>{parar();posicion=Number(barra.value);mostrar();});
     barra.addEventListener('change',()=>{if(sesion.estado==='activa') accion('pausar');});
     window.addEventListener('pagehide',parar);
+    document.addEventListener('unidades-cambiadas',mostrar);
     if(sesion.estado==='activa') estado.textContent='Lista para continuar';
     mostrar();
 }

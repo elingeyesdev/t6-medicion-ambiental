@@ -100,3 +100,6 @@
     .monitoreo-leyenda { top: calc(65dvh - 125px); bottom: auto; }
     .monitoreo-procedencia { top:calc(65dvh - 60px); bottom:auto; }
 }
+
+.monitoreo-unidades { border-bottom: 1px solid var(--enviro-borde); }
+.monitoreo-unidades > form { padding: 0 20px 16px; }

@@ -16,7 +16,7 @@
         <p id="aviso-mapa-datos" class="datos-ayuda" role="status">Pulsa un punto para consultar sus registros.</p>
     </section>
     <section class="card datos-tarjeta">
-        <div class="card-header"><h2>{{ $metricas[$metrica]['nombre'] }} · {{ $metricas[$metrica]['unidad'] }}</h2></div>
+        <div class="card-header"><h2>{{ $metricas[$metrica]['nombre'] }} · <x-datos.unidad :metrica="$metrica" :unidad="$metricas[$metrica]['unidad']" /></h2></div>
         <div class="card-body">
             <p>Promedios por hora</p>
             <div id="grafico-datos" role="img" aria-label="Evolución de {{ $metricas[$metrica]['nombre'] }}. Los valores se pueden consultar en la tabla de registros."></div>
@@ -27,7 +27,7 @@
                         <div>
                             <span class="datos-etiqueta {{ $resumen['origen'] }}">{{ $origenes[$resumen['origen']] }}</span>
                             <p>@include('datos.fuente', ['fuente' => $resumen['fuente']])</p>
-                            <strong>{{ number_format($resumen['minimo'], 1, ',', '.') }} – {{ number_format($resumen['maximo'], 1, ',', '.') }} {{ $metricas[$metrica]['unidad'] }}</strong>
+                            <strong><x-datos.valor :metrica="$metrica" :valor="$resumen['minimo']" :unidad="$metricas[$metrica]['unidad']" /> – <x-datos.valor :metrica="$metrica" :valor="$resumen['maximo']" :unidad="$metricas[$metrica]['unidad']" /></strong>
                             <p>{{ $resumen['cantidad'] }} {{ $resumen['cantidad'] === 1 ? 'registro' : 'registros' }}</p>
                         </div>
                     @endforeach
@@ -47,7 +47,7 @@
                 @forelse($resultado['datos'] as $lectura)
                     <tr>
                         <td>{{ \Carbon\CarbonImmutable::parse($lectura['instante'])->setTimezone('America/La_Paz')->format('d/m/Y H:i') }}</td>
-                        <td><strong>{{ number_format($lectura['valor'], 1, ',', '.') }} {{ $lectura['unidad'] }}</strong></td>
+                        <td><strong><x-datos.valor :metrica="$metrica" :valor="$lectura['valor']" :unidad="$lectura['unidad']" /></strong></td>
                         <td><span class="datos-etiqueta {{ $lectura['origen'] }}">{{ $origenes[$lectura['origen']] }}</span></td>
                         <td>@include('datos.fuente', ['fuente' => $lectura['fuente']])</td>
                     </tr>
