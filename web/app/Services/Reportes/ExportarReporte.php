@@ -35,6 +35,9 @@ final class ExportarReporte
         }
         $pdf->loadHtml(view('reportes.pdf', ['reporte' => $reporte, 'columnas' => PrepararReporte::COLUMNAS, 'graficos' => $graficos])->render(), 'UTF-8');
         $pdf->render();
+        $pagina = $pdf->getCanvas();
+        $fuente = $pdf->getFontMetrics()->getFont('DejaVu Sans', 'normal');
+        $pagina->page_text(28, $pagina->get_height() - 24, 'GeoSur - {PAGE_NUM} / {PAGE_COUNT}', $fuente, 9, [0.23, 0.31, 0.42]);
 
         return $pdf->output();
     }

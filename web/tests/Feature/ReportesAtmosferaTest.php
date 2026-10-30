@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\ReporteAmbiental;
 use App\Models\SimulacionContinua;
 use App\Models\User;
+use App\Services\Datos\CatalogoAmbiental;
 use App\Services\Reportes\GraficoReporte;
 use App\Services\Reportes\VariablesReporte;
 use App\Services\Simulaciones\ContinuarSimulacion;
@@ -39,17 +41,20 @@ class ReportesAtmosferaTest extends TestCase
             'variables' => ['temperatura', 'lluvia', 'viento', 'visibilidad', 'nieve', 'nieve_acumulada', 'aqi'], 'horas' => 3];
     }
 
-    private function respuesta(): array
+    private function respuesta(string $codigo = 'santacruz'): array
     {
         $hora = now('UTC')->startOfHour()->timestamp;
         $h = ['time' => [$hora, $hora + 3600, $hora + 7200]];
-        $u = [];
+        $u = ['time' => 'unixtime'];
         foreach (app(VariablesReporte::class)->atmosfericas() as [$campo, , $unidad, $min]) {
             $h[$campo] = [max(0, $min), null, max(1, $min)];
             $u[$campo] = $unidad;
         }
 
-        return ['hourly' => $h, 'hourly_units' => $u];
+        $punto = collect(app(CatalogoAmbiental::class)->leer()['puntos'])->firstWhere('codigo', $codigo);
+
+        return ['latitude' => $punto['latitud'], 'longitude' => $punto['longitud'], 'utc_offset_seconds' => 0,
+            'hourly' => $h, 'hourly_units' => $u];
     }
 
     public function test_una_accion_explicita_conserva_variables_ceros_faltantes_y_fuentes(): void
@@ -58,11 +63,12 @@ class ReportesAtmosferaTest extends TestCase
         Http::fake(fn () => Http::response($this->respuesta()));
         $r = $this->postJson('/api/v1/reportes', $this->entrada(['variables' => array_keys(app(VariablesReporte::class)->atmosfericas())]))->assertCreated();
         $filas = $r->json('contenido.filas');
-        $this->assertCount(28, $filas);
-        $this->assertCount(14, $r->json('contenido.faltantes'));
+        $this->assertCount(count(app(VariablesReporte::class)->atmosfericas()) * 2, $filas);
+        $this->assertCount(count(app(VariablesReporte::class)->atmosfericas()), $r->json('contenido.faltantes'));
         $this->assertEquals(0, $filas[0]['valor']);
         $this->assertSame(['estimado'], array_values(array_unique(array_column($filas, 'origen'))));
-        $this->assertContains('open-meteo-cams', array_column($filas, 'fuente'));
+        $this->assertContains('open-meteo-cams-us', array_column($filas, 'fuente'));
+        $this->assertContains('open-meteo-cams-eu', array_column($filas, 'fuente'));
         $nieve = collect($filas)->firstWhere('metrica', 'nieve_acumulada');
         $this->assertSame('m', $nieve['unidad']);
         $this->assertSame(now('UTC')->startOfHour()->toIso8601ZuluString(), $nieve['instante']);
@@ -150,7 +156,7 @@ class ReportesAtmosferaTest extends TestCase
     {
         $this->cliente();
         $a = $this->respuesta() + ['location_id' => 0];
-        $b = $this->respuesta() + ['location_id' => 1];
+        $b = $this->respuesta('lapaz') + ['location_id' => 1];
         $b['hourly']['rain'][0] = 25;
         $respuesta = [$a, $b];
         Http::fake(function () use (&$respuesta) {
@@ -239,5 +245,113 @@ class ReportesAtmosferaTest extends TestCase
         $this->assertNotSame($r['parametros']['corte']['version'], SimulacionContinua::find(1)->contenido['version']);
         $this->assertDatabaseCount('lecturas_ambientales', 0);
         Http::assertNothingSent();
+    }
+
+    public function test_las_escalas_del_aire_tienen_variables_unidades_fuentes_y_graficos_distintos(): void
+    {
+        $this->cliente();
+        $datos = $this->respuesta();
+        $datos['hourly']['us_aqi'] = [91, null, 95];
+        $datos['hourly']['european_aqi'] = [40, null, 45];
+        Http::fake(fn () => Http::response($datos));
+        $r = $this->postJson('/api/v1/reportes', $this->entrada(['variables' => ['aqi', 'aqi_europeo']]))->assertCreated()->json();
+        $us = collect($r['contenido']['filas'])->firstWhere('metrica', 'aqi');
+        $eu = collect($r['contenido']['filas'])->firstWhere('metrica', 'aqi_europeo');
+        $this->assertSame('USAQI', $us['unidad']);
+        $this->assertSame('EAQI', $eu['unidad']);
+        $this->assertSame('us_aqi', $us['escala']);
+        $this->assertSame('european_aqi', $eu['escala']);
+        $this->assertNotSame($us['fuente'], $eu['fuente']);
+        $this->assertSame(91, $us['valor']);
+        $this->assertSame(40, $eu['valor']);
+        $this->assertCount(2, $r['contenido']['resumen']);
+        $this->assertCount(2, app(GraficoReporte::class)->series($r['contenido']));
+        $this->assertSame(hash('sha256', json_encode($datos)), $r['contenido']['productos'][0]['sha256Respuesta']);
+        $this->assertSame('santacruz', $r['contenido']['productos'][0]['celdas'][0]['punto']);
+        Http::assertSentCount(1);
+        Http::assertSent(fn ($q) => $q['domains'] === 'cams_global' && $q['hourly'] === 'us_aqi,european_aqi' && $q['forecast_hours'] === 3);
+        $this->get('/reportes/'.$r['id'])->assertOk()->assertSee('escala europea')->assertSee('escala de Estados Unidos')->assertSee('USAQI')->assertSee('EAQI');
+        $this->assertDatabaseCount('lecturas_ambientales', 0);
+    }
+
+    public function test_celdas_zonas_escalas_y_fechas_incoherentes_no_guardan_ningun_reporte(): void
+    {
+        $this->cliente();
+        $datos = [];
+        Http::fake(function () use (&$datos) {
+            return Http::response($datos);
+        });
+        $casos = [
+            fn (&$r) => $r['latitude'] = 40,
+            fn (&$r) => $r['longitude'] = 0,
+            fn (&$r) => $r['latitude'] = '-17.8',
+            fn (&$r) => $r['utc_offset_seconds'] = -14400,
+            fn (&$r) => $r['hourly_units']['time'] = 'iso8601',
+            fn (&$r) => $r['hourly_units']['us_aqi'] = 'EAQI',
+            fn (&$r) => $r['hourly_units']['european_aqi'] = 'USAQI',
+            fn (&$r) => $r['hourly']['european_aqi'][0] = -1,
+            function (&$r) {
+                foreach ($r['hourly']['time'] as &$t) {
+                    $t += 1800;
+                }
+            },
+        ];
+        foreach ($casos as $cambiar) {
+            $datos = $this->respuesta();
+            $cambiar($datos);
+            $this->postJson('/api/v1/reportes', $this->entrada(['variables' => ['aqi', 'aqi_europeo']]))->assertStatus(503);
+        }
+        $this->assertDatabaseCount('reportes_ambientales', 0);
+    }
+
+    public function test_no_se_aplican_condiciones_cruzando_las_dos_escalas(): void
+    {
+        $this->cliente();
+        Http::fake(fn () => Http::response($this->respuesta()));
+        $p = $this->postJson('/api/v1/plantillas', ['nombre' => 'Dos escalas', 'columnas' => ['variable', 'valor', 'unidad'], 'grafico' => true,
+            'condiciones' => [['variable' => 'aqi', 'operador' => '=', 'valor' => 0], ['variable' => 'aqi_europeo', 'operador' => '=', 'valor' => 0]]])->assertCreated()->json('id');
+        $this->postJson('/api/v1/reportes', $this->entrada(['plantilla' => $p, 'variables' => ['aqi', 'aqi_europeo']]))->assertCreated()->assertJsonPath('contenido.filas', []);
+    }
+
+    public function test_reportes_anteriores_con_aqi_generico_conservan_su_corte_y_descargan_sin_red(): void
+    {
+        $u = $this->cliente();
+        Http::fake(fn () => Http::response($this->respuesta()));
+        $nuevo = $this->postJson('/api/v1/reportes', $this->entrada(['variables' => ['aqi']]))->assertCreated()->json();
+        $contenido = $nuevo['contenido'];
+        unset($contenido['productos']);
+        foreach (['filas', 'faltantes', 'resumen'] as $grupo) {
+            foreach ($contenido[$grupo] as &$fila) {
+                $fila['fuente'] = 'open-meteo-cams';
+                $fila['fuenteNombre'] = 'Open-Meteo · CAMS';
+                $fila['variable'] = 'Calidad del aire';
+                $fila['unidad'] = 'AQI';
+                unset($fila['escala']);
+            }
+            unset($fila);
+        }
+        $viejo = ReporteAmbiental::create(['usuario_id' => $u->id, 'titulo' => 'Corte anterior', 'parametros' => $nuevo['parametros'], 'contenido' => $contenido]);
+        $this->postJson('/api/v1/reportes', $this->entrada(['variables' => ['aqi_europeo']]))->assertCreated();
+        $this->getJson('/api/v1/reportes/'.$viejo->id)->assertOk()->assertJsonPath('contenido', $contenido);
+        $this->get('/reportes/'.$viejo->id.'/descargar/pdf')->assertOk()->assertHeader('Content-Type', 'application/pdf');
+        $this->get('/reportes/'.$viejo->id.'/descargar/xlsx')->assertOk();
+        Http::assertSentCount(2);
+    }
+
+    public function test_pedir_ambas_escalas_no_expone_claves_y_limita_la_descarga(): void
+    {
+        $this->cliente();
+        config(['reportes.atmosfera.clave' => 'secreto-controlado-no-real']);
+        $opciones = [];
+        Http::fake(function ($r, $configuracion) use (&$opciones) {
+            $opciones = $configuracion;
+
+            return Http::response($this->respuesta());
+        });
+        $r = $this->postJson('/api/v1/reportes', $this->entrada(['variables' => ['aqi_europeo']]))->assertCreated()->assertDontSee('secreto-controlado');
+        $this->assertFalse($opciones['allow_redirects']);
+        $this->assertSame(12, $opciones['timeout']);
+        $this->expectException(\UnexpectedValueException::class);
+        $opciones['progress'](0, 1500001);
     }
 }

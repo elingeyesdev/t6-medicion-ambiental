@@ -1,0 +1,277 @@
+{
+    "id": "01m65hxcfcttge25a3jg73qzb0",
+    "titulo": "Pronóstico de Santa Cruz - dos escalas del aire",
+    "parametros": {
+        "titulo": "Pronóstico de Santa Cruz - dos escalas del aire",
+        "base": "atmosfera",
+        "horas": 3,
+        "puntos": [
+            "santacruz"
+        ],
+        "variables": [
+            "temperatura",
+            "aqi",
+            "aqi_europeo"
+        ],
+        "consultadoEl": "2026-10-30T04:43:27Z"
+    },
+    "contenido": {
+        "faltantes": [],
+        "atribucion": "Open-Meteo y Copernicus Atmosphere Monitoring Service (CAMS global; reconocimiento CAMS ENSEMBLE). CC BY 4.0. Índices europeo y estadounidense separados.",
+        "productos": [
+            {
+                "grupo": "tiempo",
+                "producto": "Modelos meteorológicos · Open-Meteo",
+                "sha256Respuesta": "d7a041fd4da1452c4a8e7f9d0e219b5640f94ef6483dfda42fd6273118c8ec08",
+                "celdas": [
+                    {
+                        "punto": "santacruz",
+                        "latitud": -17.820738,
+                        "longitud": -63.200775
+                    }
+                ]
+            },
+            {
+                "grupo": "aire",
+                "producto": "CAMS global · Open-Meteo",
+                "sha256Respuesta": "7b44d46ed9e9e680b71e6a74ed984bc847695ceee0f1e419061d161c13e1ea2f",
+                "celdas": [
+                    {
+                        "punto": "santacruz",
+                        "latitud": -17.799995,
+                        "longitud": -63.199997
+                    }
+                ]
+            }
+        ],
+        "columnas": [
+            "fecha",
+            "punto",
+            "variable",
+            "valor",
+            "unidad",
+            "origen",
+            "fuente"
+        ],
+        "grafico": true,
+        "plantilla": {
+            "columnas": [
+                "fecha",
+                "punto",
+                "variable",
+                "valor",
+                "unidad",
+                "origen",
+                "fuente"
+            ],
+            "grafico": true
+        },
+        "filas": [
+            {
+                "puntoCodigo": "santacruz",
+                "punto": "Santa Cruz",
+                "pais": "BO",
+                "latitud": -17.7833,
+                "longitud": -63.1812,
+                "metrica": "temperatura",
+                "variable": "Temperatura",
+                "unidad": "°C",
+                "instante": "2026-10-30T04:00:00Z",
+                "valor": 20.9,
+                "origen": "estimado",
+                "fuente": "open-meteo-modelo",
+                "fecha": "30\/10\/2026 00:00",
+                "origenNombre": "Estimado",
+                "fuenteNombre": "Open-Meteo · modelo meteorológico"
+            },
+            {
+                "puntoCodigo": "santacruz",
+                "punto": "Santa Cruz",
+                "pais": "BO",
+                "latitud": -17.7833,
+                "longitud": -63.1812,
+                "metrica": "temperatura",
+                "variable": "Temperatura",
+                "unidad": "°C",
+                "instante": "2026-10-30T05:00:00Z",
+                "valor": 20.5,
+                "origen": "estimado",
+                "fuente": "open-meteo-modelo",
+                "fecha": "30\/10\/2026 01:00",
+                "origenNombre": "Estimado",
+                "fuenteNombre": "Open-Meteo · modelo meteorológico"
+            },
+            {
+                "puntoCodigo": "santacruz",
+                "punto": "Santa Cruz",
+                "pais": "BO",
+                "latitud": -17.7833,
+                "longitud": -63.1812,
+                "metrica": "temperatura",
+                "variable": "Temperatura",
+                "unidad": "°C",
+                "instante": "2026-10-30T06:00:00Z",
+                "valor": 20.3,
+                "origen": "estimado",
+                "fuente": "open-meteo-modelo",
+                "fecha": "30\/10\/2026 02:00",
+                "origenNombre": "Estimado",
+                "fuenteNombre": "Open-Meteo · modelo meteorológico"
+            },
+            {
+                "puntoCodigo": "santacruz",
+                "punto": "Santa Cruz",
+                "pais": "BO",
+                "latitud": -17.7833,
+                "longitud": -63.1812,
+                "metrica": "aqi",
+                "variable": "Aire · escala de Estados Unidos",
+                "unidad": "USAQI",
+                "instante": "2026-10-30T04:00:00Z",
+                "valor": 53,
+                "origen": "estimado",
+                "fuente": "open-meteo-cams-us",
+                "escala": "us_aqi",
+                "fecha": "30\/10\/2026 00:00",
+                "origenNombre": "Estimado",
+                "fuenteNombre": "CAMS global · escala de Estados Unidos"
+            },
+            {
+                "puntoCodigo": "santacruz",
+                "punto": "Santa Cruz",
+                "pais": "BO",
+                "latitud": -17.7833,
+                "longitud": -63.1812,
+                "metrica": "aqi",
+                "variable": "Aire · escala de Estados Unidos",
+                "unidad": "USAQI",
+                "instante": "2026-10-30T05:00:00Z",
+                "valor": 54,
+                "origen": "estimado",
+                "fuente": "open-meteo-cams-us",
+                "escala": "us_aqi",
+                "fecha": "30\/10\/2026 01:00",
+                "origenNombre": "Estimado",
+                "fuenteNombre": "CAMS global · escala de Estados Unidos"
+            },
+            {
+                "puntoCodigo": "santacruz",
+                "punto": "Santa Cruz",
+                "pais": "BO",
+                "latitud": -17.7833,
+                "longitud": -63.1812,
+                "metrica": "aqi",
+                "variable": "Aire · escala de Estados Unidos",
+                "unidad": "USAQI",
+                "instante": "2026-10-30T06:00:00Z",
+                "valor": 54,
+                "origen": "estimado",
+                "fuente": "open-meteo-cams-us",
+                "escala": "us_aqi",
+                "fecha": "30\/10\/2026 02:00",
+                "origenNombre": "Estimado",
+                "fuenteNombre": "CAMS global · escala de Estados Unidos"
+            },
+            {
+                "puntoCodigo": "santacruz",
+                "punto": "Santa Cruz",
+                "pais": "BO",
+                "latitud": -17.7833,
+                "longitud": -63.1812,
+                "metrica": "aqi_europeo",
+                "variable": "Aire · escala europea",
+                "unidad": "EAQI",
+                "instante": "2026-10-30T04:00:00Z",
+                "valor": 44,
+                "origen": "estimado",
+                "fuente": "open-meteo-cams-eu",
+                "escala": "european_aqi",
+                "fecha": "30\/10\/2026 00:00",
+                "origenNombre": "Estimado",
+                "fuenteNombre": "CAMS global · escala europea"
+            },
+            {
+                "puntoCodigo": "santacruz",
+                "punto": "Santa Cruz",
+                "pais": "BO",
+                "latitud": -17.7833,
+                "longitud": -63.1812,
+                "metrica": "aqi_europeo",
+                "variable": "Aire · escala europea",
+                "unidad": "EAQI",
+                "instante": "2026-10-30T05:00:00Z",
+                "valor": 41,
+                "origen": "estimado",
+                "fuente": "open-meteo-cams-eu",
+                "escala": "european_aqi",
+                "fecha": "30\/10\/2026 01:00",
+                "origenNombre": "Estimado",
+                "fuenteNombre": "CAMS global · escala europea"
+            },
+            {
+                "puntoCodigo": "santacruz",
+                "punto": "Santa Cruz",
+                "pais": "BO",
+                "latitud": -17.7833,
+                "longitud": -63.1812,
+                "metrica": "aqi_europeo",
+                "variable": "Aire · escala europea",
+                "unidad": "EAQI",
+                "instante": "2026-10-30T06:00:00Z",
+                "valor": 34,
+                "origen": "estimado",
+                "fuente": "open-meteo-cams-eu",
+                "escala": "european_aqi",
+                "fecha": "30\/10\/2026 02:00",
+                "origenNombre": "Estimado",
+                "fuenteNombre": "CAMS global · escala europea"
+            }
+        ],
+        "resumen": [
+            {
+                "punto": "Santa Cruz",
+                "metrica": "temperatura",
+                "variable": "Temperatura",
+                "unidad": "°C",
+                "origen": "estimado",
+                "fuente": "open-meteo-modelo",
+                "origenNombre": "Estimado",
+                "fuenteNombre": "Open-Meteo · modelo meteorológico",
+                "cantidad": 3,
+                "minimo": 20.3,
+                "maximo": 20.9,
+                "promedio": 20.5667
+            },
+            {
+                "punto": "Santa Cruz",
+                "metrica": "aqi",
+                "variable": "Aire · escala de Estados Unidos",
+                "unidad": "USAQI",
+                "origen": "estimado",
+                "fuente": "open-meteo-cams-us",
+                "origenNombre": "Estimado",
+                "fuenteNombre": "CAMS global · escala de Estados Unidos",
+                "cantidad": 3,
+                "minimo": 53,
+                "maximo": 54,
+                "promedio": 53.6667
+            },
+            {
+                "punto": "Santa Cruz",
+                "metrica": "aqi_europeo",
+                "variable": "Aire · escala europea",
+                "unidad": "EAQI",
+                "origen": "estimado",
+                "fuente": "open-meteo-cams-eu",
+                "origenNombre": "Estimado",
+                "fuenteNombre": "CAMS global · escala europea",
+                "cantidad": 3,
+                "minimo": 34,
+                "maximo": 44,
+                "promedio": 39.6667
+            }
+        ],
+        "nota": "Registrados, estimados y simulados conservan su origen. Este reporte no certifica cobertura continua del territorio."
+    },
+    "created_at": "2026-10-30T04:43:27.000000Z"
+}
