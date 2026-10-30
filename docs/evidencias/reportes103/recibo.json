@@ -1,0 +1,46 @@
+{
+    "base": "SQLite temporal en memoria; demo intacta",
+    "proveedores": [
+        {
+            "grupo": "tiempo",
+            "endpoint": "https:\/\/api.open-meteo.com\/v1\/forecast",
+            "parametros": {
+                "latitude": "-17.7833",
+                "longitude": "-63.1812",
+                "timezone": "UTC",
+                "timeformat": "unixtime",
+                "forecast_hours": 3,
+                "hourly": "temperature_2m",
+                "temperature_unit": "celsius",
+                "wind_speed_unit": "kmh",
+                "precipitation_unit": "mm"
+            },
+            "estadoHttp": 200,
+            "recibidoUtc": "2026-10-30T04:43:27Z",
+            "sha256": "d7a041fd4da1452c4a8e7f9d0e219b5640f94ef6483dfda42fd6273118c8ec08"
+        },
+        {
+            "grupo": "aire",
+            "endpoint": "https:\/\/air-quality-api.open-meteo.com\/v1\/air-quality",
+            "parametros": {
+                "latitude": "-17.7833",
+                "longitude": "-63.1812",
+                "timezone": "UTC",
+                "timeformat": "unixtime",
+                "forecast_hours": 3,
+                "hourly": "us_aqi,european_aqi",
+                "domains": "cams_global"
+            },
+            "estadoHttp": 200,
+            "recibidoUtc": "2026-10-30T04:43:27Z",
+            "sha256": "7b44d46ed9e9e680b71e6a74ed984bc847695ceee0f1e419061d161c13e1ea2f"
+        }
+    ],
+    "consultadoUtc": "2026-10-30T04:43:27Z",
+    "filas": 9,
+    "faltantes": 0,
+    "peticionesAlExportar": 0,
+    "sha256Pdf": "3dc0c44ee0337768f93a393647767c38695acdaeffd73f9f34493a128f2bac8b",
+    "sha256Excel": "ca7743fc944b0c534a07dba18f2427fa57bf78095518674bd16d04192a77b1a5",
+    "reexportacionPdfSinRedUtc": "2026-10-30T04:49:30Z"
+}

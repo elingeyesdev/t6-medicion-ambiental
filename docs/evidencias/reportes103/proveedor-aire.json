@@ -1,0 +1,1 @@
+{"latitude":-17.799995,"longitude":-63.199997,"generationtime_ms":0.3085136413574219,"utc_offset_seconds":0,"timezone":"GMT","timezone_abbreviation":"GMT","elevation":421.0,"hourly_units":{"time":"unixtime","us_aqi":"USAQI","european_aqi":"EAQI"},"hourly":{"time":[1793332800,1793336400,1793340000],"us_aqi":[53,54,54],"european_aqi":[44,41,34]}}

@@ -40,7 +40,7 @@
         @php($elegidasVariables = is_array(old('variables',['temperatura','lluvia','viento','visibilidad','nieve','nieve_acumulada','aqi'])) ? old('variables',['temperatura','lluvia','viento','visibilidad','nieve','nieve_acumulada','aqi']) : [])
         <p class="rep-ancho">Consulta estimaciones por hora y conserva este corte. Hasta mil valores entre todas las localidades y variables.</p>
         <label>Localidades<select name="puntos[]" class="form-select" multiple size="6" required>@foreach($puntosAtmosfera as $p)<option value="{{ $p['codigo'] }}" @selected(in_array($p['codigo'],$elegidosAtmosfera,true))>{{ $p['nombre'] }} · {{ $p['pais'] }}</option>@endforeach</select></label>
-        <label>Variables<select name="variables[]" class="form-select" multiple size="6" required>@foreach($variablesAtmosfera as $k=>$m)<option value="{{ $k }}" @selected(in_array($k,$elegidasVariables,true))>{{ $m[1] }} ({{ $k==='aqi'?'AQI':$m[2] }})</option>@endforeach</select></label>
+        <label>Variables<select name="variables[]" class="form-select" multiple size="6" required>@foreach($variablesAtmosfera as $k=>$m)<option value="{{ $k }}" @selected(in_array($k,$elegidasVariables,true))>{{ $m[1] }} ({{ $m[2] }})</option>@endforeach</select></label>
         <label>Horas desde la hora actual<input type="number" name="horas" class="form-control" min="1" max="72" value="{{ old('horas',24) }}" required></label>
     </fieldset>
     <p class="rep-ancho" id="rep-continua" hidden>Guarda las cinco variables del último estado global. El reporte conserva su paso, revisión y ajustes manuales.</p>
