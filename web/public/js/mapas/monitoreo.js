@@ -1,6 +1,7 @@
 import { iniciarMapaBase } from './base.js';
 import { consultaMonitoreo } from './consulta-monitoreo.js';
 import { crearConsultaTiempo } from './tiempo.js';
+import { crearConsultaAire } from './aire.js';
 import { iniciarBuscadorLugar } from './buscador.js';
 import { compararLecturas, iniciarRecorrido } from './historial-mapa.js';
 import { medida } from '../datos/unidades.js';
@@ -175,8 +176,7 @@ function seleccionar(punto) {
     const enlace = nodo('a', Object.hasOwn(origenes, respuestaActual.origen) ? 'Ver historial' : 'Ver historial completo', 'btn btn-primary');
     enlace.href = historial.href;
     informacion.append(enlace);
-    const tiempo = crearConsultaTiempo({url: configuracion.tiempo, latitud: punto.latitud, longitud: punto.longitud});
-    informacion.append(tiempo.elemento); cancelarTiempo = tiempo.cancelar;
+    consultasDelLugar(punto.latitud, punto.longitud);
     const url = new URL(location.href);
     url.searchParams.set('punto', punto.codigo);
     history.replaceState(null, '', url);
@@ -239,11 +239,17 @@ function abrirTiempo(latitud, longitud, nombre = 'Tiempo del lugar') {
     botonTiempo.setAttribute('aria-pressed', 'false'); botonTiempo.textContent = 'Tiempo de un lugar';
     document.getElementById('mapa-monitoreo').classList.remove('elegir-tiempo');
     detalle.hidden = false; document.getElementById('mon-nombre').textContent = nombre; informacion.replaceChildren();
-    const tiempo = crearConsultaTiempo({url: configuracion.tiempo, latitud, longitud, automatico: true});
-    informacion.append(tiempo.elemento); cancelarTiempo = tiempo.cancelar;
+    consultasDelLugar(latitud, longitud, true);
     marcaLectura = L.marker([latitud, longitud], {title: nombre}).addTo(mapa); centrar(latitud, longitud);
     avisar('Pronóstico del lugar elegido.');
     if (matchMedia('(max-width: 767.98px)').matches) detalle.scrollIntoView({block: 'nearest'});
+}
+
+function consultasDelLugar(latitud, longitud, automatico = false) {
+    const tiempo = crearConsultaTiempo({url: configuracion.tiempo, latitud, longitud, automatico});
+    const aire = crearConsultaAire({url: configuracion.aire, latitud, longitud});
+    informacion.append(tiempo.elemento, aire.elemento);
+    cancelarTiempo = () => { tiempo.cancelar(); aire.cancelar(); };
 }
 
 botonTiempo.addEventListener('click', () => {

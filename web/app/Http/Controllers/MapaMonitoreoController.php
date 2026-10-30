@@ -20,6 +20,7 @@ class MapaMonitoreoController extends Controller
             'paises' => $catalogo->paises(), 'metricas' => $catalogo->metricas(),
             'configuracionMonitoreo' => [
                 'api' => route('mapa.puntos'), 'historial' => route('sensores'), 'tiempo' => route('mapa.tiempo'), 'buscar' => route('mapa.buscar'),
+                'aire' => route('mapa.aire'),
                 'metricas' => $catalogo->metricas(), 'paises' => $catalogo->paises(),
                 'origenes' => CatalogoAmbiental::ORIGENES,
                 'regiones' => array_map(fn ($r) => array_intersect_key($r, array_flip(['codigo', 'pais', 'nombre', 'nivel'])), $regiones->listado()),

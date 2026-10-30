@@ -1,0 +1,18 @@
+{
+  "consulta": "https://air-quality-api.open-meteo.com/v1/air-quality",
+  "parametros": {
+    "latitude": -17.7833,
+    "longitude": -63.1833,
+    "current": "european_aqi,pm2_5,pm10,nitrogen_dioxide,ozone,sulphur_dioxide",
+    "hourly": "european_aqi,pm2_5,pm10,nitrogen_dioxide,ozone,sulphur_dioxide",
+    "past_hours": 24,
+    "forecast_hours": 1,
+    "timezone": "UTC",
+    "timeformat": "unixtime",
+    "domains": "cams_global"
+  },
+  "capturaUtc": "2026-10-30T03:39:44Z",
+  "sha256Proveedor": "17294ff323b2d9f45ac49b6c63cd419d413f1f493df806dcab5010c7cf4cbdea",
+  "sha256Normalizada": "0325da9b7331b9c85c7579d927123df07226e62cd1089a8c4aff4ea514ef9876",
+  "nota": "La captura HTTP directa y la consulta Laravel son solicitudes independientes; ambas son datos modelados del mismo lugar e instante. La huella identifica cada archivo y no certifica por sí sola al proveedor."
+}

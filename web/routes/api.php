@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlertasController;
 use App\Http\Controllers\Api\BuscarLugarController;
+use App\Http\Controllers\Api\CalidadAireController;
 use App\Http\Controllers\Api\CuentaController;
 use App\Http\Controllers\Api\FocosCalorController;
 use App\Http\Controllers\Api\MapaMonitoreoController;
@@ -37,6 +38,7 @@ Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
         Route::middleware('can:datos.consultar')->group(function (): void {
             Route::get('/mapa/buscar', BuscarLugarController::class)->middleware('throttle:mapa-busquedas');
             Route::get('/tiempo', TiempoController::class)->middleware('throttle:tiempo-consultas');
+            Route::get('/aire', CalidadAireController::class)->middleware('throttle:aire-consultas');
             Route::get('/alertas', [AlertasController::class, 'index']);
             Route::get('/umbrales', [AlertasController::class, 'umbrales']);
             Route::get('/avisos', [AvisosController::class, 'index']);
