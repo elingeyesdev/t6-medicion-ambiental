@@ -13,7 +13,7 @@ function config(string $clave): mixed
 }
 require $raizRepo.'/web/app/Services/Api/ErrorConsulta.php';
 require $raizRepo.'/web/app/Services/Mapas/Capas/VariablesRaster.php';
-foreach (['ArchivoRaster', 'CatalogoRaster', 'PublicadorRaster'] as $clase) {
+foreach (['ArchivoRaster', 'ArchivoPublicacionRaster', 'CatalogoRaster', 'BloqueoRaster', 'PublicadorRaster'] as $clase) {
     require $raizRepo.'/web/app/Services/Mapas/Radar/'.$clase.'.php';
 }
 $receta = json_decode(file_get_contents($directorio.'/receta.json'), true, 32, JSON_THROW_ON_ERROR);

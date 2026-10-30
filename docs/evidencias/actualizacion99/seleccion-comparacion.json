@@ -1,0 +1,14 @@
+{
+  "antes": {
+    "a": "gfs-temperatura-20261029120000-5defda382fd7",
+    "b": "gfs-temperatura-20261030000000-cbf707b11427",
+    "comparar": true,
+    "visible": true
+  },
+  "despues": {
+    "a": "gfs-temperatura-20261029120000-5defda382fd7",
+    "b": "gfs-temperatura-20261030000000-cbf707b11427",
+    "comparar": true,
+    "visible": true
+  }
+}
