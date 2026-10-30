@@ -1,5 +1,7 @@
 # Carga raster recuperada de EnviroSense (#66 / #62)
 
+**Ampliación del 30/10 en #107:** [energía de superficie](ENERGIA_ENVIROSENSE.md). Se identificaron los dos campos del operativo original y se recuperan como radiación solar promedio y energía de evaporación potencial en W/m². Perfil separado, máscara, período y captura real; no se publican como índice UV ni mm de agua. El perfil predeterminado de ocho capas se conserva. Las afirmaciones de pendientes al final de esta guía describen el corte inicial y deben contrastarse con esta ampliación.
+
 **Actualización posterior en #99:** coordinación automática local, conservación de cortes y aviso de fechas nuevas en la web. Se añadieron 16 imágenes reales a las 17 existentes. Ver [ACTUALIZACION_CAPAS.md](ACTUALIZACION_CAPAS.md); lo siguiente describe la preparación inicial del productor.
 
 29/10/2026. El productor convierte temperatura GFS/ERA5 local y ocho campos GFS explícitos en PNG de datos y recetas compatibles con el publicador Laravel de #62. No ejecuta los scripts originales, no genera datos aleatorios y no transforma un pronóstico en una observación.

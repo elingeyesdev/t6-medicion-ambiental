@@ -1,0 +1,53 @@
+{
+  "estado": "correcto",
+  "cuadros": [
+    {
+      "capa": "radiacion_solar",
+      "instante": "2026-10-29T21:00:00Z",
+      "unidad": "W/m²",
+      "validos": 54233,
+      "ausentes_o_fuera_de_escala": 0,
+      "minimo_original": 4.279999694824219,
+      "maximo_original": 875.2599996948243,
+      "error_maximo": 3.1372545967849987,
+      "limite_cuantizacion": 3.1372549019607843,
+      "png_sha256": "b88aff6661e40d37f97570f2a8e8ec7f5120da57985659239085a13c24147ddd"
+    },
+    {
+      "capa": "evaporacion_potencial",
+      "instante": "2026-10-29T21:00:00Z",
+      "unidad": "W/m²",
+      "validos": 24513,
+      "ausentes_o_fuera_de_escala": 29720,
+      "minimo_original": -5.60455322265625,
+      "maximo_original": 1499.7554467773439,
+      "error_maximo": 3.9266474634939357,
+      "limite_cuantizacion": 3.926701570680628,
+      "png_sha256": "47bdbba5262347a5d0bd725ea9cb1726ad0f8105b4067a25c2ac983fa4e98c52"
+    },
+    {
+      "capa": "radiacion_solar",
+      "instante": "2026-10-30T00:00:00Z",
+      "unidad": "W/m²",
+      "validos": 54233,
+      "ausentes_o_fuera_de_escala": 0,
+      "minimo_original": 2.144,
+      "maximo_original": 552.944,
+      "error_maximo": 3.137254901960773,
+      "limite_cuantizacion": 3.1372549019607843,
+      "png_sha256": "ca89a3f6e522072c00fa0a7ec6da795709c148bfe537da8fead00d6cead2ce53"
+    },
+    {
+      "capa": "evaporacion_potencial",
+      "instante": "2026-10-30T00:00:00Z",
+      "unidad": "W/m²",
+      "validos": 24668,
+      "ausentes_o_fuera_de_escala": 29565,
+      "minimo_original": -24.457285156250002,
+      "maximo_original": 1355.78271484375,
+      "error_maximo": 3.9261856798102315,
+      "limite_cuantizacion": 3.926701570680628,
+      "png_sha256": "10b805c97742b8d9d36d3acc0205b15d69c550e7350fce034b5e27dcf40e59f4"
+    }
+  ]
+}

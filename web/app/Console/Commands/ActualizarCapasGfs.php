@@ -8,7 +8,7 @@ use Throwable;
 
 class ActualizarCapasGfs extends Command
 {
-    protected $signature = 'capas:actualizar {--consultar-noaa} {--programada}';
+    protected $signature = 'capas:actualizar {--consultar-noaa} {--programada} {--energia-superficie}';
 
     protected $description = 'Obtiene y publica el último ciclo GFS con margen de disponibilidad.';
 
@@ -30,8 +30,13 @@ class ActualizarCapasGfs extends Command
 
             return self::INVALID;
         }
-        $argumentos = [$python, base_path('../herramientas/datos/raster/actualizar.py'), '--trabajo', config('capas.actualizacion.trabajo'),
+        $energia = $this->option('energia-superficie');
+        $trabajo = config('capas.actualizacion.trabajo').($energia ? '-energia' : '');
+        $argumentos = [$python, base_path('../herramientas/datos/raster/actualizar.py'), '--trabajo', $trabajo,
             '--php', PHP_BINARY, '--artisan', base_path('artisan'), '--consultar-noaa'];
+        if ($energia) {
+            $argumentos[] = '--energia-superficie';
+        }
         if ($ini = php_ini_loaded_file()) {
             array_push($argumentos, '--php-ini', $ini);
         }

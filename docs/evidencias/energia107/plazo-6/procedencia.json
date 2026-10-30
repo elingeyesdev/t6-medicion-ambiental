@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "datos_controlados": false,
+  "entrada_sha256": "9421f7928698385a0d42aee64b5254fa07f36f740da756b340f21f8d3f056b59",
+  "entrada_bytes": 161881,
+  "tipo": "modelo_estimado",
+  "campos": [
+    {
+      "capa": "radiacion_solar",
+      "tiempo": {
+        "ciclo": "2026-10-29T18:00:00Z",
+        "instante": "2026-10-30T00:00:00Z",
+        "desde": "2026-10-29T18:00:00Z",
+        "hasta": "2026-10-30T00:00:00Z",
+        "inicio_horas": 0,
+        "fin_horas": 6,
+        "tipo_paso": "avg"
+      },
+      "unidad_entrada": "W m**-2",
+      "unidad_salida": "W/m²",
+      "unidad_tabla_local_ncep": true,
+      "estadisticas": {
+        "validos": 54233,
+        "ausentes": 0,
+        "fuera_de_escala": 0,
+        "error_maximo_cuantizacion_unidad_salida": 3.1372549019607843,
+        "politica_fuera_de_escala": "null, sin saturar valores"
+      },
+      "duplicados_iguales": 0,
+      "salida_sha256": "ca89a3f6e522072c00fa0a7ec6da795709c148bfe537da8fead00d6cead2ce53",
+      "ancho": 193,
+      "alto": 281
+    },
+    {
+      "capa": "evaporacion_potencial",
+      "tiempo": {
+        "ciclo": "2026-10-29T18:00:00Z",
+        "instante": "2026-10-30T00:00:00Z",
+        "desde": "2026-10-30T00:00:00Z",
+        "hasta": "2026-10-30T00:00:00Z",
+        "inicio_horas": 6,
+        "fin_horas": 6,
+        "tipo_paso": "instant"
+      },
+      "unidad_entrada": "W m**-2",
+      "unidad_salida": "W/m²",
+      "unidad_tabla_local_ncep": true,
+      "estadisticas": {
+        "validos": 24668,
+        "ausentes": 29565,
+        "fuera_de_escala": 0,
+        "error_maximo_cuantizacion_unidad_salida": 3.926701570680628,
+        "politica_fuera_de_escala": "null, sin saturar valores"
+      },
+      "duplicados_iguales": 0,
+      "salida_sha256": "10b805c97742b8d9d36d3acc0205b15d69c550e7350fce034b5e27dcf40e59f4",
+      "ancho": 193,
+      "alto": 281
+    }
+  ],
+  "limites": "Escala finita de cada PNG; valores fuera de escala transparentes. No son estaciones ni profundidad de nieve."
+}
