@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "cuadros": [
+    {
+      "id": "gfs-radiacion_solar-20261029210000-07314ecc450c",
+      "capa": "radiacion_solar",
+      "instante": "2026-10-29T21:00:00Z",
+      "archivo": "radiacion_solar/gfs-radiacion_solar-20261029210000-07314ecc450c.png",
+      "codificacion": "solar-wm2",
+      "fuente": "NOAA/NCEP · GFS 0.25°",
+      "producto": "Modelo GFS · Radiación solar descendente · promedio · 18:00 a 21:00 UTC",
+      "rejilla": {
+        "proyeccion": "EPSG:4326",
+        "registro": "nodos",
+        "filas": "norte-sur",
+        "oeste": -82.0,
+        "este": -34.0,
+        "sur": -57.0,
+        "norte": 13.0
+      },
+      "unidad": "W/m²",
+      "intervalo": {
+        "ciclo": "2026-10-29T18:00:00Z",
+        "instante": "2026-10-29T21:00:00Z",
+        "desde": "2026-10-29T18:00:00Z",
+        "hasta": "2026-10-29T21:00:00Z",
+        "inicio_horas": 0,
+        "fin_horas": 3,
+        "tipo_paso": "avg"
+      },
+      "atribucion": "Datos NOAA/NWS/NCEP, transformados por GeoSur; sin aval de NOAA/NWS."
+    },
+    {
+      "id": "gfs-evaporacion_potencial-20261029210000-07314ecc450c",
+      "capa": "evaporacion_potencial",
+      "instante": "2026-10-29T21:00:00Z",
+      "archivo": "evaporacion_potencial/gfs-evaporacion_potencial-20261029210000-07314ecc450c.png",
+      "codificacion": "evap-pot-wm2",
+      "fuente": "NOAA/NCEP · GFS 0.25°",
+      "producto": "Modelo GFS · Evaporación potencial · energía",
+      "rejilla": {
+        "proyeccion": "EPSG:4326",
+        "registro": "nodos",
+        "filas": "norte-sur",
+        "oeste": -82.0,
+        "este": -34.0,
+        "sur": -57.0,
+        "norte": 13.0
+      },
+      "unidad": "W/m²",
+      "intervalo": {
+        "ciclo": "2026-10-29T18:00:00Z",
+        "instante": "2026-10-29T21:00:00Z",
+        "desde": "2026-10-29T21:00:00Z",
+        "hasta": "2026-10-29T21:00:00Z",
+        "inicio_horas": 3,
+        "fin_horas": 3,
+        "tipo_paso": "instant"
+      },
+      "atribucion": "Datos NOAA/NWS/NCEP, transformados por GeoSur; sin aval de NOAA/NWS."
+    }
+  ]
+}

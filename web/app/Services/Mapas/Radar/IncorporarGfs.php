@@ -9,6 +9,8 @@ final class IncorporarGfs
 {
     public const CAPAS = ['temperatura', 'humedad', 'presion', 'visibilidad', 'nieve', 'lluvia_intensidad', 'lluvia', 'viento'];
 
+    public const ENERGIA = ['radiacion_solar', 'evaporacion_potencial'];
+
     public function ejecutar(string $lote): array
     {
         $raiz = config('capas.directorio');
@@ -24,11 +26,17 @@ final class IncorporarGfs
                 throw new UnexpectedValueException('El lote no acredita un ciclo GFS real.');
             }
             $receta = $this->json($lote.'/receta.json');
+            $perfil = $manifest['perfil'] ?? 'ambiental';
+            $capas = match ($perfil) {
+                'ambiental' => self::CAPAS,
+                'energia' => self::ENERGIA,
+                default => throw new UnexpectedValueException('Perfil de publicación desconocido.'),
+            };
             $publicador = new PublicadorRaster;
             $publicador->publicar($lote, $receta);
             $nuevos = (new CatalogoRaster)->validar($this->json($lote.'/catalogo.json'));
             $esperados = [];
-            foreach (self::CAPAS as $capa) {
+            foreach ($capas as $capa) {
                 foreach ([3, 6] as $plazo) {
                     $esperados[$capa.'/'.$ciclo->modify('+'.$plazo.' hours')->format('Y-m-d\TH:i:s\Z')] = true;
                 }
@@ -40,7 +48,17 @@ final class IncorporarGfs
                     ($t['instante'] ?? null) !== $c['instante'] || ! in_array($t['fin_horas'] ?? null, [3, 6], true) ||
                     $ciclo->modify('+'.$t['fin_horas'].' hours')->format('Y-m-d\TH:i:s\Z') !== $c['instante'] ||
                     ($c['capa'] === 'lluvia' && ($t['inicio_horas'] ?? null) !== 0)) {
-                    throw new UnexpectedValueException('El lote debe contener las ocho capas de los plazos 3 y 6 del mismo ciclo.');
+                    throw new UnexpectedValueException('El lote debe contener las capas del perfil en los plazos 3 y 6 del mismo ciclo.');
+                }
+                if ($perfil === 'energia') {
+                    $promedio = $c['capa'] === 'radiacion_solar';
+                    $desde = $promedio ? 0 : $t['fin_horas'];
+                    if (($c['unidad'] ?? null) !== 'W/m²' || ($t['tipo_paso'] ?? null) !== ($promedio ? 'avg' : 'instant') ||
+                        ($t['inicio_horas'] ?? null) !== $desde ||
+                        ($t['desde'] ?? null) !== $ciclo->modify('+'.$desde.' hours')->format('Y-m-d\TH:i:s\Z') ||
+                        ($t['hasta'] ?? null) !== $c['instante']) {
+                        throw new UnexpectedValueException('La energía requiere unidades y período explícitos; no se acepta como UV ni agua perdida.');
+                    }
                 }
                 unset($esperados[$clave]);
             }
