@@ -1,4 +1,4 @@
-const estilos = Object.freeze({ relieve: 'outdoors-v12', satelite: 'satellite-streets-v12', calles: 'streets-v12' });
+const estilos = Object.freeze({ claro: 'light-v11', relieve: 'outdoors-v12', satelite: 'satellite-streets-v12', calles: 'streets-v12' });
 const atribucion = '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · <a href="https://apps.mapbox.com/feedback/" target="_blank" rel="noopener">Improve this map</a>';
 
 export function leerConfiguracionMapa(elemento) {

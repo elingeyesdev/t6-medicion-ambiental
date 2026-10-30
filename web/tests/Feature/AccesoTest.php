@@ -14,11 +14,11 @@ class AccesoTest extends TestCase
 
     public function test_el_inicio_conserva_marca_acceso_y_modulos_sin_cifras_ficticias(): void
     {
-        $this->get('/')->assertOk()->assertSee('GeoSur')->assertSee('Ingresar')
-            ->assertSee('Qué quieres consultar')->assertSee('href="#explorar"', false)
+        $this->get('/')->assertOk()->assertSee('GeoSur')->assertSee('Iniciar Sesión')
+            ->assertSee('Variables ambientales que consultamos')->assertSee('href="#plataforma"', false)
             ->assertDontSeeText('Módulos')->assertDontSeeText('EnviroSense')
-            ->assertSee(route('register'), false)->assertSee('Entrar al mapa')
-            ->assertSee('vendor/tabler/tabler.min.css')->assertDontSee('45K+')
+            ->assertSee(route('register'), false)->assertSee('Explorar el Mapa')
+            ->assertSee('css/envirosense/fuentes.css')->assertDontSee('45K+')
             ->assertDontSee('en preparación');
         $this->get('/login')->assertOk()->assertSee('name="_token"', false);
         $this->get('/register')->assertOk()->assertSee('autocomplete="new-password"', false);
@@ -91,6 +91,39 @@ class AccesoTest extends TestCase
             ->assertSessionHasErrors(['email', 'password']);
         $this->assertDatabaseCount('users', 1);
         $this->assertGuest();
+    }
+
+    public function test_registro_guarda_ubicacion_opcional_y_consentimiento_sin_enviar_avisos(): void
+    {
+        config(['avisos.email.habilitado' => true, 'avisos.email.mailer' => 'log']);
+        $clave = 'Una-frase-larga-2026';
+        $this->post('/register', ['name' => 'Prueba', 'email' => 'ubicacion@example.test', 'password' => $clave,
+            'password_confirmation' => $clave, 'latitud' => -17.78, 'longitud' => -63.18, 'notif_email' => true, 'consentimiento' => true])
+            ->assertRedirect('/mapa');
+        $usuario = User::firstOrFail();
+        $this->assertSame('visualizador', $usuario->rol->value);
+        $this->assertSame(-17.78, $usuario->preferencias->latitud);
+        $this->assertTrue($usuario->preferencias->notif_email);
+        $this->assertDatabaseHas('suscripciones_canal_avisos', ['usuario_id' => $usuario->id, 'canal' => 'email', 'activo' => true]);
+        $this->assertDatabaseCount('envios_avisos', 0);
+        Http::assertNothingSent();
+    }
+
+    public function test_un_registro_con_avisos_invalidos_no_deja_una_cuenta_creada_a_medias(): void
+    {
+        $clave = 'Una-frase-larga-2026';
+        $base = ['name' => 'Prueba', 'email' => 'sin-consentir@example.test', 'password' => $clave, 'password_confirmation' => $clave];
+        foreach ([['latitud' => -17], ['latitud' => 200, 'longitud' => 10], ['notif_email' => true],
+            ['latitud' => -17, 'longitud' => -63, 'notif_email' => true],
+            ['latitud' => -17, 'longitud' => -63, 'notif_telegram' => true, 'consentimiento' => true, 'telegram_destino' => '12345'],
+        ] as $extras) {
+            $this->from('/register')->post('/register', $base + $extras)->assertRedirect('/register')->assertSessionHasErrors();
+            $this->assertGuest();
+            $this->assertDatabaseCount('users', 0);
+            $this->assertDatabaseCount('preferencias_cuenta', 0);
+            $this->assertDatabaseCount('suscripciones_canal_avisos', 0);
+        }
+        Http::assertNothingSent();
     }
 
     public function test_la_clave_unicode_demasiado_larga_y_los_tipos_invalidos_se_rechazan_sin_error_interno(): void

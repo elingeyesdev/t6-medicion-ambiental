@@ -2,7 +2,7 @@
 @section('titulo', 'Reporte ambiental')
 @push('estilos')<link rel="stylesheet" href="{{ asset('css/paginas/reportes.css') }}">@endpush
 @section('contenido')
-<div class="rep-contenido"><a href="{{ route('reportes') }}">Volver a mis reportes</a><h1 class="mt-3">{{ $reporte->titulo }}</h1>@include('cuentas.estado')
+<div class="rep-contenido"><a href="{{ route('reportes') }}">Volver a mis reportes</a><header class="rep-cabecera rep-cabecera-detalle"><h1>{{ $reporte->titulo }}</h1><p>Reporte ambiental · GeoSur</p></header>@include('cuentas.estado')
 <div class="rep-acciones"><a class="btn btn-primary" href="{{ route('reportes.descargar',[$reporte->id,'pdf']) }}">Descargar PDF</a><a class="btn btn-outline-primary" href="{{ route('reportes.descargar',[$reporte->id,'xlsx']) }}">Descargar Excel</a><span>{{ count($reporte->contenido['filas']) }} lecturas · Generado el {{ $reporte->created_at->setTimezone('America/La_Paz')->format('d/m/Y H:i') }}</span></div>
 @if(in_array($reporte->parametros['base'],['simulacion','continua']))<p class="alert alert-warning mt-3">Este reporte contiene un escenario simulado, no observaciones ni un pronóstico.</p>@endif
 @if($reporte->parametros['base']==='continua')<p>Paso {{ $reporte->parametros['corte']['paso'] }} · Revisión {{ $reporte->parametros['corte']['revision'] }} · {{ $reporte->parametros['corte']['estado'] }}.</p>@endif

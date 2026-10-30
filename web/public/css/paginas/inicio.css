@@ -1,30 +1,76 @@
-/* Inicio: rejilla, tarjetas y botones de Tabler; fotografía e identidad de GeoCruz. */
-.portada-hero { min-height: 490px; }
-.portada-presentacion { width: 100%; padding: 56px 24px 76px; }
-.portada-presentacion h1 { margin: 0 0 24px; color: #fff; font-size: clamp(44px,5.2vw,72px); font-weight: 600; letter-spacing: -2px; line-height: 1.06; }
-.portada-presentacion > p { max-width: 480px; margin: 0; font-size: 20px; line-height: 1.6; color: #fff; }
-.portada-modulos { padding: 42px 24px 48px; scroll-margin-top: 20px; }
-.portada-modulos h2 { margin: 0 0 24px; font-size: 28px; font-weight: 600; letter-spacing: -.5px; }
-.modulo-publico { height: 100%; border-color: #d8e0da; box-shadow: none; color: #143728; }
-.modulo-publico .card-body { display: flex; gap: 24px; align-items: flex-start; padding: 28px; }
-.consulta-icono { width: 56px; height: 56px; display: grid; place-items: center; flex-shrink: 0; border-radius: 8px; background: #fff0df; color: #a94b14; }
-.consulta-icono svg { width: 30px; height: 30px; }
-.consulta-sequias .consulta-icono { background: #e5effa; color: #236b9d; }
-.consulta-monitoreo .consulta-icono { background: #e3f2e8; color: #146b3b; }
-.portada-cobertura { font-size: 16px; margin: -10px 0 24px; color: #43574b; }
-.modulo-publico h3 { margin: 0 0 8px; font-size: 24px; font-weight: 600; letter-spacing: -.4px; }
-.modulo-publico p { margin: 0 0 20px; color: #43574b; font-size: 16px; line-height: 1.6; }
-.consulta-enlace { display: inline-flex; gap: 10px; align-items: center; font-size: 16px; font-weight: 600; color: #116632; }
-.modulo-publico:hover { border-color: #15803d; color: #143728; }
-.modulo-publico:hover .consulta-enlace { text-decoration: underline; }
-@media (max-width: 767.98px) {
-    .portada-hero { min-height: 480px; }
-    .portada-presentacion { padding: 40px 24px 96px; }
-    .portada-presentacion h1 { font-size: 50px; letter-spacing: -1.5px; }
-    .portada-presentacion > p { font-size: 18px; }
-    .portada-modulos { padding-block: 32px; }
-    .portada-modulos h2 { font-size: 25px; }
-    .modulo-publico .card-body { gap: 16px; padding: 22px; }
-    .consulta-icono { width: 44px; height: 44px; }
-    .modulo-publico h3 { font-size: 22px; }
-}
+/* Valores trasladados de LandingHero, Sources, Features, Map, Metrics, Why, UseCases y CTA. */
+.pagina-inicio{background:#fff}
+.pagina-inicio section[id]{scroll-margin-top:72px}
+.landing-hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:72px}
+.hero-background,.hero-shade,.hero-grid{position:absolute;inset:0}
+.hero-background{background:url('../../img/envirosense/hero-meteo.png') center right/cover no-repeat}
+.hero-shade{background:linear-gradient(105deg,rgba(11,19,43,.97) 0%,rgba(11,19,43,.85) 40%,rgba(11,19,43,.45) 70%,rgba(11,19,43,.15) 100%)}
+.hero-grid{background-image:linear-gradient(rgba(91,192,190,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(91,192,190,.04) 1px,transparent 1px);background-size:48px 48px}
+.hero-content{position:relative;z-index:2;padding:0 2rem 120px}
+.hero-pill{display:inline-flex;align-items:center;gap:.5rem;background:#5bc0be1f;border:1px solid #5bc0be4d;border-radius:100px;padding:.35rem 1rem;margin-bottom:1.75rem;font-size:.78rem;font-weight:600;color:#5bc0be;letter-spacing:.08em;text-transform:uppercase}
+.hero-pill>span{width:6px;height:6px;border-radius:50%;background:#5bc0be;box-shadow:0 0 8px #5bc0be;animation:enviro-pulse 2s infinite}
+.pagina-publica .hero-content h1{font-size:clamp(2.8rem,6vw,5.2rem);font-weight:700;color:#fff;line-height:1.08;letter-spacing:-.03em;max-width:680px;margin-bottom:1.5rem}
+.hero-content h1>span,.landing-cta h2>span{background:linear-gradient(135deg,#5bc0be,#3a9694);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pagina-publica .hero-description{font-size:clamp(1rem,2vw,1.2rem);color:#ffffffad;max-width:520px;line-height:1.65;margin-bottom:2.5rem;font-weight:400}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+.hero-trust{margin-top:3.5rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;color:#ffffff73;font-size:.8rem;font-weight:500}
+.hero-trust>span:last-child{color:#ffffff52;font-size:.75rem}
+.hero-trust>span{display:inline-flex;align-items:center;gap:.45rem}.hero-trust svg{width:18px;height:18px}
+.hero-wave{position:absolute;bottom:0;left:0;right:0;overflow:hidden;line-height:0;pointer-events:none}
+.hero-wave svg{display:block;width:100%;height:auto}
+.hero-wave-front{animation:enviro-wave 6s ease-in-out infinite alternate}
+.hero-wave-back{animation:enviro-wave-back 8s ease-in-out infinite alternate}
+.landing-sources{padding:4rem 2rem;background:#fff;border-block:1px solid #f0f0f0}
+.landing-sources>.enviro-container>p{text-align:center;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#9ca3af;margin-bottom:2.5rem}
+.source-list{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem}
+.source-item{display:flex;align-items:center;gap:.75rem;padding:.85rem 1.5rem;border-radius:12px;background:#f9fafb;border:1px solid #e5e7eb}
+.source-item>.enviro-icon{color:#5bc0be;width:22px;height:22px}
+.source-item:nth-child(2)>.enviro-icon{color:#f59e0b}.source-item:nth-child(3)>.enviro-icon{color:#ef4444}.source-item:nth-child(4)>.enviro-icon{color:#3b82f6}.source-item:nth-child(5)>.enviro-icon{color:#8b5cf6}
+.source-item strong,.source-item span{display:block}.source-item strong{font-size:.875rem;font-weight:700}.source-item span{font-size:.72rem;color:#9ca3af}
+.landing-section{position:relative;overflow:hidden;padding:6rem 2rem}
+.landing-features{padding-top:7rem;background:radial-gradient(circle at 95% 0,#5bc0be0f,transparent 450px)}
+.section-heading{text-align:center;margin-bottom:5rem}
+.pagina-publica .section-eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5bc0be;margin-bottom:.75rem}
+.pagina-inicio h2{font-size:clamp(2rem,4vw,3rem);font-weight:700;letter-spacing:-.025em;line-height:1.15;color:#0b132b}
+.section-heading h2{max-width:680px;margin-inline:auto}.landing-features .section-heading h2{max-width:560px}
+.section-heading>p:not(.section-eyebrow){font-size:1.1rem;line-height:1.5;color:#6b7280;max-width:600px;margin:1rem auto 0}
+.feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem}
+.feature-card{display:flex;flex-direction:column;align-items:flex-start;padding:2.5rem;border-radius:20px;background:#fafafa;border:1px solid #f0f0f0;transition:transform .35s,box-shadow .35s,border-color .35s}
+.feature-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px #5bc0be1f;border-color:#5bc0be4d}
+.feature-number{font-size:.72rem;font-weight:700;color:#5bc0be;letter-spacing:.1em;margin-bottom:1.25rem}
+.feature-card>.enviro-icon{width:56px;height:56px;color:#5bc0be;margin-bottom:1.75rem;stroke-width:1}
+.feature-card h3{font-size:1.15rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.75rem}
+.feature-card p{font-size:.9rem;color:#6b7280;line-height:1.7;margin-bottom:1.5rem;flex:1}
+.feature-tag{display:inline-block;padding:.3rem .85rem;border-radius:100px;background:#5bc0be14;color:#3a9694;font-size:.72rem;font-weight:600;letter-spacing:.05em}
+.landing-map-section{background:linear-gradient(#fff,#f9fafb)}.landing-map-section .section-heading{margin-bottom:3rem}
+.landing-map-frame{position:relative;height:500px;border-radius:24px;overflow:hidden;box-shadow:0 24px 60px #0b132b26;border:1px solid #e5e7eb;background:#1c2541}
+#portada-mapa{height:100%;width:100%;background:#1c2541 url('../../img/envirosense/hero-meteo.png') center/cover no-repeat}
+.landing-map-caption{position:absolute;z-index:450;top:20px;left:20px;background:#0b132bd9;backdrop-filter:blur(8px);padding:1rem;border-radius:12px;color:#fff;border:1px solid #ffffff1a}
+.landing-map-caption>span{font-size:.75rem;color:#5bc0be;font-weight:700}.landing-map-caption strong{display:block;font-size:1.25rem;font-weight:700;margin-top:.2rem}.landing-map-caption p{font-size:.8rem;color:#9ca3af;margin-top:.2rem}
+.landing-map-access{position:absolute;z-index:450;bottom:32px;right:24px;font-size:.85rem}
+.landing-metrics{background:radial-gradient(circle at center,#5bc0be0f,transparent 65%),linear-gradient(135deg,#0b132b,#1c2541 50%,#0b132b)}
+.landing-metrics .section-heading{margin-bottom:4rem}.landing-metrics h2{color:#fff;font-size:clamp(1.8rem,3.5vw,2.75rem)}
+.landing-metrics .section-heading>p:not(.section-eyebrow){font-size:1rem;color:#ffffff80;margin-top:.75rem}
+.metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.5rem}
+.metric-card{--metric-color:#5bc0be;display:block;background:#ffffff0a;border:1px solid #ffffff14;border-radius:20px;padding:2rem;backdrop-filter:blur(12px);transition:transform .35s,background .35s;color:#fff!important}
+.metric-card:hover{transform:translateY(-4px);background:#ffffff12;border-color:var(--metric-color)}
+.metric-amber{--metric-color:#f59e0b}.metric-green{--metric-color:#22c55e}.metric-violet{--metric-color:#8b5cf6}
+.metric-card>.enviro-icon{width:40px;height:40px;color:var(--metric-color);margin-bottom:1.5rem}
+.metric-card>strong{font-size:2.5rem;font-weight:700;letter-spacing:-.03em;line-height:1.1}
+.metric-card h3{font-size:.95rem;font-weight:600;margin-top:.5rem}.metric-card p{font-size:.78rem;color:#ffffff66;margin-top:.25rem}
+.metric-link{display:flex;justify-content:space-between;gap:8px;margin-top:1.5rem;padding-top:1rem;border-top:1px solid #ffffff14;font-size:.75rem;color:var(--metric-color)}
+.landing-why{padding-block:7rem;background:radial-gradient(circle at 0 100%,#5bc0be12,transparent 400px),#f9fafb}
+.why-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4rem;align-items:center}
+.why-grid h2{margin-bottom:1.5rem}.why-description{font-size:1rem;color:#6b7280;line-height:1.75;max-width:420px}
+.why-strip{display:flex;gap:2rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid #e5e7eb;flex-wrap:wrap}.why-strip strong{display:block;font-size:2rem;font-weight:700;letter-spacing:-.02em}.why-strip span{font-size:.8rem;color:#9ca3af;font-weight:500}
+.reason-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.reason-card{padding:1.5rem;border-radius:16px;background:#fff;border:1px solid #e5e7eb}.reason-card>.enviro-icon{width:28px;height:28px;color:#5bc0be;margin-bottom:.75rem}.reason-card h3{font-size:.9rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.5rem}.reason-card p{font-size:.8rem;color:#6b7280;line-height:1.65}
+.landing-use-cases{padding-block:7rem}.use-case-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.5rem}
+.use-case-card{--case-color:#22c55e;background:#f9fafb;border:1px solid #f0f0f0;border-radius:24px;padding:3rem 2.5rem;display:flex;flex-direction:column;align-items:center;text-align:center}.case-blue{--case-color:#3b82f6}.case-violet{--case-color:#8b5cf6}
+.case-icon{width:80px;height:80px;border-radius:20px;background:color-mix(in srgb,var(--case-color) 8%,transparent);color:var(--case-color);display:flex;align-items:center;justify-content:center;margin-bottom:2rem}.case-icon>.enviro-icon{width:48px;height:48px;stroke-width:1.5}
+.use-case-card h3{font-size:1.25rem;font-weight:700;margin-bottom:1rem;letter-spacing:-.01em}.use-case-card p{font-size:.95rem;color:#6b7280;line-height:1.65}
+.landing-cta{background:radial-gradient(circle at center,#5bc0be1a,transparent 65%),linear-gradient(135deg,#0b132b,#1c2541);text-align:center}
+.cta-inner{position:relative;max-width:680px;margin:0 auto}.landing-cta h2{font-size:clamp(2rem,4vw,3.2rem);color:#fff;margin-bottom:1.25rem}.cta-inner>p:not(.section-eyebrow){font-size:1.05rem;color:#ffffff8c;line-height:1.7;margin-bottom:2.5rem}.landing-cta .hero-actions{justify-content:center}
+@keyframes enviro-pulse{50%{opacity:.6;transform:scale(1.3)}}@keyframes enviro-wave{to{transform:translateX(-25px) scaleY(1.04)}}@keyframes enviro-wave-back{to{transform:translateX(20px) scaleY(.97)}}
+@media(max-width:1100px){.feature-grid,.use-case-grid{gap:1.5rem}.feature-card,.use-case-card{padding:2rem}.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.why-grid{gap:2rem}}
+@media(max-width:800px){.feature-grid,.use-case-grid,.why-grid{grid-template-columns:1fr}.landing-section{padding:4rem 1.5rem}.section-heading{margin-bottom:3rem}.hero-content{padding-inline:1.5rem}.hero-trust{gap:1rem}.landing-map-frame{height:400px}}
+@media(max-width:480px){.hero-content{padding-top:2rem;padding-bottom:100px}.pagina-publica .hero-content h1{font-size:2.8rem}.hero-pill{font-size:.65rem;padding-inline:.75rem}.hero-actions{gap:.75rem}.hero-actions>.enviro-button{padding:.8rem 1.25rem;font-size:.9rem}.hero-trust{margin-top:2rem;font-size:.72rem}.hero-trust>span:last-child{width:100%}.landing-sources{padding:3rem 1.25rem}.source-list{display:grid;grid-template-columns:1fr}.source-item{padding:.85rem 1rem}.metric-grid,.reason-grid{grid-template-columns:1fr}.landing-map-caption{top:12px;left:12px}.landing-map-access{right:16px;bottom:30px}.why-strip{gap:1.25rem}.why-strip strong{font-size:1.5rem}}

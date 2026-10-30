@@ -3,7 +3,8 @@
 @push('estilos')<link rel="stylesheet" href="{{ asset('css/paginas/reportes.css') }}">@endpush
 @section('contenido')
 <div class="rep-contenido">
-    <h1>Plantillas de reportes</h1><p>Guarda tus filtros, columnas y gráficos.</p>
+    <header class="rep-cabecera"><h1>Plantillas de <span>Reportes</span></h1><p>Guarda tus filtros, columnas y gráficos para reutilizarlos en tus consultas.</p></header>
+    <nav class="rep-pestanas" aria-label="Área de reportes"><a href="{{ route('reportes') }}">Dashboard Global</a><a href="{{ route('reportes', ['vista' => 'historial']) }}">Historial y Simulaciones</a><a href="{{ route('plantillas') }}" aria-current="page">Plantillas</a></nav>
     @include('cuentas.estado')
     <div class="rep-acciones">
         <a class="btn btn-outline-primary" href="{{ route('reportes') }}">Reportes</a>

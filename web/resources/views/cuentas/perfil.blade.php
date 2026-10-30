@@ -7,8 +7,24 @@
 @endpush
 @section('contenido')
 <div class="cuentas-contenido">
-    <h1>Mi cuenta</h1>
+    <header class="cuenta-cabecera"><div><h1>Preferencias y <em>Localidad</em></h1><p>Ubica tu área de interés en el mapa y configura tu cuenta de GeoSur.</p></div><span class="cuenta-etiqueta">Mi cuenta</span></header>
+    <nav class="cuenta-pestanas" aria-label="Preferencias y notificaciones"><a href="{{ route('cuenta') }}" aria-current="page">Localidad y cuenta</a><a href="{{ route('avisos') }}">Canales y avisos</a></nav>
     @include('cuentas.estado')
+    <section class="card cuenta-tarjeta cuenta-ubicacion">
+        <div class="card-header"><span class="cuenta-icono" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></span><div><h2 class="card-title">Ubicación en el Mapa</h2><p id="estado-ubicacion" role="status">{{ $preferencias['latitud'] !== null ? 'Tienes una ubicación guardada.' : 'No has guardado una ubicación.' }}</p></div></div>
+        <div class="card-body">
+            <div><p id="ayuda-ubicacion">Marca un lugar en el mapa o muévelo y pulsa Enter. Los avisos se relacionan con tu ubicación y sus alrededores (50 km).</p><div id="cuenta-mapa" tabindex="0" role="region" aria-label="Elegir ubicación" aria-describedby="ayuda-ubicacion"></div></div>
+            <div>
+                <form method="post" action="{{ route('cuenta.preferencias') }}" class="cuenta-coordenadas">
+                    @csrf @method('PUT')
+                    <div><label for="latitud" class="form-label">Latitud</label><input class="form-control" type="text" id="latitud" name="latitud" readonly placeholder="Haz clic en el mapa" value="{{ old('latitud', $preferencias['latitud']) }}"></div>
+                    <div><label for="longitud" class="form-label">Longitud</label><input class="form-control" type="text" id="longitud" name="longitud" readonly placeholder="Haz clic en el mapa" value="{{ old('longitud', $preferencias['longitud']) }}"></div>
+                    <div class="cuenta-acciones"><button class="btn btn-primary" type="submit">Guardar ubicación</button><button id="quitar-ubicacion" class="btn btn-outline-primary" type="button">Quitar ubicación</button></div>
+                </form>
+                <div class="cuenta-preferencias-enlace"><a href="{{ route('avisos') }}">Configurar variables y canales de notificación</a></div>
+            </div>
+        </div>
+    </section>
     <div class="cuentas-columnas">
         <section class="card cuenta-tarjeta" id="unidades">
             <div class="card-header"><h2 class="card-title">Unidades de medida</h2></div>
@@ -44,20 +60,7 @@
                 </form>
             </div>
         </section>
-        <section class="card cuenta-tarjeta">
-            <div class="card-header"><h2 class="card-title">Tu ubicación de referencia</h2></div>
-            <div class="card-body">
-                <p id="ayuda-ubicacion">Marca un lugar en el mapa o muévelo y pulsa Enter.</p>
-                <div id="cuenta-mapa" tabindex="0" role="region" aria-label="Elegir ubicación" aria-describedby="ayuda-ubicacion"></div>
-                <p id="estado-ubicacion" class="mt-3" role="status">{{ $preferencias['latitud'] !== null ? 'Tienes una ubicación guardada.' : 'No has guardado una ubicación.' }}</p>
-                <form method="post" action="{{ route('cuenta.preferencias') }}">
-                    @csrf @method('PUT')
-                    <input type="hidden" id="latitud" name="latitud" value="{{ old('latitud', $preferencias['latitud']) }}">
-                    <input type="hidden" id="longitud" name="longitud" value="{{ old('longitud', $preferencias['longitud']) }}">
-                    <div class="cuenta-acciones"><button class="btn btn-primary" type="submit">Guardar ubicación</button><button id="quitar-ubicacion" class="btn btn-outline-primary" type="button">Quitar ubicación</button></div>
-                </form>
-            </div>
-        </section>
+
     </div>
 </div>
 @endsection

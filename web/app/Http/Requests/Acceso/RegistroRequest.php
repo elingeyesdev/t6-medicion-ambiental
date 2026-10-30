@@ -22,7 +22,7 @@ class RegistroRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        $reglas = [
             'name' => ['required', 'string', 'max:100'],
             'email' => ['bail', 'required', 'string', 'email', 'max:254', 'unique:users,email'],
             'password' => ['bail', 'required', 'string', 'confirmed', Password::min(12), function ($attribute, $value, $fail): void {
@@ -32,6 +32,19 @@ class RegistroRequest extends FormRequest
                 }
             }],
         ];
+
+        if (! $this->is('api/*')) {
+            $reglas += [
+                'latitud' => ['nullable', 'numeric', 'between:-90,90', 'required_with:longitud'],
+                'longitud' => ['nullable', 'numeric', 'between:-180,180', 'required_with:latitud'],
+                'notif_email' => ['sometimes', 'boolean'], 'notif_telegram' => ['sometimes', 'boolean'], 'notif_whatsapp' => ['sometimes', 'boolean'],
+                'telegram_destino' => ['nullable', 'string', 'max:20', 'regex:/^[1-9]\d{3,19}$/D'],
+                'whatsapp_destino' => ['nullable', 'string', 'max:16', 'regex:/^\+?[1-9]\d{7,14}$/D'],
+                'consentimiento' => ['sometimes', 'accepted'],
+            ];
+        }
+
+        return $reglas;
     }
 
     public function messages(): array

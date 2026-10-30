@@ -35,7 +35,7 @@ class SimulacionesTest extends TestCase
         $this->postJson('/api/v1/simulaciones', $this->parametros())->assertUnauthorized();
         Sanctum::actingAs(User::factory()->create(), ['cuenta']);
         $this->postJson('/api/v1/simulaciones', $this->parametros())->assertForbidden();
-        $this->get('/simulaciones')->assertForbidden();
+        $this->get('/simulaciones')->assertOk()->assertSee('Panel de')->assertDontSee('data-control=', false)->assertDontSee('data-preparar', false);
         $this->assertDatabaseCount('simulaciones', 0);
     }
 
@@ -52,6 +52,23 @@ class SimulacionesTest extends TestCase
         }
         $r->assertJsonCount(61, 'puntos')->assertJsonCount(241, 'regiones');
         Http::assertNothingSent();
+    }
+
+    public function test_consulta_visualizadora_no_expone_sesiones_privadas_ni_permite_escribir(): void
+    {
+        $propietario = User::factory()->create(['rol' => 'analista']);
+        $sesion = app(SimularEscenario::class)->crear($this->parametros(['nombre' => 'Escenario privado del analista']), $propietario->id);
+        $this->actingAs(User::factory()->create(['rol' => 'visualizador']));
+        $this->get('/simulaciones?sesion='.$sesion->id)->assertOk()
+            ->assertSee('Simulación continua global')->assertDontSee($sesion->nombre)
+            ->assertDontSee('data-control=', false)->assertDontSee('data-inyectar', false)
+            ->assertDontSee('class="sim-configuracion"', false);
+        $this->post('/simulaciones', $this->parametros())->assertForbidden();
+        $this->post('/simulaciones/'.$sesion->id.'/accion', ['accion' => 'iniciar', 'revision' => 0, 'posicion' => 0])->assertForbidden();
+        $this->post('/simulaciones/'.$sesion->id.'/historial')->assertForbidden();
+        $this->assertDatabaseCount('simulaciones', 1);
+        $this->assertDatabaseCount('lecturas_ambientales', 0);
+        $this->assertSame('lista', $sesion->fresh()->estado);
     }
 
     public function test_escenario_es_reproducible_y_no_se_mezcla_automaticamente_con_lecturas(): void
