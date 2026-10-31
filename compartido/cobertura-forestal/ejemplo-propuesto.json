@@ -1,0 +1,206 @@
+{
+  "contrato": "propuesta-met03-1",
+  "estado_metodo": "pendiente_revision",
+  "integrado_en_api": false,
+  "unidad": "ha",
+  "decimales": "cadena_decimal",
+  "fuente": {
+    "producto": "umd_tree_cover_loss",
+    "version": "v1.13",
+    "anios": [
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "frecuencia": "anual",
+    "resolucion_nominal_m": 30,
+    "licencia_datos": "CC-BY-4.0",
+    "atribucion": "Hansen/UMD/Google/USGS/NASA; consulta GFW"
+  },
+  "criterio": {
+    "base_cobertura_anio": 2000,
+    "campo": "umd_tree_cover_density_2000__percent",
+    "operador": ">=",
+    "valor": 30,
+    "adoptado": false
+  },
+  "territorio": {
+    "nombre_proveedor": "Santa Cruz",
+    "pais_proveedor": "BOL",
+    "region_proveedor": "8",
+    "proveedor": "GADM",
+    "version": "4.1",
+    "nivel": "departamento_proveedor",
+    "equivalencia_catalogo_local": "pendiente",
+    "id_catalogo_local": null,
+    "resultados_municipales": false
+  },
+  "cobertura": {
+    "es_cobertura_completa_de_observacion": null,
+    "fraccion_valida": null,
+    "nota": "La serie no informa la fracción de observaciones válidas; no se inventa 100%."
+  },
+  "serie": [
+    {
+      "anio": 2001,
+      "estado": "dato",
+      "perdida_ha": "85917.74595"
+    },
+    {
+      "anio": 2002,
+      "estado": "dato",
+      "perdida_ha": "118225.4508"
+    },
+    {
+      "anio": 2003,
+      "estado": "dato",
+      "perdida_ha": "112755.04112000001"
+    },
+    {
+      "anio": 2004,
+      "estado": "dato",
+      "perdida_ha": "132456.73939"
+    },
+    {
+      "anio": 2005,
+      "estado": "dato",
+      "perdida_ha": "150497.5276"
+    },
+    {
+      "anio": 2006,
+      "estado": "dato",
+      "perdida_ha": "148075.5809"
+    },
+    {
+      "anio": 2007,
+      "estado": "dato",
+      "perdida_ha": "129502.18974"
+    },
+    {
+      "anio": 2008,
+      "estado": "dato",
+      "perdida_ha": "259097.86595"
+    },
+    {
+      "anio": 2009,
+      "estado": "dato",
+      "perdida_ha": "141116.67362000002"
+    },
+    {
+      "anio": 2010,
+      "estado": "dato",
+      "perdida_ha": "294299.32826"
+    },
+    {
+      "anio": 2011,
+      "estado": "dato",
+      "perdida_ha": "210299.86339"
+    },
+    {
+      "anio": 2012,
+      "estado": "dato",
+      "perdida_ha": "197376.4233"
+    },
+    {
+      "anio": 2013,
+      "estado": "dato",
+      "perdida_ha": "124121.47036"
+    },
+    {
+      "anio": 2014,
+      "estado": "dato",
+      "perdida_ha": "154900.31894"
+    },
+    {
+      "anio": 2015,
+      "estado": "dato",
+      "perdida_ha": "122153.75659"
+    },
+    {
+      "anio": 2016,
+      "estado": "dato",
+      "perdida_ha": "363339.62896"
+    },
+    {
+      "anio": 2017,
+      "estado": "dato",
+      "perdida_ha": "332195.79723"
+    },
+    {
+      "anio": 2018,
+      "estado": "dato",
+      "perdida_ha": "233952.44023"
+    },
+    {
+      "anio": 2019,
+      "estado": "dato",
+      "perdida_ha": "735565.32522"
+    },
+    {
+      "anio": 2020,
+      "estado": "dato",
+      "perdida_ha": "315737.65122"
+    },
+    {
+      "anio": 2021,
+      "estado": "dato",
+      "perdida_ha": "445782.14404"
+    },
+    {
+      "anio": 2022,
+      "estado": "dato",
+      "perdida_ha": "458511.09786"
+    },
+    {
+      "anio": 2023,
+      "estado": "dato",
+      "perdida_ha": "370965.82305"
+    },
+    {
+      "anio": 2024,
+      "estado": "dato",
+      "perdida_ha": "1323408.83757"
+    },
+    {
+      "anio": 2025,
+      "estado": "dato",
+      "perdida_ha": "396845.74137"
+    }
+  ],
+  "resumen": {
+    "anios_con_dato": 25,
+    "anios_sin_dato": [],
+    "subtotal_informado_ha": "7357100.46266000003",
+    "total_periodo_ha": "7357100.46266000003"
+  },
+  "capa": null,
+  "limites": [
+    "Pérdida de cobertura arbórea del producto; no causa ni ilegalidad.",
+    "No equivale a deforestación confirmada, pérdida neta o cobertura actual.",
+    "No hay datos de 2026 en esta versión ni frecuencia diaria.",
+    "La suma del proveedor no es una estimación de área ajustada por exactitud.",
+    "No valida límites municipales ni la equivalencia con el catálogo local."
+  ]
+}
