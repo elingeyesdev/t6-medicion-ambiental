@@ -64,6 +64,103 @@ class TiempoTest extends TestCase
         return $r;
     }
 
+    private function respuestaConCondiciones(): array
+    {
+        $r = $this->respuestaConAyer();
+        $r['current']['weather_code'] = 0;
+        $r['current']['is_day'] = 0;
+        $r['hourly']['weather_code'] = array_fill(0, 192, 3);
+        $r['daily']['weather_code'] = [95, 0, 45, 61, 97, 99, null, 2];
+        foreach (['current_units', 'hourly_units', 'daily_units'] as $campo) {
+            $r[$campo]['weather_code'] = 'wmo code';
+        }
+        $r['current_units']['is_day'] = '';
+
+        return $r;
+    }
+
+    public function test_condicion_actual_diaria_y_horaria_conserva_cero_noche_y_faltantes_en_sus_fechas(): void
+    {
+        $this->cliente();
+        Http::fake(['api.open-meteo.com/*' => Http::response($this->respuestaConCondiciones())]);
+        $this->getJson('/api/v1/tiempo?latitud=-17.8&longitud=-63.2')->assertOk()
+            ->assertJsonPath('actual.codigoTiempo', 0)->assertJsonPath('actual.esDia', false)
+            ->assertJsonPath('horas.0.codigoTiempo', 3)->assertJsonPath('historial.0.codigoTiempo', 3)
+            ->assertJsonCount(168, 'horas')->assertJsonCount(24, 'historial')->assertJsonCount(7, 'dias')
+            ->assertJsonPath('dias.0.fecha', '2026-10-28')->assertJsonPath('dias.0.codigoTiempo', 0)
+            ->assertJsonPath('dias.1.codigoTiempo', 45)->assertJsonPath('dias.3.codigoTiempo', 97)
+            ->assertJsonPath('dias.5.codigoTiempo', null)->assertJsonPath('variables.temperatura.unidad', '°C')
+            ->assertJsonMissingPath('variables.codigoTiempo');
+        Http::assertSent(fn ($r) => str_contains($r['current'], 'weather_code,is_day') && str_contains($r['daily'], 'weather_code'));
+        Http::assertSentCount(1);
+        $this->assertDatabaseCount('lecturas_ambientales', 0);
+    }
+
+    public function test_codigos_ausentes_o_invalidos_no_se_convierten_en_cielo_despejado(): void
+    {
+        $this->cliente();
+        $r = [];
+        Http::fake(function () use (&$r) {
+            return Http::response($r);
+        });
+        foreach ([null, '0', false, 1.5, -1, 100, ['dato' => 0]] as $codigo) {
+            Cache::flush();
+            $r = $this->respuestaConCondiciones();
+            $r['current']['weather_code'] = $codigo;
+            $r['current']['is_day'] = '0';
+            $r['daily']['weather_code'][1] = $codigo;
+            $this->getJson('/api/v1/tiempo?latitud=0&longitud=0')->assertOk()
+                ->assertJsonPath('actual.codigoTiempo', null)->assertJsonPath('actual.esDia', null)->assertJsonPath('dias.0.codigoTiempo', null);
+        }
+        Cache::flush();
+        $r = $this->respuestaConAyer();
+        $this->getJson('/api/v1/tiempo?latitud=0&longitud=0')->assertOk()
+            ->assertJsonPath('actual.codigoTiempo', null)->assertJsonPath('actual.esDia', null)
+            ->assertJsonPath('horas.0.codigoTiempo', null)->assertJsonPath('dias.0.codigoTiempo', null);
+    }
+
+    public function test_codigos_numericos_integrales_y_dia_cero_uno_tienen_tipos_definidos(): void
+    {
+        $this->cliente();
+        $r = [];
+        Http::fake(function () use (&$r) {
+            return Http::response($r);
+        });
+        foreach ([[0.0, 1.0, true], [69, 0, false], [97, null, null]] as [$codigo, $dia, $esperado]) {
+            Cache::flush();
+            $r = $this->respuestaConCondiciones();
+            $r['current']['weather_code'] = $codigo;
+            $r['current']['is_day'] = $dia;
+            $this->getJson('/api/v1/tiempo?latitud=0&longitud=0')->assertOk()
+                ->assertJsonPath('actual.codigoTiempo', (int) $codigo)->assertJsonPath('actual.esDia', $esperado);
+        }
+    }
+
+    public function test_unidades_y_vectores_incoherentes_de_condiciones_se_rechazan(): void
+    {
+        $this->cliente();
+        $r = [];
+        Http::fake(function () use (&$r) {
+            return Http::response($r);
+        });
+        foreach (['current_units', 'hourly_units', 'daily_units', 'hourly', 'daily'] as $campo) {
+            Cache::flush();
+            $r = $this->respuestaConCondiciones();
+            $r[$campo]['weather_code'] = str_ends_with($campo, '_units') ? 'otra escala' : [0];
+            $this->getJson('/api/v1/tiempo?latitud=0&longitud=0')->assertStatus(503)->assertJsonPath('error.codigo', 'PRONOSTICO_NO_DISPONIBLE');
+        }
+    }
+
+    public function test_cache_sin_condiciones_no_impide_obtener_los_nuevos_campos_en_web(): void
+    {
+        $this->actingAs(User::factory()->create());
+        Cache::put('tiempo-envirosense-v2:'.hash('sha256', json_encode([-17.8, -63.2])), ['anterior' => true], 900);
+        Http::fake(['api.open-meteo.com/*' => Http::response($this->respuestaConCondiciones())]);
+        $this->getJson('/mapa/tiempo?latitud=-17.8&longitud=-63.2')->assertOk()
+            ->assertJsonPath('actual.codigoTiempo', 0)->assertJsonPath('dias.0.codigoTiempo', 0)->assertJsonMissingPath('anterior');
+        Http::assertSentCount(1);
+    }
+
     public function test_recupera_24_horas_recientes_sin_anteponer_ayer_al_pronostico(): void
     {
         $this->travelTo(Carbon::parse('2026-10-28T16:15:00Z'));

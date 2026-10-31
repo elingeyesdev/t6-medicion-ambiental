@@ -1,4 +1,5 @@
 import { presentacion } from '../datos/unidades.js';
+import { crearCondicionTiempo } from './condicion-tiempo.js';
 
 function nodo(tipo, texto, clase) {
     const n = document.createElement(tipo);
@@ -26,6 +27,11 @@ export function crearConsultaTiempo({url, latitud, longitud, automatico = false}
         const zona = new Intl.DateTimeFormat('es-BO', {timeZone: datos.zonaHoraria, timeZoneName: 'shortOffset'});
         const valor = (v, clave) => presentacion.texto(clave, v, datos.variables[clave]?.unidad ?? '');
         estado.textContent = 'Datos estimados · ' + fecha.format(new Date(datos.actual.instante)) + ' · Hora del lugar';
+        if (Object.hasOwn(datos.actual, 'codigoTiempo')) {
+            const condicion = nodo('div', undefined, 'tiempo-condicion-actual');
+            condicion.append(crearCondicionTiempo(datos.actual.codigoTiempo, datos.actual.esDia));
+            resultado.append(condicion);
+        }
         const tarjetas = nodo('div', undefined, 'tiempo-valores');
         for (const clave of ['temperatura', 'sensacion', 'humedad', 'probabilidad', 'viento', 'visibilidad']) {
             const tarjeta = nodo('div', undefined, 'tiempo-valor tiempo-' + clave);
@@ -43,6 +49,11 @@ export function crearConsultaTiempo({url, latitud, longitud, automatico = false}
         for (const d of datos.dias) {
             const fila = nodo('tr');
             for (const t of [dia.format(new Date(d.fecha + 'T12:00:00Z')), valor(d.maxima, 'temperatura'), valor(d.minima, 'temperatura'), valor(d.lluvia, 'lluvia')]) fila.append(nodo('td', t));
+            if (Object.hasOwn(d, 'codigoTiempo')) {
+                const condicion = crearCondicionTiempo(d.codigoTiempo);
+                condicion.title = 'Condición más intensa prevista para el día';
+                fila.querySelector('td').append(condicion);
+            }
             cuerpo.append(fila);
         }
         tabla.append(cuerpo);
@@ -65,6 +76,7 @@ export function crearConsultaTiempo({url, latitud, longitud, automatico = false}
         const controles = nodo('div', undefined, 'd-flex flex-wrap gap-2'); controles.append(etiquetaPeriodo, etiqueta);
         const descripcion = nodo('p', 'Estimaciones recientes · Hora del lugar');
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('class', 'tiempo-grafico-horario');
         svg.setAttribute('viewBox', '0 0 540 210'); svg.setAttribute('role', 'img');
         const dibujo = nodo('div'); dibujo.append(svg);
         const escala = nodo('p'); escala.setAttribute('role', 'status');

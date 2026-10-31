@@ -70,7 +70,7 @@ async function ficha(t, datos = datosTiempo()) {
     return {elemento: consulta.elemento, documento, presentacion, campo, consultas: () => consultas,
         detalle: () => consulta.elemento.querySelector('details'),
         filas: () => consulta.elemento.querySelector('details').querySelector('tbody').children.map(f => f.children.map(c => c.textContent)),
-        grafico: () => consulta.elemento.querySelector('svg'),
+        grafico: () => consulta.elemento.querySelector('details').querySelector('svg'),
         escala: () => consulta.elemento.querySelector('details').querySelectorAll('p').at(-1).textContent};
 }
 
@@ -250,4 +250,27 @@ test('solo las horas ambiguas del período visible llevan offset', async t => {
     assert.deepEqual(f.filas().map(f => f[0]), ['1/11/26, 00:00', '1/11/26, 01:00 GMT-4', '1/11/26, 01:00 GMT-5', '1/11/26, 02:00']);
     await elegir(f, 'Período', 'pronostico');
     assert.deepEqual(f.filas().map(f => f[0]), ['1/11/26, 01:00', '1/11/26, 02:00']);
+});
+
+test('la ficha muestra la condición actual de noche y la condición diaria sin códigos técnicos', async t => {
+    const datos = datosTiempo(); datos.actual.codigoTiempo = 0; datos.actual.esDia = false; datos.dias[0].codigoTiempo = 45;
+    const f = await ficha(t, datos);
+    const iconoActual = f.elemento.querySelectorAll('span').find(n => n.className === 'tiempo-condicion tiempo-condicion-luna');
+    assert.ok(iconoActual); assert.equal(iconoActual.textContent, 'Despejado');
+    assert.equal(iconoActual.querySelector('svg').getAttribute('aria-hidden'), 'true');
+    assert.match(f.elemento.querySelector('table').textContent, /Niebla/);
+    assert.doesNotMatch(f.elemento.textContent, /WMO|weather_code|codigoTiempo/);
+    f.presentacion.establecer({temperatura: 'F'}); await f.documento.emitir('unidades-cambiadas');
+    assert.match(f.elemento.textContent, /Despejado/); assert.match(f.elemento.querySelector('table').textContent, /Niebla/);
+    assert.equal(f.consultas(), 1);
+});
+
+test('condición desconocida no inyecta contenido ni oculta temperaturas y horas recientes', async t => {
+    const datos = datosTiempo(); datos.actual.codigoTiempo = '<img src=x>'; datos.dias[0].codigoTiempo = 69;
+    const f = await ficha(t, datos);
+    assert.match(f.elemento.textContent, /Sin dato/); assert.doesNotMatch(f.elemento.textContent, /Despejado|<img/);
+    assert.equal(f.elemento.querySelectorAll('img').length, 0);
+    await elegir(f, 'Período', 'historial');
+    assert.equal(f.filas().length, 4); assert.match(f.grafico().getAttribute('aria-label'), /Últimas 24 horas/);
+    assert.ok(f.elemento.querySelectorAll('strong').some(n => n.textContent === '0 °C'));
 });
