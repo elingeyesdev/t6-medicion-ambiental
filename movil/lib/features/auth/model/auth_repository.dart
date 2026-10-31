@@ -47,7 +47,11 @@ class AuthRepository {
     if (token == null || token.isEmpty) return null;
     api.bearerToken = token;
     try {
-      final payload = await api.getJson('cuenta', authenticated: true);
+      final payload = await api.getJson(
+        'cuenta',
+        authenticated: true,
+        timeoutOverride: const Duration(seconds: 4),
+      );
       return GeoSurUser.fromJson(_map(payload)['usuario']);
     } on GeoCruzApiException catch (error) {
       if (error.statusCode == 401 || error.statusCode == 403) {
