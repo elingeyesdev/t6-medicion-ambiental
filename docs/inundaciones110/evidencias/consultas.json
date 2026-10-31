@@ -1,0 +1,20 @@
+[
+  {
+    "archivo": "A.json",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=sentinel-2-l2a&bbox=-62.99%2C-17.75%2C-62.9%2C-17.65&datetime=2025-02-15T00%3A00%3A00Z%2F2025-03-03T23%3A59%3A59Z&limit=20",
+    "consultado_utc": "2026-10-31T05:34:30.570865+00:00",
+    "http": 200,
+    "tipo": "application/geo+json; charset=utf-8",
+    "bytes": 123235,
+    "sha256": "85618bafd7b196970eb75baae77344e83a1ba5e484852a9a15bf2b98fd39ae96"
+  },
+  {
+    "archivo": "B.json",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=sentinel-2-l2a&bbox=-62.99%2C-17.75%2C-62.9%2C-17.65&datetime=2025-03-04T00%3A00%3A00Z%2F2025-03-24T23%3A59%3A59Z&limit=20",
+    "consultado_utc": "2026-10-31T05:34:32.118078+00:00",
+    "http": 200,
+    "tipo": "application/geo+json; charset=utf-8",
+    "bytes": 153003,
+    "sha256": "ef19df8d3d4e0cb982be76a52e696d15642d9aa5dbfa98fa009fd9b7da23b8af"
+  }
+]

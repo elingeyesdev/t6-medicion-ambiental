@@ -1,0 +1,29 @@
+[
+  {
+    "archivo": "A.json",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=sentinel-1-rtc&bbox=-62.99%2C-17.75%2C-62.9%2C-17.65&datetime=2025-02-15T00%3A00%3A00Z%2F2025-03-03T23%3A59%3A59Z&limit=20",
+    "consultado_utc": "2026-10-31T06:16:10.017739+00:00",
+    "http": 200,
+    "tipo": "application/geo+json; charset=utf-8",
+    "bytes": 6215,
+    "sha256": "904d8cdbce800162f17301d2e208ea7f560989acde9e228c7b61efcc55d2d844"
+  },
+  {
+    "archivo": "B.json",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=sentinel-1-rtc&bbox=-62.99%2C-17.75%2C-62.9%2C-17.65&datetime=2025-03-04T00%3A00%3A00Z%2F2025-03-24T23%3A59%3A59Z&limit=20",
+    "consultado_utc": "2026-10-31T06:16:10.887082+00:00",
+    "http": 200,
+    "tipo": "application/geo+json; charset=utf-8",
+    "bytes": 12113,
+    "sha256": "217150a742f4d1830a94984a9fd8a668058697b97508caf7bddab1ee87973911"
+  },
+  {
+    "archivo": "coleccion.json",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc",
+    "consultado_utc": "2026-10-31T06:16:48.880046+00:00",
+    "http": 200,
+    "tipo": "application/json; charset=utf-8",
+    "bytes": 9298,
+    "sha256": "30bc296e602afc5288d24587c4c74c322f9b51bdd4fc5b329703f54a3daac8f0"
+  }
+]
