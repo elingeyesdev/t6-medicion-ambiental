@@ -33,8 +33,8 @@
       "sha256": "cbb3176973db462ef3be30d2de0d54e4688eeb769c0c200152bc9ad7806dbff2"
     },
     "respuesta-api.json": {
-      "bytes": 43291,
-      "sha256": "997f584e5f8bf0277fdbeaa50c45afa4fe9446ac7247447faf74f7d2b9a96b21"
+      "bytes": 43290,
+      "sha256": "ffb7a9353e464ff4cf67111cf4220442e71a9af56aa2d70a8c3768910dae9c05"
     },
     "ficha-horas-recientes.png": {
       "bytes": 88973,
@@ -44,5 +44,6 @@
   "codigo": {
     "web/app/Services/Tiempo/ConsultarPronostico.php": "50523d54d0055e654caa241e41e5cd906d81e233c9dd07870246a44143f81a66",
     "web/public/js/mapas/tiempo.js": "1cf16d5d200e3d01a4c3165709ca24e8035ddb782e9da7da1782b73c1498474e"
-  }
+  },
+  "formatoHuellaCodigo": "Bytes de los blobs Git, con finales LF."
 }
