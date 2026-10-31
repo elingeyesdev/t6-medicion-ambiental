@@ -2,11 +2,17 @@
 
 namespace App\Notifications;
 
+use App\Notifications\Canales\RecuperacionCorreoLocal;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class RecuperarAcceso extends ResetPassword
 {
+    public function via($notifiable): array
+    {
+        return $this->esLocal() ? [RecuperacionCorreoLocal::class] : ['mail'];
+    }
+
     public function toMail($notifiable): MailMessage
     {
         $enlace = rtrim(config('app.url'), '/').route('password.reset', ['token' => $this->token], false).'?'.http_build_query(['email' => $notifiable->getEmailForPasswordReset()]);
@@ -15,10 +21,15 @@ class RecuperarAcceso extends ResetPassword
             ->action('Crear una nueva contraseña', $enlace)
             ->line('El enlace vence en 15 minutos. Si no lo pediste, puedes ignorar este mensaje.')
             ->salutation('GeoSur');
-        if (app()->environment('local', 'testing')) {
+        if ($this->esLocal()) {
             $mensaje->mailer('log');
         }
 
         return $mensaje;
+    }
+
+    private function esLocal(): bool
+    {
+        return app()->environment('local', 'testing') || config('mail.default') === 'log';
     }
 }

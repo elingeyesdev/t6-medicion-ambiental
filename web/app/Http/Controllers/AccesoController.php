@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Acceso\EntradaRequest;
 use App\Http\Requests\Acceso\RegistroRequest;
 use App\Models\User;
+use App\Services\Notificaciones\GuardarPushAvisos;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,6 +45,7 @@ class AccesoController extends Controller
 
     public function salir(Request $request): RedirectResponse
     {
+        app(GuardarPushAvisos::class)->ejecutar($request->user(), false);
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

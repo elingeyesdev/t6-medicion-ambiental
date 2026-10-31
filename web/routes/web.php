@@ -29,6 +29,13 @@ Route::middleware('guest')->group(function (): void {
     Route::post('/restablecer-acceso', [RecuperacionController::class, 'restablecer'])->middleware('throttle:cuentas-restablecer')->name('password.update');
 });
 Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
+    Route::middleware('can:datos.consultar')->group(function (): void {
+        Route::put('/avisos/push', [AvisosController::class, 'push'])->middleware('throttle:10,1')->name('avisos.push');
+        Route::get('/avisos/servicio-push.js', [AvisosController::class, 'servicioPush'])->name('avisos.servicio-push');
+        Route::get('/avisos/novedades', [AvisosController::class, 'novedades'])->middleware('throttle:30,1')->name('avisos.novedades');
+        Route::put('/avisos/canales', [AvisosController::class, 'canales'])->middleware('throttle:10,1')->name('avisos.canales');
+    });
+    Route::put('/cuenta/clave', [CuentaController::class, 'clave'])->middleware('throttle:5,1')->name('cuenta.clave');
     Route::get('/simulacion-continua/estado', [SimulacionContinuaController::class, 'estado'])
         ->middleware(['can:datos.consultar', 'throttle:120,1']);
     Route::post('/simulacion-continua/accion', [SimulacionContinuaController::class, 'accion'])
