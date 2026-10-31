@@ -11,6 +11,7 @@ use App\Http\Controllers\MapaMonitoreoController;
 use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\SensoresController;
+use App\Http\Controllers\SimulacionContinuaController;
 use App\Http\Controllers\SimulacionesController;
 use App\Http\Controllers\UnidadesController;
 use App\Http\Controllers\UsuariosController;
@@ -28,6 +29,12 @@ Route::middleware('guest')->group(function (): void {
     Route::post('/restablecer-acceso', [RecuperacionController::class, 'restablecer'])->middleware('throttle:cuentas-restablecer')->name('password.update');
 });
 Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
+    Route::get('/simulacion-continua/estado', [SimulacionContinuaController::class, 'estado'])
+        ->middleware(['can:datos.consultar', 'throttle:120,1']);
+    Route::post('/simulacion-continua/accion', [SimulacionContinuaController::class, 'accion'])
+        ->middleware(['can:simulaciones.gestionar', 'throttle:30,1']);
+    Route::get('/simulaciones/{id}/estado', [SimulacionesController::class, 'mostrar'])
+        ->middleware(['can:simulaciones.gestionar', 'throttle:120,1']);
     Route::put('/cuenta/unidades', [UnidadesController::class, 'guardar'])->name('cuenta.unidades');
     Route::middleware('can:datos.consultar')->group(function (): void {
         Route::get('/mapa/buscar', BuscarLugarController::class)->middleware('throttle:mapa-busquedas')->name('mapa.buscar');

@@ -6,9 +6,11 @@ use App\Models\LecturaAmbiental;
 use App\Models\PlantillaReporte;
 use App\Models\ReporteAmbiental;
 use App\Models\Simulacion;
+use App\Models\SimulacionContinua;
 use App\Services\Api\ErrorConsulta;
 use App\Services\Api\ParametrosConsulta;
 use App\Services\Datos\CatalogoAmbiental;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -28,7 +30,7 @@ final class PrepararReporte
             'columnas.*' => ['required', 'distinct', Rule::in(array_keys(self::COLUMNAS))], 'grafico' => ['required', 'boolean'],
             'tipo' => ['sometimes', Rule::in(array_keys(self::TIPOS))], 'condiciones' => ['sometimes', 'array', 'list', 'max:10'],
             'condiciones.*' => ['array:variable,operador,valor'],
-            'condiciones.*.variable' => ['required', Rule::in(array_keys($this->catalogo->metricas()))],
+            'condiciones.*.variable' => ['required', Rule::in(array_keys(app(VariablesReporte::class)->metricas()))],
             'condiciones.*.operador' => ['required', Rule::in(['>', '<', '='])],
             'condiciones.*.valor' => ['required', 'numeric', 'between:-1000000,1000000']])->validate();
         $config = ['columnas' => $datos['columnas'], 'grafico' => (bool) $datos['grafico'], 'tipo' => $datos['tipo'] ?? 'PERSONALIZADA',
@@ -45,14 +47,23 @@ final class PrepararReporte
 
     public function crear(array $entrada, int $usuario): ReporteAmbiental
     {
-        Validator::make(['entrada' => $entrada], ['entrada' => ['array:titulo,base,simulacion,pais,punto,metrica,origen,desde,hasta,plantilla']])->validate();
-        $datos = Validator::make($entrada, ['titulo' => ['required', 'string', 'max:100'], 'base' => ['required', Rule::in(['mediciones', 'simulacion'])],
+        Validator::make(['entrada' => $entrada], ['entrada' => ['array:titulo,base,simulacion,pais,punto,metrica,origen,desde,hasta,plantilla,puntos,variables,horas']])->validate();
+        $datos = Validator::make($entrada, ['titulo' => ['required', 'string', 'max:100'], 'base' => ['required', Rule::in(['mediciones', 'simulacion', 'continua', 'atmosfera'])],
             'simulacion' => ['sometimes', 'string', 'max:40'], 'pais' => ['sometimes', Rule::in(array_column($this->catalogo->paises(), 'codigo'))],
-            'punto' => ['sometimes', 'string', 'max:60'], 'metrica' => ['sometimes', Rule::in(array_keys($this->catalogo->metricas()))],
+            'punto' => ['sometimes', 'string', 'max:60'], 'metrica' => ['sometimes', Rule::in(array_keys(app(VariablesReporte::class)->metricas()))],
+            'puntos' => ['required_if:base,atmosfera', 'array', 'list', 'min:1', 'max:9'],
+            'puntos.*' => ['required', 'string', 'distinct', Rule::in(array_column($this->catalogo->leer()['puntos'], 'codigo'))],
+            'variables' => ['required_if:base,atmosfera', 'array', 'list', 'min:1', 'max:14'],
+            'variables.*' => ['required', 'distinct', Rule::in(array_keys(app(VariablesReporte::class)->atmosfericas()))],
+            'horas' => ['required_if:base,atmosfera', 'integer', 'between:1,72'],
             'origen' => ['sometimes', Rule::in([...array_keys(CatalogoAmbiental::ORIGENES), 'todos'])],
             'desde' => ['sometimes', 'string'], 'hasta' => ['sometimes', 'string'], 'plantilla' => ['sometimes', 'string', 'max:40']])->validate();
         $config = isset($datos['plantilla']) ? PlantillaReporte::where('usuario_id', $usuario)->findOrFail($datos['plantilla'])->configuracion :
             ['columnas' => self::PREDETERMINADAS, 'grafico' => true];
+        $adicionales = [];
+        if ($datos['base'] !== 'atmosfera' && array_intersect(['puntos', 'variables', 'horas'], array_keys($datos))) {
+            throw new ErrorConsulta('FILTROS_INVALIDOS', 'Esos filtros pertenecen al reporte atmosférico.');
+        }
         if ($datos['base'] === 'simulacion') {
             if (! isset($datos['simulacion'])) {
                 throw new ErrorConsulta('FILTROS_INVALIDOS', 'Elige una simulación propia.');
@@ -67,6 +78,36 @@ final class PrepararReporte
             }
             $instantes = $s->resultado['instantes'];
             $datos = ['titulo' => $datos['titulo'], 'base' => 'simulacion', 'simulacion' => $s->id, 'desde' => $instantes[0], 'hasta' => $instantes[array_key_last($instantes)]];
+        } elseif ($datos['base'] === 'atmosfera') {
+            if (array_intersect(['punto', 'pais', 'metrica', 'origen', 'desde', 'hasta', 'simulacion'], array_keys($datos))) {
+                throw new ErrorConsulta('FILTROS_INVALIDOS', 'Elige las localidades, variables y horas del pronóstico.');
+            }
+            if (count($datos['puntos']) * count($datos['variables']) * $datos['horas'] > 1000) {
+                throw new ErrorConsulta('FILTROS_INVALIDOS', 'Reduce las localidades, variables u horas a un máximo de mil valores.');
+            }
+            $puntos = collect($this->catalogo->leer()['puntos'])->keyBy('codigo');
+            $corte = app(ConsultarAtmosfera::class)->ejecutar(array_map(fn ($k) => $puntos[$k], $datos['puntos']), $datos['variables'], (int) $datos['horas']);
+            $filas = array_map(fn ($f) => $this->fila($f), $corte['filas']);
+            $adicionales = ['faltantes' => array_map(fn ($f) => $this->fila($f), $corte['faltantes']), 'atribucion' => $corte['atribucion']];
+            $datos['consultadoEl'] = $corte['consultadoEl'];
+        } elseif ($datos['base'] === 'continua') {
+            if (array_intersect(['pais', 'origen', 'desde', 'hasta', 'simulacion'], array_keys($datos))) {
+                throw new ErrorConsulta('FILTROS_INVALIDOS', 'El corte global solo admite filtros de localidad y variable.');
+            }
+            $s = DB::transaction(fn () => SimulacionContinua::lockForUpdate()->findOrFail(1));
+            $c = $s->contenido;
+            $filas = [];
+            foreach ($c['puntos'] as $p) {
+                if (isset($datos['punto']) && $datos['punto'] !== $p['codigo']) {
+                    continue;
+                }
+                foreach ($p['valores'] as $k => $valor) {
+                    $filas[] = $this->fila(['puntoCodigo' => $p['codigo'], 'punto' => $p['nombre'], 'pais' => $p['pais'], 'latitud' => $p['latitud'], 'longitud' => $p['longitud'],
+                        'metrica' => $k, 'valor' => $valor, 'instante' => $c['instante'], 'origen' => 'simulado', 'fuente' => 'sim-global-'.strtolower($c['version']).(isset($p['inyecciones'][$k]) ? '-manual' : '-modelo'),
+                        'intervencion' => isset($p['inyecciones'][$k]) ? 'manual' : 'modelo']);
+                }
+            }
+            $datos['corte'] = ['version' => $c['version'], 'revision' => $s->revision, 'paso' => $c['paso'], 'estado' => $s->estado, 'metodo' => $c['metodo'], 'semilla' => $c['semilla'], 'ajustes' => $c['ajustes']];
         } else {
             $hasta = isset($datos['hasta']) ? ParametrosConsulta::instante($datos['hasta']) : now('UTC')->toDateTimeImmutable();
             $desde = isset($datos['desde']) ? ParametrosConsulta::instante($datos['desde']) : $hasta->modify('-7 days');
@@ -109,17 +150,21 @@ final class PrepararReporte
         })->values()->all();
 
         return ReporteAmbiental::create(['usuario_id' => $usuario, 'titulo' => $datos['titulo'], 'parametros' => $datos,
-            'contenido' => ['columnas' => $config['columnas'], 'grafico' => $config['grafico'], 'plantilla' => $config, 'filas' => $filas, 'resumen' => $resumen,
+            'contenido' => $adicionales + ['columnas' => $config['columnas'], 'grafico' => $config['grafico'], 'plantilla' => $config, 'filas' => $filas, 'resumen' => $resumen,
                 'nota' => 'Registrados, estimados y simulados conservan su origen. Este reporte no certifica cobertura continua del territorio.']]);
     }
 
     private function fila(array $dato): array
     {
-        $metrica = $this->catalogo->metricas()[$dato['metrica']];
+        $metrica = app(VariablesReporte::class)->metricas()[$dato['metrica']] ?? null;
+        if ($metrica === null) {
+            throw new ErrorConsulta('VARIABLE_NO_DISPONIBLE', 'Una variable del reporte ya no está disponible. Revisa los filtros.', 422);
+        }
 
         return $dato + ['fecha' => (new \DateTimeImmutable($dato['instante']))->setTimezone(new \DateTimeZone('America/La_Paz'))->format('d/m/Y H:i'),
             'origenNombre' => CatalogoAmbiental::ORIGENES[$dato['origen']],
-            'fuenteNombre' => str_starts_with($dato['fuente'], 'sim-') ? 'Simulación guardada' : (['demo-local' => 'Demostración', 'manual' => 'Carga manual', 'open-meteo-modelo' => 'Open-Meteo'][$dato['fuente']] ?? $dato['fuente']),
+            'fuenteNombre' => str_starts_with($dato['fuente'], 'sim-global-') ? (str_ends_with($dato['fuente'], '-manual') ? 'Simulación global · ajuste manual' : 'Simulación global · modelo') :
+                (str_starts_with($dato['fuente'], 'sim-') ? 'Simulación guardada' : (['demo-local' => 'Demostración', 'manual' => 'Carga manual', 'open-meteo-modelo' => 'Open-Meteo · modelo meteorológico', 'open-meteo-cams' => 'Open-Meteo · CAMS'][$dato['fuente']] ?? $dato['fuente'])),
             'variable' => $metrica['nombre'], 'unidad' => $metrica['unidad']];
     }
 
