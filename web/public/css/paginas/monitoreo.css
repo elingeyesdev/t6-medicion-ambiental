@@ -177,3 +177,14 @@
     .monitoreo-procedencia { bottom:160px; }
     .comparacion-fijada { top:70px; left:12px; width:calc(100% - 24px); }
 }
+
+.monitoreo-contenedor:fullscreen { position:fixed; inset:0; width:100vw; height:100dvh; max-width:none; max-height:none; margin:0; background:var(--enviro-fondo); }
+.monitoreo-contenedor::backdrop { background:var(--enviro-fondo); }
+.monitoreo-pantalla-completa [data-contraer], .monitoreo-pantalla-completa[aria-pressed="true"] [data-expandir] { display:none; }
+.monitoreo-pantalla-completa[aria-pressed="true"] [data-contraer] { display:block; }
+.monitoreo-pantalla-completa[aria-pressed="true"] { color:var(--enviro-acento); background:var(--enviro-suave); }
+.monitoreo-pantalla-completa:disabled { opacity:.55; cursor:not-allowed; }
+.monitoreo-pantalla-estado { position:absolute; left:0; bottom:100%; width:min(20rem,calc(100vw - 32px)); margin-bottom:8px; }
+@media(max-height:480px) {
+    .monitoreo-contenedor:fullscreen .monitoreo-barra { flex-direction:row; bottom:16px; }
+}
