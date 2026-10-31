@@ -28,6 +28,8 @@ Tablero: https://github.com/users/elingeyesdev/projects/13
 
 La [referencia de EnviroSense](referencias/envirosense/README.md) conserva el código publicado del proyecto de origen y declara las sustituciones de credenciales. Su [adaptación a GeoCruz](docs/MIGRACION_ENVIROSENSE.md) relaciona las funciones del referente con Laravel 12, Blade, la API común y Flutter, e identifica lo que sigue pendiente.
 
+[Preparación documental de inundaciones #40](docs/ANA01_INUNDACIONES.md): fuentes, propuesta para revisión y metadatos satelitales reproducibles sin descargar imágenes. `python herramientas/inundaciones/catalogo.py revisar` verifica la evidencia guardada sin Internet. Este avance no implementa el módulo ni declara ejecutado G; el análisis conserva la dependencia de #39.
+
 ## Organización
 
 - `web/`: backend y API compartida con Laravel, e interfaz Blade. Responsable: Josué.

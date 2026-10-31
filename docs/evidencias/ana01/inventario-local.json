@@ -1,0 +1,24 @@
+{
+  "recuperadoEn": "2026-10-25T21:42:44.5948774Z",
+  "tipo": "busqueda_local_acotada_sin_rasters_utilizables_en_rutas_revisadas",
+  "directoriosRevisados": [
+    "Descargas",
+    "Escritorio/GeoCruz",
+    "Escritorio/GeoCruz-oficial",
+    "Escritorio/EnviroSense-equipo11"
+  ],
+  "extensiones": [
+    ".tif",
+    ".tiff",
+    ".jp2",
+    ".dim"
+  ],
+  "nombresSentinelRevisados": [
+    "S1?_IW*",
+    "S2?_MSIL*",
+    "Sentinel*"
+  ],
+  "resultado": "No se encontraron coincidencias utilizables con esos patrones en las rutas revisadas",
+  "ubicacionOriginal": "no_identificada; Josue indica desconocer la ubicacion",
+  "noEquivaleA": "ausencia de archivos en todo el PC"
+}
