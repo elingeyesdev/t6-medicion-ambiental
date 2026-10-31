@@ -1,0 +1,17 @@
+{
+  "version": "met02-propuesta-1",
+  "estado": "pendiente_revision",
+  "coleccion": "sentinel-2-l2a",
+  "bbox": [-62.99, -17.75, -62.9, -17.65],
+  "crsBbox": "OGC:CRS84",
+  "ventanas": {
+    "A": "2025-02-15T00:00:00Z/2025-03-03T23:59:59Z",
+    "B": "2025-03-04T00:00:00Z/2025-03-24T23:59:59Z"
+  },
+  "limitePrimeraPagina": 20,
+  "politicaSclPropuesta": {"comparables": [4, 5, 6], "adoptada": false},
+  "umbralCoberturaMinima": null,
+  "metodoAprobado": false,
+  "escenasAprobadas": [],
+  "procesamientoInundacionesIniciado": false
+}
