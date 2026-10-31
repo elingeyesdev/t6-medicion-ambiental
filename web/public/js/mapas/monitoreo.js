@@ -4,6 +4,7 @@ import { crearConsultaTiempo } from './tiempo.js';
 import { iniciarBuscadorLugar } from './buscador.js';
 import { compararLecturas, iniciarRecorrido } from './historial-mapa.js';
 import { medida } from '../datos/unidades.js';
+import { iniciarCapas } from './capas.js';
 
 const configuracion = JSON.parse(document.getElementById('configuracion-monitoreo').textContent);
 const formulario = document.getElementById('consulta-monitoreo');
@@ -74,6 +75,7 @@ formulario.elements.namedItem('pais').addEventListener('change', () => cargarReg
 puntoSeleccionado = inicial.get('punto');
 
 iniciarMapaBase(mapa, mensaje => avisar(mensaje, true), 'mon-base');
+iniciarCapas(mapa, L);
 
 function avisar(mensaje, error = false) {
     estado.textContent = mensaje;

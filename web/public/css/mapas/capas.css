@@ -1,0 +1,26 @@
+.capas-panel { border-block: 1px solid var(--enviro-borde, #cbd5e1); }
+.capas-panel summary { font-size: 18px; font-weight: 600; }
+.capas-controles { padding: 18px 22px; }
+.capas-controles > p { margin: 0 0 14px; }
+.capas-controles fieldset { border: 0; padding: 0; margin-top: 16px; min-width: 0; }
+.capas-controles .form-label { margin-top: 14px; }
+.capas-controles .form-check { margin-block: 16px; }
+.capas-controles [hidden] { display: none !important; }
+.capas-acciones { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
+.capas-acciones .btn { white-space: normal; flex: 1; padding-inline: 8px; min-height: 44px; }
+.capas-controles [data-estado], .capas-controles [data-lectura] { margin-block: 16px; }
+.capas-controles [data-error="true"] { color: var(--tblr-danger, #b42318); }
+.capas-leyenda { border: 1px solid var(--enviro-borde, #cbd5e1); border-radius: 6px; margin: 16px 0; padding: 12px; background: var(--enviro-suave, #f3f6f5); }
+.capas-leyenda h3 { font-size: 17px; margin: 0 0 8px; }
+.capas-leyenda p { overflow-wrap: anywhere; margin: 8px 0; font-size: 15px !important; }
+.capas-escala { height: 16px; border-radius: 3px; border: 1px solid #64748b; }
+.capas-marcas { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 12px; margin-block: 8px; }
+.capas-marcas li { display: flex; gap: 5px; align-items: center; font-size: 14px; }
+.capas-marcas i { width: 12px; height: 12px; border: 1px solid #64748b; display: inline-block; }
+.capas-divisor { position: absolute; top: 0; bottom: 0; width: 3px; background: #fff; box-shadow: 0 0 2px 1px #172b4d; z-index: 399; pointer-events: none; }
+.capas-divisor span { position: absolute; top: 50%; padding: 5px; color: #fff; background: #193c52; font-weight: 700; }
+.capas-divisor span:first-child { right: 8px; }
+.capas-divisor span:last-child { left: 8px; }
+[data-resultados-poi] { list-style: none; padding: 0; max-height: 320px; overflow-y: auto; }
+[data-lectura] p { margin-block: 8px; }
+@media (prefers-reduced-motion: reduce) { .capas-panel * { scroll-behavior: auto; } }
