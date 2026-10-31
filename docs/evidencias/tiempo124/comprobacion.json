@@ -1,0 +1,48 @@
+{
+  "tarea": 124,
+  "fechaComprobacionUTC": "2026-10-31T21:30:11.872826+00:00",
+  "lugar": "Santa Cruz de la Sierra, punto público de referencia; no es geolocalización del usuario",
+  "ubicacionConsultada": {
+    "latitud": -17.7833,
+    "longitud": -63.1833
+  },
+  "proveedor": "https://api.open-meteo.com/v1/forecast",
+  "parametrosTemporales": {
+    "past_days": 1,
+    "forecast_days": 7,
+    "timezone": "auto",
+    "timeformat": "unixtime"
+  },
+  "origen": "estimado",
+  "consultaHTTP": "Una captura directa pequeña y una consulta del servicio Laravel, con validación TLS",
+  "consultadoEl": "2026-10-31T21:21:15Z",
+  "actual": "2026-10-31T21:15:00Z",
+  "zonaHoraria": "America/La_Paz",
+  "conteos": {
+    "proveedorHoras": 192,
+    "proveedorDias": 8,
+    "historial": 24,
+    "pronosticoHoras": 168,
+    "pronosticoDias": 7
+  },
+  "historialDesde": "2026-10-30T22:00:00Z",
+  "historialHasta": "2026-10-31T21:00:00Z",
+  "archivos": {
+    "proveedor.json": {
+      "bytes": 15609,
+      "sha256": "cbb3176973db462ef3be30d2de0d54e4688eeb769c0c200152bc9ad7806dbff2"
+    },
+    "respuesta-api.json": {
+      "bytes": 43291,
+      "sha256": "997f584e5f8bf0277fdbeaa50c45afa4fe9446ac7247447faf74f7d2b9a96b21"
+    },
+    "ficha-horas-recientes.png": {
+      "bytes": 88973,
+      "sha256": "e17e830308b03ea393dd58b2ccb30df6ec9cd63c57f14bc79a3cbd542dbd58c9"
+    }
+  },
+  "codigo": {
+    "web/app/Services/Tiempo/ConsultarPronostico.php": "50523d54d0055e654caa241e41e5cd906d81e233c9dd07870246a44143f81a66",
+    "web/public/js/mapas/tiempo.js": "1cf16d5d200e3d01a4c3165709ca24e8035ddb782e9da7da1782b73c1498474e"
+  }
+}
