@@ -2,7 +2,7 @@
 
 Preparación documental del 31/10/2026, pendiente de revisión de Jaziel. #110 depende de #40; la ejecución conserva la dependencia de aceptación #39. Este avance no adopta el método, ejecuta el análisis de cambios de agua ni cierra M3. Las fuentes consultadas aportan contexto regional; la validación mediante polígonos independientes sigue pendiente.
 
-El piloto candidato conserva `bbox [-62.99, -17.75, -62.90, -17.65]`, longitud/latitud, OGC:CRS84, en el entorno de Puerto Pailas, departamento de Santa Cruz. Según la [configuración versionada de #40](../../compartido/inundaciones/exploracion.json) y su [verificación territorial](../evidencias/ana01/area.json), intersecta BO070101, Santa Cruz de La Sierra, y BO070102, Cotoca. El recorte es parcial y no representa municipios completos ni certifica límites legales.
+El piloto candidato conserva `bbox [-62.99, -17.75, -62.90, -17.65]`, longitud/latitud, OGC:CRS84, en el departamento de Santa Cruz. Según la [configuración versionada de #40](../../compartido/inundaciones/exploracion.json) y su [verificación territorial](../evidencias/ana01/area.json), intersecta BO070101, Santa Cruz de La Sierra, y BO070102, Cotoca. El recorte es parcial y no representa municipios completos ni certifica límites legales.
 
 ABI publicó el **19/03/2025** declaraciones del director de Obras de SEARPI, Juan Manuel Antoni: su sistema registraba crecidas extraordinarias del río Grande **desde el 04/03 hasta el 19/03**, con municipios cruceños afectados. La misma noticia incluye un pronóstico de lluvias hasta abril, que debe distinguirse del registro de crecidas. [ABI: Río Grande continúa con crecidas](https://historico.abi.bo/index.php/noticias/gobierno/37-notas/noticias/sociedad/61811-rio-grande-continua-con-crecidas-en-diferentes-estaciones).
 
@@ -14,4 +14,4 @@ Copernicus EMS reseñó **EMSR799** el 11/04/2025 para un episodio comunicado de
 
 Jaziel debe revisar: pertinencia del evento y del recorte; fechas y posibles anegamientos antecedentes; pareja final según huella y visibilidad local; reglas SCL de comparación, malla y exclusiones; procedencia, fechas, cobertura e incertidumbre de polígonos independientes; y semántica compartida entre cambio de agua e inundación confirmada. Estas decisiones requieren registro explícito.
 
-La comprobación técnica posterior de estas ventanas y de dos parejas SCL está en [README.md](README.md). Los enlaces temporales se usaron solo en memoria; no se publicaron ni se guardaron en los recibos. Esa comprobación de acceso y calidad no constituye un resultado de inundaciones.
+La comprobación técnica posterior de estas ventanas y de las ocho parejas técnicas de esta captura SCL está en [README.md](README.md). Los enlaces temporales se usaron solo en memoria; no se publicaron ni se guardaron en los recibos. Esa comprobación de acceso y calidad no constituye un resultado de inundaciones.

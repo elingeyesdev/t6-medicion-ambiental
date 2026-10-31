@@ -81,23 +81,25 @@ def leer_recorte(raw, scene):
         }
 
 
-def descargar_scl(scene, token, opener):
+def descargar_scl(scene, token, opener, limite=MAX_ASSET):
+    if type(limite) is not int or not 0 < limite <= MAX_ASSET:
+        raise ValueError("Límite de descarga no válido.")
     unsigned = scene["scl"]["href"]
     parsed = urlsplit(unsigned)
     if (parsed.scheme != "https" or parsed.netloc != "sentinel2l2a01.blob.core.windows.net"
             or not parsed.path.startswith("/sentinel2-l2/") or not parsed.path.endswith("_SCL_20m.tif")
             or parsed.query or parsed.fragment):
         raise ValueError("Activo fuera del acceso permitido.")
-    request = Request(unsigned + "?" + token, headers={"Range": f"bytes=0-{MAX_ASSET - 1}"})
+    request = Request(unsigned + "?" + token, headers={"Range": f"bytes=0-{limite - 1}"})
     with opener.open(request, timeout=40) as response:
         content_range = response.headers.get("Content-Range", "")
         match = re.fullmatch(r"bytes 0-(\d+)/(\d+)", content_range)
         if response.status != 206 or not match:
             raise ValueError("Se requiere lectura HTTP acotada por rango.")
         total, end = int(match[2]), int(match[1])
-        if not 0 < total <= MAX_ASSET or end != total - 1:
+        if not 0 < total <= limite or end != total - 1:
             raise ValueError("El activo supera el máximo permitido.")
-        raw = response.read(MAX_ASSET + 1)
+        raw = response.read(limite + 1)
         if len(raw) != total or raw[:4] not in (b"II*\x00", b"MM\x00*"):
             raise ValueError("TIFF incompleto o incompatible.")
     return raw

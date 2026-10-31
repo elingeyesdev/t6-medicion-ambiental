@@ -25,6 +25,20 @@ La fracción usa **la política candidata** de SCL 4, 5 y 6 comparables en ambas
 
 SCL es una clasificación de apoyo al procesamiento atmosférico; su clase de agua y estas máscaras no constituyen una validación de inundaciones. Referencia técnica: [algoritmo L2A, sección de clasificación](https://sentiwiki.copernicus.eu/__attachments/1692737/S2-PDGS-MPC-ATBD-L2A%20-%20Level%202A%20Algorithm%20Theoretical%20Basis%20Document%202021%20-%202.10.pdf). Para la atribución: Contains modified Copernicus Sentinel data (2025). [Aviso legal Sentinel](https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice). No se redistribuyen aquí las imágenes completas.
 
+## Revisión ampliada de todas las parejas de esta captura
+
+La continuación nocturna revisó **las ocho parejas técnicas**, con ocho escenas únicas. [Resultado y recibos](evidencias/revision-completa.json). Se reutilizaron los cuatro TIFF anteriores después de contrastar sus huellas y direcciones con la captura; solo se descargaron cuatro activos nuevos, **4 209 412 bytes**. El total de los ocho activos es **21 295 750 bytes**. La lectura conserva un máximo de 8 MiB por activo y 32 MiB nuevos por corrida; cada activo se lee una vez.
+
+El orden ahora se obtiene de la intersección local comprobada, no de la nubosidad de la escena completa. La mejor pareja sigue siendo 25/02 → 07/03 (**9,49 %**). Las seis parejas restantes, además de las dos iniciales, no mejoran esa fracción. Esto descarta elegir otra pareja útil de **esta captura y estas ventanas** bajo la máscara candidata; no demuestra que otras fechas, áreas o productos sean inviables. El umbral mínimo sigue pendiente y no se adoptan escenas automáticamente.
+
+El comprobador exige todos los activos de las parejas para anunciar una revisión completa. Un archivo alterado, una malla distinta, un saldo de descarga insuficiente o un error interrumpen la corrida sin generar el recibo final. Los faltantes conservan su significado. No hay resultado de cambios de agua ni aprobación del método.
+
+```powershell
+./tmp/venv-met02/Scripts/python.exe herramientas/met110/lote_calidad.py --evidencia docs/inundaciones110/evidencias --privado tmp/revision-completa-nueva --consultar-mpc
+```
+
+Para reutilizar la comprobación previa en el equipo que conserva sus TIFF, agregar ambos pares `--reusar docs/inundaciones110/evidencias/calidad.json tmp/scl-comprobacion` y `--reusar docs/inundaciones110/evidencias/calidad-2.json tmp/scl-comprobacion-2`. El resultado queda en `tmp/revision-completa-nueva/revision.json`, separado de la evidencia anterior. También se repitieron las ocho comparaciones sin red reutilizando el recibo completo con `--reusar docs/inundaciones110/evidencias/revision-completa.json tmp/scl-revision-completa`, sin `--consultar-mpc`. La repetición conservó exactamente las parejas, sus fracciones y las huellas de los recortes; solo cambian la fecha y el registro de reutilización. Las veinte pruebas de preparación no dependen de la red; las ocho nuevas comprueban orden local, completitud, reutilización íntegra, malla y presupuesto conjunto.
+
 ## Método y contrato por revisar
 
 La propuesta distingue, solo dentro de celdas comparables en ambas fechas: agua persistente, agua presente únicamente en la comparación y agua presente únicamente en la referencia. El resto es no comparable. Para llamar inundación al cambio se necesita contexto y contraste independiente en la zona y fechas correctas. Los reportes regionales citados no son polígonos de verdad de terreno del piloto.
@@ -53,7 +67,7 @@ python herramientas/met110/escenas.py capturar --directorio tmp/catalogo-nuevo -
 ./tmp/venv-met02/Scripts/python.exe herramientas/met110/calidad.py --evidencia docs/inundaciones110/evidencias --privado tmp/scl-nuevo-2 --salida tmp/calidad-nueva-2.json --consultar-mpc --pareja 2
 ```
 
-No hay red en CI: se repiten once pruebas nuevas con casos controlados y las once pruebas del lector anterior. Las de calidad prueban clases/faltantes, intersección, malla y límites de descarga; no acreditan exactitud ambiental.
+No hay red en CI: se repiten veinte pruebas de preparación con casos controlados y las once pruebas del lector anterior. Las de calidad prueban clases/faltantes, intersección, malla y límites de descarga; no acreditan exactitud ambiental.
 
 ## Siguiente decisión
 
