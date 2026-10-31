@@ -1,6 +1,6 @@
 @forelse($avisos as $aviso)
 @php($a = $aviso->alerta)
-<section class="card alerta-tarjeta" data-aviso="{{ $aviso->id }}"><div class="card-body"><h2>{{ $a->contenido['nombre'] }} · {{ $a->contenido['umbral']['nombre'] }}</h2>
+<section class="card alerta-tarjeta {{ $aviso->leido_el ? 'alerta-leida' : '' }}" data-aviso="{{ $aviso->id }}"><div class="card-body"><div class="aviso-cabecera"><h2>{{ $a->contenido['nombre'] }} · {{ $a->contenido['umbral']['nombre'] }}</h2><span class="alertas-etiqueta">{{ $aviso->leido_el ? 'Leído' : 'Nuevo' }}</span></div>
     <p>{{ $metricas[$a->metrica]['nombre'] }}: {{ $a->contenido['valor'] }} {{ $metricas[$a->metrica]['unidad'] }} · {{ \App\Services\Datos\CatalogoAmbiental::ORIGENES[$a->origen] }}</p>
     <p>{{ $a->instante->setTimezone('America/La_Paz')->format('d/m/Y H:i') }} · Hora de Bolivia</p>
     @foreach($envios[$aviso->id] ?? [] as $envio)

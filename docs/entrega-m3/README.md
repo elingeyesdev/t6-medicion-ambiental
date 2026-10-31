@@ -6,6 +6,8 @@ Josué Padilla prepara la web y revisa el móvil. Jaziel Díaz desarrolla Flutte
 
 ## Paquete y recorrido
 
+- [Corrección del frente de EnviroSense](../evidencias/frente47/README.md): recorrido del original, portada/acceso, mapa y pantallas internas, con capturas comparables y pruebas. Propuesta sobre este candidato, pendiente de revisión.
+
 - [PDF para presentar](../../output/pdf/GeoSur-M3.pdf), seis páginas revisadas visualmente.
 - [Base y alcance de EnviroSense](../ENVIROSENSE_COMO_BASE.md). El catálogo principal comprende doce países sudamericanos y Guyana Francesa como territorio. Focos y sequías mantienen cobertura probada de Santa Cruz.
 - [Comparación de sequías](../qa39/README.md): respuesta, lluvia de las treinta ventanas, contraste SciPy, capturas web y evidencia móvil de Jaziel. PR #88, tarea #39.
@@ -16,7 +18,7 @@ Josué Padilla prepara la web y revisa el móvil. Jaziel Díaz desarrolla Flutte
 - [Avisos y cuentas](../M3_AVISOS_CUENTAS_WEB.md): bandeja, consentimiento, cola y estados de canales externos. PR #94.
 - [Guía del curso](../GUIA_CURSO_ESTADO.md): 61 páginas contrastadas, formularios de tareas/errores y pendientes de permisos. PR #90.
 
-El arranque existente se conserva. Servidor del checkout activo: `http://127.0.0.1:5791`; no iniciar otro servidor sobre el mismo puerto. La cuenta demo mantiene Visualizador y sus credenciales ya entregadas, sin incluirlas en este paquete. Tabler 1.7.1 es la plantilla real y el código del proveedor permanece separado de los componentes propios.
+El arranque existente se conserva. Servidor del checkout activo: `http://127.0.0.1:5791`; no iniciar otro servidor sobre el mismo puerto. La cuenta demo mantiene Visualizador y sus credenciales ya entregadas, sin incluirlas en este paquete. Tabler 1.7.1 sigue como base de componentes internos, y portada/acceso recuperan el diseño de EnviroSense. El código del proveedor permanece separado de los componentes propios.
 
 ## Integración local realizada
 
