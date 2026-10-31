@@ -1,0 +1,285 @@
+{
+  "tipo": "plantilla_pendiente_no_estimaciones_aprobadas",
+  "unidadEstimacionRestante": "horas de esfuerzo por integrante; no jornadas de duración ni tiempo ya trabajado",
+  "actualizado_utc": "2026-10-31T17:15:41Z",
+  "personas": [
+    {
+      "nombre": "Josué Padilla",
+      "trabajoPrincipal": "web, datos e integración",
+      "horasPorSemanaConfirmadas": null,
+      "calendarioConfirmado": null,
+      "desde": null,
+      "hasta": null,
+      "ausencias": null
+    },
+    {
+      "nombre": "Jaziel Díaz",
+      "trabajoPrincipal": "Flutter y revisión compartida",
+      "horasPorSemanaConfirmadas": null,
+      "calendarioConfirmado": null,
+      "desde": null,
+      "hasta": null,
+      "ausencias": null
+    }
+  ],
+  "trabajoRestante": [
+    {
+      "actividad": "A",
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "B",
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "C",
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "D",
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "E",
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "F",
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "G",
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "H",
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "I",
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "J",
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "K",
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "L",
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    }
+  ],
+  "alcanceAmpliadoEnviroSense": {
+    "fuente": "tareasDeM3AbiertasEnCorte de trazabilidad.json; asignar cada pendiente a un paquete antes de estimarlo",
+    "estimacionAcordada": false,
+    "regla": "Las funciones y revisiones agregadas deben estimarse; no heredan automáticamente las treinta jornadas originales."
+  },
+  "pronosticoActual": null
+}

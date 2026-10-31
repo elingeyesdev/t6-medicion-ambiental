@@ -1,0 +1,28 @@
+name: Planner de referencia (sin pronóstico nuevo)
+
+on:
+  pull_request:
+    branches: [develop]
+    paths: ['herramientas/planificacion109/**', 'docs/planificacion109/**', '.github/workflows/planificacion109.yml']
+  push:
+    branches: [develop]
+    paths: ['herramientas/planificacion109/**', 'docs/planificacion109/**', '.github/workflows/planificacion109.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  referencia:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -B -m unittest discover -s herramientas/planificacion109 -p 'test_*.py' -v
+      - name: Repetir extracción sin red ni cambios del Planner
+        run: python herramientas/planificacion109/extraer.py --xml docs/planificacion109/referencia-v2.xml --salida "${{ runner.temp }}/planner-referencia.json"
