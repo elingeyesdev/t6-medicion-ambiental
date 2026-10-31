@@ -1,0 +1,582 @@
+{
+  "tipo": "referencia_historica_sin_pronostico_nuevo",
+  "sha256Xml": "bb6e2f703b5a07f490a1924ae38549be54f5f67356c528af22c8487af56c8436",
+  "nombreEnArchivo": "GeoCruz - Cronograma integral del sistema v2",
+  "inicioEnArchivo": "2026-10-12T08:00:00",
+  "finEnArchivo": "2026-11-30T12:00:00",
+  "minutosPorJornadaTecnica": 240,
+  "disponibilidadActualConfirmada": false,
+  "pronosticoActual": null,
+  "jornadasRedSinNivelar": "30",
+  "actividadesHolguraCero": [
+    "A",
+    "B",
+    "C",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L"
+  ],
+  "actividades": [
+    {
+      "actividad": "A",
+      "uid": 2,
+      "nombre": "A - Alcance y diagnóstico de reingeniería",
+      "inicioReferencia": "2026-10-12T08:00:00",
+      "finReferencia": "2026-10-12T12:00:00",
+      "duracionMinutos": "240",
+      "trabajoMinutos": "480",
+      "resumen": false,
+      "hito": false,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [],
+      "recursos": [
+        {
+          "nombre": "Josué Padilla",
+          "unidades": "1",
+          "trabajoMinutos": "240"
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "unidades": "1",
+          "trabajoMinutos": "240"
+        }
+      ],
+      "duracionJornadasReferencia": "1",
+      "predecesorasActividad": [],
+      "holguraJornadasRedSinNivelar": "0"
+    },
+    {
+      "actividad": "B",
+      "uid": 3,
+      "nombre": "B - Casos de uso, diseño y contrato común",
+      "inicioReferencia": "2026-10-13T08:00:00",
+      "finReferencia": "2026-10-14T12:00:00",
+      "duracionMinutos": "480",
+      "trabajoMinutos": "960",
+      "resumen": false,
+      "hito": false,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        2
+      ],
+      "recursos": [
+        {
+          "nombre": "Josué Padilla",
+          "unidades": "1",
+          "trabajoMinutos": "480"
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "unidades": "1",
+          "trabajoMinutos": "480"
+        }
+      ],
+      "duracionJornadasReferencia": "2",
+      "predecesorasActividad": [
+        "A"
+      ],
+      "holguraJornadasRedSinNivelar": "0"
+    },
+    {
+      "actividad": "C",
+      "uid": 4,
+      "nombre": "C - Base Laravel/Blade, API y territorios",
+      "inicioReferencia": "2026-10-15T08:00:00",
+      "finReferencia": "2026-10-19T12:00:00",
+      "duracionMinutos": "720",
+      "trabajoMinutos": "720",
+      "resumen": false,
+      "hito": false,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        3
+      ],
+      "recursos": [
+        {
+          "nombre": "Josué Padilla",
+          "unidades": "1",
+          "trabajoMinutos": "720"
+        }
+      ],
+      "duracionJornadasReferencia": "3",
+      "predecesorasActividad": [
+        "B"
+      ],
+      "holguraJornadasRedSinNivelar": "0"
+    },
+    {
+      "actividad": "D",
+      "uid": 5,
+      "nombre": "D - Base Flutter y navegación",
+      "inicioReferencia": "2026-10-15T08:00:00",
+      "finReferencia": "2026-10-16T12:00:00",
+      "duracionMinutos": "480",
+      "trabajoMinutos": "480",
+      "resumen": false,
+      "hito": false,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        3
+      ],
+      "recursos": [
+        {
+          "nombre": "Jaziel Díaz",
+          "unidades": "1",
+          "trabajoMinutos": "480"
+        }
+      ],
+      "duracionJornadasReferencia": "2",
+      "predecesorasActividad": [
+        "B"
+      ],
+      "holguraJornadasRedSinNivelar": "1"
+    },
+    {
+      "actividad": "E",
+      "uid": 6,
+      "nombre": "E - Focos de calor en ambas interfaces",
+      "inicioReferencia": "2026-10-20T08:00:00",
+      "finReferencia": "2026-10-22T12:00:00",
+      "duracionMinutos": "720",
+      "trabajoMinutos": "1440",
+      "resumen": false,
+      "hito": false,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        4,
+        5
+      ],
+      "recursos": [
+        {
+          "nombre": "Josué Padilla",
+          "unidades": "1",
+          "trabajoMinutos": "720"
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "unidades": "1",
+          "trabajoMinutos": "720"
+        }
+      ],
+      "duracionJornadasReferencia": "3",
+      "predecesorasActividad": [
+        "C",
+        "D"
+      ],
+      "holguraJornadasRedSinNivelar": "0"
+    },
+    {
+      "actividad": "F",
+      "uid": 7,
+      "nombre": "F - Sequías en ambas interfaces",
+      "inicioReferencia": "2026-10-23T08:00:00",
+      "finReferencia": "2026-10-27T12:00:00",
+      "duracionMinutos": "720",
+      "trabajoMinutos": "1440",
+      "resumen": false,
+      "hito": false,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        6
+      ],
+      "recursos": [
+        {
+          "nombre": "Josué Padilla",
+          "unidades": "1",
+          "trabajoMinutos": "720"
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "unidades": "1",
+          "trabajoMinutos": "720"
+        }
+      ],
+      "duracionJornadasReferencia": "3",
+      "predecesorasActividad": [
+        "E"
+      ],
+      "holguraJornadasRedSinNivelar": "0"
+    },
+    {
+      "actividad": "G",
+      "uid": 8,
+      "nombre": "G - Inundaciones en ambas interfaces",
+      "inicioReferencia": "2026-10-28T08:00:00",
+      "finReferencia": "2026-11-02T12:00:00",
+      "duracionMinutos": "960",
+      "trabajoMinutos": "1920",
+      "resumen": false,
+      "hito": false,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        7
+      ],
+      "recursos": [
+        {
+          "nombre": "Josué Padilla",
+          "unidades": "1",
+          "trabajoMinutos": "960"
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "unidades": "1",
+          "trabajoMinutos": "960"
+        }
+      ],
+      "duracionJornadasReferencia": "4",
+      "predecesorasActividad": [
+        "F"
+      ],
+      "holguraJornadasRedSinNivelar": "0"
+    },
+    {
+      "actividad": "H",
+      "uid": 9,
+      "nombre": "H - Deforestación en ambas interfaces",
+      "inicioReferencia": "2026-11-03T08:00:00",
+      "finReferencia": "2026-11-06T12:00:00",
+      "duracionMinutos": "960",
+      "trabajoMinutos": "1920",
+      "resumen": false,
+      "hito": false,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        8
+      ],
+      "recursos": [
+        {
+          "nombre": "Josué Padilla",
+          "unidades": "1",
+          "trabajoMinutos": "960"
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "unidades": "1",
+          "trabajoMinutos": "960"
+        }
+      ],
+      "duracionJornadasReferencia": "4",
+      "predecesorasActividad": [
+        "G"
+      ],
+      "holguraJornadasRedSinNivelar": "0"
+    },
+    {
+      "actividad": "I",
+      "uid": 10,
+      "nombre": "I - Calidad del aire en ambas interfaces",
+      "inicioReferencia": "2026-11-09T08:00:00",
+      "finReferencia": "2026-11-11T12:00:00",
+      "duracionMinutos": "720",
+      "trabajoMinutos": "1440",
+      "resumen": false,
+      "hito": false,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        9
+      ],
+      "recursos": [
+        {
+          "nombre": "Josué Padilla",
+          "unidades": "1",
+          "trabajoMinutos": "720"
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "unidades": "1",
+          "trabajoMinutos": "720"
+        }
+      ],
+      "duracionJornadasReferencia": "3",
+      "predecesorasActividad": [
+        "H"
+      ],
+      "holguraJornadasRedSinNivelar": "0"
+    },
+    {
+      "actividad": "J",
+      "uid": 11,
+      "nombre": "J - Resumen y coherencia entre módulos",
+      "inicioReferencia": "2026-11-12T08:00:00",
+      "finReferencia": "2026-11-13T12:00:00",
+      "duracionMinutos": "480",
+      "trabajoMinutos": "960",
+      "resumen": false,
+      "hito": false,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        10
+      ],
+      "recursos": [
+        {
+          "nombre": "Josué Padilla",
+          "unidades": "1",
+          "trabajoMinutos": "480"
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "unidades": "1",
+          "trabajoMinutos": "480"
+        }
+      ],
+      "duracionJornadasReferencia": "2",
+      "predecesorasActividad": [
+        "I"
+      ],
+      "holguraJornadasRedSinNivelar": "0"
+    },
+    {
+      "actividad": "K",
+      "uid": 12,
+      "nombre": "K - Pruebas integrales y correcciones",
+      "inicioReferencia": "2026-11-16T08:00:00",
+      "finReferencia": "2026-11-18T12:00:00",
+      "duracionMinutos": "720",
+      "trabajoMinutos": "1440",
+      "resumen": false,
+      "hito": false,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        11
+      ],
+      "recursos": [
+        {
+          "nombre": "Josué Padilla",
+          "unidades": "1",
+          "trabajoMinutos": "720"
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "unidades": "1",
+          "trabajoMinutos": "720"
+        }
+      ],
+      "duracionJornadasReferencia": "3",
+      "predecesorasActividad": [
+        "J"
+      ],
+      "holguraJornadasRedSinNivelar": "0"
+    },
+    {
+      "actividad": "L",
+      "uid": 13,
+      "nombre": "L - Manuales, evidencias y defensa",
+      "inicioReferencia": "2026-11-19T08:00:00",
+      "finReferencia": "2026-11-20T12:00:00",
+      "duracionMinutos": "480",
+      "trabajoMinutos": "960",
+      "resumen": false,
+      "hito": false,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        12
+      ],
+      "recursos": [
+        {
+          "nombre": "Josué Padilla",
+          "unidades": "1",
+          "trabajoMinutos": "480"
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "unidades": "1",
+          "trabajoMinutos": "480"
+        }
+      ],
+      "duracionJornadasReferencia": "2",
+      "predecesorasActividad": [
+        "K"
+      ],
+      "holguraJornadasRedSinNivelar": "0"
+    }
+  ],
+  "otrasTareas": [
+    {
+      "uid": 1,
+      "nombre": "GeoCruz - Sistema integrado",
+      "inicioReferencia": "2026-10-12T08:00:00",
+      "finReferencia": "2026-11-30T12:00:00",
+      "duracionMinutos": "8640",
+      "trabajoMinutos": "0",
+      "resumen": true,
+      "hito": false,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": null,
+      "predecesorasUid": [],
+      "recursos": []
+    },
+    {
+      "uid": 14,
+      "nombre": "Reserva de calendario y cierre",
+      "inicioReferencia": "2026-11-23T08:00:00",
+      "finReferencia": "2026-11-30T12:00:00",
+      "duracionMinutos": "1440",
+      "trabajoMinutos": "0",
+      "resumen": false,
+      "hito": false,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        13
+      ],
+      "recursos": []
+    },
+    {
+      "uid": 15,
+      "nombre": "M1 - Planificación y diseño del sistema",
+      "inicioReferencia": "2026-10-15T08:00:00",
+      "finReferencia": "2026-10-15T08:00:00",
+      "duracionMinutos": "0",
+      "trabajoMinutos": "0",
+      "resumen": false,
+      "hito": true,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        3
+      ],
+      "recursos": []
+    },
+    {
+      "uid": 16,
+      "nombre": "M2 - Base común y focos de calor",
+      "inicioReferencia": "2026-10-22T08:00:00",
+      "finReferencia": "2026-10-22T08:00:00",
+      "duracionMinutos": "0",
+      "trabajoMinutos": "0",
+      "resumen": false,
+      "hito": true,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        6
+      ],
+      "recursos": []
+    },
+    {
+      "uid": 17,
+      "nombre": "M3 - Sequías y avance de inundaciones",
+      "inicioReferencia": "2026-10-29T08:00:00",
+      "finReferencia": "2026-10-29T08:00:00",
+      "duracionMinutos": "0",
+      "trabajoMinutos": "0",
+      "resumen": false,
+      "hito": true,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        7
+      ],
+      "recursos": []
+    },
+    {
+      "uid": 18,
+      "nombre": "M4 - Inundaciones y avance de deforestación",
+      "inicioReferencia": "2026-11-05T08:00:00",
+      "finReferencia": "2026-11-05T08:00:00",
+      "duracionMinutos": "0",
+      "trabajoMinutos": "0",
+      "resumen": false,
+      "hito": true,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        8
+      ],
+      "recursos": []
+    },
+    {
+      "uid": 19,
+      "nombre": "M5 - Deforestación y calidad del aire",
+      "inicioReferencia": "2026-11-12T08:00:00",
+      "finReferencia": "2026-11-12T08:00:00",
+      "duracionMinutos": "0",
+      "trabajoMinutos": "0",
+      "resumen": false,
+      "hito": true,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        9,
+        10
+      ],
+      "recursos": []
+    },
+    {
+      "uid": 20,
+      "nombre": "M6 - Integración y pruebas del sistema",
+      "inicioReferencia": "2026-11-19T08:00:00",
+      "finReferencia": "2026-11-19T08:00:00",
+      "duracionMinutos": "0",
+      "trabajoMinutos": "0",
+      "resumen": false,
+      "hito": true,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        11,
+        12
+      ],
+      "recursos": []
+    },
+    {
+      "uid": 21,
+      "nombre": "M7 - Versión candidata y preparación de entrega",
+      "inicioReferencia": "2026-11-26T08:00:00",
+      "finReferencia": "2026-11-26T08:00:00",
+      "duracionMinutos": "0",
+      "trabajoMinutos": "0",
+      "resumen": false,
+      "hito": true,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        13
+      ],
+      "recursos": []
+    },
+    {
+      "uid": 22,
+      "nombre": "Entrega final de GeoCruz",
+      "inicioReferencia": "2026-11-30T12:00:00",
+      "finReferencia": "2026-11-30T12:00:00",
+      "duracionMinutos": "0",
+      "trabajoMinutos": "0",
+      "resumen": false,
+      "hito": true,
+      "porcentajeEnArchivo": "0",
+      "prioridadEnArchivo": "500",
+      "predecesorasUid": [
+        14
+      ],
+      "recursos": []
+    }
+  ],
+  "advertenciasExportacion": [
+    {
+      "tipo": "fecha_exportada_antes_de_predecesora",
+      "tareaUid": 16,
+      "predecesoraUid": 6,
+      "inicioExportado": "2026-10-22T08:00:00",
+      "finPredecesoraExportado": "2026-10-22T12:00:00"
+    }
+  ],
+  "nota": "Duración, trabajo y jornada son campos distintos. Los porcentajes y fechas de este XML son históricos, no el avance real. La red ignora nivelación de recursos, nuevos alcances, ausencias y feriados. No fija otra fecha ni acredita aprobación académica."
+}

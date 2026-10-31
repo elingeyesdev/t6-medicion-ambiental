@@ -1,0 +1,412 @@
+{
+  "tipo": "insumos_para_replanificar_no_cronograma_actual",
+  "fuenteEstado": {
+    "commit": "e0695568e5940e778b20c6a5ed149233550fa033",
+    "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/blob/e0695568e5940e778b20c6a5ed149233550fa033/docs/entrega-m4/evidencias/2026-10-31/snapshot.json",
+    "capturado_utc": "2026-10-31T06:27:50Z",
+    "sha256": "3c60b91bd65cd6770304e528946be85948f7b906e6fcfad73ffc487217d487c5"
+  },
+  "actividades": [
+    {
+      "actividad": "A",
+      "issuesRelacionadas": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "duracionesAdicionalesPorIssue": null,
+      "regla": "Las issues desglosan la actividad; no sumar sus duraciones a la actividad padre.",
+      "alcance": "relación de trazabilidad, no declaración de finalización"
+    },
+    {
+      "actividad": "B",
+      "issuesRelacionadas": [
+        2,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "duracionesAdicionalesPorIssue": null,
+      "regla": "Las issues desglosan la actividad; no sumar sus duraciones a la actividad padre.",
+      "alcance": "relación de trazabilidad, no declaración de finalización"
+    },
+    {
+      "actividad": "C",
+      "issuesRelacionadas": [
+        15,
+        16
+      ],
+      "duracionesAdicionalesPorIssue": null,
+      "regla": "Las issues desglosan la actividad; no sumar sus duraciones a la actividad padre.",
+      "alcance": "relación de trazabilidad, no declaración de finalización"
+    },
+    {
+      "actividad": "D",
+      "issuesRelacionadas": [
+        17
+      ],
+      "duracionesAdicionalesPorIssue": null,
+      "regla": "Las issues desglosan la actividad; no sumar sus duraciones a la actividad padre.",
+      "alcance": "relación de trazabilidad, no declaración de finalización"
+    },
+    {
+      "actividad": "E",
+      "issuesRelacionadas": [
+        18,
+        19,
+        20,
+        21
+      ],
+      "duracionesAdicionalesPorIssue": null,
+      "regla": "Las issues desglosan la actividad; no sumar sus duraciones a la actividad padre.",
+      "alcance": "relación de trazabilidad, no declaración de finalización"
+    },
+    {
+      "actividad": "F",
+      "issuesRelacionadas": [
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
+      "duracionesAdicionalesPorIssue": null,
+      "regla": "Las issues desglosan la actividad; no sumar sus duraciones a la actividad padre.",
+      "alcance": "relación de trazabilidad, no declaración de finalización"
+    },
+    {
+      "actividad": "G",
+      "issuesRelacionadas": [
+        40,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "duracionesAdicionalesPorIssue": null,
+      "regla": "Las issues desglosan la actividad; no sumar sus duraciones a la actividad padre.",
+      "alcance": "relación de trazabilidad, no declaración de finalización"
+    },
+    {
+      "actividad": "H",
+      "issuesRelacionadas": [
+        116,
+        117
+      ],
+      "duracionesAdicionalesPorIssue": null,
+      "regla": "Las issues desglosan la actividad; no sumar sus duraciones a la actividad padre.",
+      "alcance": "parcial de H en M4; implementación completa posterior sin tarea nueva creada aquí"
+    },
+    {
+      "actividad": "I",
+      "issuesRelacionadas": [],
+      "duracionesAdicionalesPorIssue": null,
+      "regla": "Las issues desglosan la actividad; no sumar sus duraciones a la actividad padre.",
+      "alcance": "módulo de calidad del aire del plan; no se da por terminado por recuperar el aire original"
+    },
+    {
+      "actividad": "J",
+      "issuesRelacionadas": [],
+      "duracionesAdicionalesPorIssue": null,
+      "regla": "Las issues desglosan la actividad; no sumar sus duraciones a la actividad padre.",
+      "alcance": "relación de trazabilidad, no declaración de finalización"
+    },
+    {
+      "actividad": "K",
+      "issuesRelacionadas": [],
+      "duracionesAdicionalesPorIssue": null,
+      "regla": "Las issues desglosan la actividad; no sumar sus duraciones a la actividad padre.",
+      "alcance": "relación de trazabilidad, no declaración de finalización"
+    },
+    {
+      "actividad": "L",
+      "issuesRelacionadas": [
+        22,
+        41,
+        118
+      ],
+      "duracionesAdicionalesPorIssue": null,
+      "regla": "Las issues desglosan la actividad; no sumar sus duraciones a la actividad padre.",
+      "alcance": "relación de trazabilidad, no declaración de finalización"
+    }
+  ],
+  "tareasDeM3AbiertasEnCorte": [
+    {
+      "numero": 107,
+      "titulo": "DAT-04 - Recuperar radiación y evaporación potencial con sus unidades",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/107",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 105,
+      "titulo": "MAP-03 - Recuperar las partículas de viento de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/105",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 103,
+      "titulo": "REP-02 - Verificar reportes atmosféricos y separar las escalas del aire",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/103",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 101,
+      "titulo": "DAT-03 - Recuperar la consulta de calidad del aire en el mapa",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/101",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 99,
+      "titulo": "DAT-02 - Actualizar automáticamente las capas del mapa",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/99",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 89,
+      "titulo": "Recuperar en Flutter las funciones restantes de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/89",
+      "estado": "open",
+      "responsables": [
+        "Jazielle"
+      ]
+    },
+    {
+      "numero": 66,
+      "titulo": "DAT-01 - Recuperar sensores histórico y cargas de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/66",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 65,
+      "titulo": "ALT-01 - Recuperar alertas umbrales y notificaciones de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/65",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 64,
+      "titulo": "REP-01 - Recuperar reportes plantillas y gráficos de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/64",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 63,
+      "titulo": "ACC-02 - Recuperar cuentas roles y preferencias de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/63",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 62,
+      "titulo": "GEO-02 - Recuperar países y capas del mapa de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/62",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 61,
+      "titulo": "MIG-02 - Mantener EnviroSense completo como base de GeoSur",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/61",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 52,
+      "titulo": "SIM-01 - Recuperar Simulaciones como módulo de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/52",
+      "estado": "open",
+      "responsables": [
+        "Jazielle",
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 50,
+      "titulo": "GIT-01 - Ajustar ramas revisiones y entregas a la guía del curso",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/50",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 49,
+      "titulo": "DEP-01 - Preparar Railway con PostgreSQL y despliegue revisado",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/49",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 47,
+      "titulo": "REF-WEB - Mantener EnviroSense como base web de GeoSur",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/47",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 41,
+      "titulo": "ENT-03 - Consolidar evidencias y revisión de la tercera entrega",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/41",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 40,
+      "titulo": "ANA-01 - Preparar método y avance de análisis de inundaciones",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/40",
+      "estado": "open",
+      "responsables": [
+        "Jazielle",
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 39,
+      "titulo": "QA-02 - Verificar cálculo e integración de sequías en web y móvil",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/39",
+      "estado": "open",
+      "responsables": [
+        "Jazielle"
+      ]
+    },
+    {
+      "numero": 29,
+      "titulo": "MIG-01 - Integrar GeoCruz en la adaptación de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/29",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    }
+  ],
+  "dependenciasM4Capturadas": [
+    {
+      "issue": 109,
+      "dependeDe": [],
+      "estado": "open"
+    },
+    {
+      "issue": 110,
+      "dependeDe": [
+        40
+      ],
+      "estado": "open"
+    },
+    {
+      "issue": 111,
+      "dependeDe": [
+        110,
+        39
+      ],
+      "estado": "open"
+    },
+    {
+      "issue": 112,
+      "dependeDe": [
+        111
+      ],
+      "estado": "open"
+    },
+    {
+      "issue": 113,
+      "dependeDe": [
+        112,
+        47
+      ],
+      "estado": "open"
+    },
+    {
+      "issue": 114,
+      "dependeDe": [
+        112
+      ],
+      "estado": "open"
+    },
+    {
+      "issue": 115,
+      "dependeDe": [
+        111,
+        113,
+        114
+      ],
+      "estado": "open"
+    },
+    {
+      "issue": 116,
+      "dependeDe": [],
+      "estado": "open"
+    },
+    {
+      "issue": 117,
+      "dependeDe": [
+        116,
+        115
+      ],
+      "estado": "open"
+    },
+    {
+      "issue": 118,
+      "dependeDe": [
+        41,
+        109,
+        115,
+        117
+      ],
+      "estado": "open"
+    }
+  ],
+  "paraleloPreparacion": {
+    "109": "Confirmar capacidad, comparar referencia y preparar reestimación.",
+    "110": "Revisión documental/acceso/calidad; procesamiento #111 mantiene #39 y #110.",
+    "116": "Revisar fuente y método forestal; el piloto #117 mantiene #115 y #116.",
+    "118": "Preparar índice; el paquete final mantiene #41, #109, #115 y #117."
+  },
+  "metaM4Referencia": "2026-11-05",
+  "metaFinalReferencia": "2026-11-30",
+  "fechaAcademicaM4Confirmada": false,
+  "pronosticoActual": null
+}
