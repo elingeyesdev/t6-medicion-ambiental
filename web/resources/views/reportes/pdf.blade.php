@@ -8,4 +8,11 @@
 <p>{{ $reporte->contenido['nota'] }}</p>
 @foreach($graficos as $g)<div style="page-break-inside:avoid"><h2>{{ $g['serie'][0]['punto'] }} · {{ $g['serie'][0]['variable'] }}</h2><p>{{ $g['serie'][0]['origenNombre'] }} · {{ $g['serie'][0]['fuenteNombre'] }} · {{ $g['serie'][0]['fecha'] }} — {{ $g['serie'][array_key_last($g['serie'])]['fecha'] }}</p><img src="{{ $g['imagen'] }}" width="720" height="208" alt="Evolución de los valores incluidos"></div>@endforeach
 <section @if(count($reporte->contenido['resumen']) <= 6)class="bloque-junto"@endif><h2>Resumen por zona, variable y origen</h2><table><thead><tr><th>Zona</th><th>Variable</th><th>Origen</th><th>Fuente</th><th>Lecturas</th><th>Mínimo</th><th>Máximo</th><th>Promedio</th></tr></thead><tbody>@forelse($reporte->contenido['resumen'] as $r)<tr><td>{{ $r['punto'] }}</td><td>{{ $r['variable'] }} ({{ $r['unidad'] }})</td><td>{{ \App\Services\Datos\CatalogoAmbiental::ORIGENES[$r['origen']] }}</td><td>{{ $r['fuenteNombre'] }}</td><td>{{ $r['cantidad'] }}</td><td>{{ $r['minimo'] }}</td><td>{{ $r['maximo'] }}</td><td>{{ $r['promedio'] }}</td></tr>@empty<tr><td colspan="8">No hay lecturas para los filtros elegidos.</td></tr>@endforelse</tbody></table></section>
-<h2>Lecturas incluidas</h2><table><thead><tr>@foreach($reporte->contenido['columnas'] as $c)<th>{{ $columnas[$c] }}</th>@endforeach</tr></thead><tbody>@foreach($reporte->contenido['filas'] as $fila)<tr>@foreach($reporte->contenido['columnas'] as $c)<td>{{ \App\Services\Reportes\PrepararReporte::celda($fila,$c) }}</td>@endforeach</tr>@endforeach</tbody></table></body></html>
+<h2>Lecturas incluidas</h2><table><thead><tr>@foreach($reporte->contenido['columnas'] as $c)<th>{{ $columnas[$c] }}</th>@endforeach</tr></thead><tbody>@foreach($reporte->contenido['filas'] as $fila)<tr>@foreach($reporte->contenido['columnas'] as $c)<td>{{ \App\Services\Reportes\PrepararReporte::celda($fila,$c) }}</td>@endforeach</tr>@endforeach</tbody></table>
+@if(count($reporte->contenido['faltantes'] ?? []))
+<h2>Valores no disponibles</h2>
+<table><thead><tr><th>Zona</th><th>Fecha y hora · Bolivia</th><th>Variable</th><th>Unidad</th><th>Origen</th><th>Fuente</th><th>Estado</th></tr></thead><tbody>
+@foreach($reporte->contenido['faltantes'] as $f)<tr><td>{{ $f['punto'] }}</td><td>{{ $f['fecha'] }}</td><td>{{ $f['variable'] }}</td><td>{{ $f['unidad'] }}</td><td>{{ $f['origenNombre'] }}</td><td>{{ $f['fuenteNombre'] }}</td><td>Sin dato</td></tr>@endforeach
+</tbody></table>
+@endif
+</body></html>

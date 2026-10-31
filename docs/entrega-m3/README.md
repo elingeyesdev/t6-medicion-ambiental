@@ -2,7 +2,13 @@
 
 Josué Padilla prepara la web y revisa el móvil. Jaziel Díaz desarrolla Flutter y revisa la web. EnviroSense es el sistema principal; GeoSur adapta sus funciones a Laravel/Blade, API compartida y Flutter. El chatbot quedó fuera por decisión de Josué. El pedido actual es preparar hoy M3 y recuperar la web, sin modificar móvil.
 
-**Estado:** candidato integrado y probado en local. Requiere revisión de Jaziel, resolver el fallo Android de #88 y aceptación de la entrega. No se declara toda la migración operativa ni se promueve M3 a main. Allí continúa M2, `v0.2.0`, commit `851a79f5c699249c284001114f76f994c9ce4335`.
+**Estado:** candidato integrado y probado en local. Requiere revisión de Jaziel, resolver los tres casos de interfaz Flutter pendientes en #88 (el fallo Android anterior ya se corrigió) y aceptación de la entrega. No se declara toda la migración operativa ni se promueve M3 a main. Allí continúa M2, `v0.2.0`, commit `851a79f5c699249c284001114f76f994c9ce4335`.
+
+## Continuación del 31/10: faltantes en reportes
+
+La corrección #64 agrega al PDF el detalle de fechas, variables, unidades y origen de los valores no disponibles que ya figuraban en pantalla y Excel. [Reproducción y pruebas](../REVISION_REPORTES64.md). Esta continuación sobre #108 queda en revisión de Jaziel. La suite web completa pasó **505 pruebas / 6103 comprobaciones**; las tres pruebas JavaScript de reportes también pasaron. Son verificaciones controladas, sin consultar proveedores.
+
+El PDF de presentación enlazado más abajo corresponde al corte anterior; se regenerará al fijar el candidato revisado. La corrección del PDF de reportes no cierra #39, #41 ni toda la recuperación. Main sigue en M2 y no se promueve este candidato sin aprobación del ingeniero.
 
 ## Paquete y recorrido
 

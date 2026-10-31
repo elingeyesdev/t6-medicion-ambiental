@@ -7,13 +7,16 @@ use App\Models\SimulacionContinua;
 use App\Models\User;
 use App\Services\Datos\CatalogoAmbiental;
 use App\Services\Reportes\GraficoReporte;
+use App\Services\Reportes\PrepararReporte;
 use App\Services\Reportes\VariablesReporte;
 use App\Services\Simulaciones\ContinuarSimulacion;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Laravel\Sanctum\Sanctum;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class ReportesAtmosferaTest extends TestCase
@@ -179,6 +182,52 @@ class ReportesAtmosferaTest extends TestCase
         Http::assertSent(fn ($r) => $r['apikey'] === 'clave-ficticia-de-prueba');
         config(['reportes.atmosfera.habilitado' => false]);
         $this->postJson('/api/v1/reportes', $this->entrada())->assertStatus(503);
+        Http::assertSentCount(1);
+    }
+
+    public static function seriesConFaltantes(): array
+    {
+        return [
+            'cero y un faltante' => [[0, null, 2], ['31/10/2026 07:00'], 2],
+            'serie completamente ausente' => [[null, null, null], ['31/10/2026 06:00', '31/10/2026 07:00', '31/10/2026 08:00'], 0],
+        ];
+    }
+
+    #[DataProvider('seriesConFaltantes')]
+    public function test_pdf_conserva_el_detalle_de_faltantes_que_muestra_la_pantalla(array $valores, array $fechas, int $lecturas): void
+    {
+        $this->travelTo(Carbon::parse('2026-10-31T10:00:00Z'));
+        $this->cliente();
+        $datos = $this->respuesta();
+        $datos['hourly']['rain'] = $valores;
+        Http::fake(fn () => Http::response($datos));
+        $r = $this->postJson('/api/v1/reportes', $this->entrada(['variables' => ['lluvia']]))->assertCreated()->json();
+        $this->assertCount($lecturas, $r['contenido']['filas']);
+        $this->assertCount(count($fechas), $r['contenido']['faltantes']);
+        $pantalla = $this->get('/reportes/'.$r['id'])->assertOk()->assertSee('Ver valores no disponibles');
+        foreach ($fechas as $fecha) {
+            $pantalla->assertSee($fecha);
+        }
+        $pdf = $this->get('/reportes/'.$r['id'].'/descargar/pdf')->assertOk()->assertHeader('Content-Type', 'application/pdf');
+        $this->assertStringStartsWith('%PDF-', $pdf->getContent());
+        if (getenv('GEOSUR_EVIDENCIA_REPORTES64')) {
+            $directorio = base_path('../tmp/reportes64');
+            File::ensureDirectoryExists($directorio);
+            file_put_contents($directorio.'/faltantes-'.$lecturas.'.pdf', $pdf->getContent());
+            file_put_contents($directorio.'/faltantes-'.$lecturas.'.xlsx', $this->get('/reportes/'.$r['id'].'/descargar/xlsx')->assertOk()->getContent());
+        }
+        $reporte = ReporteAmbiental::findOrFail($r['id']);
+        $html = view('reportes.pdf', ['reporte' => $reporte, 'columnas' => PrepararReporte::COLUMNAS, 'graficos' => []])->render();
+        $documento = new \DOMDocument;
+        $documento->loadHTML('<?xml encoding="UTF-8">'.$html, LIBXML_NOERROR | LIBXML_NOWARNING);
+        $xpath = new \DOMXPath($documento);
+        $filas = $xpath->query('//h2[normalize-space(.)="Valores no disponibles"]/following-sibling::table[1]/tbody/tr');
+        $this->assertCount(count($fechas), $filas, 'El PDF debe identificar cada faltante, incluso cuando no hay ninguna lectura.');
+        foreach ($filas as $i => $fila) {
+            $celdas = array_map(fn ($celda) => trim($celda->textContent), iterator_to_array($xpath->query('./td', $fila)));
+            $this->assertSame(['Santa Cruz', $fechas[$i], 'Lluvia', 'mm', 'Estimado', 'Open-Meteo · modelo meteorológico', 'Sin dato'], $celdas);
+        }
+        $this->getJson('/api/v1/reportes/'.$r['id'])->assertOk()->assertJsonPath('contenido', $r['contenido']);
         Http::assertSentCount(1);
     }
 
