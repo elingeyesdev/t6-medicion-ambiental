@@ -162,3 +162,10 @@ Contratos oficiales consultados: [Telegram sendMessage](https://core.telegram.or
 - `web/tests/Fixtures/avisos-openssl.cnf`
 - `web/tests/Js/avisos.test.mjs`
 - `web/tests/Js/push-avisos.test.mjs`
+
+
+## Actualización de la base · 31/10/2026
+
+Incorporé develop `cf37681` (ingestión #91 y simulación/reportes #92 aceptados) a este candidato. El conflicto estaba en `web/routes/web.php`; quedaron las rutas de avisos/push/cambio de clave y las de simulación continua, con sus permisos y límites originales. Se mantienen los servicios y migraciones de ambos lados.
+
+Comprobación acotada: 67 pruebas PHP / 1762 aserciones de avisos, cuenta, recuperación, ingestión y simulación continua; diez JavaScript de avisos/push y gráficos. Pint de rutas correcto. La base de pruebas es SQLite en memoria y usa transportes controlados. No se aplicaron migraciones a la base del usuario ni se contactaron proveedores reales. Esta actualización conserva la revisión pendiente del PR #94.

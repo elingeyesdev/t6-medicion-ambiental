@@ -15,6 +15,7 @@ use App\Http\Controllers\AvisosController;
 use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\SaludController;
+use App\Http\Controllers\SimulacionContinuaController;
 use App\Http\Controllers\SimulacionesController;
 use App\Http\Controllers\UnidadesController;
 use App\Services\Api\ErrorConsulta;
@@ -29,6 +30,10 @@ Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
     Route::post('/cuenta/restablecer', [RecuperacionController::class, 'restablecer'])->middleware('throttle:cuentas-restablecer');
     Route::post('/cuenta/ingresar', [CuentaController::class, 'entrar'])->middleware('throttle:cuentas-ingreso');
     Route::middleware(['auth:sanctum', 'cuenta.activa', 'abilities:cuenta'])->group(function (): void {
+        Route::get('/simulacion-continua/estado', [SimulacionContinuaController::class, 'estado'])
+            ->withoutMiddleware('throttle:30,1')->middleware(['can:datos.consultar', 'throttle:120,1']);
+        Route::post('/simulacion-continua/accion', [SimulacionContinuaController::class, 'accion'])
+            ->middleware('can:simulaciones.gestionar');
         Route::middleware('can:datos.consultar')->group(function (): void {
             Route::get('/mapa/buscar', BuscarLugarController::class)->middleware('throttle:mapa-busquedas');
             Route::get('/tiempo', TiempoController::class)->middleware('throttle:tiempo-consultas');
