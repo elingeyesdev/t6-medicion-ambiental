@@ -1,0 +1,64 @@
+name: M4 preparación offline (fixture, no entrega)
+
+on:
+  pull_request:
+    branches: [develop]
+    paths:
+      - 'herramientas/entrega_m4/**'
+      - 'docs/entrega-m4/**'
+      - '.github/workflows/entrega-m4.yml'
+  push:
+    branches: [develop]
+    paths:
+      - 'herramientas/entrega_m4/**'
+      - 'docs/entrega-m4/**'
+      - '.github/workflows/entrega-m4.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preparar-fixture:
+    name: Recolector con fixture (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Probar contradicciones y publicación sin reemplazo, sin red ni gh
+        run: python -B -m unittest discover -s herramientas/entrega_m4/tests -p 'test_*.py' -v
+      - name: Generar índice sintético de PREPARACIÓN, sin certificar M4
+        run: >-
+          python -B -m herramientas.entrega_m4
+          --snapshot herramientas/entrega_m4/fixtures/snapshot.json
+          --output "${{ runner.temp }}/preparacion-m4-fixture"
+          --fixture-now 2026-10-31T01:00:00Z
+      - uses: actions/upload-artifact@v4
+        with:
+          name: preparacion-m4-FIXTURE-${{ matrix.os }}
+          path: ${{ runner.temp }}/preparacion-m4-fixture/
+          if-no-files-found: error
+          retention-days: 7
+      - name: Leer el corte histórico real, sin certificar entrega ni consultar proveedores
+        run: >-
+          python -B -m herramientas.entrega_m4
+          --snapshot docs/entrega-m4/evidencias/2026-10-31/snapshot.json
+          --output "${{ runner.temp }}/preparacion-m4-corte-31oct"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: preparacion-m4-corte-31oct-${{ matrix.os }}
+          path: ${{ runner.temp }}/preparacion-m4-corte-31oct/
+          if-no-files-found: error
+          retention-days: 7
