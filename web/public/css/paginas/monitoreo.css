@@ -103,3 +103,5 @@
 
 .monitoreo-unidades { border-bottom: 1px solid var(--enviro-borde); }
 .monitoreo-unidades > form { padding: 0 20px 16px; }
+.continua-marcador { background: transparent; }
+.continua-marcador > span { display: grid; place-items: center; width: 32px; height: 32px; border: 2px solid #fff; border-radius: 6px; background: #b45309; color: #fff; font: 700 17px/1 Arial, sans-serif; box-shadow: 0 1px 4px #0006; }

@@ -1,0 +1,37 @@
+name: Historia de usuario
+description: Una función concreta, con su prueba y su relación con el plan.
+title: ""
+body:
+  - type: textarea
+    id: historia
+    attributes:
+      label: Qué necesita el usuario
+      placeholder: Como usuario quiero… para…
+    validations:
+      required: true
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Cómo sabremos que está listo
+      description: Escribe criterios que se puedan comprobar, uno por casilla.
+      value: |
+        - [ ] Recorrido principal probado.
+        - [ ] Errores y datos faltantes comprobados.
+        - [ ] Evidencia de la versión ejecutada.
+        - [ ] Revisión del compañero.
+    validations:
+      required: true
+  - type: textarea
+    id: plan
+    attributes:
+      label: Relación con el plan
+      description: Caso de uso, historia, EDT/actividad, dependencias y estimación. Asignar producto, responsable, milestone y tablero al crear.
+    validations:
+      required: true
+  - type: textarea
+    id: alcance
+    attributes:
+      label: Pantalla y datos
+      description: Enlace al diseño, qué incluye, fuente y límites importantes para esta función.
+    validations:
+      required: true

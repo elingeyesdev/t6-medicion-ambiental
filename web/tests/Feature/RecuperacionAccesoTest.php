@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Notifications\Canales\RecuperacionCorreoLocal;
 use App\Notifications\RecuperarAcceso;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +21,7 @@ class RecuperacionAccesoTest extends TestCase
         Notification::fake();
         $activa = User::factory()->create(['email' => 'activa@example.test']);
         $suspendida = User::factory()->create(['activo' => false]);
-        $mensaje = 'Si ese correo tiene una cuenta activa, recibirás un enlace para recuperar el acceso.';
+        $mensaje = 'Si ese correo tiene una cuenta activa, el enlace se guardará en el registro local de correo. No llegará a tu buzón.';
         foreach ([' ACTIVA@EXAMPLE.TEST ', $suspendida->email, 'ausente@example.test'] as $correo) {
             $this->from('/recuperar-acceso')->post('/recuperar-acceso', ['email' => $correo])->assertRedirect('/recuperar-acceso')->assertSessionHas('estado', $mensaje);
         }
@@ -40,6 +41,16 @@ class RecuperacionAccesoTest extends TestCase
         $this->assertStringContainsString(rawurlencode($usuario->email), $mensaje->actionUrl);
         $this->get('/recuperar-acceso')->assertOk()->assertSee('Recupera tu acceso')->assertSee('name="_token"', false);
         $this->get('/restablecer-acceso/token-de-prueba?email='.urlencode($usuario->email))->assertOk()->assertSee('Crea una nueva contraseña');
+    }
+
+    public function test_mailer_log_se_identifica_como_local_tambien_fuera_del_entorno_local(): void
+    {
+        $this->app->instance('env', 'production');
+        config(['mail.default' => 'log']);
+        $usuario = User::factory()->create();
+        $aviso = new RecuperarAcceso('token-controlado');
+        $this->assertSame([RecuperacionCorreoLocal::class], $aviso->via($usuario));
+        $this->assertSame('log', $aviso->toMail($usuario)->mailer);
     }
 
     public function test_cambiar_clave_consume_el_enlace_y_revoca_tokens_y_sesiones_anteriores(): void

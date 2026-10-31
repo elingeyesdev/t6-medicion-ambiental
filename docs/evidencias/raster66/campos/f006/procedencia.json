@@ -1,0 +1,210 @@
+{
+  "version": 1,
+  "datos_controlados": false,
+  "entrada_sha256": "5defda382fd799e0316312d1bd810d893c9cc7a7969aa0208484881d9c968618",
+  "entrada_bytes": 1001251,
+  "tipo": "modelo_estimado",
+  "campos": [
+    {
+      "capa": "temperatura",
+      "tiempo": {
+        "ciclo": "2026-10-29T06:00:00Z",
+        "instante": "2026-10-29T12:00:00Z",
+        "desde": "2026-10-29T12:00:00Z",
+        "hasta": "2026-10-29T12:00:00Z",
+        "inicio_horas": 6,
+        "fin_horas": 6,
+        "tipo_paso": "instant"
+      },
+      "unidad_entrada": "K",
+      "unidad_salida": "°C",
+      "estadisticas": {
+        "validos": 54233,
+        "ausentes": 0,
+        "fuera_de_escala": 0,
+        "error_maximo_cuantizacion_unidad_salida": 0.19607843137254902,
+        "politica_fuera_de_escala": "null, sin saturar valores"
+      },
+      "duplicados_iguales": 0,
+      "salida_sha256": "c2ddd846794f50d681af65e00261eb881df813a6dbff86db73753b7447394aeb",
+      "ancho": 193,
+      "alto": 281
+    },
+    {
+      "capa": "humedad",
+      "tiempo": {
+        "ciclo": "2026-10-29T06:00:00Z",
+        "instante": "2026-10-29T12:00:00Z",
+        "desde": "2026-10-29T12:00:00Z",
+        "hasta": "2026-10-29T12:00:00Z",
+        "inicio_horas": 6,
+        "fin_horas": 6,
+        "tipo_paso": "instant"
+      },
+      "unidad_entrada": "%",
+      "unidad_salida": "%",
+      "estadisticas": {
+        "validos": 54233,
+        "ausentes": 0,
+        "fuera_de_escala": 0,
+        "error_maximo_cuantizacion_unidad_salida": 0.19607843137254902,
+        "politica_fuera_de_escala": "null, sin saturar valores"
+      },
+      "duplicados_iguales": 0,
+      "salida_sha256": "8eb2e25afc0ca3735609a17a82014f1fa64901bd2f6fe827c31fa3388f274d02",
+      "ancho": 193,
+      "alto": 281
+    },
+    {
+      "capa": "presion",
+      "tiempo": {
+        "ciclo": "2026-10-29T06:00:00Z",
+        "instante": "2026-10-29T12:00:00Z",
+        "desde": "2026-10-29T12:00:00Z",
+        "hasta": "2026-10-29T12:00:00Z",
+        "inicio_horas": 6,
+        "fin_horas": 6,
+        "tipo_paso": "instant"
+      },
+      "unidad_entrada": "Pa",
+      "unidad_salida": "hPa",
+      "estadisticas": {
+        "validos": 54233,
+        "ausentes": 0,
+        "fuera_de_escala": 0,
+        "error_maximo_cuantizacion_unidad_salida": 0.39215686274509803,
+        "politica_fuera_de_escala": "null, sin saturar valores"
+      },
+      "duplicados_iguales": 0,
+      "salida_sha256": "2d6643de0dcc9cdb70b3fc2bdbd484f4d4876e0b79e35b272692de7d27c732d5",
+      "ancho": 193,
+      "alto": 281
+    },
+    {
+      "capa": "visibilidad",
+      "tiempo": {
+        "ciclo": "2026-10-29T06:00:00Z",
+        "instante": "2026-10-29T12:00:00Z",
+        "desde": "2026-10-29T12:00:00Z",
+        "hasta": "2026-10-29T12:00:00Z",
+        "inicio_horas": 6,
+        "fin_horas": 6,
+        "tipo_paso": "instant"
+      },
+      "unidad_entrada": "m",
+      "unidad_salida": "km",
+      "estadisticas": {
+        "validos": 54233,
+        "ausentes": 0,
+        "fuera_de_escala": 0,
+        "error_maximo_cuantizacion_unidad_salida": 0.04733333333333333,
+        "politica_fuera_de_escala": "null, sin saturar valores"
+      },
+      "duplicados_iguales": 0,
+      "salida_sha256": "7d2ff0739bc92b1847a969237694050b61b7a29c9377392738f0871dc9257d54",
+      "ancho": 193,
+      "alto": 281
+    },
+    {
+      "capa": "nieve",
+      "tiempo": {
+        "ciclo": "2026-10-29T06:00:00Z",
+        "instante": "2026-10-29T12:00:00Z",
+        "desde": "2026-10-29T12:00:00Z",
+        "hasta": "2026-10-29T12:00:00Z",
+        "inicio_horas": 6,
+        "fin_horas": 6,
+        "tipo_paso": "instant"
+      },
+      "unidad_entrada": "kg m**-2",
+      "unidad_salida": "mm",
+      "estadisticas": {
+        "validos": 24668,
+        "ausentes": 29565,
+        "fuera_de_escala": 0,
+        "error_maximo_cuantizacion_unidad_salida": 0.29411764705882354,
+        "politica_fuera_de_escala": "null, sin saturar valores"
+      },
+      "duplicados_iguales": 0,
+      "salida_sha256": "eb32b05e729c2c97fe0e95067c03f42012e9781fd2952fd422b95ccbd68093a7",
+      "ancho": 193,
+      "alto": 281
+    },
+    {
+      "capa": "lluvia_intensidad",
+      "tiempo": {
+        "ciclo": "2026-10-29T06:00:00Z",
+        "instante": "2026-10-29T12:00:00Z",
+        "desde": "2026-10-29T12:00:00Z",
+        "hasta": "2026-10-29T12:00:00Z",
+        "inicio_horas": 6,
+        "fin_horas": 6,
+        "tipo_paso": "instant"
+      },
+      "unidad_entrada": "kg m**-2 s**-1",
+      "unidad_salida": "mm/h",
+      "estadisticas": {
+        "validos": 54233,
+        "ausentes": 0,
+        "fuera_de_escala": 0,
+        "error_maximo_cuantizacion_unidad_salida": 2.0588235294117645,
+        "politica_fuera_de_escala": "null, sin saturar valores"
+      },
+      "duplicados_iguales": 0,
+      "salida_sha256": "42f8f1bd38419477c6b8f9958de65d4d0c7a5e013aa2895fd6025f351a6057cd",
+      "ancho": 193,
+      "alto": 281
+    },
+    {
+      "capa": "lluvia",
+      "tiempo": {
+        "ciclo": "2026-10-29T06:00:00Z",
+        "instante": "2026-10-29T12:00:00Z",
+        "desde": "2026-10-29T06:00:00Z",
+        "hasta": "2026-10-29T12:00:00Z",
+        "inicio_horas": 0,
+        "fin_horas": 6,
+        "tipo_paso": "accum"
+      },
+      "unidad_entrada": "kg m**-2",
+      "unidad_salida": "mm",
+      "estadisticas": {
+        "validos": 54233,
+        "ausentes": 0,
+        "fuera_de_escala": 0,
+        "error_maximo_cuantizacion_unidad_salida": 2.0588235294117645,
+        "politica_fuera_de_escala": "null, sin saturar valores"
+      },
+      "duplicados_iguales": 1,
+      "salida_sha256": "60301d245d14c26702223c6cff548db1d8f2bf3f12cb865728f7644d36ee5a79",
+      "ancho": 193,
+      "alto": 281
+    },
+    {
+      "capa": "viento",
+      "tiempo": {
+        "ciclo": "2026-10-29T06:00:00Z",
+        "instante": "2026-10-29T12:00:00Z",
+        "desde": "2026-10-29T12:00:00Z",
+        "hasta": "2026-10-29T12:00:00Z",
+        "inicio_horas": 6,
+        "fin_horas": 6,
+        "tipo_paso": "instant"
+      },
+      "unidad_entrada": "m s**-1",
+      "unidad_salida": "km/h",
+      "estadisticas": {
+        "validos": 54233,
+        "ausentes": 0,
+        "fuera_de_escala": 0,
+        "error_maximo_cuantizacion_unidad_salida": 2.0043971750169853,
+        "politica_fuera_de_escala": "null, sin saturar valores"
+      },
+      "duplicados_iguales": 0,
+      "salida_sha256": "b962c21d04c9d6ec427f3eb6bcda6b57df3ce5642f09d70a791ec9121010a735",
+      "ancho": 193,
+      "alto": 281
+    }
+  ],
+  "limites": "Escala finita de cada PNG; valores fuera de escala transparentes. No son estaciones ni profundidad de nieve."
+}
