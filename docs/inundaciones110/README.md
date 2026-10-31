@@ -37,7 +37,7 @@ El comprobador exige todos los activos de las parejas para anunciar una revisió
 ./tmp/venv-met02/Scripts/python.exe herramientas/met110/lote_calidad.py --evidencia docs/inundaciones110/evidencias --privado tmp/revision-completa-nueva --consultar-mpc
 ```
 
-Para reutilizar la comprobación previa en el equipo que conserva sus TIFF, agregar ambos pares `--reusar docs/inundaciones110/evidencias/calidad.json tmp/scl-comprobacion` y `--reusar docs/inundaciones110/evidencias/calidad-2.json tmp/scl-comprobacion-2`. El resultado queda en `tmp/revision-completa-nueva/revision.json`, separado de la evidencia anterior. También se repitieron las ocho comparaciones sin red reutilizando el recibo completo con `--reusar docs/inundaciones110/evidencias/revision-completa.json tmp/scl-revision-completa`, sin `--consultar-mpc`. La repetición conservó exactamente las parejas, sus fracciones y las huellas de los recortes; solo cambian la fecha y el registro de reutilización. Las veinte pruebas de preparación no dependen de la red; las ocho nuevas comprueban orden local, completitud, reutilización íntegra, malla y presupuesto conjunto.
+Para reutilizar la comprobación previa en el equipo que conserva sus TIFF, agregar ambos pares `--reusar docs/inundaciones110/evidencias/calidad.json tmp/scl-comprobacion` y `--reusar docs/inundaciones110/evidencias/calidad-2.json tmp/scl-comprobacion-2`. El resultado queda en `tmp/revision-completa-nueva/revision.json`, separado de la evidencia anterior. También se repitieron las ocho comparaciones sin red reutilizando el recibo completo con `--reusar docs/inundaciones110/evidencias/revision-completa.json tmp/scl-revision-completa`, sin `--consultar-mpc`. La repetición conservó exactamente las parejas, sus fracciones y las huellas de los recortes; solo cambian la fecha y el registro de reutilización. Las veinte pruebas de escenas/SCL no dependen de la red; las nueve nuevas comprueban orden local, completitud, reutilización íntegra, malla y presupuesto conjunto.
 
 ## Método y contrato por revisar
 
@@ -67,7 +67,11 @@ python herramientas/met110/escenas.py capturar --directorio tmp/catalogo-nuevo -
 ./tmp/venv-met02/Scripts/python.exe herramientas/met110/calidad.py --evidencia docs/inundaciones110/evidencias --privado tmp/scl-nuevo-2 --salida tmp/calidad-nueva-2.json --consultar-mpc --pareja 2
 ```
 
-No hay red en CI: se repiten veinte pruebas de preparación con casos controlados y las once pruebas del lector anterior. Las de calidad prueban clases/faltantes, intersección, malla y límites de descarga; no acreditan exactitud ambiental.
+No hay red en CI: se repiten veinticuatro pruebas de preparación con casos controlados y las once pruebas del lector anterior. Las de calidad prueban clases/faltantes, intersección, malla y límites de descarga; no acreditan exactitud ambiental.
+
+## Alternativa radar documentada
+
+Se consultó el catálogo Sentinel-1 RTC de la misma caja y fechas: una ficha de referencia y dos de comparación. No se descargaron bandas. La colección exige cuenta Planetary Computer para leer sus imágenes, y las mallas anunciadas no tienen el mismo origen/tamaño. [Metadatos, condiciones y decisiones pendientes](ALTERNATIVA_RADAR.md). Las cuatro pruebas adicionales del lector conservan la diferencia entre catálogo público y acceso raster no verificado.
 
 ## Siguiente decisión
 
