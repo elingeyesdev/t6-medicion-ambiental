@@ -76,3 +76,7 @@ El navegador muestra JSON; el mapa y la pantalla funcional corresponden a #19. F
 ## Cambio de validación en M3 · #60
 
 Las consultas de focos conservan un período positivo de máximo 168 horas y ahora rechazan `hasta` posterior al instante actual del servidor, antes de llamar al proveedor, con 422 / `FILTROS_INVALIDOS`. Web abre con los últimos siete días y ofrece 24 horas/siete días. Flutter debe aplicar la misma restricción y conservar el mensaje de error; no cambia el formato UTC de las respuestas ni la interpretación de faltantes.
+
+## Servicios recuperados de EnviroSense en M3
+
+El [tiempo de un lugar](tiempo-lugar.md), #124, conserva su consulta actual y pronóstico, y añade una serie separada de estimaciones de las últimas 24 horas. La [calidad del aire](calidad-aire.md) y las [unidades de la cuenta](unidades-cuenta.md) tienen sus contratos propios. Son candidatos de web/API para revisión; la implementación Flutter continúa por sus tareas correspondientes.
