@@ -18,6 +18,9 @@
     document.getElementById('abrir-buscador-mapa').addEventListener('click', () => {
         pestana('preferencias'); mostrar(true); document.getElementById('nombre-lugar').focus();
     });
+    document.getElementById('buscar-lugar').addEventListener('lugar-seleccionado', () => {
+        mostrar(false); document.getElementById('mapa-monitoreo').focus({preventScroll: true});
+    });
     document.getElementById('abrir-historial-mapa').addEventListener('click', () => {
         document.getElementById('filtros-monitoreo').open = true;
         document.getElementById('periodo-monitoreo').open = true;

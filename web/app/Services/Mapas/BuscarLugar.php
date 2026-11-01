@@ -7,22 +7,32 @@ use Illuminate\Support\Facades\Http;
 
 final class BuscarLugar
 {
-    public function ejecutar(string $texto): array
+    public function ejecutar(string $texto, string $tipo = 'lugar', ?float $latitud = null, ?float $longitud = null): array
     {
         $texto = trim($texto);
-        if (mb_strlen($texto) < 2 || mb_strlen($texto) > 120 || preg_match('/[;\x00-\x1F]|%3b/iu', $texto) || count(preg_split('/[\s\p{P}]+/u', $texto, -1, PREG_SPLIT_NO_EMPTY)) > 20) {
-            throw new ErrorConsulta('BUSQUEDA_INVALIDA', 'Escribe el nombre de un país, ciudad o lugar.');
+        if (mb_strlen($texto) < 2 || mb_strlen($texto) > 120 || preg_match('/[;\x00-\x1F]|%3b/iu', $texto) || count(preg_split('/[\s\p{P}]+/u', $texto, -1, PREG_SPLIT_NO_EMPTY)) > 20 ||
+            ! in_array($tipo, ['lugar', 'sitio'], true) || ($latitud === null) !== ($longitud === null) ||
+            ($latitud !== null && (! is_finite($latitud) || abs($latitud) > 90 || ! is_finite($longitud) || abs($longitud) > 180))) {
+            throw new ErrorConsulta('BUSQUEDA_INVALIDA', 'Revisa el nombre y la ubicación de búsqueda.');
         }
         $token = config('mapas.token_publico');
         if (! is_string($token) || ! preg_match('/^pk\.[A-Za-z0-9._-]+$/D', $token)) {
             throw new ErrorConsulta('BUSCADOR_NO_DISPONIBLE', 'El buscador no está disponible. Puedes elegir el lugar en el mapa.', 503);
         }
         try {
-            // Resultados temporales: no se guardan ni se comparten en caché.
-            $r = Http::acceptJson()->connectTimeout(3)->timeout(10)->withOptions(['allow_redirects' => false])
-                ->get('https://api.mapbox.com/search/geocode/v6/forward', [
-                    'q' => $texto, 'access_token' => $token, 'language' => 'es', 'limit' => 6, 'format' => 'v5', 'autocomplete' => 'false',
-                ]);
+            // Búsquedas puntuales y temporales; no hay autocompletado ni almacenamiento.
+            $parametros = ['q' => $texto, 'access_token' => $token, 'language' => 'es', 'limit' => 6];
+            if ($tipo === 'sitio') {
+                $url = 'https://api.mapbox.com/search/searchbox/v1/forward';
+                $parametros['types'] = 'poi';
+                if ($latitud !== null) {
+                    $parametros['proximity'] = $longitud.','.$latitud;
+                }
+            } else {
+                $url = 'https://api.mapbox.com/search/geocode/v6/forward';
+                $parametros += ['format' => 'v5', 'autocomplete' => 'false'];
+            }
+            $r = Http::acceptJson()->connectTimeout(3)->timeout(10)->withOptions(['allow_redirects' => false])->get($url, $parametros);
             if (! $r->successful() || strlen($r->body()) > 500000) {
                 throw new \UnexpectedValueException;
             }
@@ -33,16 +43,20 @@ final class BuscarLugar
             }
             $datos = [];
             foreach ($lugares as $lugar) {
-                $centro = $lugar['center'] ?? null;
+                $sitio = $tipo === 'sitio';
+                if ($sitio && (($lugar['geometry']['type'] ?? null) !== 'Point' || ($lugar['properties']['feature_type'] ?? null) !== 'poi')) {
+                    throw new \UnexpectedValueException;
+                }
+                $centro = $sitio ? ($lugar['geometry']['coordinates'] ?? null) : ($lugar['center'] ?? null);
                 if (! is_array($centro) || ! array_is_list($centro) || count($centro) !== 2 || ! $this->coordenada($centro[0], 180) || ! $this->coordenada($centro[1], 90)) {
                     throw new \UnexpectedValueException;
                 }
-                $nombre = $lugar['text'] ?? null;
-                $descripcion = $lugar['place_name'] ?? $nombre;
+                $nombre = $sitio ? ($lugar['properties']['name'] ?? null) : ($lugar['text'] ?? null);
+                $descripcion = $sitio ? ($lugar['properties']['full_address'] ?? $lugar['properties']['place_formatted'] ?? $nombre) : ($lugar['place_name'] ?? $nombre);
                 if (! is_string($nombre) || ! trim($nombre) || mb_strlen($nombre) > 250 || ! is_string($descripcion) || mb_strlen($descripcion) > 1000) {
                     throw new \UnexpectedValueException;
                 }
-                $limites = $lugar['bbox'] ?? null;
+                $limites = $sitio ? ($lugar['properties']['bbox'] ?? null) : ($lugar['bbox'] ?? null);
                 if (! is_array($limites) || ! array_is_list($limites) || count($limites) !== 4 ||
                     ! $this->coordenada($limites[0], 180) || ! $this->coordenada($limites[1], 90) ||
                     ! $this->coordenada($limites[2], 180) || ! $this->coordenada($limites[3], 90) || $limites[0] >= $limites[2] || $limites[1] >= $limites[3]) {

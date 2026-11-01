@@ -1,0 +1,40 @@
+{
+  "fecha_cliente": "2026-11-01",
+  "base": "b994b643d1b9086abd695053eb3a27030ed238b3",
+  "tipo": "sitio",
+  "proveedor": "Mapbox Search Box forward",
+  "consulta_externa": {
+    "http": 200,
+    "codigo_pais": "BO",
+    "alcance": "Comprobación puntual; no cobertura exhaustiva",
+    "respuesta_cruda_almacenada": false
+  },
+  "recorrido_navegador": {
+    "cuenta_sintetica": true,
+    "marcador": 1,
+    "ficha_visible": true,
+    "panel_buscador_cerrado_al_elegir": true,
+    "foco_al_elegir": "mapa-monitoreo",
+    "tiempo_estimado_disponible": true,
+    "cuenta_demo_modificada": false,
+    "servidor_5791_modificado": false
+  },
+  "pruebas": {
+    "php": 523,
+    "aserciones": 6394,
+    "php_focalizadas": 14,
+    "aserciones_focalizadas": 138,
+    "javascript": 141,
+    "nuevas_javascript": 4,
+    "pint": "correcto",
+    "cuentas_proveedor_nuevas": false
+  },
+  "fuentes_sha256_lf": {
+    "web/app/Services/Mapas/BuscarLugar.php": "b9bcb5aa7acc1c7501a4f03f58c56e5b26359e78ccfbd67758dc9eedf34eb778",
+    "web/app/Http/Controllers/Api/BuscarLugarController.php": "39e29f07845b87392cc9ffcb17bbee9939a3da23b49f1a085e6fb9a25a8830cc",
+    "web/public/js/mapas/buscador.js": "692ebd649824b5a923345b8876171d246d836261443e8c5d854e8356056e6764",
+    "web/public/js/mapas/interfaz-original.js": "c76dd5fc2d86ba079c6e056eb52779f1419d3b1a961d931a08f53004f6ee33b1",
+    "web/public/js/mapas/monitoreo.js": "9bc0a3d8cbccfb89836a88ed44586974808c61c789a412da303edeef73212489",
+    "web/resources/views/mapa/index.blade.php": "9edb777750bbd7554be303d5387605be6c37b2f55b673e406876cd9fa3ae5e2f"
+  }
+}

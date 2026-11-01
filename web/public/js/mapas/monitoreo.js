@@ -266,7 +266,7 @@ iniciarBuscadorLugar(configuracion.buscar, lugar => {
         const lateral = matchMedia('(min-width: 768px)').matches ? Math.min(detalle.offsetWidth + 32, mapa.getSize().x * 0.55) : 24;
         mapa.fitBounds([[sur, oeste], [norte, este]], {paddingTopLeft: [24, 80], paddingBottomRight: [lateral, 90], maxZoom: 12, animate: false});
     }
-});
+}, () => mapa.getCenter());
 mapa.on('click', e => { if (modoTiempo) abrirTiempo(e.latlng.lat, e.latlng.lng); });
 document.getElementById('mapa-monitoreo').addEventListener('keydown', e => {
     if (modoTiempo && e.key === 'Enter' && e.target.id === 'mapa-monitoreo') { e.preventDefault(); const centro = mapa.getCenter(); abrirTiempo(centro.lat, centro.lng); }
