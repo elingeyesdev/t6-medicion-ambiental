@@ -1,0 +1,622 @@
+{
+  "schema_version": 1,
+  "repository": "elingeyesdev/t6-medicion-ambiental",
+  "ci": "no_verificado",
+  "collection": {
+    "started_at": "2026-11-01T00:18:16Z",
+    "finished_at": "2026-11-01T00:19:06Z",
+    "method": "gh api GET, GitHub REST core",
+    "scope": "Estado nativo de issues y PR, ramas/SHA y revisiones. Sin estado de Projects ni resultados de ejecuciones.",
+    "review_pagination": "Todas las páginas del endpoint reviews; hasta 100 por página."
+  },
+  "issues": [
+    {
+      "closed_at": null,
+      "milestone": {
+        "due_on": "2026-10-29T00:00:00Z",
+        "number": 3,
+        "state": "open",
+        "title": "M3 - Reingeniería de EnviroSense como GeoSur"
+      },
+      "number": 39,
+      "state": "open",
+      "state_reason": null,
+      "title": "QA-02 - Verificar cálculo e integración de sequías en web y móvil",
+      "updated_at": "2026-10-31T05:12:51Z",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/39",
+      "queried_at": "2026-11-01T00:18:17Z"
+    },
+    {
+      "closed_at": null,
+      "milestone": {
+        "due_on": "2026-10-29T00:00:00Z",
+        "number": 3,
+        "state": "open",
+        "title": "M3 - Reingeniería de EnviroSense como GeoSur"
+      },
+      "number": 40,
+      "state": "open",
+      "state_reason": null,
+      "title": "ANA-01 - Preparar método y avance de análisis de inundaciones",
+      "updated_at": "2026-10-25T21:48:43Z",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/40",
+      "queried_at": "2026-11-01T00:18:17Z"
+    },
+    {
+      "closed_at": null,
+      "milestone": {
+        "due_on": "2026-10-29T00:00:00Z",
+        "number": 3,
+        "state": "open",
+        "title": "M3 - Reingeniería de EnviroSense como GeoSur"
+      },
+      "number": 41,
+      "state": "open",
+      "state_reason": null,
+      "title": "ENT-03 - Consolidar evidencias y revisión de la tercera entrega",
+      "updated_at": "2026-10-31T20:34:51Z",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/41",
+      "queried_at": "2026-11-01T00:18:18Z"
+    }
+  ],
+  "pull_requests": [
+    {
+      "base": {
+        "ref": "develop",
+        "sha": "bb9865db787e152c6efbc4de1bd640f71ae0f615"
+      },
+      "closed_at": null,
+      "draft": false,
+      "head": {
+        "ref": "feature/39-pruebas-sequias",
+        "sha": "b1761113b161bd5d8d9634cd2396a4120fa2a12d"
+      },
+      "merged": false,
+      "merged_at": null,
+      "number": 88,
+      "requested_reviewers": [],
+      "state": "open",
+      "title": "Feature/39 pruebas sequias",
+      "updated_at": "2026-10-31T05:05:19Z",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/88",
+      "queried_at": "2026-11-01T00:18:16Z",
+      "reviews_queried_at": "2026-11-01T00:19:05Z",
+      "reviews_complete": true,
+      "reviews": [
+        {
+          "author": "JosuePadillaUnivalle",
+          "commit_id": "1604a1aa685018c950a99de6e547808445b59236",
+          "id": 5703829084,
+          "state": "COMMENTED",
+          "submitted_at": "2026-10-29T19:33:10Z",
+          "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/88#pullrequestreview-5703829084"
+        },
+        {
+          "author": "JosuePadillaUnivalle",
+          "commit_id": "b1761113b161bd5d8d9634cd2396a4120fa2a12d",
+          "id": 5721392681,
+          "state": "CHANGES_REQUESTED",
+          "submitted_at": "2026-10-31T05:05:19Z",
+          "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/88#pullrequestreview-5721392681"
+        }
+      ]
+    },
+    {
+      "base": {
+        "ref": "develop",
+        "sha": "cf3768110a83b4e948e57a92f5d9554d33317779"
+      },
+      "closed_at": null,
+      "draft": true,
+      "head": {
+        "ref": "feature/41-evidencias-entrega-m3",
+        "sha": "2516241c0cd036044480e8d9fb54c154c3e3b69a"
+      },
+      "merged": false,
+      "merged_at": null,
+      "number": 96,
+      "requested_reviewers": [
+        "Jazielle"
+      ],
+      "state": "open",
+      "title": "Reunir la recuperación web y las evidencias de M3",
+      "updated_at": "2026-10-31T20:38:26Z",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/96",
+      "queried_at": "2026-11-01T00:18:16Z",
+      "reviews_queried_at": "2026-11-01T00:19:05Z",
+      "reviews_complete": true,
+      "reviews": []
+    },
+    {
+      "base": {
+        "ref": "develop",
+        "sha": "cf3768110a83b4e948e57a92f5d9554d33317779"
+      },
+      "closed_at": null,
+      "draft": false,
+      "head": {
+        "ref": "docs/116-metodo-cobertura-forestal",
+        "sha": "09cffb9c72154a42b624c44238dbde1f6db632d9"
+      },
+      "merged": false,
+      "merged_at": null,
+      "number": 119,
+      "requested_reviewers": [
+        "Jazielle"
+      ],
+      "state": "open",
+      "title": "Revisar la fuente forestal y preparar su contrato compartido",
+      "updated_at": "2026-10-31T05:08:19Z",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/119",
+      "queried_at": "2026-11-01T00:18:16Z",
+      "reviews_queried_at": "2026-11-01T00:19:05Z",
+      "reviews_complete": true,
+      "reviews": []
+    },
+    {
+      "base": {
+        "ref": "feature/40-analisis-inundaciones",
+        "sha": "fba0319696bd5fe707bf71b68315c23ffecfb191"
+      },
+      "closed_at": null,
+      "draft": false,
+      "head": {
+        "ref": "docs/110-metodo-inundaciones",
+        "sha": "c2f6ed6d0e468d039c3d91db16c725356cc37917"
+      },
+      "merged": false,
+      "merged_at": null,
+      "number": 120,
+      "requested_reviewers": [
+        "Jazielle"
+      ],
+      "state": "open",
+      "title": "Comprobar las escenas y preparar el caso de inundaciones de M4",
+      "updated_at": "2026-10-31T06:26:26Z",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/120",
+      "queried_at": "2026-11-01T00:18:16Z",
+      "reviews_queried_at": "2026-11-01T00:19:05Z",
+      "reviews_complete": true,
+      "reviews": []
+    },
+    {
+      "base": {
+        "ref": "feature/107-energia-superficie",
+        "sha": "1d6fa3423a616b553bfd67af36ab427c5fe6fccd"
+      },
+      "closed_at": null,
+      "draft": false,
+      "head": {
+        "ref": "fix/64-revisar-reportes",
+        "sha": "fb3a42b988cf87d64ecd0e2c14d76aed8f3f4c19"
+      },
+      "merged": false,
+      "merged_at": null,
+      "number": 121,
+      "requested_reviewers": [
+        "Jazielle"
+      ],
+      "state": "open",
+      "title": "Mostrar en el PDF qué datos no están disponibles",
+      "updated_at": "2026-10-31T06:35:05Z",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/121",
+      "queried_at": "2026-11-01T00:18:16Z",
+      "reviews_queried_at": "2026-11-01T00:19:05Z",
+      "reviews_complete": true,
+      "reviews": []
+    },
+    {
+      "base": {
+        "ref": "develop",
+        "sha": "cf3768110a83b4e948e57a92f5d9554d33317779"
+      },
+      "closed_at": null,
+      "draft": false,
+      "head": {
+        "ref": "docs/118-preparar-evidencias",
+        "sha": "e0695568e5940e778b20c6a5ed149233550fa033"
+      },
+      "merged": false,
+      "merged_at": null,
+      "number": 122,
+      "requested_reviewers": [
+        "Jazielle"
+      ],
+      "state": "open",
+      "title": "Ordenar las evidencias y los pendientes de M4",
+      "updated_at": "2026-10-31T06:37:34Z",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/122",
+      "queried_at": "2026-11-01T00:18:16Z",
+      "reviews_queried_at": "2026-11-01T00:19:05Z",
+      "reviews_complete": true,
+      "reviews": []
+    },
+    {
+      "base": {
+        "ref": "develop",
+        "sha": "cf3768110a83b4e948e57a92f5d9554d33317779"
+      },
+      "closed_at": null,
+      "draft": false,
+      "head": {
+        "ref": "docs/109-planificacion-m4",
+        "sha": "f11d165f7c16d3d0fbef50295765950943be7217"
+      },
+      "merged": false,
+      "merged_at": null,
+      "number": 123,
+      "requested_reviewers": [
+        "Jazielle"
+      ],
+      "state": "open",
+      "title": "Preparar el ajuste del Planner con el avance actual",
+      "updated_at": "2026-10-31T17:24:22Z",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/123",
+      "queried_at": "2026-11-01T00:18:17Z",
+      "reviews_queried_at": "2026-11-01T00:19:06Z",
+      "reviews_complete": true,
+      "reviews": []
+    },
+    {
+      "base": {
+        "ref": "fix/64-revisar-reportes",
+        "sha": "fb3a42b988cf87d64ecd0e2c14d76aed8f3f4c19"
+      },
+      "closed_at": null,
+      "draft": false,
+      "head": {
+        "ref": "feature/124-horas-recientes",
+        "sha": "6b7d0f858feb6e4342bee5beec6bef4fb8bacde5"
+      },
+      "merged": false,
+      "merged_at": null,
+      "number": 125,
+      "requested_reviewers": [
+        "Jazielle"
+      ],
+      "state": "open",
+      "title": "DAT-06: recupero las horas recientes del tiempo de EnviroSense",
+      "updated_at": "2026-10-31T21:38:09Z",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/125",
+      "queried_at": "2026-11-01T00:18:17Z",
+      "reviews_queried_at": "2026-11-01T00:19:06Z",
+      "reviews_complete": true,
+      "reviews": []
+    },
+    {
+      "base": {
+        "ref": "feature/124-horas-recientes",
+        "sha": "6b7d0f858feb6e4342bee5beec6bef4fb8bacde5"
+      },
+      "closed_at": null,
+      "draft": false,
+      "head": {
+        "ref": "feature/127-condicion-tiempo",
+        "sha": "b994b643d1b9086abd695053eb3a27030ed238b3"
+      },
+      "merged": false,
+      "merged_at": null,
+      "number": 128,
+      "requested_reviewers": [
+        "Jazielle"
+      ],
+      "state": "open",
+      "title": "DAT-07: recupero la condición del tiempo y sus iconos",
+      "updated_at": "2026-10-31T22:58:06Z",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/128",
+      "queried_at": "2026-11-01T00:18:17Z",
+      "reviews_queried_at": "2026-11-01T00:19:06Z",
+      "reviews_complete": true,
+      "reviews": []
+    },
+    {
+      "base": {
+        "ref": "feature/124-horas-recientes",
+        "sha": "6b7d0f858feb6e4342bee5beec6bef4fb8bacde5"
+      },
+      "closed_at": null,
+      "draft": true,
+      "head": {
+        "ref": "feature/126-pantalla-completa",
+        "sha": "dc01e83c93224dad5061e02d5a792a10a70a9ca7"
+      },
+      "merged": false,
+      "merged_at": null,
+      "number": 129,
+      "requested_reviewers": [],
+      "state": "open",
+      "title": "MAP-04: recupero la pantalla completa del mapa",
+      "updated_at": "2026-10-31T23:30:52Z",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/129",
+      "queried_at": "2026-11-01T00:18:17Z",
+      "reviews_queried_at": "2026-11-01T00:19:06Z",
+      "reviews_complete": true,
+      "reviews": []
+    }
+  ],
+  "follow_up_129": {
+    "queried_at": "2026-11-01T00:50:54.445646+00:00",
+    "method": "gh api GET, GitHub REST core: pull y reviews",
+    "ci": "no_verificado",
+    "number": 129,
+    "state": "open",
+    "draft": true,
+    "head": {
+      "ref": "feature/126-pantalla-completa",
+      "sha": "b64e626a3a73d405d5ba2f65a567a0949ff646a1"
+    },
+    "base": {
+      "ref": "feature/124-horas-recientes",
+      "sha": "6b7d0f858feb6e4342bee5beec6bef4fb8bacde5"
+    },
+    "requested_reviewers": [],
+    "reviews": [],
+    "qa_respaldo": {
+      "javascript": 168,
+      "focalizadas_incluidas": 39,
+      "navegador": "interno oculto",
+      "vistas": [
+        [
+          1280,
+          720
+        ],
+        [
+          450,
+          800
+        ],
+        [
+          900,
+          420
+        ]
+      ],
+      "entrada_nativa_real": "pendiente",
+      "evidencia": "https://github.com/elingeyesdev/t6-medicion-ambiental/tree/feature/126-pantalla-completa/docs/evidencias/pantalla126"
+    }
+  },
+  "follow_up_20261101": {
+    "queried_at": "2026-11-01T05:42:57.926195+00:00",
+    "method": "GitHub REST core: pulls abiertos e issues 39/41",
+    "ci": "no_verificado",
+    "open_pull_requests": [
+      {
+        "number": 129,
+        "sha": "b64e626a3a73d405d5ba2f65a567a0949ff646a1",
+        "base": "feature/124-horas-recientes",
+        "draft": true,
+        "reviewers": [],
+        "updated_at": "2026-11-01T00:49:44Z"
+      },
+      {
+        "number": 128,
+        "sha": "b994b643d1b9086abd695053eb3a27030ed238b3",
+        "base": "feature/124-horas-recientes",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-31T22:58:06Z"
+      },
+      {
+        "number": 125,
+        "sha": "6b7d0f858feb6e4342bee5beec6bef4fb8bacde5",
+        "base": "fix/64-revisar-reportes",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-31T21:38:09Z"
+      },
+      {
+        "number": 123,
+        "sha": "f11d165f7c16d3d0fbef50295765950943be7217",
+        "base": "develop",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-31T17:24:22Z"
+      },
+      {
+        "number": 122,
+        "sha": "e0695568e5940e778b20c6a5ed149233550fa033",
+        "base": "develop",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-31T06:37:34Z"
+      },
+      {
+        "number": 121,
+        "sha": "fb3a42b988cf87d64ecd0e2c14d76aed8f3f4c19",
+        "base": "feature/107-energia-superficie",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-31T06:35:05Z"
+      },
+      {
+        "number": 120,
+        "sha": "c2f6ed6d0e468d039c3d91db16c725356cc37917",
+        "base": "feature/40-analisis-inundaciones",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-31T06:26:26Z"
+      },
+      {
+        "number": 119,
+        "sha": "09cffb9c72154a42b624c44238dbde1f6db632d9",
+        "base": "develop",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-31T05:08:19Z"
+      },
+      {
+        "number": 108,
+        "sha": "1d6fa3423a616b553bfd67af36ab427c5fe6fccd",
+        "base": "feature/105-particulas-viento",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-30T06:55:57Z"
+      },
+      {
+        "number": 106,
+        "sha": "62b227db6165e14a779be0cd6a96a135f31c5504",
+        "base": "feature/103-reportes-atmosfericos",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-30T05:41:16Z"
+      },
+      {
+        "number": 104,
+        "sha": "3800de23782f0634df3de7f156b3dbf8b55b4e2f",
+        "base": "feature/101-calidad-aire",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-30T05:00:57Z"
+      },
+      {
+        "number": 102,
+        "sha": "6d4fdbe862d8baf0bd2153832fb0b556aab62c31",
+        "base": "feature/99-actualizar-capas",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-30T04:05:16Z"
+      },
+      {
+        "number": 100,
+        "sha": "c972ee82f36e59f382bbadcbc325737271ccb841",
+        "base": "feature/47-frente-envirosense",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-30T02:53:50Z"
+      },
+      {
+        "number": 98,
+        "sha": "d8b89140fd3bf0e84314211a27a952db448b7d74",
+        "base": "feature/41-evidencias-entrega-m3",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-30T01:46:33Z"
+      },
+      {
+        "number": 97,
+        "sha": "8c80aaf68a62e6523dd5518ee617d30266e5d3b3",
+        "base": "feature/66-productor-raster",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-29T20:36:58Z"
+      },
+      {
+        "number": 96,
+        "sha": "2516241c0cd036044480e8d9fb54c154c3e3b69a",
+        "base": "develop",
+        "draft": true,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-31T20:38:26Z"
+      },
+      {
+        "number": 95,
+        "sha": "6d680ea7413c2150dbaa88fd881b9e959bc904ce",
+        "base": "feature/62-capas-web",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-29T19:07:42Z"
+      },
+      {
+        "number": 94,
+        "sha": "f5808e0defb00c5e1504ae45cf02e62442dda473",
+        "base": "develop",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-31T20:38:22Z"
+      },
+      {
+        "number": 93,
+        "sha": "b62379fa0d24c809fb5da3e9e28cbce69bb6457e",
+        "base": "develop",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-29T18:58:45Z"
+      },
+      {
+        "number": 90,
+        "sha": "0b70ed817241740ff754686653b61bff64d39e08",
+        "base": "develop",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-29T12:37:52Z"
+      },
+      {
+        "number": 88,
+        "sha": "b1761113b161bd5d8d9634cd2396a4120fa2a12d",
+        "base": "develop",
+        "draft": false,
+        "reviewers": [],
+        "updated_at": "2026-10-31T05:05:19Z"
+      },
+      {
+        "number": 46,
+        "sha": "fba0319696bd5fe707bf71b68315c23ffecfb191",
+        "base": "develop",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ],
+        "updated_at": "2026-10-29T12:39:38Z"
+      }
+    ],
+    "issues": [
+      {
+        "number": 39,
+        "state": "open",
+        "updated_at": "2026-10-31T05:12:51Z"
+      },
+      {
+        "number": 41,
+        "state": "open",
+        "updated_at": "2026-10-31T20:34:51Z"
+      }
+    ]
+  },
+  "ui_evidence": [
+    {
+      "fecha_cliente": "2026-11-01",
+      "pr": 129,
+      "sha": "b64e626a3a73d405d5ba2f65a567a0949ff646a1",
+      "source": "Interfaz pública de GitHub, navegador interno oculto",
+      "result": "7 / 7 checks OK",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/129",
+      "screenshot": "evidencias/pr129-comprobaciones-20261101.png"
+    }
+  ]
+}
