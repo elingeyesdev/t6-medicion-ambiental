@@ -7,6 +7,8 @@ use App\Services\Datos\CatalogoAmbiental;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Symfony\Component\Mailer\Exception\UnexpectedResponseException;
+use Symfony\Component\Mailer\Transport\Smtp\SmtpTransport;
 use Throwable;
 
 final class TransportarAviso
@@ -74,6 +76,18 @@ final class TransportarAviso
             return $respuesta->serverError() || $respuesta->successful() ?
                 ['estado' => 'incierto', 'error_codigo' => 'RESPUESTA_SIN_CONFIRMACION'] :
                 ['estado' => 'fallido', 'error_codigo' => 'PROVEEDOR_RECHAZO'];
+        } catch (UnexpectedResponseException $e) {
+            // Un 5xx al reiniciar tras aceptar DATA no demuestra rechazo del mensaje.
+            // Solo el marco activo de doSend identifica un fallo de esa transacción.
+            if ($envio->canal === 'email' && ($mailer ?? null) === 'smtp' && $e->getCode() >= 500 && $e->getCode() <= 599) {
+                foreach ($e->getTrace() as $marco) {
+                    if (($marco['class'] ?? null) === SmtpTransport::class && ($marco['function'] ?? null) === 'doSend') {
+                        return ['estado' => 'fallido', 'error_codigo' => 'PROVEEDOR_RECHAZO'];
+                    }
+                }
+            }
+
+            return ['estado' => 'incierto', 'error_codigo' => 'TRANSPORTE_SIN_CONFIRMACION'];
         } catch (ConnectionException) {
             // Una respuesta perdida puede corresponder a un mensaje ya aceptado. No repetirlo a ciegas.
             return ['estado' => 'incierto', 'error_codigo' => 'CONEXION_SIN_CONFIRMACION'];
