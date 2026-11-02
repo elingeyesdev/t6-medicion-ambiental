@@ -59,6 +59,7 @@
                 <button class="btn btn-primary" type="submit">Consultar mapa</button>
             </form>
         </details>
+        @include('components.mapas.capas')
         <details class="monitoreo-unidades">
             <summary>Unidades de medida</summary>
             @include('cuentas.unidades')
