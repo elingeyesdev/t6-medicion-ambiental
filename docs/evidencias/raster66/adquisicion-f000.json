@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t06z.pgrb2.0p25.f000&var_TMP=on&lev_2_m_above_ground=on&subregion=&leftlon=278&rightlon=326&toplat=13&bottomlat=-57&dir=%2Fgfs.20261029%2F06%2Fatmos",
+  "ciclo": "2026102906",
+  "plazo_horas": 0,
+  "bbox_solicitado": [
+    -82,
+    -57,
+    -34,
+    13
+  ],
+  "max_bytes": 2000000,
+  "timeout_segundos": 30,
+  "peticiones": 1,
+  "capturado_utc": "2026-10-29T12:46:24Z",
+  "http": 200,
+  "estado": "descargado",
+  "bytes": 88308,
+  "sha256": "d9a3085a64f02d38153f9386a4e0deb710be7ab5adbeca5d3904a21c981d74bc"
+}

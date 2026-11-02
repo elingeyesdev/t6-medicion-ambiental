@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "perfil": "gfs",
+  "origen": "estimado",
+  "datos_controlados": false,
+  "proveedor_declarado": "NOAA/NWS/NCEP",
+  "producto": "Modelo GFS · temperatura instantánea a 2 m",
+  "atribucion": "Datos NOAA/NWS/NCEP. Conversión y codificación GeoSur; sin aval de NOAA/NWS.",
+  "documentacion": "https://www.nco.ncep.noaa.gov/pmb/products/gfs/gfs.t00z.pgrb2.0p25.f000.shtml",
+  "tiempo": {
+    "instante": "2026-10-29T09:00:00Z",
+    "ciclo": "2026-10-29T06:00:00Z",
+    "plazo_horas": 3,
+    "tipo_temporal": "pronostico",
+    "forma_tierra_grib": 6
+  },
+  "rejilla": {
+    "proyeccion": "EPSG:4326",
+    "registro": "nodos",
+    "filas": "norte-sur",
+    "oeste": -82.0,
+    "este": -34.0,
+    "sur": -57.0,
+    "norte": 13.0
+  },
+  "unidades": {
+    "entrada": "K",
+    "salida": "°C",
+    "conversion": "celsius = kelvin - 273.15"
+  },
+  "codificacion": {
+    "nombre": "temp-era5",
+    "formula": "celsius = R/255*100-50",
+    "ausencia": "A=0 -> null",
+    "canales": "RGBA, 8 bits"
+  },
+  "entrada": {
+    "sha256": "7049c358c0e195d6251499771c99e3b5cc51c76e8b27da1a0561da1436e49333",
+    "bytes": 88308
+  },
+  "estadisticas": {
+    "validos": 54233,
+    "ausentes_no_finitos": 0,
+    "fuera_de_escala": 0,
+    "politica_fuera_de_escala": "null",
+    "minimo_celsius_valido": -16.604681396484352,
+    "maximo_celsius_valido": 28.935327148437523,
+    "error_cuantizacion_maximo_celsius": 0.19607843137254902
+  },
+  "software": {
+    "numpy": "2.3.4",
+    "xarray": "2025.10.1",
+    "cfgrib": "0.9.15.1",
+    "eccodes": "2.44.0",
+    "Pillow": "12.0.0",
+    "netCDF4": "1.7.3"
+  },
+  "salida": {
+    "archivo": "temperatura/gfs-temp-20261029090000-7049c358c0e1.png",
+    "sha256": "630478f5a2407ea092795e2318d4d8003cf52ba31a00f17c5808eb9494356aad",
+    "bytes": 25562,
+    "ancho": 193,
+    "alto": 281
+  }
+}
