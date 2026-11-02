@@ -396,29 +396,28 @@ class _DroughtScreenState extends State<DroughtScreen>
             ),
           )
         : _errorMessage != null
-            ? Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.warning_amber_rounded,
-                          size: 48, color: Colors.orange),
-                      const SizedBox(height: 12),
-                      Text(
-                        _errorMessage!,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 15),
-                      ),
-                      const SizedBox(height: 16),
-                      FilledButton.icon(
-                        onPressed: _executeQuery,
-                        icon: const Icon(Icons.refresh),
-                        label: const Text('Reintentar'),
-                      ),
-                    ],
+            ? ListView(
+                padding: const EdgeInsets.fromLTRB(16, 4, 16, 30),
+                children: [
+                  if (!widget.showAppBar) _buildTopControls(),
+                  const SizedBox(height: 24),
+                  const Center(
+                    child: Icon(Icons.warning_amber_rounded,
+                        size: 48, color: Colors.orange),
                   ),
-                ),
+                  const SizedBox(height: 12),
+                  Text(
+                    _errorMessage!,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 15),
+                  ),
+                  const SizedBox(height: 16),
+                  FilledButton.icon(
+                    onPressed: _executeQuery,
+                    icon: const Icon(Icons.refresh),
+                    label: const Text('Reintentar'),
+                  ),
+                ],
               )
             : response == null
                 ? const SizedBox.shrink()
