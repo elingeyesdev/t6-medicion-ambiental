@@ -1,6 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {decodificar, muestra, coordenadaPixel, color, cuadrosDisponibles, crearReproductor} from '../../public/js/mapas/raster.js';
+
+test('viento nuevo conserva calma exacta, componentes y máscara', () => {
+    assert.deepEqual(decodificar('viento-uv127', 127, 127, 0, 255), {u: 0, v: 0, valor: 0});
+    const vector = decodificar('viento-uv127', 254, 0, 0, 255);
+    assert.equal(vector.u, 360);
+    assert.equal(vector.v, -360);
+    assert.equal(vector.valor, Math.hypot(360, -360));
+    assert.equal(decodificar('viento-uv127', 127, 127, 0, 0), null);
+});
 import {crearPresentador} from '../../public/js/datos/unidades.js';
 import {readFileSync} from 'node:fs';
 

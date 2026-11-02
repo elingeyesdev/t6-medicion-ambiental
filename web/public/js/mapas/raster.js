@@ -14,6 +14,11 @@ export function decodificar(codigo, r, g, b, a) {
             const u = (r / 255 * 200 - 100) * 3.6, v = (g / 255 * 200 - 100) * 3.6;
             return {u, v, valor: Math.hypot(u, v)};
         }
+        case 'viento-uv127': {
+            // El byte 127 representa calma exacta; ambas componentes están en m/s.
+            const u = (r - 127) / 1.27 * 3.6, v = (g - 127) / 1.27 * 3.6;
+            return {u, v, valor: Math.hypot(u, v)};
+        }
         case 'viento-direccion': {
             const velocidad = r / 255 * 150, angulo = (g / 255 * 360 + 180) * Math.PI / 180;
             return {u: velocidad * Math.sin(angulo), v: velocidad * Math.cos(angulo), valor: velocidad};

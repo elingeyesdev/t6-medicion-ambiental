@@ -3,6 +3,7 @@
 // Ejecuta las clases reales de #62 sin bootstrap, cuenta, proveedor o conexión a base.
 $raizRepo = dirname(__DIR__, 4);
 $directorio = $argv[1];
+$esperados = isset($argv[2]) ? (int) $argv[2] : 1;
 function config(string $clave): mixed
 {
     global $directorio;
@@ -20,7 +21,7 @@ $cantidad = (new App\Services\Mapas\Radar\PublicadorRaster)->publicar($directori
 $catalogo = (new App\Services\Mapas\Radar\CatalogoRaster)->cargar();
 $cuadro = $catalogo['cuadros'][0];
 $bytes = App\Services\Mapas\Radar\ArchivoRaster::leer($directorio.'/'.$cuadro['archivo']);
-if ($cantidad !== 1 || count($catalogo['cuadros']) !== 1 || $catalogo['faltantes'] !== 0 || hash('sha256', $bytes) !== $cuadro['sha256']) {
+if ($cantidad !== $esperados || count($catalogo['cuadros']) !== $esperados || $catalogo['faltantes'] !== 0 || hash('sha256', $bytes) !== $cuadro['sha256']) {
     throw new RuntimeException('El productor no cumple el publicador real.');
 }
 echo json_encode(['cuadros' => $cantidad, 'ancho' => $cuadro['ancho'], 'alto' => $cuadro['alto'],
