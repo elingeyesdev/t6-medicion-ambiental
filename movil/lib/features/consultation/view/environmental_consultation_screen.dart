@@ -5,7 +5,7 @@ import '../../../core/theme/geocruz_theme.dart';
 import '../../drought/view/drought_screen.dart';
 import '../../hotspots/view/hotspots_screen.dart';
 
-class EnvironmentalConsultationScreen extends StatelessWidget {
+class EnvironmentalConsultationScreen extends StatefulWidget {
   const EnvironmentalConsultationScreen({
     required this.apiClient,
     super.key,
@@ -14,45 +14,77 @@ class EnvironmentalConsultationScreen extends StatelessWidget {
   final GeoCruzApiClient apiClient;
 
   @override
+  State<EnvironmentalConsultationScreen> createState() =>
+      _EnvironmentalConsultationScreenState();
+}
+
+class _EnvironmentalConsultationScreenState
+    extends State<EnvironmentalConsultationScreen>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabs;
+  bool _openedDrought = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabs = TabController(length: 2, vsync: this);
+    _tabs.addListener(_onTab);
+  }
+
+  void _onTab() {
+    if (_tabs.index == 1 && !_openedDrought) {
+      setState(() => _openedDrought = true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _tabs.removeListener(_onTab);
+    _tabs.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Consultas ambientales',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-          bottom: const TabBar(
-            indicatorColor: GeoCruzColors.green,
-            labelColor: GeoCruzColors.green,
-            unselectedLabelColor: Colors.black54,
-            tabs: [
-              Tab(
-                icon: Icon(Icons.local_fire_department_outlined),
-                text: 'Focos de calor',
-              ),
-              Tab(
-                icon: Icon(Icons.water_drop_outlined),
-                text: 'Sequías',
-              ),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Consultas ambientales',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
-        body: TabBarView(
-          children: [
-            HotspotsScreen(
-              key: const PageStorageKey('env-hotspots'),
-              apiClient: apiClient,
-              showAppBar: false,
+        bottom: TabBar(
+          controller: _tabs,
+          indicatorColor: GeoCruzColors.green,
+          labelColor: GeoCruzColors.green,
+          unselectedLabelColor: Colors.black54,
+          tabs: const [
+            Tab(
+              icon: Icon(Icons.local_fire_department_outlined),
+              text: 'Focos de calor',
             ),
-            DroughtScreen(
-              key: const PageStorageKey('env-drought'),
-              apiClient: apiClient,
-              showAppBar: false,
+            Tab(
+              icon: Icon(Icons.water_drop_outlined),
+              text: 'Sequías',
             ),
           ],
         ),
+      ),
+      body: TabBarView(
+        controller: _tabs,
+        children: [
+          HotspotsScreen(
+            key: const PageStorageKey('env-hotspots'),
+            apiClient: widget.apiClient,
+            showAppBar: false,
+          ),
+          _openedDrought
+              ? DroughtScreen(
+                  key: const PageStorageKey('env-drought'),
+                  apiClient: widget.apiClient,
+                  showAppBar: false,
+                )
+              : const SizedBox.shrink(),
+        ],
       ),
     );
   }
