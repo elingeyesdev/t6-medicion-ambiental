@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "cuadros": [
+    {
+      "id": "era5-temp-20260617-1200",
+      "capa": "temperatura",
+      "instante": "2026-06-17T12:00:00Z",
+      "archivo": "temperatura/2026/06/20260617_1200.png",
+      "codificacion": "temp-era5",
+      "fuente": "Copernicus ERA5",
+      "producto": "Reanálisis · temperatura a 2 m",
+      "rejilla": {
+        "proyeccion": "EPSG:4326",
+        "registro": "nodos",
+        "filas": "sur-norte",
+        "oeste": 0,
+        "este": 360,
+        "sur": -90,
+        "norte": 90
+      }
+    }
+  ]
+}

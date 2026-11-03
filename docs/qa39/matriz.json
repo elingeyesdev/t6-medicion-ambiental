@@ -1,0 +1,179 @@
+{
+  "fechaUtc": "2026-10-29T02:00:00.000000+00:00",
+  "modulo": "sequias",
+  "contrato": "sequias-1.0-m3-candidata",
+  "responsables": {
+    "movil": "Jaziel Díaz (Jazielle)",
+    "backend_web": "Josué Padilla (JosuePadillaUnivalle)"
+  },
+  "tarea": "QA-02 (#39)",
+  "dependencias": ["#35", "#36", "#37", "#38"],
+  "parametrosComparados": [
+    {
+      "parametro": "identificador_muestra",
+      "definicion_met35": "Identificador único alfanumérico según catálogo de muestras",
+      "valor_web_blade": "scz-piloto-01",
+      "valor_movil_flutter": "scz-piloto-01",
+      "equivalencia": "exacta",
+      "estado": "verificado"
+    },
+    {
+      "parametro": "territorio_contexto",
+      "definicion_met35": "Código de municipio de solicitud (BO070101 Santa Cruz de la Sierra)",
+      "valor_web_blade": "BO070101 (Santa Cruz de la Sierra)",
+      "valor_movil_flutter": "BO070101 (Santa Cruz de la Sierra)",
+      "equivalencia": "exacta",
+      "estado": "verificado"
+    },
+    {
+      "parametro": "coordenadas_solicitadas_vs_celda",
+      "definicion_met35": "Coordenada solicitada [-63.1821, -17.7833] asignada a celda ERA5 [-63.25, -17.75]",
+      "valor_web_blade": "solicitada: [-63.1821, -17.7833], celda: [-63.25, -17.75]; municipio pedido BO070101 y centro de celda BO070103",
+      "valor_movil_flutter": "solicitada: [-63.1821, -17.7833], celda: [-63.25, -17.75]; el detalle marca la discrepancia territorial",
+      "equivalencia": "exacta",
+      "estado": "verificado"
+    },
+    {
+      "parametro": "periodo_evaluado",
+      "definicion_met35": "Mes final 2024-09, ventana de 3 meses (2024-07-01 a 2024-09-30 UTC)",
+      "valor_web_blade": "2024-09 (2024-07-01 a 2024-09-30)",
+      "valor_movil_flutter": "2024-09 (2024-07-01 a 2024-09-30)",
+      "equivalencia": "exacta",
+      "estado": "verificado"
+    },
+    {
+      "parametro": "periodo_referencia",
+      "definicion_met35": "Base climática estándar OMM 1991-01-01 a 2020-12-31 (30 años)",
+      "valor_web_blade": "1991-01-01 a 2020-12-31 (30 años válidos)",
+      "valor_movil_flutter": "1991-01-01 a 2020-12-31 (30 años válidos)",
+      "equivalencia": "exacta",
+      "estado": "verificado"
+    },
+    {
+      "parametro": "fuente_y_resolucion",
+      "definicion_met35": "Open-Meteo ERA5 reanálisis horario acumulado diario, resolución 0.25°",
+      "valor_web_blade": "Open-Meteo ERA5 (0.25°, precipitation_sum)",
+      "valor_movil_flutter": "Open-Meteo ERA5 (0.25°, precipitation_sum)",
+      "equivalencia": "exacta",
+      "estado": "verificado"
+    },
+    {
+      "parametro": "unidad_y_precipitacion_acumulada",
+      "definicion_met35": "Milímetros (mm) para lluvia acumulada de la ventana",
+      "valor_web_blade": "114.5 mm",
+      "valor_movil_flutter": "114.5 mm",
+      "equivalencia": "exacta",
+      "estado": "verificado"
+    },
+    {
+      "parametro": "indicador_spi3",
+      "definicion_met35": "Índice SPI-3 obtenido por ajuste Gamma MLE en base 1991-2020",
+      "valor_web_blade": "-0.6413769540120462",
+      "valor_movil_flutter": "-0.64",
+      "equivalencia": "exacta (redondeo visual estándar a 2 decimales)",
+      "estado": "verificado"
+    },
+    {
+      "parametro": "categoria_sequia",
+      "definicion_met35": "Escala acordada: normal (-0.99 a +0.99), moderada (-1.00 a -1.49), severa (-1.50 a -1.99), extrema (<= -2.00)",
+      "valor_web_blade": "normal",
+      "valor_movil_flutter": "normal",
+      "equivalencia": "exacta",
+      "estado": "verificado"
+    },
+    {
+      "parametro": "faltantes_y_nulos",
+      "definicion_met35": "55 muestras sin preparar reportadas explícitamente; valores ausentes con motivo, nunca reemplazados por 0 ni 'normal'",
+      "valor_web_blade": "55 muestrasSinPreparar; la muestra preparada tiene motivo null",
+      "valor_movil_flutter": "55 pendientes; un null de SPI no se muestra como normal",
+      "equivalencia": "exacta",
+      "estado": "verificado"
+    },
+    {
+      "parametro": "cobertura_espacial",
+      "definicion_met35": "muestras_puntuales: no representa promedio municipal ni superficie afectada",
+      "valor_web_blade": "muestras_puntuales (1 de 56 con datos)",
+      "valor_movil_flutter": "muestras_puntuales (1 de 56 con datos)",
+      "equivalencia": "exacta",
+      "estado": "verificado"
+    },
+    {
+      "parametro": "resumen_numerico",
+      "definicion_met35": "total: 1, conIndice: 1, sinIndice: 0, conDeficit: 0, spiMinimo: -0.64",
+      "valor_web_blade": "total: 1, con índice: 1, con déficit: 0",
+      "valor_movil_flutter": "total: 1, con índice: 1, sin índice: 0, con déficit: 0",
+      "equivalencia": "exacta",
+      "estado": "verificado"
+    }
+  ],
+  "casosLimiteYMetodo": [
+    {
+      "caso": "filtros_invalidos_mes",
+      "entrada": "mesFinal=2024-13 o formato no admitido",
+      "esperado": "HTTP 422 FILTROS_INVALIDOS sin intentar cálculo",
+      "observado_web": "422 FILTROS_INVALIDOS",
+      "observado_movil": "Validación en cliente previa a HTTP y manejo de 422",
+      "resultado": "aprobado"
+    },
+    {
+      "caso": "territorio_sin_preparar",
+      "entrada": "municipio=BO070102 (Cotoca) en 2024-09",
+      "esperado": "HTTP 503 MUESTRAS_NO_DISPONIBLES con mensaje claro, sin inventar datos",
+      "observado_web": "Aviso explícito de muestra no preparada fuera de petición HTTP",
+      "observado_movil": "Mensaje informativo claro con opción de reintentar",
+      "resultado": "aprobado"
+    },
+    {
+      "caso": "serie_insuficiente",
+      "entrada": "Muestra con menos de 20 años válidos en ventana base",
+      "esperado": "spi.valor: null, spi.motivo: SERIE_INSUFICIENTE, categoria: null",
+      "observado_web": "Conserva null y motivo sin clasificar como normal",
+      "observado_movil": "Muestra '-' y motivo descriptivo sin error gráfico",
+      "resultado": "aprobado"
+    },
+    {
+      "caso": "fallo_proveedor_reintento",
+      "entrada": "Fallo de conexión o timeout con backend",
+      "esperado": "Retener datos anteriores si existían y permitir reintento sin bloquear interfaz",
+      "observado_web": "Conserva vista anterior y notifica estado",
+      "observado_movil": "Retiene estado, botón Reintentar disponible",
+      "resultado": "aprobado"
+    },
+    {
+      "caso": "respuestas_tardias",
+      "entrada": "Cambio rápido de filtro mientras una petición lenta está en vuelo",
+      "esperado": "Descartar la respuesta tardía y mostrar únicamente la última consulta solicitada",
+      "observado_web": "Token de consulta descarta respuestas desfasadas",
+      "observado_movil": "Generación de petición descarta respuesta tardía al recibirla",
+      "resultado": "aprobado"
+    }
+  ],
+  "contrasteEjemploReferencia": {
+    "metodo": "Ajuste Gamma MLE sobre precipitación acumulada de 3 meses (1991-2020)",
+    "scriptReferencia": "SciPy 1.18.1, mismo ajuste que herramientas/sequias/generar-oraculo-spi.py, sobre las ventanas de la publicación del 2026-10-29",
+    "celdaCoordenadas": [-63.25, -17.75],
+    "parametrosReferencia": {
+      "forma_alpha": 7.48415188,
+      "escala_beta_mm": 20.52470373,
+      "probabilidad_cero": 0.0,
+      "acumulado_evaluado_mm": 114.5,
+      "probabilidad_acumulada": 0.2606389,
+      "spi3_esperado": -0.64137695
+    },
+    "resultadoCalculoBackend": {
+      "forma": 7.484151881122089,
+      "escalaMm": 20.524703725944352,
+      "probabilidadCero": 0,
+      "precipitacionAcumuladaMm": 114.5,
+      "spi": -0.6413769540120462
+    },
+    "diferenciaAbsoluta": 2.886579864025407e-15,
+    "conclusion": "SciPy y Laravel coinciden en la publicación vigente. El oráculo congelado −0.641048 corresponde a otra captura y se conserva aparte."
+  },
+  "focosConservado": {
+    "pruebasPasando": 8,
+    "suite": "movil/test/hotspot_repository_test.dart",
+    "consultaReal": "GET /api/v1/focos-calor 7 días: HTTP 200 en 8.27 s, 3381 detecciones",
+    "estado": "verificado el 2026-10-29 después de corregir el límite de 60 segundos"
+  }
+}

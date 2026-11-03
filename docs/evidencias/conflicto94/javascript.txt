@@ -1,0 +1,31 @@
+✔ consulta inmediata con sesión, sin conexiones persistentes ni consultas superpuestas (2.7132ms)
+✔ pestaña oculta no consulta y el foco en una acción conserva la lista (1.3402ms)
+✔ error o contrato incompleto conserva los avisos y aumenta la espera (0.7986ms)
+✔ sesión vencida o redirigida detiene las consultas y conserva los avisos (0.4837ms)
+✔ viento nuevo conserva calma exacta, componentes y máscara (2.6357ms)
+✔ distingue las escalas del ETL y de las texturas actuales de temperatura (0.1947ms)
+✔ conserva faltantes transparentes en todas las codificaciones (0.3734ms)
+✔ lluvia no lineal respeta escalones y no confunde cero con ausente (0.2948ms)
+✔ decodifica componentes U/V y velocidad/dirección sin intercambiar contratos (0.4498ms)
+✔ interpola U/V antes de obtener magnitud, y no inventa calma en píxeles ausentes (0.6838ms)
+✔ usa unidades del ETL para visibilidad, nieve, humedad y presión (0.2371ms)
+✔ respeta filas de sur a norte y de norte a sur con coordenadas cero (0.466ms)
+✔ no interpola huecos ni ofrece valores fuera del área declarada (0.2858ms)
+✔ rejilla 0..360, antimeridiano y nodos conservan ubicación geográfica (0.3978ms)
+✔ leyendas y lectura comparten preferencias sin alterar la textura (52.2157ms)
+✔ AQI usa vecino cercano y una codificación desconocida falla (0.4791ms)
+✔ no inventa horas intermedias ni modifica las fechas publicadas (6.9407ms)
+✔ reproducción espera la carga y recorre solo los cuadros disponibles (16.9791ms)
+✔ pausar durante una petición evita avanzar a otra fecha (0.4666ms)
+✔ un error detiene reproducción sin saltar a datos de respaldo (1.8769ms)
+✔ abrir la página no pide permiso, carga SDK ni registra dispositivos (2.111ms)
+✔ solo el consentimiento y permiso del navegador permiten registrar el token con CSRF (1.303ms)
+✔ denegación o entorno incompatible no carga SDK ni confirma un alta inexistente (0.3381ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4647.8399

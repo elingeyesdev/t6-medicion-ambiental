@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t06z.pgrb2.0p25.f006&var_TMP=on&lev_2_m_above_ground=on&var_RH=on&var_UGRD=on&var_VGRD=on&var_VIS=on&var_WEASD=on&var_PRMSL=on&var_APCP=on&var_PRATE=on&lev_10_m_above_ground=on&lev_surface=on&lev_mean_sea_level=on&subregion=&leftlon=278&rightlon=326&toplat=13&bottomlat=-57&dir=%2Fgfs.20261029%2F06%2Fatmos",
+  "ciclo": "2026102906",
+  "plazo_horas": 6,
+  "bbox_solicitado": [
+    -82,
+    -57,
+    -34,
+    13
+  ],
+  "max_bytes": 2000000,
+  "timeout_segundos": 30,
+  "peticiones": 1,
+  "capturado_utc": "2026-10-29T19:55:54Z",
+  "http": 200,
+  "estado": "descargado",
+  "bytes": 1001251,
+  "mensajes": 12,
+  "sha256": "5defda382fd799e0316312d1bd810d893c9cc7a7969aa0208484881d9c968618"
+}
