@@ -6,6 +6,8 @@ Josué Padilla prepara la web y revisa el móvil. Jaziel Díaz desarrolla Flutte
 
 ## Paquete y recorrido
 
+- [Viento animado del mapa](../VIENTO_ENVIROSENSE.md): continuación #105 sobre #104. Trazos según la capa de viento, control de activación, comparación A/B y pausa. No representa trayectorias de humo ni modifica el tiempo de la capa.
+
 - [Reportes atmosféricos comprobados](../REPORTES_ATMOSFERICOS_VERIFICADOS.md): continuación #103 sobre #102. Dos escalas de aire identificadas, verificación de lugar/zona/unidades, captura externa real y PDF/Excel contrastados en una base temporal.
 
 - [Calidad del aire del lugar](../CALIDAD_AIRE_ENVIROSENSE.md): continuación #101 sobre #100. Consulta actual y 24 horas del índice europeo original, con CAMS global/Open-Meteo, partículas y procedencia. No se mezcla con AQI de otra escala ni completa la capa raster pendiente.

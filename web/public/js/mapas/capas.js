@@ -1,5 +1,6 @@
 import {crearCapaRaster} from './capa-raster-leaflet.js';
-import {muestra, cuadrosDisponibles, crearReproductor, rampa} from './raster.js';
+import {muestra, esViento, cuadrosDisponibles, crearReproductor, rampa} from './raster.js';
+import {crearParticulasViento} from './particulas-viento.js';
 import {iniciarPoi} from './poi.js';
 import {presentacion} from '../datos/unidades.js';
 import {conservarComparacion, hayFechasNuevas, vigilarCatalogo} from './actualizacion-catalogo.js';
@@ -10,6 +11,7 @@ export function iniciarCapas(mapa, L = window.L) {
     const q = selector => panel.querySelector(selector);
     const estado = q('[data-estado]'), controles = q('[data-controles]'), visible = q('[data-visible]');
     const comparar = q('[data-comparar]'), barra = q('[data-recorrido]'), botonPlay = q('[data-reproducir]');
+    const animarViento = q('[data-animar-viento]');
     const selectores = Object.fromEntries(['a', 'b'].map(id => [id, {capa: q(`[data-capa="${id}"]`), fecha: q(`[data-fecha="${id}"]`)}]));
     let catalogo = [], cargandoCatalogo, secuenciaCatalogo = 0, lecturaActiva = false, marcaLectura;
     let revisionCatalogo = '', nuevasFechas = null;
@@ -30,7 +32,18 @@ export function iniciarCapas(mapa, L = window.L) {
     function limpiar(id) {
         const canal = canales[id]; canal.turno = (canal.turno ?? 0) + 1; canal.peticion?.abort();
         if (canal.capa) mapa.removeLayer(canal.capa);
+        if (canal.particulas) mapa.removeLayer(canal.particulas);
+        canal.particulas = null;
         canal.capa = canal.cuadro = canal.pixeles = null;
+    }
+    function viento() {
+        const disponibles = Object.entries(canales).filter(([id, c]) => visible.checked && (id === 'a' || comparar.checked) && esViento(c.cuadro));
+        q('[data-control-viento]').hidden = !disponibles.length;
+        for (const [id, c] of Object.entries(canales)) {
+            const activar = animarViento.checked && disponibles.some(([canal]) => canal === id);
+            if (!activar && c.particulas) { mapa.removeLayer(c.particulas); c.particulas = null; }
+            if (activar && !c.particulas) c.particulas = crearParticulasViento(L, c.cuadro, c.pixeles, 'ambiente-' + id, Number(q('[data-opacidad]').value) / 100).addTo(mapa);
+        }
     }
     function leyendas() {
         const contenedor = q('[data-leyendas]'); contenedor.replaceChildren();
@@ -122,7 +135,7 @@ export function iniciarCapas(mapa, L = window.L) {
         marcaLectura = L.circleMarker(centro, {radius: 6, color: '#fff', weight: 2, fillColor: '#193c52', fillOpacity: 1, interactive: false}).addTo(mapa);
     }
     async function pintarCanal(id) {
-        limpiar(id); leyendas();
+        limpiar(id); leyendas(); viento();
         q('[data-lectura]').replaceChildren();
         if (marcaLectura) mapa.removeLayer(marcaLectura); marcaLectura = null;
         if (!visible.checked || (id === 'b' && !comparar.checked)) return;
@@ -134,7 +147,7 @@ export function iniciarCapas(mapa, L = window.L) {
             if (turno !== canal.turno || !visible.checked) return;
             canal.cuadro = {...cuadro, capa: capaElegida(id).id}; canal.pixeles = pixeles;
             canal.capa = crearCapaRaster(L, mapa, canal.cuadro, pixeles, 'ambiente-' + id, Number(q('[data-opacidad]').value) / 100).addTo(mapa);
-            leyendas(); dividir(); if (lecturaActiva) leer();
+            viento(); leyendas(); dividir(); if (lecturaActiva) leer();
         } catch (e) {
             if (turno !== canal.turno || e.name === 'AbortError') return;
             throw new Error(id.toUpperCase() + ': ' + (e instanceof TypeError || e instanceof SyntaxError ? 'No se pudo cargar la imagen. Inténtalo de nuevo.' : e.message));
@@ -232,7 +245,13 @@ export function iniciarCapas(mapa, L = window.L) {
         reproductor.iniciar(desde).catch(e => avisar(e.message, true));
     });
     q('[data-division]').addEventListener('input', dividir);
-    q('[data-opacidad]').addEventListener('input', () => { for (const canal of Object.values(canales)) canal.capa?.setOpacity(Number(q('[data-opacidad]').value) / 100); });
+    animarViento.addEventListener('change', viento);
+    q('[data-opacidad]').addEventListener('input', () => {
+        for (const canal of Object.values(canales)) {
+            const opacidad = Number(q('[data-opacidad]').value) / 100;
+            canal.capa?.setOpacity(opacidad); canal.particulas?.setOpacity(opacidad);
+        }
+    });
     q('[data-leer]').addEventListener('click', () => { lecturaActiva = true; leer(); });
     document.addEventListener('unidades-cambiadas', () => { leyendas(); if (lecturaActiva) leer(); });
     document.addEventListener('visibilitychange', () => { if (document.hidden) reproductor.parar(); });

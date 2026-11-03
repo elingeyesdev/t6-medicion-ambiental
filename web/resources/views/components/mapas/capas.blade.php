@@ -33,6 +33,10 @@
                 </div>
                 <label for="capa-opacidad" class="form-label">Opacidad</label>
                 <input id="capa-opacidad" class="form-range" type="range" min="10" max="100" value="65" data-opacidad>
+                <div data-control-viento hidden>
+                    <label class="form-check"><input type="checkbox" class="form-check-input" data-animar-viento aria-describedby="viento-ayuda"><span class="form-check-label">Animar viento</span></label>
+                    <p id="viento-ayuda">Muestra la dirección. No representa el recorrido del humo.</p>
+                </div>
                 <div data-leyendas aria-label="Leyendas de capas"></div>
                 <button type="button" class="btn btn-outline-primary" data-leer>Leer capas en el centro</button>
                 <div data-lectura role="status" aria-live="polite"></div>

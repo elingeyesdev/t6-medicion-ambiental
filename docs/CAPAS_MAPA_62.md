@@ -1,5 +1,7 @@
 # Entrega web de capas de EnviroSense · #62
 
+**Continuación del 30/10:** [viento animado](VIENTO_ENVIROSENSE.md), tarea #105 sobre #104. Recupera los trazos de dirección del original, con control, fechas y recorte A/B, pausa y retiro del dibujo. La animación es ilustrativa y conserva los datos de cada capa. Este agregado y el candidato anterior siguen sujetos a revisión.
+
 Rama `feature/62-capas-web`, worktree `tmp/m3-mapa-web`, base `c8b6b7a`. Código Laravel/Blade y JS existente, sin nuevas dependencias. Se leyó la fuente activa `tmp/panel-envirosense`, `HistoricalWebGL`, los tres hooks `useRadar*`, `windMath`, `data-worker/Dockerfile`, los ETL y los documentos de base y tiempo. La referencia permanece intacta.
 
 ## Resultado e integración pendiente

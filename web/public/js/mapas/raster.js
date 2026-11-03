@@ -47,7 +47,7 @@ export function coordenadaPixel(cuadro, latitud, longitud) {
     return {x, y: y * (cuadro.alto - (centros ? 0 : 1)) - (centros ? .5 : 0)};
 }
 
-export function muestra(cuadro, pixeles, latitud, longitud, interpolar = false) {
+function muestrear(cuadro, pixeles, latitud, longitud, interpolar = false) {
     const coordenada = coordenadaPixel(cuadro, latitud, longitud);
     if (!coordenada || pixeles.length !== cuadro.ancho * cuadro.alto * 4) return null;
     function leer(x, y) {
@@ -61,8 +61,7 @@ export function muestra(cuadro, pixeles, latitud, longitud, interpolar = false) 
     }
     const {x, y} = coordenada;
     if (!interpolar || cuadro.codificacion === 'aqi-textura') {
-        const v = leer(Math.round(x), Math.round(y));
-        return typeof v === 'object' && v !== null ? v.valor : v;
+        return leer(Math.round(x), Math.round(y));
     }
     const x0 = Math.floor(x), y0 = Math.floor(y), fx = x - x0, fy = y - y0;
     const vecinos = [[x0, y0, (1 - fx) * (1 - fy)], [x0 + 1, y0, fx * (1 - fy)],
@@ -74,7 +73,20 @@ export function muestra(cuadro, pixeles, latitud, longitud, interpolar = false) 
         if (typeof valor === 'object') { vector = true; u += valor.u * peso; v += valor.v * peso; }
         else suma += valor * peso;
     }
-    return vector ? Math.hypot(u, v) : suma;
+    return vector ? {u, v, valor: Math.hypot(u, v)} : suma;
+}
+
+export function muestra(cuadro, pixeles, latitud, longitud, interpolar = false) {
+    const valor = muestrear(cuadro, pixeles, latitud, longitud, interpolar);
+    return typeof valor === 'object' && valor !== null ? valor.valor : valor;
+}
+
+export function esViento(cuadro) {
+    return ['viento-uv', 'viento-uv127', 'viento-direccion'].includes(cuadro?.codificacion);
+}
+
+export function muestraVector(cuadro, pixeles, latitud, longitud) {
+    return esViento(cuadro) ? muestrear(cuadro, pixeles, latitud, longitud, true) : null;
 }
 
 const rampas = {
