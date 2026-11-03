@@ -1,0 +1,370 @@
+{
+  "codigo": "b64e626a3a73d405d5ba2f65a567a0949ff646a1",
+  "entorno": "Navegador integrado; Escape enviado al botón real",
+  "entradaNativa": {
+    "boton": "Salir de pantalla completa",
+    "campos": [
+      {
+        "id": "mon-pais",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "BO"
+      },
+      {
+        "id": "mon-region",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": ""
+      },
+      {
+        "id": "mon-metrica",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "temperatura"
+      },
+      {
+        "id": "mon-origen",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "simulado"
+      },
+      {
+        "id": "mon-desde",
+        "marcado": false,
+        "tipo": "datetime-local",
+        "valor": "2026-10-27T08:33"
+      },
+      {
+        "id": "mon-hasta",
+        "marcado": false,
+        "tipo": "datetime-local",
+        "valor": "2026-11-03T08:33"
+      },
+      {
+        "id": "",
+        "marcado": false,
+        "tipo": "checkbox",
+        "valor": "on"
+      },
+      {
+        "id": "recorrido-momento",
+        "marcado": false,
+        "tipo": "datetime-local",
+        "valor": ""
+      },
+      {
+        "id": "recorrido-barra",
+        "marcado": false,
+        "tipo": "range",
+        "valor": "50"
+      },
+      {
+        "id": "",
+        "marcado": false,
+        "tipo": "checkbox",
+        "valor": "on"
+      },
+      {
+        "id": "continua-variable",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "temperatura"
+      },
+      {
+        "id": "",
+        "marcado": true,
+        "tipo": "checkbox",
+        "valor": "on"
+      },
+      {
+        "id": "capa-a",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "temperatura"
+      },
+      {
+        "id": "capa-fecha-a",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "gfs-temperatura-20261029090000-be7c3805658b"
+      },
+      {
+        "id": "capa-recorrido",
+        "marcado": false,
+        "tipo": "range",
+        "valor": "0"
+      },
+      {
+        "id": "",
+        "marcado": true,
+        "tipo": "checkbox",
+        "valor": "on"
+      },
+      {
+        "id": "capa-b",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "temperatura"
+      },
+      {
+        "id": "capa-fecha-b",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "gfs-temperatura-20261029120000-5defda382fd7"
+      },
+      {
+        "id": "capa-division",
+        "marcado": false,
+        "tipo": "range",
+        "valor": "50"
+      },
+      {
+        "id": "capa-opacidad",
+        "marcado": false,
+        "tipo": "range",
+        "valor": "65"
+      },
+      {
+        "id": "",
+        "marcado": false,
+        "tipo": "checkbox",
+        "valor": "on"
+      },
+      {
+        "id": "poi-pais",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "us"
+      },
+      {
+        "id": "poi-texto",
+        "marcado": false,
+        "tipo": "search",
+        "valor": ""
+      },
+      {
+        "id": "unidad-temperatura",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "C"
+      },
+      {
+        "id": "unidad-viento",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "km/h"
+      },
+      {
+        "id": "mon-base",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "claro"
+      },
+      {
+        "id": "nombre-lugar",
+        "marcado": false,
+        "tipo": "search",
+        "valor": ""
+      }
+    ],
+    "contenedor": {
+      "bottom": 1067.3333740234375,
+      "height": 1067.3333740234375,
+      "left": 0,
+      "right": 1707.3333740234375,
+      "top": 0,
+      "width": 1707.3333740234375,
+      "x": 0,
+      "y": 0
+    },
+    "detalle": "Punto de prueba\n×\n\nBolivia\n\nPunto de monitoreo\n\nÚltima lectura del período, por origen y fuente.\n\nSimulado\n25 °C\n\n3/11/26, 07:00 · Bolivia\n\nDemostración\n\nDato simulado.\n\nVer ubicación de la lectura\nFijar para compararVer historial\nTiempo y pronóstico\n\nCalidad del aire",
+    "nativa": true,
+    "pulsado": "true",
+    "respaldo": false,
+    "url": "http://127.0.0.1:5795/mapa?pais=BO&metrica=temperatura&origen=simulado&desde=2026-10-27T08%3A33&hasta=2026-11-03T08%3A33&punto=prueba-local"
+  },
+  "salidaTrasEscape": false,
+  "estadoCapturado": {
+    "boton": "Salir de pantalla completa",
+    "campos": [
+      {
+        "id": "mon-pais",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "BO"
+      },
+      {
+        "id": "mon-region",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": ""
+      },
+      {
+        "id": "mon-metrica",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "temperatura"
+      },
+      {
+        "id": "mon-origen",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "simulado"
+      },
+      {
+        "id": "mon-desde",
+        "marcado": false,
+        "tipo": "datetime-local",
+        "valor": "2026-10-27T08:33"
+      },
+      {
+        "id": "mon-hasta",
+        "marcado": false,
+        "tipo": "datetime-local",
+        "valor": "2026-11-03T08:33"
+      },
+      {
+        "id": "",
+        "marcado": false,
+        "tipo": "checkbox",
+        "valor": "on"
+      },
+      {
+        "id": "recorrido-momento",
+        "marcado": false,
+        "tipo": "datetime-local",
+        "valor": ""
+      },
+      {
+        "id": "recorrido-barra",
+        "marcado": false,
+        "tipo": "range",
+        "valor": "50"
+      },
+      {
+        "id": "",
+        "marcado": false,
+        "tipo": "checkbox",
+        "valor": "on"
+      },
+      {
+        "id": "continua-variable",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "temperatura"
+      },
+      {
+        "id": "",
+        "marcado": true,
+        "tipo": "checkbox",
+        "valor": "on"
+      },
+      {
+        "id": "capa-a",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "temperatura"
+      },
+      {
+        "id": "capa-fecha-a",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "gfs-temperatura-20261029090000-be7c3805658b"
+      },
+      {
+        "id": "capa-recorrido",
+        "marcado": false,
+        "tipo": "range",
+        "valor": "0"
+      },
+      {
+        "id": "",
+        "marcado": true,
+        "tipo": "checkbox",
+        "valor": "on"
+      },
+      {
+        "id": "capa-b",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "temperatura"
+      },
+      {
+        "id": "capa-fecha-b",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "gfs-temperatura-20261029120000-5defda382fd7"
+      },
+      {
+        "id": "capa-division",
+        "marcado": false,
+        "tipo": "range",
+        "valor": "50"
+      },
+      {
+        "id": "capa-opacidad",
+        "marcado": false,
+        "tipo": "range",
+        "valor": "65"
+      },
+      {
+        "id": "",
+        "marcado": false,
+        "tipo": "checkbox",
+        "valor": "on"
+      },
+      {
+        "id": "poi-pais",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "us"
+      },
+      {
+        "id": "poi-texto",
+        "marcado": false,
+        "tipo": "search",
+        "valor": ""
+      },
+      {
+        "id": "unidad-temperatura",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "C"
+      },
+      {
+        "id": "unidad-viento",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "km/h"
+      },
+      {
+        "id": "mon-base",
+        "marcado": false,
+        "tipo": "select-one",
+        "valor": "claro"
+      },
+      {
+        "id": "nombre-lugar",
+        "marcado": false,
+        "tipo": "search",
+        "valor": ""
+      }
+    ],
+    "contenedor": {
+      "bottom": 1067.3333740234375,
+      "height": 1067.3333740234375,
+      "left": 0,
+      "right": 1707.3333740234375,
+      "top": 0,
+      "width": 1707.3333740234375,
+      "x": 0,
+      "y": 0
+    },
+    "detalle": "Punto de prueba\n×\n\nBolivia\n\nPunto de monitoreo\n\nÚltima lectura del período, por origen y fuente.\n\nSimulado\n25 °C\n\n3/11/26, 07:00 · Bolivia\n\nDemostración\n\nDato simulado.\n\nVer ubicación de la lectura\nFijar para compararVer historial\nTiempo y pronóstico\n\nCalidad del aire",
+    "nativa": true,
+    "pulsado": "true",
+    "respaldo": false,
+    "url": "http://127.0.0.1:5795/mapa?pais=BO&metrica=temperatura&origen=simulado&desde=2026-10-27T08%3A33&hasta=2026-11-03T08%3A33&punto=prueba-local"
+  },
+  "nota": "La primera pulsación cerró ajustes sin completar la salida dentro de la espera. El host puede abandonar más tarde el modo nativo al cambiar el foco; esta evidencia no prueba el atajo físico de Chrome."
+}

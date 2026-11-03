@@ -7,6 +7,7 @@ import { compararLecturas, iniciarRecorrido } from './historial-mapa.js';
 import { medida } from '../datos/unidades.js';
 import { iniciarCapas } from './capas.js';
 import { iniciarMapaContinua } from './mapa-continua.js';
+import { iniciarPantallaCompleta } from './pantalla-completa.js';
 
 const configuracion = JSON.parse(document.getElementById('configuracion-monitoreo').textContent);
 const formulario = document.getElementById('consulta-monitoreo');
@@ -26,10 +27,19 @@ mapa.on('moveend', () => {
 });
 const porCodigo = new Map();
 let redimension = null;
-new ResizeObserver(() => {
+function ajustarTamano() {
     cancelAnimationFrame(redimension);
     redimension = requestAnimationFrame(() => mapa.invalidateSize({ animate: false }));
-}).observe(document.getElementById('mapa-monitoreo'));
+}
+const observarTamano = new ResizeObserver(ajustarTamano);
+observarTamano.observe(document.getElementById('mapa-monitoreo'));
+const pantallaCompleta = iniciarPantallaCompleta({
+    contenedor: document.getElementById('monitoreo-contenedor'),
+    boton: document.getElementById('mon-pantalla-completa'),
+    estado: document.getElementById('estado-pantalla-completa'),
+    redimensionar: ajustarTamano,
+});
+mapa.on('unload', () => { pantallaCompleta.cancelar(); observarTamano.disconnect(); cancelAnimationFrame(redimension); });
 const formatoFecha = new Intl.DateTimeFormat('es-BO', {
     timeZone: 'America/La_Paz', dateStyle: 'short', timeStyle: 'short', hourCycle: 'h23',
 });
