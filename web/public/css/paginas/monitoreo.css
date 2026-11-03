@@ -1,3 +1,4 @@
+@import url('../componentes/condicion-tiempo.css');
 .pagina-monitoreo .contenido-panel { padding: 0; max-width: none; }
 .pagina-monitoreo .enviro-pie { display: none; }
 .monitoreo-contenedor { display: grid; grid-template-columns: 320px minmax(0, 1fr); height: calc(100dvh - 60px); }
@@ -69,7 +70,7 @@
 .tiempo-viento, .tiempo-visibilidad { border-left-color: #167cb1; }
 .mon-tiempo details { margin-block: 18px; }
 .mon-tiempo summary { font-size: 18px; cursor: pointer; font-weight: 600; }
-.mon-tiempo svg { width: 100%; margin-block: 18px; background: var(--enviro-suave); }
+.mon-tiempo .tiempo-grafico-horario { width: 100%; margin-block: 18px; background: var(--enviro-suave); }
 .mon-tiempo .table, .mon-tiempo .table th { font-size: 16px; }
 .tiempo-horas { max-height: 350px; overflow: auto; }
 .mon-tiempo a { display: inline-block; margin-top: 16px; }

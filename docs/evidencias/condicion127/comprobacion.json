@@ -1,0 +1,69 @@
+{
+  "tarea": 127,
+  "base": "6b7d0f858feb6e4342bee5beec6bef4fb8bacde5",
+  "consultaUTC": "2026-10-31T22:51:07Z",
+  "ubicacionConsultada": {
+    "latitud": -17.7833,
+    "longitud": -63.1833
+  },
+  "zonaHoraria": "America/La_Paz",
+  "origen": "estimado",
+  "actual": {
+    "instante": "2026-10-31T22:45:00Z",
+    "codigoTiempo": 2,
+    "esDia": false
+  },
+  "dias": [
+    {
+      "fecha": "2026-10-31",
+      "codigoTiempo": 51
+    },
+    {
+      "fecha": "2026-11-01",
+      "codigoTiempo": 53
+    },
+    {
+      "fecha": "2026-11-02",
+      "codigoTiempo": 51
+    },
+    {
+      "fecha": "2026-11-03",
+      "codigoTiempo": 53
+    },
+    {
+      "fecha": "2026-11-04",
+      "codigoTiempo": 51
+    },
+    {
+      "fecha": "2026-11-05",
+      "codigoTiempo": 95
+    },
+    {
+      "fecha": "2026-11-06",
+      "codigoTiempo": 3
+    }
+  ],
+  "conteos": {
+    "horas": 168,
+    "historial": 24,
+    "dias": 7
+  },
+  "archivos": {
+    "actual.png": {
+      "bytes": 130323,
+      "sha256": "f4db9474344b281480526147cacd66eb730495075c9b8797b4a55712a6acb902"
+    },
+    "diaria.png": {
+      "bytes": 130767,
+      "sha256": "64ac6ce62cbe9edac5618815ff29c42620babb5a3f85ccaf82664618f4749926"
+    },
+    "proveedor.json": {
+      "bytes": 16226,
+      "sha256": "c789ddf7aecc9962eef2cd19a3c3003623a9c37f954227f258b19835f762df9c"
+    },
+    "respuesta.json": {
+      "bytes": 46758,
+      "sha256": "473024dced05c057cee56e03dc3b1b6e82cda52b520178474c157245b1735231"
+    }
+  }
+}

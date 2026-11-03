@@ -18,7 +18,19 @@ Se mantienen `fuente`, `origen`, `zonaHoraria`, `consultadoEl`, `ubicacion`, `ac
 
 Una fila de `historial` tiene exactamente la misma forma y unidades que una fila de `horas`: `instante` ISO 8601 UTC terminado en `Z`, seguido de las claves de `variables`, con valor numérico o `null`. Cero es un dato válido, distinto de `null`. Las fechas diarias respetan el offset de calendario devuelto por el proveedor; la interfaz muestra los instantes en la zona IANA `zonaHoraria`. Distingue las horas locales repetidas con su offset.
 
-`fuente = Open-Meteo` y `origen = estimado`. `past_days=1` recupera pronósticos archivados recientes: **no son observaciones de estaciones ni reanálisis ERA5**, y no se mezclan con lecturas guardadas, alertas ni el historial de imágenes del mapa. El plazo de caché sigue siendo quince minutos; la clave pasa a v2 para no reutilizar respuestas anteriores sin `historial`.
+`fuente = Open-Meteo` y `origen = estimado`. `past_days=1` recupera pronósticos archivados recientes: **no son observaciones de estaciones ni reanálisis ERA5**, y no se mezclan con lecturas guardadas, alertas ni el historial de imágenes del mapa. El plazo de caché sigue siendo quince minutos; en #124 la clave pasó a v2 para no reutilizar respuestas anteriores sin `historial`.
+
+## Condición del tiempo · #127
+
+Cada fila de `actual`, `horas`, `historial` y `dias` añade `codigoTiempo`, entero 0…99 o `null`. Es la clasificación WMO de `weather_code` del proveedor, no una magnitud que se convierta de unidad. El código **0** significa despejado, no dato ausente. Cadenas, booleanos, fracciones y valores fuera del rango quedan en `null`. Un código numérico sin clasificación reconocida se conserva para compatibilidad, y la interfaz muestra «Sin dato»; no lo convierte en sol o tormenta.
+
+`actual.esDia` es booleano o `null`, según `is_day` numérico 1/0 del proveedor. La noche cambia el símbolo de cielo despejado/parcialmente nublado, sin alterar su descripción. No se infiere desde la zona del navegador. Un día completo no usa este indicador actual.
+
+En `dias`, el código es **la condición más intensa prevista para esa fecha**, según la definición del proveedor; no representa las 24 horas completas ni una alerta oficial. Los códigos horarios mantienen su propio instante y el historial conserva las fronteras de #124. Las series categóricas no aparecen en `variables`, en el selector de magnitudes, ni en los gráficos numéricos.
+
+La unidad de origen se comprueba como `wmo code`. Si falta la clasificación se mantiene el resto del tiempo; un vector de códigos con longitud incoherente o una unidad incompatible devuelve 503. El nuevo campo no cambia los permisos, frecuencia ni formato de los campos anteriores. La caché pasa a **v3** para evitar respuestas anteriores sin condición. Un cliente anterior puede ignorar ambos campos, y la web conserva el recorrido si recibe un DTO anterior sin ellos.
+
+La clasificación de la web está en `web/public/js/mapas/condicion-tiempo.js`, con descripciones en español y SVG propios. Incluye el código 97 de tormenta fuerte publicado en la documentación oficial consultada el 31/10/2026. No se usan emojis ni HTML recibido del proveedor. Ver [comprobación #127](../../docs/evidencias/condicion127/README.md).
 
 Errores: 401 sin acceso/cuenta inactiva, 403 sin permiso/capacidad, 422 coordenadas inválidas, 429 por frecuencia y 503 por fallo o respuesta inválida del proveedor. No se devuelven detalles internos.
 

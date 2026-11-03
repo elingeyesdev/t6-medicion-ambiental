@@ -36,7 +36,7 @@ final class ConsultarPronostico
         }
         $latitud = round($latitud, 4);
         $longitud = round($longitud, 4);
-        $clave = 'tiempo-envirosense-v2:'.hash('sha256', json_encode([$latitud, $longitud]));
+        $clave = 'tiempo-envirosense-v3:'.hash('sha256', json_encode([$latitud, $longitud]));
 
         return Cache::remember($clave, now()->addMinutes(15), fn () => $this->consultar($latitud, $longitud));
     }
@@ -46,8 +46,8 @@ final class ConsultarPronostico
         try {
             $variables = implode(',', array_column(self::VARIABLES, 0));
             $r = Http::acceptJson()->connectTimeout(3)->timeout(12)->withOptions(['allow_redirects' => false])
-                ->get('https://api.open-meteo.com/v1/forecast', ['latitude' => $latitud, 'longitude' => $longitud, 'current' => $variables,
-                    'hourly' => $variables, 'daily' => implode(',', [...array_column(self::DIARIAS, 0), 'sunrise', 'sunset']),
+                ->get('https://api.open-meteo.com/v1/forecast', ['latitude' => $latitud, 'longitude' => $longitud, 'current' => $variables.',weather_code,is_day',
+                    'hourly' => $variables.',weather_code', 'daily' => implode(',', [...array_column(self::DIARIAS, 0), 'sunrise', 'sunset', 'weather_code']),
                     'past_days' => 1, 'forecast_days' => 7, 'timezone' => 'auto', 'timeformat' => 'unixtime', 'temperature_unit' => 'celsius', 'wind_speed_unit' => 'kmh', 'precipitation_unit' => 'mm']);
             if (! $r->successful() || strlen($r->body()) > 1500000) {
                 throw new \UnexpectedValueException('Respuesta no disponible.');
@@ -75,6 +75,11 @@ final class ConsultarPronostico
             // El proveedor fija los días al offset de la consulta. Las horas se conservan en UTC.
             $hoy = gmdate('Y-m-d', now()->timestamp + $offset);
             $actual = ['instante' => $ahora->format('Y-m-d\TH:i:s\Z')];
+            $this->unidad($datos['current_units']['weather_code'] ?? null, 'wmo code');
+            $this->unidad($datos['current_units']['is_day'] ?? null, '');
+            $actual['codigoTiempo'] = $this->codigoTiempo($datos['current']['weather_code'] ?? null);
+            $diaActual = $datos['current']['is_day'] ?? null;
+            $actual['esDia'] = in_array($diaActual, [0, 0.0, 1, 1.0], true) ? (bool) $diaActual : null;
             $serie = array_map(fn ($f) => ['instante' => $f], $horas);
             foreach (self::VARIABLES as $clave => [$campo, $nombre, $unidad, $minimo, $maximo]) {
                 $this->unidad($datos['current_units'][$campo] ?? null, $unidad);
@@ -105,6 +110,8 @@ final class ConsultarPronostico
                     $diario[$i][$clave] = $valor === null || $valor === 0 ? null : $this->instante($valor)->format('Y-m-d\TH:i:s\Z');
                 }
             }
+            $this->agregarCondiciones($serie, $datos['hourly'], $datos['hourly_units'] ?? []);
+            $this->agregarCondiciones($diario, $datos['daily'], $datos['daily_units'] ?? []);
             $historial = array_values(array_filter($serie, function ($fila) use ($ahora) {
                 $instante = (new DateTimeImmutable($fila['instante']))->getTimestamp();
 
@@ -134,6 +141,24 @@ final class ConsultarPronostico
         }
 
         return (float) $valor;
+    }
+
+    private function codigoTiempo(mixed $valor): ?int
+    {
+        return (is_int($valor) || is_float($valor)) && is_finite((float) $valor) && $valor >= 0 && $valor <= 99 && floor($valor) === (float) $valor
+            ? (int) $valor : null;
+    }
+
+    private function agregarCondiciones(array &$filas, array $datos, array $unidades): void
+    {
+        $this->unidad($unidades['weather_code'] ?? null, 'wmo code');
+        $codigos = $datos['weather_code'] ?? array_fill(0, count($filas), null);
+        if (! is_array($codigos) || ! array_is_list($codigos) || count($codigos) !== count($filas)) {
+            throw new \UnexpectedValueException('Las condiciones no corresponden a sus fechas.');
+        }
+        foreach ($codigos as $i => $codigo) {
+            $filas[$i]['codigoTiempo'] = $this->codigoTiempo($codigo);
+        }
     }
 
     private function unidad(mixed $valor, string $esperada): void
