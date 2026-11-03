@@ -1,0 +1,47 @@
+/* Traslado de index.css, Sidebar.css y Navbar.css de EnviroSense.
+   Los componentes conservan los identificadores y rutas Laravel existentes. */
+:root, [data-bs-theme="light"] {
+    --enviro-panel:#fff; --enviro-fondo:#f3f4f6; --enviro-texto:#0b132b;
+    --enviro-secundario:#3a506b; --enviro-borde:#e5e7eb; --enviro-acento:#5bc0be;
+    --enviro-suave:#e0f7f6; --enviro-ancho:232px;
+    --tblr-primary:#5bc0be; --tblr-primary-rgb:91,192,190;
+    --tblr-font-sans-serif:'Space Grotesk',sans-serif;
+    --bg-app:#f3f4f6; --bg-panel:#fff; --text-primary:#0b132b; --text-secondary:#3a506b;
+    --accent:#5bc0be; --border-color:#d1d5db; --paper:#fff; --ink:#0b132b;
+    --primary:#5bc0be; --primary-dark:#3a9694; --font-sans:'Space Grotesk',sans-serif;
+}
+[data-bs-theme="dark"] {
+    --enviro-panel:#1c2541; --enviro-fondo:#0b132b; --enviro-texto:#fff;
+    --enviro-secundario:#d1d5db; --enviro-borde:#3a506b; --enviro-acento:#5bc0be;
+    --enviro-suave:#233c52; --bg-app:#0b132b; --bg-panel:#1c2541;
+    --text-primary:#fff; --text-secondary:#d1d5db; --accent:#5bc0be; --paper:#0b132b; --ink:#fff;
+}
+.menu-contraido { --enviro-ancho:72px; }
+body,button,input,select,textarea { font-family:'Space Grotesk',sans-serif; }
+body { background:var(--enviro-panel); }
+.enviro-marca { min-height:82px; padding:22px 20px 18px; }
+.enviro-marca-texto strong { font-size:22px; letter-spacing:-.01em; }
+.enviro-navegacion { padding:18px 14px 8px; }
+.enviro-seccion { font-size:16px; padding:8px 8px; color:var(--enviro-secundario); }
+.enviro-enlace { gap:10px; padding:10px; margin-bottom:2px; font-size:16px; font-weight:500; }
+.enviro-enlace.activo,[data-bs-theme="dark"] .enviro-enlace.activo { background:#5bc0be; color:#0b132b; box-shadow:none; font-weight:600; }
+.enviro-enlace:not(.activo):hover { background:var(--enviro-fondo); }
+.enviro-contraer { top:28px; width:24px; height:24px; font-size:20px; }
+.enviro-seccion-modulos { margin-top:12px; border-top:1px solid var(--enviro-borde); padding-top:18px; }
+.enviro-cabecera { height:56px; padding:0 20px; background:var(--enviro-fondo); }
+.enviro-ruta { font-size:16px; }
+.enviro-avatar { background:var(--enviro-acento); }
+.enviro-territorio { font-size:16px; padding:16px 18px; }
+.enviro-territorio small { font-size:16px; }
+.enviro-pie { border-top:1px solid var(--enviro-borde); }
+.contenido-panel { max-width:none; }
+.btn-primary { background:#5bc0be; border-color:#5bc0be; color:#0b132b; }
+.btn-primary:hover,.btn-primary:focus-visible { background:#48aaa8; border-color:#48aaa8; color:#0b132b; }
+.btn-outline-primary { color:var(--enviro-texto); border-color:var(--enviro-borde); background:var(--enviro-panel); }
+.btn-outline-primary:hover { background:var(--enviro-suave); border-color:var(--enviro-acento); color:var(--enviro-texto); }
+.form-control:focus,.form-select:focus { border-color:var(--enviro-acento); box-shadow:0 0 0 3px #5bc0be26; }
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible { outline-color:#3a9694; }
+.card { border-color:var(--enviro-borde); }
+.sq-boton { background:#5bc0be; border-color:#5bc0be; color:#0b132b; }
+.sq-enlace,.sq-texto { color:var(--enviro-texto); }
+@media(max-width:767.98px) { :root,.menu-contraido { --enviro-ancho:0px; } .enviro-ruta { font-size:16px; } }

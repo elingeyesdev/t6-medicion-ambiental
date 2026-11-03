@@ -76,8 +76,8 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
         Route::patch('/plantillas/{id}', [ReportesController::class, 'guardarPlantilla'])->name('plantillas.actualizar');
         Route::delete('/plantillas/{id}', [ReportesController::class, 'archivarPlantilla'])->name('plantillas.archivar');
     });
+    Route::get('/simulaciones', [SimulacionesController::class, 'index'])->middleware('can:datos.consultar')->name('simulaciones');
     Route::middleware('can:simulaciones.gestionar')->group(function (): void {
-        Route::get('/simulaciones', [SimulacionesController::class, 'index'])->name('simulaciones');
         Route::post('/simulaciones', [SimulacionesController::class, 'guardar'])->name('simulaciones.guardar');
         Route::post('/simulaciones/{id}/accion', [SimulacionesController::class, 'accion'])->name('simulaciones.accion');
         Route::post('/simulaciones/{id}/historial', [SimulacionesController::class, 'publicar'])->name('simulaciones.publicar');

@@ -1,5 +1,7 @@
 # EnviroSense es el sistema principal
 
+**Corrección visual del 29/10:** se ejecutó y recorrió el original, y se trasladaron su portada, acceso, paleta, fuente, navegación, mapa flotante y presentación interna a las vistas Laravel. Simulaciones tiene una entrada propia en Monitoreo. La comparación y las limitaciones están en [evidencias/frente47/README.md](evidencias/frente47/README.md). Esta revisión reemplaza la interfaz verde anterior; no acredita por sí sola toda la migración operativa.
+
 **Estado vigente del 29/10:** Josué pidió preparar M3 hoy y terminar la recuperación web, dejando Flutter a Jaziel. El candidato reúne mapa/capas, cargas, simulación continua, reportes atmosféricos, avisos y cuentas; el índice y sus límites están en [entrega-m3/README.md](entrega-m3/README.md). Se probaron ocho capas GFS reales de NOAA con dos fechas. Faltan revisión, AQI y conexiones/insumos identificados; no se declara conversión operativa completa ni se cambia main. Los pendientes descritos más abajo son el registro del 28/10 y deben contrastarse con ese índice actual.
 
 Corrección confirmada por Josué el 28/10/2026. Seguimiento #61 y #62.

@@ -105,3 +105,52 @@
 .monitoreo-unidades > form { padding: 0 20px 16px; }
 .continua-marcador { background: transparent; }
 .continua-marcador > span { display: grid; place-items: center; width: 32px; height: 32px; border: 2px solid #fff; border-radius: 6px; background: #b45309; color: #fff; font: 700 17px/1 Arial, sans-serif; box-shadow: 0 1px 4px #0006; }
+
+/* Distribución de MapaMonitoreo de EnviroSense: lienzo completo y controles flotantes. */
+.monitoreo-contenedor { display:block; position:relative; height:calc(100dvh - 56px); overflow:hidden; }
+.monitoreo-escena { position:absolute; inset:0; min-height:0; }
+#mapa-monitoreo { position:absolute; inset:0; height:100%; }
+.monitoreo-consulta { position:absolute; inset:0; border:0; background:none; overflow:visible; pointer-events:none; z-index:500; }
+.monitoreo-consulta > * { pointer-events:auto; }
+#filtros-monitoreo { position:absolute; top:16px; left:50%; transform:translateX(-50%); width:270px; max-height:calc(100% - 110px); overflow:auto; border:1px solid var(--enviro-borde); border-radius:8px; background:var(--enviro-panel); box-shadow:0 6px 18px #0b132b22; }
+#filtros-monitoreo > summary { padding:12px 16px; background:var(--enviro-panel); border-bottom:1px solid var(--enviro-borde); }
+#filtros-monitoreo h1 { font-size:16px; font-weight:600; }
+#consulta-monitoreo { padding:14px; gap:12px; }
+#consulta-monitoreo .form-label { margin-bottom:5px; }
+.monitoreo-periodo summary { padding:10px 0; background:none; font-size:16px; font-weight:500; }
+.monitoreo-periodo-campos { display:grid; gap:12px; padding-bottom:10px; }
+.monitoreo-barra { position:absolute; bottom:108px; left:16px; display:flex; flex-direction:column; gap:8px; }
+.monitoreo-barra > button,.monitoreo-barra > a { display:grid; place-items:center; width:44px; height:44px; padding:0; color:var(--enviro-texto); border:1px solid var(--enviro-borde); border-radius:8px; background:var(--enviro-panel); box-shadow:0 4px 12px #0b132b22; cursor:pointer; }
+.monitoreo-barra > button:hover,.monitoreo-barra > a:hover,.monitoreo-barra [aria-expanded="true"] { color:#3a9694; background:var(--enviro-suave); }
+.monitoreo-ajustes { position:absolute; left:72px; bottom:108px; width:360px; max-height:calc(100% - 135px); overflow:auto; background:var(--enviro-panel); border:1px solid var(--enviro-borde); border-radius:8px; box-shadow:0 6px 20px #0b132b33; }
+.monitoreo-ajustes > header { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 16px; border-bottom:1px solid var(--enviro-borde); }
+.monitoreo-ajustes > header h2 { margin:0; font-size:18px; }
+.monitoreo-ajustes > header button { display:grid; place-items:center; border:1px solid var(--enviro-borde); background:var(--enviro-panel); color:var(--enviro-texto); border-radius:6px; width:32px; height:32px; font-size:24px; }
+.monitoreo-pestanas { display:flex; gap:4px; padding:10px; border-bottom:1px solid var(--enviro-borde); }
+.monitoreo-pestanas button { flex:1; padding:10px 8px; background:var(--enviro-panel); color:var(--enviro-secundario); border:0; border-bottom:3px solid transparent; border-radius:4px; font-size:16px; }
+.monitoreo-pestanas button[aria-pressed="true"] { color:var(--enviro-texto); background:var(--enviro-suave); border-color:var(--enviro-acento); }
+.monitoreo-ajustes summary { padding:14px 16px; background:var(--enviro-panel); font-size:16px; }
+.monitoreo-fondo-opciones { display:grid; gap:12px; padding:0 16px 16px; }
+.monitoreo-ajustes .monitoreo-buscador { padding:16px; }
+.monitoreo-ajustes .monitoreo-tiempo { margin:12px 16px 20px; max-width:calc(100% - 32px); }
+.monitoreo-estado { position:absolute; bottom:50px; left:16px; margin:0; padding:10px 14px; width:max-content; max-width:calc(100% - 32px); border:1px solid var(--enviro-borde); border-radius:6px; background:var(--enviro-panel); box-shadow:0 2px 8px #0b132b11; }
+.monitoreo-aclaracion { position:absolute; left:16px; bottom:16px; max-width:calc(100% - 32px); margin:0; padding:4px 8px; font-size:16px; background:var(--enviro-panel); border-radius:4px; }
+.monitoreo-paginacion { position:absolute; bottom:100px; left:16px; background:var(--enviro-panel); }
+.monitoreo-detalle { position:absolute; top:16px; right:60px; width:370px; max-width:calc(100% - 32px); max-height:calc(100% - 100px); margin:0; z-index:520; }
+.monitoreo-detalle .card-header { top:0; }
+.monitoreo-leyenda { position:absolute; top:auto; left:auto; right:16px; bottom:90px; max-width:calc(100% - 100px); }
+.monitoreo-procedencia { position:absolute; top:auto; left:auto; bottom:145px; right:16px; max-width:calc(100% - 100px); }
+.comparacion-fijada { position:absolute; top:16px; left:16px; width:300px; background:var(--enviro-panel); }
+.capas-leyenda p,.capas-marcas li { font-size:16px !important; }
+@media(max-width:767.98px) {
+    #filtros-monitoreo { top:12px; left:12px; transform:none; width:min(270px,calc(100% - 70px)); max-height:calc(100% - 180px); }
+    .monitoreo-ajustes { left:12px; right:12px; bottom:170px; width:auto; max-height:calc(100% - 190px); }
+    .monitoreo-barra { bottom:190px; left:12px; flex-direction:row; }
+    .monitoreo-detalle { position:absolute; right:12px; top:68px; width:calc(100% - 24px); max-height:calc(100% - 220px); }
+    .monitoreo-detalle .card-header { top:0; }
+    .monitoreo-leyenda { bottom:90px; right:12px; font-size:16px; }
+    .monitoreo-estado { bottom:30px; left:12px; max-width:calc(100% - 24px); padding:8px; }
+    .monitoreo-aclaracion { display:none; }
+    .monitoreo-procedencia { bottom:160px; }
+    .comparacion-fijada { top:70px; left:12px; width:calc(100% - 24px); }
+}

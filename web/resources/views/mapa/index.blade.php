@@ -10,7 +10,7 @@
 <div class="monitoreo-contenedor">
     <aside class="monitoreo-consulta" aria-label="Consulta ambiental">
         <details id="filtros-monitoreo" open>
-            <summary><h1>Monitoreo ambiental</h1><span aria-hidden="true">⌄</span></summary>
+            <summary><h1>Navegación</h1><span aria-hidden="true">⌄</span></summary>
             <form id="consulta-monitoreo">
                 <div>
                     <label class="form-label" for="mon-pais">País o territorio</label>
@@ -23,6 +23,9 @@
                     <label class="form-label" for="mon-region">Región</label>
                     <select id="mon-region" name="region" class="form-select"><option value="">Todas las regiones</option></select>
                 </div>
+                <details id="periodo-monitoreo" class="monitoreo-periodo">
+                <summary>Período y variable</summary>
+                <div class="monitoreo-periodo-campos">
                 <div>
                     <label class="form-label" for="mon-metrica">Variable</label>
                     <select id="mon-metrica" name="metrica" class="form-select">
@@ -56,19 +59,31 @@
                     <input id="recorrido-barra" type="range" step="1" class="form-range">
                     <div class="buscador-acciones"><button id="recorrido-anterior" type="button" class="btn btn-outline-primary">Una hora antes</button><button id="recorrido-siguiente" type="button" class="btn btn-outline-primary">Una hora después</button></div>
                 </div>
-                <button class="btn btn-primary" type="submit">Consultar mapa</button>
+                </div>
+                </details>
+                <button class="btn btn-primary" type="submit">Ir a destino</button>
             </form>
         </details>
+        <section id="ajustes-monitoreo" class="monitoreo-ajustes" aria-label="Ajustes del mapa" hidden>
+        <header><h2>Ajustes del mapa</h2><button type="button" data-cerrar-ajustes aria-label="Cerrar ajustes">×</button></header>
+        <nav class="monitoreo-pestanas" aria-label="Opciones del mapa">
+            <button type="button" data-opcion-mapa="capas" aria-pressed="true">Capas</button>
+            <button type="button" data-opcion-mapa="preferencias" aria-pressed="false">Preferencias</button>
+        </nav>
+        <div data-contenido-mapa="capas">
         @include('simulaciones.continua', ['compacto' => true])
         @include('components.mapas.capas')
+        </div>
+        <div data-contenido-mapa="preferencias" hidden>
         <details class="monitoreo-unidades">
             <summary>Unidades de medida</summary>
             @include('cuentas.unidades')
         </details>
-        <section id="comparacion-fijada" class="comparacion-fijada" hidden aria-label="Referencia de comparación">
-            <strong id="comparacion-nombre"></strong><p>Elige otro punto o momento para comparar.</p>
-            <button id="quitar-comparacion" type="button" class="btn btn-outline-primary">Quitar comparación</button>
-        </section>
+        <details class="monitoreo-unidades" open><summary>Fondo del mapa</summary><div class="monitoreo-fondo-opciones">
+            <label class="visually-hidden" for="mon-base">Fondo del mapa</label>
+            <select id="mon-base" class="form-select" disabled><option value="claro">Claro</option><option value="relieve">Relieve</option><option value="satelite">Satélite</option><option value="calles">Calles</option></select>
+            <button id="mon-centrar" class="btn btn-outline-primary" type="button">Centrar puntos</button>
+        </div></details>
         <section class="monitoreo-buscador" aria-label="Buscar lugar">
             <form id="buscar-lugar" role="search">
                 <label for="nombre-lugar" class="form-label">Buscar lugar</label>
@@ -80,27 +95,27 @@
             <a class="buscador-fuente" href="https://www.mapbox.com/about/maps/" target="_blank" rel="noopener noreferrer">Mapbox</a>
         </section>
         <button id="mon-tiempo" type="button" class="btn btn-outline-primary monitoreo-tiempo" aria-pressed="false">Tiempo de un lugar</button>
+        </div>
+        </section>
+        <section id="comparacion-fijada" class="comparacion-fijada" hidden aria-label="Referencia de comparación">
+            <strong id="comparacion-nombre"></strong><p>Elige otro punto o momento para comparar.</p>
+            <button id="quitar-comparacion" type="button" class="btn btn-outline-primary">Quitar comparación</button>
+        </section>
         <p id="estado-monitoreo" class="monitoreo-estado" role="status" aria-live="polite">Cargando…</p>
         <div id="paginacion-monitoreo" class="monitoreo-paginacion" hidden>
             <button id="mon-anterior" class="btn btn-outline-primary" type="button">Anterior</button>
             <button id="mon-siguiente" class="btn btn-outline-primary" type="button">Siguiente</button>
         </div>
         <p class="monitoreo-aclaracion">Un punto de referencia no representa necesariamente una estación física.</p>
-        <nav class="monitoreo-analisis" aria-label="Análisis del territorio">
-            <h2>Análisis del territorio</h2>
-            <p>Consultas de Santa Cruz, Bolivia.</p>
-            @foreach($modulos as $id => $modulo)
-                <a href="{{ route('modulos.mostrar', $id) }}"><x-panel.icono :nombre="$modulo['icono']" />{{ $modulo['nombre'] }}<x-panel.icono nombre="arrow-right" /></a>
-            @endforeach
-        </nav>
+        <div class="monitoreo-barra" aria-label="Herramientas de monitoreo">
+            <button type="button" id="abrir-ajustes-mapa" aria-label="Ajustes del mapa" title="Ajustes del mapa" aria-expanded="false" aria-controls="ajustes-monitoreo"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m10 3-1 3-3 1-2 3 2 2v3l3 2 1 3h4l1-3 3-2v-3l2-2-2-3-3-1-1-3Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <button type="button" id="abrir-historial-mapa" aria-label="Período e historial" title="Período e historial"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></button>
+            <button type="button" id="abrir-buscador-mapa" aria-label="Buscar un lugar" title="Buscar un lugar"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></svg></button>
+            <a href="{{ route('simulaciones') }}" aria-label="Abrir Simulaciones" title="Abrir Simulaciones"><x-panel.icono nombre="flask" /></a>
+        </div>
     </aside>
     <section class="monitoreo-escena" aria-label="Mapa ambiental">
         <div id="mapa-monitoreo" tabindex="0" role="region" aria-label="Puntos de monitoreo ambiental"></div>
-        <div class="monitoreo-herramientas">
-            <label class="visually-hidden" for="mon-base">Fondo del mapa</label>
-            <select id="mon-base" class="form-select" disabled><option value="relieve">Relieve</option><option value="satelite">Satélite</option><option value="calles">Calles</option></select>
-            <button id="mon-centrar" class="btn btn-outline-primary" type="button">Centrar puntos</button>
-        </div>
         <div class="monitoreo-leyenda"><span class="mon-punto con-datos" aria-hidden="true"></span>Con datos<span class="mon-punto" aria-hidden="true"></span>Sin datos del período</div>
         <p id="mon-fuente-limite" class="monitoreo-procedencia" hidden></p>
         <aside id="mon-detalle" class="card monitoreo-detalle" aria-label="Punto seleccionado" hidden>
@@ -117,4 +132,5 @@
 <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
 <script type="application/json" id="configuracion-monitoreo">@json($configuracionMonitoreo)</script>
 <script type="module" src="{{ asset('js/mapas/monitoreo.js') }}"></script>
+<script src="{{ asset('js/mapas/interfaz-original.js') }}" defer></script>
 @endpush
