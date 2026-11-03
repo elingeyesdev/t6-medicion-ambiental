@@ -1,0 +1,15 @@
+✔ consulta inmediata con sesión, sin conexiones persistentes ni consultas superpuestas (1.3681ms)
+✔ pestaña oculta no consulta y el foco en una acción conserva la lista (0.8042ms)
+✔ error o contrato incompleto conserva los avisos y aumenta la espera (0.3996ms)
+✔ sesión vencida o redirigida detiene las consultas y conserva los avisos (0.254ms)
+✔ abrir la página no pide permiso, carga SDK ni registra dispositivos (1.2562ms)
+✔ solo el consentimiento y permiso del navegador permiten registrar el token con CSRF (1.5595ms)
+✔ denegación o entorno incompatible no carga SDK ni confirma un alta inexistente (0.1978ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 106.8879
