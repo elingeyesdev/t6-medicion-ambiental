@@ -1,0 +1,15 @@
+{
+  "phpunit": {
+    "status": "fulfilled",
+    "value": {
+      "exitCode": 0,
+      "stdout": "PHPUnit 11.5.57 by Sebastian Bergmann and contributors.\r\n\r\nRuntime:       PHP 8.3.30\nConfiguration: <worktree>\\web\\phpunit.xml\n\r\n................                                                  16 / 16 (100%)\r\n\r\nTime: 00:21.732, Memory: 54.00 MB\r\n\r\nOK (16 tests, 92 assertions)\r\n",
+      "stderr": ""
+    }
+  },
+  "ownedProcesses": {
+    "exitCode": 0,
+    "stdout": "[]\r\n",
+    "stderr": ""
+  }
+}
