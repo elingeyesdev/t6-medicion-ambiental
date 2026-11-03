@@ -617,6 +617,264 @@
       "result": "7 / 7 checks OK",
       "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/129",
       "screenshot": "evidencias/pr129-comprobaciones-20261101.png"
+    },
+    {
+      "fecha_cliente": "2026-11-02",
+      "pr": 133,
+      "sha": "08aa6c4388fd560830de432c8d91fe6961132406",
+      "source": "Interfaz autenticada de GitHub en Chrome, sin acciones de escritorio",
+      "result": "12 / 12 checks OK",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/133",
+      "screenshot": "evidencias/pr133-comprobaciones-20261102.png",
+      "review": "Jazielle pendiente"
+    },
+    {
+      "fecha_cliente": "2026-11-01",
+      "pr": 134,
+      "sha": "635b0f84aadd633cf43719121b16949f6e7059fc",
+      "source": "Interfaz autenticada de GitHub en Chrome, sin acciones de escritorio",
+      "result": "8 / 8 checks OK",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/134",
+      "screenshot": "evidencias/pr134-comprobaciones-20261101.png",
+      "review": "Jazielle pendiente"
+    },
+    {
+      "fecha_cliente": "2026-11-01",
+      "pr": 135,
+      "sha": "6c0df1c909749165e1c0d2bb2ea5bd893957f4e6",
+      "source": "Interfaz autenticada de GitHub en Chrome, sin acciones de escritorio",
+      "result": "7 / 7 checks OK",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/135",
+      "screenshot": "evidencias/pr135-comprobaciones-20261101.png",
+      "review": "Jazielle pendiente"
+    },
+    {
+      "fecha_cliente": "2026-11-02",
+      "pr": 134,
+      "sha": "d59cd754fb8d7c1ae7dc25d0a294ea07ac6820e0",
+      "source": "Interfaz autenticada de GitHub en Chrome",
+      "result": "8 / 8 checks OK; broker-real Linux y Windows correctos",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/134",
+      "screenshot": "evidencias/pr134-comprobaciones-20261102.png",
+      "review": "Jazielle pendiente"
+    },
+    {
+      "fecha_cliente": "2026-11-02",
+      "pr": 88,
+      "sha": "339d6e6b9560711c1f59b0fbf5bdb3c6f955f325",
+      "source": "Interfaz autenticada de GitHub en Chrome",
+      "result": "12 / 12 checks OK, incluida Flutter; revisión aprobada y fusión a develop verificada",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/88",
+      "screenshot": "evidencias/pr88-integrado-20261102.png",
+      "merge_sha": "1313e04d050ee2f0c42ef3a080b0559248593513"
     }
-  ]
+  ],
+  "follow_up_night_20261101": {
+    "queried_at": "2026-11-01T17:16:00.465Z",
+    "method": "GitHub REST core: pulls abiertos, referencia main e issues 39/41; sin endpoints de CI",
+    "main": "851a79f5c699249c284001114f76f994c9ce4335",
+    "issues": [
+      {
+        "number": 39,
+        "state": "open",
+        "updated_at": "2026-10-31T05:12:51Z"
+      },
+      {
+        "number": 41,
+        "state": "open",
+        "updated_at": "2026-11-01T05:44:23Z"
+      }
+    ],
+    "pull_requests": [
+      {
+        "number": 135,
+        "sha": "6c0df1c909749165e1c0d2bb2ea5bd893957f4e6",
+        "base": "feature/127-condicion-tiempo",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ]
+      },
+      {
+        "number": 134,
+        "sha": "635b0f84aadd633cf43719121b16949f6e7059fc",
+        "base": "feature/127-condicion-tiempo",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ]
+      },
+      {
+        "number": 133,
+        "sha": "08aa6c4388fd560830de432c8d91fe6961132406",
+        "base": "feature/127-condicion-tiempo",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ]
+      },
+      {
+        "number": 130,
+        "sha": "5f8b06d3ea670e839f726d60a4f215c5c68273c2",
+        "base": "feature/127-condicion-tiempo",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ]
+      },
+      {
+        "number": 129,
+        "sha": "b64e626a3a73d405d5ba2f65a567a0949ff646a1",
+        "base": "feature/124-horas-recientes",
+        "draft": true,
+        "reviewers": []
+      },
+      {
+        "number": 128,
+        "sha": "b994b643d1b9086abd695053eb3a27030ed238b3",
+        "base": "feature/124-horas-recientes",
+        "draft": false,
+        "reviewers": [
+          "Jazielle"
+        ]
+      },
+      {
+        "number": 96,
+        "sha": "2516241c0cd036044480e8d9fb54c154c3e3b69a",
+        "base": "develop",
+        "draft": true,
+        "reviewers": [
+          "Jazielle"
+        ]
+      },
+      {
+        "number": 88,
+        "sha": "b1761113b161bd5d8d9634cd2396a4120fa2a12d",
+        "base": "develop",
+        "draft": false,
+        "reviewers": []
+      }
+    ],
+    "new_prs": [
+      133,
+      134,
+      135
+    ],
+    "integration_status": "Tres ramas hermanas desde #128; ninguna fusionada; revisión de Jazielle pendiente",
+    "ci": "Ver evidencia de interfaz separada"
+  },
+  "local_combination_20261101": {
+    "scope": "WEB; comprobación local aislada sin fusión remota",
+    "timestamp": "2026-11-01T17:18:59.103Z",
+    "sha": "90313405504406bdf3a71dd1ea272794c381f909",
+    "branch": "test/41-comprobar-web",
+    "published": false,
+    "base": "b994b643d1b9086abd695053eb3a27030ed238b3",
+    "sources": [
+      {
+        "pr": 133,
+        "sha": "08aa6c4388fd560830de432c8d91fe6961132406"
+      },
+      {
+        "pr": 134,
+        "sha": "635b0f84aadd633cf43719121b16949f6e7059fc"
+      },
+      {
+        "pr": 135,
+        "sha": "6c0df1c909749165e1c0d2bb2ea5bd893957f4e6"
+      }
+    ],
+    "php": {
+      "tests": 509,
+      "assertions": 6273,
+      "exitCode": 0,
+      "excludedClasses": [
+        "ConcurrenciaIngestionDatosTest",
+        "MqttTransporteDatosTest"
+      ],
+      "excludedCases": 14,
+      "reason": "Estas fixtures requieren proc_open, deshabilitado localmente para impedir consolas secundarias. No se presentan como superadas en este corte."
+    },
+    "firstFullAttempt": {
+      "tests": 523,
+      "assertions": 6273,
+      "errors": 14,
+      "exitCode": 2,
+      "cause": "Call to undefined function proc_open; guardas deliberadas de esta ejecución local"
+    },
+    "javascript": {
+      "tests": 141,
+      "exitCode": 0
+    },
+    "mqtt": {
+      "cases": 19,
+      "ok": true,
+      "start": "2026-11-01T17:18:49.650Z",
+      "end": "2026-11-01T17:19:14.869Z",
+      "cleanup": {
+        "brokerCerrado": true,
+        "servidorCerrado": true,
+        "procesosPropios": 0,
+        "sockets": 0,
+        "puertoCerrado": true
+      }
+    },
+    "smtp": {
+      "tests": 8,
+      "assertions": 345,
+      "exitCode": 0,
+      "timestamp": "2026-11-01T17:18:59.103Z",
+      "cleanup": {
+        "serverClosed": true,
+        "loopbackPortClosed": true,
+        "openSmtpSessions": 0,
+        "separateBrokerProcess": false
+      }
+    },
+    "limitations": [
+      "No es una aceptación de M3 ni una fusión de los PR.",
+      "No demuestra correo externo ni sensores físicos.",
+      "El último cambio del informe CI de #134 se prueba y revisa aparte; no pertenece a este corte local."
+    ]
+  },
+  "follow_up_20261102": {
+    "queried_at": "2026-11-03T02:28:56.918Z",
+    "method": "GitHub REST core: pulls abiertos, referencia main, revisión y fusión de #88; cierre de #39",
+    "main": "851a79f5c699249c284001114f76f994c9ce4335",
+    "issue39": {
+      "state": "closed",
+      "closed_at": "2026-11-03T02:27:08Z"
+    },
+    "issue41": "open",
+    "pr88": {
+      "head": "339d6e6b9560711c1f59b0fbf5bdb3c6f955f325",
+      "review": "APPROVED",
+      "review_url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/88#pullrequestreview-5746453636",
+      "merged": true,
+      "merge_sha": "1313e04d050ee2f0c42ef3a080b0559248593513",
+      "base": "develop",
+      "remote_branch_deleted": true,
+      "review_threads_resolved": 3
+    },
+    "pr134": {
+      "head": "d59cd754fb8d7c1ae7dc25d0a294ea07ac6820e0",
+      "base": "feature/127-condicion-tiempo",
+      "state": "open",
+      "reviewer": "Jazielle"
+    },
+    "mqtt_ci_local": {
+      "start": "2026-11-03T02:16:06.769Z",
+      "end": "2026-11-03T02:16:40.800Z",
+      "ok": true,
+      "cases": 19,
+      "cleanup": {
+        "brokerCerrado": true,
+        "servidorCerrado": true,
+        "procesosPropios": 0,
+        "sockets": 0,
+        "puertoCerrado": true
+      }
+    },
+    "ci": "Ver ui_evidence; no se consultaron endpoints de CI"
+  }
 }
