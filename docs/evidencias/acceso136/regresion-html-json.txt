@@ -1,0 +1,10 @@
+PHPUnit 11.5.57 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.30
+Configuration: C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\acceso-claro136\web\phpunit.xml
+
+..                                                                  2 / 2 (100%)
+
+Time: 00:09.809, Memory: 46.00 MB
+
+OK (2 tests, 17 assertions)
