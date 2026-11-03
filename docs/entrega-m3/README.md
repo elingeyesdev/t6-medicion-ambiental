@@ -6,6 +6,8 @@ Josué Padilla prepara la web y revisa el móvil. Jaziel Díaz desarrolla Flutte
 
 ## Paquete y recorrido
 
+- [Calidad del aire del lugar](../CALIDAD_AIRE_ENVIROSENSE.md): continuación #101 sobre #100. Consulta actual y 24 horas del índice europeo original, con CAMS global/Open-Meteo, partículas y procedencia. No se mezcla con AQI de otra escala ni completa la capa raster pendiente.
+
 - [Actualización automática local de capas](../ACTUALIZACION_CAPAS.md): continuación #99 sobre el frente recuperado, con una nueva captura real, conservación del archivo y horario Windows comprobado. El candidato original conserva sus pruebas como registro; la corrección visual y esta actualización se revisan en sus propios PR.
 
 - [Corrección del frente de EnviroSense](../evidencias/frente47/README.md): recorrido del original, portada/acceso, mapa y pantallas internas, con capturas comparables y pruebas. Propuesta sobre este candidato, pendiente de revisión.
@@ -57,7 +59,7 @@ El productor raster utiliza su entorno aislado; ver su guía. Las pruebas no acr
 
 1. Jaziel: corregir el conflicto de manifiestos Android en #88 y repetir CI; revisar el candidato web y los PR #90-95 y #97. El fallo se dejó comentado con el ajuste concreto. #39 no se cierra con Android fallido.
 2. Flutter: trabajo ampliado de EnviroSense en #89, con Jaziel. No se desarrolló móvil después de la instrucción de reservarle ese trabajo. APK release e instalación siguen pendientes.
-3. Datos: dispositivos/broker reales, importación de un historial saneado real, AQI y productos UV/evaporación con significado verificado. Las ocho capas GFS y PostgreSQL local con concurrencia ya están comprobados; esto no acredita un histórico completo ni un despliegue.
+3. Datos: dispositivos/broker reales, importación de un historial saneado real, capa raster AQI y productos UV/evaporación con significado verificado. La consulta puntual del índice europeo y sus 24 horas continúa en #101. Las ocho capas GFS y PostgreSQL local con concurrencia ya están comprobados; esto no acredita un histórico completo ni un despliegue.
 4. Servicios externos: correo, Telegram, WhatsApp, push y consultas atmosféricas configurables, apagados por defecto. Faltan credenciales y pruebas autorizadas. No se envían mensajes desde una prueba ni se usa el WhatsApp personal como integración.
 5. Inundaciones: revisar método, objetivo/evento y referencia de escenas antes de procesar; la adquisición parcial está documentada en #40/#46.
 6. Gestión: estimar el alcance ampliado y recalcular ProjectLibre conservando la línea base; propietario configura protecciones, rama predeterminada y borrado global. Railway/publicación siguen pospuestos por Josué.
