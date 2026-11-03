@@ -876,5 +876,92 @@
       }
     },
     "ci": "Ver ui_evidence; no se consultaron endpoints de CI"
+  },
+  "follow_up_20261103": {
+    "fechaUTC": "2026-11-03T12:08:33.042Z",
+    "tarea": 41,
+    "candidato": {
+      "pr": 96,
+      "head": "b7ed148d6162b2f1608f1a26266753c4a5df4d1a",
+      "padre": "7925c3b9bf061717fb28556b32d04d2dc13b09f8",
+      "develop": "1313e04d050ee2f0c42ef3a080b0559248593513",
+      "draft": true,
+      "webHerramientasSinCambios": true,
+      "js": 107,
+      "ci": {
+        "fuente": "Interfaz pública de GitHub observada mediante navegador en segundo plano",
+        "correctos": 13,
+        "total": 13,
+        "sha": "b7ed148d6162b2f1608f1a26266753c4a5df4d1a",
+        "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/96"
+      },
+      "phpLocal": "no_ejecutado",
+      "flutterLocal": "no_recompilado"
+    },
+    "avisos": {
+      "pr": 94,
+      "sha": "329dbe73f087e0baf4aa6664c15071958e08d5a4",
+      "ci": {
+        "fuente": "Interfaz pública de GitHub observada mediante navegador",
+        "correctos": 7,
+        "total": 7
+      },
+      "revision": "pendiente"
+    },
+    "aprobadosIntegradosEnCandidato": [
+      {
+        "n": 98,
+        "merged": true,
+        "by": "Jazielle",
+        "sha": "9d1ed362ff0231582cfde8999dfea70e0525becc",
+        "branch": "feature/47-frente-envirosense",
+        "head": "d8b89140fd3bf0e84314211a27a952db448b7d74",
+        "rev": [
+          {
+            "u": "Jazielle",
+            "s": "APPROVED",
+            "sha": "d8b89140fd3bf0e84314211a27a952db448b7d74"
+          }
+        ]
+      },
+      {
+        "n": 100,
+        "merged": true,
+        "by": "Jazielle",
+        "sha": "d041872dcd19f921ce886652c2a5b424c310deac",
+        "branch": "feature/99-actualizar-capas",
+        "head": "c972ee82f36e59f382bbadcbc325737271ccb841",
+        "rev": [
+          {
+            "u": "Jazielle",
+            "s": "APPROVED",
+            "sha": "c972ee82f36e59f382bbadcbc325737271ccb841"
+          }
+        ]
+      },
+      {
+        "n": 102,
+        "merged": true,
+        "by": "Jazielle",
+        "sha": "7925c3b9bf061717fb28556b32d04d2dc13b09f8",
+        "branch": "feature/101-calidad-aire",
+        "head": "6d4fdbe862d8baf0bd2153832fb0b556aab62c31",
+        "rev": [
+          {
+            "u": "Jazielle",
+            "s": "APPROVED",
+            "sha": "6d4fdbe862d8baf0bd2153832fb0b556aab62c31"
+          }
+        ]
+      }
+    ],
+    "tareasCerradas": [
+      99,
+      101
+    ],
+    "main": "851a79f5c699249c284001114f76f994c9ce4335",
+    "m3": "abierto",
+    "aceptacionIngeniero": "pendiente",
+    "nota": "Lecturas REST core para PR, revisiones y referencias. No se consultaron endpoints de Actions/checks; los resultados CI son observación de interfaz y no aprobación humana."
   }
 }
