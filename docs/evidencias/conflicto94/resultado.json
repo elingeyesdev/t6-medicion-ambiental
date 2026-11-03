@@ -1,0 +1,40 @@
+{
+  "issue": 65,
+  "pr": 94,
+  "originalHead": "f5808e0defb00c5e1504ae45cf02e62442dda473",
+  "develop": "1313e04d050ee2f0c42ef3a080b0559248593513",
+  "conflictosResueltos": [
+    "web/bootstrap/app.php"
+  ],
+  "resolucion": "Conservar el manejador de ErrorConsulta de avisos/cuenta y registrar también ErroresConsultaMapa; conservar las rutas y permisos de ambos lados.",
+  "verificacion": {
+    "javascript": {
+      "tests": 23,
+      "exitCode": 0
+    },
+    "pint": {
+      "files": 2,
+      "exitCode": 0
+    },
+    "sintaxisBootstrap": {
+      "exitCode": 0
+    },
+    "diffCheckCambiosPropios": {
+      "exitCode": 0
+    },
+    "phpunit": {
+      "estado": "Sin resultado local: también se bloquea al pedir --version; no se atribuye una ejecución correcta."
+    }
+  },
+  "pr120": {
+    "head": "c2f6ed6d0e468d039c3d91db16c725356cc37917",
+    "base": "feature/40-analisis-inundaciones",
+    "mergeable": true,
+    "mergeTreeConDevelop": {
+      "exitCode": 0,
+      "tree": "a602aac82342e9f3a7cdbccdb427fdc314fe0c44"
+    },
+    "dependencia": 46
+  },
+  "alcance": "Resolución del conflicto; no fusión del PR ni promoción a main."
+}

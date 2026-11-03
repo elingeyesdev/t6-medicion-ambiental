@@ -14,6 +14,24 @@
             <div class="card-header"><h2 class="card-title">Unidades de medida</h2></div>
             <div class="card-body">@include('cuentas.unidades')</div>
         </section>
+        @if(\Illuminate\Support\Facades\Route::has('cuenta.clave'))
+        <section class="card cuenta-tarjeta">
+            <div class="card-header"><h2 class="card-title">Cambiar contraseña</h2></div>
+            <div class="card-body">
+                <form method="post" action="{{ route('cuenta.clave') }}">
+                    @csrf @method('PUT')
+                    <label for="clave-actual" class="form-label">Contraseña actual</label>
+                    <input id="clave-actual" name="current_password" class="form-control mb-3" type="password" autocomplete="current-password" required>
+                    <label for="clave-nueva" class="form-label">Nueva contraseña</label>
+                    <input id="clave-nueva" name="password" class="form-control mb-3" type="password" autocomplete="new-password" minlength="12" required aria-describedby="ayuda-clave">
+                    <p id="ayuda-clave">Usa al menos 12 caracteres. Al guardar, se cerrarán tus otras sesiones.</p>
+                    <label for="clave-confirmar" class="form-label">Repite la nueva contraseña</label>
+                    <input id="clave-confirmar" name="password_confirmation" class="form-control mb-4" type="password" autocomplete="new-password" minlength="12" required>
+                    <button class="btn btn-primary" type="submit">Guardar contraseña</button>
+                </form>
+            </div>
+        </section>
+        @endif
         <section class="card cuenta-tarjeta">
             <div class="card-header"><h2 class="card-title">Tus datos</h2><span class="cuenta-rol">{{ $usuario->rol->nombre() }}</span></div>
             <div class="card-body">
