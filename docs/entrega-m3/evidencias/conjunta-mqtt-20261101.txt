@@ -1,0 +1,21 @@
+Dependencias privadas instaladas mediante npm ci --ignore-scripts.
+OK 01 captura dos variables, puntos, UTC, procedencia y actor
+OK 02 repetición y zona equivalente no duplican
+OK 03 retained en dos arranques conserva instante y deduplica
+OK 04 conflicto sin PUBACK conserva valor y commits previos
+OK 05 JSON inválido
+OK 06 valor fuera de rango
+OK 07 fecha futura
+OK 08 instante sin zona
+OK 09 campos extra no controlan destino
+OK 10 contenido superior a 4096 bytes
+OK 11 punto inexistente no se crea
+OK 12 punto inactivo no persiste ni confirma
+OK 13 revalida cuenta entre mensajes y conserva primero
+OK 14 recepción deshabilitada no conecta
+OK 15 sin consentimiento explícito no conecta
+OK 16 tema ajeno no llega; límite finito con cero capturas
+OK 17 QoS 0 guarda sin prometer PUBACK
+OK 18 sesión persistente entrega mensaje publicado desconectado
+OK 19 rechazo del broker no guarda
+{"ok":true,"casos":19,"resultado":"C:\\Users\\cjosu\\Desktop\\GeoCruz-oficial\\tmp\\comprobacion-web41\\tmp\\mqtt-local66\\runs\\run-e6DjY2\\resultado.json","limpieza":{"brokerCerrado":true,"servidorCerrado":true,"procesosPropios":0,"sockets":0,"puertoCerrado":true}}
