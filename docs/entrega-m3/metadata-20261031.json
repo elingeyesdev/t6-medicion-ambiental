@@ -963,5 +963,50 @@
     "m3": "abierto",
     "aceptacionIngeniero": "pendiente",
     "nota": "Lecturas REST core para PR, revisiones y referencias. No se consultaron endpoints de Actions/checks; los resultados CI son observación de interfaz y no aprobación humana."
+  },
+  "follow_up_fullscreen_20261103": {
+    "fechaUTC": "2026-11-03T12:52:41.084Z",
+    "issue": 126,
+    "pr": 129,
+    "head": "637e846305ed39a84f563a982e7afc7f20897483",
+    "base": "feature/124-horas-recientes",
+    "draft": true,
+    "revisorSolicitado": "Jazielle",
+    "estadoIssue": "open",
+    "cambio": "Escape sale del mapa nativo antes de cerrar paneles; salida deduplicada y reintento ante rechazo",
+    "javascript": {
+      "correctas": 172,
+      "focalizadasIncluidas": 40,
+      "regresionesNuevas": 4,
+      "fallos": 0
+    },
+    "navegador": {
+      "entorno": "integrado en segundo plano",
+      "entradaNativa": true,
+      "salidaBoton": true,
+      "salidaEscape": true,
+      "capasAyBConservadas": true,
+      "filtrosConservados": true,
+      "puntoConservado": true,
+      "panelesConservados": true,
+      "csrfYSecretos": "excluidos de la evidencia"
+    },
+    "ci": {
+      "fuente": "Interfaz pública de GitHub; no consulta de endpoints CI",
+      "correctas": 7,
+      "total": 7,
+      "head": "637e846305ed39a84f563a982e7afc7f20897483"
+    },
+    "evidencia": "https://github.com/elingeyesdev/t6-medicion-ambiental/blob/637e846305ed39a84f563a982e7afc7f20897483/docs/evidencias/pantalla126/nativa-20261103/README.md",
+    "limites": [
+      "No prueba todos los navegadores ni Escape físico de Chrome",
+      "El caso PHP aislado pasó; el intento completo no terminó dentro del límite de25s",
+      "No altera cuenta demo, servidor5791, Flutter ni main",
+      "No aprueba M3 ni integra PR pendientes"
+    ],
+    "limpieza": {
+      "servidor5795Detenido": true,
+      "codigo": 0
+    }
   }
 }
