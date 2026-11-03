@@ -100,6 +100,13 @@ final class CatalogoRaster
     public function imagen(string $id): string
     {
         $c = collect($this->cargar()['cuadros'])->firstWhere('id', $id);
+        if (! $c && is_string(config('capas.directorio'))) {
+            try {
+                $c = ArchivoPublicacionRaster::leer(config('capas.directorio'), $id);
+            } catch (\Throwable) {
+                throw new ErrorConsulta('CUADRO_NO_DISPONIBLE', 'No se pudo cargar esta imagen. Elige otra fecha.', 503);
+            }
+        }
         if (! $c) {
             throw new ErrorConsulta('CUADRO_NO_ENCONTRADO', 'Esta imagen no está disponible. Elige otra fecha.', 404);
         }

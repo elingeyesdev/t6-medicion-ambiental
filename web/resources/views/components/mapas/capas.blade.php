@@ -5,6 +5,7 @@
         <div class="capas-controles">
             <p>Imágenes del ambiente, separadas de las mediciones de puntos.</p>
             <button type="button" class="btn btn-outline-primary" data-actualizar>Actualizar capas</button>
+            <button type="button" class="btn btn-primary" data-fechas-nuevas hidden>Hay nuevas fechas · Actualizar fechas</button>
             <p data-estado role="status" aria-live="polite">Consultando imágenes disponibles…</p>
             <label class="form-check"><input type="checkbox" class="form-check-input" data-visible disabled><span class="form-check-label">Mostrar capa</span></label>
             <fieldset data-controles disabled>

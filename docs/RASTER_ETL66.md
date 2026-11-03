@@ -1,5 +1,7 @@
 # Carga raster recuperada de EnviroSense (#66 / #62)
 
+**Actualización posterior en #99:** coordinación automática local, conservación de cortes y aviso de fechas nuevas en la web. Se añadieron 16 imágenes reales a las 17 existentes. Ver [ACTUALIZACION_CAPAS.md](ACTUALIZACION_CAPAS.md); lo siguiente describe la preparación inicial del productor.
+
 29/10/2026. El productor convierte temperatura GFS/ERA5 local y ocho campos GFS explícitos en PNG de datos y recetas compatibles con el publicador Laravel de #62. No ejecuta los scripts originales, no genera datos aleatorios y no transforma un pronóstico en una observación.
 
 ## Ampliación de los campos GFS
@@ -60,6 +62,6 @@ $env:RASTER_PHP = 'C:/ruta/php.exe'
 tmp/raster-venv/Scripts/python.exe -m unittest discover -s herramientas/datos/raster/tests -p 'test_*.py'
 ```
 
-Esta entrega recupera ocho capas GFS y la lectura de temperatura ERA5 local. No acredita un productor de AQI, todas las fechas históricas ni actualización automática. Las salidas ambiguas de UV/evaporación del original no se renombran como productos científicos distintos. Quedan registradas como pendientes de #66. Sensores y broker reales mantienen su validación independiente; un catálogo de imágenes no prueba su conexión.
+Esta entrega recupera ocho capas GFS y la lectura de temperatura ERA5 local. No acredita un productor de AQI ni todas las fechas históricas. La actualización automática local se añadió posteriormente en #99. Las salidas ambiguas de UV/evaporación del original no se renombran como productos científicos distintos. Quedan registradas como pendientes de #66. Sensores y broker reales mantienen su validación independiente; un catálogo de imágenes no prueba su conexión.
 
 Fuentes primarias consultadas: [filtro NOMADS](https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl), [inventario GFS de NCEP](https://www.nco.ncep.noaa.gov/pmb/products/gfs/) y [ERA5 C3S](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels). Se conserva atribución NOAA/NWS/NCEP y Copernicus/ECMWF en cada producto correspondiente.

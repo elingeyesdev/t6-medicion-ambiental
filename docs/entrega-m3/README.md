@@ -6,6 +6,8 @@ Josué Padilla prepara la web y revisa el móvil. Jaziel Díaz desarrolla Flutte
 
 ## Paquete y recorrido
 
+- [Actualización automática local de capas](../ACTUALIZACION_CAPAS.md): continuación #99 sobre el frente recuperado, con una nueva captura real, conservación del archivo y horario Windows comprobado. El candidato original conserva sus pruebas como registro; la corrección visual y esta actualización se revisan en sus propios PR.
+
 - [Corrección del frente de EnviroSense](../evidencias/frente47/README.md): recorrido del original, portada/acceso, mapa y pantallas internas, con capturas comparables y pruebas. Propuesta sobre este candidato, pendiente de revisión.
 
 - [PDF para presentar](../../output/pdf/GeoSur-M3.pdf), seis páginas revisadas visualmente.
@@ -26,7 +28,7 @@ Se reunieron los candidatos de las tareas en `feature/41-evidencias-entrega-m3`,
 
 Se guardó un respaldo SQLite consistente antes de aplicar las migraciones `003000`, `004001` y `004002`. No se ejecutó `migrate:fresh` ni se cambió el rol o contraseña de la demo. La base, el respaldo, el entorno y los logs permanecen fuera de Git. Las sesiones y los originales privados de EnviroSense no se importan.
 
-Se publicaron 17 PNG GFS reales en almacenamiento privado: temperatura de las 06 UTC y ocho capas de las 09 y 12 UTC del 29/10. Incluyen temperatura, humedad, viento, presión, visibilidad, nieve equivalente de agua, precipitación acumulada e intensidad de precipitación. Se comprobaron sus huellas y el navegador los recibe por rutas autenticadas. Son capturas fijas, no una conexión que se actualice sola. El mapa distingue registros, estimaciones y simulación continua.
+Se publicaron inicialmente 17 PNG GFS reales en almacenamiento privado: temperatura de las 06 UTC y ocho capas de las 09 y 12 UTC del 29/10. Incluyen temperatura, humedad, viento, presión, visibilidad, nieve equivalente de agua, precipitación acumulada e intensidad de precipitación. Se comprobaron sus huellas y el navegador los recibe por rutas autenticadas. El mapa distingue registros, estimaciones y simulación continua. La continuación #99 añade actualización automática local, con 16 imágenes nuevas del ciclo 18 UTC sin eliminar las anteriores; la ejecución periódica necesita el equipo disponible y su revisión propia.
 
 ## Validación
 

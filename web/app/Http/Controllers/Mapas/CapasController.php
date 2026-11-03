@@ -28,6 +28,7 @@ final class CapasController
 
             return response()->json([
                 'version' => 1, 'estado' => $publicacion['cuadros'] ? 'disponible' : 'sin_insumos',
+                'revision' => hash('sha256', json_encode([$capas, $publicacion['faltantes']], JSON_THROW_ON_ERROR)),
                 'capas' => $capas, 'faltantes' => $publicacion['faltantes'],
                 'poi' => ['habilitado' => (bool) config('capas.poi_habilitado'), 'paises' => config('capas.poi_paises')],
             ])->header('Cache-Control', 'no-store, private');

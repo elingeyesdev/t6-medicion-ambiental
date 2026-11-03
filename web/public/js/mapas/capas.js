@@ -2,6 +2,7 @@ import {crearCapaRaster} from './capa-raster-leaflet.js';
 import {muestra, cuadrosDisponibles, crearReproductor, rampa} from './raster.js';
 import {iniciarPoi} from './poi.js';
 import {presentacion} from '../datos/unidades.js';
+import {conservarComparacion, hayFechasNuevas, vigilarCatalogo} from './actualizacion-catalogo.js';
 
 export function iniciarCapas(mapa, L = window.L) {
     const panel = document.getElementById('capas-mapa');
@@ -11,6 +12,7 @@ export function iniciarCapas(mapa, L = window.L) {
     const comparar = q('[data-comparar]'), barra = q('[data-recorrido]'), botonPlay = q('[data-reproducir]');
     const selectores = Object.fromEntries(['a', 'b'].map(id => [id, {capa: q(`[data-capa="${id}"]`), fecha: q(`[data-fecha="${id}"]`)}]));
     let catalogo = [], cargandoCatalogo, secuenciaCatalogo = 0, lecturaActiva = false, marcaLectura;
+    let revisionCatalogo = '', nuevasFechas = null;
     const canales = {a: {}, b: {}}, memoria = new Map();
     const formato = new Intl.DateTimeFormat('es-BO', {timeZone: 'America/La_Paz', dateStyle: 'short', timeStyle: 'short', hourCycle: 'h23'});
     const fecha = valor => formato.format(new Date(valor));
@@ -158,32 +160,60 @@ export function iniciarCapas(mapa, L = window.L) {
         if (errores.length) { reproductor.parar(); avisar(errores.join(' '), true); }
         else if (visible.checked) avisar(comparar.checked ? 'A a la izquierda · B a la derecha. Cada capa conserva su fecha y escala.' : 'Capa visible. Las zonas transparentes no tienen datos.');
     }
+    function aplicarCatalogo(datos) {
+        const seleccion = ['a', 'b'].map(id => ({capa: selectores[id].capa.value, fecha: selectores[id].fecha.value}));
+        catalogo = conservarComparacion(catalogo, datos.capas, seleccion);
+        configurarPoi(datos.poi);
+        revisionCatalogo = datos.revision ?? '';
+        nuevasFechas = null; q('[data-fechas-nuevas]').hidden = true;
+        for (const [indice, id] of ['a', 'b'].entries()) {
+            const previa = seleccion[indice];
+            selectores[id].capa.replaceChildren(...catalogo.filter(c => c.cuadros.length).map(c => new Option(c.nombre, c.id)));
+            selectores[id].capa.value = catalogo.find(c => c.id === previa.capa && c.cuadros.length)?.id ?? catalogo.find(c => c.cuadros.length)?.id ?? '';
+            cargarFechas(id);
+            if (cuadros(id).some(c => c.id === previa.fecha)) selectores[id].fecha.value = previa.fecha;
+        }
+        const disponible = catalogo.some(c => c.cuadros.length);
+        controles.disabled = !disponible; visible.disabled = !disponible;
+        sincronizar();
+        if (!disponible) avisar('Todavía no hay imágenes ambientales disponibles. Puedes seguir consultando los puntos.');
+        else if (!visible.checked) avisar('Elige Mostrar capa para ver las imágenes.' + (datos.faltantes ? ' Algunas imágenes no están disponibles.' : ''));
+        else pintar();
+    }
+    async function consultarCatalogo(signal) {
+        const r = await fetch(panel.dataset.catalogo, {headers: {Accept: 'application/json'}, credentials: 'same-origin', signal});
+        const datos = await r.json();
+        if (!r.ok) throw new Error(datos.error?.mensaje ?? 'No se pueden consultar las capas. Vuelve a ingresar o inténtalo otra vez.');
+        if (datos.version !== 1 || !Array.isArray(datos.capas)) throw new Error('No se pudo leer la lista de capas.');
+        return datos;
+    }
     async function actualizar() {
         reproductor.parar(); cargandoCatalogo?.abort(); const turno = ++secuenciaCatalogo;
-        cargandoCatalogo = new AbortController(); limpiar('a'); limpiar('b'); memoria.clear(); leyendas();
-        visible.checked = false; visible.disabled = true; controles.disabled = true; sincronizar(); avisar('Consultando imágenes disponibles…');
+        cargandoCatalogo = new AbortController(); avisar('Cargando…');
         try {
-            const r = await fetch(panel.dataset.catalogo, {headers: {Accept: 'application/json'}, credentials: 'same-origin', signal: cargandoCatalogo.signal});
-            const datos = await r.json(); if (turno !== secuenciaCatalogo) return;
-            if (!r.ok) throw new Error(datos.error?.mensaje ?? 'No se pueden consultar las capas. Vuelve a ingresar o inténtalo otra vez.');
-            if (datos.version !== 1 || !Array.isArray(datos.capas)) throw new Error('No se pudo leer la lista de capas.');
-            catalogo = datos.capas; configurarPoi(datos.poi);
-            for (const id of ['a', 'b']) {
-                selectores[id].capa.replaceChildren(...catalogo.filter(c => c.cuadros.length).map(c => {
-                    const n = new Option(c.nombre + (c.cuadros.length ? '' : ' · sin imágenes'), c.id); n.disabled = !c.cuadros.length; return n;
-                }));
-                selectores[id].capa.value = catalogo.find(c => c.cuadros.length)?.id ?? '';
-                cargarFechas(id);
-            }
-            const disponible = catalogo.some(c => c.cuadros.length);
-            controles.disabled = !disponible; visible.disabled = !disponible;
-            avisar(disponible ? 'Elige Mostrar capa para ver las imágenes.' + (datos.faltantes ? ' Algunas imágenes no están disponibles.' : '') : 'Todavía no hay imágenes ambientales disponibles. Puedes seguir consultando los puntos.');
+            const datos = await consultarCatalogo(cargandoCatalogo.signal);
+            if (turno !== secuenciaCatalogo) return;
+            aplicarCatalogo(datos);
         } catch (e) {
             if (turno !== secuenciaCatalogo || e.name === 'AbortError') return;
-            configurarPoi({habilitado: false, paises: {}});
+            if (!catalogo.length) configurarPoi({habilitado: false, paises: {}});
             avisar(e instanceof TypeError || e instanceof SyntaxError ? 'No se pudo conectar. Inténtalo de nuevo.' : e.message, true);
-        }
+        } finally { if (turno === secuenciaCatalogo) cargandoCatalogo = null; }
     }
+    const vigilancia = vigilarCatalogo({
+        consultar: async signal => {
+            const turno = secuenciaCatalogo;
+            return {turno, datos: await consultarCatalogo(signal)};
+        },
+        activa: () => !document.hidden && !cargandoCatalogo && panel.getClientRects().length > 0,
+        recibir: ({turno, datos}) => {
+            if (turno !== secuenciaCatalogo || cargandoCatalogo) return;
+            if (typeof datos.revision === 'string' && revisionCatalogo && datos.revision !== revisionCatalogo && hayFechasNuevas(catalogo, datos.capas)) {
+                nuevasFechas = datos; q('[data-fechas-nuevas]').hidden = false;
+            }
+        },
+    });
+    q('[data-fechas-nuevas]').addEventListener('click', () => { if (nuevasFechas) { reproductor.parar(); aplicarCatalogo(nuevasFechas); } });
     q('[data-actualizar]').addEventListener('click', actualizar);
     visible.addEventListener('change', () => { reproductor.parar(); pintar(); });
     comparar.addEventListener('change', () => { reproductor.parar(); pintar(); });
@@ -206,6 +236,7 @@ export function iniciarCapas(mapa, L = window.L) {
     q('[data-leer]').addEventListener('click', () => { lecturaActiva = true; leer(); });
     document.addEventListener('unidades-cambiadas', () => { leyendas(); if (lecturaActiva) leer(); });
     document.addEventListener('visibilitychange', () => { if (document.hidden) reproductor.parar(); });
-    window.addEventListener('pagehide', () => { reproductor.parar(); cargandoCatalogo?.abort(); limpiar('a'); limpiar('b'); memoria.clear(); });
+    window.addEventListener('pagehide', () => { vigilancia.detener(); reproductor.parar(); cargandoCatalogo?.abort(); limpiar('a'); limpiar('b'); memoria.clear(); });
+    window.addEventListener('pageshow', evento => { if (evento.persisted) { vigilancia.reanudar(); actualizar(); } });
     actualizar();
 }
