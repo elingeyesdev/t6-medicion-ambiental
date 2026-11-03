@@ -30,6 +30,8 @@ export function decodificar(codigo, r, g, b, a) {
         case 'aqi-textura': return r * 2;
         case 'humedad-etl': return r / 255 * 100;
         case 'presion-etl': return r / 255 * 200 + 900;
+        case 'solar-wm2': return r / 255 * 1600;
+        case 'evap-pot-wm2': return r <= 64 ? (r - 64) / 64 * 500 : (r - 64) / 191 * 1500;
         default: throw new Error('Codificación de capa desconocida.');
     }
 }
@@ -47,7 +49,7 @@ export function coordenadaPixel(cuadro, latitud, longitud) {
     return {x, y: y * (cuadro.alto - (centros ? 0 : 1)) - (centros ? .5 : 0)};
 }
 
-export function muestra(cuadro, pixeles, latitud, longitud, interpolar = false) {
+function muestrear(cuadro, pixeles, latitud, longitud, interpolar = false) {
     const coordenada = coordenadaPixel(cuadro, latitud, longitud);
     if (!coordenada || pixeles.length !== cuadro.ancho * cuadro.alto * 4) return null;
     function leer(x, y) {
@@ -61,8 +63,7 @@ export function muestra(cuadro, pixeles, latitud, longitud, interpolar = false) 
     }
     const {x, y} = coordenada;
     if (!interpolar || cuadro.codificacion === 'aqi-textura') {
-        const v = leer(Math.round(x), Math.round(y));
-        return typeof v === 'object' && v !== null ? v.valor : v;
+        return leer(Math.round(x), Math.round(y));
     }
     const x0 = Math.floor(x), y0 = Math.floor(y), fx = x - x0, fy = y - y0;
     const vecinos = [[x0, y0, (1 - fx) * (1 - fy)], [x0 + 1, y0, fx * (1 - fy)],
@@ -74,7 +75,20 @@ export function muestra(cuadro, pixeles, latitud, longitud, interpolar = false) 
         if (typeof valor === 'object') { vector = true; u += valor.u * peso; v += valor.v * peso; }
         else suma += valor * peso;
     }
-    return vector ? Math.hypot(u, v) : suma;
+    return vector ? {u, v, valor: Math.hypot(u, v)} : suma;
+}
+
+export function muestra(cuadro, pixeles, latitud, longitud, interpolar = false) {
+    const valor = muestrear(cuadro, pixeles, latitud, longitud, interpolar);
+    return typeof valor === 'object' && valor !== null ? valor.valor : valor;
+}
+
+export function esViento(cuadro) {
+    return ['viento-uv', 'viento-uv127', 'viento-direccion'].includes(cuadro?.codificacion);
+}
+
+export function muestraVector(cuadro, pixeles, latitud, longitud) {
+    return esViento(cuadro) ? muestrear(cuadro, pixeles, latitud, longitud, true) : null;
 }
 
 const rampas = {
@@ -86,6 +100,8 @@ const rampas = {
     aqi: [[0, '#d4f1e0'], [50, '#59b633'], [100, '#edda30'], [150, '#ef8a35'], [200, '#cc3a3f'], [300, '#9d4a98'], [510, '#70152e']],
     humedad: [[0, '#dec08b'], [25, '#eadca8'], [50, '#b2e5dc'], [75, '#4fabbf'], [100, '#265ba5']],
     presion: [[900, '#684ab0'], [950, '#71a6d4'], [1000, '#bce5be'], [1050, '#f5bc67'], [1100, '#a33634']],
+    radiacion_solar: [[0, '#fff6d5'], [200, '#ffdf72'], [500, '#f5a33b'], [800, '#df592c'], [1200, '#a32131'], [1600, '#641d44']],
+    evaporacion_potencial: [[-500, '#3657a6'], [0, '#d7edf2'], [250, '#a9cf81'], [500, '#f4d36a'], [1000, '#dc7738'], [1500, '#a6352c']],
 };
 rampas.lluvia_intensidad = rampas.lluvia;
 export function rampa(capa) { return rampas[capa] ?? []; }

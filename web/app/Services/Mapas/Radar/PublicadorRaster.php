@@ -9,6 +9,11 @@ final class PublicadorRaster
     /** La receta enumera archivos locales ya producidos; no descarga ni ejecuta ETL. */
     public function publicar(string $raiz, array $receta): int
     {
+        return BloqueoRaster::ejecutar($raiz, fn () => $this->publicarBloqueado($raiz, $receta));
+    }
+
+    private function publicarBloqueado(string $raiz, array $receta): int
+    {
         if (! is_dir($raiz) || ($receta['version'] ?? null) !== 1 || ! is_array($receta['cuadros'] ?? null) ||
             count($receta['cuadros']) > config('capas.max_cuadros') || is_link($raiz.'/catalogo.json')) {
             throw new UnexpectedValueException('Publicación inválida.');

@@ -5,6 +5,7 @@
         <div class="capas-controles">
             <p>Imágenes del ambiente, separadas de las mediciones de puntos.</p>
             <button type="button" class="btn btn-outline-primary" data-actualizar>Actualizar capas</button>
+            <button type="button" class="btn btn-primary" data-fechas-nuevas hidden>Hay nuevas fechas · Actualizar fechas</button>
             <p data-estado role="status" aria-live="polite">Consultando imágenes disponibles…</p>
             <label class="form-check"><input type="checkbox" class="form-check-input" data-visible disabled><span class="form-check-label">Mostrar capa</span></label>
             <fieldset data-controles disabled>
@@ -32,13 +33,17 @@
                 </div>
                 <label for="capa-opacidad" class="form-label">Opacidad</label>
                 <input id="capa-opacidad" class="form-range" type="range" min="10" max="100" value="65" data-opacidad>
+                <div data-control-viento hidden>
+                    <label class="form-check"><input type="checkbox" class="form-check-input" data-animar-viento aria-describedby="viento-ayuda"><span class="form-check-label">Animar viento</span></label>
+                    <p id="viento-ayuda">Muestra la dirección. No representa el recorrido del humo.</p>
+                </div>
                 <div data-leyendas aria-label="Leyendas de capas"></div>
                 <button type="button" class="btn btn-outline-primary" data-leer>Leer capas en el centro</button>
                 <div data-lectura role="status" aria-live="polite"></div>
             </fieldset>
         </div>
     </details>
-    <details class="capas-poi">
+    <details class="capas-poi" @if(!config('capas.poi_habilitado')) hidden @endif>
         <summary>Buscar establecimientos</summary>
         <div class="capas-controles">
             <p>Disponible en algunos países de Estados Unidos, Canadá y Europa. Sin cobertura de Bolivia.</p>

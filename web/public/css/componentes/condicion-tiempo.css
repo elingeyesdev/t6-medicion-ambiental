@@ -1,0 +1,7 @@
+.tiempo-condicion { display: inline-flex; align-items: center; gap: 8px; line-height: 1.35; }
+.tiempo-condicion svg { flex: 0 0 24px; color: #287f92; }
+.tiempo-condicion-sol svg, .tiempo-condicion-nube-sol svg { color: #ad790e; }
+.tiempo-condicion-luna svg, .tiempo-condicion-nube-luna svg, .tiempo-condicion-nube svg,
+.tiempo-condicion-niebla svg, .tiempo-condicion-sin-dato svg { color: var(--enviro-secundario); }
+.tiempo-condicion-actual { padding-top: 12px; font-size: 20px; font-weight: 600; }
+.tiempo-diario td .tiempo-condicion { display: flex; max-width: 145px; white-space: normal; margin-top: 6px; font-size: 16px; font-weight: 400; }

@@ -15,6 +15,12 @@ class SimulacionesController extends Controller
 {
     public function index(Request $request, SimularEscenario $motor, CatalogoAmbiental $catalogo, RegionesEnvirosense $regiones)
     {
+        if (! $request->is('api/*') && ! $request->user()->can('simulaciones.gestionar')) {
+            return view('simulaciones.consulta', [
+                'modulos' => array_filter(config('geocruz.modulos'), fn ($m) => $m['habilitado']),
+                'metricas' => $catalogo->metricas(),
+            ]);
+        }
         $sesion = $request->filled('sesion') ? $motor->estado($request->query('sesion'), $request->user()->id) : null;
         $lista = Simulacion::where('usuario_id', $request->user()->id)->latest()->paginate(20);
         if ($request->is('api/*')) {

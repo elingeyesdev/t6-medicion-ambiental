@@ -39,8 +39,8 @@ class RecuperacionAccesoTest extends TestCase
         $this->assertSame('log', $mensaje->mailer);
         $this->assertStringStartsWith('http://localhost:5791/restablecer-acceso/token-de-prueba?', $mensaje->actionUrl);
         $this->assertStringContainsString(rawurlencode($usuario->email), $mensaje->actionUrl);
-        $this->get('/recuperar-acceso')->assertOk()->assertSee('Recupera tu acceso')->assertSee('name="_token"', false);
-        $this->get('/restablecer-acceso/token-de-prueba?email='.urlencode($usuario->email))->assertOk()->assertSee('Crea una nueva contraseña');
+        $this->get('/recuperar-acceso')->assertOk()->assertSeeText('¿Olvidaste tu contraseña?')->assertSee('name="_token"', false);
+        $this->get('/restablecer-acceso/token-de-prueba?email='.urlencode($usuario->email))->assertOk()->assertSeeText('Crea una nueva contraseña');
     }
 
     public function test_mailer_log_se_identifica_como_local_tambien_fuera_del_entorno_local(): void

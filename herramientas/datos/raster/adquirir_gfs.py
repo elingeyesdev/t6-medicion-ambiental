@@ -14,13 +14,17 @@ BBOX = (-82, -57, -34, 13)  # oeste, sur, este, norte; grados geográficos
 HOST = "nomads.ncep.noaa.gov"
 
 
-def parametros(ciclo, plazo, conjunto=False):
+def parametros(ciclo, plazo, conjunto=False, energia=False):
     fecha = datetime.strptime(ciclo, "%Y%m%d%H")
     if fecha.strftime("%Y%m%d%H") != ciclo or fecha.hour not in (0, 6, 12, 18):
         raise ValueError("El ciclo requiere YYYYMMDDHH, con HH=00,06,12,18.")
     if not 0 <= plazo <= 120:
         raise ValueError("El plazo debe estar entre 0 y 120 horas.")
+    if conjunto and energia:
+        raise ValueError('Elige el conjunto ambiental o energía de superficie, sin mezclar perfiles.')
     campos = {"var_TMP": "on", "lev_2_m_above_ground": "on"}
+    if energia:
+        campos = {'var_DSWRF': 'on', 'var_PEVPR': 'on', 'lev_surface': 'on'}
     if conjunto:
         campos.update({"var_" + k: "on" for k in ("RH", "UGRD", "VGRD", "VIS", "WEASD", "PRMSL", "APCP", "PRATE")})
         campos.update({"lev_" + k: "on" for k in ("10_m_above_ground", "surface", "mean_sea_level")})
@@ -31,8 +35,8 @@ def parametros(ciclo, plazo, conjunto=False):
     return "/cgi-bin/filter_gfs_0p25.pl?" + consulta
 
 
-def descargar(ciclo, plazo, transporte=None, conjunto=False):
-    ruta = parametros(ciclo, plazo, conjunto)
+def descargar(ciclo, plazo, transporte=None, conjunto=False, energia=False):
+    ruta = parametros(ciclo, plazo, conjunto, energia)
     recibo = {"version": 1, "url": "https://" + HOST + ruta, "ciclo": ciclo,
               "plazo_horas": plazo, "bbox_solicitado": list(BBOX), "max_bytes": MAX_BYTES,
               "timeout_segundos": 30, "peticiones": 1, "capturado_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
@@ -82,7 +86,7 @@ def descargar(ciclo, plazo, transporte=None, conjunto=False):
             if largo_mensaje < 20 or fin > len(contenido) or contenido[fin-4:fin] != b"7777":
                 raise ValueError("El mensaje GRIB2 está truncado.")
             mensajes += 1
-            if mensajes > (64 if conjunto else 1):
+            if mensajes > (64 if conjunto or energia else 1):
                 raise ValueError("Hay más mensajes que los admitidos en esta consulta.")
             cursor = fin
         if not mensajes:
@@ -104,9 +108,10 @@ def main():
     parser.add_argument("--recibo", required=True)
     parser.add_argument("--consultar-noaa", action="store_true")
     parser.add_argument("--campos-ambientales", action="store_true", help="Temperatura, humedad, viento, lluvia, presión, visibilidad y nieve.")
+    parser.add_argument('--energia-superficie', action='store_true', help='Radiación solar y energía de evaporación potencial; no índice UV ni mm de agua.')
     args = parser.parse_args()
     try:
-        parametros(args.ciclo, args.plazo, args.campos_ambientales)
+        parametros(args.ciclo, args.plazo, args.campos_ambientales, args.energia_superficie)
         destino, recibo = Path(args.destino), Path(args.recibo)
         if not args.consultar_noaa:
             raise ValueError("La descarga requiere --consultar-noaa.")
@@ -114,7 +119,7 @@ def main():
             raise ValueError("Destino y recibo deben ser archivos nuevos distintos.")
         if not destino.parent.is_dir() or not recibo.parent.is_dir():
             raise ValueError("Crea primero las carpetas de trabajo.")
-        contenido, resultado = descargar(args.ciclo, args.plazo, conjunto=args.campos_ambientales)
+        contenido, resultado = descargar(args.ciclo, args.plazo, conjunto=args.campos_ambientales, energia=args.energia_superficie)
         if contenido is not None:
             with destino.open("xb") as archivo:
                 archivo.write(contenido)

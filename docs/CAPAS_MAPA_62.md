@@ -1,12 +1,14 @@
 # Entrega web de capas de EnviroSense · #62
 
+**Continuación del 30/10:** [viento animado](VIENTO_ENVIROSENSE.md), tarea #105 sobre #104. Recupera los trazos de dirección del original, con control, fechas y recorte A/B, pausa y retiro del dibujo. La animación es ilustrativa y conserva los datos de cada capa. Este agregado y el candidato anterior siguen sujetos a revisión.
+
 Rama `feature/62-capas-web`, worktree `tmp/m3-mapa-web`, base `c8b6b7a`. Código Laravel/Blade y JS existente, sin nuevas dependencias. Se leyó la fuente activa `tmp/panel-envirosense`, `HistoricalWebGL`, los tres hooks `useRadar*`, `windMath`, `data-worker/Dockerfile`, los ETL y los documentos de base y tiempo. La referencia permanece intacta.
 
 ## Resultado e integración pendiente
 
 El lote contiene selección de capas y fechas, reproducción secuencial con pausa, recorrido manual, opacidad, comparación A/B de distintas fechas o variables mediante división del mismo mapa, leyendas con unidades de la cuenta y lectura espacial en su centro. Cada lado conserva fecha, procedencia y escala. Solo se ofrecen fechas enumeradas con archivos presentes. No hay relleno de horas, imágenes de respaldo ni valores ambientales generados al abrir el mapa.
 
-Se recuperan las codificaciones de temperatura, lluvia acumulada e intensidad de lluvia, viento, visibilidad, nieve equivalente de agua, AQI, humedad y presión. Son alternativas del catálogo; **no están disponibles hasta publicar sus insumos reales**. Los huecos permanecen transparentes y las consultas devuelven `null`. Los modelos se presentan como estimaciones, incluidas las fechas futuras declaradas por el productor; no se convierten en registros de estaciones.
+Se recuperan las codificaciones de temperatura, precipitación acumulada e intensidad de precipitación, viento, visibilidad, nieve equivalente de agua, AQI, humedad y presión. El candidato #96 publica ocho capas GFS reales con dos fechas; AQI continúa sin insumo publicado. El productor y sus límites están en [RASTER_ETL66.md](RASTER_ETL66.md), PR #95 y #97. Los huecos permanecen transparentes y las consultas devuelven `null`. Los modelos se presentan como estimaciones, incluidas las fechas futuras declaradas por el productor; no se convierten en registros de estaciones.
 
 El buscador de establecimientos es un servicio propio. No cambia `BuscarLugar`, filtros de puntos, su historial/comparación, pronóstico, roles ni demo Visualizador. No hay chatbot, móvil, SQL, migraciones, importación de cuentas ni cambios en Datos/Simulaciones/Reportes/Alertas/Cuentas.
 

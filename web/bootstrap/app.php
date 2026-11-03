@@ -28,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias(['cuenta.activa' => CuentaActiva::class, 'abilities' => CheckAbilities::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->render(new ErroresConsultaMapa);
         $exceptions->render(static function (ErrorConsulta $e, Request $request) {
             if ($request->is('avisos/novedades', 'avisos/canales', 'avisos/push', 'cuenta/clave') && $request->expectsJson()) {
                 return response()->json(['mensaje' => $e->getMessage()], $e->estado)->header('Cache-Control', 'no-store');
@@ -35,10 +36,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
             return null;
         });
-        $exceptions->render(new ErroresConsultaMapa);
         $exceptions->dontReport([ErrorConsulta::class]);
         $exceptions->render(function (Throwable $e, Request $request) {
-            if (! $request->is('api/v1/*', 'mapa/puntos', 'mapa/tiempo', 'mapa/buscar')) {
+            if (! $request->is('api/v1/*', 'mapa/puntos', 'mapa/tiempo', 'mapa/aire', 'mapa/buscar')) {
                 return null;
             }
             $estado = 500;
@@ -89,6 +89,6 @@ return Application::configure(basePath: dirname(__DIR__))
             return $respuesta;
         });
         $exceptions->shouldRenderJsonWhen(
-            fn (Request $request): bool => $request->is('api/*', 'mapa/puntos', 'mapa/tiempo', 'mapa/buscar') || $request->expectsJson()
+            fn (Request $request): bool => $request->is('api/*', 'mapa/puntos', 'mapa/tiempo', 'mapa/aire', 'mapa/buscar') || $request->expectsJson()
         );
     })->create();

@@ -1,10 +1,13 @@
 import { iniciarMapaBase } from './base.js';
 import { consultaMonitoreo } from './consulta-monitoreo.js';
 import { crearConsultaTiempo } from './tiempo.js';
+import { crearConsultaAire } from './aire.js';
 import { iniciarBuscadorLugar } from './buscador.js';
 import { compararLecturas, iniciarRecorrido } from './historial-mapa.js';
 import { medida } from '../datos/unidades.js';
 import { iniciarCapas } from './capas.js';
+import { iniciarMapaContinua } from './mapa-continua.js';
+import { iniciarPantallaCompleta } from './pantalla-completa.js';
 
 const configuracion = JSON.parse(document.getElementById('configuracion-monitoreo').textContent);
 const formulario = document.getElementById('consulta-monitoreo');
@@ -14,7 +17,8 @@ const informacion = document.getElementById('mon-informacion');
 const origenes = configuracion.origenes;
 const paises = new Map(configuracion.paises.map(pais => [pais.codigo, pais.nombre]));
 const L = window.L;
-const mapa = L.map('mapa-monitoreo', { scrollWheelZoom: true, zoomAnimation: false, fadeAnimation: false }).setView([-20, -60], 3);
+const mapa = L.map('mapa-monitoreo', { scrollWheelZoom: true, zoomControl: false, zoomAnimation: false, fadeAnimation: false }).setView([-20, -60], 3);
+L.control.zoom({position: 'topright'}).addTo(mapa);
 const marcadores = L.layerGroup().addTo(mapa);
 const limites = L.geoJSON(null, {style:{color:'#f59e0b',weight:3,fillColor:'#fef3c7',fillOpacity:0.08},interactive:false}).addTo(mapa);
 const marcasComparacion = L.layerGroup().addTo(mapa);
@@ -23,10 +27,19 @@ mapa.on('moveend', () => {
 });
 const porCodigo = new Map();
 let redimension = null;
-new ResizeObserver(() => {
+function ajustarTamano() {
     cancelAnimationFrame(redimension);
     redimension = requestAnimationFrame(() => mapa.invalidateSize({ animate: false }));
-}).observe(document.getElementById('mapa-monitoreo'));
+}
+const observarTamano = new ResizeObserver(ajustarTamano);
+observarTamano.observe(document.getElementById('mapa-monitoreo'));
+const pantallaCompleta = iniciarPantallaCompleta({
+    contenedor: document.getElementById('monitoreo-contenedor'),
+    boton: document.getElementById('mon-pantalla-completa'),
+    estado: document.getElementById('estado-pantalla-completa'),
+    redimensionar: ajustarTamano,
+});
+mapa.on('unload', () => { pantallaCompleta.cancelar(); observarTamano.disconnect(); cancelAnimationFrame(redimension); });
 const formatoFecha = new Intl.DateTimeFormat('es-BO', {
     timeZone: 'America/La_Paz', dateStyle: 'short', timeStyle: 'short', hourCycle: 'h23',
 });
@@ -173,8 +186,7 @@ function seleccionar(punto) {
     const enlace = nodo('a', Object.hasOwn(origenes, respuestaActual.origen) ? 'Ver historial' : 'Ver historial completo', 'btn btn-primary');
     enlace.href = historial.href;
     informacion.append(enlace);
-    const tiempo = crearConsultaTiempo({url: configuracion.tiempo, latitud: punto.latitud, longitud: punto.longitud});
-    informacion.append(tiempo.elemento); cancelarTiempo = tiempo.cancelar;
+    consultasDelLugar(punto.latitud, punto.longitud);
     const url = new URL(location.href);
     url.searchParams.set('punto', punto.codigo);
     history.replaceState(null, '', url);
@@ -237,11 +249,17 @@ function abrirTiempo(latitud, longitud, nombre = 'Tiempo del lugar') {
     botonTiempo.setAttribute('aria-pressed', 'false'); botonTiempo.textContent = 'Tiempo de un lugar';
     document.getElementById('mapa-monitoreo').classList.remove('elegir-tiempo');
     detalle.hidden = false; document.getElementById('mon-nombre').textContent = nombre; informacion.replaceChildren();
-    const tiempo = crearConsultaTiempo({url: configuracion.tiempo, latitud, longitud, automatico: true});
-    informacion.append(tiempo.elemento); cancelarTiempo = tiempo.cancelar;
+    consultasDelLugar(latitud, longitud, true);
     marcaLectura = L.marker([latitud, longitud], {title: nombre}).addTo(mapa); centrar(latitud, longitud);
     avisar('Pronóstico del lugar elegido.');
     if (matchMedia('(max-width: 767.98px)').matches) detalle.scrollIntoView({block: 'nearest'});
+}
+
+function consultasDelLugar(latitud, longitud, automatico = false) {
+    const tiempo = crearConsultaTiempo({url: configuracion.tiempo, latitud, longitud, automatico});
+    const aire = crearConsultaAire({url: configuracion.aire, latitud, longitud});
+    informacion.append(tiempo.elemento, aire.elemento);
+    cancelarTiempo = () => { tiempo.cancelar(); aire.cancelar(); };
 }
 
 botonTiempo.addEventListener('click', () => {
@@ -258,7 +276,7 @@ iniciarBuscadorLugar(configuracion.buscar, lugar => {
         const lateral = matchMedia('(min-width: 768px)').matches ? Math.min(detalle.offsetWidth + 32, mapa.getSize().x * 0.55) : 24;
         mapa.fitBounds([[sur, oeste], [norte, este]], {paddingTopLeft: [24, 80], paddingBottomRight: [lateral, 90], maxZoom: 12, animate: false});
     }
-});
+}, () => mapa.getCenter());
 mapa.on('click', e => { if (modoTiempo) abrirTiempo(e.latlng.lat, e.latlng.lng); });
 document.getElementById('mapa-monitoreo').addEventListener('keydown', e => {
     if (modoTiempo && e.key === 'Enter' && e.target.id === 'mapa-monitoreo') { e.preventDefault(); const centro = mapa.getCenter(); abrirTiempo(centro.lat, centro.lng); }
@@ -310,6 +328,7 @@ function dibujar() {
 }
 
 async function consultar(pagina = 1) {
+    document.dispatchEvent(new CustomEvent('monitoreo-consulta-iniciada'));
     cancelarTiempo?.();
     peticion?.abort();
     const turno = ++secuencia;
@@ -362,6 +381,7 @@ async function consultar(pagina = 1) {
         if (!Array.isArray(cuerpo.datos)) throw new Error('No se pudo leer la consulta. Inténtalo otra vez.');
         respuestaActual = cuerpo;
         dibujar();
+        document.dispatchEvent(new CustomEvent('monitoreo-actualizado'));
         const conDatos = cuerpo.datos.filter(punto => punto.lecturas.length).length;
         const simulados = ['simulado', 'todos'].includes(cuerpo.origen) ? ' Incluye datos simulados cuando los hay.' : '';
         const momento = cuerpo.momento ? ' Hasta ' + formatoFecha.format(new Date(cuerpo.momento)) + ' · Bolivia.' : '';
@@ -382,4 +402,5 @@ document.getElementById('mon-centrar').addEventListener('click', () => { cerrarD
 document.getElementById('mon-cerrar').addEventListener('click', cerrarDetalle);
 document.getElementById('mon-anterior').addEventListener('click', () => consultar((respuestaActual?.pagina ?? 1) - 1));
 document.getElementById('mon-siguiente').addEventListener('click', () => consultar((respuestaActual?.pagina ?? 1) + 1));
+iniciarMapaContinua(mapa, L, configuracion, () => respuestaActual);
 consultar();

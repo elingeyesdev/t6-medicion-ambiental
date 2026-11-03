@@ -1,0 +1,18 @@
+{
+  "version": "ana01-exploracion-metadatos-0.1",
+  "estado": "propuesta_sin_revision_sin_analisis_raster",
+  "coleccion": "sentinel-2-l2a",
+  "territorio": "BO07",
+  "bbox": [-62.99, -17.75, -62.90, -17.65],
+  "crsBbox": "OGC:CRS84",
+  "ordenCoordenadas": ["longitud", "latitud"],
+  "municipiosQueIntersecanSegunCatalogo": ["BO070101", "BO070102"],
+  "ventanas": {
+    "A": "2024-09-01T00:00:00Z/2024-09-30T23:59:59Z",
+    "B": "2025-03-01T00:00:00Z/2025-03-31T23:59:59Z"
+  },
+  "limitePrimeraPagina": 12,
+  "eventoConfirmado": false,
+  "escenasAprobadas": [],
+  "advertencia": "Ventanas para comprobar disponibilidad técnica; no constituyen referencia antes/después de un evento. No hay píxeles de agua analizados ni inundación confirmada."
+}

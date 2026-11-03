@@ -6,6 +6,7 @@
 .capas-controles .form-label { margin-top: 14px; }
 .capas-controles .form-check { margin-block: 16px; }
 .capas-controles [hidden] { display: none !important; }
+.capas-particulas { position: absolute; top: 0; left: 0; z-index: 2; pointer-events: none; }
 .capas-acciones { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
 .capas-acciones .btn { white-space: normal; flex: 1; padding-inline: 8px; min-height: 44px; }
 .capas-controles [data-estado], .capas-controles [data-lectura] { margin-block: 16px; }
@@ -17,7 +18,7 @@
 .capas-marcas { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 12px; margin-block: 8px; }
 .capas-marcas li { display: flex; gap: 5px; align-items: center; font-size: 14px; }
 .capas-marcas i { width: 12px; height: 12px; border: 1px solid #64748b; display: inline-block; }
-.capas-divisor { position: absolute; top: 0; bottom: 0; width: 3px; background: #fff; box-shadow: 0 0 2px 1px #172b4d; z-index: 399; pointer-events: none; }
+.capas-divisor { position: absolute; top: 0; bottom: 0; width: 3px; background: #fff; box-shadow: 0 0 2px 1px #172b4d; z-index: 450; pointer-events: none; }
 .capas-divisor span { position: absolute; top: 50%; padding: 5px; color: #fff; background: #193c52; font-weight: 700; }
 .capas-divisor span:first-child { right: 8px; }
 .capas-divisor span:last-child { left: 8px; }

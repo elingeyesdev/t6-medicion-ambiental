@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Acceso\EntradaRequest;
 use App\Http\Requests\Acceso\RegistroRequest;
 use App\Models\User;
+use App\Services\Cuentas\GuardarCanalesAvisos;
+use App\Services\Cuentas\GuardarPreferencias;
 use App\Services\Notificaciones\GuardarPushAvisos;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
 
@@ -32,9 +35,21 @@ class AccesoController extends Controller
         return redirect()->intended(route('mapa', absolute: false));
     }
 
-    public function registrar(RegistroRequest $request): RedirectResponse
+    public function registrar(RegistroRequest $request, GuardarPreferencias $preferencias, GuardarCanalesAvisos $canales): RedirectResponse
     {
-        $usuario = User::create($request->safe()->only(['name', 'email', 'password']));
+        $usuario = DB::transaction(function () use ($request, $preferencias, $canales): User {
+            $usuario = User::create($request->safe()->only(['name', 'email', 'password']));
+            if ($request->filled('latitud') || $request->filled('longitud')) {
+                $preferencias->ejecutar($usuario, $request->safe()->only(['latitud', 'longitud']));
+            }
+            if ($request->boolean('notif_email') || $request->boolean('notif_telegram') || $request->boolean('notif_whatsapp')) {
+                $canales->ejecutar($usuario, $request->safe()->only(['telegram_destino', 'whatsapp_destino', 'consentimiento']) + [
+                    'notif_email' => $request->boolean('notif_email'), 'notif_telegram' => $request->boolean('notif_telegram'), 'notif_whatsapp' => $request->boolean('notif_whatsapp'),
+                ]);
+            }
+
+            return $usuario;
+        });
         event(new Registered($usuario));
         Auth::login($usuario);
         $request->session()->regenerate();

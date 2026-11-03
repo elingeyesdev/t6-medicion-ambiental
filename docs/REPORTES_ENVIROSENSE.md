@@ -1,5 +1,7 @@
 # Reportes y plantillas de EnviroSense
 
+**Comprobación posterior del 30/10:** #103 contrasta la consulta atmosférica con respuestas externas reales y verifica sus exportaciones en memoria. Los índices estadounidense y europeo se identifican por separado, se valida la celda/zona y la copia guardada no cambia al descargarla. Ver [REPORTES_ATMOSFERICOS_VERIFICADOS.md](REPORTES_ATMOSFERICOS_VERIFICADOS.md); el resto conserva el registro inicial del módulo.
+
 Candidato de #64, sobre Simulaciones #52. Usa Laravel/Blade, la misma base de lecturas del mapa y Tabler 1.7.1. No modifica el código de referencia.
 
 ## Recorrido recuperado

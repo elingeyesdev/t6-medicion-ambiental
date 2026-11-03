@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccesoController;
 use App\Http\Controllers\AlertasController;
 use App\Http\Controllers\Api\BuscarLugarController;
+use App\Http\Controllers\Api\CalidadAireController;
 use App\Http\Controllers\Api\TiempoController;
 use App\Http\Controllers\AvisosController;
 use App\Http\Controllers\CuentaController;
@@ -40,6 +41,12 @@ Route::middleware('guest')->group(function (): void {
     Route::post('/restablecer-acceso', [RecuperacionController::class, 'restablecer'])->middleware('throttle:cuentas-restablecer')->name('password.update');
 });
 Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
+    Route::get('/simulacion-continua/estado', [SimulacionContinuaController::class, 'estado'])
+        ->middleware(['can:datos.consultar', 'throttle:120,1']);
+    Route::post('/simulacion-continua/accion', [SimulacionContinuaController::class, 'accion'])
+        ->middleware(['can:simulaciones.gestionar', 'throttle:30,1']);
+    Route::get('/simulaciones/{id}/estado', [SimulacionesController::class, 'mostrar'])
+        ->middleware(['can:simulaciones.gestionar', 'throttle:120,1']);
     Route::middleware('can:datos.consultar')->group(function (): void {
         Route::put('/avisos/push', [AvisosController::class, 'push'])->middleware('throttle:10,1')->name('avisos.push');
         Route::get('/avisos/servicio-push.js', [AvisosController::class, 'servicioPush'])->name('avisos.servicio-push');
@@ -47,16 +54,11 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
         Route::put('/avisos/canales', [AvisosController::class, 'canales'])->middleware('throttle:10,1')->name('avisos.canales');
     });
     Route::put('/cuenta/clave', [CuentaController::class, 'clave'])->middleware('throttle:5,1')->name('cuenta.clave');
-    Route::get('/simulacion-continua/estado', [SimulacionContinuaController::class, 'estado'])
-        ->middleware(['can:datos.consultar', 'throttle:120,1']);
-    Route::post('/simulacion-continua/accion', [SimulacionContinuaController::class, 'accion'])
-        ->middleware(['can:simulaciones.gestionar', 'throttle:30,1']);
-    Route::get('/simulaciones/{id}/estado', [SimulacionesController::class, 'mostrar'])
-        ->middleware(['can:simulaciones.gestionar', 'throttle:120,1']);
     Route::put('/cuenta/unidades', [UnidadesController::class, 'guardar'])->name('cuenta.unidades');
     Route::middleware('can:datos.consultar')->group(function (): void {
         Route::get('/mapa/buscar', BuscarLugarController::class)->middleware('throttle:mapa-busquedas')->name('mapa.buscar');
         Route::get('/mapa/tiempo', TiempoController::class)->middleware('throttle:tiempo-consultas')->name('mapa.tiempo');
+        Route::get('/mapa/aire', CalidadAireController::class)->middleware('throttle:aire-consultas')->name('mapa.aire');
         Route::get('/alertas', [AlertasController::class, 'index'])->name('alertas');
         Route::get('/umbrales', [AlertasController::class, 'umbrales'])->name('umbrales');
         Route::get('/avisos', [AvisosController::class, 'index'])->name('avisos');
@@ -76,8 +78,8 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
         Route::patch('/plantillas/{id}', [ReportesController::class, 'guardarPlantilla'])->name('plantillas.actualizar');
         Route::delete('/plantillas/{id}', [ReportesController::class, 'archivarPlantilla'])->name('plantillas.archivar');
     });
+    Route::get('/simulaciones', [SimulacionesController::class, 'index'])->middleware('can:datos.consultar')->name('simulaciones');
     Route::middleware('can:simulaciones.gestionar')->group(function (): void {
-        Route::get('/simulaciones', [SimulacionesController::class, 'index'])->name('simulaciones');
         Route::post('/simulaciones', [SimulacionesController::class, 'guardar'])->name('simulaciones.guardar');
         Route::post('/simulaciones/{id}/accion', [SimulacionesController::class, 'accion'])->name('simulaciones.accion');
         Route::post('/simulaciones/{id}/historial', [SimulacionesController::class, 'publicar'])->name('simulaciones.publicar');

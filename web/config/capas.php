@@ -6,6 +6,12 @@ return [
     'max_cuadros' => 512,
     'max_bytes' => 5242880,
     'max_pixeles' => 2200000,
+    'actualizacion' => [
+        'habilitada' => env('MAPAS_ACTUALIZACION_HABILITADA', false),
+        'python' => env('MAPAS_ACTUALIZACION_PYTHON'),
+        'trabajo' => env('MAPAS_ACTUALIZACION_TRABAJO', storage_path('app/private/mapas/actualizacion')),
+        'fechas_por_capa' => 48,
+    ],
     'poi_habilitado' => env('MAPAS_POI_HABILITADO', false),
     'poi_token' => env('MAPAS_POI_TOKEN', env('MAPBOX_PUBLIC_TOKEN')),
     // Subconjunto explícito de la cobertura documentada de Search Box.

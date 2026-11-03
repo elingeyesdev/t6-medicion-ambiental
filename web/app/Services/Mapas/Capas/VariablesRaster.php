@@ -16,6 +16,8 @@ final class VariablesRaster
             'aqi' => ['nombre' => 'Calidad del aire (AQI)', 'unidad' => 'AQI', 'codificaciones' => ['aqi-textura']],
             'humedad' => ['nombre' => 'Humedad relativa', 'unidad' => '%', 'codificaciones' => ['humedad-etl']],
             'presion' => ['nombre' => 'Presión a nivel del mar', 'unidad' => 'hPa', 'codificaciones' => ['presion-etl']],
+            'radiacion_solar' => ['nombre' => 'Radiación solar · promedio', 'unidad' => 'W/m²', 'codificaciones' => ['solar-wm2']],
+            'evaporacion_potencial' => ['nombre' => 'Evaporación potencial · energía', 'unidad' => 'W/m²', 'codificaciones' => ['evap-pot-wm2']],
         ];
     }
 }
