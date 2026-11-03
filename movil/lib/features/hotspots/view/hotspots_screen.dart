@@ -228,12 +228,12 @@ class _HotspotsScreenState extends State<HotspotsScreen>
                 if (widget.showAppBar) ...[
                   const _CoverageScopeCard(),
                   const SizedBox(height: 8),
-                  if (response != null) _appliedContext(context, response),
-                  const SizedBox(height: 8),
                   _searchButton(context),
                   const SizedBox(height: 8),
-                  _queryStatus(context, response),
                 ],
+                if (response != null) _appliedContext(context, response),
+                const SizedBox(height: 8),
+                _queryStatus(context, response),
                 if (response != null) ...[
                   const SizedBox(height: 8),
                   _detectionMap(context, response),
@@ -333,7 +333,9 @@ class _HotspotsScreenState extends State<HotspotsScreen>
     }
 
     final coverage = response.coverageState;
-    if (response.total > 0 && coverage != 'sin_cobertura') {
+    if (response.total > 0 &&
+        coverage != 'sin_cobertura' &&
+        coverage != 'parcial') {
       return const SizedBox.shrink();
     }
     final title = switch (coverage) {
@@ -895,9 +897,6 @@ class _CoverageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (response.coverageState == 'parcial') {
-      return const SizedBox.shrink();
-    }
     final (icon, color) = switch (response.coverageState) {
       'parcial' => (Icons.warning_amber_rounded, GeoCruzColors.amber),
       'sin_cobertura' => (
