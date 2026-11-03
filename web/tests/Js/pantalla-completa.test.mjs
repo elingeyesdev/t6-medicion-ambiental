@@ -187,17 +187,84 @@ test('entra desde el gesto del botón y solo confirma el estado después del nav
     assert.deepEqual(f.mapa, antes);
 });
 
-test('Escape se refleja mediante fullscreenchange sin solicitar otra salida', async t => {
+test('una salida nativa externa se refleja sin solicitar otra salida', async t => {
     const f = escenario(t);
     await f.boton.emitir('click');
-    await f.documento.emitir('keydown', {key: 'Escape'});
-    assert.equal(f.documento.ultimoEvento.defaultPrevented, false, 'En modo nativo Escape sigue en manos del navegador.');
     assert.equal(f.boton.getAttribute('aria-pressed'), 'true');
     f.documento.fullscreenElement = null;
     await f.documento.emitir('fullscreenchange');
     assert.equal(f.boton.getAttribute('aria-pressed'), 'false');
     assert.equal(f.boton.getAttribute('aria-label'), 'Entrar en pantalla completa');
     assert.deepEqual(f.llamadas, {entrar: 1, salir: 0, redimensionar: 2});
+});
+
+
+test('Escape nativo sale antes del cierre de paneles y conserva el mismo mapa', async t => {
+    const f = escenario(t), antes = structuredClone(f.mapa);
+    let cierresDePanel = 0;
+    f.documento.addEventListener('keydown', () => cierresDePanel++);
+    await f.boton.emitir('click');
+    const salida = f.documento.emitir('keydown', {key: 'Escape', target: f.boton});
+    const evento = f.documento.ultimoEvento;
+    await salida;
+    assert.equal(evento.defaultPrevented, true);
+    assert.equal(evento.detenida, true);
+    assert.equal(cierresDePanel, 0);
+    assert.equal(f.documento.fullscreenElement, null);
+    assert.equal(f.boton.getAttribute('aria-pressed'), 'false');
+    assert.equal(f.boton.getAttribute('aria-label'), 'Entrar en pantalla completa');
+    assert.equal(f.llamadas.salir, 1);
+    assert.equal(f.contenedor.mapa, f.mapa);
+    assert.deepEqual(f.mapa, antes);
+});
+
+test('Escape fuera del mapa nativo conserva los atajos de paneles y no cierra otra pantalla completa', async t => {
+    for (const inicial of [undefined, 'ajena']) {
+        const f = escenario(t, {inicial});
+        let cierresDePanel = 0;
+        f.documento.addEventListener('keydown', () => cierresDePanel++);
+        await f.documento.emitir('keydown', {key: 'Escape'});
+        assert.equal(f.documento.ultimoEvento.defaultPrevented, false);
+        assert.equal(cierresDePanel, 1);
+        assert.equal(f.llamadas.salir, 0);
+        assert.equal(f.documento.fullscreenElement, inicial === 'ajena' ? f.ajeno : null);
+    }
+});
+
+test('varios Escape durante una salida nativa pendiente no duplican solicitudes', async t => {
+    const f = escenario(t), pendiente = diferida();
+    await f.boton.emitir('click');
+    f.documento.exitFullscreen = () => {
+        f.llamadas.salir++;
+        return pendiente.promesa.then(() => { f.documento.fullscreenElement = null; return f.documento.emitir('fullscreenchange'); });
+    };
+    const primera = f.documento.emitir('keydown', {key: 'Escape'});
+    assert.equal(f.llamadas.salir, 1);
+    assert.equal(f.boton.getAttribute('aria-busy'), 'true');
+    assert.equal(f.boton.disabled, true);
+    await f.documento.emitir('keydown', {key: 'Escape'});
+    assert.equal(f.llamadas.salir, 1);
+    pendiente.resolver();
+    await primera;
+    assert.equal(f.boton.getAttribute('aria-busy'), 'false');
+    assert.equal(f.boton.disabled, false);
+    assert.equal(f.documento.fullscreenElement, null);
+});
+
+test('un rechazo de Escape nativo conserva el estado real y permite reintentar con el botón', async t => {
+    const f = escenario(t);
+    await f.boton.emitir('click');
+    f.documento.exitFullscreen = () => { f.llamadas.salir++; return Promise.reject(new Error('detalle privado')); };
+    await f.documento.emitir('keydown', {key: 'Escape'});
+    assert.equal(f.documento.fullscreenElement, f.contenedor);
+    assert.equal(f.boton.getAttribute('aria-pressed'), 'true');
+    assert.equal(f.boton.disabled, false);
+    assert.match(f.estado.textContent, /No se pudo salir.*botón/);
+    assert.doesNotMatch(f.estado.textContent, /detalle privado/);
+    f.documento.exitFullscreen = f.salir;
+    await f.boton.emitir('click');
+    assert.equal(f.documento.fullscreenElement, null);
+    assert.equal(f.estado.hidden, true);
 });
 
 for (const [caso, opciones] of [['sin API de entrada', {sinSolicitud: true}], ['sin API de salida', {sinSalida: true}], ['API bloqueada por el navegador', {prohibida: true}]]) {

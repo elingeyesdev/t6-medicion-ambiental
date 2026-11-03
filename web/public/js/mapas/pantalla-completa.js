@@ -100,6 +100,7 @@ export function iniciarPantallaCompleta({contenedor, boton, estado, redimensiona
     async function salirPropia() {
         if (salidasPendientes.has(contenedor) || documento.fullscreenElement !== contenedor) return;
         salidasPendientes.add(contenedor);
+        controles.get(boton)?.actualizar();
         try { await documento.exitFullscreen(); }
         finally { salidasPendientes.delete(contenedor); controles.get(boton)?.actualizar(); }
     }
@@ -133,9 +134,20 @@ export function iniciarPantallaCompleta({contenedor, boton, estado, redimensiona
         }
     }
 
-    function tecla(evento) {
-        if (!pagina || documento.fullscreenElement || evento.key !== 'Escape') return;
+    async function tecla(evento) {
+        if (evento.key !== 'Escape') return;
+        const propia = documento.fullscreenElement === contenedor;
+        if (!propia && (!pagina || documento.fullscreenElement)) return;
         evento.preventDefault(); evento.stopPropagation();
+        if (propia) {
+            try { await salirPropia(); }
+            catch {
+                if (activo && conectados() && documento.fullscreenElement === contenedor) {
+                    avisar('No se pudo salir de pantalla completa. Usa el botón para reintentar.', true);
+                }
+            }
+            return;
+        }
         restaurarPagina(); actualizar();
     }
 

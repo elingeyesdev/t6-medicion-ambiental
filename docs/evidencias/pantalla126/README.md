@@ -19,5 +19,5 @@ estrecha, el menú cerrado siguió aislado después de salir; al volver al
 escritorio recuperó su estado normal. La ficha y los ajustes se conservaron.
 
 **168 pruebas JavaScript correctas**, incluidas las 39 focalizadas.
-La entrada nativa real continúa pendiente: este recorrido no la acredita.
+Este recorrido histórico no acredita la entrada nativa. La [comprobación nativa del 03/11 y el ajuste de Escape](nativa-20261103/README.md) se conservan aparte con sus propios archivos, datos y resultados.
 La copia de pruebas no modifica la cuenta demo, Flutter ni el servidor 5791.
