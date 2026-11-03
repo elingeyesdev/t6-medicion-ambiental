@@ -104,7 +104,7 @@ class CapasRasterTest extends TestCase
         $this->usuario();
         $this->publicar([$this->cuadro(['id' => 'b', 'instante' => '2026-10-28T18:00:00Z']), $this->cuadro(['id' => 'a'])]);
         $this->getJson('/mapa/capas')->assertOk()->assertJsonPath('estado', 'disponible')
-            ->assertJsonCount(9, 'capas')->assertJsonCount(2, 'capas.0.cuadros')
+            ->assertJsonCount(11, 'capas')->assertJsonCount(2, 'capas.0.cuadros')
             ->assertJsonPath('capas.0.cuadros.0.id', 'a')->assertJsonPath('capas.0.cuadros.1.id', 'b')
             ->assertJsonPath('capas.0.cuadros.0.origen', 'estimado')->assertJsonPath('capas.0.unidad', '°C')
             ->assertJsonPath('capas.0.cuadros.0.url', '/mapa/capas/cuadros/a.png')

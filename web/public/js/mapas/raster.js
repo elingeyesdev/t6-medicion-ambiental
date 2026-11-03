@@ -30,6 +30,8 @@ export function decodificar(codigo, r, g, b, a) {
         case 'aqi-textura': return r * 2;
         case 'humedad-etl': return r / 255 * 100;
         case 'presion-etl': return r / 255 * 200 + 900;
+        case 'solar-wm2': return r / 255 * 1600;
+        case 'evap-pot-wm2': return r <= 64 ? (r - 64) / 64 * 500 : (r - 64) / 191 * 1500;
         default: throw new Error('Codificación de capa desconocida.');
     }
 }
@@ -98,6 +100,8 @@ const rampas = {
     aqi: [[0, '#d4f1e0'], [50, '#59b633'], [100, '#edda30'], [150, '#ef8a35'], [200, '#cc3a3f'], [300, '#9d4a98'], [510, '#70152e']],
     humedad: [[0, '#dec08b'], [25, '#eadca8'], [50, '#b2e5dc'], [75, '#4fabbf'], [100, '#265ba5']],
     presion: [[900, '#684ab0'], [950, '#71a6d4'], [1000, '#bce5be'], [1050, '#f5bc67'], [1100, '#a33634']],
+    radiacion_solar: [[0, '#fff6d5'], [200, '#ffdf72'], [500, '#f5a33b'], [800, '#df592c'], [1200, '#a32131'], [1600, '#641d44']],
+    evaporacion_potencial: [[-500, '#3657a6'], [0, '#d7edf2'], [250, '#a9cf81'], [500, '#f4d36a'], [1000, '#dc7738'], [1500, '#a6352c']],
 };
 rampas.lluvia_intensidad = rampas.lluvia;
 export function rampa(capa) { return rampas[capa] ?? []; }

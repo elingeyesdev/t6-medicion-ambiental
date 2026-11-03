@@ -123,6 +123,23 @@ class ActualizarTest(unittest.TestCase):
         self.assertTrue((self.raiz/'actualizacion.lock').exists())
         self.assertEqual(self.ejecutar()['estado'], 'publicado')
 
+    def test_perfil_energia_explicito_sin_reutilizar_el_estado_ambiental(self):
+        recibidas = []
+        def adquirir(ciclo, plazo, energia=False):
+            self.assertTrue(energia)
+            recibidas.append(plazo)
+            return b'fixture', {'estado': 'descargado'}
+        def publicar(lote):
+            m = json.loads((lote/'actualizacion.json').read_text())
+            self.assertEqual(m['perfil'], 'energia')
+            return {'estado': 'publicado'}
+        r = actualizar(self.raiz, publicar, self.ahora, adquirir, self.transformar, self.esperas.append, energia=True)
+        self.assertEqual(r['estado'], 'publicado')
+        self.assertEqual(recibidas, [3, 6])
+        self.assertEqual(self.esperas, [10])
+        with self.assertRaisesRegex(ValueError, 'directorio de trabajo separado'):
+            self.ejecutar()
+
 
 if __name__ == '__main__':
     unittest.main()

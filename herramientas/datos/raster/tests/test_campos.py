@@ -28,6 +28,7 @@ def mensaje(clave, valores=None, cambios=None):
             'presion': (3, 1, 'meanSea', 0), 'visibilidad': (19, 0, 'surface', 0),
             'nieve': (1, 13, 'surface', 0), 'lluvia_intensidad': (1, 7, 'surface', 0),
             'lluvia': (1, 8, 'surface', 0),
+            'radiacion_solar': (4, 192, 'surface', 0), 'evaporacion_potencial': (1, 200, 'surface', 0),
         }[clave]
         ajustes = {'centre': 'kwbc', 'Ni': 3, 'Nj': 3, 'latitudeOfFirstGridPointInDegrees': -17,
                    'latitudeOfLastGridPointInDegrees': -17.5, 'longitudeOfFirstGridPointInDegrees': 298,
@@ -35,12 +36,16 @@ def mensaje(clave, valores=None, cambios=None):
                    'jDirectionIncrementInDegrees': .25, 'jScansPositively': 0, 'dataDate': 20261029,
                    'dataTime': 600, 'typeOfGeneratingProcess': 2, 'generatingProcessIdentifier': 96,
                    'typeOfLevel': nivel, 'level': altura, 'parameterCategory': cat, 'parameterNumber': num,
-                   'stepType': 'accum' if clave == 'lluvia' else 'instant', 'stepRange': '0-3' if clave == 'lluvia' else '3',
+                   'stepType': 'accum' if clave == 'lluvia' else 'avg' if clave == 'radiacion_solar' else 'instant',
+                   'stepRange': '0-3' if clave in ('lluvia', 'radiacion_solar') else '3',
                    'bitmapPresent': 1, 'missingValue': 9999, 'bitsPerValue': 24}
+        if clave in ('radiacion_solar', 'evaporacion_potencial'):
+            ajustes.update(tablesVersion=2, localTablesVersion=1)
         for k, v in (ajustes | (cambios or {})).items():
             ec.codes_set(m, k, v)
         defecto = {'temperatura': 293.15, 'humedad': 60, 'u10': 0, 'v10': 0, 'presion': 101325,
-                   'visibilidad': 10000, 'nieve': 0, 'lluvia_intensidad': .001, 'lluvia': 5}[clave]
+                   'visibilidad': 10000, 'nieve': 0, 'lluvia_intensidad': .001, 'lluvia': 5,
+                   'radiacion_solar': 400, 'evaporacion_potencial': -20}[clave]
         ec.codes_set_values(m, valores if valores is not None else [defecto]*9)
         return ec.codes_get_message(m)
     finally:

@@ -42,7 +42,7 @@ class ActualizacionGfsTest extends TestCase
         parent::tearDown();
     }
 
-    private function lote(string $ciclo, string $sufijo = ''): string
+    private function lote(string $ciclo, string $sufijo = '', bool $energia = false): string
     {
         $ruta = $this->raiz.'/lote-'.$ciclo.$sufijo;
         mkdir($ruta);
@@ -51,22 +51,27 @@ class ActualizacionGfsTest extends TestCase
             $chunk('IDAT', gzcompress("\0\0\0\0\xff\xff\0\0\xff\0\x80\0\0\xff\0\0\0\0")).$chunk('IEND', '');
         $inicio = \DateTimeImmutable::createFromFormat('!YmdH', $ciclo);
         $cuadros = [];
-        foreach (IncorporarGfs::CAPAS as $capa) {
+        foreach ($energia ? IncorporarGfs::ENERGIA : IncorporarGfs::CAPAS as $capa) {
             $codificacion = ['temperatura' => 'temp-era5', 'humedad' => 'humedad-etl', 'presion' => 'presion-etl',
-                'visibilidad' => 'vis-etl', 'nieve' => 'nieve-etl', 'lluvia_intensidad' => 'lluvia-escalones', 'lluvia' => 'lluvia-escalones', 'viento' => 'viento-uv127'][$capa];
+                'visibilidad' => 'vis-etl', 'nieve' => 'nieve-etl', 'lluvia_intensidad' => 'lluvia-escalones', 'lluvia' => 'lluvia-escalones', 'viento' => 'viento-uv127',
+                'radiacion_solar' => 'solar-wm2', 'evaporacion_potencial' => 'evap-pot-wm2'][$capa];
             foreach ([3, 6] as $plazo) {
                 $id = 'prueba-'.$ciclo.'-'.$capa.'-'.$plazo.$sufijo;
                 file_put_contents($ruta.'/'.$id.'.png', $png);
                 $instante = $inicio->modify('+'.$plazo.' hours')->format('Y-m-d\TH:i:s\Z');
+                $desde = in_array($capa, ['lluvia', 'radiacion_solar'], true) ? 0 : $plazo;
                 $cuadros[] = ['id' => $id, 'capa' => $capa, 'archivo' => $id.'.png', 'instante' => $instante, 'codificacion' => $codificacion,
                     'fuente' => 'Fixture técnico controlado', 'producto' => 'No son datos ambientales reales',
-                    'intervalo' => ['ciclo' => $inicio->format('Y-m-d\TH:i:s\Z'), 'instante' => $instante, 'inicio_horas' => $capa === 'lluvia' ? 0 : $plazo, 'fin_horas' => $plazo],
+                    'unidad' => $energia ? 'W/m²' : 'fixture',
+                    'intervalo' => ['ciclo' => $inicio->format('Y-m-d\TH:i:s\Z'), 'instante' => $instante, 'inicio_horas' => $desde, 'fin_horas' => $plazo,
+                        'desde' => $inicio->modify('+'.$desde.' hours')->format('Y-m-d\TH:i:s\Z'), 'hasta' => $instante,
+                        'tipo_paso' => $capa === 'radiacion_solar' ? 'avg' : 'instant'],
                     'rejilla' => ['proyeccion' => 'EPSG:4326', 'registro' => 'nodos', 'filas' => 'norte-sur', 'oeste' => -64, 'este' => -63, 'sur' => -18, 'norte' => -17]];
             }
         }
         file_put_contents($ruta.'/receta.json', json_encode(['version' => 1, 'cuadros' => $cuadros]));
         // Simula el manifiesto del orquestador; solo se usa en este directorio aleatorio.
-        file_put_contents($ruta.'/actualizacion.json', json_encode(['version' => 1, 'ciclo' => $ciclo, 'datos_controlados' => false]));
+        file_put_contents($ruta.'/actualizacion.json', json_encode(['version' => 1, 'ciclo' => $ciclo, 'perfil' => $energia ? 'energia' : 'ambiental', 'datos_controlados' => false]));
 
         return $ruta;
     }
@@ -173,6 +178,50 @@ class ActualizacionGfsTest extends TestCase
     {
         config(['capas.actualizacion.habilitada' => false]);
         $this->artisan('capas:actualizar --programada')->assertSuccessful();
+        $this->artisan('capas:actualizar --programada --energia-superficie')->assertSuccessful();
         $this->artisan('capas:actualizar')->assertExitCode(2);
+    }
+
+    public function test_energia_y_ambiente_conviven_sin_sustituir_el_catalogo(): void
+    {
+        $motor = new IncorporarGfs;
+        $motor->ejecutar($this->lote('2026102900'));
+        $primero = (new CatalogoRaster)->cargar()['cuadros'][0];
+        $bytes = (new CatalogoRaster)->imagen($primero['id']);
+        $energia = $this->lote('2026102900', '-energia', true);
+        $this->assertSame(4, $motor->ejecutar($energia)['nuevos']);
+        $this->assertCount(20, (new CatalogoRaster)->cargar()['cuadros']);
+        $this->assertSame($bytes, (new CatalogoRaster)->imagen($primero['id']));
+        $this->assertSame(0, $motor->ejecutar($energia)['nuevos']);
+    }
+
+    public function test_energia_rechaza_unidades_periodos_o_perfiles_incorrectos_sin_cambios_parciales(): void
+    {
+        $motor = new IncorporarGfs;
+        $motor->ejecutar($this->lote('2026102900'));
+        $antes = file_get_contents(config('capas.directorio').'/catalogo.json');
+        foreach (['unidad', 'instante', 'evaporacion', 'incompleto', 'perfil'] as $caso) {
+            $lote = $this->lote('2026102906', '-'.$caso, true);
+            $r = json_decode(file_get_contents($lote.'/receta.json'), true);
+            match ($caso) {
+                'unidad' => $r['cuadros'][0]['unidad'] = 'mm',
+                'instante' => $r['cuadros'][0]['intervalo']['tipo_paso'] = 'instant',
+                'evaporacion' => $r['cuadros'][2]['intervalo']['inicio_horas'] = 0,
+                'incompleto' => array_pop($r['cuadros']),
+                default => null,
+            };
+            file_put_contents($lote.'/receta.json', json_encode($r));
+            if ($caso === 'perfil') {
+                $m = json_decode(file_get_contents($lote.'/actualizacion.json'), true);
+                $m['perfil'] = 'uv';
+                file_put_contents($lote.'/actualizacion.json', json_encode($m));
+            }
+            try {
+                $motor->ejecutar($lote);
+                $this->fail('Se aceptó energía sin su contrato.');
+            } catch (UnexpectedValueException) {
+                $this->assertSame($antes, file_get_contents(config('capas.directorio').'/catalogo.json'));
+            }
+        }
     }
 }

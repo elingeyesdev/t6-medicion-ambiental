@@ -83,7 +83,14 @@ def producir(entrada, salida):
     return producir_campos(entrada, salida, list(CAPAS), acumulado_desde=0)
 
 
-def actualizar(trabajo, publicar, ahora=None, adquirir=descargar, transformar=producir, esperar=time.sleep):
+def producir_energia(entrada, salida):
+    from campos_gfs import CAPAS_ENERGIA, producir_campos
+    return producir_campos(entrada, salida, list(CAPAS_ENERGIA), promedio_desde=0)
+
+
+def actualizar(trabajo, publicar, ahora=None, adquirir=descargar, transformar=None, esperar=time.sleep, energia=False):
+    transformar = transformar or (producir_energia if energia else producir)
+    perfil = 'energia' if energia else 'ambiental'
     ahora = utc(ahora or datetime.now(timezone.utc))
     trabajo = Path(trabajo)
     trabajo.mkdir(parents=True, exist_ok=True)
@@ -99,6 +106,8 @@ def actualizar(trabajo, publicar, ahora=None, adquirir=descargar, transformar=pr
             anterior = json.loads(ruta_estado.read_text(encoding='utf-8'))
             if not isinstance(anterior, dict):
                 raise ValueError('Estado de actualización inválido.')
+        if anterior and anterior.get('perfil', 'ambiental') != perfil:
+            raise ValueError('Cada perfil requiere un directorio de trabajo separado.')
         if anterior.get('ultimo_ciclo_publicado', '') >= ciclo:
             return {'estado': 'al_dia', 'ciclo': ciclo}
         if anterior.get('intento_utc'):
@@ -106,7 +115,7 @@ def actualizar(trabajo, publicar, ahora=None, adquirir=descargar, transformar=pr
             if ahora - utc(intento) < timedelta(hours=1):
                 return {'estado': 'esperando', 'ciclo': ciclo}
         anterior.pop('error', None)
-        estado = {**anterior, 'estado': 'actualizando', 'ciclo': ciclo, 'intento_utc': ahora.isoformat()}
+        estado = {**anterior, 'estado': 'actualizando', 'ciclo': ciclo, 'perfil': perfil, 'intento_utc': ahora.isoformat()}
         escribir_json(ruta_estado, estado)
         corrida = trabajo/(ciclo+'-'+uuid.uuid4().hex)
         corrida.mkdir()
@@ -117,7 +126,7 @@ def actualizar(trabajo, publicar, ahora=None, adquirir=descargar, transformar=pr
             for indice, plazo in enumerate((3, 6)):
                 if indice:
                     esperar(10)  # NOMADS exige al menos diez segundos entre peticiones de bucles.
-                contenido, recibo = adquirir(ciclo, plazo, conjunto=True)
+                contenido, recibo = adquirir(ciclo, plazo, energia=True) if energia else adquirir(ciclo, plazo, conjunto=True)
                 escribir_json(corrida/f'recibo-{plazo:03d}.json', recibo)
                 if contenido is None:
                     raise ValueError('No se pudo descargar el conjunto completo; se conserva la publicación anterior.')
@@ -144,7 +153,7 @@ def actualizar(trabajo, publicar, ahora=None, adquirir=descargar, transformar=pr
                 cuadros.extend(receta['cuadros'])
                 recibos.append(recibo)
             escribir_json(lote/'receta.json', {'version': 1, 'cuadros': cuadros})
-            escribir_json(lote/'actualizacion.json', {'version': 1, 'ciclo': ciclo, 'datos_controlados': False, 'recibos': recibos})
+            escribir_json(lote/'actualizacion.json', {'version': 1, 'ciclo': ciclo, 'perfil': perfil, 'datos_controlados': False, 'recibos': recibos})
             resultado = publicar(lote)
             if resultado.get('estado') != 'publicado':
                 raise ValueError('La publicación no confirmó el conjunto completo.')
@@ -163,6 +172,7 @@ def main():
     parser.add_argument('--php-ini')
     parser.add_argument('--artisan', required=True)
     parser.add_argument('--consultar-noaa', action='store_true')
+    parser.add_argument('--energia-superficie', action='store_true')
     args = parser.parse_args()
     if not args.consultar_noaa:
         parser.error('La adquisición requiere --consultar-noaa.')
@@ -175,7 +185,7 @@ def main():
         return json.loads(proceso.stdout)
 
     try:
-        resultado = actualizar(args.trabajo, publicar)
+        resultado = actualizar(args.trabajo, publicar, energia=args.energia_superficie)
         print(json.dumps(resultado, ensure_ascii=False))
         return 0
     except Ocupado:

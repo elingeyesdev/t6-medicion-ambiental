@@ -1,10 +1,12 @@
-# GeoSur - candidato M3 del 29/10/2026
+# GeoSur - candidato M3 actualizado al 30/10/2026
 
 Josué Padilla prepara la web y revisa el móvil. Jaziel Díaz desarrolla Flutter y revisa la web. EnviroSense es el sistema principal; GeoSur adapta sus funciones a Laravel/Blade, API compartida y Flutter. El chatbot quedó fuera por decisión de Josué. El pedido actual es preparar hoy M3 y recuperar la web, sin modificar móvil.
 
 **Estado:** candidato integrado y probado en local. Requiere revisión de Jaziel, resolver el fallo Android de #88 y aceptación de la entrega. No se declara toda la migración operativa ni se promueve M3 a main. Allí continúa M2, `v0.2.0`, commit `851a79f5c699249c284001114f76f994c9ce4335`.
 
 ## Paquete y recorrido
+
+- [Radiación y evaporación potencial](../ENERGIA_ENVIROSENSE.md): #107 recupera DSWRF promedio y PEVPR instantáneo del operativo original en W/m². Dos capas nuevas, captura real, perfiles de actualización separados y conservación del archivo. No equivalen a índice UV ni evaporación acumulada en mm.
 
 - [Viento animado del mapa](../VIENTO_ENVIROSENSE.md): continuación #105 sobre #104. Trazos según la capa de viento, control de activación, comparación A/B y pausa. No representa trayectorias de humo ni modifica el tiempo de la capa.
 
@@ -16,7 +18,7 @@ Josué Padilla prepara la web y revisa el móvil. Jaziel Díaz desarrolla Flutte
 
 - [Corrección del frente de EnviroSense](../evidencias/frente47/README.md): recorrido del original, portada/acceso, mapa y pantallas internas, con capturas comparables y pruebas. Propuesta sobre este candidato, pendiente de revisión.
 
-- [PDF para presentar](../../output/pdf/GeoSur-M3.pdf), seis páginas revisadas visualmente.
+- [PDF para presentar](../../output/pdf/GeoSur-M3.pdf), diez páginas revisadas visualmente, con capturas, recorrido y límites vigentes.
 - [Base y alcance de EnviroSense](../ENVIROSENSE_COMO_BASE.md). El catálogo principal comprende doce países sudamericanos y Guyana Francesa como territorio. Focos y sequías mantienen cobertura probada de Santa Cruz.
 - [Comparación de sequías](../qa39/README.md): respuesta, lluvia de las treinta ventanas, contraste SciPy, capturas web y evidencia móvil de Jaziel. PR #88, tarea #39.
 - [Avance parcial de agua/inundaciones](../ANA01_INUNDACIONES.md): propuesta, catálogo y adquisición reproducible. PR #46, tarea #40. No hay resultado de inundación ni análisis de píxeles.
@@ -37,6 +39,8 @@ Se guardó un respaldo SQLite consistente antes de aplicar las migraciones `0030
 Se publicaron inicialmente 17 PNG GFS reales en almacenamiento privado: temperatura de las 06 UTC y ocho capas de las 09 y 12 UTC del 29/10. Incluyen temperatura, humedad, viento, presión, visibilidad, nieve equivalente de agua, precipitación acumulada e intensidad de precipitación. Se comprobaron sus huellas y el navegador los recibe por rutas autenticadas. El mapa distingue registros, estimaciones y simulación continua. La continuación #99 añade actualización automática local, con 16 imágenes nuevas del ciclo 18 UTC sin eliminar las anteriores; la ejecución periódica necesita el equipo disponible y su revisión propia.
 
 ## Validación
+
+**Corte actualizado del 30/10 (#107):** 503 pruebas PHP / 6069 comprobaciones, 121 JavaScript y 34 del productor/orquestación, Pint correcto. Captura real y lectura de las dos capas de energía; publicación de cuatro imágenes de tarde y otras cuatro del nuevo ciclo. El horario incorporó también el ciclo ambiental nuevo: 57 cuadros activos, con las 33 imágenes anteriores conservadas. Estado y evidencia en la guía de energía. Los resultados siguientes conservan el registro de la integración base, sin sustituirlos por el resultado actual.
 
 - Integración PHP: **477 pruebas, 5717 comprobaciones correctas**. Vistas compiladas en un directorio de pruebas separado. Bases y transportes controlados.
 - JavaScript integrado: **101 pruebas correctas**, incluidos filtro territorial, capa continua y calma exacta del viento.
@@ -63,7 +67,7 @@ El productor raster utiliza su entorno aislado; ver su guía. Las pruebas no acr
 
 1. Jaziel: corregir el conflicto de manifiestos Android en #88 y repetir CI; revisar el candidato web y los PR #90-95 y #97. El fallo se dejó comentado con el ajuste concreto. #39 no se cierra con Android fallido.
 2. Flutter: trabajo ampliado de EnviroSense en #89, con Jaziel. No se desarrolló móvil después de la instrucción de reservarle ese trabajo. APK release e instalación siguen pendientes.
-3. Datos: dispositivos/broker reales, importación de un historial saneado real, capa raster AQI y productos UV/evaporación con significado verificado. La consulta puntual del índice europeo y sus 24 horas continúa en #101. Las ocho capas GFS y PostgreSQL local con concurrencia ya están comprobados; esto no acredita un histórico completo ni un despliegue.
+3. Datos: dispositivos/broker reales, importación de un historial saneado real, capa raster AQI, índice UV raster y evaporación histórica ERA5. #107 recupera las dos magnitudes del operativo original como radiación solar y energía potencial, sin confundirlas con esos productos pendientes. La consulta puntual del índice europeo y sus 24 horas está en #101. Las ocho capas GFS previas, las dos de energía y PostgreSQL local con concurrencia están comprobados; esto no acredita un histórico completo ni un despliegue.
 4. Servicios externos: correo, Telegram, WhatsApp y push configurables, apagados por defecto; faltan credenciales y pruebas autorizadas. La consulta atmosférica de Reportes se comprobó con el proveedor real y se habilitó en este equipo en #103; una instalación nueva la conserva apagada. No se envían mensajes desde una prueba ni se usa el WhatsApp personal como integración.
 5. Inundaciones: revisar método, objetivo/evento y referencia de escenas antes de procesar; la adquisición parcial está documentada en #40/#46.
 6. Gestión: estimar el alcance ampliado y recalcular ProjectLibre conservando la línea base; propietario configura protecciones, rama predeterminada y borrado global. Railway/publicación siguen pospuestos por Josué.
