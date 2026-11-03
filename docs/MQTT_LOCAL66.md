@@ -191,7 +191,7 @@ Se añaden únicamente herramientas de prueba y estos documentos/evidencias.
 No se encontró un fallo del runtime GeoSur que justificara modificarlo.
 No se editan dependencias de producción, migraciones, app/, móvil, referencia,
 demo, roles, prod/live5791 ni otros checkouts. No hay avisos a personas,
-cuentas externas, API keys, escrituras GitHub, commit o push.
+cuentas externas ni API keys. La propuesta se publica en su PR para revisión.
 
 **Esta evidencia acredita interoperabilidad LOCAL con un broker de uso común
 y el camino Laravel/SQLite real usando mensajes sintéticos. No acredita
@@ -210,4 +210,4 @@ Referencias oficiales consultadas solo para herramientas de prueba:
 
 ## Comprobación automática
 
-El workflow MQTT local real repite los 19 escenarios con Node 22 y PHP 8.3 en Linux y Windows. Usa las dependencias fijadas y un broker efímero de loopback; publica solo el informe saneado como artefacto. No sube la base ni el entorno privados. El resultado remoto se comprueba por separado en la interfaz de GitHub.
+El workflow MQTT local real repite los 19 escenarios con Node 22 y PHP 8.3 en Linux y Windows. Usa las dependencias fijadas y un broker efímero de loopback; publica solo el informe saneado de ese arranque como artefacto (tmp/mqtt-local66/ci-informe.json). Verifica la fecha de inicio y el directorio de origen; no adjunta el informe histórico de docs/. No sube la base ni el entorno privados. El resultado remoto se comprueba por separado en la interfaz de GitHub.
