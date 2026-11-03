@@ -1,0 +1,192 @@
+{
+  "status": "passed",
+  "correction": 136,
+  "head": "7163a0e94be04bc49a6ad1312364617909da740b",
+  "headAfter": "7163a0e94be04bc49a6ad1312364617909da740b",
+  "scope": "SOLO AccesoDenegadoWebTest y dos regresiones puntuales ApiCuentasTest",
+  "completedAt": "2026-11-03T15:54:23.875Z",
+  "currentHeadValidation": {
+    "executed": 4,
+    "passed": 4,
+    "assertions": 38,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "elapsedSeconds": 7.546,
+    "tests": [
+      {
+        "id": "Tests\\Feature\\AccesoDenegadoWebTest::test_el_visualizador_recibe_un_403_en_espanol_con_salidas_accesibles",
+        "assertions": 13,
+        "seconds": 7.425826,
+        "status": "passed",
+        "file": "C:\\Users\\cjosu\\Desktop\\GeoCruz-oficial\\tmp\\qa-web-m3-20261103\\web\\tests\\Feature\\AccesoDenegadoWebTest.php",
+        "line": 16
+      },
+      {
+        "id": "Tests\\Feature\\AccesoDenegadoWebTest::test_la_peticion_json_conserva_el_403_y_su_respuesta",
+        "assertions": 4,
+        "seconds": 0.024663,
+        "status": "passed",
+        "file": "C:\\Users\\cjosu\\Desktop\\GeoCruz-oficial\\tmp\\qa-web-m3-20261103\\web\\tests\\Feature\\AccesoDenegadoWebTest.php",
+        "line": 42
+      },
+      {
+        "id": "Tests\\Feature\\ApiCuentasTest::test_cookie_web_no_reemplaza_el_token_movil_y_salir_revoca_solo_ese_dispositivo",
+        "assertions": 5,
+        "seconds": 0.039326,
+        "status": "passed",
+        "file": "C:\\Users\\cjosu\\Desktop\\GeoCruz-oficial\\tmp\\qa-web-m3-20261103\\web\\tests\\Feature\\ApiCuentasTest.php",
+        "line": 84
+      },
+      {
+        "id": "Tests\\Feature\\ApiCuentasTest::test_solo_administrador_lista_y_cambia_cuentas_por_api_y_revoca_el_acceso_anterior",
+        "assertions": 16,
+        "seconds": 0.037025,
+        "status": "passed",
+        "file": "C:\\Users\\cjosu\\Desktop\\GeoCruz-oficial\\tmp\\qa-web-m3-20261103\\web\\tests\\Feature\\ApiCuentasTest.php",
+        "line": 96
+      }
+    ],
+    "missing": [],
+    "unexpected": []
+  },
+  "previousAcceptance": {
+    "head": "92615f68420c9eed0d27a5fc90afdbef3e7ef1ce",
+    "passed": 509,
+    "report": "summary.json",
+    "reportSha256Before": "e1991f0705e10e72f96e5838e23f9a499ab48530992181b574fb1fb7203b280e",
+    "reportSha256After": "e1991f0705e10e72f96e5838e23f9a499ab48530992181b574fb1fb7203b280e",
+    "preservedUnchanged": true,
+    "notAttributedToCurrentHead": true,
+    "full509NotRepeated": true,
+    "note": "Solo se repitieron las dos regresiones ApiCuentasTest solicitadas; la clase nueva añade dos casos."
+  },
+  "isolation": {
+    "verifiedEveryApplication": true,
+    "preflight": {
+      "checks": {
+        "testing": true,
+        "config_not_cached": true,
+        "sqlite": true,
+        "memory": true,
+        "no_db_url": true,
+        "array_cache": true,
+        "array_session": true,
+        "array_mail": true,
+        "sync_queue": true,
+        "no_env_file": true,
+        "columns": true,
+        "lines": true,
+        "disabled_exec": true,
+        "disabled_shell_exec": true,
+        "disabled_system": true,
+        "disabled_passthru": true,
+        "disabled_proc_open": true,
+        "disabled_popen": true
+      },
+      "paths": {
+        "config": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/bootstrap-cache/config.php",
+        "routes": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/bootstrap-cache/routes.php",
+        "events": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/bootstrap-cache/events.php",
+        "packages": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/bootstrap-cache/packages.php",
+        "services": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/bootstrap-cache/services.php",
+        "views": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/views",
+        "storage": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/storage",
+        "cache_files": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/storage\\framework/cache/data",
+        "sessions": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/storage\\framework/sessions",
+        "local_disk": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/storage\\app/private",
+        "public_disk": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/storage\\app/public",
+        "test_tmp": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/test-tmp",
+        "environment": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/env"
+      },
+      "php_version": "8.3.30",
+      "php_ini": "C:\\Users\\cjosu\\Desktop\\GeoCruz-oficial\\tmp\\qa-web-m3-20261103\\tmp\\php-qa.ini",
+      "db": {
+        "driver": "sqlite",
+        "database": ":memory:"
+      },
+      "environment_file": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/env\\qa-disabled.env",
+      "temporary_directory": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/temp",
+      "actual_database_list": [
+        {
+          "seq": 0,
+          "name": "main",
+          "file": ""
+        }
+      ],
+      "test_case_harness": "Original Tests\\TestCase con createApplication aislado; mismas aserciones y setUp"
+    },
+    "runRoot": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136",
+    "harness": {
+      "bootstrap": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/bootstrap.php",
+      "testCase": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/TestCase-isolated.php",
+      "autoPrepend": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/isolation.php"
+    },
+    "cacheAndStorageFresh": true,
+    "environmentFilesLoaded": false,
+    "windowsHide": true,
+    "shell": false,
+    "environmentInherited": true,
+    "timeoutSeconds": 180
+  },
+  "integrity": {
+    "sourceFilesChecked": 346,
+    "changedSourceFiles": [],
+    "priorArtifactsChecked": 50,
+    "changedPriorArtifacts": [],
+    "gitOrGitHubWrites": false
+  },
+  "processes": {
+    "startedAt": "2026-11-03T15:53:38.256Z",
+    "finished": true,
+    "exitCode": 0,
+    "args": [
+      "-n",
+      "-c",
+      "../tmp/php-qa.ini",
+      "-d",
+      "disable_functions=exec,shell_exec,system,passthru,proc_open,popen",
+      "-d",
+      "sys_temp_dir=C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/temp",
+      "-d",
+      "upload_tmp_dir=C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/temp",
+      "-d",
+      "session.save_path=C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/temp",
+      "-d",
+      "error_log=C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/php-errors.log",
+      "-d",
+      "log_errors=1",
+      "-d",
+      "auto_prepend_file=C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/isolation.php",
+      "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/web/vendor/bin/phpunit",
+      "--configuration",
+      "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/phpunit.xml",
+      "--filter",
+      "(?:AccesoDenegadoWebTest::|ApiCuentasTest::(?:test_solo_administrador_lista_y_cambia_cuentas_por_api_y_revoca_el_acceso_anterior|test_cookie_web_no_reemplaza_el_token_movil_y_salir_revoca_solo_ese_dispositivo)$)",
+      "--colors=never",
+      "--columns",
+      "100",
+      "--do-not-cache-result",
+      "--log-junit",
+      "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/junit.log",
+      "--log-events-text",
+      "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/run-136/events.log"
+    ],
+    "pythonPid": 30660,
+    "signal": null,
+    "finishedAt": "2026-11-03T15:53:46.099Z",
+    "allOwnedFinished": true,
+    "remainingOwned": []
+  },
+  "evidence": {
+    "log": "run-136/acceptance.log",
+    "junit": "run-136/junit.log",
+    "events": "run-136/events.log",
+    "isolation": "run-136/isolation.json",
+    "initialMetadata": "run-136/before.json",
+    "previousReport": "summary.json"
+  },
+  "pintRun": false,
+  "fullSuiteRun": false
+}

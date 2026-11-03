@@ -1008,5 +1008,39 @@
       "servidor5795Detenido": true,
       "codigo": 0
     }
+  },
+  "follow_up_walkthrough_20261103": {
+    "captured_at": "2026-11-03T18:43:38.599Z",
+    "source": "ensayo local aislado y UI pública de GitHub",
+    "record": "recorrido-web-20261103/resultado.json",
+    "guide": "../../output/pdf/GeoSur-M3-recorrido-web-20261103.pdf",
+    "qa_initial": "92615f68420c9eed0d27a5fc90afdbef3e7ef1ce",
+    "qa_fix": "7163a0e94be04bc49a6ad1312364617909da740b",
+    "web_manual_cases": 20,
+    "php": {
+      "sha": "92615f68420c9eed0d27a5fc90afdbef3e7ef1ce",
+      "correctas": 509,
+      "aserciones": 6273,
+      "excluidas": 14
+    },
+    "js": {
+      "correctas": 181,
+      "sha": "92615f68420c9eed0d27a5fc90afdbef3e7ef1ce",
+      "arbolSinCambiosEnCorreccion": true
+    },
+    "correction": {
+      "numero": 137,
+      "sha": "98af91f5c5539a1900ab58df6582b042164f944c",
+      "checks": {
+        "correctos": 7,
+        "total": 7,
+        "fuente": "interfaz pública de GitHub",
+        "captura": "pr137-comprobaciones.png"
+      },
+      "revision": "solicitada a Jazielle, pendiente"
+    },
+    "main": "851a79f5c699249c284001114f76f994c9ce4335",
+    "m3_acceptance": "pendiente",
+    "mobile": "sin cambios ni nueva ejecución local"
   }
 }

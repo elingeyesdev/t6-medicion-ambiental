@@ -1,0 +1,106 @@
+{
+  "fechaUTC": "2026-11-03T16:15:58.017Z",
+  "tarea": 41,
+  "qaInicial": "92615f68420c9eed0d27a5fc90afdbef3e7ef1ce",
+  "qaConCorreccion": "7163a0e94be04bc49a6ad1312364617909da740b",
+  "ramaLocal": "test/41-recorrido-web",
+  "publicada": false,
+  "fuentes": [
+    {
+      "pr": 133,
+      "sha": "08aa6c4388fd560830de432c8d91fe6961132406"
+    },
+    {
+      "sha": "d59cd754fb8d7c1ae7dc25d0a294ea07ac6820e0",
+      "nombre": "MQTT"
+    },
+    {
+      "sha": "6c0df1c909749165e1c0d2bb2ea5bd893957f4e6",
+      "nombre": "correo"
+    },
+    {
+      "sha": "637e846305ed39a84f563a982e7afc7f20897483",
+      "nombre": "pantalla completa"
+    },
+    {
+      "sha": "b7ed148d6162b2f1608f1a26266753c4a5df4d1a",
+      "nombre": "develop y candidato"
+    },
+    {
+      "sha": "329dbe73f087e0baf4aa6664c15071958e08d5a4",
+      "nombre": "avisos actualizado"
+    },
+    {
+      "issue": 136,
+      "fuente": "c2b520dd9ace220e79979dc36b8633ca712e8057",
+      "pr": 137
+    }
+  ],
+  "php": {
+    "sha": "92615f68420c9eed0d27a5fc90afdbef3e7ef1ce",
+    "correctas": 509,
+    "aserciones": 6273,
+    "excluidas": 14
+  },
+  "fix136": {
+    "sha": "7163a0e94be04bc49a6ad1312364617909da740b",
+    "correctas": 4,
+    "aserciones": 38
+  },
+  "js": {
+    "correctas": 181,
+    "sha": "92615f68420c9eed0d27a5fc90afdbef3e7ef1ce",
+    "arbolSinCambiosEnCorreccion": true
+  },
+  "pint": {
+    "archivos": 255,
+    "sha": "92615f68420c9eed0d27a5fc90afdbef3e7ef1ce"
+  },
+  "recorridoVisual": {
+    "casos": 20,
+    "archivo": "recorrido-ui.json"
+  },
+  "sequias": {
+    "mesFinal": "2024-09",
+    "publicacion": "372bc9fa7d8119831f3091ca859a3d4490f0bce0a44ad4b424fc6819c101a6be",
+    "lluviaMm": 114.5,
+    "spi": -0.6413769540120462,
+    "municipiosConDatos": 1,
+    "municipios": 56
+  },
+  "focos": {
+    "consulta": "Últimas 24 h, del 2 al 3 de noviembre de 2026",
+    "detecciones": 0,
+    "interpretacion": "Sin detecciones publicadas no descarta incendios"
+  },
+  "canalesExternos": "desactivados",
+  "cuentaDemo": "sin cambios",
+  "main": "851a79f5c699249c284001114f76f994c9ce4335",
+  "aceptacionM3": "pendiente",
+  "correccionPR": {
+    "numero": 137,
+    "sha": "98af91f5c5539a1900ab58df6582b042164f944c",
+    "checks": {
+      "correctos": 7,
+      "total": 7,
+      "fuente": "interfaz pública de GitHub",
+      "captura": "pr137-comprobaciones.png"
+    },
+    "revision": "solicitada a Jazielle, pendiente"
+  },
+  "guia": {
+    "paginas": 6,
+    "archivo": "../../../output/pdf/GeoSur-M3-recorrido-web-20261103.pdf",
+    "revisionVisual": "seis páginas completas"
+  },
+  "exportaciones": {
+    "pdfPaginas": 5,
+    "pdfRevisionVisual": "cinco páginas completas",
+    "excelContenidoVerificado": true
+  },
+  "servidorEnsayo": {
+    "estado": "detenido",
+    "codigoSalida": 0,
+    "puerto": 5796
+  }
+}

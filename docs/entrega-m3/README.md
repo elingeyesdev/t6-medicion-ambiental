@@ -6,6 +6,17 @@ Actualización del traspaso: **03/11/2026, America/La_Paz**. Jaziel, dejo separa
 
 La [captura de metadata](metadata-20261031.json) conserva estado nativo (`state`/`closed_at`), Draft, HEAD, base y commit de cada revisión. La captura inicial consultó solo issues, pulls y reviews mediante GitHub REST core, con `gh api GET`; no se consultaron ejecuciones ni se modificó GitHub. El intervalo UTC del 01/11/2026, 00:18-00:19, corresponde al 31/10 por la noche en Bolivia. El `due_on` histórico del milestone no acredita una fecha académica nueva. **CI: sin verificación en este registro REST** (`ci: no_verificado`). El seguimiento `follow_up_129` conserva aparte el SHA posterior y su QA; `follow_up_20261101` actualiza los PR abiertos y #39/#41 sin reescribir la captura inicial. El seguimiento follow_up_night_20261101 registra #133–#135 y la comprobación final de main/#39/#41. La evidencia de interfaz se conserva en `ui_evidence`, separada de la consulta REST.
 
+## Recorrido web y guía de demostración · 03/11
+
+Completé un ensayo en una copia aislada que reúne los PR publicados, sin integrarlos en remoto. El [guion de 8 a 10 minutos](recorrido-web-20261103/guion.md) y la [guía visual de seis páginas](../../output/pdf/GeoSur-M3-recorrido-web-20261103.pdf) permiten preparar la demostración. Esta guía complementa el PDF histórico; no presenta M3 como aceptado.
+
+- **20 comprobaciones manuales:** acceso y roles, mapa A/B y pantalla completa, simulaciones, mediciones, reportes y sus descargas, sequías, focos, preferencias y avisos. [Registro](recorrido-web-20261103/recorrido-ui.json), [capturas y resultados](recorrido-web-20261103/resultado.json). Plantillas/Alertas se abrieron con sus filtros y estados vacíos; no se crearon plantillas ni se reconocieron alertas manualmente.
+- **Copia 92615f6:** 509 casos PHP elegibles / 6273 aserciones, Pint en 255 archivos y 181 JavaScript correctas. Se excluyeron 14 casos de concurrencia/MQTT que necesitan abrir procesos. No se cuentan como aprobados ni se vuelven a atribuir estos resultados a otro commit. Los casos conservados y la selección están adjuntos.
+- **Corrección encontrada, #136 / [PR #137](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/137):** el acceso sin permiso conserva el 403, explica el motivo en español y permite volver. Se repitió en navegador y pasaron 4 regresiones / 38 aserciones en la copia 7163a0e. El PR conserva su validación independiente de 4 / 39 y tiene **7/7 comprobaciones GitHub en 98af91f**, vistas en navegador; [captura](recorrido-web-20261103/pr137-comprobaciones.png). La revisión de Jaziel sigue solicitada.
+- **Datos reales, con sus límites:** sequías de septiembre de 2024 devuelve 114,5 mm y SPI-3 -0,6414 en una muestra, con cobertura 1/56 y celda en Porongo. La consulta FIRMS de las últimas 24 horas devolvió cero detecciones; no demuestra ausencia de incendios. La ficha del tiempo respondió con su pronóstico. El reporte conserva 50 lecturas simuladas y sus exportaciones PDF/Excel, sin presentarlas como observadas.
+
+La copia local combina #133, #134, #135, #129, #96 y #94; luego aplica la corrección fuente de #136. Los SHA y la composición están en el resultado. El móvil, la cuenta demo y main no se modificaron. Se detuvo el servidor de ensayo; no quedan procesos de esta comprobación. Falta revisar e integrar los PR, fijar el SHA aceptado y repetir el recorrido conjunto con Jaziel. M3 y #41 continúan abiertos.
+
 ## Candidato actualizado y cambios aprobados · 03/11
 
 - [PR #88](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/88), HEAD revisado 339d6e6: aprobado e integrado en develop el 02/11, merge 1313e04. Sus tres ajustes móviles y la corrección Android se conservan; #39 está cerrada. [Aprobación](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/88#pullrequestreview-5746453636) y [evidencia anterior](evidencias/pr88-integrado-20261102.png). No se recompiló ni modificó Flutter localmente.
@@ -18,7 +29,7 @@ El [seguimiento de este día](evidencias/seguimiento-20261103.json) distingue le
 
 ## Continuaciones web del 31/10, cada una en su corte
 
-Estos resultados fueron comunicados para los SHA indicados y conservan sus alcances. **No se suman entre sí ni se trasladan a otro HEAD.** No se ejecutaron pruebas en esta actualización.
+Estos resultados fueron comunicados para los SHA indicados y conservan sus alcances. **No se suman entre sí ni se trasladan a otro HEAD.** Estos resultados no se repitieron durante la actualización documental inicial; el ensayo nuevo está separado arriba.
 
 - [PR #121, reportes](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/121), `fb3a42b`, hacia `feature/107-energia-superficie`: abierto, con revisión solicitada a Jazielle y sin reviews registradas en la captura. Agrega al PDF de reportes el detalle de faltantes que ya estaba en pantalla y Excel. Referencia: **505 pruebas PHP / 6103 aserciones** y tres JavaScript de reportes. [Reproducción y evidencia existente](../REVISION_REPORTES64.md).
 - [PR #125, últimas 24 horas](https://github.com/elingeyesdev/t6-medicion-ambiental/pull/125), `6b7d0f8`, sobre la rama de #121: abierto, con revisión solicitada a Jazielle y sin reviews registradas. Referencia: **511 PHP / 6244 aserciones; 132 JavaScript**. Recupera estimaciones recientes en la ficha del tiempo, separadas del pronóstico; no sustituye la línea temporal raster ni el historial de sensores. [Captura, respuestas y límites de #124](../evidencias/tiempo124/README.md).
@@ -76,7 +87,7 @@ Los enlaces siguientes conservan los antecedentes del candidato del 30/10. Son e
 - [Avisos y cuentas](../M3_AVISOS_CUENTAS_WEB.md): bandeja, consentimiento, cola y estados de canales externos. PR #94.
 - [Guía del curso](../GUIA_CURSO_ESTADO.md): 61 páginas contrastadas, formularios de tareas/errores y pendientes de permisos. PR #90.
 
-El registro anterior utilizó la demo de 5791, con rol Visualizador. Esta edición no inicia servidores, no cambia cuentas o sesiones y no incluye credenciales. Tabler 1.7.1 se conserva como base de componentes internos; el código del proveedor permanece separado de los componentes propios.
+El registro anterior utilizó la demo de 5791, con rol Visualizador. El índice inicial no inició servidores ni cambió cuentas o sesiones. El ensayo del 03/11, registrado arriba, usa una base y cuentas sintéticas propias; no incluye credenciales. Tabler 1.7.1 se conserva como base de componentes internos; el código del proveedor permanece separado de los componentes propios.
 
 ## Integración local registrada en el corte histórico
 
@@ -99,7 +110,7 @@ Se publicaron inicialmente 17 PNG GFS reales en almacenamiento privado: temperat
 - Sequías real: 114,5 mm; SPI Laravel `-0.6413769540120462`; SciPy `-0.6413769540120433`; diferencia `2.886579864025407e-15`. Cobertura parcial: 1 de 56 municipios. Una celda no acredita la condición de todo el municipio.
 - Navegador: demo, mapa continental, comparación de temperaturas, viento y precipitación reales y consulta de sequías con sesión. [Ocho capas disponibles y comparación](evidencias/mapa-ocho-capas-noaa.png), [temperatura](evidencias/mapa-temperatura-noaa.png) y [detalle de sequías](../qa39/evidencias/web-sequias-detalle-2024-09.png). En el centro de la captura nueva se leen 8 km/h y 0 mm, con fechas y período del acumulado visibles.
 
-El [archivo de resultados](resultados.json) corresponde al 29/10 y no se reescribió. Su pendiente Android de #88 quedó superado en `b176111`; para el estado actual, usar la distinción #88/#96 de arriba. Las pruebas históricas con transportes controlados no acreditan nuevas conexiones externas. Esta edición solo cambia documentación y metadata; no ejecuta pruebas, proveedores, bases ni horarios automáticos.
+El [archivo de resultados](resultados.json) corresponde al 29/10 y no se reescribió. Su pendiente Android de #88 quedó superado en `b176111`; para el estado actual, usar la distinción #88/#96 de arriba. Las pruebas históricas con transportes controlados no acreditan nuevas conexiones externas. El registro histórico se conserva sin atribuir sus pruebas o conexiones al ensayo nuevo. La actualización de este PR cambia documentación y evidencias; no activa horarios en la demo.
 
 ## Orden de revisión y lo que falta
 
@@ -121,12 +132,15 @@ En la captura siguen abiertos, sin fusionar, con revisión solicitada a Jazielle
 
 Estos PR no cierran M3 ni M4, no sustituyen las dependencias de #41 y no confirman fechas académicas. Sus documentos se revisan en su propio alcance.
 
-## Plan manual de aceptación web - todo pendiente
+## Aceptación web: ensayo terminado, revisión cruzada pendiente
 
-Este plan se deja para la revisión; **no se ejecutó en esta actualización**. Reutiliza las respuestas, capturas y exportaciones existentes, conservando su SHA, lugar y fecha, sin presentar ensayos distintos como una misma medición.
+- [x] Reunir los PR en una copia local de ensayo e identificar su composición y SHA, diferenciándola del candidato remoto.
+- [x] Ejecutar el recorrido web de acceso, mapa, comparación, simulaciones, mediciones, reportes, sequías, focos, preferencias y avisos; guardar capturas y límites.
+- [x] Probar pantalla completa nativa y Escape conservando punto, ajustes, comparación, fechas y URL. La revisión de Jaziel de #129 sigue pendiente.
+- [x] Abrir el PDF y Excel descargados del reporte, revisar sus datos y las cinco páginas del PDF; revisar visualmente las seis páginas de la guía.
+- [x] Registrar el defecto #136, publicar la corrección #137 y repetir el acceso sin permiso sin ampliar roles.
+- [ ] Acordar los PR que se aceptarán y fijar el SHA remoto de integración revisado.
+- [ ] Jaziel registra SHA, evidencia y resultado de su revisión web; ambos repiten el recorrido con Flutter y sus alcances actuales.
+- [ ] Completar la revisión del avance de inundaciones y del paquete #41. Presentar el corte al ingeniero y registrar su aceptación antes de promover M3 a main.
 
-- [ ] **Pendiente:** acordar el SHA del candidato y la lista de PR realmente incluidos. Anotar qué sigue fuera, incluido #129 mientras falte su revisión.
-- [ ] **Pendiente:** contrastar el recorrido del mapa con las [capturas del frente](../evidencias/frente47/README.md) y las [ocho capas](evidencias/mapa-ocho-capas-noaa.png): filtros, leyendas, fechas, comparación A/B, unidades y selección. Para sequías, usar la [respuesta y capturas de #39](../qa39/README.md), respetando cobertura 1/56, faltantes y procedencia de cada ensayo.
-- [ ] **Pendiente:** revisar el [detalle de faltantes de reportes](../evidencias/reportes64/faltantes-controlados.png) con su exportación/evidencia guardada, y la [ficha de 24 horas](../evidencias/tiempo124/README.md) con sus propias respuestas. Confirmar ceros frente a faltantes, período, UTC/hora del lugar y separación de estimaciones recientes/pronóstico. Contrastar la [condición del tiempo](../evidencias/condicion127/README.md): cero despejado, noche, desconocidos y condición diaria más intensa; no alertas.
-- [ ] **Pendiente de aceptación cruzada:** el respaldo de #129 tiene recorrido local y capturas en `b64e626`; Jaziel debe contrastarlo y completar la vía nativa real, salida por botón/Escape y conservación de capas, fondo, ficha y selección. Las comprobaciones automáticas no sustituyen ese recorrido.
-- [ ] **Pendiente:** Jaziel registra SHA revisado, evidencia utilizada, observaciones y resultado de la revisión web. Después se presenta el corte al ingeniero para aceptación de M3. Mantener #41 abierta y main en M2 mientras esa aceptación no exista; el PDF enlazado continúa identificado como corte antiguo.
+El ensayo propio no marca aprobados los PR ni cierra el milestone. [Preparación y pendientes para defender](recorrido-web-20261103/guion.md).
