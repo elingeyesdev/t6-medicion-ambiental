@@ -169,3 +169,11 @@ Contratos oficiales consultados: [Telegram sendMessage](https://core.telegram.or
 Incorporé develop `cf37681` (ingestión #91 y simulación/reportes #92 aceptados) a este candidato. El conflicto estaba en `web/routes/web.php`; quedaron las rutas de avisos/push/cambio de clave y las de simulación continua, con sus permisos y límites originales. Se mantienen los servicios y migraciones de ambos lados.
 
 Comprobación acotada: 67 pruebas PHP / 1762 aserciones de avisos, cuenta, recuperación, ingestión y simulación continua; diez JavaScript de avisos/push y gráficos. Pint de rutas correcto. La base de pruebas es SQLite en memoria y usa transportes controlados. No se aplicaron migraciones a la base del usuario ni se contactaron proveedores reales. Esta actualización conserva la revisión pendiente del PR #94.
+
+## Corrección del conflicto con develop · PR #94
+
+Se incorpora develop 1313e04. El conflicto estaba en web/bootstrap/app.php: el PR conservaba el manejo de errores de avisos/cuenta y develop añadía el del mapa. Se mantienen ambos, con sus rutas, respuestas y permisos. No se habilitan canales ni se aplican migraciones a la instalación del usuario.
+
+Pasaron 23 pruebas JavaScript, Pint de bootstrap/rutas y la revisión de sintaxis. PHPUnit no terminó de arrancar localmente, incluso con --version; no se presenta como una suite PHP correcta. La comprobación remota debe revisarse sobre el nuevo commit. [Registro local](evidencias/conflicto94/resultado.json).
+
+El PR #120 no presenta conflicto con su base actual ni al combinarlo con este develop. Conserva la dependencia del PR #46 y no se cambia su base ni se fusionan esos PR con esta corrección.
