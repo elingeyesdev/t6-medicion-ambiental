@@ -1,0 +1,13 @@
+{
+  "paginasPdf": 4,
+  "hojasExcel": [
+    "Lecturas",
+    "Resumen"
+  ],
+  "filasExportadas": 9,
+  "respuestasYExportacionesCoinciden": true,
+  "resumenesContrastados": 3,
+  "escalasSeparadas": true,
+  "formulasInyectadas": 0,
+  "numeracionComprobada": true
+}
