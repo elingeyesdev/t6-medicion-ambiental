@@ -86,6 +86,8 @@
         </div></details>
         <section class="monitoreo-buscador" aria-label="Buscar lugar">
             <form id="buscar-lugar" role="search">
+                <label for="tipo-busqueda" class="form-label">Qué buscas</label>
+                <select id="tipo-busqueda" name="tipo" class="form-select"><option value="lugar">Ciudad o dirección</option><option value="sitio">Sitio de interés</option></select>
                 <label for="nombre-lugar" class="form-label">Buscar lugar</label>
                 <input id="nombre-lugar" name="texto" class="form-control" type="search" placeholder="País, ciudad o lugar" minlength="2" maxlength="120" required autocomplete="off">
                 <div class="buscador-acciones"><button type="submit" class="btn btn-primary">Buscar</button><button type="reset" class="btn btn-outline-primary">Limpiar</button></div>
