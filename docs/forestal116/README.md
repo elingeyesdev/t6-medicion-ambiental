@@ -58,3 +58,8 @@ Comprobación local: 13 pruebas correctas, incluidas lectura sin red, integridad
 ## Revisión pendiente
 
 Jaziel debe revisar producto/versión, parámetro de cobertura, período, geometría y lectura desde Flutter. Ambos deben acordar el piloto y su contraste antes de #117. #116 queda en revisión, no cerrada por esta preparación. #109 conserva la replanificación con la capacidad real del equipo; los pendientes M3 siguen en M3.
+
+
+## Continuación de acceso y territorio · 03/11/2026
+
+La [captura posterior y el contraste territorial](evidencias/contraste-20261103/README.md) completan los cuatro HTTP 200 de GFW y verifican la identidad departamental de GADM. Se conservan 25 años informados, con sus decimales originales. Los contornos GADM y local difieren; la consulta conserva la identidad del territorio del proveedor. El verificador de acceso y las pruebas locales están adjuntos para la revisión del criterio y del piloto.

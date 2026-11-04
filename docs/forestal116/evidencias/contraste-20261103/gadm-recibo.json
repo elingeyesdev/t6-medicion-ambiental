@@ -1,0 +1,11 @@
+{
+  "url": "https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_BOL_1.json",
+  "http": 200,
+  "bytes": 347649,
+  "sha256": "206dad00c2d25488abac3b5ce3b7b04b5c496337c4ece99740404701259924a2",
+  "feature": "BOL.8_1",
+  "licencia": "https://gadm.org/license.html",
+  "geometriaCompleta": "archivo local privado, fuera de Git",
+  "pyproj": "3.7.2",
+  "registradoUTC": "2026-11-04T03:50:25.798Z"
+}
