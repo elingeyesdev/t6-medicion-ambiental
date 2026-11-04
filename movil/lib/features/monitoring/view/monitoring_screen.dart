@@ -8,6 +8,7 @@ import '../../../core/formatters/bolivia_time.dart';
 import '../../../core/formatters/consultation_period.dart';
 import '../../../core/theme/geocruz_theme.dart';
 import '../../../core/widgets/geosur_brand.dart';
+import '../../../core/widgets/units_scope.dart';
 import '../model/monitoring_models.dart';
 import '../model/monitoring_repository.dart';
 
@@ -699,7 +700,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${reading.value} ${response.unit}',
+                        _formatReading(context, response, reading.value),
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       Text(
@@ -804,6 +805,16 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
         ),
       );
 
+
+  String _formatReading(
+    BuildContext context,
+    MonitoringResponse response,
+    num value,
+  ) {
+    final units = UnitsScope.maybeOf(context)?.presentation;
+    if (units == null) return '$value ${response.unit}';
+    return units.format(response.metric, value, response.unit);
+  }
   Future<void> _showHistory(MonitoringPoint point) async {
     showModalBottomSheet<void>(
       context: context,
@@ -902,7 +913,7 @@ class _HistorySheetState extends State<_HistorySheet> {
                     return ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        '${row['valor'] ?? 'Sin dato'} ${row['unidad'] ?? ''}',
+                        _formatHistoryRow(context, widget.filters.metric, row),
                       ),
                       subtitle: Text(
                         '${row['origen'] ?? ''} · ${row['fuente'] ?? ''}',
@@ -986,3 +997,16 @@ IconData _originIcon(String origin) => switch (origin) {
   'simulado' => Icons.science_outlined,
   _ => Icons.circle_outlined,
 };
+
+String _formatHistoryRow(
+  BuildContext context,
+  String metric,
+  Map row,
+) {
+  final raw = row['valor'];
+  final base = '${row['unidad'] ?? ''}';
+  if (raw is! num) return 'Sin dato $base'.trim();
+  final units = UnitsScope.maybeOf(context)?.presentation;
+  if (units == null) return '$raw $base'.trim();
+  return units.format(metric, raw, base);
+}
