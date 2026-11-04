@@ -610,5 +610,39 @@
   "metaM4Referencia": "2026-11-05",
   "metaFinalReferencia": "2026-11-30",
   "fechaAcademicaM4Confirmada": false,
-  "pronosticoActual": null
+  "pronosticoActual": null,
+  "revisionPreparacion20261104": {
+    "registradoUTC": "2026-11-04T04:32:53.703Z",
+    "fuenteSnapshot": "https://github.com/elingeyesdev/t6-medicion-ambiental/blob/c40f2c2/docs/entrega-m4/evidencias/2026-11-04/snapshot.json",
+    "preparaciones": [
+      {
+        "issue": 112,
+        "pr": 138,
+        "estado": "candidato_sin_producto_real"
+      },
+      {
+        "issue": 113,
+        "pr": 139,
+        "estado": "revision_local_controlada_sobre_138"
+      },
+      {
+        "issue": 116,
+        "pr": 119,
+        "estado": "acceso_y_territorio_documentados_metodo_pendiente"
+      },
+      {
+        "issue": 118,
+        "pr": 122,
+        "estado": "indice_guion_y_pdf_preparados"
+      }
+    ],
+    "diasTrabajoConfirmados": "lunes a domingo",
+    "horasPorDiaPorPersona": {
+      "minimo": 2,
+      "maximo": 3
+    },
+    "inicioConfirmado": null,
+    "pronostico": null,
+    "nota": "La revisión anterior y el XML permanecen históricos. Las preparaciones no resuelven dependencias del producto real ni se vuelven a sumar como trabajo restante."
+  }
 }

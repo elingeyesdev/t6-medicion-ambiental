@@ -1,0 +1,58 @@
+{
+  "tipo": "capacidad_declarada_no_pronostico",
+  "unidad": "horas-persona",
+  "personas": [
+    {
+      "nombre": "Josué Padilla",
+      "diasSemanaISO": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "horasDiarias": {
+        "minimo": 2,
+        "maximo": 3
+      },
+      "horasSemanaCompleta": {
+        "minimo": 14,
+        "maximo": 21
+      },
+      "desdeConfirmado": null,
+      "ausenciasConfirmadas": null
+    },
+    {
+      "nombre": "Jaziel Díaz",
+      "diasSemanaISO": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "horasDiarias": {
+        "minimo": 2,
+        "maximo": 3
+      },
+      "horasSemanaCompleta": {
+        "minimo": 14,
+        "maximo": 21
+      },
+      "desdeConfirmado": null,
+      "ausenciasConfirmadas": null
+    }
+  ],
+  "totalSemanaCompleta": {
+    "minimo": 28,
+    "maximo": 42
+  },
+  "condicion": "Semana completa con todos los dias declarados disponibles; sin descontar ausencias desconocidas. No implica trabajo simultaneo ni recursos intercambiables.",
+  "duracionCalendarioHoras": null,
+  "fechaEntrega": null,
+  "esfuerzoRestante": null
+}

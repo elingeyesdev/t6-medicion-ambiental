@@ -1,7 +1,7 @@
 {
   "tipo": "plantilla_pendiente_no_estimaciones_aprobadas",
   "unidadEstimacionRestante": "horas de esfuerzo por integrante; no jornadas de duración ni tiempo ya trabajado",
-  "actualizado_utc": "2026-11-04T03:21:56.497Z",
+  "actualizado_utc": "2026-11-04T04:32:53.702Z",
   "responsablePlanificacion": "Jaziel Díaz",
   "apoyoPlanificacion": "Josué Padilla",
   "estadoEstimacionesRestantes": "pendientes_de_confirmar_con_ambos",
@@ -15,7 +15,7 @@
     "estado": "confirmada_por_usuario",
     "duracionCalendarioHoras": null
   },
-  "criterioCarga": "Una fila por actividad para describir solo trabajo restante y estimar esfuerzo O/M/P por persona. Si se desglosan subtareas, consolidar una vez en su padre; no añadir la duración histórica del padre. La capacidad diaria no fija días de trabajo, horas semanales ni fechas.",
+  "criterioCarga": "Contar solo esfuerzo restante por integrante. Calendario semanal lunes a domingo confirmado; inicio, horarios, vigencia y ausencias desconocidos. La capacidad no es duración ni pronóstico. Consolidar G/H una vez, sin sumar el padre histórico.",
   "personas": [
     {
       "nombre": "Josué Padilla",
@@ -26,8 +26,26 @@
         "unidad": "horas por día disponible",
         "estado": "confirmada_por_usuario"
       },
-      "horasPorSemanaConfirmadas": null,
-      "calendarioConfirmado": null,
+      "horasPorSemanaConfirmadas": {
+        "minimo": 14,
+        "maximo": 21,
+        "unidad": "horas-persona por semana completa sin ausencias",
+        "estado": "derivado_de_disponibilidad_declarada"
+      },
+      "calendarioConfirmado": {
+        "diasSemanaISO": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "zona": "America/La_Paz",
+        "estado": "confirmado_por_usuario",
+        "horarios": null
+      },
       "desde": null,
       "hasta": null,
       "ausencias": null
@@ -41,8 +59,26 @@
         "unidad": "horas por día disponible",
         "estado": "confirmada_por_usuario"
       },
-      "horasPorSemanaConfirmadas": null,
-      "calendarioConfirmado": null,
+      "horasPorSemanaConfirmadas": {
+        "minimo": 14,
+        "maximo": 21,
+        "unidad": "horas-persona por semana completa sin ausencias",
+        "estado": "derivado_de_disponibilidad_declarada"
+      },
+      "calendarioConfirmado": {
+        "diasSemanaISO": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "zona": "America/La_Paz",
+        "estado": "confirmado_por_usuario",
+        "horarios": null
+      },
       "desde": null,
       "hasta": null,
       "ausencias": null
@@ -277,8 +313,8 @@
         114,
         115
       ],
-      "descripcionTrabajoRestante": null,
-      "apoyo": "4.3 G: #46 integrado es preparación; #40 sigue abierta y #110 / PR #120 pendiente de revisión. #111 espera #110; siguen #112, #113, #114 y #115. #39 y la base #47 están cubiertas. Consolidar subtareas una vez en G.",
+      "descripcionTrabajoRestante": "Acordar #110/#40, producir y verificar #111, completar la publicación real de #112 y su integración #113, Flutter #114 y comparación #115. Las preparaciones #138/#139 ya existen y no se estiman otra vez como trabajo nuevo.",
+      "apoyo": "4.3 G: #46 integrado es preparación; #40 sigue abierta y #110 / PR #120 pendiente de revisión. #111 espera #110; siguen #112, #113, #114 y #115. #39 y la base #47 están cubiertas. Consolidar subtareas una vez en G. Preparación del 04/11: API candidata #138 y revisión web local #139, sin producto real ni cierre de dependencias.",
       "estimacionesPorIntegrante": [
         {
           "nombre": "Josué Padilla",
@@ -311,7 +347,7 @@
         116,
         117
       ],
-      "descripcionTrabajoRestante": null,
+      "descripcionTrabajoRestante": "Acordar criterio, equivalencia territorial y piloto #116; después del contraste #115 preparar el resultado parcial #117. #119 ya documenta acceso y territorio, que no deben estimarse como si faltaran.",
       "apoyo": "4.4 H: #116 / PR #119 pendiente de revisión; #117 es avance parcial y espera #116 y #115. Estimar solo trabajo forestal restante, separado de G, sin duplicar subtareas ni dar por completado todo H.",
       "estimacionesPorIntegrante": [
         {
@@ -461,5 +497,6 @@
     "estimacionAcordada": false,
     "regla": "Las funciones y revisiones agregadas deben estimarse; no heredan automáticamente las treinta jornadas originales."
   },
-  "pronosticoActual": null
+  "pronosticoActual": null,
+  "fuenteDisponibilidad": "Confirmado por Josué en esta conversación el 04/11/2026: 2–3 horas diarias por persona y trabajo de lunes a domingo."
 }

@@ -39,19 +39,19 @@ El orden F → G → H se conserva como referencia y propuesta pendiente de revi
 
 ## Capacidad declarada y plantilla de carga
 
-El usuario confirmó **2–3 horas al día por persona**, tanto para Josué como para Jaziel. La suma es **4–6 horas-persona** en un día en que ambos estén disponibles; no equivale a 4–6 horas de duración calendario. No se conocen los días de trabajo, la coincidencia de horarios, la fecha de inicio ni el período de vigencia; no se calculan horas semanales ni fechas del Planner. Esta capacidad declarada tampoco estima el esfuerzo restante.
+El usuario confirmó **2–3 horas al día por persona**, tanto para Josué como para Jaziel. La suma es **4–6 horas-persona** en un día en que ambos estén disponibles; no equivale a 4–6 horas de duración calendario. El 04/11 Josué confirmó trabajo de lunes a domingo para ambos. Esto da 14–21 horas por persona y 28–42 horas-persona en una semana completa sin ausencias. No se conocen coincidencia de horarios, inicio, vigencia ni ausencias; no se calculan fechas del Planner. Esta capacidad declarada tampoco estima el esfuerzo restante.
 
 [datos-por-confirmar.json](datos-por-confirmar.json) registra el intervalo confirmado de cada persona y ofrece una fila por actividad A–L para cargar lo que falta. Los responsables propuestos y las precedencias de actividad proceden de la referencia; deben revisarse con Jaziel. Las dependencias de issues se contrastan con `revisionDependencias` de [trazabilidad.json](trazabilidad.json).
 
 Para completar la carga:
 
-1. Confirmar días/horarios, fecha de inicio, período y ausencias/feriados de cada integrante.
+1. Los días lunes a domingo ya están confirmados. Completar horarios, fecha de inicio, período y ausencias/feriados de cada integrante.
 2. Describir solo el trabajo restante de cada paquete y confirmar sus responsables y dependencias. Registrar O/M/P por persona en horas de esfuerzo y su fuente; los campos siguen nulos, nunca cero por falta de datos.
 3. Incluir esfuerzo de revisión e integración; registrar aparte las esperas externas. En 4.3 G y 4.4 H, consolidar las subtareas una sola vez, sin añadir la duración histórica del padre.
 4. Asignar los pendientes M3 #40, #49 y #89 a sus paquetes antes de estimarlos, sin trasladarlos ni duplicarlos en M4. Revisar con Jaziel el caso y acceso de #110: calidad óptica baja y acceso RTC pendiente.
 5. Acordar el orden y las estimaciones; después preparar otra versión de ProjectLibre con recursos, calendario, nivelación y fechas revisadas, conservando la referencia original.
 
-La meta original M4 es 05/11 y la final 30/11. Falta el pronóstico para contrastar si caben y qué impacto tienen los pendientes. M4 no tiene fecha académica confirmada. Los campos del pronóstico siguen nulos hasta acordar capacidad y esfuerzo; un vacío no representa cero horas.
+La meta original M4 es 05/11 y la final 30/11. Falta el pronóstico para contrastar si caben y qué impacto tienen los pendientes. M4 no tiene fecha académica confirmada. Los campos del pronóstico siguen nulos hasta completar inicio/ausencias y acordar esfuerzo; un vacío no representa cero horas.
 
 ## Repetir la comprobación
 
@@ -65,3 +65,16 @@ python -B -m unittest discover -s herramientas/planificacion109 -p 'test_*.py' -
 Crear `tmp/` si no existe y usar un archivo de salida nuevo. El lector no consulta red ni modifica XML/POD. Sus cinco pruebas contrastan la red real, distinguen esfuerzo de duración y detectan cambios del camino crítico, identificadores rotos y ciclos. El resultado matemático no nivela recursos ni incorpora ausencias, el nuevo alcance o estimaciones restantes.
 
 Esta preparación adelanta la comparación y el análisis de precedencias de #109. Jaziel conserva la responsabilidad de planificación, con apoyo de Josué; quedan pendientes la aprobación del orden propuesto, la estimación conjunta, el pronóstico, el nuevo POD y su revisión. La aceptación documental de [DOC-08](https://github.com/elingeyesdev/t6-medicion-ambiental/issues/8) se conserva como antecedente de M1.
+
+## Actualización del 04/11
+
+El [cálculo de capacidad](capacidad-confirmada-20261104.json) reproduce el intervalo semanal confirmado, sin convertirlo en duración ni repartir tareas entre personas como si fueran intercambiables. No descuenta ausencias desconocidas. La fecha de inicio queda null. El XML original conserva su huella y no se fuerza otro calendario sobre la línea base.
+
+Las preparaciones API #138 y web #139 ya están en revisión; #139 depende de #138. No cierran #111/#112/#113 ni se estiman nuevamente como trabajo no iniciado. #119 ya cuenta con acceso forestal y contraste de identidad territorial; falta acordar método y piloto. El paquete #122 incluye un resumen y guion, sin acreditar entrega final. La revisión nueva de trazabilidad enlaza la captura de 22 tareas y 17 PR del 04/11 y conserva el corte anterior.
+
+```text
+python herramientas/planificacion109/capacidad.py --salida tmp/capacidad-nueva.json
+python -B -m unittest discover -s herramientas/planificacion109 -p test_*.py -v
+```
+
+La salida debe ser nueva. La calculadora solo lee la plantilla; no toca ProjectLibre ni estima O/M/P. Para producir el nuevo POD faltan el inicio, excepciones, esfuerzo restante por responsable y esperas de revisión/datos. Jaziel conserva la planificación y Josué su apoyo; la meta original 05/11 no se convierte en promesa de entrega.
