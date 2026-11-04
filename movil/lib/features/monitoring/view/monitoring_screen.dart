@@ -3,20 +3,29 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
-import '../../../core/network/geocruz_api_client.dart';
 import '../../../core/formatters/bolivia_time.dart';
 import '../../../core/formatters/consultation_period.dart';
+import '../../../core/maps/map_base_styles.dart';
+import '../../../core/maps/map_chrome.dart';
+import '../../../core/network/geocruz_api_client.dart';
 import '../../../core/theme/geocruz_theme.dart';
 import '../../../core/widgets/geosur_brand.dart';
 import '../../../core/widgets/units_scope.dart';
 import '../model/monitoring_models.dart';
 import '../model/monitoring_repository.dart';
+import '../model/place_search_repository.dart';
+import 'air_sheet.dart';
+import 'capas_panel.dart';
+import 'place_search_sheet.dart';
+import 'weather_sheet.dart';
 
+/// Métricas del catálogo EnviroSense (puntos). Pronóstico vía `/tiempo`;
+/// calidad del aire puntual vía `/aire`; capas raster GFS vía `/mapa/capas`.
 const _metrics = <String, String>{
   'temperatura': 'Temperatura',
   'humedad': 'Humedad',
-  'aqi': 'AQI',
-  'ica': 'ICA',
+  'aqi': 'Calidad del aire',
+  'ica': 'Índice de agua',
   'ruido': 'Ruido',
 };
 
@@ -48,6 +57,10 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
   bool _loading = true;
   bool _catalogReady = false;
   bool _mapReady = false;
+  List<OverlayImage> _capaOverlays = const [];
+  MapBaseStyle _mapStyle = MapBaseStyle.relieve;
+  LatLng? _searchPin;
+  String? _searchPinLabel;
 
   @override
   void initState() {
@@ -108,6 +121,91 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
         _loading = false;
       });
     }
+  }
+
+  Future<void> _openSearch() async {
+    final near = _selected != null
+        ? LatLng(_selected!.latitude, _selected!.longitude)
+        : (_response?.points.isNotEmpty == true
+              ? LatLng(
+                  _response!.points.first.latitude,
+                  _response!.points.first.longitude,
+                )
+              : const LatLng(-17.7833, -63.1821));
+    final result = await showModalBottomSheet<PlaceSearchResult>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      showDragHandle: true,
+      builder: (_) => PlaceSearchSheet(api: widget.api, near: near),
+    );
+    if (!mounted || result == null) return;
+    final point = LatLng(result.latitude, result.longitude);
+    setState(() {
+      _searchPin = point;
+      _searchPinLabel = result.name;
+    });
+    if (_mapReady) _mapController.move(point, 11);
+    if (!mounted) return;
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.clearSnackBars();
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(result.name),
+        action: SnackBarAction(
+          label: 'Tiempo',
+          onPressed: () {
+            showModalBottomSheet<void>(
+              context: context,
+              isScrollControlled: true,
+              useSafeArea: true,
+              showDragHandle: true,
+              builder: (_) => WeatherSheet(
+                api: widget.api,
+                point: point,
+                title: 'Tiempo · ${result.name}',
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  LatLng _focusPoint() {
+    if (_selected != null) {
+      return LatLng(_selected!.latitude, _selected!.longitude);
+    }
+    if (_mapReady) return _mapController.camera.center;
+    return const LatLng(-17.7833, -63.1821);
+  }
+
+  Future<void> _openWeather() async {
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      showDragHandle: true,
+      builder: (_) => WeatherSheet(
+        api: widget.api,
+        point: _focusPoint(),
+        title: _selected?.name ?? 'Tiempo en el mapa',
+      ),
+    );
+  }
+
+  Future<void> _openAir() async {
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      showDragHandle: true,
+      builder: (_) => AirSheet(
+        api: widget.api,
+        point: _focusPoint(),
+        title: _selected?.name ?? 'Calidad del aire',
+      ),
+    );
   }
 
   Future<void> _choosePeriod() async {
@@ -178,6 +276,21 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
         title: const GeoSurBrand(compact: true),
         actions: [
           IconButton(
+            tooltip: 'Buscar lugar',
+            onPressed: _openSearch,
+            icon: const Icon(Icons.search_rounded),
+          ),
+          IconButton(
+            tooltip: 'Tiempo y pronóstico',
+            onPressed: _openWeather,
+            icon: const Icon(Icons.wb_cloudy_outlined),
+          ),
+          IconButton(
+            tooltip: 'Calidad del aire',
+            onPressed: _openAir,
+            icon: const Icon(Icons.air_rounded),
+          ),
+          IconButton(
             tooltip: 'Centrar mapa',
             onPressed: response == null ? null : _centerMap,
             icon: const Icon(Icons.center_focus_strong_rounded),
@@ -192,6 +305,14 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
           children: [
             _filtersCard(context),
             const SizedBox(height: 12),
+            CapasPanel(
+              api: widget.api,
+              onOverlayChanged: (overlays) {
+                if (!mounted) return;
+                setState(() => _capaOverlays = overlays);
+              },
+            ),
+            const SizedBox(height: 12),
             if (_loading && response == null)
               const _LoadingCard()
             else if (_error != null && response == null)
@@ -202,14 +323,14 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                 onRetry: _catalogReady ? _query : _initialize,
               )
             else if (response != null) ...[
-              _resultSummary(context, response),
-              const SizedBox(height: 10),
               _mapCard(context, response),
-              const SizedBox(height: 10),
-              if (_selected != null)
+              if (_selected != null) ...[
+                const SizedBox(height: 10),
                 _selectedCard(context, _selected!, response),
+              ],
+              const SizedBox(height: 10),
               _pointsList(context, response),
-              _pagination(context, response),
+              if (response.lastPage > 1) _pagination(context, response),
               if (_error != null)
                 _ErrorCard(
                   message: _error is GeoCruzApiException
@@ -224,20 +345,30 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
     );
   }
 
-  Widget _filtersCard(BuildContext context) => Card(
-    child: ExpansionTile(
-      key: const PageStorageKey<String>('monitoring-filters'),
-      initiallyExpanded: false,
-      tilePadding: const EdgeInsets.symmetric(horizontal: 14),
-      childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
-      leading: const Icon(Icons.tune_rounded),
-      title: const Text('Filtros'),
-      subtitle: Text(
-        '${_countryName(_filters.country)} · ${_metrics[_filters.metric] ?? _filters.metric} · ${_periodLabel()}',
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      children: [
+  Widget _filtersCard(BuildContext context) {
+    final points = _response?.total;
+    final summary = points == null
+        ? '${_metrics[_filters.metric] ?? _filters.metric} · ${_periodLabel()}'
+        : '$points pts · ${_metrics[_filters.metric] ?? _filters.metric}';
+    return Material(
+      color: Theme.of(context).colorScheme.surfaceContainerLow,
+      borderRadius: BorderRadius.circular(18),
+      child: ExpansionTile(
+        key: const PageStorageKey<String>('monitoring-filters'),
+        initiallyExpanded: false,
+        shape: const Border(),
+        collapsedShape: const Border(),
+        tilePadding: const EdgeInsets.symmetric(horizontal: 14),
+        childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
+        title: Text(
+          _countryName(_filters.country),
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+        ),
+        subtitle: Text(summary, maxLines: 1, overflow: TextOverflow.ellipsis),
+        trailing: const Icon(Icons.tune_rounded),
+        children: [
         Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Column(
@@ -427,51 +558,13 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
               label: const Text('Consultar mapa'),
             ),
             const SizedBox(height: 5),
-            Text(
-              'Período máximo: 7 días.',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
           ],
         ),
       ),
     ],
-    ),
-  );
-
-  Widget _resultSummary(
-    BuildContext context,
-    MonitoringResponse response,
-  ) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(14),
-      child: Row(
-        children: [
-          Icon(Icons.public, color: Theme.of(context).colorScheme.primary),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _countryName(_filters.country),
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                Text(
-                  '${response.total} puntos · ${_metrics[response.metric] ?? response.metric} · ${response.unit}',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ],
-            ),
-          ),
-          if (_loading)
-            const SizedBox.square(
-              dimension: 20,
-              child: CircularProgressIndicator(strokeWidth: 2),
-            ),
-        ],
       ),
-    ),
-  );
+    );
+  }
 
   Widget _mapCard(BuildContext context, MonitoringResponse response) {
     final mapPoints = <LatLng>[];
@@ -512,108 +605,113 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
         );
       }
     }
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    'Mapa de monitoreo',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
-                Text(
-                  '${response.page}/${response.lastPage}',
-                  style: Theme.of(context).textTheme.labelMedium,
-                ),
-              ],
+    final searchPin = _searchPin;
+    if (searchPin != null) {
+      markers.add(
+        Marker(
+          point: searchPin,
+          width: 44,
+          height: 48,
+          child: Tooltip(
+            message: _searchPinLabel ?? 'Lugar buscado',
+            child: Icon(
+              Icons.place_rounded,
+              size: 40,
+              color: Theme.of(context).colorScheme.tertiary,
+              shadows: const [Shadow(color: Colors.white, blurRadius: 4)],
             ),
           ),
-          SizedBox(
-            height: 280,
-            child: Stack(
-              children: [
-                FlutterMap(
-                  key: ValueKey(
-                    'monitoring-${_filters.country}-${_filters.region}-${response.page}',
-                  ),
-                  mapController: _mapController,
-                  options: MapOptions(
-                    initialCenter: center,
-                    initialZoom: 4,
-                    initialCameraFit: bounds == null
-                        ? null
-                        : CameraFit.bounds(
-                            bounds: bounds,
-                            padding: const EdgeInsets.all(32),
-                          ),
-                    minZoom: 2,
-                    maxZoom: 17,
-                    onMapReady: () => _mapReady = true,
-                  ),
-                  children: [
-                    TileLayer(
-                      urlTemplate:
-                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                      userAgentPackageName: 'bo.edu.univalle.geocruz_movil',
-                      maxNativeZoom: 19,
-                    ),
-                    if (response.boundary?.polygons.isNotEmpty ?? false)
-                      PolygonLayer(polygons: response.boundary!.polygons),
-                    MarkerLayer(markers: markers),
-                    const RichAttributionWidget(
-                      alignment: AttributionAlignment.bottomRight,
-                      attributions: [
-                        TextSourceAttribution('© OpenStreetMap contributors'),
-                      ],
-                    ),
-                  ],
-                ),
-                Positioned(
-                  left: 10,
-                  top: 10,
-                  child: Material(
-                    color: Colors.white,
-                    elevation: 2,
-                    borderRadius: BorderRadius.circular(10),
-                    clipBehavior: Clip.antiAlias,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          tooltip: 'Acercar',
-                          visualDensity: VisualDensity.compact,
-                          onPressed: _mapReady ? () => _zoomMap(1) : null,
-                          icon: const Icon(Icons.add),
-                        ),
-                        const SizedBox(width: 28, child: Divider(height: 1)),
-                        IconButton(
-                          tooltip: 'Alejar',
-                          visualDensity: VisualDensity.compact,
-                          onPressed: _mapReady ? () => _zoomMap(-1) : null,
-                          icon: const Icon(Icons.remove),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          if (response.notice.isNotEmpty)
+        ),
+      );
+    }
+    final mapHeight = MediaQuery.sizeOf(context).height * 0.46;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: ColoredBox(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
             Padding(
-              padding: const EdgeInsets.all(12),
-              child: Text(
-                response.notice,
-                style: Theme.of(context).textTheme.bodySmall,
+              padding: const EdgeInsets.fromLTRB(14, 12, 14, 6),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Mapa · ${_countryName(_filters.country)}',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
+                  Text(
+                    '${response.page}/${response.lastPage}',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                ],
               ),
             ),
-        ],
+            SizedBox(
+              height: mapHeight.clamp(280.0, 520.0),
+              child: Stack(
+                children: [
+                  FlutterMap(
+                    key: ValueKey(
+                      'monitoring-${_filters.country}-${_filters.region}-${response.page}-$_mapStyle',
+                    ),
+                    mapController: _mapController,
+                    options: MapOptions(
+                      initialCenter: center,
+                      initialZoom: 4,
+                      initialCameraFit: bounds == null
+                          ? null
+                          : CameraFit.bounds(
+                              bounds: bounds,
+                              padding: const EdgeInsets.all(32),
+                            ),
+                      minZoom: 2,
+                      maxZoom: 17,
+                      onMapReady: () => _mapReady = true,
+                    ),
+                    children: [
+                      _mapStyle.toLayer(),
+                      if (_capaOverlays.isNotEmpty)
+                        OverlayImageLayer(overlayImages: _capaOverlays),
+                      if (response.boundary?.polygons.isNotEmpty ?? false)
+                        PolygonLayer(polygons: response.boundary!.polygons),
+                      MarkerLayer(markers: markers),
+                      RichAttributionWidget(
+                        alignment: AttributionAlignment.bottomLeft,
+                        attributions: [
+                          TextSourceAttribution(_mapStyle.attribution),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Positioned.fill(
+                    child: MapChrome(
+                      style: _mapStyle,
+                      onStyleChanged: (style) =>
+                          setState(() => _mapStyle = style),
+                      onZoomIn: () => _zoomMap(1),
+                      onZoomOut: () => _zoomMap(-1),
+                      onFit: _centerMap,
+                      onFullscreen: () => openFullscreenMap(
+                        context: context,
+                        title: 'Mapa de monitoreo',
+                        center: center,
+                        zoom: 4,
+                        markers: markers,
+                        polygons: response.boundary?.polygons ?? const [],
+                        overlays: _capaOverlays,
+                        fitBounds: bounds,
+                        initialStyle: _mapStyle,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -805,16 +903,6 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
         ),
       );
 
-
-  String _formatReading(
-    BuildContext context,
-    MonitoringResponse response,
-    num value,
-  ) {
-    final units = UnitsScope.maybeOf(context)?.presentation;
-    if (units == null) return '$value ${response.unit}';
-    return units.format(response.metric, value, response.unit);
-  }
   Future<void> _showHistory(MonitoringPoint point) async {
     showModalBottomSheet<void>(
       context: context,
@@ -827,6 +915,16 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
         onUnauthorized: widget.onUnauthorized,
       ),
     );
+  }
+
+  String _formatReading(
+    BuildContext context,
+    MonitoringResponse response,
+    num value,
+  ) {
+    final units = UnitsScope.maybeOf(context)?.presentation;
+    if (units == null) return '$value ${response.unit}';
+    return units.format(response.metric, value, response.unit);
   }
 }
 
@@ -913,7 +1011,11 @@ class _HistorySheetState extends State<_HistorySheet> {
                     return ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        _formatHistoryRow(context, widget.filters.metric, row),
+                        _formatHistoryRow(
+                          context,
+                          widget.filters.metric,
+                          row,
+                        ),
                       ),
                       subtitle: Text(
                         '${row['origen'] ?? ''} · ${row['fuente'] ?? ''}',

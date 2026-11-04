@@ -34,6 +34,80 @@ class GeoCruzApiClient {
     );
   }
 
+  /// Descarga bytes (p. ej. PNG de capas GFS) con el mismo token Sanctum.
+  Future<Uint8List> getBytes(
+    String endpoint, {
+    Map<String, String> queryParameters = const {},
+    Duration? timeoutOverride,
+    bool authenticated = false,
+  }) async {
+    final normalizedEndpoint = endpoint.replaceFirst(RegExp(r'^/+'), '');
+    if (normalizedEndpoint.isEmpty ||
+        normalizedEndpoint.contains('..') ||
+        normalizedEndpoint.contains('://') ||
+        normalizedEndpoint.startsWith(r'\\')) {
+      throw ArgumentError.value(endpoint, 'endpoint', 'Ruta no válida.');
+    }
+    final headers = <String, String>{
+      'Accept': 'image/png, application/json',
+      'Accept-Encoding': 'identity',
+    };
+    if (authenticated) {
+      final token = bearerToken;
+      if (token == null || token.isEmpty) {
+        throw const GeoCruzApiException(
+          statusCode: 401,
+          message: 'Inicia sesión para consultar esta información.',
+          code: 'NO_AUTORIZADO',
+        );
+      }
+      headers['Authorization'] = 'Bearer $token';
+    }
+    final uri = _baseUrl
+        .resolve(normalizedEndpoint)
+        .replace(
+          queryParameters: queryParameters.isEmpty ? null : queryParameters,
+        );
+    final response = await _client
+        .get(uri, headers: headers)
+        .timeout(timeoutOverride ?? timeout);
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      Object? payload;
+      try {
+        payload = jsonDecode(utf8.decode(response.bodyBytes));
+      } catch (_) {
+        payload = null;
+      }
+      final error = payload is Map<String, dynamic> ? payload['error'] : null;
+      final message = error is Map<String, dynamic> ? error['mensaje'] : null;
+      final code = error is Map<String, dynamic> ? error['codigo'] : null;
+      throw GeoCruzApiException(
+        statusCode: response.statusCode,
+        message: message is String
+            ? message
+            : 'No se pudo descargar el recurso.',
+        code: code is String ? code : null,
+      );
+    }
+    final type = response.headers['content-type'] ?? '';
+    if (!type.startsWith('image/png') && response.bodyBytes.length > 16) {
+      // Algunos proxies omiten content-type; se valida firma PNG.
+      final b = response.bodyBytes;
+      final png = b.length >= 8 &&
+          b[0] == 0x89 &&
+          b[1] == 0x50 &&
+          b[2] == 0x4E &&
+          b[3] == 0x47;
+      if (!png) {
+        throw const GeoCruzApiException(
+          statusCode: 502,
+          message: 'La respuesta no es una imagen PNG válida.',
+        );
+      }
+    }
+    return response.bodyBytes;
+  }
+
   Future<Object?> postJson(
     String endpoint, {
     Object? body,
