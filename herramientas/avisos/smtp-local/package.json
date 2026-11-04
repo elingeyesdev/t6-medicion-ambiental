@@ -1,0 +1,12 @@
+{
+  "name": "geosur-smtp-local65",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "smtp-server": "3.21.3"
+  }
+}

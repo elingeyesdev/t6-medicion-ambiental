@@ -36,7 +36,7 @@ final class ConsultarPronostico
         }
         $latitud = round($latitud, 4);
         $longitud = round($longitud, 4);
-        $clave = 'tiempo-envirosense-v1:'.hash('sha256', json_encode([$latitud, $longitud]));
+        $clave = 'tiempo-envirosense-v3:'.hash('sha256', json_encode([$latitud, $longitud]));
 
         return Cache::remember($clave, now()->addMinutes(15), fn () => $this->consultar($latitud, $longitud));
     }
@@ -46,9 +46,9 @@ final class ConsultarPronostico
         try {
             $variables = implode(',', array_column(self::VARIABLES, 0));
             $r = Http::acceptJson()->connectTimeout(3)->timeout(12)->withOptions(['allow_redirects' => false])
-                ->get('https://api.open-meteo.com/v1/forecast', ['latitude' => $latitud, 'longitude' => $longitud, 'current' => $variables,
-                    'hourly' => $variables, 'daily' => implode(',', [...array_column(self::DIARIAS, 0), 'sunrise', 'sunset']),
-                    'forecast_days' => 7, 'timezone' => 'auto', 'timeformat' => 'unixtime', 'temperature_unit' => 'celsius', 'wind_speed_unit' => 'kmh', 'precipitation_unit' => 'mm']);
+                ->get('https://api.open-meteo.com/v1/forecast', ['latitude' => $latitud, 'longitude' => $longitud, 'current' => $variables.',weather_code,is_day',
+                    'hourly' => $variables.',weather_code', 'daily' => implode(',', [...array_column(self::DIARIAS, 0), 'sunrise', 'sunset', 'weather_code']),
+                    'past_days' => 1, 'forecast_days' => 7, 'timezone' => 'auto', 'timeformat' => 'unixtime', 'temperature_unit' => 'celsius', 'wind_speed_unit' => 'kmh', 'precipitation_unit' => 'mm']);
             if (! $r->successful() || strlen($r->body()) > 1500000) {
                 throw new \UnexpectedValueException('Respuesta no disponible.');
             }
@@ -58,16 +58,28 @@ final class ConsultarPronostico
                 throw new \UnexpectedValueException('Faltan series de tiempo.');
             }
             $horas = $this->instantes($datos['hourly']['time'], 200);
-            $dias = $this->instantes($datos['daily']['time'], 7);
+            $dias = $this->instantes($datos['daily']['time'], 8);
             if (count($horas) < 2 || count($dias) < 1 || (new DateTimeImmutable($horas[0]))->getTimestamp() < now()->subDays(2)->timestamp ||
                 ! array_intersect(array_keys($datos['hourly']), array_column(self::VARIABLES, 0))) {
                 throw new \UnexpectedValueException('Series vacías.');
             }
             $ahora = $this->instante($datos['current']['time']);
-            if (abs($ahora->getTimestamp() - now()->timestamp) > 6 * 3600) {
+            if ($ahora->getTimestamp() > now()->timestamp || $ahora->getTimestamp() < now()->subHours(6)->timestamp) {
                 throw new \UnexpectedValueException('Datos actuales fuera de fecha.');
             }
+            $offsetEsperado = $zona->getOffset(new DateTimeImmutable('@'.now()->timestamp));
+            $offset = $datos['utc_offset_seconds'] ?? $offsetEsperado;
+            if (! is_int($offset) || $offset !== $offsetEsperado) {
+                throw new \UnexpectedValueException('Desfase horario inválido.');
+            }
+            // El proveedor fija los días al offset de la consulta. Las horas se conservan en UTC.
+            $hoy = gmdate('Y-m-d', now()->timestamp + $offset);
             $actual = ['instante' => $ahora->format('Y-m-d\TH:i:s\Z')];
+            $this->unidad($datos['current_units']['weather_code'] ?? null, 'wmo code');
+            $this->unidad($datos['current_units']['is_day'] ?? null, '');
+            $actual['codigoTiempo'] = $this->codigoTiempo($datos['current']['weather_code'] ?? null);
+            $diaActual = $datos['current']['is_day'] ?? null;
+            $actual['esDia'] = in_array($diaActual, [0, 0.0, 1, 1.0], true) ? (bool) $diaActual : null;
             $serie = array_map(fn ($f) => ['instante' => $f], $horas);
             foreach (self::VARIABLES as $clave => [$campo, $nombre, $unidad, $minimo, $maximo]) {
                 $this->unidad($datos['current_units'][$campo] ?? null, $unidad);
@@ -81,7 +93,7 @@ final class ConsultarPronostico
                     $serie[$i][$clave] = $this->numero($valor, $minimo, $maximo);
                 }
             }
-            $diario = array_map(fn ($f) => ['fecha' => (new DateTimeImmutable($f))->setTimezone($zona)->format('Y-m-d')], $dias);
+            $diario = array_map(fn ($f) => ['fecha' => gmdate('Y-m-d', (new DateTimeImmutable($f))->getTimestamp() + $offset)], $dias);
             foreach (self::DIARIAS as $clave => [$campo, $unidad, $minimo, $maximo]) {
                 $this->unidad($datos['daily_units'][$campo] ?? null, $unidad);
                 $valores = $datos['daily'][$campo] ?? array_fill(0, count($dias), null);
@@ -98,9 +110,21 @@ final class ConsultarPronostico
                     $diario[$i][$clave] = $valor === null || $valor === 0 ? null : $this->instante($valor)->format('Y-m-d\TH:i:s\Z');
                 }
             }
+            $this->agregarCondiciones($serie, $datos['hourly'], $datos['hourly_units'] ?? []);
+            $this->agregarCondiciones($diario, $datos['daily'], $datos['daily_units'] ?? []);
+            $historial = array_values(array_filter($serie, function ($fila) use ($ahora) {
+                $instante = (new DateTimeImmutable($fila['instante']))->getTimestamp();
+
+                return $instante > $ahora->getTimestamp() - 24 * 3600 && $instante <= $ahora->getTimestamp();
+            }));
+            $pronostico = array_values(array_filter($serie, fn ($fila) => gmdate('Y-m-d', (new DateTimeImmutable($fila['instante']))->getTimestamp() + $offset) >= $hoy));
+            $diario = array_values(array_filter($diario, fn ($fila) => $fila['fecha'] >= $hoy));
+            if (count($historial) > 24 || count($pronostico) < 2 || count($pronostico) > 168 || count($diario) < 1 || count($diario) > 7) {
+                throw new \UnexpectedValueException('Períodos del tiempo incoherentes.');
+            }
 
             return ['fuente' => 'Open-Meteo', 'origen' => 'estimado', 'zonaHoraria' => $zona->getName(), 'consultadoEl' => now('UTC')->toIso8601ZuluString(),
-                'ubicacion' => ['latitud' => $latitud, 'longitud' => $longitud], 'actual' => $actual, 'horas' => $serie, 'dias' => $diario,
+                'ubicacion' => ['latitud' => $latitud, 'longitud' => $longitud], 'actual' => $actual, 'horas' => $pronostico, 'historial' => $historial, 'dias' => $diario,
                 'variables' => array_map(fn ($v) => ['nombre' => $v[1], 'unidad' => $v[2]], self::VARIABLES)];
         } catch (\Throwable $e) {
             throw new ErrorConsulta('PRONOSTICO_NO_DISPONIBLE', 'No se pudo consultar el tiempo. Inténtalo de nuevo más tarde.', 503);
@@ -117,6 +141,24 @@ final class ConsultarPronostico
         }
 
         return (float) $valor;
+    }
+
+    private function codigoTiempo(mixed $valor): ?int
+    {
+        return (is_int($valor) || is_float($valor)) && is_finite((float) $valor) && $valor >= 0 && $valor <= 99 && floor($valor) === (float) $valor
+            ? (int) $valor : null;
+    }
+
+    private function agregarCondiciones(array &$filas, array $datos, array $unidades): void
+    {
+        $this->unidad($unidades['weather_code'] ?? null, 'wmo code');
+        $codigos = $datos['weather_code'] ?? array_fill(0, count($filas), null);
+        if (! is_array($codigos) || ! array_is_list($codigos) || count($codigos) !== count($filas)) {
+            throw new \UnexpectedValueException('Las condiciones no corresponden a sus fechas.');
+        }
+        foreach ($codigos as $i => $codigo) {
+            $filas[$i]['codigoTiempo'] = $this->codigoTiempo($codigo);
+        }
     }
 
     private function unidad(mixed $valor, string $esperada): void

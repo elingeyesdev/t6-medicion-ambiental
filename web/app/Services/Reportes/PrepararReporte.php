@@ -53,7 +53,7 @@ final class PrepararReporte
             'punto' => ['sometimes', 'string', 'max:60'], 'metrica' => ['sometimes', Rule::in(array_keys(app(VariablesReporte::class)->metricas()))],
             'puntos' => ['required_if:base,atmosfera', 'array', 'list', 'min:1', 'max:9'],
             'puntos.*' => ['required', 'string', 'distinct', Rule::in(array_column($this->catalogo->leer()['puntos'], 'codigo'))],
-            'variables' => ['required_if:base,atmosfera', 'array', 'list', 'min:1', 'max:14'],
+            'variables' => ['required_if:base,atmosfera', 'array', 'list', 'min:1', 'max:15'],
             'variables.*' => ['required', 'distinct', Rule::in(array_keys(app(VariablesReporte::class)->atmosfericas()))],
             'horas' => ['required_if:base,atmosfera', 'integer', 'between:1,72'],
             'origen' => ['sometimes', Rule::in([...array_keys(CatalogoAmbiental::ORIGENES), 'todos'])],
@@ -88,7 +88,8 @@ final class PrepararReporte
             $puntos = collect($this->catalogo->leer()['puntos'])->keyBy('codigo');
             $corte = app(ConsultarAtmosfera::class)->ejecutar(array_map(fn ($k) => $puntos[$k], $datos['puntos']), $datos['variables'], (int) $datos['horas']);
             $filas = array_map(fn ($f) => $this->fila($f), $corte['filas']);
-            $adicionales = ['faltantes' => array_map(fn ($f) => $this->fila($f), $corte['faltantes']), 'atribucion' => $corte['atribucion']];
+            $adicionales = ['faltantes' => array_map(fn ($f) => $this->fila($f), $corte['faltantes']), 'atribucion' => $corte['atribucion'],
+                'productos' => $corte['productos']];
             $datos['consultadoEl'] = $corte['consultadoEl'];
         } elseif ($datos['base'] === 'continua') {
             if (array_intersect(['pais', 'origen', 'desde', 'hasta', 'simulacion'], array_keys($datos))) {
@@ -164,7 +165,8 @@ final class PrepararReporte
         return $dato + ['fecha' => (new \DateTimeImmutable($dato['instante']))->setTimezone(new \DateTimeZone('America/La_Paz'))->format('d/m/Y H:i'),
             'origenNombre' => CatalogoAmbiental::ORIGENES[$dato['origen']],
             'fuenteNombre' => str_starts_with($dato['fuente'], 'sim-global-') ? (str_ends_with($dato['fuente'], '-manual') ? 'Simulación global · ajuste manual' : 'Simulación global · modelo') :
-                (str_starts_with($dato['fuente'], 'sim-') ? 'Simulación guardada' : (['demo-local' => 'Demostración', 'manual' => 'Carga manual', 'open-meteo-modelo' => 'Open-Meteo · modelo meteorológico', 'open-meteo-cams' => 'Open-Meteo · CAMS'][$dato['fuente']] ?? $dato['fuente'])),
+                (str_starts_with($dato['fuente'], 'sim-') ? 'Simulación guardada' : (['demo-local' => 'Demostración', 'manual' => 'Carga manual', 'open-meteo-modelo' => 'Open-Meteo · modelo meteorológico', 'open-meteo-cams' => 'Open-Meteo · CAMS',
+                    'open-meteo-cams-us' => 'CAMS global · escala de Estados Unidos', 'open-meteo-cams-eu' => 'CAMS global · escala europea'][$dato['fuente']] ?? $dato['fuente'])),
             'variable' => $metrica['nombre'], 'unidad' => $metrica['unidad']];
     }
 

@@ -1,0 +1,105 @@
+PHPUnit 11.5.57 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.30
+Configuration: C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\phpunit.xml
+
+...............................................................  63 / 523 ( 12%)
+.......................EEE..................................... 126 / 523 ( 24%)
+............................................................... 189 / 523 ( 36%)
+.....................EEEEEEEEEEE............................... 252 / 523 ( 48%)
+............................................................... 315 / 523 ( 60%)
+............................................................... 378 / 523 ( 72%)
+............................................................... 441 / 523 ( 84%)
+............................................................... 504 / 523 ( 96%)
+...................                                             523 / 523 (100%)
+
+Time: 02:46.674, Memory: 246.00 MB
+
+There were 14 errors:
+
+1) Tests\Feature\ConcurrenciaIngestionDatosTest::test_cuatro_procesos_con_lote_repetido_no_pierden_datos_ni_duplican with data set #0 ('DELETE')
+Error: Call to undefined function Tests\Feature\proc_open()
+
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\ConcurrenciaIngestionDatosTest.php:71
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\ConcurrenciaIngestionDatosTest.php:118
+
+2) Tests\Feature\ConcurrenciaIngestionDatosTest::test_cuatro_procesos_con_lote_repetido_no_pierden_datos_ni_duplican with data set #1 ('WAL')
+Error: Call to undefined function Tests\Feature\proc_open()
+
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\ConcurrenciaIngestionDatosTest.php:71
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\ConcurrenciaIngestionDatosTest.php:118
+
+3) Tests\Feature\ConcurrenciaIngestionDatosTest::test_lotes_concurrentes_en_conflicto_conservan_un_ganador_y_revierten_el_otro_completo
+Error: Call to undefined function Tests\Feature\proc_open()
+
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\ConcurrenciaIngestionDatosTest.php:71
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\ConcurrenciaIngestionDatosTest.php:126
+
+4) Tests\Feature\MqttTransporteDatosTest::test_tcp_local_negocia_qos1_guarda_antes_del_ack_y_deduplica_reenvio
+Error: Call to undefined function Tests\Feature\proc_open()
+
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:23
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:56
+
+5) Tests\Feature\MqttTransporteDatosTest::test_sesion_persistente_admite_publicacion_antes_de_suback
+Error: Call to undefined function Tests\Feature\proc_open()
+
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:23
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:69
+
+6) Tests\Feature\MqttTransporteDatosTest::test_rechazo_o_error_no_guarda_ni_confirma with data set #0 ('conexion-rechazada')
+Error: Call to undefined function Tests\Feature\proc_open()
+
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:23
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:85
+
+7) Tests\Feature\MqttTransporteDatosTest::test_rechazo_o_error_no_guarda_ni_confirma with data set #1 ('suscripcion-rechazada')
+Error: Call to undefined function Tests\Feature\proc_open()
+
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:23
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:85
+
+8) Tests\Feature\MqttTransporteDatosTest::test_rechazo_o_error_no_guarda_ni_confirma with data set #2 ('mensaje-invalido')
+Error: Call to undefined function Tests\Feature\proc_open()
+
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:23
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:85
+
+9) Tests\Feature\MqttTransporteDatosTest::test_rechazo_o_error_no_guarda_ni_confirma with data set #3 ('tema-ajeno')
+Error: Call to undefined function Tests\Feature\proc_open()
+
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:23
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:85
+
+10) Tests\Feature\MqttTransporteDatosTest::test_rechazo_o_error_no_guarda_ni_confirma with data set #4 ('truncado')
+Error: Call to undefined function Tests\Feature\proc_open()
+
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:23
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:85
+
+11) Tests\Feature\MqttTransporteDatosTest::test_rechazo_o_error_no_guarda_ni_confirma with data set #5 ('excesivo')
+Error: Call to undefined function Tests\Feature\proc_open()
+
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:23
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:85
+
+12) Tests\Feature\MqttTransporteDatosTest::test_rechazo_o_error_no_guarda_ni_confirma with data set #6 ('qos2')
+Error: Call to undefined function Tests\Feature\proc_open()
+
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:23
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:85
+
+13) Tests\Feature\MqttTransporteDatosTest::test_rechazo_o_error_no_guarda_ni_confirma with data set #7 ('sin-suback')
+Error: Call to undefined function Tests\Feature\proc_open()
+
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:23
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:85
+
+14) Tests\Feature\MqttTransporteDatosTest::test_fallo_de_persistencia_cierra_sin_puback
+Error: Call to undefined function Tests\Feature\proc_open()
+
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:23
+C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\comprobacion-web41\web\tests\Feature\MqttTransporteDatosTest.php:95
+
+ERRORS!
+Tests: 523, Assertions: 6273, Errors: 14.

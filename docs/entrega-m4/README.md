@@ -12,6 +12,16 @@ red, `gh`, subprocessos, tokens ni credenciales. La captura REST real la realiza
 el responsable aparte. No se consulta Actions, check-runs ni CI por CLI; un enlace
 de evidencia recibido se conserva y no se visita.
 
+## Corte vigente · 03/11/2026
+
+El candidato #96 y la preparación #46 ya están integrados en develop. La [captura nueva](evidencias/2026-11-03/snapshot.json) reúne 22 tareas y 15 PR, con su estado y sus revisiones paginadas. El [índice actualizado](evidencias/2026-11-03/preparacion/indice.md) conserva esas fechas y enlaza sus pendientes.
+
+El [inventario M3](evidencias/2026-11-03/pendientes-m3.json) contiene tres tareas abiertas. #89 conserva las funciones móviles de Jaziel. #40 requiere el acuerdo sobre método y contrato de agua. #49 conserva la publicación pospuesta por la decisión de trabajar en local.
+
+#120 ya se actualizó hacia develop. #119, #122 y #123 siguen en revisión. El avance de #111 espera la selección de escenas y la referencia acordada en #110. La recuperación forestal y la planificación conservan sus dependencias.
+
+Las tareas #34–#38 se vincularon con sus PR integrados y sus criterios registrados. La implementación consignada en la captura se apoya en esos registros, en el recorrido web de #130 y en el paquete integrado. Los checks se conservan desconocidos donde esta captura solo leyó metadata y revisiones. Pasaron las [43 pruebas del recolector](evidencias/2026-11-03/pruebas.txt).
+
 ## Contexto comunicado al 31/10/2026
 
 Estos son antecedentes de este encargo, no el estado actual de una captura

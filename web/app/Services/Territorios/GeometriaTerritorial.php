@@ -4,7 +4,15 @@ namespace App\Services\Territorios;
 
 final class GeometriaTerritorial
 {
+    private const PASO_LATITUD = 0.05;
+
+    private const TOLERANCIA = 1e-10;
+
     private array $municipios = [];
+
+    private ?array $geometriaActiva = null;
+
+    private ?array $indiceActivo = null;
 
     public function __construct(private readonly CatalogoTerritorial $catalogo) {}
 
@@ -23,42 +31,19 @@ final class GeometriaTerritorial
 
     public function contiene(array $g, float $x, float $y): bool
     {
-        $poligonos = $g['type'] === 'Polygon' ? [$g['coordinates']] : $g['coordinates'];
-        foreach ($poligonos as $p) {
-            $exterior = $this->enAnillo($p[0], $x, $y);
-            if ($exterior === 2) {
-                return true;
-            }
-            if ($exterior === 0) {
-                continue;
-            }
-            $enHueco = false;
-            foreach (array_slice($p, 1) as $hueco) {
-                $interior = $this->enAnillo($hueco, $x, $y);
-                if ($interior === 2) {
-                    return true;
-                }
-                $enHueco = $enHueco || $interior === 1;
-            }
-            if (! $enHueco) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->contieneIndice($this->indice($g), $x, $y);
     }
 
     /** Interior estricto para muestras: excluye bordes exteriores y de huecos. */
     public function interiorEstricto(array $g, float $x, float $y): bool
     {
-        $poligonos = $g['type'] === 'Polygon' ? [$g['coordinates']] : $g['coordinates'];
-        foreach ($poligonos as $p) {
-            if ($this->enAnillo($p[0], $x, $y) !== 1) {
+        foreach ($this->indice($g) as $p) {
+            if ($this->clasificar($p['exterior'], $x, $y) !== 1) {
                 continue;
             }
             $enHueco = false;
-            foreach (array_slice($p, 1) as $hueco) {
-                $enHueco = $enHueco || $this->enAnillo($hueco, $x, $y) !== 0;
+            foreach ($p['huecos'] as $hueco) {
+                $enHueco = $enHueco || $this->clasificar($hueco, $x, $y) !== 0;
             }
             if (! $enHueco) {
                 return true;
@@ -78,12 +63,12 @@ final class GeometriaTerritorial
                 throw new \RuntimeException('Versiones territoriales incompatibles.');
             }
             foreach ($capa['features'] as $f) {
-                $this->municipios[] = [$f['id'], $f['geometry'], $this->caja($f['geometry'])];
+                $this->municipios[] = [$f['id'], $this->construir($f['geometry']), $this->caja($f['geometry'])];
             }
         }
         $coinciden = [];
-        foreach ($this->municipios as [$id, $g, $b]) {
-            if ($x >= $b[0] && $y >= $b[1] && $x <= $b[2] && $y <= $b[3] && $this->contiene($g, $x, $y)) {
+        foreach ($this->municipios as [$id, $indice, $b]) {
+            if ($x >= $b[0] && $y >= $b[1] && $x <= $b[2] && $y <= $b[3] && $this->contieneIndice($indice, $x, $y)) {
                 $coinciden[] = $this->catalogo->buscar($id);
             }
         }
@@ -96,20 +81,92 @@ final class GeometriaTerritorial
         ];
     }
 
-    // 0 fuera, 1 dentro, 2 borde; tolerancia numérica de 1e-10 grados, sin buffer territorial.
-    private function enAnillo(array $anillo, float $x, float $y): int
+    private function contieneIndice(array $indice, float $x, float $y): bool
     {
+        foreach ($indice as $p) {
+            $exterior = $this->clasificar($p['exterior'], $x, $y);
+            if ($exterior === 2) {
+                return true;
+            }
+            if ($exterior === 0) {
+                continue;
+            }
+            $enHueco = false;
+            foreach ($p['huecos'] as $hueco) {
+                $interior = $this->clasificar($hueco, $x, $y);
+                if ($interior === 2) {
+                    return true;
+                }
+                $enHueco = $enHueco || $interior === 1;
+            }
+            if (! $enHueco) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function indice(array $g): array
+    {
+        if ($this->geometriaActiva === $g && $this->indiceActivo !== null) {
+            return $this->indiceActivo;
+        }
+        $construido = $this->construir($g);
+        $this->geometriaActiva = $g;
+        $this->indiceActivo = $construido;
+
+        return $construido;
+    }
+
+    private function construir(array $g): array
+    {
+        $poligonos = $g['type'] === 'Polygon' ? [$g['coordinates']] : $g['coordinates'];
+        $salida = [];
+        foreach ($poligonos as $p) {
+            $huecos = [];
+            foreach (array_slice($p, 1) as $hueco) {
+                $huecos[] = $this->cubetas($hueco);
+            }
+            $salida[] = ['exterior' => $this->cubetas($p[0]), 'huecos' => $huecos];
+        }
+
+        return $salida;
+    }
+
+    private function cubetas(array $anillo): array
+    {
+        $cubetas = [];
+        $n = count($anillo);
+        for ($i = 0, $j = $n - 1; $i < $n; $j = $i++) {
+            $ax = (float) $anillo[$j][0];
+            $ay = (float) $anillo[$j][1];
+            $bx = (float) $anillo[$i][0];
+            $by = (float) $anillo[$i][1];
+            $desde = (int) floor((min($ay, $by) - 1e-8) / self::PASO_LATITUD);
+            $hasta = (int) floor((max($ay, $by) + 1e-8) / self::PASO_LATITUD);
+            for ($k = $desde; $k <= $hasta; $k++) {
+                $cubetas[$k][] = [$ax, $ay, $bx, $by];
+            }
+        }
+
+        return $cubetas;
+    }
+
+    // 0 fuera, 1 dentro, 2 borde; tolerancia numérica de 1e-10 grados, sin buffer territorial.
+    private function clasificar(array $cubetas, float $x, float $y): int
+    {
+        $aristas = $cubetas[(int) floor($y / self::PASO_LATITUD)] ?? [];
         $dentro = false;
-        for ($i = 0, $j = count($anillo) - 1; $i < count($anillo); $j = $i++) {
-            [$ax, $ay] = $anillo[$j];
-            [$bx, $by] = $anillo[$i];
-            $dx = $bx - $ax;
-            $dy = $by - $ay;
-            $largo = hypot($dx, $dy);
-            if ($largo > 0 && abs(($x - $ax) * $dy - ($y - $ay) * $dx) <= 1e-10 * $largo
-                && $x >= min($ax, $bx) - 1e-10 && $x <= max($ax, $bx) + 1e-10
-                && $y >= min($ay, $by) - 1e-10 && $y <= max($ay, $by) + 1e-10) {
-                return 2;
+        foreach ($aristas as [$ax, $ay, $bx, $by]) {
+            if ($x >= min($ax, $bx) - self::TOLERANCIA && $x <= max($ax, $bx) + self::TOLERANCIA
+                && $y >= min($ay, $by) - self::TOLERANCIA && $y <= max($ay, $by) + self::TOLERANCIA) {
+                $dx = $bx - $ax;
+                $dy = $by - $ay;
+                $largo = hypot($dx, $dy);
+                if ($largo > 0 && abs(($x - $ax) * $dy - ($y - $ay) * $dx) <= self::TOLERANCIA * $largo) {
+                    return 2;
+                }
             }
             if (($ay > $y) !== ($by > $y) && $x < ($bx - $ax) * ($y - $ay) / ($by - $ay) + $ax) {
                 $dentro = ! $dentro;

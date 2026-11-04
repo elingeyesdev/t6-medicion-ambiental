@@ -42,7 +42,7 @@ class VisorSequiasTest extends TestCase
 
     public function test_la_navegacion_diferencia_sequias_por_muestras_y_modulos_pendientes(): void
     {
-        $this->get('/')->assertOk()->assertSee('Abrir Sequías')->assertDontSee('en preparación');
+        $this->get('/')->assertOk()->assertSee('Sequías')->assertSee(route('modulos.mostrar', 'sequias'), false)->assertDontSee('en preparación');
         foreach (['inundaciones', 'deforestacion', 'calidad-aire'] as $id) {
             $this->get('/modulos/'.$id)->assertNotFound();
         }

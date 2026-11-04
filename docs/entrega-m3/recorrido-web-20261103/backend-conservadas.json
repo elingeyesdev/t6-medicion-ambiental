@@ -1,0 +1,10 @@
+{
+  "reason": "Casos aprobados conservados sin repetición",
+  "tests": [
+    "Tests\\Feature\\GeometriaTerritorialTest::test_cambiar_los_huecos_no_reutiliza_el_limite_anterior",
+    "Tests\\Feature\\GeometriaTerritorialTest::test_cambiar_otra_parte_del_multipoligono_actualiza_la_seleccion",
+    "Tests\\Feature\\GeometriaTerritorialTest::test_cambiar_un_vertice_intermedio_tambien_cambia_el_limite",
+    "Tests\\Feature\\GeometriaTerritorialTest::test_las_cubetas_conservan_la_regla_original_en_bordes_y_latitudes_negativas",
+    "Tests\\Feature\\AislamientoTest::test_la_base_de_pruebas_admite_escritura_sin_tocar_la_demo"
+  ]
+}

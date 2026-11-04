@@ -5,11 +5,12 @@ const contraer = document.getElementById('contraer-menu');
 const fondo = document.getElementById('fondo-menu');
 const tema = document.getElementById('cambiar-tema');
 const movil = matchMedia('(max-width: 767.98px)');
+let mapaAmpliado = false;
 const guardar = (clave, valor) => { try { localStorage.setItem(clave, valor); } catch { /* Las preferencias son opcionales. */ } };
 const sincronizar = () => {
     const abierto = raiz.classList.contains('menu-abierto');
     abrir.setAttribute('aria-expanded', String(abierto));
-    menu.inert = movil.matches && !abierto;
+    menu.inert = mapaAmpliado || (movil.matches && !abierto);
     fondo.hidden = !movil.matches || !abierto;
     contraer.setAttribute('aria-expanded', String(!raiz.classList.contains('menu-contraido')));
     contraer.setAttribute('aria-label', raiz.classList.contains('menu-contraido') ? 'Expandir menú' : 'Contraer menú');
@@ -39,4 +40,10 @@ tema.addEventListener('click', () => {
     guardar('envirosense-tema', raiz.dataset.bsTheme); sincronizar();
 });
 movil.addEventListener('change', () => { raiz.classList.remove('menu-abierto'); sincronizar(); });
+// El respaldo comunica entrada/salida antes de aislar el exterior/devolver foco.
+// Nav conserva la autoridad sobre su inert incluso si cambia el ancho activo.
+document.addEventListener('monitoreo-ampliacion-cambiada', evento => {
+    mapaAmpliado = evento.detail?.activo === true;
+    sincronizar();
+});
 sincronizar();

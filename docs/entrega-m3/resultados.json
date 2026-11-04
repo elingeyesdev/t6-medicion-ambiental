@@ -1,0 +1,14 @@
+{
+  "fecha": "2026-10-29",
+  "estado": "candidato_web_pendiente_revision",
+  "autor": "Josue Padilla",
+  "php": "8.3.30",
+  "sqlite": {"pruebas": 477, "comprobaciones": 5717, "resultado": "correcto"},
+  "postgresql": {"version": "16.11", "pruebas": 476, "comprobaciones": 5707, "resultado": "correcto", "entorno": "cluster_efimero_loopback", "detenido": true},
+  "javascript": {"pruebas": 101, "resultado": "correcto"},
+  "productorRaster": {"pruebas": 22, "resultado": "correcto", "capas": 8, "cuadrosRealesPublicados": 17},
+  "normalizador": {"pruebas": 5, "resultado": "correcto"},
+  "pint": "correcto",
+  "mainM2": "851a79f5c699249c284001114f76f994c9ce4335",
+  "limitaciones": ["Android de PR88 requiere correccion de Jaziel", "revision cruzada pendiente", "dispositivos e historico real pendientes", "AQI y productos ambiguos UV/evaporacion pendientes", "canales externos sin envio real", "publicacion pospuesta"]
+}

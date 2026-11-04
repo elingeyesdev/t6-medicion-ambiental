@@ -2,9 +2,12 @@
 @section('titulo', 'Mis avisos')
 @push('estilos')<link rel="stylesheet" href="{{ asset('css/paginas/alertas.css') }}">@endpush
 @section('contenido')
-<div class="alertas-contenido"><h1>Mis avisos</h1>@include('cuentas.estado')
-<p>{{ $sinLeer }} sin leer</p>
-<details class="card mt-3"><summary class="card-header"><h2>Configurar avisos</h2></summary><div class="card-body">
+<div class="alertas-contenido">
+<header class="alertas-cabecera"><div><h1>Preferencias y <span>Notificaciones</span></h1><p>Elige las variables y los canales para recibir alertas de tu localidad.</p></div><span class="alertas-etiqueta">GeoSur</span></header>
+@include('cuentas.estado')
+<nav class="alertas-pestanas" aria-label="Preferencias y notificaciones"><a href="{{ route('cuenta') }}">Localidad y cuenta</a><a href="{{ route('avisos') }}" aria-current="page">Canales y avisos</a><a href="{{ route('alertas') }}">Historial de alertas</a></nav>
+<div class="avisos-configuracion">
+<details class="card avisos-preferencias" open><summary class="card-header"><h2>Configurar avisos</h2></summary><div class="card-body">
     <p>Recibe avisos aquí sobre tu ubicación y sus alrededores (50 km). Sin ubicación guardada, recibirás avisos de todas las zonas.</p>
     <a href="{{ route('cuenta') }}">Elegir ubicación</a>
     <form action="{{ route('avisos.preferencias') }}" method="post" class="mt-4">@csrf @method('PUT')
@@ -14,14 +17,14 @@
         <button class="btn btn-primary" type="submit">Guardar preferencias</button>
     </form>
 </div></details>
-@forelse($avisos as $aviso)
-@php($a = $aviso->alerta)
-<section class="card alerta-tarjeta"><div class="card-body"><h2>{{ $a->contenido['nombre'] }} · {{ $a->contenido['umbral']['nombre'] }}</h2>
-    <p>{{ $metricas[$a->metrica]['nombre'] }}: {{ $a->contenido['valor'] }} {{ $metricas[$a->metrica]['unidad'] }} · {{ \App\Services\Datos\CatalogoAmbiental::ORIGENES[$a->origen] }}</p>
-    <p>{{ $a->instante->setTimezone('America/La_Paz')->format('d/m/Y H:i') }} · Hora de Bolivia</p>
-    <div class="alertas-acciones"><a class="btn btn-outline-primary" href="{{ route('alertas', ['metrica' => $a->metrica, 'origen' => $a->origen]) }}">Ver alertas</a>
-    @unless($aviso->leido_el)<form method="post" action="{{ route('avisos.leer', $aviso->id) }}">@csrf @method('PATCH')<button class="btn btn-primary" type="submit">Marcar como leído</button></form>@else<span>Leído</span>@endunless</div>
-</div></section>
-@empty<p class="card card-body mt-4">No tienes avisos guardados.</p>@endforelse
-{{ $avisos->links() }}</div>
+@include('alertas.canales')
+@include('alertas.push')
+</div>
+<div class="aviso-cabecera avisos-bandeja"><h2>Mis avisos</h2><p id="avisos-contador" role="status" aria-live="polite">{{ $sinLeer }} sin leer</p></div>
+<p id="avisos-actualizacion" role="status" aria-live="polite"></p>
+<div id="avisos-lista" @if($avisos->currentPage() === 1 && \Illuminate\Support\Facades\Route::has('avisos.novedades')) data-novedades="{{ route('avisos.novedades') }}" @endif>
+@include('alertas.lista-avisos')
+</div>
+<div id="avisos-paginacion">{{ $avisos->links() }}</div></div>
 @endsection
+@push('scripts')<script type="module" src="{{ asset('js/avisos/actualizar.js') }}"></script><script type="module" src="{{ asset('js/avisos/push.js') }}"></script>@endpush

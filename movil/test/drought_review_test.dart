@@ -128,4 +128,32 @@ void main() {
     await advance(tester);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('un error de consulta conserva los filtros', (tester) async {
+    tester.view.physicalSize = const Size(900, 1500);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final api = GeoCruzApiClient(baseUrl: Uri.parse('http://localhost/api/v1/'));
+    addTearDown(api.close);
+    final repository = _Repository(api)..catalog.complete(const [
+      TerritoryOption(identifier: 'BO0701', name: 'Andrés Ibáñez', type: 'provincia'),
+      TerritoryOption(identifier: 'BO070102', name: 'Cotoca', type: 'municipio', parentId: 'BO0701'),
+    ]);
+    await tester.pumpWidget(MaterialApp(
+      home: DroughtScreen(apiClient: api, repository: repository, showAppBar: false),
+    ));
+    await advance(tester);
+    repository.queries.single.completeError(
+      const GeoCruzApiException(statusCode: 503, message: 'No hay muestra para Cotoca.'),
+    );
+    await advance(tester);
+    expect(find.text('No hay muestra para Cotoca.'), findsOneWidget);
+    expect(find.text('Reintentar'), findsOneWidget);
+    expect(find.text('Filtros'), findsOneWidget);
+    await tester.tap(find.text('Filtros'));
+    await advance(tester);
+    expect(find.text('Filtros de sequías'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
 }

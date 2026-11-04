@@ -45,6 +45,7 @@ class AppServiceProvider extends ServiceProvider
     {
         RateLimiter::for('mapa-busquedas', fn (Request $request) => Limit::perMinute(12)->by((string) $request->user()?->id));
         RateLimiter::for('tiempo-consultas', fn (Request $request) => Limit::perMinute(12)->by((string) $request->user()?->id));
+        RateLimiter::for('aire-consultas', fn (Request $request) => Limit::perMinute(12)->by((string) $request->user()?->id));
         foreach (['cuentas-ingreso' => 15, 'cuentas-registro' => 5, 'cuentas-recuperacion' => 5, 'cuentas-restablecer' => 5] as $nombre => $maximo) {
             RateLimiter::for($nombre, fn (Request $request) => Limit::perMinute($maximo)->by($request->ip()));
         }

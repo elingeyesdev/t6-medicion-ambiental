@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\smtp-local65\herramientas\avisos\smtp-local\phpunit.xml" tests="8" assertions="345" errors="0" failures="0" skipped="0" time="26.058988">
+    <testsuite name="SMTP real localhost WEB" tests="8" assertions="345" errors="0" failures="0" skipped="0" time="26.058988">
+      <testsuite name="SmtpLocal65Test" file="C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\smtp-local65\herramientas\avisos\smtp-local\SmtpLocal65Test.php" tests="8" assertions="345" errors="0" failures="0" skipped="0" time="26.058988">
+        <testcase name="test_sin_consentimiento_web_y_flags_antiguos_no_envian" file="C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\smtp-local65\herramientas\avisos\smtp-local\SmtpLocal65Test.php" line="152" class="SmtpLocal65Test" classname="SmtpLocal65Test" assertions="32" time="14.673295"/>
+        <testcase name="test_smtp_real_aceptado_cli_reclamo_y_no_duplicado" file="C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\smtp-local65\herramientas\avisos\smtp-local\SmtpLocal65Test.php" line="167" class="SmtpLocal65Test" classname="SmtpLocal65Test" assertions="65" time="4.441912"/>
+        <testcase name="test_baja_web_cancela_pendiente_y_no_abre_smtp" file="C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\smtp-local65\herramientas\avisos\smtp-local\SmtpLocal65Test.php" line="219" class="SmtpLocal65Test" classname="SmtpLocal65Test" assertions="39" time="0.748121"/>
+        <testcase name="test_cambio_de_correo_revalida_y_no_redirige_pendientes" file="C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\smtp-local65\herramientas\avisos\smtp-local\SmtpLocal65Test.php" line="233" class="SmtpLocal65Test" classname="SmtpLocal65Test" assertions="35" time="0.692199"/>
+        <testcase name="test_rechazo_smtp_550_sin_data_fallido_sin_reenvio" file="C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\smtp-local65\herramientas\avisos\smtp-local\SmtpLocal65Test.php" line="246" class="SmtpLocal65Test" classname="SmtpLocal65Test" assertions="43" time="0.889635"/>
+        <testcase name="test_data_real_sin_respuesta_final_timeout_no_se_repite" file="C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\smtp-local65\herramientas\avisos\smtp-local\SmtpLocal65Test.php" line="268" class="SmtpLocal65Test" classname="SmtpLocal65Test" assertions="43" time="2.866279"/>
+        <testcase name="test_smtp_450_sigue_incierto_sin_reintento_automatico" file="C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\smtp-local65\herramientas\avisos\smtp-local\SmtpLocal65Test.php" line="291" class="SmtpLocal65Test" classname="SmtpLocal65Test" assertions="40" time="0.801453"/>
+        <testcase name="test_reinicio_rechazado_despues_de_data_aceptado_no_es_fallido" file="C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\smtp-local65\herramientas\avisos\smtp-local\SmtpLocal65Test.php" line="311" class="SmtpLocal65Test" classname="SmtpLocal65Test" assertions="48" time="0.946094"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>
