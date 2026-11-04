@@ -7,19 +7,24 @@ import 'package:intl/intl.dart';
 
 import '../../../core/network/geocruz_api_client.dart';
 import '../model/capas_models.dart';
+import '../model/capas_overlay_state.dart';
 import '../model/capas_repository.dart';
 import '../model/raster_decode.dart';
+import 'capas_leyenda.dart';
 
-/// Controles de capas raster GFS: recorrido de fechas y comparación A/B.
+/// Capas raster GFS: fechas, reproducción y comparación A/B.
+/// Misma cáscara visual que el filtro de Sudamérica (ExpansionTile suave).
 class CapasPanel extends StatefulWidget {
   const CapasPanel({
     required this.api,
     required this.onOverlayChanged,
+    this.onDivisionChanged,
     super.key,
   });
 
   final GeoCruzApiClient api;
-  final void Function(List<OverlayImage> overlays) onOverlayChanged;
+  final void Function(CapasOverlayState state) onOverlayChanged;
+  final ValueChanged<double>? onDivisionChanged;
 
   @override
   State<CapasPanel> createState() => CapasPanelState();
@@ -33,6 +38,7 @@ class CapasPanelState extends State<CapasPanel> {
   bool _visible = false;
   bool _comparing = false;
   bool _playing = false;
+  bool _animarViento = true;
   String? _capaA;
   String? _capaB;
   String? _fechaA;
@@ -40,8 +46,9 @@ class CapasPanelState extends State<CapasPanel> {
   double _opacity = 0.65;
   double _division = 0.5;
   Timer? _playTimer;
-  final Map<String, Uint8List> _cache = {};
+  final Map<String, CuadroRasterDecoded> _cache = {};
   int _paintGeneration = 0;
+  CapasOverlayState _lastState = CapasOverlayState.empty;
 
   @override
   void initState() {
@@ -75,15 +82,17 @@ class CapasPanelState extends State<CapasPanel> {
         _fechaB = first != null && first.ordenados.length > 1
             ? first.ordenados.first.id
             : first?.ordenados.lastOrNull?.id;
+        // El panel y la capa quedan apagados al entrar; el usuario los activa.
+        _visible = false;
       });
-      if (_visible) await _refreshOverlays();
+      _emit(CapasOverlayState.empty);
     } catch (error) {
       if (!mounted) return;
       setState(() {
         _error = error;
         _loading = false;
       });
-      widget.onOverlayChanged(const []);
+      _emit(CapasOverlayState.empty);
     }
   }
 
@@ -105,60 +114,95 @@ class CapasPanelState extends State<CapasPanel> {
     return null;
   }
 
-  Future<Uint8List> _pngFor(CapaCuadro cuadro) async {
+  Future<CuadroRasterDecoded> _decodedFor(CapaCuadro cuadro) async {
     final cached = _cache[cuadro.id];
     if (cached != null) return cached;
     final bytes = await _repository.loadPng(cuadro);
-    final colored = await colorearCuadroPng(cuadro, bytes);
-    _cache[cuadro.id] = colored;
+    final decoded = await decodificarYColorearCuadro(cuadro, bytes);
+    _cache[cuadro.id] = decoded;
     while (_cache.length > 4) {
       _cache.remove(_cache.keys.first);
     }
-    return colored;
+    return decoded;
+  }
+
+  CapaCanalSample _sampleOf(CapaVariable variable, CapaCuadro cuadro, Uint8List pixels) {
+    return CapaCanalSample(
+      cuadro: cuadro,
+      pixels: pixels,
+      nombre: variable.nombre,
+      unidad: variable.unidad,
+    );
   }
 
   Future<void> _refreshOverlays() async {
     final generation = ++_paintGeneration;
     if (!_visible) {
-      widget.onOverlayChanged(const []);
+      _emit(CapasOverlayState.empty);
       return;
     }
+    final variableA = _variable(_capaA);
     final a = _cuadro(_capaA, _fechaA);
-    if (a == null) {
-      widget.onOverlayChanged(const []);
+    if (variableA == null || a == null) {
+      _emit(CapasOverlayState.empty);
       return;
     }
     try {
-      final pngA = await _pngFor(a);
+      final decodedA = await _decodedFor(a);
       if (!mounted || generation != _paintGeneration) return;
-      final overlays = <OverlayImage>[
-        OverlayImage(
-          bounds: a.bounds,
-          opacity: _comparing ? _opacity * _division : _opacity,
-          imageProvider: MemoryImage(pngA),
-        ),
-      ];
+      OverlayImage? layerB;
+      CapaCanalSample? sampleB;
       if (_comparing) {
+        final variableB = _variable(_capaB);
         final b = _cuadro(_capaB, _fechaB);
-        if (b != null) {
-          final pngB = await _pngFor(b);
+        if (variableB != null && b != null) {
+          final decodedB = await _decodedFor(b);
           if (!mounted || generation != _paintGeneration) return;
-          overlays.add(
-            OverlayImage(
-              bounds: b.bounds,
-              opacity: _opacity * (1 - _division),
-              imageProvider: MemoryImage(pngB),
-            ),
+          layerB = OverlayImage(
+            bounds: b.bounds,
+            opacity: _opacity,
+            imageProvider: MemoryImage(decodedB.coloredPng),
           );
+          sampleB = _sampleOf(variableB, b, decodedB.pixels);
         }
       }
-      widget.onOverlayChanged(overlays);
+      final sampleA = _sampleOf(variableA, a, decodedA.pixels);
+      _emit(
+        CapasOverlayState(
+          layerA: OverlayImage(
+            bounds: a.bounds,
+            opacity: _opacity,
+            imageProvider: MemoryImage(decodedA.coloredPng),
+          ),
+          layerB: layerB,
+          comparing: _comparing && layerB != null,
+          division: _division,
+          visible: true,
+          sampleA: sampleA,
+          sampleB: sampleB,
+          animarViento: _animarViento,
+          opacity: _opacity,
+        ),
+      );
     } catch (_) {
       if (!mounted || generation != _paintGeneration) return;
-      widget.onOverlayChanged(const []);
+      _emit(CapasOverlayState.empty);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('No se pudo cargar la capa raster.')),
       );
+    }
+  }
+
+  void _emit(CapasOverlayState state) {
+    _lastState = state;
+    widget.onOverlayChanged(state);
+  }
+
+  void _setDivision(double value) {
+    setState(() => _division = value);
+    widget.onDivisionChanged?.call(value);
+    if (_lastState.hasContent) {
+      _emit(_lastState.copyWith(division: value));
     }
   }
 
@@ -171,11 +215,13 @@ class CapasPanelState extends State<CapasPanel> {
     final cuadros = _variable(_capaA)?.ordenados ?? const [];
     if (cuadros.length < 2) return;
     setState(() => _playing = true);
-    _playTimer = Timer.periodic(const Duration(seconds: 1), (_) async {
+    // Intervalo cercano a la web (1400 ms).
+    _playTimer = Timer.periodic(const Duration(milliseconds: 1400), (_) async {
       final list = _variable(_capaA)?.ordenados ?? const [];
       if (list.isEmpty) return;
       final index = list.indexWhere((c) => c.id == _fechaA);
       final next = index < 0 || index >= list.length - 1 ? 0 : index + 1;
+      if (!mounted) return;
       setState(() => _fechaA = list[next].id);
       await _refreshOverlays();
     });
@@ -190,259 +236,321 @@ class CapasPanelState extends State<CapasPanel> {
     _refreshOverlays();
   }
 
+  String _labelFecha(CapaCuadro? cuadro) {
+    if (cuadro == null || cuadro.instante.isEmpty) return 'Sin fecha';
+    final dt = DateTime.tryParse(cuadro.instante);
+    if (dt == null) return cuadro.instante;
+    final fmt = DateFormat('dd/MM HH:mm');
+    return '${fmt.format(dt.toUtc().subtract(const Duration(hours: 4)))} · Bolivia';
+  }
+
+  bool get _capaEsViento {
+    final a = _cuadro(_capaA, _fechaA);
+    final b = _comparing ? _cuadro(_capaB, _fechaB) : null;
+    return esCodificacionViento(a?.codificacion) ||
+        esCodificacionViento(b?.codificacion);
+  }
+
+  Widget _shell({
+    required String subtitle,
+    required List<Widget> children,
+    bool initiallyExpanded = false,
+  }) {
+    final scheme = Theme.of(context).colorScheme;
+    return Material(
+      color: scheme.surfaceContainerLow,
+      borderRadius: BorderRadius.circular(18),
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          // Sin PageStorage: si no, recuerda “abierto” entre visitas al Mapa.
+          initiallyExpanded: initiallyExpanded,
+          shape: const Border(),
+          collapsedShape: const Border(),
+          tilePadding: const EdgeInsets.symmetric(horizontal: 14),
+          childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
+          leading: Icon(Icons.layers_outlined, color: scheme.primary),
+          title: Text(
+            'Capas del ambiente',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+          subtitle: Text(subtitle, maxLines: 1, overflow: TextOverflow.ellipsis),
+          children: children,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final fmt = DateFormat('dd/MM HH:mm');
-    String labelFecha(CapaCuadro? cuadro) {
-      if (cuadro == null || cuadro.instante.isEmpty) return 'Sin fecha';
-      final dt = DateTime.tryParse(cuadro.instante);
-      if (dt == null) return cuadro.instante;
-      return '${fmt.format(dt.toUtc().subtract(const Duration(hours: 4)))} · Bolivia';
-    }
-
     if (_loading) {
-      return Card(
-        child: ListTile(
-          leading: const SizedBox.square(
-            dimension: 22,
-            child: CircularProgressIndicator(strokeWidth: 2),
+      return _shell(
+        subtitle: 'Cargando catálogo…',
+        children: const [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 12),
+            child: Center(
+              child: SizedBox.square(
+                dimension: 22,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            ),
           ),
-          title: const Text('Capas del ambiente'),
-          subtitle: const Text('Cargando catálogo GFS…'),
-        ),
+        ],
       );
     }
 
-    if (_error != null || _catalog == null || !_catalog!.disponible) {
+    final disponible = _catalog?.disponible == true;
+    if (_error != null || !disponible) {
       final detail = _error is GeoCruzApiException
           ? (_error as GeoCruzApiException).message
-          : (_catalog?.estado == 'sin_insumos'
-              ? 'Aún no hay imágenes raster publicadas en el servidor.'
-              : 'No se pudo abrir el catálogo de capas.');
-      return Card(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.layers_outlined,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      'Capas del ambiente',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Text(detail, style: Theme.of(context).textTheme.bodyMedium),
-              const SizedBox(height: 8),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: TextButton.icon(
-                  onPressed: _load,
-                  icon: const Icon(Icons.refresh),
-                  label: const Text('Reintentar'),
-                ),
-              ),
-            ],
+          : 'Sin imágenes GFS publicadas. Activa capas cuando el servidor las tenga.';
+      return _shell(
+        subtitle: 'No disponibles ahora',
+        children: [
+          Text(detail, style: Theme.of(context).textTheme.bodyMedium),
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton.icon(
+              onPressed: _load,
+              icon: const Icon(Icons.refresh_rounded),
+              label: const Text('Reintentar'),
+            ),
           ),
-        ),
+        ],
       );
     }
 
-    final catalog = _catalog!;
-
-    final variables = catalog.capas.where((c) => c.cuadros.isNotEmpty).toList();
+    final variables = _catalog!.capas.where((c) => c.cuadros.isNotEmpty).toList();
     final cuadrosA = _variable(_capaA)?.ordenados ?? const [];
     final cuadrosB = _variable(_capaB)?.ordenados ?? const [];
     final maxIndex = (cuadrosA.length - 1).clamp(0, 9999);
     final indexA = cuadrosA.isEmpty
         ? 0
         : cuadrosA.indexWhere((c) => c.id == _fechaA).clamp(0, maxIndex);
+    final variableA = _variable(_capaA);
 
-    return Card(
-      child: ExpansionTile(
-        key: const PageStorageKey<String>('monitoring-capas'),
-        initiallyExpanded: false,
-        tilePadding: const EdgeInsets.symmetric(horizontal: 14),
-        childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
-        leading: const Icon(Icons.layers_outlined),
-        title: const Text('Capas del ambiente'),
-        subtitle: Text(
-          _visible
-              ? '${_variable(_capaA)?.nombre ?? 'Capa'} · ${labelFecha(_cuadro(_capaA, _fechaA))}'
-              : 'Lluvia, nieve, viento y más (GFS)',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+    return _shell(
+      initiallyExpanded: false,
+      subtitle: _visible
+          ? '${variableA?.nombre ?? 'Capa'} · ${_labelFecha(_cuadro(_capaA, _fechaA))}'
+          : 'Lluvia, temperatura, viento…',
+      children: [
+        SwitchListTile(
+          contentPadding: EdgeInsets.zero,
+          title: const Text('Mostrar sobre el mapa'),
+          value: _visible,
+          onChanged: (value) async {
+            setState(() => _visible = value);
+            await _refreshOverlays();
+          },
         ),
-        children: [
-          SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            title: const Text('Mostrar capa'),
-            value: _visible,
-            onChanged: (value) async {
-              setState(() => _visible = value);
-              await _refreshOverlays();
-            },
+        DropdownButtonFormField<String>(
+          key: ValueKey('capa-a-$_capaA'),
+          initialValue: _capaA,
+          isExpanded: true,
+          decoration: const InputDecoration(
+            labelText: 'Capa',
+            border: OutlineInputBorder(),
+            isDense: true,
           ),
+          items: [
+            for (final capa in variables)
+              DropdownMenuItem(value: capa.id, child: Text(capa.nombre)),
+          ],
+          onChanged: !_visible
+              ? null
+              : (value) async {
+                  final cuadros = _variable(value)?.ordenados ?? const [];
+                  setState(() {
+                    _capaA = value;
+                    _fechaA = cuadros.lastOrNull?.id;
+                  });
+                  await _refreshOverlays();
+                },
+        ),
+        const SizedBox(height: 10),
+        DropdownButtonFormField<String>(
+          key: ValueKey('fecha-a-$_fechaA-${cuadrosA.length}'),
+          initialValue: _fechaA,
+          isExpanded: true,
+          decoration: const InputDecoration(
+            labelText: 'Momento · Bolivia',
+            border: OutlineInputBorder(),
+            isDense: true,
+          ),
+          items: [
+            for (final cuadro in cuadrosA)
+              DropdownMenuItem(
+                value: cuadro.id,
+                child: Text(_labelFecha(cuadro)),
+              ),
+          ],
+          onChanged: !_visible
+              ? null
+              : (value) async {
+                  setState(() => _fechaA = value);
+                  await _refreshOverlays();
+                },
+        ),
+        if (cuadrosA.length > 1) ...[
+          const SizedBox(height: 8),
+          Text('Recorrer fechas', style: Theme.of(context).textTheme.labelLarge),
+          Slider(
+            value: indexA.toDouble(),
+            min: 0,
+            max: maxIndex.toDouble(),
+            divisions: maxIndex > 0 ? maxIndex : null,
+            label: _labelFecha(cuadrosA[indexA]),
+            onChanged: !_visible
+                ? null
+                : (value) {
+                    setState(() => _fechaA = cuadrosA[value.round()].id);
+                  },
+            onChangeEnd: (_) => _refreshOverlays(),
+          ),
+          Row(
+            children: [
+              IconButton(
+                tooltip: 'Anterior',
+                onPressed: !_visible || indexA <= 0 ? null : () => _step(-1),
+                icon: const Icon(Icons.skip_previous_rounded),
+              ),
+              FilledButton.tonalIcon(
+                onPressed: !_visible ? null : _togglePlay,
+                icon: Icon(_playing ? Icons.pause_rounded : Icons.play_arrow_rounded),
+                label: Text(_playing ? 'Pausar' : 'Reproducir'),
+              ),
+              IconButton(
+                tooltip: 'Siguiente',
+                onPressed: !_visible || indexA >= maxIndex ? null : () => _step(1),
+                icon: const Icon(Icons.skip_next_rounded),
+              ),
+            ],
+          ),
+        ],
+        SwitchListTile(
+          contentPadding: EdgeInsets.zero,
+          title: const Text('Comparar capas o momentos'),
+          value: _comparing,
+          onChanged: !_visible
+              ? null
+              : (value) async {
+                  setState(() => _comparing = value);
+                  await _refreshOverlays();
+                },
+        ),
+        if (_comparing) ...[
           DropdownButtonFormField<String>(
-            key: ValueKey('capa-a-$_capaA'),
-            initialValue: _capaA,
-            decoration: const InputDecoration(labelText: 'Capa A'),
+            key: ValueKey('capa-b-$_capaB'),
+            initialValue: _capaB,
+            isExpanded: true,
+            decoration: const InputDecoration(
+              labelText: 'Capa B',
+              border: OutlineInputBorder(),
+              isDense: true,
+            ),
             items: [
               for (final capa in variables)
                 DropdownMenuItem(value: capa.id, child: Text(capa.nombre)),
             ],
-            onChanged: !_visible
-                ? null
-                : (value) async {
-                    final cuadros = _variable(value)?.ordenados ?? const [];
-                    setState(() {
-                      _capaA = value;
-                      _fechaA = cuadros.lastOrNull?.id;
-                    });
-                    await _refreshOverlays();
-                  },
+            onChanged: (value) async {
+              final cuadros = _variable(value)?.ordenados ?? const [];
+              setState(() {
+                _capaB = value;
+                _fechaB = cuadros.firstOrNull?.id ?? cuadros.lastOrNull?.id;
+              });
+              await _refreshOverlays();
+            },
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
           DropdownButtonFormField<String>(
-            key: ValueKey('fecha-a-$_fechaA-${cuadrosA.length}'),
-            initialValue: _fechaA,
-            decoration: const InputDecoration(labelText: 'Fecha de A · Bolivia'),
+            key: ValueKey('fecha-b-$_fechaB-${cuadrosB.length}'),
+            initialValue: _fechaB,
+            isExpanded: true,
+            decoration: const InputDecoration(
+              labelText: 'Momento B · Bolivia',
+              border: OutlineInputBorder(),
+              isDense: true,
+            ),
             items: [
-              for (final cuadro in cuadrosA)
+              for (final cuadro in cuadrosB)
                 DropdownMenuItem(
                   value: cuadro.id,
-                  child: Text(labelFecha(cuadro)),
+                  child: Text(_labelFecha(cuadro)),
                 ),
             ],
-            onChanged: !_visible
-                ? null
-                : (value) async {
-                    setState(() => _fechaA = value);
-                    await _refreshOverlays();
-                  },
-          ),
-          if (cuadrosA.length > 1) ...[
-            const SizedBox(height: 8),
-            Text('Recorrer imágenes', style: Theme.of(context).textTheme.labelLarge),
-            Slider(
-              value: indexA.toDouble(),
-              min: 0,
-              max: maxIndex.toDouble(),
-              divisions: maxIndex > 0 ? maxIndex : null,
-              label: labelFecha(cuadrosA[indexA]),
-              onChanged: !_visible
-                  ? null
-                  : (value) {
-                      setState(() => _fechaA = cuadrosA[value.round()].id);
-                    },
-              onChangeEnd: (_) => _refreshOverlays(),
-            ),
-            Row(
-              children: [
-                IconButton(
-                  tooltip: 'Anterior',
-                  onPressed: !_visible || indexA <= 0 ? null : () => _step(-1),
-                  icon: const Icon(Icons.skip_previous),
-                ),
-                FilledButton.tonalIcon(
-                  onPressed: !_visible ? null : _togglePlay,
-                  icon: Icon(_playing ? Icons.pause : Icons.play_arrow),
-                  label: Text(_playing ? 'Pausar' : 'Reproducir'),
-                ),
-                IconButton(
-                  tooltip: 'Siguiente',
-                  onPressed: !_visible || indexA >= maxIndex
-                      ? null
-                      : () => _step(1),
-                  icon: const Icon(Icons.skip_next),
-                ),
-              ],
-            ),
-          ],
-          SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            title: const Text('Comparar capas o fechas'),
-            value: _comparing,
-            onChanged: !_visible
-                ? null
-                : (value) async {
-                    setState(() => _comparing = value);
-                    await _refreshOverlays();
-                  },
-          ),
-          if (_comparing) ...[
-            DropdownButtonFormField<String>(
-              key: ValueKey('capa-b-$_capaB'),
-              initialValue: _capaB,
-              decoration: const InputDecoration(labelText: 'Capa B'),
-              items: [
-                for (final capa in variables)
-                  DropdownMenuItem(value: capa.id, child: Text(capa.nombre)),
-              ],
-              onChanged: (value) async {
-                final cuadros = _variable(value)?.ordenados ?? const [];
-                setState(() {
-                  _capaB = value;
-                  _fechaB = cuadros.firstOrNull?.id ?? cuadros.lastOrNull?.id;
-                });
-                await _refreshOverlays();
-              },
-            ),
-            const SizedBox(height: 8),
-            DropdownButtonFormField<String>(
-              key: ValueKey('fecha-b-$_fechaB-${cuadrosB.length}'),
-              initialValue: _fechaB,
-              decoration: const InputDecoration(labelText: 'Fecha de B · Bolivia'),
-              items: [
-                for (final cuadro in cuadrosB)
-                  DropdownMenuItem(
-                    value: cuadro.id,
-                    child: Text(labelFecha(cuadro)),
-                  ),
-              ],
-              onChanged: (value) async {
-                setState(() => _fechaB = value);
-                await _refreshOverlays();
-              },
-            ),
-            Text(
-              '${(_division * 100).round()} % de A · ${((1 - _division) * 100).round()} % de B',
-            ),
-            Slider(
-              value: _division,
-              onChanged: (value) {
-                setState(() => _division = value);
-              },
-              onChangeEnd: (_) => _refreshOverlays(),
-            ),
-          ],
-          Text('Opacidad ${(_opacity * 100).round()} %'),
-          Slider(
-            value: _opacity,
-            min: 0.1,
-            max: 1,
-            onChanged: !_visible
-                ? null
-                : (value) {
-                    setState(() => _opacity = value);
-                  },
-            onChangeEnd: (_) => _refreshOverlays(),
+            onChanged: (value) async {
+              setState(() => _fechaB = value);
+              await _refreshOverlays();
+            },
           ),
           Text(
-            'Estimado GFS · transparente = sin dato',
+            '${(_division * 100).round()} % A · ${((1 - _division) * 100).round()} % B',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          Slider(
+            value: _division,
+            onChanged: _setDivision,
+          ),
+          Text(
+            'A izquierda · B derecha · arrastra la línea en el mapa',
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
-      ),
+        if (_capaEsViento)
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: const Text('Animar viento'),
+            subtitle: const Text('Partículas sobre el mapa'),
+            value: _animarViento,
+            onChanged: !_visible
+                ? null
+                : (value) async {
+                    setState(() => _animarViento = value);
+                    if (_lastState.hasContent) {
+                      _emit(_lastState.copyWith(animarViento: value));
+                    } else {
+                      await _refreshOverlays();
+                    }
+                  },
+          ),
+        Text(
+          'Opacidad ${(_opacity * 100).round()} %',
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+        Slider(
+          value: _opacity,
+          min: 0.1,
+          max: 1,
+          onChanged: !_visible
+              ? null
+              : (value) => setState(() => _opacity = value),
+          onChangeEnd: (_) => _refreshOverlays(),
+        ),
+        if (_visible && variableA != null) ...[
+          const SizedBox(height: 8),
+          CapasLeyendaBar(
+            capaId: variableA.id,
+            nombre: 'A · ${variableA.nombre}',
+          ),
+          if (_comparing && _variable(_capaB) != null) ...[
+            const SizedBox(height: 10),
+            CapasLeyendaBar(
+              capaId: _variable(_capaB)!.id,
+              nombre: 'B · ${_variable(_capaB)!.nombre}',
+            ),
+          ],
+        ],
+        const SizedBox(height: 6),
+        Text(
+          'Estimado GFS · transparente = sin dato',
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      ],
     );
   }
 }

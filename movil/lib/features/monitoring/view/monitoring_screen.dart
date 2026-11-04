@@ -5,12 +5,14 @@ import 'package:latlong2/latlong.dart';
 
 import '../../../core/formatters/bolivia_time.dart';
 import '../../../core/formatters/consultation_period.dart';
+import '../../../core/maps/capas_map_layers.dart';
 import '../../../core/maps/map_base_styles.dart';
 import '../../../core/maps/map_chrome.dart';
 import '../../../core/network/geocruz_api_client.dart';
 import '../../../core/theme/geocruz_theme.dart';
 import '../../../core/widgets/geosur_brand.dart';
 import '../../../core/widgets/units_scope.dart';
+import '../model/capas_overlay_state.dart';
 import '../model/monitoring_models.dart';
 import '../model/monitoring_repository.dart';
 import '../model/place_search_repository.dart';
@@ -57,7 +59,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
   bool _loading = true;
   bool _catalogReady = false;
   bool _mapReady = false;
-  List<OverlayImage> _capaOverlays = const [];
+  CapasOverlayState _capas = CapasOverlayState.empty;
   MapBaseStyle _mapStyle = MapBaseStyle.relieve;
   LatLng? _searchPin;
   String? _searchPinLabel;
@@ -307,9 +309,13 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
             const SizedBox(height: 12),
             CapasPanel(
               api: widget.api,
-              onOverlayChanged: (overlays) {
+              onOverlayChanged: (state) {
                 if (!mounted) return;
-                setState(() => _capaOverlays = overlays);
+                setState(() => _capas = state);
+              },
+              onDivisionChanged: (value) {
+                if (!mounted) return;
+                setState(() => _capas = _capas.copyWith(division: value));
               },
             ),
             const SizedBox(height: 12),
@@ -673,8 +679,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                     ),
                     children: [
                       _mapStyle.toLayer(),
-                      if (_capaOverlays.isNotEmpty)
-                        OverlayImageLayer(overlayImages: _capaOverlays),
+                      ...capasMapChildren(_capas),
                       if (response.boundary?.polygons.isNotEmpty ?? false)
                         PolygonLayer(polygons: response.boundary!.polygons),
                       MarkerLayer(markers: markers),
@@ -701,12 +706,27 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                         zoom: 4,
                         markers: markers,
                         polygons: response.boundary?.polygons ?? const [],
-                        overlays: _capaOverlays,
+                        overlays: [
+                          if (_capas.layerA != null) _capas.layerA!,
+                          if (_capas.layerB != null) _capas.layerB!,
+                        ],
                         fitBounds: bounds,
                         initialStyle: _mapStyle,
                       ),
                     ),
                   ),
+                  ...capasMapOverlays(
+                    state: _capas,
+                    mapController: _mapController,
+                    units: UnitsScope.maybeOf(context)?.presentation,
+                  ),
+                  if (capasSwipeHandle(_capas, (value) {
+                        setState(
+                          () => _capas = _capas.copyWith(division: value),
+                        );
+                      })
+                      case final handle?)
+                    Positioned.fill(child: handle),
                 ],
               ),
             ),

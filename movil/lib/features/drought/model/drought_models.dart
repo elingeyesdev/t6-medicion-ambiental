@@ -370,6 +370,10 @@ class DroughtFilters {
     this.muestra,
   });
 
+  /// Mes del piloto publicado (mismo ejemplo que la web: septiembre 2024).
+  /// Otros meses requieren preparación en el servidor.
+  static String defaultMesFinal({DateTime? now}) => '2024-09';
+
   final String mesFinal;
   final String? provincia;
   final String? municipio;

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../core/network/geocruz_api_client.dart';
 import '../../../uikits/models/nav_menu.dart';
 import '../../account/view/account_screen.dart';
+import '../../alerts/model/aviso_local_notifications.dart';
+import '../../alerts/model/avisos_poller.dart';
+import '../../alerts/view/alerts_screen.dart';
 import '../../auth/model/auth_repository.dart';
 import '../../consultation/view/environmental_consultation_screen.dart';
 import '../../monitoring/view/monitoring_screen.dart';
@@ -33,12 +36,44 @@ class HomeShell extends StatefulWidget {
 class _HomeShellState extends State<HomeShell> {
   int _selectedIndex = 0;
   final Set<int> _visitedTabs = {0};
+  late final AvisosPoller _avisosPoller;
 
   static const _destinations = <UiKitNavMenu>[
     UiKitNavMenu('Mapa', Icons.public_outlined, Icons.public),
     UiKitNavMenu('Consultas', Icons.travel_explore_outlined, Icons.travel_explore),
     UiKitNavMenu('Cuenta', Icons.account_circle_outlined, Icons.account_circle),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _avisosPoller = AvisosPoller(api: widget.apiClient);
+    _bootstrapNotifications();
+  }
+
+  Future<void> _bootstrapNotifications() async {
+    await AvisoLocalNotifications.instance.init(
+      onOpenAviso: (_) {
+        if (!mounted) return;
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (_) => AlertsScreen(
+              api: widget.apiClient,
+              user: widget.user,
+              onUnauthorized: widget.onUnauthorized,
+            ),
+          ),
+        );
+      },
+    );
+    _avisosPoller.start();
+  }
+
+  @override
+  void dispose() {
+    _avisosPoller.stop();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +98,7 @@ class _HomeShellState extends State<HomeShell> {
               api: widget.apiClient,
               user: widget.user,
               onSignOut: widget.onSignOut,
+              onUnauthorized: widget.onUnauthorized,
               onUserChanged: widget.onUserChanged,
             )
           : const SizedBox.shrink(),

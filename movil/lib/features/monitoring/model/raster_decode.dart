@@ -1,6 +1,7 @@
 import 'dart:math' as math;
-import 'dart:typed_data';
 import 'dart:ui' as ui;
+
+import 'package:flutter/foundation.dart';
 
 import 'capas_models.dart';
 
@@ -23,7 +24,19 @@ const _rampas = <String, List<(double, String)>>{
   'evaporacion_potencial': [(-500, '#3657a6'), (0, '#d7edf2'), (250, '#a9cf81'), (500, '#f4d36a'), (1000, '#dc7738'), (1500, '#a6352c')],
 };
 
+/// Rampa de colores de la capa (paridad web `rampa`).
+List<(double, String)> rampaDeCapa(String capaId) =>
+    List<(double, String)>.unmodifiable(_rampas[capaId] ?? const []);
+
+bool esCodificacionViento(String? codigo) => const {
+      'viento-uv',
+      'viento-uv127',
+      'viento-direccion',
+    }.contains(codigo);
+
 double? decodificarValor(String codigo, int r, int g, int b, int a) {
+  final vector = decodificarVector(codigo, r, g, b, a);
+  if (vector != null) return vector.valor;
   if (a == 0) return null;
   switch (codigo) {
     case 'temp-era5':
@@ -36,16 +49,6 @@ double? decodificarValor(String codigo, int r, int g, int b, int a) {
       return _lluviaEscalones[inferior] +
           (i - inferior) *
               (_lluviaEscalones[inferior + 1] - _lluviaEscalones[inferior]);
-    case 'viento-uv':
-      final u = (r / 255 * 200 - 100) * 3.6;
-      final v = (g / 255 * 200 - 100) * 3.6;
-      return _hypot(u, v);
-    case 'viento-uv127':
-      final u = (r - 127) / 1.27 * 3.6;
-      final v = (g - 127) / 1.27 * 3.6;
-      return _hypot(u, v);
-    case 'viento-direccion':
-      return r / 255 * 150;
     case 'vis-etl':
       return r / 255 * 24.140;
     case 'vis-textura':
@@ -69,6 +72,183 @@ double? decodificarValor(String codigo, int r, int g, int b, int a) {
   }
 }
 
+class VientoVector {
+  const VientoVector({required this.u, required this.v, required this.valor});
+
+  final double u;
+  final double v;
+  final double valor;
+}
+
+VientoVector? decodificarVector(String codigo, int r, int g, int b, int a) {
+  if (a == 0) return null;
+  switch (codigo) {
+    case 'viento-uv':
+      final u = (r / 255 * 200 - 100) * 3.6;
+      final v = (g / 255 * 200 - 100) * 3.6;
+      return VientoVector(u: u, v: v, valor: _hypot(u, v));
+    case 'viento-uv127':
+      final u = (r - 127) / 1.27 * 3.6;
+      final v = (g - 127) / 1.27 * 3.6;
+      return VientoVector(u: u, v: v, valor: _hypot(u, v));
+    case 'viento-direccion':
+      final velocidad = r / 255 * 150;
+      final angulo = (g / 255 * 360 + 180) * math.pi / 180;
+      final u = velocidad * math.sin(angulo);
+      final v = velocidad * math.cos(angulo);
+      return VientoVector(u: u, v: v, valor: velocidad);
+    default:
+      return null;
+  }
+}
+
+({double x, double y})? coordenadaPixel(
+  CapaCuadro cuadro,
+  double latitud,
+  double longitud,
+) {
+  if (!latitud.isFinite || !longitud.isFinite) return null;
+  final r = cuadro.rejilla;
+  final ancho = r.este - r.oeste;
+  var lon = ((longitud - r.oeste) % 360 + 360) % 360 + r.oeste;
+  if (lon > r.este || latitud < r.sur || latitud > r.norte) return null;
+  if (ancho == 360 && lon == r.este) lon = r.oeste;
+  final centros = r.registro == 'centros';
+  final x = (lon - r.oeste) / ancho * (cuadro.ancho - (centros ? 0 : 1)) -
+      (centros ? .5 : 0);
+  var y = (latitud - r.sur) / (r.norte - r.sur);
+  if (r.filas == 'norte-sur') y = 1 - y;
+  return (
+    x: x,
+    y: y * (cuadro.alto - (centros ? 0 : 1)) - (centros ? .5 : 0),
+  );
+}
+
+Object? _leerPixel(
+  CapaCuadro cuadro,
+  Uint8List pixeles,
+  int x,
+  int y, {
+  required bool vector,
+}) {
+  final global = cuadro.rejilla.este - cuadro.rejilla.oeste == 360;
+  final periodo =
+      cuadro.ancho - (cuadro.rejilla.registro == 'nodos' ? 1 : 0);
+  var xx = x;
+  var yy = y;
+  if (global) {
+    xx = ((xx % periodo) + periodo) % periodo;
+  } else {
+    xx = xx.clamp(0, cuadro.ancho - 1);
+  }
+  yy = yy.clamp(0, cuadro.alto - 1);
+  final i = (yy * cuadro.ancho + xx) * 4;
+  if (i + 3 >= pixeles.length) return null;
+  final r = pixeles[i];
+  final g = pixeles[i + 1];
+  final b = pixeles[i + 2];
+  final a = pixeles[i + 3];
+  if (vector) return decodificarVector(cuadro.codificacion, r, g, b, a);
+  return decodificarValor(cuadro.codificacion, r, g, b, a);
+}
+
+Object? _muestrear(
+  CapaCuadro cuadro,
+  Uint8List pixeles,
+  double latitud,
+  double longitud, {
+  bool interpolar = false,
+  required bool vector,
+}) {
+  final coordenada = coordenadaPixel(cuadro, latitud, longitud);
+  if (coordenada == null ||
+      pixeles.length != cuadro.ancho * cuadro.alto * 4) {
+    return null;
+  }
+  final x = coordenada.x;
+  final y = coordenada.y;
+  if (!interpolar || cuadro.codificacion == 'aqi-textura') {
+    return _leerPixel(
+      cuadro,
+      pixeles,
+      x.round(),
+      y.round(),
+      vector: vector,
+    );
+  }
+  final x0 = x.floor();
+  final y0 = y.floor();
+  final fx = x - x0;
+  final fy = y - y0;
+  final vecinos = <(int, int, double)>[
+    (x0, y0, (1 - fx) * (1 - fy)),
+    (x0 + 1, y0, fx * (1 - fy)),
+    (x0, y0 + 1, (1 - fx) * fy),
+    (x0 + 1, y0 + 1, fx * fy),
+  ].where((v) => v.$3 > 1e-10);
+  var suma = 0.0;
+  var u = 0.0;
+  var v = 0.0;
+  var esVector = false;
+  for (final (cx, cy, peso) in vecinos) {
+    final valor = _leerPixel(cuadro, pixeles, cx, cy, vector: vector);
+    if (valor == null) return null;
+    if (valor is VientoVector) {
+      esVector = true;
+      u += valor.u * peso;
+      v += valor.v * peso;
+    } else if (valor is num) {
+      suma += valor * peso;
+    } else {
+      return null;
+    }
+  }
+  if (esVector) {
+    return VientoVector(u: u, v: v, valor: _hypot(u, v));
+  }
+  return suma;
+}
+
+/// Valor escalar muestreado (paridad web `muestra`).
+double? muestraValor(
+  CapaCuadro cuadro,
+  Uint8List pixeles,
+  double latitud,
+  double longitud, {
+  bool interpolar = false,
+}) {
+  final valor = _muestrear(
+    cuadro,
+    pixeles,
+    latitud,
+    longitud,
+    interpolar: interpolar,
+    vector: esCodificacionViento(cuadro.codificacion),
+  );
+  if (valor is VientoVector) return valor.valor;
+  if (valor is num) return valor.toDouble();
+  return null;
+}
+
+/// Vector de viento interpolado (paridad web `muestraVector`).
+VientoVector? muestraVector(
+  CapaCuadro cuadro,
+  Uint8List pixeles,
+  double latitud,
+  double longitud,
+) {
+  if (!esCodificacionViento(cuadro.codificacion)) return null;
+  final valor = _muestrear(
+    cuadro,
+    pixeles,
+    latitud,
+    longitud,
+    interpolar: true,
+    vector: true,
+  );
+  return valor is VientoVector ? valor : null;
+}
+
 List<int> colorDeCapa(String capa, double? valor) {
   if (valor == null || valor.isNaN || valor.isInfinite) return const [0, 0, 0, 0];
   final stops = _rampas[capa];
@@ -88,7 +268,21 @@ List<int> colorDeCapa(String capa, double? valor) {
   ];
 }
 
-Future<Uint8List> colorearCuadroPng(CapaCuadro cuadro, Uint8List pngBytes) async {
+class CuadroRasterDecoded {
+  const CuadroRasterDecoded({
+    required this.pixels,
+    required this.coloredPng,
+  });
+
+  final Uint8List pixels;
+  final Uint8List coloredPng;
+}
+
+/// Extrae RGBA crudo y genera PNG coloreado para overlay.
+Future<CuadroRasterDecoded> decodificarYColorearCuadro(
+  CapaCuadro cuadro,
+  Uint8List pngBytes,
+) async {
   final codec = await ui.instantiateImageCodec(pngBytes);
   final frame = await codec.getNextFrame();
   final image = frame.image;
@@ -101,22 +295,15 @@ Future<Uint8List> colorearCuadroPng(CapaCuadro cuadro, Uint8List pngBytes) async
   if (bytes == null) {
     throw const FormatException('No se pudieron leer los píxeles de la capa.');
   }
-  final pixels = bytes.buffer.asUint8List();
-  final out = Uint8List(pixels.length);
-  for (var i = 0; i < pixels.length; i += 4) {
-    final valor = decodificarValor(
-      cuadro.codificacion,
-      pixels[i],
-      pixels[i + 1],
-      pixels[i + 2],
-      pixels[i + 3],
-    );
-    final rgba = colorDeCapa(cuadro.capaId, valor);
-    out[i] = rgba[0];
-    out[i + 1] = rgba[1];
-    out[i + 2] = rgba[2];
-    out[i + 3] = rgba[3];
-  }
+  final pixels = Uint8List.fromList(bytes.buffer.asUint8List());
+  final out = await compute(
+    _colorearPixeles,
+    _ColorJob(
+      pixels: Uint8List.fromList(pixels),
+      codificacion: cuadro.codificacion,
+      capaId: cuadro.capaId,
+    ),
+  );
   final buffer = await ui.ImmutableBuffer.fromUint8List(out);
   final descriptor = ui.ImageDescriptor.raw(
     buffer,
@@ -132,7 +319,47 @@ Future<Uint8List> colorearCuadroPng(CapaCuadro cuadro, Uint8List pngBytes) async
   if (png == null) {
     throw const FormatException('No se pudo generar la capa coloreada.');
   }
-  return png.buffer.asUint8List();
+  return CuadroRasterDecoded(
+    pixels: pixels,
+    coloredPng: png.buffer.asUint8List(),
+  );
+}
+
+Future<Uint8List> colorearCuadroPng(CapaCuadro cuadro, Uint8List pngBytes) async {
+  final decoded = await decodificarYColorearCuadro(cuadro, pngBytes);
+  return decoded.coloredPng;
+}
+
+class _ColorJob {
+  const _ColorJob({
+    required this.pixels,
+    required this.codificacion,
+    required this.capaId,
+  });
+
+  final Uint8List pixels;
+  final String codificacion;
+  final String capaId;
+}
+
+Uint8List _colorearPixeles(_ColorJob job) {
+  final pixels = job.pixels;
+  final out = Uint8List(pixels.length);
+  for (var i = 0; i < pixels.length; i += 4) {
+    final valor = decodificarValor(
+      job.codificacion,
+      pixels[i],
+      pixels[i + 1],
+      pixels[i + 2],
+      pixels[i + 3],
+    );
+    final rgba = colorDeCapa(job.capaId, valor);
+    out[i] = rgba[0];
+    out[i + 1] = rgba[1];
+    out[i + 2] = rgba[2];
+    out[i + 3] = rgba[3];
+  }
+  return out;
 }
 
 double _hypot(double u, double v) => math.sqrt(u * u + v * v);

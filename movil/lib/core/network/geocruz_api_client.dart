@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io' show gzip;
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -41,6 +42,36 @@ class GeoCruzApiClient {
     Duration? timeoutOverride,
     bool authenticated = false,
   }) async {
+    final bytes = await downloadBytes(
+      endpoint,
+      queryParameters: queryParameters,
+      timeoutOverride: timeoutOverride,
+      authenticated: authenticated,
+      accept: 'image/png, application/json',
+    );
+    // Algunos proxies omiten content-type; se valida firma PNG.
+    final png = bytes.length >= 8 &&
+        bytes[0] == 0x89 &&
+        bytes[1] == 0x50 &&
+        bytes[2] == 0x4E &&
+        bytes[3] == 0x47;
+    if (!png) {
+      throw const GeoCruzApiException(
+        statusCode: 502,
+        message: 'La respuesta no es una imagen PNG válida.',
+      );
+    }
+    return bytes;
+  }
+
+  /// Descarga bytes genéricos (PDF, XLSX, etc.) con el mismo token Sanctum.
+  Future<Uint8List> downloadBytes(
+    String endpoint, {
+    Map<String, String> queryParameters = const {},
+    Duration? timeoutOverride,
+    bool authenticated = false,
+    String accept = '*/*',
+  }) async {
     final normalizedEndpoint = endpoint.replaceFirst(RegExp(r'^/+'), '');
     if (normalizedEndpoint.isEmpty ||
         normalizedEndpoint.contains('..') ||
@@ -49,7 +80,7 @@ class GeoCruzApiClient {
       throw ArgumentError.value(endpoint, 'endpoint', 'Ruta no válida.');
     }
     final headers = <String, String>{
-      'Accept': 'image/png, application/json',
+      'Accept': accept,
       'Accept-Encoding': 'identity',
     };
     if (authenticated) {
@@ -89,22 +120,6 @@ class GeoCruzApiClient {
         code: code is String ? code : null,
       );
     }
-    final type = response.headers['content-type'] ?? '';
-    if (!type.startsWith('image/png') && response.bodyBytes.length > 16) {
-      // Algunos proxies omiten content-type; se valida firma PNG.
-      final b = response.bodyBytes;
-      final png = b.length >= 8 &&
-          b[0] == 0x89 &&
-          b[1] == 0x50 &&
-          b[2] == 0x4E &&
-          b[3] == 0x47;
-      if (!png) {
-        throw const GeoCruzApiException(
-          statusCode: 502,
-          message: 'La respuesta no es una imagen PNG válida.',
-        );
-      }
-    }
     return response.bodyBytes;
   }
 
@@ -134,6 +149,19 @@ class GeoCruzApiClient {
     timeoutOverride: timeoutOverride,
   );
 
+  Future<Object?> patchJson(
+    String endpoint, {
+    Object? body,
+    bool authenticated = false,
+    Duration? timeoutOverride,
+  }) => _requestJson(
+    'PATCH',
+    endpoint,
+    body: body,
+    authenticated: authenticated,
+    timeoutOverride: timeoutOverride,
+  );
+
   Future<Object?> _requestJson(
     String method,
     String endpoint, {
@@ -152,7 +180,6 @@ class GeoCruzApiClient {
 
     final headers = <String, String>{
       'Accept': 'application/json',
-      'Accept-Encoding': 'identity',
     };
     if (body != null) headers['Content-Type'] = 'application/json';
     if (authenticated) {
@@ -178,6 +205,7 @@ class GeoCruzApiClient {
         'GET' => _client.get(uri, headers: headers),
         'POST' => _client.post(uri, headers: headers, body: encodedBody),
         'PUT' => _client.put(uri, headers: headers, body: encodedBody),
+        'PATCH' => _client.patch(uri, headers: headers, body: encodedBody),
         _ => throw ArgumentError.value(method, 'method', 'Método no admitido.'),
       };
       return request.timeout(requestTimeout);
@@ -188,8 +216,7 @@ class GeoCruzApiClient {
 
     Object? payload;
     try {
-      final body = utf8.decode(response.bodyBytes);
-      payload = jsonDecode(body);
+      payload = _decodeJsonBody(response);
     } on FormatException catch (error) {
       debugPrint(
         'Respuesta JSON inválida: HTTP ${response.statusCode}, '
@@ -197,9 +224,23 @@ class GeoCruzApiClient {
         'content-type=${response.headers['content-type']}, '
         'offset=${error.offset}, mensaje=${error.message}',
       );
+      final head = response.bodyBytes.isEmpty
+          ? ''
+          : utf8.decode(
+              response.bodyBytes.sublist(
+                0,
+                response.bodyBytes.length < 80 ? response.bodyBytes.length : 80,
+              ),
+              allowMalformed: true,
+            );
+      final looksHtml = response.headers['content-type']?.contains('text/html') ==
+              true ||
+          head.contains('<');
       throw GeoCruzApiException(
         statusCode: response.statusCode,
-        message: 'La API devolvió una respuesta que no es JSON válido.',
+        message: looksHtml
+            ? 'El servidor respondió HTML en vez de JSON (¿API caída o URL incorrecta?).'
+            : 'La API devolvió una respuesta que no es JSON válido (HTTP ${response.statusCode}).',
       );
     }
 
@@ -220,6 +261,50 @@ class GeoCruzApiClient {
   }
 
   void close() => _client.close();
+}
+
+Object? _decodeJsonBody(http.Response response) {
+  var bytes = response.bodyBytes;
+  // Algunos stacks Android entregan gzip sin Content-Encoding usable.
+  if (bytes.length >= 2 && bytes[0] == 0x1f && bytes[1] == 0x8b) {
+    try {
+      bytes = Uint8List.fromList(gzip.decode(bytes));
+    } catch (_) {
+      // Sigue con el cuerpo original; el error de JSON será más claro.
+    }
+  }
+  var body = utf8.decode(bytes, allowMalformed: true);
+  if (body.isNotEmpty && body.codeUnitAt(0) == 0xFEFF) {
+    body = body.substring(1);
+  }
+  body = body.trimLeft();
+  // Proxies/errores PHP a veces anteponen HTML o avisos al JSON.
+  if (body.isNotEmpty && body[0] != '{' && body[0] != '[') {
+    final objectStart = body.indexOf('{');
+    final arrayStart = body.indexOf('[');
+    final start = switch ((objectStart, arrayStart)) {
+      (-1, -1) => -1,
+      (-1, final a) => a,
+      (final o, -1) => o,
+      (final o, final a) => o < a ? o : a,
+    };
+    if (start >= 0) body = body.substring(start);
+  }
+  if (body.isEmpty) {
+    throw const FormatException('cuerpo vacío');
+  }
+  try {
+    return jsonDecode(body);
+  } on FormatException {
+    // Cuerpo truncado o basura al final: recorta al último cierre plausible.
+    final endObject = body.lastIndexOf('}');
+    final endArray = body.lastIndexOf(']');
+    final end = endObject > endArray ? endObject : endArray;
+    if (end > 0) {
+      return jsonDecode(body.substring(0, end + 1));
+    }
+    rethrow;
+  }
 }
 
 class GeoCruzApiException implements Exception {

@@ -148,6 +148,7 @@ class HotspotsViewModel extends ChangeNotifier {
     return HotspotFilters(
       fromUtc: value.fromUtc.toUtc(),
       untilUtc: value.untilUtc.toUtc(),
+      alcance: 'santacruz',
       provinceId: province,
       municipalityId: municipality,
       confidence: value.confidence,
@@ -230,8 +231,13 @@ class HotspotsViewModel extends ChangeNotifier {
   }
 
   static HotspotFilters defaultFilters({DateTime? now}) {
+    // Misma cobertura que la web: Santa Cruz (BO07), hasta 7 días.
     final period = ConsultationPeriod.lastSevenDays(now: now);
-    return HotspotFilters(fromUtc: period.from, untilUtc: period.until);
+    return HotspotFilters(
+      fromUtc: period.from,
+      untilUtc: period.until,
+      alcance: 'santacruz',
+    );
   }
 }
 

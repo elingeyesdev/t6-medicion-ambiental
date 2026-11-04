@@ -15,6 +15,16 @@ class GeoSurUser {
   final String role;
   final Set<String> permissions;
 
+  bool get canManageSimulations =>
+      permissions.contains('simulaciones.gestionar');
+
+  bool get canViewReports => permissions.contains('reportes.ver');
+
+  bool get canCreateReports => permissions.contains('reportes.crear');
+
+  bool get canAcknowledgeAlerts =>
+      permissions.contains('alertas.gestionar');
+
   factory GeoSurUser.fromJson(Object? value) {
     if (value is! Map) {
       throw const FormatException('La API devolvió una cuenta inválida.');

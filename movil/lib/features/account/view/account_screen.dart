@@ -8,7 +8,10 @@ import '../../../core/widgets/geosur_brand.dart';
 import '../../../core/widgets/units_scope.dart';
 import '../../../core/units/units_presentation.dart';
 import '../../../uikits/uikits.dart';
+import '../../alerts/view/alerts_screen.dart';
 import '../../auth/model/auth_repository.dart';
+import '../../reports/view/reports_screen.dart';
+import '../../simulations/view/simulations_screen.dart';
 import '../model/account_preferences.dart';
 import '../model/account_repository.dart';
 
@@ -18,6 +21,7 @@ class AccountScreen extends StatefulWidget {
     required this.api,
     required this.user,
     required this.onSignOut,
+    required this.onUnauthorized,
     required this.onUserChanged,
     super.key,
   });
@@ -26,6 +30,7 @@ class AccountScreen extends StatefulWidget {
   final GeoCruzApiClient api;
   final GeoSurUser user;
   final Future<void> Function() onSignOut;
+  final VoidCallback onUnauthorized;
   final ValueChanged<GeoSurUser> onUserChanged;
 
   @override
@@ -153,7 +158,7 @@ class _AccountScreenState extends State<AccountScreen> {
       if (!mounted) return;
       setState(() {
         _units = saved;
-        _message = 'Unidades guardadas. Se usan al mostrar lecturas.';
+        _message = 'Unidades guardadas.';
       });
     } on GeoCruzApiException catch (error) {
       if (mounted) setState(() => _error = error.message);
@@ -235,9 +240,9 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     final scopeUnits = UnitsScope.maybeOf(context)?.presentation;
     final catalog = scopeUnits?.catalog;
-    // Vista previa con la selección local (antes de guardar).
     final previewUnits = catalog == null
         ? null
         : UnitsPresentation(catalog: catalog, preferences: _units);
@@ -258,259 +263,408 @@ class _AccountScreenState extends State<AccountScreen> {
           : RefreshIndicator(
               onRefresh: _load,
               child: ListView(
-                padding: const EdgeInsets.only(bottom: 32),
+                padding: EdgeInsets.zero,
                 children: [
                   UiKitProfileHeader(
                     name: widget.user.name,
                     subtitle: widget.user.email,
                     roleLabel: widget.user.role,
                   ),
+                  // Accesos rápidos estilo ProfileScreen03 (BlockText).
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: _QuickStat(
+                            title: 'Simulaciones',
+                            value: widget.user.canManageSimulations
+                                ? 'Abrir'
+                                : 'Bloq.',
+                            icon: Icons.science_outlined,
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) => SimulationsScreen(
+                                    api: widget.api,
+                                    user: widget.user,
+                                    onUnauthorized: widget.onUnauthorized,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: _QuickStat(
+                            title: 'Reportes',
+                            value: widget.user.canViewReports ? 'Abrir' : 'Bloq.',
+                            icon: Icons.description_outlined,
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) => ReportsScreen(
+                                    api: widget.api,
+                                    user: widget.user,
+                                    onUnauthorized: widget.onUnauthorized,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: _QuickStat(
+                            title: 'Alertas',
+                            value: 'Abrir',
+                            icon: Icons.notifications_outlined,
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) => AlertsScreen(
+                                    api: widget.api,
+                                    user: widget.user,
+                                    onUnauthorized: widget.onUnauthorized,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   if (_error != null || _message != null)
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                      child: _StatusBanner(
-                        message: _error ?? _message!,
-                        isError: _error != null,
+                      child: UiKitSectionCard(
+                        title: _error != null ? 'Atención' : 'Listo',
+                        icon: _error != null
+                            ? Icons.error_outline
+                            : Icons.check_circle_outline,
+                        child: Text(_error ?? _message!),
                       ),
                     ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                    child: UiKitSectionCard(
-                      title: 'Perfil',
-                      subtitle: 'Nombre visible en GeoSur',
-                      icon: Icons.badge_outlined,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          TextFormField(
-                            controller: _name,
-                            textCapitalization: TextCapitalization.words,
-                            decoration: const InputDecoration(
-                              labelText: 'Nombre',
-                              border: InputBorder.none,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          InputDecorator(
-                            decoration: const InputDecoration(
-                              labelText: 'Correo',
-                              border: InputBorder.none,
-                            ),
-                            child: Text(widget.user.email),
-                          ),
-                          const SizedBox(height: 12),
-                          FilledButton(
-                            onPressed: _savingProfile ? null : _saveName,
-                            child: _savingProfile
-                                ? const SizedBox.square(
-                                    dimension: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  )
-                                : const Text('Guardar nombre'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                    child: UiKitSectionCard(
-                      title: 'Unidades',
-                      subtitle: 'Se aplican al mostrar lecturas del mapa.',
-                      icon: Icons.straighten_outlined,
+                    child: Card(
+                      // Sin clip: el label flotante del campo Nombre no se corta.
+                      clipBehavior: Clip.none,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          if (catalog == null || catalog.groups.isEmpty)
-                            const Text(
-                              'No se pudo cargar el catálogo. Revisa la API.',
-                            )
-                          else
-                            for (final group in catalog.groups.values) ...[
-                              Text(
-                                group.name,
-                                style: Theme.of(context).textTheme.titleSmall,
-                              ),
-                              const SizedBox(height: 8),
-                              Wrap(
-                                spacing: 8,
-                                runSpacing: 8,
-                                children: [
-                                  for (final option in group.options.values)
-                                    ChoiceChip(
-                                      label: Text(option.name),
-                                      selected:
-                                          (_units[group.key] ??
-                                              group.defaultCode) ==
-                                          option.code,
-                                      onSelected: (_) => setState(
-                                        () => _units[group.key] = option.code,
-                                      ),
+                          _AccountPanel(
+                            title: 'Perfil',
+                            subtitle: 'Nombre visible en GeoSur',
+                            icon: Icons.badge_outlined,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                TextFormField(
+                                  controller: _name,
+                                  textCapitalization: TextCapitalization.words,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Nombre',
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.auto,
+                                    contentPadding: EdgeInsets.fromLTRB(
+                                      18,
+                                      18,
+                                      18,
+                                      16,
                                     ),
-                                ],
-                              ),
-                              if (group.key == 'temperatura' &&
-                                  previewUnits != null) ...[
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Vista previa: ${previewUnits.format('temperatura', 0, '°C')} · ${previewUnits.format('temperatura', 25, '°C')}',
-                                  style: Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                InputDecorator(
+                                  decoration: const InputDecoration(
+                                    labelText: 'Correo',
+                                    contentPadding: EdgeInsets.fromLTRB(
+                                      18,
+                                      18,
+                                      18,
+                                      16,
+                                    ),
+                                  ),
+                                  child: Text(widget.user.email),
+                                ),
+                                const SizedBox(height: 12),
+                                FilledButton(
+                                  onPressed:
+                                      _savingProfile ? null : _saveName,
+                                  child: _savingProfile
+                                      ? const SizedBox.square(
+                                          dimension: 20,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                          ),
+                                        )
+                                      : const Text('Guardar nombre'),
                                 ),
                               ],
-                              const SizedBox(height: 14),
-                            ],
-                          FilledButton(
-                            onPressed: _savingUnits ? null : _saveUnits,
-                            child: _savingUnits
-                                ? const SizedBox.square(
-                                    dimension: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  )
-                                : const Text('Guardar unidades'),
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                    child: UiKitSectionCard(
-                      title: 'Ubicación',
-                      subtitle: 'Toca el mapa para marcar tu punto.',
-                      icon: Icons.place_outlined,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: SizedBox(
-                              height: 180,
-                              child: FlutterMap(
-                                mapController: _mapController,
-                                options: MapOptions(
-                                  initialCenter: LatLng(
-                                    _prefs?.latitude ?? -17.7833,
-                                    _prefs?.longitude ?? -63.1821,
-                                  ),
-                                  initialZoom: 11,
-                                  onTap: (_, point) => _setLocation(point),
+                          Divider(
+                            height: 1,
+                            color: scheme.outlineVariant.withValues(alpha: 0.5),
+                          ),
+                          _AccountPanel(
+                            title: 'Unidades',
+                            subtitle: 'Cómo se muestran las lecturas',
+                            icon: Icons.straighten_outlined,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                if (catalog == null || catalog.groups.isEmpty)
+                                  const Text(
+                                    'No se pudo cargar el catálogo. Revisa la API.',
+                                  )
+                                else
+                                  for (final group
+                                      in catalog.groups.values) ...[
+                                    Text(
+                                      group.name,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Builder(
+                                      builder: (context) {
+                                        final codes = group.options.keys
+                                            .toList(growable: false);
+                                        if (codes.isEmpty) {
+                                          return const SizedBox.shrink();
+                                        }
+                                        final raw = _units[group.key] ??
+                                            group.defaultCode;
+                                        final selected = codes.contains(raw)
+                                            ? raw
+                                            : codes.first;
+                                        return SegmentedButton<String>(
+                                          segments: [
+                                            for (final option
+                                                in group.options.values)
+                                              ButtonSegment(
+                                                value: option.code,
+                                                label: Text(
+                                                  option.symbol.isEmpty
+                                                      ? option.name
+                                                      : option.symbol,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                tooltip: option.name,
+                                              ),
+                                          ],
+                                          selected: {selected},
+                                          emptySelectionAllowed: false,
+                                          onSelectionChanged: (next) {
+                                            if (next.isEmpty) return;
+                                            setState(
+                                              () => _units[group.key] =
+                                                  next.first,
+                                            );
+                                          },
+                                          style: ButtonStyle(
+                                            visualDensity:
+                                                VisualDensity.compact,
+                                            foregroundColor:
+                                                WidgetStateProperty
+                                                    .resolveWith((states) {
+                                              if (states.contains(
+                                                WidgetState.selected,
+                                              )) {
+                                                return scheme.onSurface;
+                                              }
+                                              return scheme.onSurfaceVariant;
+                                            }),
+                                            backgroundColor:
+                                                WidgetStateProperty
+                                                    .resolveWith((states) {
+                                              if (states.contains(
+                                                WidgetState.selected,
+                                              )) {
+                                                return scheme
+                                                    .surfaceContainerHighest;
+                                              }
+                                              return scheme.surface;
+                                            }),
+                                          ),
+                                          showSelectedIcon: false,
+                                        );
+                                      },
+                                    ),
+                                    if (group.key == 'temperatura' &&
+                                        previewUnits != null) ...[
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        'Vista previa: ${previewUnits.format('temperatura', 0, '°C')} · ${previewUnits.format('temperatura', 25, '°C')}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
+                                      ),
+                                    ],
+                                    const SizedBox(height: 14),
+                                  ],
+                                FilledButton(
+                                  onPressed:
+                                      _savingUnits ? null : _saveUnits,
+                                  child: _savingUnits
+                                      ? const SizedBox.square(
+                                          dimension: 20,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                          ),
+                                        )
+                                      : const Text('Guardar unidades'),
                                 ),
-                                children: [
-                                  MapBaseStyle.claro.toLayer(),
-                                  if (_prefs?.hasLocation == true)
-                                    MarkerLayer(
-                                      markers: [
-                                        Marker(
-                                          point: LatLng(
-                                            _prefs!.latitude!,
-                                            _prefs!.longitude!,
-                                          ),
-                                          width: 40,
-                                          height: 40,
-                                          child: Icon(
-                                            Icons.location_on,
-                                            color: Theme.of(
-                                              context,
-                                            ).colorScheme.primary,
-                                            size: 36,
-                                          ),
+                              ],
+                            ),
+                          ),
+                          Divider(
+                            height: 1,
+                            color: scheme.outlineVariant.withValues(alpha: 0.5),
+                          ),
+                          _AccountPanel(
+                            title: 'Ubicación y avisos',
+                            subtitle: 'Punto para notificaciones',
+                            icon: Icons.place_outlined,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: SizedBox(
+                                    height: 180,
+                                    child: FlutterMap(
+                                      mapController: _mapController,
+                                      options: MapOptions(
+                                        initialCenter: LatLng(
+                                          _prefs?.latitude ?? -17.7833,
+                                          _prefs?.longitude ?? -63.1821,
                                         ),
+                                        initialZoom: 12,
+                                        interactionOptions:
+                                            const InteractionOptions(
+                                          flags: InteractiveFlag.drag |
+                                              InteractiveFlag.pinchZoom |
+                                              InteractiveFlag.doubleTapZoom,
+                                        ),
+                                        onTap: (_, point) =>
+                                            _setLocation(point),
+                                      ),
+                                      children: [
+                                        MapBaseStyle.calles.toLayer(),
+                                        if (_prefs?.hasLocation == true)
+                                          MarkerLayer(
+                                            markers: [
+                                              Marker(
+                                                point: LatLng(
+                                                  _prefs!.latitude!,
+                                                  _prefs!.longitude!,
+                                                ),
+                                                width: 40,
+                                                height: 40,
+                                                child: Icon(
+                                                  Icons.location_on,
+                                                  color: scheme.primary,
+                                                  size: 36,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                       ],
                                     ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            _prefs?.hasLocation == true
-                                ? 'Lat ${_prefs!.latitude!.toStringAsFixed(5)} · Lon ${_prefs!.longitude!.toStringAsFixed(5)}'
-                                : 'Sin ubicación guardada',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: TextButton(
-                              onPressed: _prefs?.hasLocation == true
-                                  ? _clearLocation
-                                  : null,
-                              child: const Text('Quitar ubicación'),
-                            ),
-                          ),
-                          SwitchListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: const Text('Avisos por correo'),
-                            value: _prefs?.notifyEmail ?? false,
-                            onChanged: _prefs?.hasLocation == true
-                                ? (value) => setState(() {
-                                    _prefs = _prefs!.copyWith(
-                                      notifyEmail: value,
-                                    );
-                                  })
-                                : null,
-                          ),
-                          SwitchListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: const Text('WhatsApp'),
-                            value: _prefs?.notifyWhatsapp ?? false,
-                            onChanged: _prefs?.hasLocation == true
-                                ? (value) => setState(() {
-                                    _prefs = _prefs!.copyWith(
-                                      notifyWhatsapp: value,
-                                    );
-                                  })
-                                : null,
-                          ),
-                          if (_prefs?.notifyWhatsapp == true)
-                            TextFormField(
-                              controller: _whatsapp,
-                              decoration: const InputDecoration(
-                                labelText: 'Destino WhatsApp',
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          SwitchListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: const Text('Telegram'),
-                            value: _prefs?.notifyTelegram ?? false,
-                            onChanged: _prefs?.hasLocation == true
-                                ? (value) => setState(() {
-                                    _prefs = _prefs!.copyWith(
-                                      notifyTelegram: value,
-                                    );
-                                  })
-                                : null,
-                          ),
-                          if (_prefs?.notifyTelegram == true)
-                            TextFormField(
-                              controller: _telegram,
-                              decoration: const InputDecoration(
-                                labelText: 'Destino Telegram',
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          const SizedBox(height: 8),
-                          FilledButton(
-                            onPressed: _savingPrefs ? null : _savePreferences,
-                            child: _savingPrefs
-                                ? const SizedBox.square(
-                                    dimension: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  _prefs?.hasLocation == true
+                                      ? 'Lat ${_prefs!.latitude!.toStringAsFixed(5)} · Lon ${_prefs!.longitude!.toStringAsFixed(5)}'
+                                      : 'Sin ubicación guardada',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: TextButton(
+                                    onPressed: _prefs?.hasLocation == true
+                                        ? _clearLocation
+                                        : null,
+                                    child: const Text('Quitar ubicación'),
+                                  ),
+                                ),
+                                SwitchListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  title: const Text('Avisos por correo'),
+                                  value: _prefs?.notifyEmail ?? false,
+                                  onChanged: _prefs?.hasLocation == true
+                                      ? (value) => setState(() {
+                                            _prefs = _prefs!.copyWith(
+                                              notifyEmail: value,
+                                            );
+                                          })
+                                      : null,
+                                ),
+                                SwitchListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  title: const Text('WhatsApp'),
+                                  value: _prefs?.notifyWhatsapp ?? false,
+                                  onChanged: _prefs?.hasLocation == true
+                                      ? (value) => setState(() {
+                                            _prefs = _prefs!.copyWith(
+                                              notifyWhatsapp: value,
+                                            );
+                                          })
+                                      : null,
+                                ),
+                                if (_prefs?.notifyWhatsapp == true)
+                                  TextFormField(
+                                    controller: _whatsapp,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Destino WhatsApp',
                                     ),
-                                  )
-                                : const Text('Guardar preferencias'),
+                                  ),
+                                SwitchListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  title: const Text('Telegram'),
+                                  value: _prefs?.notifyTelegram ?? false,
+                                  onChanged: _prefs?.hasLocation == true
+                                      ? (value) => setState(() {
+                                            _prefs = _prefs!.copyWith(
+                                              notifyTelegram: value,
+                                            );
+                                          })
+                                      : null,
+                                ),
+                                if (_prefs?.notifyTelegram == true)
+                                  TextFormField(
+                                    controller: _telegram,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Destino Telegram',
+                                    ),
+                                  ),
+                                const SizedBox(height: 8),
+                                FilledButton(
+                                  onPressed:
+                                      _savingPrefs ? null : _savePreferences,
+                                  child: _savingPrefs
+                                      ? const SizedBox.square(
+                                          dimension: 20,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                          ),
+                                        )
+                                      : const Text('Guardar preferencias'),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+                    padding: const EdgeInsets.fromLTRB(16, 20, 16, 32),
                     child: OutlinedButton.icon(
                       onPressed: widget.onSignOut,
                       icon: const Icon(Icons.logout),
@@ -524,27 +678,68 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 }
 
-class _StatusBanner extends StatelessWidget {
-  const _StatusBanner({required this.message, required this.isError});
+class _QuickStat extends StatelessWidget {
+  const _QuickStat({
+    required this.title,
+    required this.value,
+    required this.icon,
+    required this.onTap,
+  });
 
-  final String message;
-  final bool isError;
+  final String title;
+  final String value;
+  final IconData icon;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: isError ? scheme.errorContainer : scheme.primaryContainer,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Text(
-        message,
-        style: TextStyle(
-          color: isError ? scheme.onErrorContainer : scheme.onPrimaryContainer,
+    return InkWell(
+      borderRadius: BorderRadius.circular(16),
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        child: Column(
+          children: [
+            Icon(icon, color: scheme.primary),
+            const SizedBox(height: 6),
+            Text(value, style: Theme.of(context).textTheme.titleMedium),
+            Text(title, style: Theme.of(context).textTheme.labelMedium),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class _AccountPanel extends StatelessWidget {
+  const _AccountPanel({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.child,
+  });
+
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        // Siempre cerrado al entrar; sin setState al expandir (evita assert de framework).
+        initiallyExpanded: false,
+        maintainState: true,
+        leading: Icon(icon, color: scheme.primary),
+        title: Text(title),
+        subtitle: Text(subtitle),
+        // Top > 0: el label flotante del OutlineInput no queda cortado.
+        childrenPadding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
+        children: [child],
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../../../core/network/geocruz_api_client.dart';
 import '../../../core/widgets/units_scope.dart';
+import '../model/condicion_tiempo.dart';
 import '../model/weather_repository.dart';
 
 /// Tiempo y pronóstico (API `tiempo`) — mapa completo #62 / #89.
@@ -87,6 +88,10 @@ class _WeatherSheetState extends State<WeatherSheet> {
               final units = UnitsScope.maybeOf(context)?.presentation;
               final current = weather.current;
               final tempBase = weather.unitOf('temperatura') ?? '°C';
+              final condicion = condicionTiempo(
+                current['codigoTiempo'],
+                esDia: current['esDia'] is bool ? current['esDia'] as bool : null,
+              );
 
               String fmt(String key, {String? asMetric}) {
                 final raw = current[key];
@@ -124,6 +129,8 @@ class _WeatherSheetState extends State<WeatherSheet> {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 14),
+                  _CondicionBanner(condicion: condicion),
+                  const SizedBox(height: 12),
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
@@ -155,9 +162,13 @@ class _WeatherSheetState extends State<WeatherSheet> {
                     for (final day in weather.days.take(7))
                       ListTile(
                         contentPadding: EdgeInsets.zero,
-                        leading: const Icon(Icons.calendar_today_outlined),
+                        leading: Icon(
+                          condicionTiempo(day['codigoTiempo']).iconData,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                         title: Text(_dayLabel(day['fecha'])),
                         subtitle: Text(
+                          '${condicionTiempo(day['codigoTiempo']).nombre} · '
                           'Máx ${dayTemp(day['maxima'])} · '
                           'Mín ${dayTemp(day['minima'])} · '
                           'Lluvia ${_num(day['lluvia'])} mm',
@@ -179,6 +190,47 @@ class _WeatherSheetState extends State<WeatherSheet> {
   }
 
   String _num(Object? value) => value is num ? '$value' : '—';
+}
+
+class _CondicionBanner extends StatelessWidget {
+  const _CondicionBanner({required this.condicion});
+
+  final CondicionTiempo condicion;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Material(
+      color: scheme.primaryContainer.withValues(alpha: 0.55),
+      borderRadius: BorderRadius.circular(16),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        child: Row(
+          children: [
+            Icon(condicion.iconData, size: 36, color: scheme.primary),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Condición del tiempo',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                  Text(
+                    condicion.nombre,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _ChipMetric extends StatelessWidget {

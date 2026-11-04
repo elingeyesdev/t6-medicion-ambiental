@@ -53,15 +53,32 @@ class WeatherRepository {
     required double latitude,
     required double longitude,
   }) async {
-    final payload = await api.getJson(
-      'tiempo',
-      queryParameters: {
-        'latitud': '$latitude',
-        'longitud': '$longitude',
-      },
-      authenticated: true,
-      timeoutOverride: const Duration(seconds: 20),
-    );
+    final lat = double.parse(latitude.toStringAsFixed(4));
+    final lon = double.parse(longitude.toStringAsFixed(4));
+    Object? payload;
+    try {
+      payload = await api.getJson(
+        'tiempo',
+        queryParameters: {
+          'latitud': '$lat',
+          'longitud': '$lon',
+        },
+        authenticated: true,
+        timeoutOverride: const Duration(seconds: 45),
+      );
+    } on GeoCruzApiException catch (error) {
+      // Un reintento corto suele salvar respuestas truncadas en el emulador.
+      if (!error.message.contains('JSON')) rethrow;
+      payload = await api.getJson(
+        'tiempo',
+        queryParameters: {
+          'latitud': '$lat',
+          'longitud': '$lon',
+        },
+        authenticated: true,
+        timeoutOverride: const Duration(seconds: 60),
+      );
+    }
     return WeatherSnapshot.fromJson(
       payload,
       latitude: latitude,

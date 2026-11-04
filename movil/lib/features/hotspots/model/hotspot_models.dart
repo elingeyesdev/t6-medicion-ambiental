@@ -39,6 +39,7 @@ class HotspotFilters {
   const HotspotFilters({
     required this.fromUtc,
     required this.untilUtc,
+    this.alcance = 'santacruz',
     this.provinceId,
     this.municipalityId,
     this.confidence,
@@ -46,6 +47,8 @@ class HotspotFilters {
 
   final DateTime fromUtc;
   final DateTime untilUtc;
+  /// Siempre catálogo Santa Cruz (igual que la web).
+  final String alcance;
   final String? provinceId;
   final String? municipalityId;
   final String? confidence;
@@ -59,6 +62,7 @@ class HotspotFilters {
       'desde': _isoSeconds(fromUtc),
       'hasta': _isoSeconds(untilUtc),
       'modo': 'externo',
+      'alcance': 'santacruz',
       'pagina': '$page',
       'tamanioPagina': '$pageSize',
     };
