@@ -12,7 +12,11 @@ red, `gh`, subprocessos, tokens ni credenciales. La captura REST real la realiza
 el responsable aparte. No se consulta Actions, check-runs ni CI por CLI; un enlace
 de evidencia recibido se conserva y no se visita.
 
-## Corte vigente · 03/11/2026
+## Corte vigente · 04/11/2026
+
+El [resumen de revisión](REVISION-20261104.md) reúne el avance de las consultas #138 y la vista local #139, el contraste forestal de #119 y las decisiones pendientes. La [captura del 04/11](evidencias/2026-11-04/snapshot.json) conserva 22 tareas y 17 PR; el [índice nuevo](evidencias/2026-11-04/preparacion/indice.md) mantiene sus dependencias. El PDF en output/pdf/resumen-m4-20261104.pdf es un resumen de preparación, no un paquete final.
+
+## Corte anterior · 03/11/2026
 
 El candidato #96 y la preparación #46 ya están integrados en develop. La [captura nueva](evidencias/2026-11-03/snapshot.json) reúne 22 tareas y 15 PR, con su estado y sus revisiones paginadas. El [índice actualizado](evidencias/2026-11-03/preparacion/indice.md) conserva esas fechas y enlaza sus pendientes.
 

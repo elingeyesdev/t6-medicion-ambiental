@@ -1,0 +1,35 @@
+{
+  "captured_at": "2026-11-04T04:28:19.662Z",
+  "repository": "elingeyesdev/t6-medicion-ambiental",
+  "source": "GitHub REST core issues, milestone 3",
+  "issues": [
+    {
+      "assignees": [
+        "Jazielle"
+      ],
+      "number": 89,
+      "state": "open",
+      "title": "Recuperar en Flutter las funciones restantes de EnviroSense",
+      "updated_at": "2026-11-03T23:09:47Z"
+    },
+    {
+      "assignees": [
+        "JosuePadillaUnivalle"
+      ],
+      "number": 49,
+      "state": "open",
+      "title": "DEP-01 - Preparar Railway con PostgreSQL y despliegue revisado",
+      "updated_at": "2026-10-28T03:49:07Z"
+    },
+    {
+      "assignees": [
+        "Jazielle",
+        "JosuePadillaUnivalle"
+      ],
+      "number": 40,
+      "state": "open",
+      "title": "ANA-01 - Preparar método y avance de análisis de inundaciones",
+      "updated_at": "2026-11-04T02:56:46Z"
+    }
+  ]
+}
