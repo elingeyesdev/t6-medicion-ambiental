@@ -1,0 +1,101 @@
+✔ navegación real: escritorio a móvil conserva el menú cerrado aislado al restaurar por botón (2.9346ms)
+✔ navegación real: móvil a escritorio mantiene aislamiento activo y lo retira al restaurar por botón (0.8066ms)
+✔ navegación real: menú móvil abierto recupera accesibilidad antes del foco al restaurar por botón (0.9361ms)
+✔ navegación real: escritorio a móvil conserva el menú cerrado aislado al restaurar por Escape (0.7803ms)
+✔ navegación real: móvil a escritorio mantiene aislamiento activo y lo retira al restaurar por Escape (0.828ms)
+✔ navegación real: menú móvil abierto recupera accesibilidad antes del foco al restaurar por Escape (0.6625ms)
+✔ entra desde el gesto del botón y solo confirma el estado después del navegador; sale sin reemplazar el mapa (0.7243ms)
+✔ una salida nativa externa se refleja sin solicitar otra salida (0.2049ms)
+✖ Escape nativo sale antes del cierre de paneles y conserva el mismo mapa (2.6457ms)
+✔ Escape fuera del mapa nativo conserva los atajos de paneles y no cierra otra pantalla completa (0.3388ms)
+✖ varios Escape durante una salida nativa pendiente no duplican solicitudes (0.2916ms)
+✖ un rechazo de Escape nativo conserva el estado real y permite reintentar con el botón (0.7538ms)
+✔ sin API de entrada: amplía dentro de la página y restaura sin solicitar pantalla completa nativa (0.2571ms)
+✔ sin API de salida: amplía dentro de la página y restaura sin solicitar pantalla completa nativa (0.1218ms)
+✔ API bloqueada por el navegador: amplía dentro de la página y restaura sin solicitar pantalla completa nativa (0.1657ms)
+✔ una entrada nativa denegada con promesa rechazada activa el respaldo y permite restaurar y reintentar (0.3224ms)
+✔ una entrada nativa denegada con excepción síncrona activa el respaldo y permite restaurar y reintentar (0.7811ms)
+✔ una salida denegada mantiene el nombre y pressed reales; Escape limpia el aviso (0.2915ms)
+✔ no entra sobre una pantalla completa ajena ni la cierra durante la limpieza (0.1336ms)
+✔ al cerrar una pantalla completa ajena se habilita el mapa sin redimensionarlo innecesariamente (0.1762ms)
+✔ varios clics y fullscreenchange antes de resolver la promesa no duplican solicitudes ni redimensionados (0.1836ms)
+✔ resolver la solicitud sin fullscreenchange no anuncia una entrada inexistente (0.1337ms)
+✔ inicializar dos veces el mismo botón conserva un solo control y una sola solicitud (0.1455ms)
+✔ la limpieza es idempotente, elimina oyentes y cierra únicamente su contenedor (0.1091ms)
+✔ una entrada pendiente que termina después de cancelar se cierra sin actualizar la UI retirada (0.1157ms)
+✔ cancelar durante una salida pendiente no solicita una segunda salida (0.2095ms)
+✔ una entrada tardía no cierra la pantalla ajena que la reemplazó (0.1986ms)
+✔ un rechazo tardío tras cancelar no muestra avisos ni deja una promesa rechazada sin manejar (0.1757ms)
+✔ un control reiniciado hereda una entrada pendiente sin que el anterior la cierre (0.2059ms)
+✔ reiniciar y cancelar el control durante la salida de limpieza no duplica esa salida (0.1924ms)
+✔ el respaldo aísla solo el exterior, mantiene accesibles los controles y Escape restaura el foco y los atributos previos (0.6436ms)
+✔ el respaldo recupera foco después de que un rechazo nativo lo deje fuera mientras el botón estaba deshabilitado (0.2102ms)
+✔ un foco exterior inesperado vuelve al control del mapa solo mientras está ampliado dentro de la página (0.6664ms)
+✔ la limpieza del respaldo restaura todo lo propio sin deshacer cambios posteriores de otro componente (0.1546ms)
+✔ una pantalla completa ajena sobrevenida retira el respaldo sin cerrarla ni quitarle el foco (0.1503ms)
+✔ una transición real a modo nativo retira clase e inert del respaldo y luego usa la salida nativa (0.1895ms)
+✔ un rechazo tardío con contenedor desconectado nunca activa el respaldo (0.1695ms)
+✔ un rechazo tardío con boton desconectado nunca activa el respaldo (0.0982ms)
+✔ un rechazo tardío con estado desconectado nunca activa el respaldo (0.0665ms)
+✔ un rechazo nativo cuando ya hay pantalla completa ajena no activa el respaldo (0.1486ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 37
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 120.1489
+
+✖ failing tests:
+
+test at tests\Js\pantalla-completa.test.mjs:202:1
+✖ Escape nativo sale antes del cierre de paneles y conserva el mismo mapa (2.6457ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  false !== true
+
+      at TestContext.<anonymous> (file:///C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/pantalla-completa126/web/tests/Js/pantalla-completa.test.mjs:210:12)
+      at async Test.run (node:internal/test_runner/test:1373:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:946:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\Js\pantalla-completa.test.mjs:234:1
+✖ varios Escape durante una salida nativa pendiente no duplican solicitudes (0.2916ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 1
+
+      at TestContext.<anonymous> (file:///C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/pantalla-completa126/web/tests/Js/pantalla-completa.test.mjs:242:12)
+      at async Test.run (node:internal/test_runner/test:1373:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:946:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\Js\pantalla-completa.test.mjs:254:1
+✖ un rechazo de Escape nativo conserva el estado real y permite reintentar con el botón (0.7538ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /No se pudo salir.*botón/. Input:
+
+  ''
+
+      at TestContext.<anonymous> (file:///C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/pantalla-completa126/web/tests/Js/pantalla-completa.test.mjs:262:12)
+      at async Test.run (node:internal/test_runner/test:1373:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:946:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: /No se pudo salir.*botón/,
+    operator: 'match',
+    diff: 'simple'
+  }

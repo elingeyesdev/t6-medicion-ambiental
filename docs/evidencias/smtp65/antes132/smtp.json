@@ -1,0 +1,296 @@
+{
+  "host": "127.0.0.1",
+  "port": 62465,
+  "closed": true,
+  "events": [
+    {
+      "type": "connect",
+      "session": "inhvgue2blpfml91",
+      "remote": "127.0.0.1"
+    },
+    {
+      "type": "protocol",
+      "session": "inhvgue2blpfml91",
+      "direction": "send",
+      "text": "S: 220 smtp65.example.test ESMTP GeoSur local protocol capture only"
+    },
+    {
+      "type": "protocol",
+      "session": "inhvgue2blpfml91",
+      "direction": "command",
+      "text": "C: EHLO cliente.example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "inhvgue2blpfml91",
+      "direction": "send",
+      "text": "S: 250-smtp65.example.test Nice to meet you, [127.0.0.1]\r\n250-PIPELINING\r\n250-8BITMIME\r\n250-SMTPUTF8\r\n250 SIZE 65536"
+    },
+    {
+      "type": "protocol",
+      "session": "inhvgue2blpfml91",
+      "direction": "command",
+      "text": "C: MAIL FROM:<avisos@example.test>"
+    },
+    {
+      "type": "mail",
+      "session": "inhvgue2blpfml91",
+      "from": "avisos@example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "inhvgue2blpfml91",
+      "direction": "send",
+      "text": "S: 250 Accepted"
+    },
+    {
+      "type": "protocol",
+      "session": "inhvgue2blpfml91",
+      "direction": "command",
+      "text": "C: RCPT TO:<aceptacion@example.test>"
+    },
+    {
+      "type": "rcpt",
+      "session": "inhvgue2blpfml91",
+      "to": "aceptacion@example.test",
+      "reply": 250
+    },
+    {
+      "type": "protocol",
+      "session": "inhvgue2blpfml91",
+      "direction": "send",
+      "text": "S: 250 Accepted"
+    },
+    {
+      "type": "protocol",
+      "session": "inhvgue2blpfml91",
+      "direction": "command",
+      "text": "C: DATA"
+    },
+    {
+      "type": "protocol",
+      "session": "inhvgue2blpfml91",
+      "direction": "send",
+      "text": "S: 354 End data with <CR><LF>.<CR><LF>"
+    },
+    {
+      "type": "data",
+      "session": "inhvgue2blpfml91",
+      "to": [
+        "aceptacion@example.test"
+      ],
+      "finalReply": 250
+    },
+    {
+      "type": "protocol",
+      "session": "inhvgue2blpfml91",
+      "direction": "send",
+      "text": "S: 250 SMTP65_LOCAL_ACCEPTED"
+    },
+    {
+      "type": "protocol",
+      "session": "inhvgue2blpfml91",
+      "direction": "command",
+      "text": "C: QUIT"
+    },
+    {
+      "type": "protocol",
+      "session": "inhvgue2blpfml91",
+      "direction": "send",
+      "text": "S: 221 Bye"
+    },
+    {
+      "type": "close",
+      "session": "inhvgue2blpfml91"
+    },
+    {
+      "type": "connect",
+      "session": "53ra4uk159i28p62",
+      "remote": "127.0.0.1"
+    },
+    {
+      "type": "protocol",
+      "session": "53ra4uk159i28p62",
+      "direction": "send",
+      "text": "S: 220 smtp65.example.test ESMTP GeoSur local protocol capture only"
+    },
+    {
+      "type": "protocol",
+      "session": "53ra4uk159i28p62",
+      "direction": "command",
+      "text": "C: EHLO cliente.example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "53ra4uk159i28p62",
+      "direction": "send",
+      "text": "S: 250-smtp65.example.test Nice to meet you, [127.0.0.1]\r\n250-PIPELINING\r\n250-8BITMIME\r\n250-SMTPUTF8\r\n250 SIZE 65536"
+    },
+    {
+      "type": "protocol",
+      "session": "53ra4uk159i28p62",
+      "direction": "command",
+      "text": "C: MAIL FROM:<avisos@example.test>"
+    },
+    {
+      "type": "mail",
+      "session": "53ra4uk159i28p62",
+      "from": "avisos@example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "53ra4uk159i28p62",
+      "direction": "send",
+      "text": "S: 250 Accepted"
+    },
+    {
+      "type": "protocol",
+      "session": "53ra4uk159i28p62",
+      "direction": "command",
+      "text": "C: RCPT TO:<rechazo@example.test>"
+    },
+    {
+      "type": "rcpt",
+      "session": "53ra4uk159i28p62",
+      "to": "rechazo@example.test",
+      "reply": 550
+    },
+    {
+      "type": "protocol",
+      "session": "53ra4uk159i28p62",
+      "direction": "send",
+      "text": "S: 550 SMTP65_RECHAZO_SINTETICO"
+    },
+    {
+      "type": "protocol",
+      "session": "53ra4uk159i28p62",
+      "direction": "command",
+      "text": "C: RSET"
+    },
+    {
+      "type": "protocol",
+      "session": "53ra4uk159i28p62",
+      "direction": "send",
+      "text": "S: 250 Flushed"
+    },
+    {
+      "type": "protocol",
+      "session": "53ra4uk159i28p62",
+      "direction": "command",
+      "text": "C: QUIT"
+    },
+    {
+      "type": "protocol",
+      "session": "53ra4uk159i28p62",
+      "direction": "send",
+      "text": "S: 221 Bye"
+    },
+    {
+      "type": "close",
+      "session": "53ra4uk159i28p62"
+    },
+    {
+      "type": "connect",
+      "session": "5krpfflsr1ohfbh3",
+      "remote": "127.0.0.1"
+    },
+    {
+      "type": "protocol",
+      "session": "5krpfflsr1ohfbh3",
+      "direction": "send",
+      "text": "S: 220 smtp65.example.test ESMTP GeoSur local protocol capture only"
+    },
+    {
+      "type": "protocol",
+      "session": "5krpfflsr1ohfbh3",
+      "direction": "command",
+      "text": "C: EHLO cliente.example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "5krpfflsr1ohfbh3",
+      "direction": "send",
+      "text": "S: 250-smtp65.example.test Nice to meet you, [127.0.0.1]\r\n250-PIPELINING\r\n250-8BITMIME\r\n250-SMTPUTF8\r\n250 SIZE 65536"
+    },
+    {
+      "type": "protocol",
+      "session": "5krpfflsr1ohfbh3",
+      "direction": "command",
+      "text": "C: MAIL FROM:<avisos@example.test>"
+    },
+    {
+      "type": "mail",
+      "session": "5krpfflsr1ohfbh3",
+      "from": "avisos@example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "5krpfflsr1ohfbh3",
+      "direction": "send",
+      "text": "S: 250 Accepted"
+    },
+    {
+      "type": "protocol",
+      "session": "5krpfflsr1ohfbh3",
+      "direction": "command",
+      "text": "C: RCPT TO:<incierto@example.test>"
+    },
+    {
+      "type": "rcpt",
+      "session": "5krpfflsr1ohfbh3",
+      "to": "incierto@example.test",
+      "reply": 250
+    },
+    {
+      "type": "protocol",
+      "session": "5krpfflsr1ohfbh3",
+      "direction": "send",
+      "text": "S: 250 Accepted"
+    },
+    {
+      "type": "protocol",
+      "session": "5krpfflsr1ohfbh3",
+      "direction": "command",
+      "text": "C: DATA"
+    },
+    {
+      "type": "protocol",
+      "session": "5krpfflsr1ohfbh3",
+      "direction": "send",
+      "text": "S: 354 End data with <CR><LF>.<CR><LF>"
+    },
+    {
+      "type": "data",
+      "session": "5krpfflsr1ohfbh3",
+      "to": [
+        "incierto@example.test"
+      ],
+      "finalReply": null
+    },
+    {
+      "type": "close",
+      "session": "5krpfflsr1ohfbh3"
+    }
+  ],
+  "messages": [
+    {
+      "session": "inhvgue2blpfml91",
+      "from": "avisos@example.test",
+      "to": [
+        "aceptacion@example.test"
+      ],
+      "data": "From: GeoSur SMTP65 <avisos@example.test>\r\nTo: aceptacion@example.test\r\nSubject: GeoSur =?utf-8?Q?=C2=B7_Observaci=C3=B3n?= ambiental\r\nMessage-ID: <a2a9c0b7c7133aee9793251b22920652@example.test>\r\nMIME-Version: 1.0\r\nDate: Sun, 01 Nov 2026 08:56:53 +0000\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\nGeoSur =C2=B7 Observaci=C3=B3n\r\nPunto sint=C3=A9tico SMTP65\r\nTemperatura:=\r\n 45 =C2=B0C =C2=B7 Calor extremo\r\n01/11/2026 04:55 =C2=B7 Hora de Bolivia=\r\n\r\nhttp://localhost/avisos\r\n",
+      "finalReply": 250
+    },
+    {
+      "session": "5krpfflsr1ohfbh3",
+      "from": "avisos@example.test",
+      "to": [
+        "incierto@example.test"
+      ],
+      "data": "From: GeoSur SMTP65 <avisos@example.test>\r\nTo: incierto@example.test\r\nSubject: GeoSur =?utf-8?Q?=C2=B7_Observaci=C3=B3n?= ambiental\r\nMessage-ID: <af773fdf70d97430b763d76dde4e47c1@example.test>\r\nMIME-Version: 1.0\r\nDate: Sun, 01 Nov 2026 08:56:57 +0000\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\nGeoSur =C2=B7 Observaci=C3=B3n\r\nPunto sint=C3=A9tico SMTP65\r\nTemperatura:=\r\n 45 =C2=B0C =C2=B7 Calor extremo\r\n01/11/2026 04:55 =C2=B7 Hora de Bolivia=\r\n\r\nhttp://localhost/avisos\r\n",
+      "finalReply": null
+    }
+  ],
+  "openSessionsAtClose": 0
+}

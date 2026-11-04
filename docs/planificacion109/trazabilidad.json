@@ -6,6 +6,206 @@
     "capturado_utc": "2026-10-31T06:27:50Z",
     "sha256": "3c60b91bd65cd6770304e528946be85948f7b906e6fcfad73ffc487217d487c5"
   },
+  "revisionDependencias": {
+    "registrado_utc": "2026-11-04T03:21:56.497Z",
+    "fechaEstadoLocal": "2026-11-03",
+    "baseDevelop": {
+      "commit": "a1ad8e71f7a7f8cedf4f013c72e6ec4326593aef",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/commit/a1ad8e71f7a7f8cedf4f013c72e6ec4326593aef"
+    },
+    "fuenteEstadosActuales": "Captura GitHub REST core de M4 del 03/11 en c5c6bd0061fe499da607e393b97ff9b4cf79cc80; contraste del 03/11 por Josué. La fuenteEstado y las listas EnCorte/Capturadas conservan el corte histórico del 31/10.",
+    "verificacionGitLocal": {
+      "merge96": "a1ad8e71f7a7f8cedf4f013c72e6ec4326593aef",
+      "headPreparacion46Incluido": "fba0319696bd5fe707bf71b68315c23ffecfb191",
+      "alcance46": "Preparación documental y metadatos integrados; #40 permanece abierta y no se acredita implementación de G."
+    },
+    "dependenciasDeBaseCubiertas": [
+      {
+        "issue": 39,
+        "motivo": "QA cerrada tras integración de PR #88; vínculo de #111 conservado."
+      },
+      {
+        "issue": 47,
+        "motivo": "Base web incorporada en M3 por PR #96; vínculo de #113 conservado."
+      },
+      {
+        "issue": 41,
+        "motivo": "Paquete M3 incorporado por PR #96; vínculo de #118 conservado, sin acreditar aceptación académica."
+      }
+    ],
+    "m3AbiertasInformadas": [
+      {
+        "numero": 40,
+        "titulo": "ANA-01 - Preparar método y avance de análisis de inundaciones",
+        "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/40",
+        "estado": "open",
+        "responsables": [
+          "Jazielle",
+          "JosuePadillaUnivalle"
+        ]
+      },
+      {
+        "numero": 49,
+        "titulo": "DEP-01 - Preparar Railway con PostgreSQL y despliegue revisado",
+        "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/49",
+        "estado": "open",
+        "responsables": [
+          "JosuePadillaUnivalle"
+        ]
+      },
+      {
+        "numero": 89,
+        "titulo": "Recuperar en Flutter las funciones restantes de EnviroSense",
+        "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/89",
+        "estado": "open",
+        "responsables": [
+          "Jazielle"
+        ]
+      }
+    ],
+    "revisionesM4Pendientes": [
+      {
+        "pr": 119,
+        "issue": 116,
+        "trabajo": "fuente forestal",
+        "estado": "pendiente_de_revision"
+      },
+      {
+        "pr": 120,
+        "issue": 110,
+        "trabajo": "método de agua e inundaciones",
+        "estado": "pendiente_de_revision"
+      },
+      {
+        "pr": 122,
+        "issue": 118,
+        "trabajo": "evidencias de M4",
+        "estado": "pendiente_de_revision"
+      },
+      {
+        "pr": 123,
+        "issue": 109,
+        "trabajo": "planificación a cargo de Jaziel, con apoyo de Josué",
+        "estado": "pendiente_de_revision"
+      }
+    ],
+    "dependenciasM4Revisadas": [
+      {
+        "issue": 109,
+        "dependeDe": [],
+        "cubiertasPorIntegracion": [],
+        "pendientes": []
+      },
+      {
+        "issue": 110,
+        "dependeDe": [
+          40
+        ],
+        "cubiertasPorIntegracion": [],
+        "pendientes": [
+          40
+        ]
+      },
+      {
+        "issue": 111,
+        "dependeDe": [
+          110,
+          39
+        ],
+        "cubiertasPorIntegracion": [
+          39
+        ],
+        "pendientes": [
+          110
+        ]
+      },
+      {
+        "issue": 112,
+        "dependeDe": [
+          111
+        ],
+        "cubiertasPorIntegracion": [],
+        "pendientes": [
+          111
+        ]
+      },
+      {
+        "issue": 113,
+        "dependeDe": [
+          112,
+          47
+        ],
+        "cubiertasPorIntegracion": [
+          47
+        ],
+        "pendientes": [
+          112
+        ]
+      },
+      {
+        "issue": 114,
+        "dependeDe": [
+          112
+        ],
+        "cubiertasPorIntegracion": [],
+        "pendientes": [
+          112
+        ]
+      },
+      {
+        "issue": 115,
+        "dependeDe": [
+          111,
+          113,
+          114
+        ],
+        "cubiertasPorIntegracion": [],
+        "pendientes": [
+          111,
+          113,
+          114
+        ]
+      },
+      {
+        "issue": 116,
+        "dependeDe": [],
+        "cubiertasPorIntegracion": [],
+        "pendientes": []
+      },
+      {
+        "issue": 117,
+        "dependeDe": [
+          116,
+          115
+        ],
+        "cubiertasPorIntegracion": [],
+        "pendientes": [
+          116,
+          115
+        ]
+      },
+      {
+        "issue": 118,
+        "dependeDe": [
+          41,
+          109,
+          115,
+          117
+        ],
+        "cubiertasPorIntegracion": [
+          41
+        ],
+        "pendientes": [
+          109,
+          115,
+          117
+        ]
+      }
+    ],
+    "estadoOrdenPropuesto": "pendiente_de_revision_con_Jaziel",
+    "nota": "La integración no cierra #40, #49 o #89 ni aprueba los PR de M4. Sin estimaciones O/M/P, nuevo calendario, nivelación o fechas de pronóstico.",
+    "fuenteEstadosActualesUrl": "https://github.com/elingeyesdev/t6-medicion-ambiental/blob/c5c6bd0061fe499da607e393b97ff9b4cf79cc80/docs/entrega-m4/evidencias/2026-11-03/snapshot.json"
+  },
   "actividades": [
     {
       "actividad": "A",
@@ -94,7 +294,8 @@
       ],
       "duracionesAdicionalesPorIssue": null,
       "regla": "Las issues desglosan la actividad; no sumar sus duraciones a la actividad padre.",
-      "alcance": "relación de trazabilidad, no declaración de finalización"
+      "alcance": "relación de trazabilidad, no declaración de finalización",
+      "paquete": "4.3 G"
     },
     {
       "actividad": "H",
@@ -104,7 +305,8 @@
       ],
       "duracionesAdicionalesPorIssue": null,
       "regla": "Las issues desglosan la actividad; no sumar sus duraciones a la actividad padre.",
-      "alcance": "parcial de H en M4; implementación completa posterior sin tarea nueva creada aquí"
+      "alcance": "parcial de H en M4; implementación completa posterior sin tarea nueva creada aquí",
+      "paquete": "4.4 H"
     },
     {
       "actividad": "I",
@@ -400,10 +602,10 @@
     }
   ],
   "paraleloPreparacion": {
-    "109": "Confirmar capacidad, comparar referencia y preparar reestimación.",
-    "110": "Revisión documental/acceso/calidad; procesamiento #111 mantiene #39 y #110.",
-    "116": "Revisar fuente y método forestal; el piloto #117 mantiene #115 y #116.",
-    "118": "Preparar índice; el paquete final mantiene #41, #109, #115 y #117."
+    "109": "Registrar capacidad declarada de 2–3 h por persona y día; confirmar calendario, período, orden y esfuerzo con Jaziel, responsable de planificación.",
+    "110": "Revisar caso, acceso y calidad; #46 integrado no cierra #40. #111 espera #110; #39 ya está cubierta.",
+    "116": "Revisar fuente y método forestal / PR #119; el piloto #117 mantiene #115 y #116.",
+    "118": "Preparar índice y revisión / PR #122; insumo #41 integrado. El paquete final espera #109, #115 y #117."
   },
   "metaM4Referencia": "2026-11-05",
   "metaFinalReferencia": "2026-11-30",

@@ -3,11 +3,14 @@
 use App\Http\Controllers\AccesoController;
 use App\Http\Controllers\AlertasController;
 use App\Http\Controllers\Api\BuscarLugarController;
+use App\Http\Controllers\Api\CalidadAireController;
 use App\Http\Controllers\Api\TiempoController;
 use App\Http\Controllers\AvisosController;
 use App\Http\Controllers\CuentaController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MapaMonitoreoController;
+use App\Http\Controllers\Mapas\CapasController;
+use App\Http\Controllers\Mapas\PoiController;
 use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\SensoresController;
@@ -18,6 +21,15 @@ use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'paginas.inicio')->name('inicio');
+Route::middleware(['auth', 'cuenta.activa', 'can:mapa.ver', 'can:datos.consultar'])->group(function (): void {
+    Route::get('/mapa/capas', [CapasController::class, 'index'])
+        ->middleware('throttle:120,1,mapa-capas')->name('mapa.capas');
+    Route::get('/mapa/capas/cuadros/{cuadro}.png', [CapasController::class, 'imagen'])
+        ->where('cuadro', '[a-z0-9][a-z0-9_-]{0,79}')
+        ->middleware('throttle:120,1,mapa-imagenes')->name('mapa.capas.imagen');
+    Route::get('/mapa/poi', PoiController::class)
+        ->middleware('throttle:12,1,mapa-poi')->name('mapa.poi');
+});
 Route::middleware('guest')->group(function (): void {
     Route::view('/login', 'acceso.entrar')->name('login');
     Route::post('/login', [AccesoController::class, 'entrar'])->middleware('throttle:cuentas-ingreso')->name('acceso.entrar');
@@ -35,10 +47,18 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
         ->middleware(['can:simulaciones.gestionar', 'throttle:30,1']);
     Route::get('/simulaciones/{id}/estado', [SimulacionesController::class, 'mostrar'])
         ->middleware(['can:simulaciones.gestionar', 'throttle:120,1']);
+    Route::middleware('can:datos.consultar')->group(function (): void {
+        Route::put('/avisos/push', [AvisosController::class, 'push'])->middleware('throttle:10,1')->name('avisos.push');
+        Route::get('/avisos/servicio-push.js', [AvisosController::class, 'servicioPush'])->name('avisos.servicio-push');
+        Route::get('/avisos/novedades', [AvisosController::class, 'novedades'])->middleware('throttle:30,1')->name('avisos.novedades');
+        Route::put('/avisos/canales', [AvisosController::class, 'canales'])->middleware('throttle:10,1')->name('avisos.canales');
+    });
+    Route::put('/cuenta/clave', [CuentaController::class, 'clave'])->middleware('throttle:5,1')->name('cuenta.clave');
     Route::put('/cuenta/unidades', [UnidadesController::class, 'guardar'])->name('cuenta.unidades');
     Route::middleware('can:datos.consultar')->group(function (): void {
         Route::get('/mapa/buscar', BuscarLugarController::class)->middleware('throttle:mapa-busquedas')->name('mapa.buscar');
         Route::get('/mapa/tiempo', TiempoController::class)->middleware('throttle:tiempo-consultas')->name('mapa.tiempo');
+        Route::get('/mapa/aire', CalidadAireController::class)->middleware('throttle:aire-consultas')->name('mapa.aire');
         Route::get('/alertas', [AlertasController::class, 'index'])->name('alertas');
         Route::get('/umbrales', [AlertasController::class, 'umbrales'])->name('umbrales');
         Route::get('/avisos', [AvisosController::class, 'index'])->name('avisos');
@@ -58,8 +78,8 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
         Route::patch('/plantillas/{id}', [ReportesController::class, 'guardarPlantilla'])->name('plantillas.actualizar');
         Route::delete('/plantillas/{id}', [ReportesController::class, 'archivarPlantilla'])->name('plantillas.archivar');
     });
+    Route::get('/simulaciones', [SimulacionesController::class, 'index'])->middleware('can:datos.consultar')->name('simulaciones');
     Route::middleware('can:simulaciones.gestionar')->group(function (): void {
-        Route::get('/simulaciones', [SimulacionesController::class, 'index'])->name('simulaciones');
         Route::post('/simulaciones', [SimulacionesController::class, 'guardar'])->name('simulaciones.guardar');
         Route::post('/simulaciones/{id}/accion', [SimulacionesController::class, 'accion'])->name('simulaciones.accion');
         Route::post('/simulaciones/{id}/historial', [SimulacionesController::class, 'publicar'])->name('simulaciones.publicar');

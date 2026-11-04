@@ -1,0 +1,10 @@
+PHPUnit 11.5.57 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.30
+Configuration: C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\smtp-local65\web\phpunit.xml
+
+.................                                                 17 / 17 (100%)
+
+Time: 00:01.725, Memory: 54.00 MB
+
+OK (17 tests, 109 assertions)

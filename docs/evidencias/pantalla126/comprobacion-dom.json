@@ -1,0 +1,404 @@
+{
+  "base": {
+    "boton": "Ampliar mapa",
+    "campos": [
+      [
+        "mon-pais",
+        "BO"
+      ],
+      [
+        "mon-region",
+        ""
+      ],
+      [
+        "mon-metrica",
+        "temperatura"
+      ],
+      [
+        "mon-origen",
+        "simulado"
+      ],
+      [
+        "mon-desde",
+        "2026-10-24T20:26"
+      ],
+      [
+        "mon-hasta",
+        "2026-10-31T20:26"
+      ]
+    ],
+    "clase": "monitoreo-contenedor",
+    "ficha": true,
+    "foco": "",
+    "inertes": 0,
+    "marcadores": 1,
+    "menuInerte": false,
+    "overflow": [
+      "",
+      ""
+    ],
+    "pulsado": "false",
+    "rect": {
+      "bottom": 720,
+      "height": 664,
+      "left": 232,
+      "right": 1280,
+      "top": 56,
+      "width": 1048,
+      "x": 232,
+      "y": 56
+    }
+  },
+  "escritorio": {
+    "boton": "Restaurar mapa",
+    "campos": [
+      [
+        "mon-pais",
+        "BO"
+      ],
+      [
+        "mon-region",
+        ""
+      ],
+      [
+        "mon-metrica",
+        "temperatura"
+      ],
+      [
+        "mon-origen",
+        "simulado"
+      ],
+      [
+        "mon-desde",
+        "2026-10-24T20:26"
+      ],
+      [
+        "mon-hasta",
+        "2026-10-31T20:26"
+      ]
+    ],
+    "clase": "monitoreo-contenedor monitoreo-ampliado",
+    "ficha": true,
+    "foco": "mon-pantalla-completa",
+    "inertes": 15,
+    "marcadores": 1,
+    "menuInerte": true,
+    "overflow": [
+      "hidden",
+      "hidden"
+    ],
+    "pulsado": "true",
+    "rect": {
+      "bottom": 720,
+      "height": 720,
+      "left": 0,
+      "right": 1280,
+      "top": 0,
+      "width": 1280,
+      "x": 0,
+      "y": 0
+    }
+  },
+  "salidaBoton": {
+    "boton": "Ampliar mapa",
+    "campos": [
+      [
+        "mon-pais",
+        "BO"
+      ],
+      [
+        "mon-region",
+        ""
+      ],
+      [
+        "mon-metrica",
+        "temperatura"
+      ],
+      [
+        "mon-origen",
+        "simulado"
+      ],
+      [
+        "mon-desde",
+        "2026-10-24T20:26"
+      ],
+      [
+        "mon-hasta",
+        "2026-10-31T20:26"
+      ]
+    ],
+    "clase": "monitoreo-contenedor",
+    "ficha": true,
+    "foco": "mon-pantalla-completa",
+    "inertes": 0,
+    "marcadores": 1,
+    "menuInerte": false,
+    "overflow": [
+      "",
+      ""
+    ],
+    "pulsado": "false",
+    "rect": {
+      "bottom": 720,
+      "height": 664,
+      "left": 232,
+      "right": 1280,
+      "top": 56,
+      "width": 1048,
+      "x": 232,
+      "y": 56
+    }
+  },
+  "estrecha": {
+    "boton": "Restaurar mapa",
+    "campos": [
+      [
+        "mon-pais",
+        "BO"
+      ],
+      [
+        "mon-region",
+        ""
+      ],
+      [
+        "mon-metrica",
+        "temperatura"
+      ],
+      [
+        "mon-origen",
+        "simulado"
+      ],
+      [
+        "mon-desde",
+        "2026-10-24T20:26"
+      ],
+      [
+        "mon-hasta",
+        "2026-10-31T20:26"
+      ]
+    ],
+    "clase": "monitoreo-contenedor monitoreo-ampliado",
+    "ficha": true,
+    "foco": "mon-pantalla-completa",
+    "inertes": 15,
+    "marcadores": 1,
+    "menuInerte": true,
+    "overflow": [
+      "hidden",
+      "hidden"
+    ],
+    "pulsado": "true",
+    "rect": {
+      "bottom": 800,
+      "height": 800,
+      "left": 0,
+      "right": 450,
+      "top": 0,
+      "width": 450,
+      "x": 0,
+      "y": 0
+    }
+  },
+  "escritorioAMovilEscape": {
+    "boton": "Ampliar mapa",
+    "campos": [
+      [
+        "mon-pais",
+        "BO"
+      ],
+      [
+        "mon-region",
+        ""
+      ],
+      [
+        "mon-metrica",
+        "temperatura"
+      ],
+      [
+        "mon-origen",
+        "simulado"
+      ],
+      [
+        "mon-desde",
+        "2026-10-24T20:26"
+      ],
+      [
+        "mon-hasta",
+        "2026-10-31T20:26"
+      ]
+    ],
+    "clase": "monitoreo-contenedor",
+    "ficha": true,
+    "foco": "mon-pantalla-completa",
+    "inertes": 1,
+    "marcadores": 1,
+    "menuInerte": true,
+    "overflow": [
+      "",
+      ""
+    ],
+    "pulsado": "false",
+    "rect": {
+      "bottom": 800,
+      "height": 744,
+      "left": 0,
+      "right": 450,
+      "top": 56,
+      "width": 450,
+      "x": 0,
+      "y": 56
+    }
+  },
+  "baja": {
+    "boton": "Restaurar mapa",
+    "campos": [
+      [
+        "mon-pais",
+        "BO"
+      ],
+      [
+        "mon-region",
+        ""
+      ],
+      [
+        "mon-metrica",
+        "temperatura"
+      ],
+      [
+        "mon-origen",
+        "simulado"
+      ],
+      [
+        "mon-desde",
+        "2026-10-24T20:26"
+      ],
+      [
+        "mon-hasta",
+        "2026-10-31T20:26"
+      ]
+    ],
+    "clase": "monitoreo-contenedor monitoreo-ampliado",
+    "ficha": true,
+    "foco": "mon-pantalla-completa",
+    "inertes": 15,
+    "marcadores": 1,
+    "menuInerte": true,
+    "overflow": [
+      "hidden",
+      "hidden"
+    ],
+    "pulsado": "true",
+    "rect": {
+      "bottom": 420,
+      "height": 420,
+      "left": 0,
+      "right": 900,
+      "top": 0,
+      "width": 900,
+      "x": 0,
+      "y": 0
+    }
+  },
+  "movilAEscritorioBoton": {
+    "boton": "Ampliar mapa",
+    "campos": [
+      [
+        "mon-pais",
+        "BO"
+      ],
+      [
+        "mon-region",
+        ""
+      ],
+      [
+        "mon-metrica",
+        "temperatura"
+      ],
+      [
+        "mon-origen",
+        "simulado"
+      ],
+      [
+        "mon-desde",
+        "2026-10-24T20:26"
+      ],
+      [
+        "mon-hasta",
+        "2026-10-31T20:26"
+      ]
+    ],
+    "clase": "monitoreo-contenedor",
+    "ficha": true,
+    "foco": "mon-pantalla-completa",
+    "inertes": 0,
+    "marcadores": 1,
+    "menuInerte": false,
+    "overflow": [
+      "",
+      ""
+    ],
+    "pulsado": "false",
+    "rect": {
+      "bottom": 420,
+      "height": 364,
+      "left": 232,
+      "right": 900,
+      "top": 56,
+      "width": 668,
+      "x": 232,
+      "y": 56
+    }
+  },
+  "conAjustes": {
+    "boton": "Restaurar mapa",
+    "campos": [
+      [
+        "mon-pais",
+        "BO"
+      ],
+      [
+        "mon-region",
+        ""
+      ],
+      [
+        "mon-metrica",
+        "temperatura"
+      ],
+      [
+        "mon-origen",
+        "simulado"
+      ],
+      [
+        "mon-desde",
+        "2026-10-24T20:26"
+      ],
+      [
+        "mon-hasta",
+        "2026-10-31T20:26"
+      ]
+    ],
+    "clase": "monitoreo-contenedor monitoreo-ampliado",
+    "ficha": true,
+    "foco": "mon-pantalla-completa",
+    "inertes": 15,
+    "marcadores": 1,
+    "menuInerte": true,
+    "overflow": [
+      "hidden",
+      "hidden"
+    ],
+    "pulsado": "true",
+    "rect": {
+      "bottom": 720,
+      "height": 720,
+      "left": 0,
+      "right": 1280,
+      "top": 0,
+      "width": 1280,
+      "x": 0,
+      "y": 0
+    },
+    "ajustesVisibles": true
+  },
+  "ajustesTrasEscape": true
+}

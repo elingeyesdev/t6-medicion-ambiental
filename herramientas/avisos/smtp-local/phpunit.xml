@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../../web/vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="../../../web/vendor/autoload.php" colors="false" cacheResult="false"
+         failOnWarning="true" failOnRisky="true">
+    <testsuites><testsuite name="SMTP real localhost WEB"><file>SmtpLocal65Test.php</file></testsuite></testsuites>
+    <php>
+        <env name="APP_ENV" value="testing" force="true"/>
+        <env name="APP_DEBUG" value="false" force="true"/>
+        <env name="CACHE_STORE" value="array" force="true"/>
+        <env name="DB_CONNECTION" value="sqlite" force="true"/>
+        <env name="DB_URL" value="" force="true"/>
+        <env name="MAIL_MAILER" value="smtp" force="true"/>
+        <env name="QUEUE_CONNECTION" value="sync" force="true"/>
+        <env name="SESSION_DRIVER" value="array" force="true"/>
+        <env name="BCRYPT_ROUNDS" value="4" force="true"/>
+        <env name="BROADCAST_CONNECTION" value="null" force="true"/>
+        <env name="PULSE_ENABLED" value="false"/>
+        <env name="TELESCOPE_ENABLED" value="false"/>
+        <env name="NIGHTWATCH_ENABLED" value="false"/>
+    </php>
+</phpunit>

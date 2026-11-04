@@ -1,0 +1,28 @@
+{
+  "fechaUtc": "2026-10-29T10:05:00Z",
+  "scipy": "1.18.1",
+  "metodo": "scipy.stats.gamma.fit MLE floc=0, igual que herramientas/sequias/generar-oraculo-spi.py",
+  "entrada": "30 ventanas jul-sep 1991-2020 de la publicación vigente de scz-piloto-01, captura Open-Meteo ERA5 del 2026-10-29T04:44:23Z",
+  "objetivoMm": 114.5,
+  "referenciaIndependiente": {
+    "forma": 7.48415188112213,
+    "escalaMm": 20.52470372594424,
+    "probabilidadCero": 0.0,
+    "probabilidadAcumulada": 0.2606389012096143,
+    "spi3": -0.6413769540120433
+  },
+  "laravel": {
+    "forma": 7.484151881122089,
+    "escalaMm": 20.524703725944352,
+    "probabilidadCero": 0,
+    "probabilidadAcumulada": 0.2606389012096143,
+    "spi3": -0.6413769540120462
+  },
+  "diferenciaAbsolutaSpi": 2.886579864025407e-15,
+  "oraculoCongeladoDistinto": {
+    "archivo": "docs/ejemplos/sequias/spi3-oraculo.json",
+    "caso": "piloto_externo",
+    "spi3": -0.6410480784168507,
+    "motivo": "Esa referencia usa la captura de MET-01 (commit 1d1865f). La ventana de 1991 es 234.8 mm allí y 233.5 mm en la publicación local del 2026-10-29. No se mezclan como si fueran el mismo ensayo."
+  }
+}

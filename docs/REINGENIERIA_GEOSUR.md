@@ -1,5 +1,7 @@
 # GeoSur: recuperación completa de EnviroSense
 
+**Actualización vigente del 29/10:** Josué pidió entregar hoy el candidato M3 y recuperar la web completa, con agentes en paralelo y sin desarrollar móvil. Flutter queda con Jaziel en #89. El trabajo concreto, capturas, pruebas y límites actuales se reúnen en [entrega-m3/README.md](entrega-m3/README.md). Este pedido reemplaza la ausencia de fecha de M3 indicada en el registro anterior. La aceptación académica de M3, los servicios externos y la promoción a main siguen separados de preparar este candidato.
+
 **Aclaración del 28/10:** EnviroSense completo es el sistema principal y nuestros análisis se incorporan dentro de él. La migración sigue incompleta: conservar sus archivos no equivale a convertirlo. Se corrigió `/mapa`, que abría Focos de calor, y se documentaron las funciones originales que aún faltan en [ENVIROSENSE_COMO_BASE.md](ENVIROSENSE_COMO_BASE.md). Se comprobó la tecnología registrada en el Planner y confirmada por Josué: Laravel/Blade, API compartida y Flutter. Se adaptan las funciones originales a esa tecnología.
 
 Decisión de Josué del 27/10/2026, seguimiento #61. **GeoSur conserva las funciones de EnviroSense, con la excepción del chatbot retirada por Josué el 28/10** y añade las funciones ambientales trabajadas por la pareja. Esto reemplaza la selección anterior de solo cinco funciones; no se continúa construyendo un producto independiente del referente.

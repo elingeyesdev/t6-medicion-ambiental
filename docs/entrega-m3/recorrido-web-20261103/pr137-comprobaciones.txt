@@ -1,0 +1,293 @@
+- link "Skip to content":
+  - /url: "#start-of-content"
+- banner:
+  - heading "Navigation Menu" [level=2]
+  - link "Homepage":
+    - /url: /
+  - navigation "Global":
+    - list:
+      - button "Products":
+        - text: Products
+      - button "Developers":
+        - text: Developers
+      - button "Businesses":
+        - text: Businesses
+      - button "Resources":
+        - text: Resources
+      - link "Pricing":
+        - /url: https://github.com/pricing
+  - button "Search or jump to, type / to search":
+    - generic: Search
+    - generic: /
+  - link "Sign in":
+    - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Felingeyesdev%2Ft6-medicion-ambiental%2Fpull%2F137
+    - generic: Sign in
+  - link "Sign up":
+    - /url: /signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fvoltron%2Fpull_requests_fragments%2Fpull_request_layout&source=header-repo&source_repo=elingeyesdev%2Ft6-medicion-ambiental
+    - generic: Sign up
+  - button "Appearance settings":
+- main:
+  - generic "Global navigation menu":
+    - navigation "Breadcrumbs":
+      - list:
+        - link "elingeyesdev":
+          - /url: /elingeyesdev
+          - generic: elingeyesdev
+        - link "t6-medicion-ambiental":
+          - /url: /elingeyesdev/t6-medicion-ambiental
+          - generic: t6-medicion-ambiental
+    - heading "Repository navigation" [level=2]
+    - navigation "Repository":
+      - list:
+        - link "Code":
+          - /url: /elingeyesdev/t6-medicion-ambiental
+          - generic: Code
+        - link "Issues (33)":
+          - /url: /elingeyesdev/t6-medicion-ambiental/issues
+          - generic: Issues
+          - generic: "33"
+          - generic: (33)
+        - link "Pull requests (20)":
+          - /url: /elingeyesdev/t6-medicion-ambiental/pulls
+          - generic: Pull requests
+          - generic: "20"
+          - generic: (20)
+        - link "Actions":
+          - /url: /elingeyesdev/t6-medicion-ambiental/actions
+          - generic: Actions
+        - link "Projects":
+          - /url: /elingeyesdev/t6-medicion-ambiental/projects
+          - generic: Projects
+        - link "Security and quality":
+          - /url: /elingeyesdev/t6-medicion-ambiental/security
+          - generic: Security and quality
+        - link "Insights":
+          - /url: /elingeyesdev/t6-medicion-ambiental/pulse
+          - generic: Insights
+  - 'heading "Aclarar el acceso denegado y permitir volver al mapa - #137" [level=1]':
+    - text: Aclarar el acceso denegado y permitir volver al mapa
+    - generic: "- #137"
+  - generic: "#137"
+  - img "Pull request"
+  - text: Open
+  - link "JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+  - text: wants to merge 2 commits into
+  - link "feature/41-evidencias-entrega-m3":
+    - /url: /elingeyesdev/t6-medicion-ambiental/tree/feature/41-evidencias-entrega-m3
+  - generic: from
+  - link "fix/136-acceso-claro":
+    - /url: /elingeyesdev/t6-medicion-ambiental/tree/fix/136-acceso-claro
+  - button "Copy head branch name to clipboard":
+  - generic: "+106"
+  - generic: "Lines changed: 106 additions & 0 deletions"
+  - navigation "Pull request navigation":
+    - link "Conversation (0)":
+      - /url: /elingeyesdev/t6-medicion-ambiental/pull/137
+      - text: Conversation
+      - generic: "0"
+      - generic: (0)
+    - link "Commits (2)":
+      - /url: /elingeyesdev/t6-medicion-ambiental/pull/137/commits
+      - text: Commits
+      - generic: "2"
+      - generic: (2)
+    - link "Checks (7)":
+      - /url: /elingeyesdev/t6-medicion-ambiental/pull/137/checks
+      - text: Checks
+      - generic: "7"
+      - generic: (7)
+    - link "Files changed (6)":
+      - /url: /elingeyesdev/t6-medicion-ambiental/pull/137/files
+      - text: Files changed
+      - generic: "6"
+      - generic: (6)
+  - heading "Conversation" [level=2]
+  - link "@JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+    - img "@JosuePadillaUnivalle"
+  - heading "JosuePadillaUnivalle commented Nov 3, 20262 hours ago •" [level=3]:
+    - strong:
+      - link "JosuePadillaUnivalle":
+        - /url: /JosuePadillaUnivalle
+    - text: commented
+    - link "Nov 3, 20262 hours ago":
+      - /url: "#issue-6186521708"
+    - generic: •
+    - button "edited":
+      - text: edited
+  - button "Show options":
+    - img "Show options"
+  - generic "This user has been invited to collaborate on the t6-medicion-ambiental repository.":
+    - generic: Collaborator
+  - paragraph: En la revisión de M3 encontré que un usuario sin permiso veía un mensaje en inglés y quedaba sin una salida clara. Ahora el 403 explica el acceso en español y permite volver al mapa o al inicio.
+  - paragraph: Conservé los permisos y las respuestas JSON. Pasaron 4 pruebas y 39 comprobaciones en esta rama, y repetí el caso en el navegador de la copia conjunta. La captura y las instrucciones están en docs/ACCESO_DENEGADO136.md.
+  - paragraph:
+    - text: Closes
+    - link "#136":
+      - /url: https://github.com/elingeyesdev/t6-medicion-ambiental/issues/136
+    - text: . Sale del candidato
+    - link "#96":
+      - /url: https://github.com/elingeyesdev/t6-medicion-ambiental/pull/96
+    - text: ; queda para Jaziel y no cambia main.
+  - paragraph: "Al aprobarlo, este comando también elimina la rama:"
+  - generic: gh pr merge 137 --repo elingeyesdev/t6-medicion-ambiental --merge --delete-branch
+  - button "Copy code to clipboard":
+  - link "JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+  - text: added 2 commits
+  - link "November 3, 2026 11:522 hours ago":
+    - /url: "#commits-pushed-c2b520d"
+  - link "@JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+    - img "@JosuePadillaUnivalle"
+  - code:
+    - 'link "fix(acceso): aclaro el permiso y dejo volver al mapa ("':
+      - /url: /elingeyesdev/t6-medicion-ambiental/pull/137/commits/c2b520dd9ace220e79979dc36b8633ca712e8057
+    - link "#136":
+      - /url: https://github.com/elingeyesdev/t6-medicion-ambiental/issues/136
+    - link ")":
+      - /url: /elingeyesdev/t6-medicion-ambiental/pull/137/commits/c2b520dd9ace220e79979dc36b8633ca712e8057
+  - code:
+    - link "c2b520d":
+      - /url: /elingeyesdev/t6-medicion-ambiental/pull/137/commits/c2b520dd9ace220e79979dc36b8633ca712e8057
+  - link "@JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+    - img "@JosuePadillaUnivalle"
+  - code:
+    - 'link "docs(acceso): dejo la comprobación del permiso ("':
+      - /url: /elingeyesdev/t6-medicion-ambiental/pull/137/commits/98af91f5c5539a1900ab58df6582b042164f944c
+    - link "#136":
+      - /url: https://github.com/elingeyesdev/t6-medicion-ambiental/issues/136
+    - link ")":
+      - /url: /elingeyesdev/t6-medicion-ambiental/pull/137/commits/98af91f5c5539a1900ab58df6582b042164f944c
+  - generic "7 / 7 checks OK":
+    - img "7 / 7 checks OK"
+  - code:
+    - link "98af91f":
+      - /url: /elingeyesdev/t6-medicion-ambiental/pull/137/commits/98af91f5c5539a1900ab58df6582b042164f944c
+  - link "@JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+    - img "@JosuePadillaUnivalle"
+  - link "JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+  - text: added this to the
+  - link "M3 - Reingeniería de EnviroSense como GeoSur":
+    - /url: /elingeyesdev/t6-medicion-ambiental/milestone/3
+  - text: milestone
+  - link "Nov 3, 20262 hours ago":
+    - /url: "#event-35039691691"
+  - link "@JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+    - img "@JosuePadillaUnivalle"
+  - link "JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+  - text: added
+  - link "web":
+    - /url: /elingeyesdev/t6-medicion-ambiental/issues?q=state%3Aopen%20label%3Aweb
+  - link "pruebas":
+    - /url: /elingeyesdev/t6-medicion-ambiental/issues?q=state%3Aopen%20label%3Apruebas
+  - text: labels
+  - link "Nov 3, 20262 hours ago":
+    - /url: "#event-35039692564"
+  - link "@JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+    - img "@JosuePadillaUnivalle"
+  - link "JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+  - text: self-assigned this
+  - link "Nov 3, 20262 hours ago":
+    - /url: "#event-35039694137"
+  - link "@JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+    - img "@JosuePadillaUnivalle"
+  - link "JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+  - text: requested a review from
+  - link "Jazielle":
+    - /url: /Jazielle
+  - link "November 3, 2026 16:122 hours ago":
+    - /url: "#event-35039697374"
+  - link "@JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+    - img "@JosuePadillaUnivalle"
+  - link "JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+  - text: mentioned this pull request
+  - link "Nov 3, 20262 hours ago":
+    - /url: "#ref-issue-6186001955"
+  - 'link "UX-WEB - Aclarar el acceso denegado y permitir volver al mapa #136"':
+    - /url: /elingeyesdev/t6-medicion-ambiental/issues/136
+  - 'generic "Status: Open"':
+    - text: Open
+  - 'img "Progress: 83.0%"'
+  - generic: 5 of 6 tasks
+  - link "Sign up for free":
+    - /url: /join?source=comment-repo
+  - strong: to join this conversation on GitHub
+  - text: . Already have an account?
+  - link "Sign in to comment":
+    - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Felingeyesdev%2Ft6-medicion-ambiental%2Fpull%2F137
+  - form "Select reviewers":
+    - heading "Reviewers" [level=3]
+    - link "@Jazielle":
+      - /url: /Jazielle
+      - img "@Jazielle"
+    - link "Jazielle":
+      - /url: /Jazielle
+    - button "Awaiting requested review from Jazielle":
+  - form "Select assignees":
+    - heading "Assignees" [level=3]
+    - paragraph:
+      - link "@JosuePadillaUnivalle":
+        - /url: /JosuePadillaUnivalle
+        - img "@JosuePadillaUnivalle"
+      - link "JosuePadillaUnivalle":
+        - /url: /JosuePadillaUnivalle
+  - heading "Labels" [level=3]
+  - link "pruebas":
+    - /url: /elingeyesdev/t6-medicion-ambiental/issues?q=state%3Aopen%20label%3Apruebas
+    - generic: pruebas
+  - link "web":
+    - /url: /elingeyesdev/t6-medicion-ambiental/issues?q=state%3Aopen%20label%3Aweb
+    - generic: web
+  - form "Select projects":
+    - heading "Projects" [level=3]
+    - text: None yet
+  - form "Select milestones":
+    - heading "Milestone" [level=3]
+    - link "M3 - Reingeniería de EnviroSense como...":
+      - /url: /elingeyesdev/t6-medicion-ambiental/milestone/3
+      - strong: M3 - Reingeniería de EnviroSense como...
+  - form "Link issues":
+    - heading "Development" [level=3]
+    - paragraph: Successfully merging this pull request may close these issues.
+    - paragraph: None yet
+  - heading "1 participant" [level=3]
+  - link "@JosuePadillaUnivalle":
+    - /url: /JosuePadillaUnivalle
+    - img "@JosuePadillaUnivalle"
+- contentinfo:
+  - heading "Footer" [level=2]
+  - link "GitHub Homepage":
+    - /url: https://github.com
+  - generic: © 2026 GitHub, Inc.
+  - navigation "Footer":
+    - heading "Footer navigation" [level=3]
+    - list "Footer navigation":
+      - link "Terms":
+        - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+      - link "Privacy":
+        - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+      - link "Security":
+        - /url: https://github.com/security
+      - link "Status":
+        - /url: https://www.githubstatus.com/
+      - link "Community":
+        - /url: https://github.community/
+      - link "Docs":
+        - /url: https://docs.github.com/
+      - link "Contact":
+        - /url: https://support.github.com?tags=dotcom-footer
+      - button "Manage cookies"
+      - button "Do not share my personal information"

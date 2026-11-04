@@ -1,0 +1,725 @@
+{
+  "formato": "geosur.mqtt-local66.v1",
+  "inicio": "2026-11-01T08:54:20.197Z",
+  "baseObjetivo": "b994b643d1b9086abd695053eb3a27030ed238b3",
+  "node": "v26.2.0",
+  "versiones": {
+    "aedes": "0.51.3",
+    "mqtt": "5.10.4"
+  },
+  "alcance": "LOCAL: broker real en loopback y payloads sintéticos; sin sensores físicos, broker externo ni TLS",
+  "casos": [
+    {
+      "nombre": "01 captura dos variables, puntos, UTC, procedencia y actor",
+      "ok": true,
+      "ms": 583,
+      "comando": {
+        "exit": 0,
+        "output": "Mensajes: 2. Nuevas: 2. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "filas": [
+        {
+          "punto_id": 1,
+          "metrica": "temperatura",
+          "valor": 25.5,
+          "instante": "2026-10-27 12:00:00",
+          "hora_utc": "2026-10-27 12:00:00",
+          "origen": "simulado",
+          "fuente": "mqtt-local66",
+          "latitud": -17.1,
+          "longitud": -63.1,
+          "registrado_por": 1
+        },
+        {
+          "punto_id": 2,
+          "metrica": "humedad",
+          "valor": 65,
+          "instante": "2026-10-27 12:00:00",
+          "hora_utc": "2026-10-27 12:00:00",
+          "origen": "simulado",
+          "fuente": "mqtt-local66",
+          "latitud": -17.2,
+          "longitud": -63.2,
+          "registrado_por": 1
+        }
+      ],
+      "pubacks": 2
+    },
+    {
+      "nombre": "02 repetición y zona equivalente no duplican",
+      "ok": true,
+      "ms": 814,
+      "comando": {
+        "exit": 0,
+        "output": "Mensajes: 2. Nuevas: 0. Repetidas: 2.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 2
+    },
+    {
+      "nombre": "03 retained en dos arranques conserva instante y deduplica",
+      "ok": true,
+      "ms": 1098,
+      "pubacks": 4
+    },
+    {
+      "nombre": "04 conflicto sin PUBACK conserva valor y commits previos",
+      "ok": true,
+      "ms": 592,
+      "comando": {
+        "exit": 2,
+        "output": "Ya existe otra lectura para ese instante y origen. Se conservó el dato anterior. Recepción detenida. Nuevas: 1. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 1
+    },
+    {
+      "nombre": "05 JSON inválido",
+      "ok": true,
+      "ms": 814,
+      "comando": {
+        "exit": 2,
+        "output": "Revisa el formato JSON del archivo. Recepción detenida. Nuevas: 0. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 0
+    },
+    {
+      "nombre": "06 valor fuera de rango",
+      "ok": true,
+      "ms": 808,
+      "comando": {
+        "exit": 2,
+        "output": "Mensaje o configuración inválidos. Recepción detenida. Nuevas: 0. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 0
+    },
+    {
+      "nombre": "07 fecha futura",
+      "ok": true,
+      "ms": 797,
+      "comando": {
+        "exit": 2,
+        "output": "No se pueden registrar lecturas del futuro. Recepción detenida. Nuevas: 0. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 0
+    },
+    {
+      "nombre": "08 instante sin zona",
+      "ok": true,
+      "ms": 823,
+      "comando": {
+        "exit": 2,
+        "output": "desde y hasta requieren fecha ISO 8601, segundos y zona explícita. Recepción detenida. Nuevas: 0. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 0
+    },
+    {
+      "nombre": "09 campos extra no controlan destino",
+      "ok": true,
+      "ms": 857,
+      "comando": {
+        "exit": 2,
+        "output": "Mensaje o configuración inválidos. Recepción detenida. Nuevas: 0. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 0
+    },
+    {
+      "nombre": "10 contenido superior a 4096 bytes",
+      "ok": true,
+      "ms": 814,
+      "comando": {
+        "exit": 2,
+        "output": "El mensaje supera el tamaño permitido. Recepción detenida. Nuevas: 0. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 0
+    },
+    {
+      "nombre": "11 punto inexistente no se crea",
+      "ok": true,
+      "ms": 819,
+      "comando": {
+        "exit": 2,
+        "output": "Mensaje o configuración inválidos. Recepción detenida. Nuevas: 0. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 0
+    },
+    {
+      "nombre": "12 punto inactivo no persiste ni confirma",
+      "ok": true,
+      "ms": 1327,
+      "comando": {
+        "exit": 2,
+        "output": "El punto no está activo. Recepción detenida. Nuevas: 0. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 0
+    },
+    {
+      "nombre": "13 revalida cuenta entre mensajes y conserva primero",
+      "ok": true,
+      "ms": 1444,
+      "comando": {
+        "exit": 2,
+        "output": "Se necesita una cuenta activa con permiso para cargar datos. Recepción detenida. Nuevas: 1. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 1
+    },
+    {
+      "nombre": "14 recepción deshabilitada no conecta",
+      "ok": true,
+      "ms": 850,
+      "comando": {
+        "exit": 2,
+        "output": "La recepción MQTT está deshabilitada. Recepción detenida. Nuevas: 0. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      }
+    },
+    {
+      "nombre": "15 sin consentimiento explícito no conecta",
+      "ok": true,
+      "ms": 256,
+      "comando": {
+        "exit": 2,
+        "output": "Indica --conectar, --actor, hasta 10000 mensajes y de 1 a 3600 segundos.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      }
+    },
+    {
+      "nombre": "16 tema ajeno no llega; límite finito con cero capturas",
+      "ok": true,
+      "ms": 2870,
+      "comando": {
+        "exit": 0,
+        "output": "Mensajes: 0. Nuevas: 0. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 0
+    },
+    {
+      "nombre": "17 QoS 0 guarda sin prometer PUBACK",
+      "ok": true,
+      "ms": 2054,
+      "comando": {
+        "exit": 0,
+        "output": "Mensajes: 1. Nuevas: 1. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 0
+    },
+    {
+      "nombre": "18 sesión persistente entrega mensaje publicado desconectado",
+      "ok": true,
+      "ms": 1424,
+      "comando": {
+        "exit": 0,
+        "output": "Mensajes: 1. Nuevas: 1. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 2
+    },
+    {
+      "nombre": "19 rechazo del broker no guarda",
+      "ok": true,
+      "ms": 828,
+      "comando": {
+        "exit": 2,
+        "output": "El broker rechazó la conexión MQTT. Recepción detenida. Nuevas: 0. Repetidas: 0.\r\n",
+        "result": [],
+        "php": "8.3.30",
+        "laravel": "12.70.0"
+      },
+      "pubacks": 0
+    }
+  ],
+  "trazas": {
+    "subscriptions": [
+      {
+        "client": "mqtt66-captura",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-dedup",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-retained0",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-retained1",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-conflicto",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-error4",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-error5",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-error6",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-error7",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-error8",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-error9",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-sin-punto",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-inactivo",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-actor",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-ajeno",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-qos0",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-persistente",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      },
+      {
+        "client": "mqtt66-persistente",
+        "subs": [
+          {
+            "topic": "geosur/mqtt66/temperatura",
+            "qos": 1
+          },
+          {
+            "topic": "geosur/mqtt66/humedad",
+            "qos": 1
+          }
+        ]
+      }
+    ],
+    "acks": [
+      {
+        "client": "mqtt66-captura",
+        "topic": "geosur/mqtt66/temperatura",
+        "payload": "{\"valor\":25.5,\"instante\":\"2026-10-27T12:00:00Z\"}",
+        "messageId": 25651
+      },
+      {
+        "client": "mqtt66-captura",
+        "topic": "geosur/mqtt66/humedad",
+        "payload": "{\"valor\":65,\"instante\":\"2026-10-27T12:00:00Z\"}",
+        "messageId": 25652
+      },
+      {
+        "client": "mqtt66-dedup",
+        "topic": "geosur/mqtt66/temperatura",
+        "payload": "{\"valor\":25.5,\"instante\":\"2026-10-27T08:00:00-04:00\"}",
+        "messageId": 36667
+      },
+      {
+        "client": "mqtt66-dedup",
+        "topic": "geosur/mqtt66/humedad",
+        "payload": "{\"valor\":65,\"instante\":\"2026-10-27T12:00:00Z\"}",
+        "messageId": 36668
+      },
+      {
+        "client": "mqtt66-retained0",
+        "topic": null,
+        "payload": null,
+        "messageId": null
+      },
+      {
+        "client": "mqtt66-retained0",
+        "topic": null,
+        "payload": null,
+        "messageId": null
+      },
+      {
+        "client": "mqtt66-retained1",
+        "topic": null,
+        "payload": null,
+        "messageId": null
+      },
+      {
+        "client": "mqtt66-retained1",
+        "topic": null,
+        "payload": null,
+        "messageId": null
+      },
+      {
+        "client": "mqtt66-conflicto",
+        "topic": "geosur/mqtt66/humedad",
+        "payload": "{\"valor\":64,\"instante\":\"2026-10-27T12:01:00Z\"}",
+        "messageId": 40179
+      },
+      {
+        "client": "mqtt66-actor",
+        "topic": "geosur/mqtt66/temperatura",
+        "payload": "{\"valor\":24,\"instante\":\"2026-10-27T12:02:00Z\"}",
+        "messageId": 50916
+      },
+      {
+        "client": "mqtt66-persistente",
+        "topic": "geosur/mqtt66/temperatura",
+        "payload": "{\"valor\":25.5,\"instante\":\"2026-10-27T12:00:00Z\"}",
+        "messageId": 51276
+      },
+      {
+        "client": "mqtt66-persistente",
+        "topic": "geosur/mqtt66/humedad",
+        "payload": "{\"valor\":61,\"instante\":\"2026-10-27T12:04:00Z\"}",
+        "messageId": 35286
+      }
+    ],
+    "clients": [
+      "mqtt66-publicador",
+      "mqtt66-captura",
+      "mqtt66-dedup",
+      "mqtt66-retained0",
+      "mqtt66-retained1",
+      "mqtt66-conflicto",
+      "mqtt66-error4",
+      "mqtt66-error5",
+      "mqtt66-error6",
+      "mqtt66-error7",
+      "mqtt66-error8",
+      "mqtt66-error9",
+      "mqtt66-sin-punto",
+      "mqtt66-inactivo",
+      "mqtt66-actor",
+      "mqtt66-ajeno",
+      "mqtt66-qos0",
+      "mqtt66-persistente",
+      "mqtt66-persistente"
+    ],
+    "errors": [
+      {
+        "client": "mqtt66-rechazo",
+        "message": "not authorized"
+      }
+    ]
+  },
+  "broker": {
+    "host": "127.0.0.1",
+    "puerto": 52493,
+    "persistencia": "memoria, efímera"
+  },
+  "php": "8.3.30",
+  "laravel": "12.70.0",
+  "estadoFinal": {
+    "lecturas": [
+      {
+        "punto_id": 1,
+        "metrica": "temperatura",
+        "valor": 25.5,
+        "instante": "2026-10-27 12:00:00",
+        "hora_utc": "2026-10-27 12:00:00",
+        "origen": "simulado",
+        "fuente": "mqtt-local66",
+        "latitud": -17.1,
+        "longitud": -63.1,
+        "registrado_por": 1
+      },
+      {
+        "punto_id": 2,
+        "metrica": "humedad",
+        "valor": 65,
+        "instante": "2026-10-27 12:00:00",
+        "hora_utc": "2026-10-27 12:00:00",
+        "origen": "simulado",
+        "fuente": "mqtt-local66",
+        "latitud": -17.2,
+        "longitud": -63.2,
+        "registrado_por": 1
+      },
+      {
+        "punto_id": 2,
+        "metrica": "humedad",
+        "valor": 64,
+        "instante": "2026-10-27 12:01:00",
+        "hora_utc": "2026-10-27 12:00:00",
+        "origen": "simulado",
+        "fuente": "mqtt-local66",
+        "latitud": -17.2,
+        "longitud": -63.2,
+        "registrado_por": 1
+      },
+      {
+        "punto_id": 1,
+        "metrica": "temperatura",
+        "valor": 24,
+        "instante": "2026-10-27 12:02:00",
+        "hora_utc": "2026-10-27 12:00:00",
+        "origen": "simulado",
+        "fuente": "mqtt-local66",
+        "latitud": -17.1,
+        "longitud": -63.1,
+        "registrado_por": 1
+      },
+      {
+        "punto_id": 2,
+        "metrica": "humedad",
+        "valor": 62,
+        "instante": "2026-10-27 12:03:00",
+        "hora_utc": "2026-10-27 12:00:00",
+        "origen": "simulado",
+        "fuente": "mqtt-local66",
+        "latitud": -17.2,
+        "longitud": -63.2,
+        "registrado_por": 1
+      },
+      {
+        "punto_id": 2,
+        "metrica": "humedad",
+        "valor": 61,
+        "instante": "2026-10-27 12:04:00",
+        "hora_utc": "2026-10-27 12:00:00",
+        "origen": "simulado",
+        "fuente": "mqtt-local66",
+        "latitud": -17.2,
+        "longitud": -63.2,
+        "registrado_por": 1
+      }
+    ],
+    "cuentas": 1,
+    "puntos": 2,
+    "avisos": 0,
+    "envios": 0,
+    "suscripciones": 0
+  },
+  "ok": true,
+  "limpieza": {
+    "brokerCerrado": true,
+    "servidorCerrado": true,
+    "procesosPropios": 0,
+    "sockets": 0,
+    "puertoCerrado": true
+  },
+  "fin": "2026-11-01T08:54:41.031Z",
+  "huellas": {
+    "herramientas/datos/mqtt-local/ejecutar.mjs": "df524dcf04840771cf2367f07accc652e12a799e50f6d64f5b6a2eaf477c1293",
+    "herramientas/datos/mqtt-local/laravel.php": "155daa6a338bbb305b72ac46f20d511a3fed2dd8a67f91ee5a4efc5c5c1b08af",
+    "herramientas/datos/mqtt-local/package.json": "927ad08b04bc63d4adc27694b22719d4f4f97463e034aecf0cacca2d2d1c85b9",
+    "herramientas/datos/mqtt-local/package-lock.json": "83d1dd7f5dfeb8eeb2417e7794256d2998efbdef87c30c435a9b1fa9302b0074",
+    "web/app/Console/Commands/RecibirMqtt.php": "cf39639e922a8c1d56c07eef43925eb46d9ec08603e3fa15e91324fa6a146cdb",
+    "web/app/Services/Datos/Mqtt/ClienteMqtt.php": "9c1d5793ddc3380dc50a9bb0dbb19963729704baa4fd739b7079ea2d30dd5e01",
+    "web/app/Services/Datos/Mqtt/ConfiguracionMqtt.php": "89304cfb13a5325504e241988d8514e7cee9f19ce900434b30f38443c60cf530",
+    "web/app/Services/Datos/Mqtt/IngerirMensajeMqtt.php": "e8fe372a29a3fac2f381e50bfef5628006d9f5c98a6da5e314c6526ea597fe1d",
+    "web/app/Services/Datos/RegistrarLecturas.php": "f6937131df58000a10ef1529b4b8a0f4c12023d2ea50212e19833ca468fae799",
+    "web/app/Services/Datos/AutorizarIngestion.php": "2ad08315595ffb7c5e80a3c3652f4e65aa1f3e41e5ad4712e31ec9bdce34eb17"
+  }
+}

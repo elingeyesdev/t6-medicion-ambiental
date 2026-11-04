@@ -81,7 +81,7 @@ function iniciar(config) {
         } catch(e){estado.textContent=e instanceof TypeError||e instanceof SyntaxError?'No se pudo conectar. Vuelve a abrir la simulación.':e.message;}
         finally{ocupado=false;}
     }
-    for(const boton of document.querySelectorAll('[data-accion]')) boton.addEventListener('click',()=>accion(boton.dataset.accion));
+    for(const boton of document.querySelectorAll('.sim-resultado button[data-accion]')) boton.addEventListener('click',()=>accion(boton.dataset.accion));
     barra.addEventListener('input',()=>{parar();posicion=Number(barra.value);mostrar();});
     barra.addEventListener('change',()=>accion(sesion.estado==='activa'?'pausar':'posicionar'));
     let consulta=setInterval(sincronizar,1400);

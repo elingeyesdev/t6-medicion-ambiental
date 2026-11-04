@@ -1,0 +1,15 @@
+{
+  "bbox": [
+    -62.99,
+    -17.75,
+    -62.9,
+    -17.65
+  ],
+  "crs": "OGC:CRS84",
+  "interseccionesCatalogo": [
+    "BO070101",
+    "BO070102"
+  ],
+  "sha256Geometrias": "d9293e6f8805fced5eca24b9b90882bc461c5a1390ddac4cd1cfc4a1dd06c83d",
+  "alcance": "Intersecci\u00f3n geom\u00e9trica, no certificaci\u00f3n legal ni superficie de inundaci\u00f3n"
+}
