@@ -22,6 +22,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'paginas.inicio')->name('inicio');
 Route::middleware(['auth', 'cuenta.activa', 'can:mapa.ver', 'can:datos.consultar'])->group(function (): void {
+    Route::get('/revision/agua', function () {
+        abort_unless(app()->environment(['local', 'testing']) && config('inundaciones.revision_local'), 404);
+
+        return app()->call([app(MapaMonitoreoController::class), '__invoke']);
+    })->name('revision.agua');
     Route::get('/mapa/capas', [CapasController::class, 'index'])
         ->middleware('throttle:120,1,mapa-capas')->name('mapa.capas');
     Route::get('/mapa/capas/cuadros/{cuadro}.png', [CapasController::class, 'imagen'])

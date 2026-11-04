@@ -4,11 +4,12 @@
 @push('estilos')
 <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
 <link rel="stylesheet" href="{{ asset('css/paginas/monitoreo.css') }}">
+@if(request()->routeIs('revision.agua'))<link rel="stylesheet" href="{{ asset('css/mapas/agua.css') }}">@endif
 @endpush
 
 @section('contenido')
 <div id="monitoreo-contenedor" class="monitoreo-contenedor" role="region" aria-label="Mapa ambiental y controles">
-    <aside class="monitoreo-consulta" aria-label="Consulta ambiental">
+    <aside @if(request()->routeIs('revision.agua')) hidden @endif class="monitoreo-consulta" aria-label="Consulta ambiental">
         <details id="filtros-monitoreo" open>
             <summary><h1>Navegación</h1><span aria-hidden="true">⌄</span></summary>
             <form id="consulta-monitoreo">
@@ -119,6 +120,7 @@
         <a href="{{ route('simulaciones') }}" aria-label="Abrir Simulaciones" title="Abrir Simulaciones"><x-panel.icono nombre="flask" /></a>
         <p id="estado-pantalla-completa" class="monitoreo-pantalla-estado alert alert-info" role="status" aria-live="polite" hidden></p>
     </div>
+    @if(request()->routeIs('revision.agua'))@include('components.mapas.revision-agua')@endif
     <section class="monitoreo-escena" aria-label="Mapa ambiental">
         <div id="mapa-monitoreo" tabindex="0" role="region" aria-label="Puntos de monitoreo ambiental"></div>
         <div class="monitoreo-leyenda"><span class="mon-punto con-datos" aria-hidden="true"></span>Con datos<span class="mon-punto" aria-hidden="true"></span>Sin datos del período</div>
