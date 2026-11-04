@@ -1,0 +1,8 @@
+PHPUnit 11.5.57 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.30
+Configuration: C:\Users\cjosu\Desktop\GeoCruz-oficial\tmp\web-inundaciones113-20261104\web\phpunit.xml
+
+Time: 00:03.612, Memory: 184.00 MB
+
+OK (27 tests, 146 assertions)

@@ -1,3 +1,4 @@
+import { iniciarRevisionAgua } from './agua.js';
 import { iniciarMapaBase } from './base.js';
 import { consultaMonitoreo } from './consulta-monitoreo.js';
 import { crearConsultaTiempo } from './tiempo.js';
@@ -403,4 +404,5 @@ document.getElementById('mon-cerrar').addEventListener('click', cerrarDetalle);
 document.getElementById('mon-anterior').addEventListener('click', () => consultar((respuestaActual?.pagina ?? 1) - 1));
 document.getElementById('mon-siguiente').addEventListener('click', () => consultar((respuestaActual?.pagina ?? 1) + 1));
 iniciarMapaContinua(mapa, L, configuracion, () => respuestaActual);
-consultar();
+if (document.getElementById('revision-agua')) iniciarRevisionAgua(mapa, L);
+else consultar();
