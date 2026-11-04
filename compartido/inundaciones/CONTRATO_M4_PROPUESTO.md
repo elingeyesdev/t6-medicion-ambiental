@@ -31,3 +31,8 @@ El resumen deberá dar cobertura evaluada, no comparable y criterio de calidad; 
 Los controles de selección deben seguir disponibles tras un error. En ambos clientes se podrá cerrar el detalle y volver al mapa sin perder los filtros; los controles no deben taparse entre sí. La interfaz usará textos breves y conservará fuente/cobertura relevantes en el detalle. La API mantiene la información de trazabilidad completa y los permisos existentes.
 
 La elección del caso, referencia, criterio y contrato necesita a Jaziel; la implementación sigue en #111–#115 después de las dependencias de M3. No se acredita Flutter por preparar estos archivos.
+
+
+## Criterio candidato para la revisión del 03/11
+
+La [hoja del piloto](../../docs/inundaciones110/DECISION_PILOTO.md) propone revisar un mínimo operativo de 80 % de ventana común comparable antes de publicar su resumen general. El equipo debe acordarlo junto con la localización de los huecos y la referencia espacial. El campo operativo umbralCoberturaMinima conserva su estado pendiente hasta registrar esa decisión.

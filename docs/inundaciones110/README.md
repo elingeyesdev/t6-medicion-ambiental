@@ -2,6 +2,10 @@
 
 La preparación de M4 comenzó el 31/10/2026. El 03/11 se incorporó develop, que ya reúne M3 y la preparación de #46. Esta continuación se revisa hacia develop. #110 conserva la decisión sobre el método, las escenas y la referencia. #111 continúa después de ese acuerdo.
 
+## Propuesta para decidir el siguiente paso
+
+La [hoja de decisión del 03/11](DECISION_PILOTO.md) concreta episodio, cobertura candidata y contrato. La ampliación de referencia añadió dos parejas de catálogo. Su comparación limita la cobertura al 16,86 % y 0 %, respectivamente, antes de descargar bandas adicionales. La recomendación prioriza revisar el área afectada y otra comparación óptica. El mínimo operativo de 80 % queda propuesto para el acuerdo de #110.
+
 ## Caso y consultas
 
 El [contexto](CONTEXTO.md) propone estudiar las crecidas del río Grande de marzo de 2025. El rectángulo técnico anterior se mantiene: OGC:CRS84, `[-62.99, -17.75, -62.90, -17.65]`, parcialmente en Santa Cruz de La Sierra y Cotoca según el catálogo versionado. No representa municipios completos. La referencia propuesta está entre 15/02 y 03/03; la comparación entre 04/03 y 24/03/2025. No se asegura que la primera estuviera seca ni que el episodio terminara el día 24.
