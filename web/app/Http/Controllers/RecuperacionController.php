@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password as ReglaClave;
@@ -17,9 +18,17 @@ class RecuperacionController extends Controller
     {
         $this->normalizarCorreo($request);
         $datos = $request->validate(['email' => ['required', 'string', 'email', 'max:254']]);
-        Password::sendResetLink($datos + ['activo' => true]);
+        try {
+            Password::sendResetLink($datos + ['activo' => true]);
+        } catch (\Throwable) {
+            // Igual respuesta para cuentas presentes/ausentes; no registrar correo, enlace ni excepción del transporte.
+            Log::warning('RECUPERACION_TRANSPORTE_NO_CONFIRMADO');
+        }
 
         $mensaje = 'Si ese correo tiene una cuenta activa, recibirás un enlace para recuperar el acceso.';
+        if (app()->environment('local', 'testing') || config('mail.default') === 'log') {
+            $mensaje = 'Si ese correo tiene una cuenta activa, el enlace se guardará en el registro local de correo. No llegará a tu buzón.';
+        }
 
         return $request->is('api/*') ? response()->json(['mensaje' => $mensaje])->header('Cache-Control', 'no-store') : back()->with('estado', $mensaje);
     }

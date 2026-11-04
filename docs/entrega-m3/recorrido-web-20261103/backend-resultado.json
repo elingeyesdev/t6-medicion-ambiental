@@ -1,0 +1,124 @@
+{
+  "status": "passed",
+  "head": "92615f68420c9eed0d27a5fc90afdbef3e7ef1ce",
+  "root": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103",
+  "scope": "web backend PHP solamente",
+  "completedAt": "2026-11-03T15:44:15.400Z",
+  "acceptance": {
+    "enumerated": 523,
+    "eligible": 509,
+    "passedUnique": 509,
+    "assertions": 6273,
+    "failures": 0,
+    "errors": 0,
+    "skippedWithinExecuted": 0,
+    "excludedNotRun": 14,
+    "excludedClasses": [
+      "ConcurrenciaIngestionDatosTest",
+      "MqttTransporteDatosTest"
+    ],
+    "excludedNotCountedAsPassed": true,
+    "retainedWithoutRerun": 5,
+    "finalRun": {
+      "tests": 504,
+      "assertions": 6075,
+      "exitCode": 0,
+      "elapsedSeconds": 122.198,
+      "phpunit": "11.5.57",
+      "php": "8.3.30",
+      "peakMemoryMB": 246
+    },
+    "reconciliation": {
+      "missing": [],
+      "unexpected": [],
+      "excludedExecuted": [],
+      "duplicatePassed": []
+    }
+  },
+  "pint": {
+    "status": "passed",
+    "exitCode": 0,
+    "filesChecked": 255,
+    "changedFiles": [],
+    "mode": "--test --no-config --no-interaction --no-ansi --format=json",
+    "ownCache": "pint-cache.json"
+  },
+  "isolation": {
+    "verified": true,
+    "evidence": "isolation.json",
+    "checksEveryLaravelApplication": true,
+    "environmentFileLoaded": false,
+    "database": "sqlite :memory:",
+    "actualPersistentDatabaseFile": "",
+    "cacheAndViewsAndStorageWithinQa": true,
+    "temporaryPathsMappedWithinQa": true,
+    "functionsDisabled": [
+      "exec",
+      "shell_exec",
+      "system",
+      "passthru",
+      "proc_open",
+      "popen"
+    ],
+    "columns": 100,
+    "lines": 40,
+    "childTimeoutSeconds": 180,
+    "parentEnvironmentInherited": true,
+    "windowsHide": true,
+    "shell": false
+  },
+  "harnessIncident": {
+    "status": "resolved",
+    "initialAttempt": "Preparación de 505 casos detenida por Ruta no aislada: test_tmp; PHPUnit había cargado helpers antes del bootstrap. No se atribuye al producto.",
+    "resolution": "isolation.php cargado con auto_prepend_file antes del autoload, conservando código y aserciones originales. TestCase temporal únicamente fija entorno y valida aislamiento.",
+    "retainedFourPureGeometryCases": true,
+    "preflightWindowsPrefix": "Se añadió C: mediante addAbsoluteCachePathPrefix solo en el arnés.",
+    "artifactsPrefix": "harness-attempt-1-"
+  },
+  "integrity": {
+    "checkedAt": "2026-11-03T15:44:15.398Z",
+    "baselineFiles": 926,
+    "codeChanges": [],
+    "cacheChanges": [],
+    "persistentDatabaseChanges": [],
+    "addedFiles": [
+      "storage/framework/sessions/[sesion-de-ensayo]"
+    ],
+    "otherObservedChanges": [
+      {
+        "path": "storage/logs/laravel.log",
+        "before": "b54f508a920b41066c1dfe419d5411b32af203b56732be2f7d59c15e97c9ae2c",
+        "after": "2537ff72d7151acbbe081aefd640b8883f0b242324ac43f2bb6a07302cd114e2",
+        "attribution": "Entrada concurrente desde tmp/preparar-recorrido.php; ruta ui-cache. Fuera de procesos QA propios.",
+        "callerEvidence": "#7 C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/preparar-recorrido.php(2): Illuminate/Foundation/Console/Kernel->bootstrap()"
+      }
+    ],
+    "agentWritesOutsideQa": [],
+    "addedCodeFiles": [],
+    "concurrentStorageAdditions": [
+      {
+        "path": "storage/framework/sessions/[sesion-de-ensayo]",
+        "attribution": "Compatible con UI paralela (inferencia); QA verificó SESSION_DRIVER=array en cada aplicación y almacenamiento dirigido a backend-qa."
+      }
+    ]
+  },
+  "processes": {
+    "allOwnedCompleted": true,
+    "remainingOwnedProcesses": [],
+    "acceptanceSupervisorPid": 31584,
+    "pintSupervisorPid": 30452,
+    "acceptanceExitCode": 0,
+    "pintExitCode": 0,
+    "supervisor": "ejecutar-sin-consola.py; Popen CREATE_NO_WINDOW, wait(timeout=180)"
+  },
+  "evidence": {
+    "cases": "cases.json",
+    "selected": "selection.json",
+    "isolation": "isolation.json",
+    "suiteLog": "acceptance.log",
+    "suiteJunit": "phpunit-junit.log",
+    "suiteEvents": "phpunit-events.log",
+    "pintLog": "pint.log",
+    "integrity": "integrity.json"
+  }
+}

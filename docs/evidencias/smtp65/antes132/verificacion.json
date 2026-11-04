@@ -1,0 +1,77 @@
+{
+  "base": "b994b643d1b9086abd695053eb3a27030ed238b3",
+  "branch": "test/65-smtp-local",
+  "trackedRuntimeChanges": [],
+  "scopeFailures": [],
+  "files": [
+    "docs/SMTP_LOCAL65.md",
+    "docs/evidencias/smtp65/README.md",
+    "docs/evidencias/smtp65/phpunit.txt",
+    "docs/evidencias/smtp65/phpunit.xml",
+    "docs/evidencias/smtp65/pint.txt",
+    "docs/evidencias/smtp65/regresion-js.txt",
+    "docs/evidencias/smtp65/regresion-php.txt",
+    "docs/evidencias/smtp65/resultado.json",
+    "docs/evidencias/smtp65/smtp.json",
+    "docs/evidencias/smtp65/verificacion.json",
+    "herramientas/avisos/smtp-local/SmtpLocal65Test.php",
+    "herramientas/avisos/smtp-local/package-lock.json",
+    "herramientas/avisos/smtp-local/package.json",
+    "herramientas/avisos/smtp-local/phpunit.xml",
+    "herramientas/avisos/smtp-local/run.mjs",
+    "herramientas/avisos/smtp-local/smtp-capture.mjs"
+  ],
+  "vendor": {
+    "source": "tmp/condicion-tiempo127/web/vendor",
+    "method": "fs.cp recursive dereference true; excludes .env and DB files",
+    "independentAutoloadInodes": true,
+    "copySymlink": false,
+    "sourceLinks": 1,
+    "copyLinks": 1,
+    "composerLockMatchesSource": true
+  },
+  "webEnvAbsent": true,
+  "checks": {
+    "smtpPhpunit": {
+      "tests": 6,
+      "assertions": 209,
+      "exitCode": 0
+    },
+    "existingPhp": {
+      "tests": 17,
+      "assertions": 109,
+      "exitCode": 0
+    },
+    "existingJs": {
+      "tests": 7,
+      "exitCode": 0
+    },
+    "pintExitCode": 0,
+    "nodeSyntaxExitCodes": [
+      0,
+      0
+    ],
+    "gitDiffCheckExitCode": 0,
+    "newTextWhitespaceProblems": []
+  },
+  "launcher": {
+    "method": "Node.spawn windowsHide true shell false stdout/stderr files",
+    "exit": {
+      "code": 0,
+      "signal": null
+    }
+  },
+  "phpChild": {
+    "method": "Node.spawn windowsHide true shell false stdout/stderr private files",
+    "timeoutMilliseconds": 180000
+  },
+  "shutdown": {
+    "serverClosed": true,
+    "loopbackPortClosed": true,
+    "openSmtpSessions": 0,
+    "separateBrokerProcess": false
+  },
+  "commitCreated": false,
+  "pushExecuted": false,
+  "runtimeModified": false
+}

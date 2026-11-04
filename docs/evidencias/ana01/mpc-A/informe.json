@@ -1,0 +1,109 @@
+{
+  "version": "ana01-exploracion-metadatos-0.1",
+  "proveedorCatalogo": "mpc",
+  "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=sentinel-2-l2a&bbox=-62.99%2C-17.75%2C-62.9%2C-17.65&datetime=2024-09-01T00%3A00%3A00Z%2F2024-09-30T23%3A59%3A59Z&limit=12",
+  "ventana": "A",
+  "recuperadoEn": "2026-10-25T21:36:25.141989+00:00",
+  "http": {
+    "estado": 200,
+    "tipoContenido": "application/geo+json; charset=utf-8",
+    "bytes": 122405,
+    "sha256": "2d5d52cacb96ca52f22b7d1042656e1dbe921c630d35cd9ba140e8753afbdd2b"
+  },
+  "rasterDescargado": false,
+  "pixelesAgua": null,
+  "superficieInundadaKm2": null,
+  "metodoAprobado": false,
+  "escenas": [
+    {
+      "identificador": "S2B_MSIL2A_20240928T141709_R010_T20KNF_20240928T200114",
+      "fecha": "2024-09-28T14:17:09.024000Z",
+      "tile": "20KNF",
+      "plataforma": "Sentinel-2B",
+      "nubesEscenaPorcentaje": 1.454338,
+      "nubesEnAreaPorcentaje": null,
+      "sclDisponibleEnMetadatos": true,
+      "sclUrlSinFirma": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2024/09/28/S2B_MSIL2A_20240928T141709_N0511_R010_T20KNF_20240928T200114.SAFE/GRANULE/L2A_T20KNF_A039504_20240928T142307/IMG_DATA/R20m/T20KNF_20240928T141709_SCL_20m.tif",
+      "pixelesAgua": null
+    },
+    {
+      "identificador": "S2B_MSIL2A_20240928T141709_R010_T20KMF_20240928T200114",
+      "fecha": "2024-09-28T14:17:09.024000Z",
+      "tile": "20KMF",
+      "plataforma": "Sentinel-2B",
+      "nubesEscenaPorcentaje": 0.205034,
+      "nubesEnAreaPorcentaje": null,
+      "sclDisponibleEnMetadatos": true,
+      "sclUrlSinFirma": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/MF/2024/09/28/S2B_MSIL2A_20240928T141709_N0511_R010_T20KMF_20240928T200114.SAFE/GRANULE/L2A_T20KMF_A039504_20240928T142307/IMG_DATA/R20m/T20KMF_20240928T141709_SCL_20m.tif",
+      "pixelesAgua": null
+    },
+    {
+      "identificador": "S2A_MSIL2A_20240923T141711_R010_T20KNF_20240923T201159",
+      "fecha": "2024-09-23T14:17:11.024000Z",
+      "tile": "20KNF",
+      "plataforma": "Sentinel-2A",
+      "nubesEscenaPorcentaje": 2.923418,
+      "nubesEnAreaPorcentaje": null,
+      "sclDisponibleEnMetadatos": true,
+      "sclUrlSinFirma": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2024/09/23/S2A_MSIL2A_20240923T141711_N0511_R010_T20KNF_20240923T201159.SAFE/GRANULE/L2A_T20KNF_A048341_20240923T141747/IMG_DATA/R20m/T20KNF_20240923T141711_SCL_20m.tif",
+      "pixelesAgua": null
+    },
+    {
+      "identificador": "S2A_MSIL2A_20240923T141711_R010_T20KMF_20240923T201159",
+      "fecha": "2024-09-23T14:17:11.024000Z",
+      "tile": "20KMF",
+      "plataforma": "Sentinel-2A",
+      "nubesEscenaPorcentaje": 0.034832,
+      "nubesEnAreaPorcentaje": null,
+      "sclDisponibleEnMetadatos": true,
+      "sclUrlSinFirma": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/MF/2024/09/23/S2A_MSIL2A_20240923T141711_N0511_R010_T20KMF_20240923T201159.SAFE/GRANULE/L2A_T20KMF_A048341_20240923T141747/IMG_DATA/R20m/T20KMF_20240923T141711_SCL_20m.tif",
+      "pixelesAgua": null
+    },
+    {
+      "identificador": "S2B_MSIL2A_20240908T141709_R010_T20KNF_20240908T182124",
+      "fecha": "2024-09-08T14:17:09.024000Z",
+      "tile": "20KNF",
+      "plataforma": "Sentinel-2B",
+      "nubesEscenaPorcentaje": 14.866062,
+      "nubesEnAreaPorcentaje": null,
+      "sclDisponibleEnMetadatos": true,
+      "sclUrlSinFirma": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2024/09/08/S2B_MSIL2A_20240908T141709_N0511_R010_T20KNF_20240908T182124.SAFE/GRANULE/L2A_T20KNF_A039218_20240908T141835/IMG_DATA/R20m/T20KNF_20240908T141709_SCL_20m.tif",
+      "pixelesAgua": null
+    },
+    {
+      "identificador": "S2B_MSIL2A_20240908T141709_R010_T20KMF_20240908T182124",
+      "fecha": "2024-09-08T14:17:09.024000Z",
+      "tile": "20KMF",
+      "plataforma": "Sentinel-2B",
+      "nubesEscenaPorcentaje": 0.861166,
+      "nubesEnAreaPorcentaje": null,
+      "sclDisponibleEnMetadatos": true,
+      "sclUrlSinFirma": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/MF/2024/09/08/S2B_MSIL2A_20240908T141709_N0511_R010_T20KMF_20240908T182124.SAFE/GRANULE/L2A_T20KMF_A039218_20240908T141835/IMG_DATA/R20m/T20KMF_20240908T141709_SCL_20m.tif",
+      "pixelesAgua": null
+    },
+    {
+      "identificador": "S2A_MSIL2A_20240903T141711_R010_T20KNF_20240903T195858",
+      "fecha": "2024-09-03T14:17:11.024000Z",
+      "tile": "20KNF",
+      "plataforma": "Sentinel-2A",
+      "nubesEscenaPorcentaje": 0.140036,
+      "nubesEnAreaPorcentaje": null,
+      "sclDisponibleEnMetadatos": true,
+      "sclUrlSinFirma": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2024/09/03/S2A_MSIL2A_20240903T141711_N0511_R010_T20KNF_20240903T195858.SAFE/GRANULE/L2A_T20KNF_A048055_20240903T142535/IMG_DATA/R20m/T20KNF_20240903T141711_SCL_20m.tif",
+      "pixelesAgua": null
+    },
+    {
+      "identificador": "S2A_MSIL2A_20240903T141711_R010_T20KMF_20240903T195858",
+      "fecha": "2024-09-03T14:17:11.024000Z",
+      "tile": "20KMF",
+      "plataforma": "Sentinel-2A",
+      "nubesEscenaPorcentaje": 0.018619,
+      "nubesEnAreaPorcentaje": null,
+      "sclDisponibleEnMetadatos": true,
+      "sclUrlSinFirma": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/MF/2024/09/03/S2A_MSIL2A_20240903T141711_N0511_R010_T20KMF_20240903T195858.SAFE/GRANULE/L2A_T20KMF_A048055_20240903T142535/IMG_DATA/R20m/T20KMF_20240903T141711_SCL_20m.tif",
+      "pixelesAgua": null
+    }
+  ],
+  "tieneSiguientePagina": false,
+  "estado": "metadatos_disponibles"
+}

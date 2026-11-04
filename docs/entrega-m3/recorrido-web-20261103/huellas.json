@@ -1,0 +1,156 @@
+{
+  "fechaUTC": "2026-11-03T18:46:53.150Z",
+  "normalizacion": "Texto UTF-8 con finales LF; binarios sin cambios.",
+  "archivos": [
+    {
+      "archivo": "README.md",
+      "bytes": 1867,
+      "sha256": "236e47fa5b01d40c504d42d7379a7f454d77ca0a50197d7e71bb9685e899bc34"
+    },
+    {
+      "archivo": "acceso-denegado.png",
+      "bytes": 14785,
+      "sha256": "07bdd078097f5f25c1497bd0e93597a1047504b3eda739f8bf73bf2fa1a0419f"
+    },
+    {
+      "archivo": "avisos.png",
+      "bytes": 66633,
+      "sha256": "d990939a111471257a4f3ecc0b7f09bbd3e0f3442cce54b3751b271b2ab74626"
+    },
+    {
+      "archivo": "backend-aislamiento.json",
+      "bytes": 2830,
+      "sha256": "dec05c0a4e280d7c38b595df4b55c79f3e1c33f8591be94c5b0f61b15aafd62f"
+    },
+    {
+      "archivo": "backend-casos.json",
+      "bytes": 252997,
+      "sha256": "b096bebd7cff3e87b184f83629c8928f063d6df6d44d0cace84a6b9d0ca7abc4"
+    },
+    {
+      "archivo": "backend-conservadas.json",
+      "bytes": 631,
+      "sha256": "e8b859f04678333288ae885b9b056b60bcf4b78d2326ccaa3c43ef3936b7bbd9"
+    },
+    {
+      "archivo": "backend-fix136.json",
+      "bytes": 8653,
+      "sha256": "4e7e109e6cedaa799cdaa08278eb848ddfc9040baaded3620c414814f9dae7de"
+    },
+    {
+      "archivo": "backend-fix136.txt",
+      "bytes": 361,
+      "sha256": "a883d70f90766bc5b1a5409dc7bcf1c418d32b1b6e02a2502aab27d2c6e20118"
+    },
+    {
+      "archivo": "backend-formato.txt",
+      "bytes": 140,
+      "sha256": "959f31c668b171add514f5cbc8d635a32dc485b393d3543ea22cfb99620dc10c"
+    },
+    {
+      "archivo": "backend-prueba-aislamiento.txt",
+      "bytes": 340,
+      "sha256": "e0d81943a50b1050cfa0d9bc5b414a40d144070948a0fa65f0b7506ce1c8f093"
+    },
+    {
+      "archivo": "backend-pruebas.txt",
+      "bytes": 973,
+      "sha256": "48bb7fcbc4f74769aaed7f18be13e8fc8698013c8d406073bda395be2a49c053"
+    },
+    {
+      "archivo": "backend-resultado.json",
+      "bytes": 4148,
+      "sha256": "8c33b452ed17aa006ed513ce8ee670bb0d81cfd784b81eaa831153c83f3e1071"
+    },
+    {
+      "archivo": "backend-seleccion.json",
+      "bytes": 59991,
+      "sha256": "e2659ff422e7fab70a23caf3a7b879946e7d9eeffba85c92dac9fa26a406e94a"
+    },
+    {
+      "archivo": "focos.png",
+      "bytes": 95589,
+      "sha256": "d19a3ea2dc02886a5425be019dab40a81a87e274b87ba0bb1fafa78c65c35ecc"
+    },
+    {
+      "archivo": "guion.md",
+      "bytes": 4985,
+      "sha256": "c723fbecccb4f096a2ca5357573985030b953271aa61d1ff81665c6b2727ac31"
+    },
+    {
+      "archivo": "inicio.png",
+      "bytes": 120714,
+      "sha256": "4035b6b9d3102070bcdaa80998534aeb9c3feb6566825aeabc1907626bd77f7c"
+    },
+    {
+      "archivo": "javascript.txt",
+      "bytes": 16521,
+      "sha256": "b12e0e3d5acfadeb1f2a13d6d0d30c3bad6a002948b7db8c7aa846a9ac2e9d14"
+    },
+    {
+      "archivo": "mapa-comparacion.png",
+      "bytes": 147595,
+      "sha256": "87a3f865132a87cf0d74f0242b708378f11dd1102bea043ae717e9246eee5323"
+    },
+    {
+      "archivo": "mediciones.png",
+      "bytes": 67183,
+      "sha256": "ebdfb6f17a1725831e74743950a38366bd3aa7cc2d120f1edbaee751970607ed"
+    },
+    {
+      "archivo": "pr137-comprobaciones.png",
+      "bytes": 159722,
+      "sha256": "71737b78d7813906b4b4483796a3e1fd151acea0079f4c04ef743c9d56e6590f"
+    },
+    {
+      "archivo": "pr137-comprobaciones.txt",
+      "bytes": 11550,
+      "sha256": "902345a76014a302b9d120411778b07ccf065645623881bc8aaf2f5aabac32b4"
+    },
+    {
+      "archivo": "recorrido-ui.json",
+      "bytes": 4117,
+      "sha256": "321dc1fdee4a7ebcd934add9cf55526f3bf11394751e4698297b9b6635edfe73"
+    },
+    {
+      "archivo": "reporte-simulado.pdf",
+      "bytes": 41355,
+      "sha256": "363115022f26357c0d752290e46861bcf1bcf2dfdb2a6fe0a2d0eb88b8e47b56"
+    },
+    {
+      "archivo": "reporte-simulado.xlsx",
+      "bytes": 6296,
+      "sha256": "d8dbf3e38daf66ef3fa0bcb7b007b1b0337eac574081aa8bc46656b66be2d988"
+    },
+    {
+      "archivo": "reporte.png",
+      "bytes": 68665,
+      "sha256": "efd1195e36a4a1f5f7ed2955f20d7d41b321d0094f5fa30c4c5f0056eaa6df29"
+    },
+    {
+      "archivo": "resultado.json",
+      "bytes": 2790,
+      "sha256": "841c2cf401c30df105769f27983b9b0f688cc5d649bdb158a89d7489909eafec"
+    },
+    {
+      "archivo": "sequias.png",
+      "bytes": 72415,
+      "sha256": "cdb0c0cbafaaad828552d601a4d3c6d3c35b9537d88c38a3f16f60743ae66ce8"
+    },
+    {
+      "archivo": "simulaciones.png",
+      "bytes": 77617,
+      "sha256": "a7e38e95d6a7ff08d481c44cee5cdb1b38cadcd2cc7c01ec29bda7d9b27b3bd8"
+    },
+    {
+      "archivo": "validacion-exportaciones.json",
+      "bytes": 256,
+      "sha256": "d793cbf347bda9339129a546e3a345ea2dd61cddb66e7b1c0563edd56afbb78a"
+    },
+    {
+      "archivo": "../../../output/pdf/GeoSur-M3-recorrido-web-20261103.pdf",
+      "bytes": 659821,
+      "sha256": "33b2f210ef365004ea93309e4b6405af4b41379a92b83621795e4dfcfa5abfc3"
+    }
+  ]
+}

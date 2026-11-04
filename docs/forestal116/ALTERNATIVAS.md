@@ -1,6 +1,6 @@
 # MET03 / #116: comparación acotada de fuentes forestales
 
-Revisión documental oficial: 31/10/2026. GeoSur adapta EnviroSense completo en Laravel/Blade: web de Josué, móvil de Jaziel, sin chatbot. La investigación M4 puede avanzar; el procesamiento H sigue bloqueado por G (#115). Este documento no desbloquea H ni presenta resultados ambientales.
+Revisión documental inicial: 31/10/2026; contraste oficial y aclaraciones: 03/11/2026. GeoSur adapta EnviroSense completo en Laravel/Blade: web de Josué, móvil de Jaziel, sin chatbot. La investigación M4 puede avanzar; el procesamiento H sigue bloqueado por G (#115). La propuesta se concentra en la [hoja de decisión para Jaziel](DECISION-JAZIEL.md); esta comparación no desbloquea H.
 
 ## GFW / UMD: piloto anual propuesto
 
@@ -8,7 +8,7 @@ La publicación GFC-2025-v1.13 documenta pérdidas anuales de 2001–2025, con c
 
 La pérdida de cobertura arbórea incluye perturbaciones humanas o naturales, temporales o permanentes, y plantaciones. La deforestación supone conversión duradera del bosque a otro uso; no se puede renombrar toda pérdida como deforestación ni como cambio neto. [GFW/WRI: interpretación oficial](https://globalnaturewatch.org/blog/data-and-tools/2025-tree-cover-loss-data-explained/).
 
-Hay enlaces GeoTIFF directos documentados. La licencia CC BY 4.0 exige atribución, enlace de licencia e indicación de modificaciones; Earth Engine es otra vía con registro. No se probó aquí la descarga ni una API. [UMD: acceso y licencia](https://storage.googleapis.com/earthenginepartners-hansen/GFC-2025-v1.13/download.html).
+Hay enlaces GeoTIFF directos documentados. La licencia CC BY 4.0 exige atribución, enlace de licencia e indicación de modificaciones; Earth Engine es otra vía con registro. Esta comparación no probó descargas raster. La consulta API pequeña del 31/10 sí está acreditada en [la captura y el verificador](README.md); la nueva lectura del catálogo del 03/11 agotó el tiempo de espera. [UMD: acceso y licencia](https://storage.googleapis.com/earthenginepartners-hansen/GFC-2025-v1.13/download.html).
 
 ## Copernicus CLMS LCFM: cobertura global a 10 m
 
@@ -28,4 +28,4 @@ Para Santa Cruz serviría como contraste dentro de su dominio húmedo; no reempl
 
 Treinta metros no son 30 m²: una celda métrica cuadrada de 30 × 30 m representa 900 m², o 0,09 ha. Ese factor no es universal: GFW usa celdas angulares. Calcular área geodésica o mediante proyección equivalente y tratar bordes y ausencia de datos. UMD además desaconseja estimaciones definitivas basadas solo en contar píxeles. [Especificación UMD](https://storage.googleapis.com/earthenginepartners-hansen/GFC-2025-v1.13/download.html).
 
-Propongo un piloto anual GFW/UMD con versión fijada, sin `latest`, candidata documental GFC-2025-v1.13, pendiente de Jaziel. La tarea principal verifica por separado versión de dataset/API, campos y respuesta con una muestra pública pequeña; no se equipara automáticamente esa versión a la edición GFC. Aquí no se acredita esa prueba ni se requieren capturas nuevas. Quedan definir período, geometría, tratamiento de bosque seco, cálculo de área y definición de bosque. El 30 % sería un parámetro técnico por acordar, no una definición legal aprobada. CLMS y TMF quedarían como contrastes; H conserva el bloqueo de G.
+La [hoja de decisión](DECISION-JAZIEL.md) propone revisar la serie anual GFW `umd_tree_cover_loss/v1.13`, ventana 2001–2025 y GADM 4.1 BOL/8, con el filtro continuo `percent >= 30` acreditado en la captura. El metadato del producto remite a GFC-2025-v1.13; se mantienen separadas la versión API, la edición raster y la versión territorial. La tabla categórica `threshold` no se intercambia con ese filtro y la referencia habitual de WRI `> 30 %` no es idéntica. Geometría local, pertinencia en bosque seco y adopción del criterio siguen pendientes. CLMS y TMF quedan como contrastes; H conserva el bloqueo de G.

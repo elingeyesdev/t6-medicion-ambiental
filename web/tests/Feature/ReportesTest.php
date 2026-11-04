@@ -30,7 +30,8 @@ class ReportesTest extends TestCase
         }
         $this->postJson('/api/v1/reportes', ['titulo' => 'Grande', 'base' => 'mediciones', 'origen' => 'simulado'])->assertUnprocessable();
         $this->assertDatabaseCount('reportes_ambientales', 0);
-        LecturaAmbiental::where('id', '>', 100)->delete();
+        $primeras = LecturaAmbiental::where('punto_id', $punto->id)->orderBy('id')->limit(100)->pluck('id');
+        LecturaAmbiental::where('punto_id', $punto->id)->whereNotIn('id', $primeras)->delete();
         $r = $this->crear(['titulo' => 'GeoSur · Revisión de datos simulados', 'origen' => 'simulado']);
         $this->assertCount(100, $r['contenido']['filas']);
         $pdf = $this->get('/reportes/'.$r['id'].'/descargar/pdf')->assertOk();

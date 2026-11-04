@@ -1,6 +1,7 @@
-export function iniciarBuscadorLugar(url, seleccionar) {
+export function iniciarBuscadorLugar(url, seleccionar, centro = () => null) {
     const formulario = document.getElementById('buscar-lugar');
     const entrada = formulario.elements.texto;
+    const tipo = formulario.elements.tipo;
     const resultados = document.getElementById('lugares-encontrados');
     const estado = document.getElementById('estado-buscador');
     const buscar = formulario.querySelector('[type="submit"]');
@@ -17,6 +18,7 @@ export function iniciarBuscadorLugar(url, seleccionar) {
 
     formulario.addEventListener('reset', limpiar);
     entrada.addEventListener('input', limpiar);
+    tipo?.addEventListener('change', limpiar);
     entrada.addEventListener('keydown', evento => {
         if (evento.key === 'Escape') formulario.reset();
     });
@@ -33,6 +35,14 @@ export function iniciarBuscadorLugar(url, seleccionar) {
         try {
             const destino = new URL(url, location.origin);
             destino.searchParams.set('texto', texto);
+            if (tipo?.value === 'sitio') {
+                destino.searchParams.set('tipo', 'sitio');
+                const posicion = centro();
+                if (posicion && Number.isFinite(posicion.lat) && Number.isFinite(posicion.lng) && Math.abs(posicion.lat) <= 90) {
+                    destino.searchParams.set('latitud', String(posicion.lat));
+                    destino.searchParams.set('longitud', String(((posicion.lng + 180) % 360 + 360) % 360 - 180));
+                }
+            }
             const r = await fetch(destino, {headers: {Accept: 'application/json'}, credentials: 'same-origin', signal: peticion.signal});
             const datos = await r.json();
             if (actual !== turno) return;
@@ -50,6 +60,7 @@ export function iniciarBuscadorLugar(url, seleccionar) {
                     limpiar();
                     entrada.value = lugar.nombre;
                     seleccionar(lugar);
+                    formulario.dispatchEvent(new Event('lugar-seleccionado'));
                 });
                 fila.append(boton); resultados.append(fila);
             }

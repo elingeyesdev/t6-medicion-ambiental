@@ -11,7 +11,8 @@ final class VariablesReporte
     {
         $variables = ConsultarPronostico::VARIABLES;
         $variables['nieve_acumulada'] = ['snow_depth', 'Nieve acumulada', 'm', 0, 100];
-        $variables['aqi'] = ['us_aqi', 'Calidad del aire', 'USAQI', 0, 1000];
+        $variables['aqi'] = ['us_aqi', 'Aire · escala de Estados Unidos', 'USAQI', 0, 1000];
+        $variables['aqi_europeo'] = ['european_aqi', 'Aire · escala europea', 'EAQI', 0, 10000];
 
         return $variables;
     }

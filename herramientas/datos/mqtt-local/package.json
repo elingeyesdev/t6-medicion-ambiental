@@ -1,0 +1,14 @@
+{
+  "name": "geosur-mqtt-local66",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Harness de integración local MQTT para GeoSur #66",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "aedes": "0.51.3",
+    "mqtt": "5.10.4"
+  }
+}

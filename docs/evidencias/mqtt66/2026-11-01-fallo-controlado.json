@@ -1,0 +1,45 @@
+{
+  "formato": "geosur.mqtt-local66.v1",
+  "inicio": "2026-11-01T08:55:04.123Z",
+  "baseObjetivo": "b994b643d1b9086abd695053eb3a27030ed238b3",
+  "node": "v26.2.0",
+  "versiones": {
+    "aedes": "0.51.3",
+    "mqtt": "5.10.4"
+  },
+  "alcance": "LOCAL: broker real en loopback y payloads sintéticos; sin sensores físicos, broker externo ni TLS",
+  "casos": [],
+  "trazas": {
+    "subscriptions": [],
+    "acks": [],
+    "clients": [],
+    "errors": []
+  },
+  "broker": {
+    "host": "127.0.0.1",
+    "puerto": 53737,
+    "persistencia": "memoria, efímera"
+  },
+  "ok": false,
+  "error": "Error: Salida PHP no JSON: \r\nIn Connection.php line 838:\r\n                                                                                                   \r\n  could not find driver (Connection: sqlite, Database: C:\\Users\\cjosu\\Desktop\\GeoCruz-oficial\\tmp  \r\n  \\mqtt-local66\\tmp\\mqtt-local66\\runs\\run-92fam4/prueba.sqlite, SQL: select exists (select 1 from  \r\n   \"main\".sqlite_master where name = 'migrations' and type = 'table') as \"exists\")                 \r\n                                                                                                   \r\n\r\nIn Connector.php line 66:\r\n                         \r\n  could not find driver  \r\n                         \r\n\r\n\n    at file:///<worktree>/herramientas/datos/mqtt-local/ejecutar.mjs:119:58\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async file:///<worktree>/herramientas/datos/mqtt-local/ejecutar.mjs:212:20",
+  "limpieza": {
+    "brokerCerrado": true,
+    "servidorCerrado": true,
+    "procesosPropios": 0,
+    "sockets": 0,
+    "puertoCerrado": true
+  },
+  "fin": "2026-11-01T08:55:04.486Z",
+  "huellas": {
+    "herramientas/datos/mqtt-local/ejecutar.mjs": "df524dcf04840771cf2367f07accc652e12a799e50f6d64f5b6a2eaf477c1293",
+    "herramientas/datos/mqtt-local/laravel.php": "155daa6a338bbb305b72ac46f20d511a3fed2dd8a67f91ee5a4efc5c5c1b08af",
+    "herramientas/datos/mqtt-local/package.json": "927ad08b04bc63d4adc27694b22719d4f4f97463e034aecf0cacca2d2d1c85b9",
+    "herramientas/datos/mqtt-local/package-lock.json": "83d1dd7f5dfeb8eeb2417e7794256d2998efbdef87c30c435a9b1fa9302b0074",
+    "web/app/Console/Commands/RecibirMqtt.php": "cf39639e922a8c1d56c07eef43925eb46d9ec08603e3fa15e91324fa6a146cdb",
+    "web/app/Services/Datos/Mqtt/ClienteMqtt.php": "9c1d5793ddc3380dc50a9bb0dbb19963729704baa4fd739b7079ea2d30dd5e01",
+    "web/app/Services/Datos/Mqtt/ConfiguracionMqtt.php": "89304cfb13a5325504e241988d8514e7cee9f19ce900434b30f38443c60cf530",
+    "web/app/Services/Datos/Mqtt/IngerirMensajeMqtt.php": "e8fe372a29a3fac2f381e50bfef5628006d9f5c98a6da5e314c6526ea597fe1d",
+    "web/app/Services/Datos/RegistrarLecturas.php": "f6937131df58000a10ef1529b4b8a0f4c12023d2ea50212e19833ca468fae799",
+    "web/app/Services/Datos/AutorizarIngestion.php": "2ad08315595ffb7c5e80a3c3652f4e65aa1f3e41e5ad4712e31ec9bdce34eb17"
+  }
+}
