@@ -6,9 +6,12 @@ use App\Models\AlertaAmbiental;
 use App\Models\AvisoAmbiental;
 use App\Models\PreferenciasAvisos;
 use App\Models\User;
+use App\Services\Notificaciones\EncolarAvisos;
 
 final class PrepararAvisos
 {
+    public function __construct(private EncolarAvisos $envios) {}
+
     public function ejecutar(AlertaAmbiental $alerta): void
     {
         // Una carga histórica conserva sus alertas sin presentarlas como avisos actuales.
@@ -31,7 +34,8 @@ final class PrepararAvisos
             $reciente = AvisoAmbiental::where('usuario_id', $usuario->id)->where('created_at', '>=', now()->subMinutes(2))
                 ->whereHas('alerta', fn ($q) => $q->where('metrica', $alerta->metrica)->where('origen', $alerta->origen))->exists();
             if (! $reciente) {
-                AvisoAmbiental::firstOrCreate(['usuario_id' => $usuario->id, 'alerta_id' => $alerta->id]);
+                $aviso = AvisoAmbiental::firstOrCreate(['usuario_id' => $usuario->id, 'alerta_id' => $alerta->id]);
+                $this->envios->ejecutar($aviso, $usuario);
             }
         }
     }

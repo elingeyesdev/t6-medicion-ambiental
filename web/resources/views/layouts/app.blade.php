@@ -6,11 +6,14 @@
     <meta name="description" content="GeoSur: monitoreo ambiental y análisis del territorio.">
     <title>@yield('titulo', 'Mapa de Monitoreo') · {{ config('geocruz.nombre') }}</title>
     <script src="{{ asset('js/panel/preferencias.js') }}"></script>
+    <link rel="preload" href="{{ asset('fonts/envirosense/space-grotesk-latin-400-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="{{ asset('css/envirosense/fuentes.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/tabler/tabler.min.css') }}">
     @stack('estilos')
     <link rel="stylesheet" href="{{ asset('css/panel/panel.css') }}">
     <link rel="stylesheet" href="{{ asset('css/panel/marca.css') }}">
     <link rel="stylesheet" href="{{ asset('css/panel/mapas.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/envirosense/interfaz.css') }}?v=original-1">
     <link rel="icon" type="image/svg+xml" href="{{ asset('img/marca/geosur-simbolo.svg') }}?v=gs-1">
 </head>
 <body class="@yield('clase-cuerpo')">

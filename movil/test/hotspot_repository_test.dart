@@ -88,6 +88,70 @@ void main() {
         api.close();
       });
     }
+
+    testWidgets('cobertura parcial con detecciones permanece visible', (tester) async {
+      tester.view.physicalSize = const Size(800, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final payload = _response(total: 2);
+      payload['cobertura'] = {
+        'estado': 'parcial',
+        'fundamento': 'Falta parte del período.',
+      };
+      final api = GeoCruzApiClient(
+        baseUrl: Uri.parse('http://localhost/api/v1/'),
+        client: MockClient((request) async {
+          if (request.url.path.endsWith('/territorios')) return _json(_catalog());
+          if (request.url.path.endsWith('/focos-calor')) return _json(payload);
+          return _json(_boundary());
+        }),
+      );
+      await tester.pumpWidget(
+        MaterialApp(home: HotspotsScreen(apiClient: api, showAppBar: false)),
+      );
+      for (var i = 0; i < 8; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      expect(find.text('Resultados con cobertura parcial'), findsOneWidget);
+      await tester.scrollUntilVisible(find.text('Datos de la consulta'), 300);
+      await tester.tap(find.text('Datos de la consulta'));
+      await tester.pump();
+      expect(find.textContaining('Cobertura parcial'), findsOneWidget);
+      await tester.pumpWidget(const SizedBox());
+      api.close();
+    });
+
+    testWidgets('un fallo posterior avisa sin ocultar reiniciar', (tester) async {
+      var consultas = 0;
+      final api = GeoCruzApiClient(
+        baseUrl: Uri.parse('http://localhost/api/v1/'),
+        client: MockClient((request) async {
+          if (request.url.path.endsWith('/territorios')) return _json(_catalog());
+          if (request.url.path.endsWith('/focos-calor')) {
+            consultas++;
+            if (consultas == 1) return _json(_response());
+            return _json({'mensaje': 'El conjunto cambió.'}, status: 409);
+          }
+          return _json(_boundary());
+        }),
+      );
+      await tester.pumpWidget(
+        MaterialApp(home: HotspotsScreen(apiClient: api, showAppBar: false)),
+      );
+      for (var i = 0; i < 8; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      await tester.tap(find.byTooltip('Recargar'));
+      for (var i = 0; i < 8; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      expect(find.text('El conjunto de resultados expiró'), findsOneWidget);
+      expect(find.text('Reiniciar consulta'), findsOneWidget);
+      expect(find.textContaining('datos anteriores'), findsOneWidget);
+      await tester.pumpWidget(const SizedBox());
+      api.close();
+    });
   });
 
   group('MOV-02 contrato de focos', () {

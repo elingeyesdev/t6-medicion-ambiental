@@ -1,0 +1,53 @@
+{
+    "checks": {
+        "testing": true,
+        "config_not_cached": true,
+        "sqlite": true,
+        "memory": true,
+        "no_db_url": true,
+        "array_cache": true,
+        "array_session": true,
+        "array_mail": true,
+        "sync_queue": true,
+        "no_env_file": true,
+        "columns": true,
+        "lines": true,
+        "disabled_exec": true,
+        "disabled_shell_exec": true,
+        "disabled_system": true,
+        "disabled_passthru": true,
+        "disabled_proc_open": true,
+        "disabled_popen": true
+    },
+    "paths": {
+        "config": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/bootstrap-cache/config.php",
+        "routes": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/bootstrap-cache/routes.php",
+        "events": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/bootstrap-cache/events.php",
+        "packages": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/bootstrap-cache/packages.php",
+        "services": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/bootstrap-cache/services.php",
+        "views": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/views",
+        "storage": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/storage",
+        "cache_files": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/storage\\framework/cache/data",
+        "sessions": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/storage\\framework/sessions",
+        "local_disk": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/storage\\app/private",
+        "public_disk": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/storage\\app/public",
+        "test_tmp": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/test-tmp",
+        "environment": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/env"
+    },
+    "php_version": "8.3.30",
+    "php_ini": "C:\\Users\\cjosu\\Desktop\\GeoCruz-oficial\\tmp\\qa-web-m3-20261103\\tmp\\php-qa.ini",
+    "db": {
+        "driver": "sqlite",
+        "database": ":memory:"
+    },
+    "environment_file": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/env\\qa-disabled.env",
+    "temporary_directory": "C:/Users/cjosu/Desktop/GeoCruz-oficial/tmp/qa-web-m3-20261103/tmp/backend-qa/temp",
+    "actual_database_list": [
+        {
+            "seq": 0,
+            "name": "main",
+            "file": ""
+        }
+    ],
+    "test_case_harness": "Original Tests\\TestCase con createApplication aislado; mismas aserciones y setUp"
+}

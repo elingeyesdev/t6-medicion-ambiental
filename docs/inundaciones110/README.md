@@ -1,6 +1,6 @@
 # MET-02 / #110 — caso candidato y calidad de escenas
 
-Preparación de M4 del 31/10/2026, para revisión de Jaziel. Continúa #40/PR #46, cuya aceptación sigue pendiente, en una rama dependiente explícita. La ejecución de cambios de agua #111 conserva su dependencia de #39 y del método acordado. No se cerró M3 ni se habilitó un análisis de inundaciones en la web.
+La preparación de M4 comenzó el 31/10/2026. El 03/11 se incorporó develop, que ya reúne M3 y la preparación de #46. Esta continuación se revisa hacia develop. #110 conserva la decisión sobre el método, las escenas y la referencia. #111 continúa después de ese acuerdo.
 
 ## Caso y consultas
 
@@ -76,3 +76,8 @@ Se consultó el catálogo Sentinel-1 RTC de la misma caja y fechas: una ficha de
 ## Siguiente decisión
 
 Revisar con Jaziel evento, referencia y cobertura mínima; decidir si se buscan otras fechas ópticas o se prepara un método Sentinel-1 con su cadena y órbita propias. No aplicar un umbral radar universal ni llamar validado un producto porque se descargó. También falta una referencia independiente espacialmente adecuada. #110 sigue abierta; #111 no se inicia por esta comprobación preparatoria.
+
+
+## Actualización de base · 03/11/2026
+
+Integré develop después de la fusión del PR #46 y del candidato M3. Se conservaron las ocho parejas y sus resultados. Pasaron nuevamente las 24 pruebas de preparación y las 11 del lector anterior. [Resultados y salidas](evidencias/base-20261103/resultado.json). Jaziel debe revisar el evento, la referencia y la cobertura mínima antes de ejecutar #111.

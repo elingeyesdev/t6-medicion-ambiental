@@ -1,2 +1,12 @@
 const base=document.getElementById('rep-base');
-if(base){function cambiar(){const simulacion=base.value==='simulacion';document.getElementById('rep-mediciones').hidden=simulacion;document.getElementById('rep-mediciones').disabled=simulacion;document.getElementById('rep-simulacion').hidden=!simulacion;document.getElementById('rep-sesion').disabled=!simulacion;}base.addEventListener('change',cambiar);cambiar();}
+if(base){
+    function cambiar(){
+        for(const tipo of ['mediciones','simulacion','atmosfera','continua']){
+            const seccion=document.getElementById('rep-'+tipo);
+            seccion.hidden=base.value!==tipo;
+            if(seccion.tagName==='FIELDSET') seccion.disabled=base.value!==tipo;
+        }
+        document.getElementById('rep-sesion').disabled=base.value!=='simulacion';
+    }
+    base.addEventListener('change',cambiar);cambiar();
+}

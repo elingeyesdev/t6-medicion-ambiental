@@ -15,7 +15,7 @@ class Simulacion extends Model
 
     protected function casts(): array
     {
-        return ['configuracion' => 'array', 'resultado' => 'array', 'posicion' => 'integer', 'revision' => 'integer'];
+        return ['configuracion' => 'array', 'resultado' => 'array', 'posicion' => 'integer', 'revision' => 'integer', 'reloj_ms' => 'integer', 'posicion_base' => 'integer'];
     }
 
     public function paraCliente(): array

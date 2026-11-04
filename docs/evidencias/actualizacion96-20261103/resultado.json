@@ -1,0 +1,22 @@
+{
+  "fechaUTC": "2026-11-03T12:01:50.756Z",
+  "tarea": 41,
+  "pr": 96,
+  "padre": "7925c3b9bf061717fb28556b32d04d2dc13b09f8",
+  "develop": "1313e04d050ee2f0c42ef3a080b0559248593513",
+  "main": "851a79f5c699249c284001114f76f994c9ce4335",
+  "webSinCambios": true,
+  "herramientasSinCambios": true,
+  "arbolWeb": "ae71b0e47cc3722bd7c6a02e42c5c450d33f77ac",
+  "arbolHerramientas": "2dc4ac7233b64dd64495608b0a47da727502b3ef",
+  "js": {
+    "total": 107,
+    "correctas": 107,
+    "fallos": 0,
+    "omitidas": 0
+  },
+  "php": "no_ejecutado",
+  "flutter": "no_recompilado",
+  "ci": "pendiente_verificacion_del_commit_publicado",
+  "aprobacionM3": "pendiente"
+}

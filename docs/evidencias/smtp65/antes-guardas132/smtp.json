@@ -1,0 +1,512 @@
+{
+  "host": "127.0.0.1",
+  "port": 49214,
+  "closed": true,
+  "events": [
+    {
+      "type": "connect",
+      "session": "0ih325u6s5bbljns",
+      "remote": "127.0.0.1",
+      "reply": 220
+    },
+    {
+      "type": "protocol",
+      "session": "0ih325u6s5bbljns",
+      "direction": "send",
+      "text": "S: 220 smtp65.example.test ESMTP GeoSur local protocol capture only"
+    },
+    {
+      "type": "protocol",
+      "session": "0ih325u6s5bbljns",
+      "direction": "command",
+      "text": "C: EHLO cliente.example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "0ih325u6s5bbljns",
+      "direction": "send",
+      "text": "S: 250-smtp65.example.test Nice to meet you, [127.0.0.1]\r\n250-PIPELINING\r\n250-8BITMIME\r\n250-SMTPUTF8\r\n250 SIZE 65536"
+    },
+    {
+      "type": "protocol",
+      "session": "0ih325u6s5bbljns",
+      "direction": "command",
+      "text": "C: MAIL FROM:<avisos@example.test>"
+    },
+    {
+      "type": "mail",
+      "session": "0ih325u6s5bbljns",
+      "from": "avisos@example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "0ih325u6s5bbljns",
+      "direction": "send",
+      "text": "S: 250 Accepted"
+    },
+    {
+      "type": "protocol",
+      "session": "0ih325u6s5bbljns",
+      "direction": "command",
+      "text": "C: RCPT TO:<aceptacion@example.test>"
+    },
+    {
+      "type": "rcpt",
+      "session": "0ih325u6s5bbljns",
+      "to": "aceptacion@example.test",
+      "reply": 250
+    },
+    {
+      "type": "protocol",
+      "session": "0ih325u6s5bbljns",
+      "direction": "send",
+      "text": "S: 250 Accepted"
+    },
+    {
+      "type": "protocol",
+      "session": "0ih325u6s5bbljns",
+      "direction": "command",
+      "text": "C: DATA"
+    },
+    {
+      "type": "protocol",
+      "session": "0ih325u6s5bbljns",
+      "direction": "send",
+      "text": "S: 354 End data with <CR><LF>.<CR><LF>"
+    },
+    {
+      "type": "data",
+      "session": "0ih325u6s5bbljns",
+      "to": [
+        "aceptacion@example.test"
+      ],
+      "finalReply": 250
+    },
+    {
+      "type": "protocol",
+      "session": "0ih325u6s5bbljns",
+      "direction": "send",
+      "text": "S: 250 SMTP65_LOCAL_ACCEPTED"
+    },
+    {
+      "type": "protocol",
+      "session": "0ih325u6s5bbljns",
+      "direction": "command",
+      "text": "C: QUIT"
+    },
+    {
+      "type": "protocol",
+      "session": "0ih325u6s5bbljns",
+      "direction": "send",
+      "text": "S: 221 Bye"
+    },
+    {
+      "type": "close",
+      "session": "0ih325u6s5bbljns"
+    },
+    {
+      "type": "connect",
+      "session": "3d4epsup5kl9pmtv",
+      "remote": "127.0.0.1",
+      "reply": 220
+    },
+    {
+      "type": "protocol",
+      "session": "3d4epsup5kl9pmtv",
+      "direction": "send",
+      "text": "S: 220 smtp65.example.test ESMTP GeoSur local protocol capture only"
+    },
+    {
+      "type": "protocol",
+      "session": "3d4epsup5kl9pmtv",
+      "direction": "command",
+      "text": "C: EHLO cliente.example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "3d4epsup5kl9pmtv",
+      "direction": "send",
+      "text": "S: 250-smtp65.example.test Nice to meet you, [127.0.0.1]\r\n250-PIPELINING\r\n250-8BITMIME\r\n250-SMTPUTF8\r\n250 SIZE 65536"
+    },
+    {
+      "type": "protocol",
+      "session": "3d4epsup5kl9pmtv",
+      "direction": "command",
+      "text": "C: MAIL FROM:<avisos@example.test>"
+    },
+    {
+      "type": "mail",
+      "session": "3d4epsup5kl9pmtv",
+      "from": "avisos@example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "3d4epsup5kl9pmtv",
+      "direction": "send",
+      "text": "S: 250 Accepted"
+    },
+    {
+      "type": "protocol",
+      "session": "3d4epsup5kl9pmtv",
+      "direction": "command",
+      "text": "C: RCPT TO:<rechazo@example.test>"
+    },
+    {
+      "type": "rcpt",
+      "session": "3d4epsup5kl9pmtv",
+      "to": "rechazo@example.test",
+      "reply": 550
+    },
+    {
+      "type": "protocol",
+      "session": "3d4epsup5kl9pmtv",
+      "direction": "send",
+      "text": "S: 550 SMTP65_RECHAZO_SINTETICO"
+    },
+    {
+      "type": "protocol",
+      "session": "3d4epsup5kl9pmtv",
+      "direction": "command",
+      "text": "C: RSET"
+    },
+    {
+      "type": "protocol",
+      "session": "3d4epsup5kl9pmtv",
+      "direction": "send",
+      "text": "S: 250 Flushed"
+    },
+    {
+      "type": "protocol",
+      "session": "3d4epsup5kl9pmtv",
+      "direction": "command",
+      "text": "C: QUIT"
+    },
+    {
+      "type": "protocol",
+      "session": "3d4epsup5kl9pmtv",
+      "direction": "send",
+      "text": "S: 221 Bye"
+    },
+    {
+      "type": "close",
+      "session": "3d4epsup5kl9pmtv"
+    },
+    {
+      "type": "connect",
+      "session": "cove063fvlfadckv",
+      "remote": "127.0.0.1",
+      "reply": 220
+    },
+    {
+      "type": "protocol",
+      "session": "cove063fvlfadckv",
+      "direction": "send",
+      "text": "S: 220 smtp65.example.test ESMTP GeoSur local protocol capture only"
+    },
+    {
+      "type": "protocol",
+      "session": "cove063fvlfadckv",
+      "direction": "command",
+      "text": "C: EHLO cliente.example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "cove063fvlfadckv",
+      "direction": "send",
+      "text": "S: 250-smtp65.example.test Nice to meet you, [127.0.0.1]\r\n250-PIPELINING\r\n250-8BITMIME\r\n250-SMTPUTF8\r\n250 SIZE 65536"
+    },
+    {
+      "type": "protocol",
+      "session": "cove063fvlfadckv",
+      "direction": "command",
+      "text": "C: MAIL FROM:<avisos@example.test>"
+    },
+    {
+      "type": "mail",
+      "session": "cove063fvlfadckv",
+      "from": "avisos@example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "cove063fvlfadckv",
+      "direction": "send",
+      "text": "S: 250 Accepted"
+    },
+    {
+      "type": "protocol",
+      "session": "cove063fvlfadckv",
+      "direction": "command",
+      "text": "C: RCPT TO:<incierto@example.test>"
+    },
+    {
+      "type": "rcpt",
+      "session": "cove063fvlfadckv",
+      "to": "incierto@example.test",
+      "reply": 250
+    },
+    {
+      "type": "protocol",
+      "session": "cove063fvlfadckv",
+      "direction": "send",
+      "text": "S: 250 Accepted"
+    },
+    {
+      "type": "protocol",
+      "session": "cove063fvlfadckv",
+      "direction": "command",
+      "text": "C: DATA"
+    },
+    {
+      "type": "protocol",
+      "session": "cove063fvlfadckv",
+      "direction": "send",
+      "text": "S: 354 End data with <CR><LF>.<CR><LF>"
+    },
+    {
+      "type": "data",
+      "session": "cove063fvlfadckv",
+      "to": [
+        "incierto@example.test"
+      ],
+      "finalReply": null
+    },
+    {
+      "type": "close",
+      "session": "cove063fvlfadckv"
+    },
+    {
+      "type": "connect",
+      "session": "pdfbifffh9jdoaub",
+      "remote": "127.0.0.1",
+      "reply": 220
+    },
+    {
+      "type": "protocol",
+      "session": "pdfbifffh9jdoaub",
+      "direction": "send",
+      "text": "S: 220 smtp65.example.test ESMTP GeoSur local protocol capture only"
+    },
+    {
+      "type": "protocol",
+      "session": "pdfbifffh9jdoaub",
+      "direction": "command",
+      "text": "C: EHLO cliente.example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "pdfbifffh9jdoaub",
+      "direction": "send",
+      "text": "S: 250-smtp65.example.test Nice to meet you, [127.0.0.1]\r\n250-PIPELINING\r\n250-8BITMIME\r\n250-SMTPUTF8\r\n250 SIZE 65536"
+    },
+    {
+      "type": "protocol",
+      "session": "pdfbifffh9jdoaub",
+      "direction": "command",
+      "text": "C: MAIL FROM:<avisos@example.test>"
+    },
+    {
+      "type": "mail",
+      "session": "pdfbifffh9jdoaub",
+      "from": "avisos@example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "pdfbifffh9jdoaub",
+      "direction": "send",
+      "text": "S: 250 Accepted"
+    },
+    {
+      "type": "protocol",
+      "session": "pdfbifffh9jdoaub",
+      "direction": "command",
+      "text": "C: RCPT TO:<temporal@example.test>"
+    },
+    {
+      "type": "rcpt",
+      "session": "pdfbifffh9jdoaub",
+      "to": "temporal@example.test",
+      "reply": 450
+    },
+    {
+      "type": "protocol",
+      "session": "pdfbifffh9jdoaub",
+      "direction": "send",
+      "text": "S: 450 SMTP65_RECHAZO_SINTETICO"
+    },
+    {
+      "type": "protocol",
+      "session": "pdfbifffh9jdoaub",
+      "direction": "command",
+      "text": "C: RSET"
+    },
+    {
+      "type": "protocol",
+      "session": "pdfbifffh9jdoaub",
+      "direction": "send",
+      "text": "S: 250 Flushed"
+    },
+    {
+      "type": "protocol",
+      "session": "pdfbifffh9jdoaub",
+      "direction": "command",
+      "text": "C: QUIT"
+    },
+    {
+      "type": "protocol",
+      "session": "pdfbifffh9jdoaub",
+      "direction": "send",
+      "text": "S: 221 Bye"
+    },
+    {
+      "type": "close",
+      "session": "pdfbifffh9jdoaub"
+    },
+    {
+      "type": "connect",
+      "session": "fq79gatl0hgnmqdb",
+      "remote": "127.0.0.1",
+      "reply": 220
+    },
+    {
+      "type": "protocol",
+      "session": "fq79gatl0hgnmqdb",
+      "direction": "send",
+      "text": "S: 220 smtp65.example.test ESMTP GeoSur local protocol capture only"
+    },
+    {
+      "type": "protocol",
+      "session": "fq79gatl0hgnmqdb",
+      "direction": "command",
+      "text": "C: EHLO cliente.example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "fq79gatl0hgnmqdb",
+      "direction": "send",
+      "text": "S: 250-smtp65.example.test Nice to meet you, [127.0.0.1]\r\n250-PIPELINING\r\n250-8BITMIME\r\n250-SMTPUTF8\r\n250 SIZE 65536"
+    },
+    {
+      "type": "protocol",
+      "session": "fq79gatl0hgnmqdb",
+      "direction": "command",
+      "text": "C: MAIL FROM:<avisos@example.test>"
+    },
+    {
+      "type": "mail",
+      "session": "fq79gatl0hgnmqdb",
+      "from": "avisos@example.test"
+    },
+    {
+      "type": "protocol",
+      "session": "fq79gatl0hgnmqdb",
+      "direction": "send",
+      "text": "S: 250 Accepted"
+    },
+    {
+      "type": "protocol",
+      "session": "fq79gatl0hgnmqdb",
+      "direction": "command",
+      "text": "C: RCPT TO:<reinicio@example.test>"
+    },
+    {
+      "type": "rcpt",
+      "session": "fq79gatl0hgnmqdb",
+      "to": "reinicio@example.test",
+      "reply": 250
+    },
+    {
+      "type": "protocol",
+      "session": "fq79gatl0hgnmqdb",
+      "direction": "send",
+      "text": "S: 250 Accepted"
+    },
+    {
+      "type": "protocol",
+      "session": "fq79gatl0hgnmqdb",
+      "direction": "command",
+      "text": "C: DATA"
+    },
+    {
+      "type": "protocol",
+      "session": "fq79gatl0hgnmqdb",
+      "direction": "send",
+      "text": "S: 354 End data with <CR><LF>.<CR><LF>"
+    },
+    {
+      "type": "data",
+      "session": "fq79gatl0hgnmqdb",
+      "to": [
+        "reinicio@example.test"
+      ],
+      "finalReply": 250
+    },
+    {
+      "type": "protocol",
+      "session": "fq79gatl0hgnmqdb",
+      "direction": "send",
+      "text": "S: 250 SMTP65_LOCAL_ACCEPTED"
+    },
+    {
+      "type": "protocol",
+      "session": "fq79gatl0hgnmqdb",
+      "direction": "command",
+      "text": "C: QUIT"
+    },
+    {
+      "type": "protocol",
+      "session": "fq79gatl0hgnmqdb",
+      "direction": "send",
+      "text": "S: 221 Bye"
+    },
+    {
+      "type": "close",
+      "session": "fq79gatl0hgnmqdb"
+    },
+    {
+      "type": "connect",
+      "session": "e7cfrmhh5ujkuel6",
+      "remote": "127.0.0.1",
+      "reply": 554
+    },
+    {
+      "type": "protocol",
+      "session": "e7cfrmhh5ujkuel6",
+      "direction": "send",
+      "text": "S: 554 SMTP132_REINICIO_RECHAZADO"
+    },
+    {
+      "type": "close",
+      "session": "e7cfrmhh5ujkuel6"
+    }
+  ],
+  "messages": [
+    {
+      "session": "0ih325u6s5bbljns",
+      "from": "avisos@example.test",
+      "to": [
+        "aceptacion@example.test"
+      ],
+      "data": "From: GeoSur SMTP65 <avisos@example.test>\r\nTo: aceptacion@example.test\r\nSubject: GeoSur =?utf-8?Q?=C2=B7_Observaci=C3=B3n?= ambiental\r\nMessage-ID: <15072524d176276dec45057f3177a4ea@example.test>\r\nMIME-Version: 1.0\r\nDate: Sun, 01 Nov 2026 09:10:09 +0000\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\nGeoSur =C2=B7 Observaci=C3=B3n\r\nPunto sint=C3=A9tico SMTP65\r\nTemperatura:=\r\n 45 =C2=B0C =C2=B7 Calor extremo\r\n01/11/2026 05:09 =C2=B7 Hora de Bolivia=\r\n\r\nhttp://localhost/avisos\r\n",
+      "finalReply": 250
+    },
+    {
+      "session": "cove063fvlfadckv",
+      "from": "avisos@example.test",
+      "to": [
+        "incierto@example.test"
+      ],
+      "data": "From: GeoSur SMTP65 <avisos@example.test>\r\nTo: incierto@example.test\r\nSubject: GeoSur =?utf-8?Q?=C2=B7_Observaci=C3=B3n?= ambiental\r\nMessage-ID: <1f38070d5e3c3842fc8dd9081c90552c@example.test>\r\nMIME-Version: 1.0\r\nDate: Sun, 01 Nov 2026 09:10:13 +0000\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\nGeoSur =C2=B7 Observaci=C3=B3n\r\nPunto sint=C3=A9tico SMTP65\r\nTemperatura:=\r\n 45 =C2=B0C =C2=B7 Calor extremo\r\n01/11/2026 05:09 =C2=B7 Hora de Bolivia=\r\n\r\nhttp://localhost/avisos\r\n",
+      "finalReply": null
+    },
+    {
+      "session": "fq79gatl0hgnmqdb",
+      "from": "avisos@example.test",
+      "to": [
+        "reinicio@example.test"
+      ],
+      "data": "From: GeoSur SMTP65 <avisos@example.test>\r\nTo: reinicio@example.test\r\nSubject: GeoSur =?utf-8?Q?=C2=B7_Observaci=C3=B3n?= ambiental\r\nMessage-ID: <f881f141da3d7b3027979a50a990834d@example.test>\r\nMIME-Version: 1.0\r\nDate: Sun, 01 Nov 2026 09:10:15 +0000\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\nGeoSur =C2=B7 Observaci=C3=B3n\r\nPunto sint=C3=A9tico SMTP65\r\nTemperatura:=\r\n 45 =C2=B0C =C2=B7 Calor extremo\r\n01/11/2026 05:09 =C2=B7 Hora de Bolivia=\r\n\r\nhttp://localhost/avisos\r\n",
+      "finalReply": 250
+    }
+  ],
+  "openSessionsAtClose": 0
+}

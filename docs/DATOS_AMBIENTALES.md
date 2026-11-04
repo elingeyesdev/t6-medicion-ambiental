@@ -65,7 +65,7 @@ El ejemplo es simulado. Sustituir fecha y valor por los de la carga; no registra
 También se puede importar desde consola:
 
 ```sh
-php artisan geosur:importar-lecturas /ruta/privada/lecturas.csv
+php artisan geosur:importar-lecturas /ruta/privada/lecturas.csv --actor=ID_AUTORIZADO
 ```
 
 ## Captura del tiempo, opcional
@@ -105,8 +105,16 @@ La pantalla usa hora de Bolivia; API y almacenamiento usan UTC. Flutter todavía
 - `app/Console/Commands/`: preparación, demostración, CSV y captura explícita.
 - `tests/Feature/DatosAmbientalesTest.php`: pruebas de permisos, integridad, datos y proveedores.
 
-## Lo que sigue abierto en #66
+## Ingestión saneada, MQTT y tareas locales (#66)
 
-MQTT con un equipo/broker real y credenciales privadas; definición/calibración de sus métricas; radar y capas por país; cargas masivas NOAA/CDS y sus tareas; reconstrucción del data-worker; migración de una copia saneada de una base histórica original; prueba real de PostgreSQL y concurrencia; aplicación Flutter y revisión de Jaziel. No se activaron proveedores, notificaciones, descargas grandes ni tareas programadas al recuperar el catálogo. La fecha de recuperación completa no está confirmada.
+El lote `feature/66-cargas-envirosense`, basado en `c8b6b7a`, añade importación JSON a **Mediciones → Importar lecturas**, normalización de un export revisado, comprobación sin persistir, worker local explícito y receptor MQTT configurable. Consola exige una cuenta activa con `datos.gestionar`; no elige una cuenta por defecto. CSV por consola ahora también requiere `--actor`.
 
-El `data-worker` conservado aporta un Dockerfile; eso solo no acredita un servicio completo. ETL y radar tienen código de referencia, pero esta entrega no prueba su cobertura ni los declara recuperados. La prueba real se hizo con SQLite local. Railway continúa pospuesto. #66 permanece abierto; este avance no promueve M3 a `main`.
+La identidad y la transacción siguen en `RegistrarLecturas`. Se añadieron reintentos acotados de lotes completos ante bloqueos SQLite, incluidos los que Laravel envuelve al abrir un savepoint. Hay pruebas con procesos independientes y base efímera en modos DELETE y WAL.
+
+Contrato, comandos, variables de entorno, archivos, validación y snippets exactos: [entrega de ingestión #66](ENTREGA_DATOS66.md). La recepción externa está apagada por defecto; la reproducción local guarda solamente datos simulados. No se conectó un dispositivo físico ni un broker externo en este lote.
+
+## Límites que siguen abiertos en #66
+
+MQTT con un equipo/broker real y credenciales privadas; definición/calibración de sus métricas; radar y capas por país; cargas masivas NOAA/CDS; disponibilidad de un export histórico saneado con procedencia comprobable; prueba real de PostgreSQL. Radar/raster corresponde al otro agente. El trabajo móvil pertenece a Jaziel y no se modifica aquí. Este lote no ejecutó proveedores externos, envíos a personas, descargas grandes ni tareas programadas.
+
+El `data-worker` original conserva un Dockerfile con `tail -f /dev/null`; no acredita un servicio completo. El reemplazo de este alcance es un worker local para archivos saneados, probado y arrancado explícitamente. Los scripts ETL originales producen raster NOAA/CDS; no se ejecutaron ni se declara recuperada esa cadena en este módulo. PostgreSQL 16 está instalado, pero su servicio está detenido y `127.0.0.1:5432` no responde; no se cambiaron sus bases ni su servicio. Railway continúa pospuesto. La integración y publicación de M3 quedan a cargo del integrador.

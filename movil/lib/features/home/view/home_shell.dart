@@ -60,7 +60,7 @@ class _HomeShellState extends State<HomeShell> {
     ];
     return Scaffold(
       body: SafeArea(
-        top: false,
+        top: true,
         child: IndexedStack(index: _selectedIndex, children: pages),
       ),
       bottomNavigationBar: NavigationBar(

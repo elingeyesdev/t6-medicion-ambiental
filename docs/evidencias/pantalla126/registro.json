@@ -1,0 +1,27 @@
+{
+  "fecha_local": "2026-10-31",
+  "zona": "America/La_Paz",
+  "base_commit": "dc01e83c93224dad5061e02d5a792a10a70a9ca7",
+  "modo_verificado": "respaldo CSS, navegador interno oculto",
+  "restriccion_prueba": "Permissions-Policy: fullscreen=() aplicada solo en router temporal ignorado",
+  "pantalla_completa_nativa_real": "pendiente",
+  "javascript": {
+    "pruebas_correctas": 168,
+    "focalizadas_correctas": 39,
+    "focalizadas_incluidas_en_total": true
+  },
+  "datos": "Punto simulado de prueba; sin consultas meteorológicas externas",
+  "fuentes_sha256_lf": {
+    "web/public/js/mapas/pantalla-completa.js": "1eadf188eb676a4fb49a519473cc23da10d303f449903a25ca1d6fba934ce555",
+    "web/public/js/panel/navegacion.js": "fe9a3ff9e644f0eba22147ff1820ca43081fb20b18812826370995023a9ead07",
+    "web/public/js/mapas/monitoreo.js": "bb6eca85f61f12a7491f673e21bab1b734df8b7340040c08fffc48e5dfcadf68",
+    "web/public/css/paginas/monitoreo.css": "99edd435de3b172d6f37cc1aaab97f398cac2ce738d158794e0e746f0ab4d1d8",
+    "web/resources/views/mapa/index.blade.php": "79a2a94d2219b4b8faf9334019008ba5426e6ce8e7789455af125ee72184db7c"
+  },
+  "evidencia_sha256": {
+    "comprobacion-dom.json": "3808eadb6011cd5ca1fd3ac61154ccd999c0331a97d03c06697d61904441e21f",
+    "mapa-ampliado.png": "9c3f4615d80d9d435b69b540b0f64881a68c392992d6ddc81f146627bbd46c26",
+    "vista-baja.png": "f754c0aba8de475922282cea1a648dbb241916bf6cad4d63173eddbfb0fffce2",
+    "vista-estrecha.png": "a2b3aa251768b86204ed05a11080ef29ba55f948087e0b1a33195e4e80139588"
+  }
+}

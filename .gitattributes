@@ -1,3 +1,5 @@
 # Los recursos con SHA256 deben conservar los mismos bytes en Windows y Linux.
 *.json text eol=lf
 *.geojson text eol=lf
+# Un PDF debe conservar sus offsets y sus bytes al descargarse o clonarse.
+*.pdf binary

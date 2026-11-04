@@ -1,0 +1,52 @@
+name: MQTT local real
+
+on:
+  pull_request:
+    paths:
+      - 'herramientas/datos/mqtt-local/**'
+      - 'web/app/Services/Datos/**'
+      - 'web/app/Console/Commands/RecibirMqtt.php'
+      - 'web/composer.lock'
+      - '.github/workflows/mqtt-local.yml'
+  push:
+    branches: [develop, main]
+    paths:
+      - 'herramientas/datos/mqtt-local/**'
+      - 'web/app/Services/Datos/**'
+      - 'web/app/Console/Commands/RecibirMqtt.php'
+      - 'web/composer.lock'
+      - '.github/workflows/mqtt-local.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  broker-real:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, pdo_sqlite, sqlite3, openssl, fileinfo
+          coverage: none
+          tools: composer:v2
+      - name: Instalar Laravel desde su lockfile
+        working-directory: web
+        run: composer install --no-interaction --prefer-dist --no-progress
+      - name: Probar captura, conflictos y cierre con Aedes
+        run: node herramientas/datos/mqtt-local/ci.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mqtt-local-${{ matrix.os }}
+          path: tmp/mqtt-local66/ci-informe.json
+          if-no-files-found: ignore

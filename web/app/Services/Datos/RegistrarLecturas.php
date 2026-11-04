@@ -10,12 +10,13 @@ use App\Services\Api\ParametrosConsulta;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use PDOException;
 
 final class RegistrarLecturas
 {
     public function __construct(private CatalogoAmbiental $catalogo) {}
 
-    public function ejecutar(array $filas, ?int $actor = null): array
+    public function ejecutar(array $filas, ?int $actor = null, bool $comprobar = false): array
     {
         Validator::make(['lecturas' => $filas], ['lecturas' => ['required', 'array', 'list', 'min:1', 'max:1000']])->validate();
         $metricas = $this->catalogo->metricas();
@@ -40,7 +41,7 @@ final class RegistrarLecturas
                 'instante' => $instante->format('Y-m-d H:i:s'), 'hora_utc' => $instante->format('Y-m-d H:00:00'), 'origen' => $fila['origen'], 'fuente' => $fila['fuente']];
         }
 
-        return DB::transaction(function () use ($normalizadas, $actor): array {
+        $operacion = function () use ($normalizadas, $actor, $comprobar): array {
             $nuevas = 0;
             $paraAlertas = [];
             $puntos = PuntoAmbiental::whereIn('codigo', array_column($normalizadas, 'codigo'))->orderBy('id')->lockForUpdate()->get()->keyBy('codigo');
@@ -60,9 +61,32 @@ final class RegistrarLecturas
                     $paraAlertas[] = $lectura->setRelation('punto', $punto);
                 }
             }
+            $resultado = ['nuevas' => $nuevas, 'repetidas' => count($normalizadas) - $nuevas];
+            if ($comprobar) {
+                throw new LoteComprobado($resultado);
+            }
             app(EvaluarAlertas::class)->ejecutar($paraAlertas);
 
-            return ['nuevas' => $nuevas, 'repetidas' => count($normalizadas) - $nuevas];
-        }, 3);
+            return $resultado;
+        };
+        // SQLite no implementa FOR UPDATE. Repetir el lote completo tras BUSY/SNAPSHOT,
+        // con espera acotada, permite volver a leer la identidad después del otro commit.
+        for ($intento = 0; ; $intento++) {
+            try {
+                return DB::transaction($operacion, DB::getDriverName() === 'sqlite' ? 1 : 3);
+            } catch (LoteComprobado $e) {
+                return $e->resultado;
+            } catch (PDOException $e) {
+                // firstOrCreate puede envolver BUSY en DeadlockException al usar un savepoint.
+                $causa = $e;
+                while ($causa->getPrevious() instanceof PDOException) {
+                    $causa = $causa->getPrevious();
+                }
+                if (DB::getDriverName() !== 'sqlite' || ! in_array((int) ($causa->errorInfo[1] ?? 0), [5, 6, 517], true) || $intento >= 5 || DB::transactionLevel() > 0) {
+                    throw $e;
+                }
+                usleep(25000 * (2 ** $intento));
+            }
+        }
     }
 }

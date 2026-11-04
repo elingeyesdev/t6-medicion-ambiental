@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Datos\ImportacionRequest;
 use App\Http\Requests\Datos\PuntoRequest;
 use App\Models\PuntoAmbiental;
 use App\Services\Api\ErrorConsulta;
 use App\Services\Datos\CatalogoAmbiental;
 use App\Services\Datos\ConsultaHistorial;
 use App\Services\Datos\ImportarCsv;
+use App\Services\Datos\ImportarHistorial;
 use App\Services\Datos\RegistrarLecturas;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
@@ -15,6 +17,7 @@ use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class SensoresController extends Controller
 {
@@ -72,13 +75,16 @@ class SensoresController extends Controller
         return redirect()->route('sensores', ['punto' => $punto->codigo, 'metrica' => $datos['metrica']])->with('estado', 'Lectura guardada.');
     }
 
-    public function importar(Request $request, ImportarCsv $importar)
+    public function importar(ImportacionRequest $request, ImportarCsv $importar, ImportarHistorial $historial)
     {
-        $request->validate(['archivo' => ['required', 'file', 'max:2048', 'mimes:csv,txt']]);
         try {
-            $resultado = $importar->ejecutar($request->file('archivo')->getRealPath(), $request->user()->id);
+            $resultado = $request->input('formato', 'csv') === 'historial'
+                ? $historial->ejecutar($request->file('archivo')->getRealPath(), $request->user()->id)
+                : $importar->ejecutar($request->file('archivo')->getRealPath(), $request->user()->id);
         } catch (ErrorConsulta $e) {
             return back()->withErrors(['archivo' => $e->getMessage()]);
+        } catch (ValidationException $e) {
+            return back()->withErrors(['archivo' => 'No se importó el archivo. Revisa puntos, variables, unidades, valores y procedencia.']);
         }
 
         return back()->with('estado', 'Importación completa: '.$resultado['nuevas'].' nuevas y '.$resultado['repetidas'].' repetidas.');

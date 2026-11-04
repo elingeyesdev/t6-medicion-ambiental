@@ -1,0 +1,144 @@
+{
+  "task": 65,
+  "scope": "WEB",
+  "timestamp": "2026-11-01T08:56:59.842Z",
+  "head": "b994b643d1b9086abd695053eb3a27030ed238b3",
+  "branch": "test/65-smtp-local",
+  "node": "v26.2.0",
+  "php": "8.3.30",
+  "packages": {
+    "smtp-server": "3.21.3",
+    "nodemailer": "10.3.1",
+    "ipv6-normalize": "1.0.1",
+    "punycode.js": "2.3.1"
+  },
+  "composer": {
+    "laravel/framework": "v12.70.0",
+    "symfony/mailer": "v7.4.19"
+  },
+  "lockSha256": "b1952015cd905858eff25a5e15ad2899112fccd03956fab7cb4ba84d222a6f51",
+  "phpunitExitCode": 0,
+  "cases": [
+    {
+      "case": "test_baja_web_cancela_pendiente_y_no_abre_smtp",
+      "observations": {
+        "web_unsubscribe": true,
+        "smtp_connections": 0
+      },
+      "outbox": [
+        {
+          "canal": "email",
+          "estado": "cancelado",
+          "intentos": 0,
+          "error_codigo": "CONSENTIMIENTO_CAMBIADO"
+        }
+      ],
+      "messages_before": 1,
+      "messages_after": 1
+    },
+    {
+      "case": "test_cambio_de_correo_revalida_y_no_redirige_pendientes",
+      "observations": {
+        "pending_not_redirected": true,
+        "smtp_connections": 0
+      },
+      "outbox": [
+        {
+          "canal": "email",
+          "estado": "cancelado",
+          "intentos": 1,
+          "error_codigo": "PREFERENCIAS_O_VIGENCIA"
+        }
+      ],
+      "messages_before": 1,
+      "messages_after": 1
+    },
+    {
+      "case": "test_data_real_sin_respuesta_final_timeout_no_se_repite",
+      "observations": {
+        "data_received": 1,
+        "final_reply": null,
+        "automatic_resends": 0,
+        "limit": "DATA received locally; acceptance or external delivery is not claimed"
+      },
+      "outbox": [
+        {
+          "canal": "email",
+          "estado": "incierto",
+          "intentos": 1,
+          "error_codigo": "TRANSPORTE_SIN_CONFIRMACION"
+        }
+      ],
+      "messages_before": 1,
+      "messages_after": 2
+    },
+    {
+      "case": "test_rechazo_smtp_550_actualmente_incierto_sin_reenvio",
+      "observations": {
+        "explicit_smtp_rcpt_reply": 550,
+        "known_limitation": "Definite SMTP rejection maps to incierto",
+        "automatic_resends": 0
+      },
+      "outbox": [
+        {
+          "canal": "email",
+          "estado": "incierto",
+          "intentos": 1,
+          "error_codigo": "TRANSPORTE_SIN_CONFIRMACION"
+        }
+      ],
+      "messages_before": 1,
+      "messages_after": 1
+    },
+    {
+      "case": "test_sin_consentimiento_web_y_flags_antiguos_no_envian",
+      "observations": {
+        "web_rejected_missing_consent": true,
+        "legacy_flag_did_not_authorize": true
+      },
+      "outbox": [],
+      "messages_before": 0,
+      "messages_after": 0
+    },
+    {
+      "case": "test_smtp_real_aceptado_cli_reclamo_y_no_duplicado",
+      "observations": {
+        "sql_transaction_during_smtp": 0,
+        "second_processor_claims": 0,
+        "smtp_messages": 1,
+        "web_status": "Aceptado por el proveedor",
+        "message_sent_event_real": [
+          {
+            "to": "aceptacion@example.test",
+            "subject": "GeoSur · Observación ambiental",
+            "text": "GeoSur · Observación\nPunto sintético SMTP65\nTemperatura: 45 °C · Calor extremo\n01/11/2026 04:55 · Hora de Bolivia\nhttp://localhost/avisos",
+            "debug": "[2026-11-01T08:56:53.978027Z] < 220 smtp65.example.test ESMTP GeoSur local protocol capture only\r\n[2026-11-01T08:56:53.978057Z] > EHLO cliente.example.test\n[2026-11-01T08:56:53.980133Z] < 250-smtp65.example.test Nice to meet you, [127.0.0.1]\r\n[2026-11-01T08:56:53.980145Z] < 250-PIPELINING\r\n[2026-11-01T08:56:53.980147Z] < 250-8BITMIME\r\n[2026-11-01T08:56:53.980148Z] < 250-SMTPUTF8\r\n[2026-11-01T08:56:53.980149Z] < 250 SIZE 65536\r\n[2026-11-01T08:56:53.980777Z] > MAIL FROM:<avisos@example.test>\n[2026-11-01T08:56:53.983270Z] < 250 Accepted\r\n[2026-11-01T08:56:53.983310Z] > RCPT TO:<aceptacion@example.test>\n[2026-11-01T08:56:53.985563Z] < 250 Accepted\r\n[2026-11-01T08:56:53.985584Z] > DATA\n[2026-11-01T08:56:53.987661Z] < 354 End data with <CR><LF>.<CR><LF>\r\n[2026-11-01T08:56:53.992479Z] > .\n[2026-11-01T08:56:53.993662Z] < 250 SMTP65_LOCAL_ACCEPTED\r\n"
+          }
+        ]
+      },
+      "outbox": [
+        {
+          "canal": "email",
+          "estado": "aceptado",
+          "intentos": 1,
+          "error_codigo": null
+        }
+      ],
+      "messages_before": 0,
+      "messages_after": 1
+    }
+  ],
+  "shutdown": {
+    "serverClosed": true,
+    "loopbackPortClosed": true,
+    "openSmtpSessions": 0,
+    "separateBrokerProcess": false
+  },
+  "limitations": [
+    "Local SMTP protocol only; no external delivery or read receipt.",
+    "Explicit SMTP 550 currently maps to incierto; no runtime changes.",
+    "Uncertain case receives DATA but deliberately withholds final reply; not proof of accepted mail with lost acknowledgement.",
+    "Second processor is reentrant in one PHP process; not an OS concurrency benchmark.",
+    "No TLS/STARTTLS, AUTH, external accounts or providers tested."
+  ]
+}

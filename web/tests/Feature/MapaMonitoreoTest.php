@@ -42,8 +42,10 @@ class MapaMonitoreoTest extends TestCase
 
     public function test_portada_presenta_la_base_ambiental_antes_de_los_analisis_agregados(): void
     {
-        $this->get('/')->assertOk()->assertSeeInOrder(['Mapa de Monitoreo', 'Mediciones e historial', 'Análisis del territorio', 'Focos de calor'])
-            ->assertSee('Santa Cruz, Bolivia')->assertDontSee('cobertura completa');
+        $this->get('/')->assertOk()->assertSeeInOrder(['Explorar el Mapa', 'Mediciones', 'Análisis del territorio'])
+            ->assertSee('class="landing-hero"', false)->assertSee('Santa Cruz, Bolivia')->assertDontSee('cobertura completa')
+            ->assertSee(route('mapa'), false)->assertSee(route('modulos.mostrar', 'focos-calor'), false)
+            ->assertSee(route('modulos.mostrar', 'sequias'), false);
     }
 
     public function test_consulta_vacia_no_importa_catalogos_ni_simula_datos_automaticamente(): void

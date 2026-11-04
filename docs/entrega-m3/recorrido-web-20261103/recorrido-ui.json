@@ -1,0 +1,102 @@
+[
+  {
+    "caso": "Portada",
+    "resultado": "correcto",
+    "observado": "GeoSur conserva la portada y los recorridos de EnviroSense; accesos a mapa y análisis"
+  },
+  {
+    "caso": "Mapa sin sesión",
+    "resultado": "correcto",
+    "observado": "El acceso al mapa redirige a ingresar"
+  },
+  {
+    "caso": "Ingreso visualizador",
+    "resultado": "correcto",
+    "observado": "Sesión de Consulta M3 abierta; mapa con 61 puntos de referencia y sin inventar mediciones observadas"
+  },
+  {
+    "caso": "Visualizador: simulaciones",
+    "resultado": "correcto",
+    "observado": "Consulta sin controles de gestión; los datos se identifican como simulados"
+  },
+  {
+    "caso": "Visualizador: reportes",
+    "resultado": "correcto",
+    "observado": "Puede consultar sus reportes; no aparece creación de reportes"
+  },
+  {
+    "caso": "Visualizador: administración",
+    "resultado": "detectado y corregido en #136; repetición correcta registrada aparte",
+    "observado": "HTTP403 bloquea acceso; mensaje genérico en inglés"
+  },
+  {
+    "caso": "Preferencias",
+    "resultado": "correcto",
+    "observado": "El cambio a Fahrenheit se confirma y persiste al recargar; afecta solo a la cuenta de ensayo"
+  },
+  {
+    "caso": "Sequías: ausencia y reintento",
+    "resultado": "correcto",
+    "observado": "Sin publicación vigente muestra falta de datos; después de preparación externa, Reintentar devuelve el resultado sin inventar cobertura"
+  },
+  {
+    "caso": "Sequías: septiembre2024",
+    "resultado": "correcto",
+    "observado": "114,5mm; condiciónNormal;1de56municipios; diferencia entre municipio consultado SantaCruz y centro de celda Porongo visible"
+  },
+  {
+    "caso": "Focos: calendario",
+    "resultado": "correcto",
+    "observado": "Últimas24h/7d limitadas; máximo actual;2099rechazada sin solicitud al proveedor en ese paso. La consulta válida se comprobó aparte."
+  },
+  {
+    "caso": "Acceso denegado después de #136",
+    "resultado": "correcto",
+    "observado": "403 en español, enlaces a inicio/mapa; Volver al mapa funciona y no cambia el rol"
+  },
+  {
+    "caso": "Reporte y exportaciones",
+    "resultado": "correcto",
+    "observado": "Reporte guardado de50lecturassimuladas,doslocalidades; gráfico yresumen; PDF yExceldescargados desdeenlacesreales"
+  },
+  {
+    "caso": "Simulación por zonas",
+    "resultado": "correcto",
+    "observado": "Abre escenario propio, reproduce y pausa; muestra comparación SantaCruz/LaPaz y valores identificados como simulados"
+  },
+  {
+    "caso": "Simulación continua",
+    "resultado": "correcto",
+    "observado": "Preparar61localidades; Iniciar cambia a En marcha y Pausar a En pausa. La simulación por zonas confirmó activa/pausada al repetir las acciones."
+  },
+  {
+    "caso": "Mediciones",
+    "resultado": "correcto",
+    "observado": "Historial de SantaCruz muestra25lecturas deTemperatura identificadascomoSimulado; origen yfechasvisibles"
+  },
+  {
+    "caso": "Avisos",
+    "resultado": "correcto en alcance local",
+    "observado": "Consentimiento y preferencias guardadas; canales externos apagados; sin afirmar entrega externa. Evaluación de50lecturas no produjo alertas nuevas."
+  },
+  {
+    "caso": "Mapa integrado",
+    "resultado": "correcto",
+    "observado": "Comparación de temperatura A/B 3Nov05y08Bolivia, puntoSantaCruz; entrada nativa y Escape conservan fechas,URL,ficha y ajustes"
+  },
+  {
+    "caso": "Plantillas y alertas",
+    "resultado": "correcto en consulta",
+    "observado": "Las dos pantallas abren con sus filtros y estados vacíos; no se crearon plantillas ni se reconocieron alertas en este recorrido"
+  },
+  {
+    "caso": "Ficha del tiempo",
+    "resultado": "correcto",
+    "observado": "Consulta real Open-Meteo: pronóstico diario con condición e iconos, temperaturas y lluvia; separado de la lectura simulada del punto"
+  },
+  {
+    "caso": "Focos: consulta válida",
+    "resultado": "correcto - conjunto vacío",
+    "observado": "Consulta real últimas24h del2al3Nov2026:0detecciones; mensaje Sin detecciones publicadas.No descarta incendios, resumen0 y paginación1/1"
+  }
+]
