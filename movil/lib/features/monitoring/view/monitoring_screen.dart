@@ -368,205 +368,242 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
         collapsedShape: const Border(),
         tilePadding: const EdgeInsets.symmetric(horizontal: 14),
         childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
-        title: Text(
-          _countryName(_filters.country),
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+        leading: const Icon(Icons.tune_rounded),
+        title: const Text('Filtros'),
+        subtitle: Text(
+          '${_countryName(_filters.country)} · $summary',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
-        subtitle: Text(summary, maxLines: 1, overflow: TextOverflow.ellipsis),
-        trailing: const Icon(Icons.tune_rounded),
         children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: DropdownButtonFormField<String?>(
-                      key: const Key('monitoring-country'),
-                      initialValue: _filters.country,
-                      isExpanded: true,
-                      decoration: const InputDecoration(
-                        labelText: 'País',
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                      ),
-                    items: [
-                      const DropdownMenuItem<String?>(
-                        value: null,
-                        child: Text('Sudamérica', overflow: TextOverflow.ellipsis),
-                      ),
-                      ..._countries.map(
-                        (item) => DropdownMenuItem<String?>(
-                          value: item.code,
-                          child: Text(
-                            item.name,
-                            overflow: TextOverflow.ellipsis,
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButtonFormField<String?>(
+                        key: const Key('monitoring-country'),
+                        initialValue: _filters.country,
+                        isExpanded: true,
+                        decoration: const InputDecoration(
+                          labelText: 'País',
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 14,
                           ),
                         ),
-                      ),
-                    ],
-                    onChanged: _loading
-                        ? null
-                        : (value) => setState(() {
-                            _filters = _filters.copyWith(
-                              country: value,
-                              clearCountry: value == null,
-                              clearRegion: true,
-                              page: 1,
-                            );
-                          }),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: DropdownButtonFormField<String?>(
-                    key: ValueKey('monitoring-region-${_filters.country ?? 'sur'}'),
-                    initialValue: _filters.region,
-                    isExpanded: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Región',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                    ),
-                    items: [
-                      const DropdownMenuItem<String?>(
-                        value: null,
-                        child: Text('Todas', overflow: TextOverflow.ellipsis),
-                      ),
-                      ..._regions
-                          .where(
-                            (region) =>
-                                _filters.country == null ||
-                                region.country == _filters.country,
-                          )
-                          .map(
-                            (region) => DropdownMenuItem<String?>(
-                              value: region.code,
+                        items: [
+                          const DropdownMenuItem<String?>(
+                            value: null,
+                            child: Text(
+                              'Sudamérica',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          ..._countries.map(
+                            (item) => DropdownMenuItem<String?>(
+                              value: item.code,
                               child: Text(
-                                region.name,
+                                item.name,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ),
-                    ],
-                    onChanged: _loading || _filters.country == null
-                        ? null
-                        : (value) => setState(() {
-                            _filters = _filters.copyWith(
-                              region: value,
-                              clearRegion: value == null,
-                              page: 1,
-                            );
-                          }),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: DropdownButtonFormField<String>(
-                    initialValue: _filters.metric,
-                    isExpanded: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Variable',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                        ],
+                        onChanged: _loading
+                            ? null
+                            : (value) => setState(() {
+                                  _filters = _filters.copyWith(
+                                    country: value,
+                                    clearCountry: value == null,
+                                    clearRegion: true,
+                                    page: 1,
+                                  );
+                                }),
+                      ),
                     ),
-                    items: _metrics.entries
-                        .map(
-                          (entry) => DropdownMenuItem(
-                            value: entry.key,
-                            child: Text(entry.value, overflow: TextOverflow.ellipsis),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: DropdownButtonFormField<String?>(
+                        key: ValueKey(
+                          'monitoring-region-${_filters.country ?? 'sur'}',
+                        ),
+                        initialValue: _filters.region,
+                        isExpanded: true,
+                        decoration: const InputDecoration(
+                          labelText: 'Región',
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 14,
                           ),
-                        )
-                        .toList(),
-                    onChanged: _loading
-                        ? null
-                        : (value) => setState(() {
-                            if (value != null) {
-                              _filters = _filters.copyWith(
-                                metric: value,
-                                page: 1,
-                              );
-                            }
-                          }),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: DropdownButtonFormField<String?>(
-                    key: const Key('monitoring-origin'),
-                    initialValue: _filters.origin,
-                    isExpanded: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Origen',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                        ),
+                        items: [
+                          const DropdownMenuItem<String?>(
+                            value: null,
+                            child: Text(
+                              'Todas',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          ..._regions
+                              .where(
+                                (region) =>
+                                    _filters.country == null ||
+                                    region.country == _filters.country,
+                              )
+                              .map(
+                                (region) => DropdownMenuItem<String?>(
+                                  value: region.code,
+                                  child: Text(
+                                    region.name,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                        ],
+                        onChanged: _loading || _filters.country == null
+                            ? null
+                            : (value) => setState(() {
+                                  _filters = _filters.copyWith(
+                                    region: value,
+                                    clearRegion: value == null,
+                                    page: 1,
+                                  );
+                                }),
+                      ),
                     ),
-                    items: const [
-                      DropdownMenuItem<String?>(
-                        value: null,
-                        child: Text('Registros y estimaciones', overflow: TextOverflow.ellipsis),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButtonFormField<String>(
+                        initialValue: _filters.metric,
+                        isExpanded: true,
+                        decoration: const InputDecoration(
+                          labelText: 'Variable',
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 14,
+                          ),
+                        ),
+                        items: _metrics.entries
+                            .map(
+                              (entry) => DropdownMenuItem(
+                                value: entry.key,
+                                child: Text(
+                                  entry.value,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: _loading
+                            ? null
+                            : (value) => setState(() {
+                                  if (value != null) {
+                                    _filters = _filters.copyWith(
+                                      metric: value,
+                                      page: 1,
+                                    );
+                                  }
+                                }),
                       ),
-                      DropdownMenuItem<String?>(
-                        value: 'observado',
-                        child: Text('Observado', overflow: TextOverflow.ellipsis),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: DropdownButtonFormField<String?>(
+                        key: const Key('monitoring-origin'),
+                        initialValue: _filters.origin,
+                        isExpanded: true,
+                        decoration: const InputDecoration(
+                          labelText: 'Origen',
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 14,
+                          ),
+                        ),
+                        items: const [
+                          DropdownMenuItem<String?>(
+                            value: null,
+                            child: Text(
+                              'Registros y estimaciones',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          DropdownMenuItem<String?>(
+                            value: 'observado',
+                            child: Text(
+                              'Observado',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          DropdownMenuItem<String?>(
+                            value: 'estimado',
+                            child: Text(
+                              'Estimado',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          DropdownMenuItem<String?>(
+                            value: 'simulado',
+                            child: Text(
+                              'Solo simulados',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          DropdownMenuItem<String?>(
+                            value: 'todos',
+                            child: Text(
+                              'Todos, incluidos simulados',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                        onChanged: _loading
+                            ? null
+                            : (value) => setState(() {
+                                  _filters = _filters.copyWith(
+                                    origin: value,
+                                    clearOrigin: value == null,
+                                    page: 1,
+                                  );
+                                }),
                       ),
-                      DropdownMenuItem<String?>(
-                        value: 'estimado',
-                        child: Text('Estimado', overflow: TextOverflow.ellipsis),
-                      ),
-                      DropdownMenuItem<String?>(
-                        value: 'simulado',
-                        child: Text('Solo simulados', overflow: TextOverflow.ellipsis),
-                      ),
-                      DropdownMenuItem<String?>(
-                        value: 'todos',
-                        child: Text('Todos, incluidos simulados', overflow: TextOverflow.ellipsis),
-                      ),
-                    ],
-                    onChanged: _loading
-                        ? null
-                        : (value) => setState(() {
-                            _filters = _filters.copyWith(
-                              origin: value,
-                              clearOrigin: value == null,
-                              page: 1,
-                            );
-                          }),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                OutlinedButton.icon(
+                  onPressed: _loading ? null : _choosePeriod,
+                  icon: const Icon(Icons.calendar_month_outlined),
+                  label: Text(
+                    _periodLabel(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
+                const SizedBox(height: 10),
+                FilledButton.icon(
+                  onPressed: _loading ? null : () => _query(page: 1),
+                  icon: _loading
+                      ? const SizedBox.square(
+                          dimension: 17,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.search),
+                  label: const Text('Consultar mapa'),
+                ),
+                const SizedBox(height: 5),
               ],
-            ),
-            const SizedBox(height: 10),
-            OutlinedButton.icon(
-              onPressed: _loading ? null : _choosePeriod,
-              icon: const Icon(Icons.calendar_month_outlined),
-              label: Text(
-                _periodLabel(),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            const SizedBox(height: 10),
-            FilledButton.icon(
-              onPressed: _loading ? null : () => _query(page: 1),
-              icon: _loading
-                  ? const SizedBox.square(
-                      dimension: 17,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(Icons.search),
-              label: const Text('Consultar mapa'),
-            ),
-            const SizedBox(height: 5),
-          ],
         ),
       ),
     ],

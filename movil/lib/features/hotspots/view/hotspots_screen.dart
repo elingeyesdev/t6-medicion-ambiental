@@ -319,14 +319,22 @@ class _HotspotsScreenState extends State<HotspotsScreen>
   );
 
   Widget _queryStatus(BuildContext context, HotspotResponse? response) {
-    // En móvil no mostramos avisos largos de cobertura parcial (ruido tipo web).
     if (_controller.loading) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(vertical: 12),
-        child: Center(
-          child: SizedBox.square(
-            dimension: 28,
-            child: CircularProgressIndicator(strokeWidth: 2.5),
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          child: Row(
+            children: [
+              const SizedBox.square(
+                dimension: 18,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                response == null ? 'Buscando detecciones…' : 'Actualizando…',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ],
           ),
         ),
       );
@@ -337,20 +345,62 @@ class _HotspotsScreenState extends State<HotspotsScreen>
             ? Icons.hourglass_disabled_rounded
             : Icons.error_outline_rounded,
         title: _controller.queryExpired
-            ? 'Resultados vencidos'
-            : 'No se pudo consultar',
+            ? 'El conjunto de resultados expiró'
+            : 'No se pudo completar la consulta',
         message: _controller.queryError!,
         tone: _StatusTone.error,
         action: _controller.queryExpired
             ? () => _controller.restartExpiredQuery()
             : () => _controller.retry(),
-        actionLabel: _controller.queryExpired ? 'Reiniciar' : 'Reintentar',
+        actionLabel: _controller.queryExpired
+            ? 'Reiniciar consulta'
+            : 'Reintentar consulta',
       );
     }
     if (response == null) {
+      return const _StatusCard(
+        icon: Icons.info_outline_rounded,
+        title: 'Define una consulta',
+        message: 'Elige el territorio y el período.',
+        tone: _StatusTone.neutral,
+      );
+    }
+
+    final coverage = response.coverageState;
+    if (response.total > 0 &&
+        coverage != 'sin_cobertura' &&
+        coverage != 'parcial') {
       return const SizedBox.shrink();
     }
-    return const SizedBox.shrink();
+    final title = switch (coverage) {
+      'sin_cobertura' => 'Sin cobertura comprobada',
+      'parcial' => 'Resultados con cobertura parcial',
+      _ => response.total == 0
+          ? 'Sin detecciones para estos filtros'
+          : 'Consulta lista',
+    };
+    final message = switch (coverage) {
+      'sin_cobertura' =>
+        'La fuente no cubre el período solicitado. No se puede inferir ausencia de detecciones. '
+            '${response.coverage['fundamento'] ?? ''}',
+      'parcial' =>
+        'La cobertura es parcial; los resultados no describen todo el período. '
+            '${response.coverage['fundamento'] ?? ''}',
+      _ => response.total == 0
+          ? 'La consulta respondió sin detecciones; revisa la cobertura publicada.'
+          : response.coverage['fundamento']?.toString() ?? '',
+    };
+    final tone = coverage == 'sin_cobertura' || coverage == 'parcial'
+        ? _StatusTone.warning
+        : _StatusTone.success;
+    return _StatusCard(
+      icon: tone == _StatusTone.warning
+          ? Icons.warning_amber_rounded
+          : Icons.check_circle_outline_rounded,
+      title: title,
+      message: message,
+      tone: tone,
+    );
   }
 
   Widget _searchButton(BuildContext context) => SizedBox(
@@ -551,6 +601,8 @@ class _HotspotsScreenState extends State<HotspotsScreen>
       response.periodFrom,
       response.periodUntil,
     );
+    final oldResults =
+        _controller.loading || _controller.queryError != null;
     final scheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 4, 0, 10),
@@ -568,7 +620,7 @@ class _HotspotsScreenState extends State<HotspotsScreen>
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  period,
+                  '$period${oldResults ? ' · datos anteriores' : ''}',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: scheme.onSurfaceVariant,
                       ),
@@ -610,60 +662,69 @@ class _HotspotsScreenState extends State<HotspotsScreen>
     final highIndicator = response.indicator('focosConfianzaAlta');
     final maxFrp = response.indicator('potenciaMaxima');
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Row(
+    return Card(
+      margin: const EdgeInsets.only(bottom: 10),
+      child: ExpansionTile(
+        key: const PageStorageKey<String>('hotspots-summary'),
+        leading: const Icon(Icons.info_outline_rounded),
+        title: const Text('Datos de la consulta'),
+        subtitle: Text('${_formatNumber(response.total)} detecciones'),
+        childrenPadding: const EdgeInsets.fromLTRB(12, 0, 12, 14),
         children: [
-          Expanded(
-            child: _metricItem(
-              response.total.toString(),
-              'Detecciones',
-              Theme.of(context).colorScheme.primary,
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: _metricItem(
+                  response.total.toString(),
+                  'Detecciones',
+                  Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              Expanded(
+                child: _metricItem(
+                  (highIndicator?['valor'] ?? 0).toString(),
+                  'Alta conf.',
+                  GeoCruzColors.green,
+                ),
+              ),
+              Expanded(
+                child: _metricItem(
+                  maxFrp?['valor'] != null
+                      ? (maxFrp!['valor'] as num).toStringAsFixed(1)
+                      : '—',
+                  'FRP máx',
+                  const Color(0xFFBC673B),
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: _metricItem(
-              (highIndicator?['valor'] ?? 0).toString(),
-              'Alta conf.',
-              GeoCruzColors.green,
-            ),
-          ),
-          Expanded(
-            child: _metricItem(
-              maxFrp?['valor'] != null
-                  ? (maxFrp!['valor'] as num).toStringAsFixed(1)
-                  : '—',
-              'FRP máx',
-              const Color(0xFFBC673B),
-            ),
-          ),
+          const SizedBox(height: 10),
+          _CoverageCard(response: response),
         ],
       ),
     );
   }
 
   Widget _metricItem(String val, String label, Color color) {
-    return Expanded(
-      child: Column(
-        children: [
-          Text(
-            val,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
+    return Column(
+      children: [
+        Text(
+          val,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: color,
           ),
-          const SizedBox(height: 2),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 11, color: Colors.black54),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 11, color: Colors.black54),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
     );
   }
 
@@ -671,6 +732,51 @@ class _HotspotsScreenState extends State<HotspotsScreen>
     if (value == null) return 'Sin dato';
     if (value is num) return NumberFormat('###,##0.##', 'es_BO').format(value);
     return '$value';
+  }
+}
+
+class _CoverageCard extends StatelessWidget {
+  const _CoverageCard({required this.response});
+
+  final HotspotResponse response;
+
+  @override
+  Widget build(BuildContext context) {
+    final (icon, color) = switch (response.coverageState) {
+      'parcial' => (Icons.warning_amber_rounded, GeoCruzColors.amber),
+      'sin_cobertura' => (
+          Icons.signal_wifi_statusbar_null_rounded,
+          GeoCruzColors.amber,
+        ),
+      'disponible' => (Icons.check_circle_outline_rounded, GeoCruzColors.green),
+      _ => (Icons.help_outline_rounded, GeoCruzColors.textSoft),
+    };
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: color, size: 19),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              '${switch (response.coverageState) {
+                'disponible' => 'Datos disponibles con límites del producto',
+                'parcial' => 'Cobertura parcial',
+                'sin_cobertura' => 'Sin cobertura comprobada',
+                'desconocida' => 'Cobertura desconocida',
+                _ => 'Cobertura no informada',
+              }}. ${response.coverage['fundamento'] ?? ''}',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

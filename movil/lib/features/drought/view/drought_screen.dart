@@ -578,6 +578,7 @@ class _DroughtScreenState extends State<DroughtScreen>
 
   Widget _buildSummaryCard(DroughtSummary? summary) {
     if (summary == null) return const SizedBox.shrink();
+    final coverage = _response?.cobertura;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -628,6 +629,25 @@ class _DroughtScreenState extends State<DroughtScreen>
                 ),
               ],
             ),
+            if (coverage != null) ...[
+              const SizedBox(height: 12),
+              const Divider(height: 1),
+              const SizedBox(height: 8),
+              Text(
+                'Datos para ${coverage.municipiosConDatos} de ${coverage.municipiosEnFiltro} municipios consultados.',
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                coverage.esParcial
+                    ? 'Cobertura parcial. Faltan datos; eso no significa que no haya sequía.'
+                    : 'Son puntos de referencia; no describen todo el municipio.',
+                style: const TextStyle(fontSize: 14, color: Colors.black54),
+              ),
+            ],
           ],
         ),
       ),
