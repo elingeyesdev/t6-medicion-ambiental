@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/maps/safe_overlay_image.dart';
 import '../../../core/network/geocruz_api_client.dart';
 import '../model/capas_models.dart';
 import '../model/capas_overlay_state.dart';
@@ -159,7 +160,7 @@ class CapasPanelState extends State<CapasPanel> {
         if (variableB != null && b != null) {
           final decodedB = await _decodedFor(b);
           if (!mounted || generation != _paintGeneration) return;
-          layerB = OverlayImage(
+          layerB = SafeOverlayImage(
             bounds: b.bounds,
             opacity: _opacity,
             imageProvider: MemoryImage(decodedB.coloredPng),
@@ -170,7 +171,7 @@ class CapasPanelState extends State<CapasPanel> {
       final sampleA = _sampleOf(variableA, a, decodedA.pixels);
       _emit(
         CapasOverlayState(
-          layerA: OverlayImage(
+          layerA: SafeOverlayImage(
             bounds: a.bounds,
             opacity: _opacity,
             imageProvider: MemoryImage(decodedA.coloredPng),

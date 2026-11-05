@@ -57,9 +57,8 @@ class _WeatherSheetState extends State<WeatherSheet> {
                 return const Center(child: CircularProgressIndicator());
               }
               if (snapshot.hasError) {
-                final message = snapshot.error is GeoCruzApiException
-                    ? (snapshot.error as GeoCruzApiException).message
-                    : 'No se pudo cargar el tiempo.';
+                const message =
+                    'No se pudo consultar el tiempo. Inténtalo de nuevo más tarde.';
                 return ListView(
                   controller: controller,
                   children: [

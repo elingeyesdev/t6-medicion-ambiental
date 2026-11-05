@@ -82,8 +82,24 @@ class _HotspotsScreenState extends State<HotspotsScreen>
         context: context,
         api: widget.apiClient,
         point: _focusPoint(),
-        title: _searchPinLabel ?? _selectedRecord?.identifier ?? 'Tiempo',
+        title: _weatherTitle(),
       );
+
+  String _weatherTitle() {
+    final pin = _searchPinLabel?.trim();
+    if (pin != null && pin.isNotEmpty) return pin;
+    final record = _selectedRecord;
+    if (record == null) return 'Tiempo en este foco';
+    final municipio = _controller
+        .territoryById(record.territory['municipio']?.toString())
+        ?.name;
+    if (municipio != null && municipio.isNotEmpty) return municipio;
+    final provincia = _controller
+        .territoryById(record.territory['provincia']?.toString())
+        ?.name;
+    if (provincia != null && provincia.isNotEmpty) return provincia;
+    return 'Tiempo en este foco';
+  }
 
   Future<void> _openFilters() async {
     final selected = await showModalBottomSheet<HotspotFilters>(
@@ -367,14 +383,22 @@ class _HotspotsScreenState extends State<HotspotsScreen>
     }
 
     final coverage = response.coverageState;
-    if (response.total > 0 &&
-        coverage != 'sin_cobertura' &&
-        coverage != 'parcial') {
+    // Cobertura parcial: se omite el aviso en pantalla (sigue en la API).
+    if (coverage == 'parcial') {
+      if (response.total > 0) return const SizedBox.shrink();
+      return const _StatusCard(
+        icon: Icons.info_outline_rounded,
+        title: 'Sin detecciones para estos filtros',
+        message:
+            'La consulta respondió sin detecciones; revisa el período o el territorio.',
+        tone: _StatusTone.neutral,
+      );
+    }
+    if (response.total > 0 && coverage != 'sin_cobertura') {
       return const SizedBox.shrink();
     }
     final title = switch (coverage) {
       'sin_cobertura' => 'Sin cobertura comprobada',
-      'parcial' => 'Resultados con cobertura parcial',
       _ => response.total == 0
           ? 'Sin detecciones para estos filtros'
           : 'Consulta lista',
@@ -383,14 +407,11 @@ class _HotspotsScreenState extends State<HotspotsScreen>
       'sin_cobertura' =>
         'La fuente no cubre el período solicitado. No se puede inferir ausencia de detecciones. '
             '${response.coverage['fundamento'] ?? ''}',
-      'parcial' =>
-        'La cobertura es parcial; los resultados no describen todo el período. '
-            '${response.coverage['fundamento'] ?? ''}',
       _ => response.total == 0
           ? 'La consulta respondió sin detecciones; revisa la cobertura publicada.'
           : response.coverage['fundamento']?.toString() ?? '',
     };
-    final tone = coverage == 'sin_cobertura' || coverage == 'parcial'
+    final tone = coverage == 'sin_cobertura'
         ? _StatusTone.warning
         : _StatusTone.success;
     return _StatusCard(
@@ -742,8 +763,10 @@ class _CoverageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (response.coverageState == 'parcial') {
+      return const SizedBox.shrink();
+    }
     final (icon, color) = switch (response.coverageState) {
-      'parcial' => (Icons.warning_amber_rounded, GeoCruzColors.amber),
       'sin_cobertura' => (
           Icons.signal_wifi_statusbar_null_rounded,
           GeoCruzColors.amber,
@@ -766,7 +789,6 @@ class _CoverageCard extends StatelessWidget {
             child: Text(
               '${switch (response.coverageState) {
                 'disponible' => 'Datos disponibles con límites del producto',
-                'parcial' => 'Cobertura parcial',
                 'sin_cobertura' => 'Sin cobertura comprobada',
                 'desconocida' => 'Cobertura desconocida',
                 _ => 'Cobertura no informada',
