@@ -43,3 +43,7 @@ El resultado se contrasta con el JSON guardado. La exploración comprueba huella
 SEARPI informó crecidas entre el 04/03 y el 19/03 y afectaciones en Pailón y otros municipios. Esa referencia orienta el episodio candidato. [ABI, 19/03/2025](https://historico.abi.bo/index.php/noticias/gobierno/37-notas/noticias/sociedad/61811-rio-grande-continua-con-crecidas-en-diferentes-estaciones).
 
 La colección RTC mantiene el requisito de cuenta para obtener el acceso a sus bandas. La opción radar requiere resolver ese acceso y verificar sus georreferencias y unidades antes de comparar. [Colección oficial de Microsoft](https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc).
+
+## Recorte adicional en Puente Pailas · 05/11/2026
+
+La [comprobación de Puente Pailas](evidencias/pailas-20261105/README.md) midió seis parejas. La mejor permite comparar 10,56 % del recorte. Se conserva la evidencia para descartar esta selección bajo el criterio candidato. Para avanzar a #111 hace falta otra pareja con cobertura suficiente y una referencia independiente para el área seleccionada.
