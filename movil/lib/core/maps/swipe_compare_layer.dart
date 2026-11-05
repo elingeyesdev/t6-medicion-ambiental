@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
+/// Mismo rango efectivo para clip de imagen, mango y partículas de viento.
+const double kSwipeDivisionMin = 0.05;
+const double kSwipeDivisionMax = 0.95;
+
+double effectiveSwipeDivision(double division) =>
+    division.clamp(kSwipeDivisionMin, kSwipeDivisionMax);
+
 /// Recorta capa A a la izquierda y B a la derecha (como el clip de panes en la web #62).
 class SwipeCompareOverlays extends StatelessWidget {
   const SwipeCompareOverlays({
@@ -16,7 +23,7 @@ class SwipeCompareOverlays extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = division.clamp(0.05, 0.95);
+    final t = effectiveSwipeDivision(division);
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -67,7 +74,7 @@ class SwipeCompareHandle extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     return LayoutBuilder(
       builder: (context, constraints) {
-        final x = constraints.maxWidth * division.clamp(0.05, 0.95);
+        final x = constraints.maxWidth * effectiveSwipeDivision(division);
         return Stack(
           children: [
             Positioned(
@@ -96,7 +103,7 @@ class SwipeCompareHandle extends StatelessWidget {
                 onHorizontalDragUpdate: (details) {
                   final next =
                       (details.localPosition.dx + x - 18) / constraints.maxWidth;
-                  onChanged(next.clamp(0.05, 0.95));
+                  onChanged(effectiveSwipeDivision(next));
                 },
                 child: Center(
                   child: Material(

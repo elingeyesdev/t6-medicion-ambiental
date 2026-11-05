@@ -47,6 +47,7 @@ class CapasPanelState extends State<CapasPanel> {
   double _division = 0.5;
   final Map<String, CuadroRasterDecoded> _cache = {};
   int _paintGeneration = 0;
+  int _playGeneration = 0;
   CapasOverlayState _lastState = CapasOverlayState.empty;
 
   @override
@@ -59,6 +60,7 @@ class CapasPanelState extends State<CapasPanel> {
   @override
   void dispose() {
     _playing = false;
+    _playGeneration++;
     _paintGeneration++;
     super.dispose();
   }
@@ -198,47 +200,52 @@ class CapasPanelState extends State<CapasPanel> {
   }
 
   void _setDivision(double value) {
-    setState(() => _division = value);
-    widget.onDivisionChanged?.call(value);
+    final next = value.clamp(0.05, 0.95);
+    setState(() => _division = next);
+    widget.onDivisionChanged?.call(next);
     if (_lastState.hasContent) {
-      _emit(_lastState.copyWith(division: value));
+      _emit(_lastState.copyWith(division: next));
     }
   }
 
   /// Alinea la posición del divisor con el mapa (una sola fuente de verdad).
   void syncDivision(double value) {
     if (!mounted) return;
-    if ((value - _division).abs() < 0.0005) return;
-    setState(() => _division = value);
+    final next = value.clamp(0.05, 0.95);
+    if ((next - _division).abs() < 0.0005) return;
+    setState(() => _division = next);
     if (_lastState.hasContent) {
-      _lastState = _lastState.copyWith(division: value);
+      _lastState = _lastState.copyWith(division: next);
     }
   }
 
   void _togglePlay() {
     if (_playing) {
+      _playGeneration++;
       setState(() => _playing = false);
       return;
     }
     final cuadros = _variable(_capaA)?.ordenados ?? const [];
     if (cuadros.length < 2) return;
+    final runId = ++_playGeneration;
     setState(() => _playing = true);
-    unawaited(_playLoop());
+    unawaited(_playLoop(runId));
   }
 
-  /// Espera cada cuadro antes del siguiente (evita descartar descargas lentas).
-  Future<void> _playLoop() async {
-    while (mounted && _playing) {
+  /// Espera cada cuadro antes del siguiente. [runId] cancela recorridos viejos.
+  Future<void> _playLoop(int runId) async {
+    while (mounted && _playing && runId == _playGeneration) {
       final list = _variable(_capaA)?.ordenados ?? const [];
       if (list.length < 2) {
-        setState(() => _playing = false);
+        if (runId == _playGeneration) setState(() => _playing = false);
         return;
       }
       final index = list.indexWhere((c) => c.id == _fechaA);
       final next = index < 0 || index >= list.length - 1 ? 0 : index + 1;
+      if (runId != _playGeneration) return;
       setState(() => _fechaA = list[next].id);
       await _refreshOverlays();
-      if (!mounted || !_playing) return;
+      if (!mounted || !_playing || runId != _playGeneration) return;
       await Future<void>.delayed(const Duration(milliseconds: 1400));
     }
   }

@@ -6,6 +6,7 @@ import 'package:flutter_map/flutter_map.dart';
 
 import '../../features/monitoring/model/capas_overlay_state.dart';
 import '../../features/monitoring/model/raster_decode.dart';
+import 'swipe_compare_layer.dart';
 
 /// Partículas de viento animadas (estilo simplificado de `particulas-viento.js`).
 class VientoParticulasOverlay extends StatefulWidget {
@@ -48,8 +49,16 @@ class _VientoParticulasOverlayState extends State<VientoParticulasOverlay>
   @override
   void didUpdateWidget(covariant VientoParticulasOverlay oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.state.sampleA?.cuadro.id != widget.state.sampleA?.cuadro.id ||
-        oldWidget.state.sampleB?.cuadro.id != widget.state.sampleB?.cuadro.id ||
+    final sameA =
+        oldWidget.state.sampleA?.cuadro.id == widget.state.sampleA?.cuadro.id;
+    final sameB =
+        oldWidget.state.sampleB?.cuadro.id == widget.state.sampleB?.cuadro.id;
+    final sameDivision =
+        (oldWidget.state.division - widget.state.division).abs() < 0.0005;
+    if (!sameA ||
+        !sameB ||
+        !sameDivision ||
+        oldWidget.state.comparing != widget.state.comparing ||
         oldWidget.state.animarViento != widget.state.animarViento ||
         oldWidget.state.visible != widget.state.visible) {
       _reponer();
@@ -67,7 +76,8 @@ class _VientoParticulasOverlayState extends State<VientoParticulasOverlay>
     final a = widget.state.sampleA;
     final b = widget.state.sampleB;
     if (widget.state.comparing && b != null) {
-      final divisionX = _size.width * widget.state.division;
+      final divisionX =
+          _size.width * effectiveSwipeDivision(widget.state.division);
       final ladoB = x >= divisionX;
       final canal = ladoB ? b : a;
       return canal != null && canal.esViento ? canal : null;

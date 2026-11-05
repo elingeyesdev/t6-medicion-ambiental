@@ -118,23 +118,24 @@ class _SimulationDetailScreenState extends State<SimulationDetailScreen> {
   Future<void> _runAction(String action, {int? position}) async {
     final current = _detail;
     if (current == null || _acting) return;
-    // Pausar/detener: leer posición vigente antes de enviar la acción.
-    var revision = current.revision;
-    var pos = position ?? current.position;
-    if (action == 'pausar' || action == 'detener') {
-      try {
-        final live = await _repository.get(current.id);
-        revision = live.revision;
-        pos = position ?? live.position;
-      } catch (_) {
-        // Usa la última conocida si falla el refresco.
-      }
-    }
     setState(() {
       _acting = true;
       _error = null;
       _message = null;
     });
+    // Pausar/detener: leer posición vigente; _acting ya evita toques repetidos.
+    var revision = current.revision;
+    var pos = position ?? current.position;
+    if (action == 'pausar' || action == 'detener') {
+      try {
+        final live = await _repository.get(current.id);
+        if (!mounted) return;
+        revision = live.revision;
+        pos = position ?? live.position;
+      } catch (_) {
+        if (!mounted) return;
+      }
+    }
     try {
       final next = await _repository.action(
         id: current.id,

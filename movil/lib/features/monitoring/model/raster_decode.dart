@@ -308,6 +308,17 @@ Future<CuadroRasterDecoded> decodificarYColorearCuadro(
   if (cuadro.rejilla.filas == 'sur-norte') {
     out = _voltearVertical(out, cuadro.ancho, cuadro.alto);
   }
+  // El mapa usa Mercator: remuestrear filas para que latitudes intermedias no queden corridas.
+  out = await compute(
+    _ajustarMercator,
+    _MercatorJob(
+      pixels: out,
+      ancho: cuadro.ancho,
+      alto: cuadro.alto,
+      sur: cuadro.rejilla.sur,
+      norte: cuadro.rejilla.norte,
+    ),
+  );
   final buffer = await ui.ImmutableBuffer.fromUint8List(out);
   final descriptor = ui.ImageDescriptor.raw(
     buffer,
@@ -373,6 +384,63 @@ Uint8List _voltearVertical(Uint8List rgba, int ancho, int alto) {
     final src = y * stride;
     final dst = (alto - 1 - y) * stride;
     out.setRange(dst, dst + stride, rgba, src);
+  }
+  return out;
+}
+
+class _MercatorJob {
+  const _MercatorJob({
+    required this.pixels,
+    required this.ancho,
+    required this.alto,
+    required this.sur,
+    required this.norte,
+  });
+
+  final Uint8List pixels;
+  final int ancho;
+  final int alto;
+  final double sur;
+  final double norte;
+}
+
+/// Web Mercator (EPSG:3857): Y = ln(tan(π/4 + φ/2)).
+double _mercatorY(double latDegrees) {
+  final lat = latDegrees.clamp(-85.05112878, 85.05112878) * math.pi / 180;
+  return math.log(math.tan(math.pi / 4 + lat / 2));
+}
+
+double _latFromMercatorY(double y) {
+  return (2 * math.atan(math.exp(y)) - math.pi / 2) * 180 / math.pi;
+}
+
+/// Reordena filas para que OverlayImage (lineal en pantalla/Mercator) muestre la lat correcta.
+Uint8List _ajustarMercator(_MercatorJob job) {
+  final alto = job.alto;
+  final ancho = job.ancho;
+  if (alto < 2 || (job.norte - job.sur).abs() < 1e-9) return job.pixels;
+  final stride = ancho * 4;
+  final src = job.pixels;
+  final out = Uint8List(src.length);
+  final mNorte = _mercatorY(job.norte);
+  final mSur = _mercatorY(job.sur);
+  final spanLat = job.norte - job.sur;
+  for (var y = 0; y < alto; y++) {
+    final t = y / (alto - 1); // 0 = norte (arriba)
+    final merc = mNorte + t * (mSur - mNorte);
+    final lat = _latFromMercatorY(merc);
+    final srcYF = ((job.norte - lat) / spanLat) * (alto - 1);
+    final y0 = srcYF.floor().clamp(0, alto - 1);
+    final y1 = (y0 + 1).clamp(0, alto - 1);
+    final fy = (srcYF - y0).clamp(0.0, 1.0);
+    final dst = y * stride;
+    final row0 = y0 * stride;
+    final row1 = y1 * stride;
+    for (var x = 0; x < stride; x++) {
+      final a = src[row0 + x];
+      final b = src[row1 + x];
+      out[dst + x] = (a + (b - a) * fy).round().clamp(0, 255);
+    }
   }
   return out;
 }
