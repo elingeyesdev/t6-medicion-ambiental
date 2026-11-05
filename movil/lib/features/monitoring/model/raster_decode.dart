@@ -317,6 +317,7 @@ Future<CuadroRasterDecoded> decodificarYColorearCuadro(
       alto: cuadro.alto,
       sur: cuadro.rejilla.sur,
       norte: cuadro.rejilla.norte,
+      registro: cuadro.rejilla.registro,
     ),
   );
   final buffer = await ui.ImmutableBuffer.fromUint8List(out);
@@ -395,6 +396,7 @@ class _MercatorJob {
     required this.alto,
     required this.sur,
     required this.norte,
+    required this.registro,
   });
 
   final Uint8List pixels;
@@ -402,19 +404,48 @@ class _MercatorJob {
   final int alto;
   final double sur;
   final double norte;
+  final String registro;
 }
 
 /// Web Mercator (EPSG:3857): Y = ln(tan(π/4 + φ/2)).
-double _mercatorY(double latDegrees) {
+double mercatorY(double latDegrees) {
   final lat = latDegrees.clamp(-85.05112878, 85.05112878) * math.pi / 180;
   return math.log(math.tan(math.pi / 4 + lat / 2));
 }
 
-double _latFromMercatorY(double y) {
+double latFromMercatorY(double y) {
   return (2 * math.atan(math.exp(y)) - math.pi / 2) * 180 / math.pi;
 }
 
-/// Reordena filas para que OverlayImage (lineal en pantalla/Mercator) muestre la lat correcta.
+/// Latitud del centro del píxel de salida [y] (0 = norte) entre [norte] y [sur].
+double latitudCentroSalidaMercator({
+  required int y,
+  required int alto,
+  required double sur,
+  required double norte,
+}) {
+  final t = (y + 0.5) / alto;
+  final merc = mercatorY(norte) + t * (mercatorY(sur) - mercatorY(norte));
+  return latFromMercatorY(merc);
+}
+
+/// Fila en la imagen norte-arriba para [lat], según registro centros/nodos.
+double filaFuenteParaLatitud({
+  required double lat,
+  required int alto,
+  required double sur,
+  required double norte,
+  required String registro,
+}) {
+  final span = norte - sur;
+  final f = ((norte - lat) / span).clamp(0.0, 1.0);
+  if (registro == 'centros') {
+    return f * alto - 0.5;
+  }
+  return f * (alto - 1);
+}
+
+/// Reordena filas para OverlayImage (Mercator + centro de píxel + registro).
 Uint8List _ajustarMercator(_MercatorJob job) {
   final alto = job.alto;
   final ancho = job.ancho;
@@ -422,14 +453,20 @@ Uint8List _ajustarMercator(_MercatorJob job) {
   final stride = ancho * 4;
   final src = job.pixels;
   final out = Uint8List(src.length);
-  final mNorte = _mercatorY(job.norte);
-  final mSur = _mercatorY(job.sur);
-  final spanLat = job.norte - job.sur;
   for (var y = 0; y < alto; y++) {
-    final t = y / (alto - 1); // 0 = norte (arriba)
-    final merc = mNorte + t * (mSur - mNorte);
-    final lat = _latFromMercatorY(merc);
-    final srcYF = ((job.norte - lat) / spanLat) * (alto - 1);
+    final lat = latitudCentroSalidaMercator(
+      y: y,
+      alto: alto,
+      sur: job.sur,
+      norte: job.norte,
+    );
+    final srcYF = filaFuenteParaLatitud(
+      lat: lat,
+      alto: alto,
+      sur: job.sur,
+      norte: job.norte,
+      registro: job.registro,
+    );
     final y0 = srcYF.floor().clamp(0, alto - 1);
     final y1 = (y0 + 1).clamp(0, alto - 1);
     final fy = (srcYF - y0).clamp(0.0, 1.0);

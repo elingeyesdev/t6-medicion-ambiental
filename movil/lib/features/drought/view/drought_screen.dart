@@ -560,18 +560,21 @@ class _DroughtScreenState extends State<DroughtScreen>
   }
 
   String _friendlyDroughtError(GeoCruzApiException error) {
-    if (error.code == 'PERIODO_NO_DISPONIBLE' ||
-        error.code == 'MUESTRAS_NO_DISPONIBLES' ||
-        error.message.toLowerCase().contains('vencieron') ||
-        error.message.toLowerCase().contains('vencida') ||
-        error.message.toLowerCase().contains('preparados')) {
-      return 'No hay datos de sequías para ese mes. '
-          'El piloto publicado es septiembre 2024 (2024-09). '
-          'Cámbialo en Filtros. No es un fallo del teléfono.';
+    final msg = error.message.toLowerCase();
+    final vencidos = error.code == 'PERIODO_NO_DISPONIBLE' ||
+        msg.contains('vencieron') ||
+        msg.contains('vencida') ||
+        msg.contains('caducad');
+    if (vencidos) {
+      return 'Los datos de sequías están vencidos. '
+          'Hay que actualizarlos; cambiar el mes no lo resuelve.';
     }
-    if (error.message.contains('sequias:preparar') ||
-        error.message.contains('petición web')) {
-      return 'No hay datos de sequías para ese mes. Prueba 2024-09 en Filtros.';
+    if (error.code == 'MUESTRAS_NO_DISPONIBLES' ||
+        msg.contains('no hay resultados preparados') ||
+        msg.contains('sequias:preparar') ||
+        msg.contains('petición web')) {
+      return 'No hay datos de sequías para ese mes. '
+          'Prueba otro mes en Filtros (p. ej. 2024-09).';
     }
     return error.message;
   }
