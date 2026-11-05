@@ -248,11 +248,13 @@ class GeoCruzApiClient {
       final error = payload is Map<String, dynamic> ? payload['error'] : null;
       final message = error is Map<String, dynamic> ? error['mensaje'] : null;
       final code = error is Map<String, dynamic> ? error['codigo'] : null;
+      final campos = error is Map<String, dynamic> ? error['campos'] : null;
       throw GeoCruzApiException(
         statusCode: response.statusCode,
-        message: message is String
-            ? message
-            : 'La consulta no pudo completarse.',
+        message: _mensajeConCampos(
+          message is String ? message : 'La consulta no pudo completarse.',
+          campos,
+        ),
         code: code is String ? code : null,
       );
     }
@@ -305,6 +307,28 @@ Object? _decodeJsonBody(http.Response response) {
     }
     rethrow;
   }
+}
+
+String _mensajeConCampos(String mensaje, Object? campos) {
+  if (campos is! Map || campos.isEmpty) return mensaje;
+  final detalles = <String>[];
+  for (final entry in campos.entries) {
+    final valor = entry.value;
+    if (valor is List) {
+      for (final item in valor) {
+        if (item is String && item.trim().isNotEmpty) detalles.add(item.trim());
+      }
+    } else if (valor is String && valor.trim().isNotEmpty) {
+      detalles.add(valor.trim());
+    }
+  }
+  if (detalles.isEmpty) return mensaje;
+  // Evita repetir el genérico "Revisa los datos…" si ya hay el motivo real.
+  if (mensaje == 'Revisa los datos del formulario.' ||
+      mensaje == 'La consulta no pudo completarse.') {
+    return detalles.first;
+  }
+  return '$mensaje ${detalles.first}';
 }
 
 class GeoCruzApiException implements Exception {

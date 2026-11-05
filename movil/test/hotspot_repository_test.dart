@@ -48,48 +48,41 @@ void main() {
       api.close();
     });
 
-    for (final coverage in ['sin_cobertura', 'parcial']) {
-      testWidgets('cero registros con $coverage no afirma ausencia', (
-        tester,
-      ) async {
-        final payload = _response(total: 0);
-        payload['datos'] = <Object>[];
-        payload['cobertura'] = {
-          'estado': coverage,
-          'fundamento': 'Cobertura de prueba controlada.',
-        };
-        final api = GeoCruzApiClient(
-          baseUrl: Uri.parse('http://localhost/api/v1/'),
-          client: MockClient((request) async {
-            if (request.url.path.endsWith('/territorios')) {
-              return _json(_catalog());
-            }
-            if (request.url.path.endsWith('/focos-calor')) {
-              return _json(payload);
-            }
-            return _json(_boundary());
-          }),
-        );
-        await tester.pumpWidget(
-          MaterialApp(home: HotspotsScreen(apiClient: api)),
-        );
-        for (var i = 0; i < 8; i++) {
-          await tester.pump(const Duration(milliseconds: 50));
-        }
-        expect(
-          find.text(coverage == 'sin_cobertura'
-              ? 'Sin cobertura comprobada'
-              : 'Resultados con cobertura parcial'),
-          findsOneWidget,
-        );
-        expect(find.text('Sin detecciones para estos filtros'), findsNothing);
-        expect(find.text('No hay detecciones en el período consultado.'), findsNothing);
-        await tester.pumpWidget(const SizedBox());
-        api.close();
-      });
-    }
+    testWidgets('cero registros con sin_cobertura no afirma ausencia', (
+      tester,
+    ) async {
+      final payload = _response(total: 0);
+      payload['datos'] = <Object>[];
+      payload['cobertura'] = {
+        'estado': 'sin_cobertura',
+        'fundamento': 'Cobertura de prueba controlada.',
+      };
+      final api = GeoCruzApiClient(
+        baseUrl: Uri.parse('http://localhost/api/v1/'),
+        client: MockClient((request) async {
+          if (request.url.path.endsWith('/territorios')) {
+            return _json(_catalog());
+          }
+          if (request.url.path.endsWith('/focos-calor')) {
+            return _json(payload);
+          }
+          return _json(_boundary());
+        }),
+      );
+      await tester.pumpWidget(
+        MaterialApp(home: HotspotsScreen(apiClient: api)),
+      );
+      for (var i = 0; i < 8; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      expect(find.text('Sin cobertura comprobada'), findsOneWidget);
+      expect(find.text('Sin detecciones para estos filtros'), findsNothing);
+      expect(find.text('No hay detecciones en el período consultado.'), findsNothing);
+      await tester.pumpWidget(const SizedBox());
+      api.close();
+    });
 
-    testWidgets('cobertura parcial con detecciones permanece visible', (tester) async {
+    testWidgets('cobertura parcial con detecciones no muestra aviso', (tester) async {
       tester.view.physicalSize = const Size(800, 2400);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
@@ -113,11 +106,9 @@ void main() {
       for (var i = 0; i < 8; i++) {
         await tester.pump(const Duration(milliseconds: 50));
       }
-      expect(find.text('Resultados con cobertura parcial'), findsOneWidget);
-      await tester.scrollUntilVisible(find.text('Datos de la consulta'), 300);
-      await tester.tap(find.text('Datos de la consulta'));
-      await tester.pump();
-      expect(find.textContaining('Cobertura parcial'), findsOneWidget);
+      expect(find.text('Resultados con cobertura parcial'), findsNothing);
+      expect(find.textContaining('Cobertura parcial'), findsNothing);
+      expect(find.text('Datos de la consulta'), findsOneWidget);
       await tester.pumpWidget(const SizedBox());
       api.close();
     });

@@ -115,19 +115,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                         borderRadius: BorderRadius.circular(28),
                       ),
-                      child: const Column(
-                        children: [
-                          GeoSurBrand(),
-                          SizedBox(height: 10),
-                          Text(
-                            'UIKits · acceso móvil',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
-                      ),
+                      child: const GeoSurBrand(),
                     ),
                     const SizedBox(height: 28),
                     Text(
@@ -204,8 +192,8 @@ class _AuthScreenState extends State<AuthScreen> {
                             ),
                           ),
                         ),
-                        validator: (value) => (value?.length ?? 0) < 8
-                            ? 'Usa al menos 8 caracteres.'
+                        validator: (value) => (value?.length ?? 0) < 12
+                            ? 'Usa al menos 12 caracteres.'
                             : null,
                       ),
                     ),

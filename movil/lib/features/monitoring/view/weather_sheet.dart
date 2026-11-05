@@ -57,9 +57,18 @@ class _WeatherSheetState extends State<WeatherSheet> {
                 return const Center(child: CircularProgressIndicator());
               }
               if (snapshot.hasError) {
-                final message = snapshot.error is GeoCruzApiException
-                    ? (snapshot.error as GeoCruzApiException).message
+                final error = snapshot.error;
+                var message = error is GeoCruzApiException
+                    ? error.message
                     : 'No se pudo cargar el tiempo.';
+                if (error is GeoCruzApiException &&
+                    (error.code == 'PRONOSTICO_NO_DISPONIBLE' ||
+                        error.statusCode == 503 ||
+                        message.contains('tiempo'))) {
+                  message =
+                      'El servidor no pudo pedir el pronóstico a Open-Meteo. '
+                      'Revisa que el PC de la API tenga internet y vuelve a intentar.';
+                }
                 return ListView(
                   controller: controller,
                   children: [
