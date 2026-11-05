@@ -47,3 +47,5 @@ La colección RTC mantiene el requisito de cuenta para obtener el acceso a sus b
 ## Recorte adicional en Puente Pailas · 05/11/2026
 
 La [comprobación de Puente Pailas](evidencias/pailas-20261105/README.md) midió seis parejas. La mejor permite comparar 10,56 % del recorte. Se conserva la evidencia para descartar esta selección bajo el criterio candidato. Para avanzar a #111 hace falta otra pareja con cobertura suficiente y una referencia independiente para el área seleccionada.
+
+Como alternativa dentro de Santa Cruz, la [activación EMSR853](ALTERNATIVA_EMSR853.md) proporciona productos oficiales para revisar el evento de diciembre de 2025.
