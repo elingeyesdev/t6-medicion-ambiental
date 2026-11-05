@@ -60,6 +60,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
   bool _catalogReady = false;
   bool _mapReady = false;
   CapasOverlayState _capas = CapasOverlayState.empty;
+  final GlobalKey<CapasPanelState> _capasKey = GlobalKey<CapasPanelState>();
   MapBaseStyle _mapStyle = MapBaseStyle.relieve;
   LatLng? _searchPin;
   String? _searchPinLabel;
@@ -308,6 +309,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
             _filtersCard(context),
             const SizedBox(height: 12),
             CapasPanel(
+              key: _capasKey,
               api: widget.api,
               onOverlayChanged: (state) {
                 if (!mounted) return;
@@ -699,20 +701,28 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                       onZoomIn: () => _zoomMap(1),
                       onZoomOut: () => _zoomMap(-1),
                       onFit: _centerMap,
-                      onFullscreen: () => openFullscreenMap(
-                        context: context,
-                        title: 'Mapa de monitoreo',
-                        center: center,
-                        zoom: 4,
-                        markers: markers,
-                        polygons: response.boundary?.polygons ?? const [],
-                        overlays: [
-                          if (_capas.layerA != null) _capas.layerA!,
-                          if (_capas.layerB != null) _capas.layerB!,
-                        ],
-                        fitBounds: bounds,
-                        initialStyle: _mapStyle,
-                      ),
+                      onFullscreen: () {
+                        var capasFs = _capas;
+                        openFullscreenMap(
+                          context: context,
+                          title: 'Mapa de monitoreo',
+                          center: center,
+                          zoom: 4,
+                          markers: markers,
+                          polygons: response.boundary?.polygons ?? const [],
+                          mapChildren: capasMapChildren(capasFs),
+                          capasState: capasFs,
+                          onCapasDivision: (value) {
+                            capasFs = capasFs.copyWith(division: value);
+                            if (mounted) {
+                              setState(() => _capas = capasFs);
+                              _capasKey.currentState?.syncDivision(value);
+                            }
+                          },
+                          fitBounds: bounds,
+                          initialStyle: _mapStyle,
+                        );
+                      },
                     ),
                   ),
                   ...capasMapOverlays(
@@ -724,6 +734,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                         setState(
                           () => _capas = _capas.copyWith(division: value),
                         );
+                        _capasKey.currentState?.syncDivision(value);
                       })
                       case final handle?)
                     Positioned.fill(child: handle),

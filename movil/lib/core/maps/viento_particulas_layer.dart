@@ -63,18 +63,26 @@ class _VientoParticulasOverlayState extends State<VientoParticulasOverlay>
     super.dispose();
   }
 
-  CapaCanalSample? get _canalViento {
+  CapaCanalSample? _canalEn(double x) {
     final a = widget.state.sampleA;
-    if (a != null && a.esViento) return a;
     final b = widget.state.sampleB;
-    if (widget.state.comparing && b != null && b.esViento) return b;
+    if (widget.state.comparing && b != null) {
+      final divisionX = _size.width * widget.state.division;
+      final ladoB = x >= divisionX;
+      final canal = ladoB ? b : a;
+      return canal != null && canal.esViento ? canal : null;
+    }
+    if (a != null && a.esViento) return a;
     return null;
   }
 
-  bool get _activo =>
-      widget.state.visible &&
-      widget.state.animarViento &&
-      _canalViento != null;
+  bool get _activo {
+    if (!widget.state.visible || !widget.state.animarViento) return false;
+    final a = widget.state.sampleA;
+    final b = widget.state.sampleB;
+    if (a != null && a.esViento) return true;
+    return widget.state.comparing && b != null && b.esViento;
+  }
 
   void _reponer() {
     if (!_activo || _size.isEmpty) {
@@ -105,14 +113,11 @@ class _VientoParticulasOverlayState extends State<VientoParticulasOverlay>
   }
 
   VientoVector? _vectorEn(double x, double y) {
-    final canal = _canalViento;
-    if (canal == null ||
-        x < 0 ||
-        y < 0 ||
-        x > _size.width ||
-        y > _size.height) {
+    if (x < 0 || y < 0 || x > _size.width || y > _size.height) {
       return null;
     }
+    final canal = _canalEn(x);
+    if (canal == null) return null;
     try {
       final punto =
           widget.mapController.camera.screenOffsetToLatLng(Offset(x, y));

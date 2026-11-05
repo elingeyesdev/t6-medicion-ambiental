@@ -59,17 +59,23 @@ class AccountPreferences {
     bool? notifyEmail,
     bool? notifyWhatsapp,
     String? whatsappDestination,
+    bool clearWhatsappDestination = false,
     bool? notifyTelegram,
     String? telegramDestination,
+    bool clearTelegramDestination = false,
     Map<String, String>? units,
   }) => AccountPreferences(
     latitude: clearLocation ? null : (latitude ?? this.latitude),
     longitude: clearLocation ? null : (longitude ?? this.longitude),
     notifyEmail: notifyEmail ?? this.notifyEmail,
     notifyWhatsapp: notifyWhatsapp ?? this.notifyWhatsapp,
-    whatsappDestination: whatsappDestination ?? this.whatsappDestination,
+    whatsappDestination: clearWhatsappDestination
+        ? null
+        : (whatsappDestination ?? this.whatsappDestination),
     notifyTelegram: notifyTelegram ?? this.notifyTelegram,
-    telegramDestination: telegramDestination ?? this.telegramDestination,
+    telegramDestination: clearTelegramDestination
+        ? null
+        : (telegramDestination ?? this.telegramDestination),
     units: units ?? this.units,
   );
 }

@@ -38,17 +38,6 @@ final class ClienteFirms
         return $this->csv($this->descargar('area', $sufijo), ['latitude', 'longitude', 'acq_date', 'acq_time']);
     }
 
-    /** Consulta por código ISO-3 de país (API country de FIRMS). */
-    public function pais(string $iso3, DateTimeImmutable $inicio, int $dias): array
-    {
-        if (! preg_match('/^[A-Z]{3}$/D', $iso3)) {
-            $this->fallo();
-        }
-        $sufijo = config('focos.producto').'/'.$iso3.'/'.$dias.'/'.$inicio->format('Y-m-d');
-
-        return $this->csv($this->descargar('country', $sufijo), ['latitude', 'longitude', 'acq_date', 'acq_time']);
-    }
-
     private function descargar(string $operacion, string $sufijo): string
     {
         $clave = config('focos.clave');
@@ -57,7 +46,7 @@ final class ClienteFirms
         }
         try {
             // Destino fijo y sin redirecciones. No registrar URL: FIRMS lleva la clave en la ruta.
-            $r = Http::connectTimeout(8)->timeout(45)->withOptions(['allow_redirects' => false, 'stream' => true])
+            $r = Http::connectTimeout(5)->timeout(20)->withOptions(['allow_redirects' => false, 'stream' => true])
                 ->get('https://firms.modaps.eosdis.nasa.gov/api/'.$operacion.'/csv/'.$clave.'/'.$sufijo);
             if (! $r->successful()) {
                 $this->fallo();

@@ -45,7 +45,6 @@ class CapasPanelState extends State<CapasPanel> {
   String? _fechaB;
   double _opacity = 0.65;
   double _division = 0.5;
-  Timer? _playTimer;
   final Map<String, CuadroRasterDecoded> _cache = {};
   int _paintGeneration = 0;
   CapasOverlayState _lastState = CapasOverlayState.empty;
@@ -59,7 +58,7 @@ class CapasPanelState extends State<CapasPanel> {
 
   @override
   void dispose() {
-    _playTimer?.cancel();
+    _playing = false;
     _paintGeneration++;
     super.dispose();
   }
@@ -206,25 +205,42 @@ class CapasPanelState extends State<CapasPanel> {
     }
   }
 
+  /// Alinea la posición del divisor con el mapa (una sola fuente de verdad).
+  void syncDivision(double value) {
+    if (!mounted) return;
+    if ((value - _division).abs() < 0.0005) return;
+    setState(() => _division = value);
+    if (_lastState.hasContent) {
+      _lastState = _lastState.copyWith(division: value);
+    }
+  }
+
   void _togglePlay() {
     if (_playing) {
-      _playTimer?.cancel();
       setState(() => _playing = false);
       return;
     }
     final cuadros = _variable(_capaA)?.ordenados ?? const [];
     if (cuadros.length < 2) return;
     setState(() => _playing = true);
-    // Intervalo cercano a la web (1400 ms).
-    _playTimer = Timer.periodic(const Duration(milliseconds: 1400), (_) async {
+    unawaited(_playLoop());
+  }
+
+  /// Espera cada cuadro antes del siguiente (evita descartar descargas lentas).
+  Future<void> _playLoop() async {
+    while (mounted && _playing) {
       final list = _variable(_capaA)?.ordenados ?? const [];
-      if (list.isEmpty) return;
+      if (list.length < 2) {
+        setState(() => _playing = false);
+        return;
+      }
       final index = list.indexWhere((c) => c.id == _fechaA);
       final next = index < 0 || index >= list.length - 1 ? 0 : index + 1;
-      if (!mounted) return;
       setState(() => _fechaA = list[next].id);
       await _refreshOverlays();
-    });
+      if (!mounted || !_playing) return;
+      await Future<void>.delayed(const Duration(milliseconds: 1400));
+    }
   }
 
   void _step(int delta) {

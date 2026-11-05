@@ -23,11 +23,9 @@ class ConsultaFocosTest extends TestCase
 
     private function nasa(string $filas = '', string $desde = '2026-10-01', string $hasta = '2026-10-16'): void
     {
-        $csv = "latitude,longitude,acq_date,acq_time,satellite,instrument,confidence,frp,version\n".$filas;
         Http::fake([
             '*/data_availability/*' => fn () => Http::response("data_id,min_date,max_date\nVIIRS_SNPP_NRT,$desde,$hasta\n"),
-            '*/area/*' => fn () => Http::response($csv),
-            '*/country/*' => fn () => Http::response($csv),
+            '*/area/*' => fn () => Http::response("latitude,longitude,acq_date,acq_time,satellite,instrument,confidence,frp,version\n".$filas),
         ]);
     }
 
@@ -43,7 +41,7 @@ class ConsultaFocosTest extends TestCase
     public function test_admite_siete_dias_hasta_el_instante_actual_y_rechaza_un_segundo_mas(): void
     {
         $this->nasa('', '2026-10-01', '2026-10-27');
-        $parametros = ['alcance' => 'santacruz', 'desde' => '2026-10-20T17:19:30-04:00', 'hasta' => '2026-10-27T17:19:30-04:00'];
+        $parametros = ['desde' => '2026-10-20T17:19:30-04:00', 'hasta' => '2026-10-27T17:19:30-04:00'];
         $this->getJson('/api/v1/focos-calor?'.http_build_query($parametros))->assertOk()
             ->assertJsonPath('consulta.periodo.hasta', '2026-10-27T21:19:30Z');
         Http::fake();
@@ -88,9 +86,7 @@ class ConsultaFocosTest extends TestCase
         $this->nasa();
         $this->getJson(self::BASE)->assertOk()->assertJsonCount(0, 'datos')
             ->assertJsonPath('resumen.indicadores.2.valor', null)->assertJsonPath('resumen.totalRegistros', 0)
-            ->assertJsonPath('cobertura.estado', 'desconocida')
-            ->assertJsonPath('consulta.filtrosEfectivos.alcance', 'sudamerica')
-            ->assertJsonPath('consulta.territorio.identificador', 'SA');
+            ->assertJsonPath('cobertura.estado', 'desconocida');
     }
 
     public function test_confianza_filtra_antes_del_resumen_y_del_mapa(): void
@@ -138,7 +134,7 @@ class ConsultaFocosTest extends TestCase
     public function test_catalogo_inaccesible_no_se_sustituye_con_una_caja_o_datos_de_prueba(): void
     {
         config(['focos.datos_territoriales' => storage_path('no-existe')]);
-        $this->getJson(self::BASE.'&alcance=santacruz')->assertStatus(503)->assertJsonPath('error.codigo', 'CATALOGO_NO_DISPONIBLE')->assertJsonMissingPath('datos');
+        $this->getJson(self::BASE)->assertStatus(503)->assertJsonPath('error.codigo', 'CATALOGO_NO_DISPONIBLE')->assertJsonMissingPath('datos');
         Http::assertNothingSent();
     }
 
@@ -186,11 +182,7 @@ class ConsultaFocosTest extends TestCase
     public function test_respuesta_html_200_o_csv_roto_es_error_no_vacio(): void
     {
         foreach (['<html>Error</html>', 'latitude,longitude,acq_date,acq_time'."\n-17,-63,2026-10-10\n"] as $cuerpo) {
-            Http::fake([
-                '*/data_availability/*' => Http::response("data_id,min_date,max_date\nVIIRS_SNPP_NRT,2026-10-01,2026-10-16\n"),
-                '*/area/*' => Http::response($cuerpo),
-                '*/country/*' => Http::response($cuerpo),
-            ]);
+            Http::fake(['*/data_availability/*' => Http::response("data_id,min_date,max_date\nVIIRS_SNPP_NRT,2026-10-01,2026-10-16\n"), '*/area/*' => Http::response($cuerpo)]);
             $this->getJson(self::BASE)->assertStatus(503)->assertJsonPath('error.codigo', 'PROVEEDOR_NO_DISPONIBLE');
         }
     }
@@ -198,7 +190,7 @@ class ConsultaFocosTest extends TestCase
     public function test_ventana_utc_168_horas_se_divide_en_bloques_de_maximo_cinco_dias(): void
     {
         $this->nasa("-17.7834,-63.1821,2026-10-10,0400,N,VIIRS,h,1,2.0NRT\n");
-        $url = '/api/v1/focos-calor?'.http_build_query(['alcance' => 'santacruz', 'desde' => '2026-10-10T00:00:00-04:00', 'hasta' => '2026-10-17T00:00:00-04:00']);
+        $url = '/api/v1/focos-calor?'.http_build_query(['desde' => '2026-10-10T00:00:00-04:00', 'hasta' => '2026-10-17T00:00:00-04:00']);
         $this->getJson($url)->assertOk()->assertJsonPath('consulta.periodo.desde', '2026-10-10T04:00:00Z')->assertJsonPath('cobertura.estado', 'parcial');
         Http::assertSentCount(3);
         Http::assertSent(fn ($r) => str_contains($r->url(), '/5/2026-10-10'));
@@ -220,8 +212,7 @@ class ConsultaFocosTest extends TestCase
         $this->travel(16)->minutes();
         $this->getJson(self::BASE.'&pagina=2&versionConjunto='.$token)->assertStatus(409)->assertJsonPath('error.codigo', 'CONJUNTO_CAMBIADO');
         $this->getJson(self::BASE.'&pagina=2')->assertStatus(409);
-        // 1 disponibilidad + 12 paises SA
-        Http::assertSentCount(13);
+        Http::assertSentCount(2);
     }
 
     public function test_normalizador_conserva_ausencias_fecha_utc_y_confianza_original(): void

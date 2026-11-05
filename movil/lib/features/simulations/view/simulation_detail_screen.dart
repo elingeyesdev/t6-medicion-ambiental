@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../core/network/geocruz_api_client.dart';
@@ -29,12 +31,52 @@ class _SimulationDetailScreenState extends State<SimulationDetailScreen> {
   bool _acting = false;
   String? _error;
   String? _message;
+  Timer? _pollTimer;
 
   @override
   void initState() {
     super.initState();
     _repository = SimulationRepository(widget.api);
     _load();
+  }
+
+  @override
+  void dispose() {
+    _pollTimer?.cancel();
+    super.dispose();
+  }
+
+  void _syncPoll(SimulationDetail? detail) {
+    _pollTimer?.cancel();
+    _pollTimer = null;
+    if (detail == null || detail.status != 'activa') return;
+    _pollTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      unawaited(_pollWhileActive());
+    });
+  }
+
+  Future<void> _pollWhileActive() async {
+    if (!mounted || _acting) return;
+    final current = _detail;
+    if (current == null || current.status != 'activa') {
+      _pollTimer?.cancel();
+      _pollTimer = null;
+      return;
+    }
+    try {
+      final next = await _repository.get(widget.simulationId);
+      if (!mounted) return;
+      setState(() => _detail = next);
+      _syncPoll(next);
+    } on GeoCruzApiException catch (error) {
+      if (!mounted) return;
+      if (error.statusCode == 401) {
+        widget.onUnauthorized();
+        return;
+      }
+    } catch (_) {
+      // Silencioso: el siguiente tick reintenta.
+    }
   }
 
   Future<void> _load() async {
@@ -49,6 +91,7 @@ class _SimulationDetailScreenState extends State<SimulationDetailScreen> {
         _detail = detail;
         _loading = false;
       });
+      _syncPoll(detail);
     } on GeoCruzApiException catch (error) {
       if (!mounted) return;
       if (error.statusCode == 401) {
@@ -61,18 +104,32 @@ class _SimulationDetailScreenState extends State<SimulationDetailScreen> {
             ? 'No tienes permiso para ver esta simulación.'
             : error.message;
       });
+      _syncPoll(null);
     } catch (_) {
       if (!mounted) return;
       setState(() {
         _loading = false;
         _error = 'No se pudo cargar el detalle de la simulación.';
       });
+      _syncPoll(null);
     }
   }
 
   Future<void> _runAction(String action, {int? position}) async {
     final current = _detail;
     if (current == null || _acting) return;
+    // Pausar/detener: leer posición vigente antes de enviar la acción.
+    var revision = current.revision;
+    var pos = position ?? current.position;
+    if (action == 'pausar' || action == 'detener') {
+      try {
+        final live = await _repository.get(current.id);
+        revision = live.revision;
+        pos = position ?? live.position;
+      } catch (_) {
+        // Usa la última conocida si falla el refresco.
+      }
+    }
     setState(() {
       _acting = true;
       _error = null;
@@ -82,8 +139,8 @@ class _SimulationDetailScreenState extends State<SimulationDetailScreen> {
       final next = await _repository.action(
         id: current.id,
         action: action,
-        revision: current.revision,
-        position: position ?? current.position,
+        revision: revision,
+        position: pos,
       );
       if (!mounted) return;
       setState(() {
@@ -91,6 +148,7 @@ class _SimulationDetailScreenState extends State<SimulationDetailScreen> {
         _acting = false;
         _message = 'Acción «$action» aplicada.';
       });
+      _syncPoll(next);
     } on GeoCruzApiException catch (error) {
       if (!mounted) return;
       if (error.statusCode == 401) {

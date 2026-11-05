@@ -296,7 +296,7 @@ Future<CuadroRasterDecoded> decodificarYColorearCuadro(
     throw const FormatException('No se pudieron leer los píxeles de la capa.');
   }
   final pixels = Uint8List.fromList(bytes.buffer.asUint8List());
-  final out = await compute(
+  var out = await compute(
     _colorearPixeles,
     _ColorJob(
       pixels: Uint8List.fromList(pixels),
@@ -304,6 +304,10 @@ Future<CuadroRasterDecoded> decodificarYColorearCuadro(
       capaId: cuadro.capaId,
     ),
   );
+  // OverlayImage asume fila 0 = norte. Con muestra sur-norte hay que invertir filas.
+  if (cuadro.rejilla.filas == 'sur-norte') {
+    out = _voltearVertical(out, cuadro.ancho, cuadro.alto);
+  }
   final buffer = await ui.ImmutableBuffer.fromUint8List(out);
   final descriptor = ui.ImageDescriptor.raw(
     buffer,
@@ -358,6 +362,17 @@ Uint8List _colorearPixeles(_ColorJob job) {
     out[i + 1] = rgba[1];
     out[i + 2] = rgba[2];
     out[i + 3] = rgba[3];
+  }
+  return out;
+}
+
+Uint8List _voltearVertical(Uint8List rgba, int ancho, int alto) {
+  final stride = ancho * 4;
+  final out = Uint8List(rgba.length);
+  for (var y = 0; y < alto; y++) {
+    final src = y * stride;
+    final dst = (alto - 1 - y) * stride;
+    out.setRange(dst, dst + stride, rgba, src);
   }
   return out;
 }

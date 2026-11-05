@@ -84,21 +84,27 @@ class _GeoCruzAppState extends State<GeoCruzApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'GeoSur',
-      debugShowCheckedModeBanner: false,
-      theme: UiKitsTheme.light(),
-      home: _checkingSession
-          ? const _SessionLoadingScreen()
-          : _user == null
-          ? AuthScreen(
-              auth: _auth,
-              initialNotice: _sessionError,
-              onAuthenticated: _authenticated,
-            )
-          : UnitsScope(
-              controller: _units,
-              child: HomeShell(
+    // UnitsScope envuelve el Navigator (builder) para que Tiempo/historial
+    // abiertos como ruta/ficha hereden las unidades de Cuenta.
+    return UnitsScope(
+      controller: _units,
+      child: MaterialApp(
+        title: 'GeoSur',
+        debugShowCheckedModeBanner: false,
+        theme: UiKitsTheme.light(),
+        builder: (context, child) => UnitsScope(
+          controller: _units,
+          child: child ?? const SizedBox.shrink(),
+        ),
+        home: _checkingSession
+            ? const _SessionLoadingScreen()
+            : _user == null
+            ? AuthScreen(
+                auth: _auth,
+                initialNotice: _sessionError,
+                onAuthenticated: _authenticated,
+              )
+            : HomeShell(
                 apiClient: widget.apiClient,
                 auth: _auth,
                 user: _user!,
@@ -106,7 +112,7 @@ class _GeoCruzAppState extends State<GeoCruzApp> {
                 onUnauthorized: _expireSession,
                 onUserChanged: (user) => _authenticated(user),
               ),
-            ),
+      ),
     );
   }
 }

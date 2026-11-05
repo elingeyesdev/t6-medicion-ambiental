@@ -172,16 +172,16 @@ class _AccountScreenState extends State<AccountScreen> {
   Future<void> _savePreferences() async {
     final current = _prefs;
     if (current == null) return;
+    final whatsapp = _whatsapp.text.trim();
+    final telegram = _telegram.text.trim();
     var next = current.copyWith(
       notifyEmail: current.notifyEmail,
       notifyWhatsapp: current.notifyWhatsapp,
-      whatsappDestination: _whatsapp.text.trim().isEmpty
-          ? null
-          : _whatsapp.text.trim(),
+      whatsappDestination: whatsapp.isEmpty ? null : whatsapp,
+      clearWhatsappDestination: whatsapp.isEmpty,
       notifyTelegram: current.notifyTelegram,
-      telegramDestination: _telegram.text.trim().isEmpty
-          ? null
-          : _telegram.text.trim(),
+      telegramDestination: telegram.isEmpty ? null : telegram,
+      clearTelegramDestination: telegram.isEmpty,
     );
     if (!next.hasLocation) {
       next = next.copyWith(

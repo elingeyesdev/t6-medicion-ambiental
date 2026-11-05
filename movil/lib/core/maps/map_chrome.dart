@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../features/monitoring/model/capas_overlay_state.dart';
+import 'capas_map_layers.dart';
 import 'map_base_styles.dart';
 
 /// Controles compactos en esquina (hay que envolverlos en [Positioned.fill]).
@@ -96,6 +98,9 @@ Future<void> openFullscreenMap({
   required List<Marker> markers,
   List<Polygon> polygons = const [],
   List<OverlayImage> overlays = const [],
+  List<Widget> mapChildren = const [],
+  CapasOverlayState? capasState,
+  ValueChanged<double>? onCapasDivision,
   MapBaseStyle initialStyle = MapBaseStyle.relieve,
   String title = 'Mapa',
   LatLngBounds? fitBounds,
@@ -110,6 +115,9 @@ Future<void> openFullscreenMap({
         markers: markers,
         polygons: polygons,
         overlays: overlays,
+        mapChildren: mapChildren,
+        capasState: capasState,
+        onCapasDivision: onCapasDivision,
         initialStyle: initialStyle,
         fitBounds: fitBounds,
       ),
@@ -125,6 +133,9 @@ class FullscreenMapPage extends StatefulWidget {
     required this.markers,
     this.polygons = const [],
     this.overlays = const [],
+    this.mapChildren = const [],
+    this.capasState,
+    this.onCapasDivision,
     this.initialStyle = MapBaseStyle.relieve,
     this.fitBounds,
     super.key,
@@ -136,6 +147,9 @@ class FullscreenMapPage extends StatefulWidget {
   final List<Marker> markers;
   final List<Polygon> polygons;
   final List<OverlayImage> overlays;
+  final List<Widget> mapChildren;
+  final CapasOverlayState? capasState;
+  final ValueChanged<double>? onCapasDivision;
   final MapBaseStyle initialStyle;
   final LatLngBounds? fitBounds;
 
@@ -146,12 +160,14 @@ class FullscreenMapPage extends StatefulWidget {
 class _FullscreenMapPageState extends State<FullscreenMapPage> {
   final MapController _controller = MapController();
   late MapBaseStyle _style;
+  late CapasOverlayState _capas;
   bool _ready = false;
 
   @override
   void initState() {
     super.initState();
     _style = widget.initialStyle;
+    _capas = widget.capasState ?? CapasOverlayState.empty;
   }
 
   @override
@@ -221,7 +237,12 @@ class _FullscreenMapPageState extends State<FullscreenMapPage> {
             ),
             children: [
               _style.toLayer(),
-              if (widget.overlays.isNotEmpty)
+              ...(_capas.hasContent
+                  ? capasMapChildren(_capas)
+                  : widget.mapChildren),
+              if (!_capas.hasContent &&
+                  widget.mapChildren.isEmpty &&
+                  widget.overlays.isNotEmpty)
                 OverlayImageLayer(overlayImages: widget.overlays),
               if (widget.polygons.isNotEmpty)
                 PolygonLayer(polygons: widget.polygons),
@@ -234,6 +255,16 @@ class _FullscreenMapPageState extends State<FullscreenMapPage> {
               ),
             ],
           ),
+          ...capasMapOverlays(
+            state: _capas,
+            mapController: _controller,
+          ),
+          if (capasSwipeHandle(_capas, (value) {
+                setState(() => _capas = _capas.copyWith(division: value));
+                widget.onCapasDivision?.call(value);
+              })
+              case final handle?)
+            Positioned.fill(child: handle),
           Positioned.fill(
             child: MapChrome(
               style: _style,

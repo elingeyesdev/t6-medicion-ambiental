@@ -12,8 +12,8 @@ use App\Http\Controllers\Api\SequiasController;
 use App\Http\Controllers\Api\TerritoriosController;
 use App\Http\Controllers\Api\TiempoController;
 use App\Http\Controllers\Api\UsuariosController;
-use App\Http\Controllers\Mapas\CapasController;
 use App\Http\Controllers\AvisosController;
+use App\Http\Controllers\Mapas\CapasController;
 use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\SaludController;
@@ -38,9 +38,13 @@ Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
             ->middleware('can:simulaciones.gestionar');
         Route::middleware('can:datos.consultar')->group(function (): void {
             Route::get('/mapa/buscar', BuscarLugarController::class)->middleware('throttle:mapa-busquedas');
-            Route::get('/mapa/capas', [CapasController::class, 'index'])->middleware('throttle:120,1');
+            // Sin el throttle:30,1 del grupo: si no, cada PNG cuenta dos veces y corta el recorrido (~16).
+            Route::get('/mapa/capas', [CapasController::class, 'index'])
+                ->withoutMiddleware('throttle:30,1')
+                ->middleware('throttle:120,1');
             Route::get('/mapa/capas/cuadros/{cuadro}.png', [CapasController::class, 'imagen'])
                 ->where('cuadro', '[a-z0-9][a-z0-9_-]{0,79}')
+                ->withoutMiddleware('throttle:30,1')
                 ->middleware('throttle:120,1');
             Route::get('/tiempo', TiempoController::class)->middleware('throttle:tiempo-consultas');
             Route::get('/aire', CalidadAireController::class)->middleware('throttle:aire-consultas');
