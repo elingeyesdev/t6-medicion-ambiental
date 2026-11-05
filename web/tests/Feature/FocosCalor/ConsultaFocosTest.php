@@ -251,4 +251,20 @@ class ConsultaFocosTest extends TestCase
         $this->getJson('/api/incendios')->assertNotFound();
         Http::assertNothingSent();
     }
+
+    public function test_la_consulta_sin_alcance_conserva_santa_cruz_y_no_usa_country(): void
+    {
+        $this->nasa();
+        $this->getJson(self::BASE)->assertOk()
+            ->assertJsonPath('consulta.territorio.identificador', 'BO07');
+        Http::assertNotSent(fn ($request) => str_contains($request->url(), '/country/'));
+    }
+
+    public function test_un_alcance_no_admitido_se_rechaza_sin_sustituirlo_por_santa_cruz(): void
+    {
+        $this->getJson(self::BASE.'&alcance=sudamerica')->assertStatus(422)
+            ->assertJsonPath('error.codigo', 'FILTROS_INVALIDOS')
+            ->assertJsonMissingPath('datos');
+        Http::assertNothingSent();
+    }
 }

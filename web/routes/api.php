@@ -41,11 +41,11 @@ Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
             // Sin el throttle:30,1 del grupo: si no, cada PNG cuenta dos veces y corta el recorrido (~16).
             Route::get('/mapa/capas', [CapasController::class, 'index'])
                 ->withoutMiddleware('throttle:30,1')
-                ->middleware('throttle:120,1');
+                ->middleware('throttle:120,1,mapa-capas-api');
             Route::get('/mapa/capas/cuadros/{cuadro}.png', [CapasController::class, 'imagen'])
                 ->where('cuadro', '[a-z0-9][a-z0-9_-]{0,79}')
                 ->withoutMiddleware('throttle:30,1')
-                ->middleware('throttle:120,1');
+                ->middleware('throttle:120,1,mapa-capas-api');
             Route::get('/tiempo', TiempoController::class)->middleware('throttle:tiempo-consultas');
             Route::get('/aire', CalidadAireController::class)->middleware('throttle:aire-consultas');
             Route::get('/alertas', [AlertasController::class, 'index']);
