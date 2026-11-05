@@ -525,139 +525,17 @@ class _AccountScreenState extends State<AccountScreen> {
                             height: 1,
                             color: scheme.outlineVariant.withValues(alpha: 0.5),
                           ),
-                          _AccountPanel(
-                            title: 'Ubicación y avisos',
-                            subtitle: 'Punto para notificaciones',
-                            icon: Icons.place_outlined,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(16),
-                                  child: SizedBox(
-                                    height: 180,
-                                    child: FlutterMap(
-                                      mapController: _mapController,
-                                      options: MapOptions(
-                                        initialCenter: LatLng(
-                                          _prefs?.latitude ?? -17.7833,
-                                          _prefs?.longitude ?? -63.1821,
-                                        ),
-                                        initialZoom: 12,
-                                        interactionOptions:
-                                            const InteractionOptions(
-                                          flags: InteractiveFlag.drag |
-                                              InteractiveFlag.pinchZoom |
-                                              InteractiveFlag.doubleTapZoom,
-                                        ),
-                                        onTap: (_, point) =>
-                                            _setLocation(point),
-                                      ),
-                                      children: [
-                                        MapBaseStyle.calles.toLayer(),
-                                        if (_prefs?.hasLocation == true)
-                                          MarkerLayer(
-                                            markers: [
-                                              Marker(
-                                                point: LatLng(
-                                                  _prefs!.latitude!,
-                                                  _prefs!.longitude!,
-                                                ),
-                                                width: 40,
-                                                height: 40,
-                                                child: Icon(
-                                                  Icons.location_on,
-                                                  color: scheme.primary,
-                                                  size: 36,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  _prefs?.hasLocation == true
-                                      ? 'Lat ${_prefs!.latitude!.toStringAsFixed(5)} · Lon ${_prefs!.longitude!.toStringAsFixed(5)}'
-                                      : 'Sin ubicación guardada',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: TextButton(
-                                    onPressed: _prefs?.hasLocation == true
-                                        ? _clearLocation
-                                        : null,
-                                    child: const Text('Quitar ubicación'),
-                                  ),
-                                ),
-                                SwitchListTile(
-                                  contentPadding: EdgeInsets.zero,
-                                  title: const Text('Avisos por correo'),
-                                  value: _prefs?.notifyEmail ?? false,
-                                  onChanged: _prefs?.hasLocation == true
-                                      ? (value) => setState(() {
-                                            _prefs = _prefs!.copyWith(
-                                              notifyEmail: value,
-                                            );
-                                          })
-                                      : null,
-                                ),
-                                SwitchListTile(
-                                  contentPadding: EdgeInsets.zero,
-                                  title: const Text('WhatsApp'),
-                                  value: _prefs?.notifyWhatsapp ?? false,
-                                  onChanged: _prefs?.hasLocation == true
-                                      ? (value) => setState(() {
-                                            _prefs = _prefs!.copyWith(
-                                              notifyWhatsapp: value,
-                                            );
-                                          })
-                                      : null,
-                                ),
-                                if (_prefs?.notifyWhatsapp == true)
-                                  TextFormField(
-                                    controller: _whatsapp,
-                                    decoration: const InputDecoration(
-                                      labelText: 'Destino WhatsApp',
-                                    ),
-                                  ),
-                                SwitchListTile(
-                                  contentPadding: EdgeInsets.zero,
-                                  title: const Text('Telegram'),
-                                  value: _prefs?.notifyTelegram ?? false,
-                                  onChanged: _prefs?.hasLocation == true
-                                      ? (value) => setState(() {
-                                            _prefs = _prefs!.copyWith(
-                                              notifyTelegram: value,
-                                            );
-                                          })
-                                      : null,
-                                ),
-                                if (_prefs?.notifyTelegram == true)
-                                  TextFormField(
-                                    controller: _telegram,
-                                    decoration: const InputDecoration(
-                                      labelText: 'Destino Telegram',
-                                    ),
-                                  ),
-                                const SizedBox(height: 8),
-                                FilledButton(
-                                  onPressed:
-                                      _savingPrefs ? null : _savePreferences,
-                                  child: _savingPrefs
-                                      ? const SizedBox.square(
-                                          dimension: 20,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                          ),
-                                        )
-                                      : const Text('Guardar preferencias'),
-                                ),
-                              ],
-                            ),
+                          _AccountLocationPanel(
+                            mapController: _mapController,
+                            prefs: _prefs,
+                            whatsapp: _whatsapp,
+                            telegram: _telegram,
+                            savingPrefs: _savingPrefs,
+                            onTapMap: _setLocation,
+                            onClearLocation: _clearLocation,
+                            onPrefsChanged: (next) =>
+                                setState(() => _prefs = next),
+                            onSavePreferences: _savePreferences,
                           ),
                         ],
                       ),
@@ -740,6 +618,179 @@ class _AccountPanel extends StatelessWidget {
         // Top > 0: el label flotante del OutlineInput no queda cortado.
         childrenPadding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
         children: [child],
+      ),
+    );
+  }
+}
+
+/// Mapa de ubicación solo mientras el panel está abierto (evita Placeholder rojo
+/// al colapsar y hacer scroll con teselas aún vivas).
+class _AccountLocationPanel extends StatefulWidget {
+  const _AccountLocationPanel({
+    required this.mapController,
+    required this.prefs,
+    required this.whatsapp,
+    required this.telegram,
+    required this.savingPrefs,
+    required this.onTapMap,
+    required this.onClearLocation,
+    required this.onPrefsChanged,
+    required this.onSavePreferences,
+  });
+
+  final MapController mapController;
+  final AccountPreferences? prefs;
+  final TextEditingController whatsapp;
+  final TextEditingController telegram;
+  final bool savingPrefs;
+  final void Function(LatLng point) onTapMap;
+  final VoidCallback onClearLocation;
+  final ValueChanged<AccountPreferences> onPrefsChanged;
+  final VoidCallback onSavePreferences;
+
+  @override
+  State<_AccountLocationPanel> createState() => _AccountLocationPanelState();
+}
+
+class _AccountLocationPanelState extends State<_AccountLocationPanel> {
+  bool _expanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final prefs = widget.prefs;
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        initiallyExpanded: false,
+        maintainState: false,
+        onExpansionChanged: (open) => setState(() => _expanded = open),
+        leading: Icon(Icons.place_outlined, color: scheme.primary),
+        title: const Text('Ubicación y avisos'),
+        subtitle: const Text('Punto para notificaciones'),
+        childrenPadding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: SizedBox(
+                  height: 180,
+                  child: _expanded
+                      ? FlutterMap(
+                          mapController: widget.mapController,
+                          options: MapOptions(
+                            initialCenter: LatLng(
+                              prefs?.latitude ?? -17.7833,
+                              prefs?.longitude ?? -63.1821,
+                            ),
+                            initialZoom: 12,
+                            interactionOptions: const InteractionOptions(
+                              flags: InteractiveFlag.drag |
+                                  InteractiveFlag.pinchZoom |
+                                  InteractiveFlag.doubleTapZoom,
+                            ),
+                            onTap: (_, point) => widget.onTapMap(point),
+                          ),
+                          children: [
+                            MapBaseStyle.calles.toLayer(),
+                            if (prefs?.hasLocation == true)
+                              MarkerLayer(
+                                markers: [
+                                  Marker(
+                                    point: LatLng(
+                                      prefs!.latitude!,
+                                      prefs.longitude!,
+                                    ),
+                                    width: 40,
+                                    height: 40,
+                                    child: Icon(
+                                      Icons.location_on,
+                                      color: scheme.primary,
+                                      size: 36,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                          ],
+                        )
+                      : ColoredBox(color: scheme.surfaceContainerHighest),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                prefs?.hasLocation == true
+                    ? 'Lat ${prefs!.latitude!.toStringAsFixed(5)} · Lon ${prefs.longitude!.toStringAsFixed(5)}'
+                    : 'Sin ubicación guardada',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton(
+                  onPressed:
+                      prefs?.hasLocation == true ? widget.onClearLocation : null,
+                  child: const Text('Quitar ubicación'),
+                ),
+              ),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Avisos por correo'),
+                value: prefs?.notifyEmail ?? false,
+                onChanged: prefs?.hasLocation == true && prefs != null
+                    ? (value) => widget.onPrefsChanged(
+                          prefs.copyWith(notifyEmail: value),
+                        )
+                    : null,
+              ),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('WhatsApp'),
+                value: prefs?.notifyWhatsapp ?? false,
+                onChanged: prefs?.hasLocation == true && prefs != null
+                    ? (value) => widget.onPrefsChanged(
+                          prefs.copyWith(notifyWhatsapp: value),
+                        )
+                    : null,
+              ),
+              if (prefs?.notifyWhatsapp == true)
+                TextFormField(
+                  controller: widget.whatsapp,
+                  decoration: const InputDecoration(
+                    labelText: 'Destino WhatsApp',
+                  ),
+                ),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Telegram'),
+                value: prefs?.notifyTelegram ?? false,
+                onChanged: prefs?.hasLocation == true && prefs != null
+                    ? (value) => widget.onPrefsChanged(
+                          prefs.copyWith(notifyTelegram: value),
+                        )
+                    : null,
+              ),
+              if (prefs?.notifyTelegram == true)
+                TextFormField(
+                  controller: widget.telegram,
+                  decoration: const InputDecoration(
+                    labelText: 'Destino Telegram',
+                  ),
+                ),
+              const SizedBox(height: 8),
+              FilledButton(
+                onPressed:
+                    widget.savingPrefs ? null : widget.onSavePreferences,
+                child: widget.savingPrefs
+                    ? const SizedBox.square(
+                        dimension: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : const Text('Guardar preferencias'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

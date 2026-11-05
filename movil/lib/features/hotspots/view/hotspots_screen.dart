@@ -82,8 +82,24 @@ class _HotspotsScreenState extends State<HotspotsScreen>
         context: context,
         api: widget.apiClient,
         point: _focusPoint(),
-        title: _searchPinLabel ?? _selectedRecord?.identifier ?? 'Tiempo',
+        title: _weatherTitle(),
       );
+
+  String _weatherTitle() {
+    final pin = _searchPinLabel?.trim();
+    if (pin != null && pin.isNotEmpty) return pin;
+    final record = _selectedRecord;
+    if (record == null) return 'Tiempo en este foco';
+    final municipio = _controller
+        .territoryById(record.territory['municipio']?.toString())
+        ?.name;
+    if (municipio != null && municipio.isNotEmpty) return municipio;
+    final provincia = _controller
+        .territoryById(record.territory['provincia']?.toString())
+        ?.name;
+    if (provincia != null && provincia.isNotEmpty) return provincia;
+    return 'Tiempo en este foco';
+  }
 
   Future<void> _openFilters() async {
     final selected = await showModalBottomSheet<HotspotFilters>(

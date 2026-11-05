@@ -504,12 +504,15 @@ class _DroughtScreenState extends State<DroughtScreen>
     if (_mapReady) _mapController.move(point, 9);
   }
 
-  Future<void> _openWeather() => openWeatherSheet(
-        context: context,
-        api: widget.apiClient,
-        point: _focusPoint(),
-        title: _searchPinLabel ?? 'Tiempo',
-      );
+  Future<void> _openWeather() {
+    final pin = _searchPinLabel?.trim();
+    return openWeatherSheet(
+      context: context,
+      api: widget.apiClient,
+      point: _focusPoint(),
+      title: (pin != null && pin.isNotEmpty) ? pin : 'Tiempo en este lugar',
+    );
+  }
 
   Widget _buildTopControls() {
     return Padding(

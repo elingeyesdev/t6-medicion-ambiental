@@ -37,5 +37,7 @@ enum MapBaseStyle {
     urlTemplate: urlTemplate,
     userAgentPackageName: 'bo.edu.univalle.geocruz_movil',
     maxNativeZoom: this == MapBaseStyle.relieve ? 17 : 19,
+    // Sin esto, una tesela fallida pinta el Placeholder rojo de depuración.
+    errorImage: MemoryImage(TileProvider.transparentImage),
   );
 }
