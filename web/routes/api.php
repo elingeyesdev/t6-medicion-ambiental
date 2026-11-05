@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\BuscarLugarController;
 use App\Http\Controllers\Api\CalidadAireController;
 use App\Http\Controllers\Api\CuentaController;
 use App\Http\Controllers\Api\FocosCalorController;
+use App\Http\Controllers\Api\InundacionesController;
 use App\Http\Controllers\Api\MapaMonitoreoController;
 use App\Http\Controllers\Api\PaisesController;
 use App\Http\Controllers\Api\SensoresController;
@@ -37,6 +38,8 @@ Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
         Route::post('/simulacion-continua/accion', [SimulacionContinuaController::class, 'accion'])
             ->middleware('can:simulaciones.gestionar');
         Route::middleware('can:datos.consultar')->group(function (): void {
+            Route::get('/inundaciones/catalogo', [InundacionesController::class, 'catalogo']);
+            Route::get('/inundaciones/consulta', [InundacionesController::class, 'consultar']);
             Route::get('/mapa/buscar', BuscarLugarController::class)->middleware('throttle:mapa-busquedas');
             // Sin el throttle:30,1 del grupo: si no, cada PNG cuenta dos veces y corta el recorrido (~16).
             Route::get('/mapa/capas', [CapasController::class, 'index'])

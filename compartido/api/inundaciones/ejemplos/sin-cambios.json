@@ -1,0 +1,112 @@
+{
+  "versionContrato": "agua-0.1-candidata",
+  "tipoEvidencia": "prueba_controlada",
+  "estado": "sin_cambios",
+  "comparacion": {
+    "referencia": "2024-09-01",
+    "comparacion": "2025-03-07"
+  },
+  "territorio": {
+    "identificador": "BO070101",
+    "nombre": "Ejemplo controlado",
+    "alcance": "recorte_parcial"
+  },
+  "fuente": {
+    "nombre": "Prueba de interfaz, sin observaciones reales",
+    "producto": "Figuras sintéticas",
+    "metodo": "Solo representación",
+    "resolucionMetros": 20,
+    "escenas": [
+      "prueba-A",
+      "prueba-B"
+    ]
+  },
+  "cobertura": {
+    "areaEstudiadaKm2": 1,
+    "areaComparableKm2": 0.8,
+    "fraccionComparable": 0.8
+  },
+  "resumen": {
+    "aguaPersistenteKm2": 0.2,
+    "aguaNuevaKm2": 0,
+    "aguaRetiradaKm2": 0,
+    "inundacionConfirmada": null
+  },
+  "capa": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "id": "prueba-0",
+        "properties": {
+          "clase": "agua_persistente"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -63.2,
+                -17.8
+              ],
+              [
+                -63.194,
+                -17.8
+              ],
+              [
+                -63.194,
+                -17.794
+              ],
+              [
+                -63.2,
+                -17.794
+              ],
+              [
+                -63.2,
+                -17.8
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "id": "prueba-3",
+        "properties": {
+          "clase": "no_comparable"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -63.176,
+                -17.8
+              ],
+              [
+                -63.17,
+                -17.8
+              ],
+              [
+                -63.17,
+                -17.794
+              ],
+              [
+                -63.176,
+                -17.794
+              ],
+              [
+                -63.176,
+                -17.8
+              ]
+            ]
+          ]
+        }
+      }
+    ]
+  },
+  "advertencias": [
+    "Datos de prueba. No representan una inundación real.",
+    "La comparación cubre solo el recorte mostrado."
+  ]
+}
