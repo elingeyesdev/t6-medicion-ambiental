@@ -1,0 +1,42 @@
+[
+  {
+    "archivo": "producto.json",
+    "url": "https://data-api.globalforestwatch.org/dataset/umd_tree_cover_loss",
+    "consultado_utc": "2026-10-31T04:58:32.595589+00:00",
+    "http": 200,
+    "bytes": 7467,
+    "sha256": "d6fda9a9023de671aee5f71dc5e1a08da9c48de8df526bec14f866c777b00abd",
+    "credenciales": false,
+    "content_type": "application/json"
+  },
+  {
+    "archivo": "version.json",
+    "url": "https://data-api.globalforestwatch.org/dataset/umd_tree_cover_loss/v1.13",
+    "consultado_utc": "2026-10-31T04:58:33.435899+00:00",
+    "http": 200,
+    "bytes": 5378,
+    "sha256": "97445659c2d16830eeb76ba717d059e9b08eb349c33f8133c1b570efc622c404",
+    "credenciales": false,
+    "content_type": "application/json"
+  },
+  {
+    "archivo": "campos.json",
+    "url": "https://data-api.globalforestwatch.org/dataset/umd_tree_cover_loss/v1.13/fields",
+    "consultado_utc": "2026-10-31T04:58:34.179557+00:00",
+    "http": 200,
+    "bytes": 59711,
+    "sha256": "c00667ee4f256afe421352b82a8578cc9a220ef39a764ddf01a099ae238ce91e",
+    "credenciales": false,
+    "content_type": "application/json"
+  },
+  {
+    "archivo": "serie.json",
+    "url": "https://data-api.globalforestwatch.org/dataset/umd_tree_cover_loss/v1.13/download_by_aoi/json?sql=SELECT+umd_tree_cover_loss__year%2C+SUM%28area__ha%29+AS+perdida_ha+FROM+data+WHERE+umd_tree_cover_loss__year+%3E%3D+2001+AND+umd_tree_cover_density_2000__percent+%3E%3D+30+GROUP+BY+umd_tree_cover_loss__year+ORDER+BY+umd_tree_cover_loss__year&aoi%5Btype%5D=admin&aoi%5Bcountry%5D=BOL&aoi%5Bregion%5D=8&aoi%5Bprovider%5D=gadm&aoi%5Bversion%5D=4.1",
+    "consultado_utc": "2026-10-31T04:58:35.398726+00:00",
+    "http": 200,
+    "bytes": 1534,
+    "sha256": "094d9db14df8fe54fa4cc117ae7ae5f612680a77cde84b1af211e97527a93c93",
+    "credenciales": false,
+    "content_type": "application/json"
+  }
+]

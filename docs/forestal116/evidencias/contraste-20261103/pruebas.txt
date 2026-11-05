@@ -1,0 +1,29 @@
+test_anillo_abierto_no_finito_o_fuera_del_globo_falla (test_territorios.TerritorioTest.test_anillo_abierto_no_finito_o_fuera_del_globo_falla) ... ok
+test_hueco_se_resta_con_ambas_orientaciones (test_territorios.TerritorioTest.test_hueco_se_resta_con_ambas_orientaciones) ... ok
+test_otro_archivo_gadm_requiere_una_captura_nueva (test_territorios.TerritorioTest.test_otro_archivo_gadm_requiere_una_captura_nueva) ... ok
+test_polygon_y_multipolygon_representan_la_misma_area (test_territorios.TerritorioTest.test_polygon_y_multipolygon_representan_la_misma_area) ... ok
+test_rechaza_lineas_y_area_no_positiva (test_territorios.TerritorioTest.test_rechaza_lineas_y_area_no_positiva) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.005s
+
+OK
+
+test_ausencia_y_nulo_no_son_cero (test_verificar_fuente.FuenteTest.test_ausencia_y_nulo_no_son_cero) ... ok
+test_captura_manipulada_no_se_valida (test_verificar_fuente.FuenteTest.test_captura_manipulada_no_se_valida) ... ok
+test_captura_real_y_ejemplo_reproducible (test_verificar_fuente.FuenteTest.test_captura_real_y_ejemplo_reproducible) ... ok
+test_cero_valido_y_cobertura_parcial (test_verificar_fuente.FuenteTest.test_cero_valido_y_cobertura_parcial) ... ok
+test_json_estricto_no_finito_y_claves_repetidas (test_verificar_fuente.FuenteTest.test_json_estricto_no_finito_y_claves_repetidas) ... ok
+test_orden_y_total_solo_si_todos_los_anios_tienen_dato (test_verificar_fuente.FuenteTest.test_orden_y_total_solo_si_todos_los_anios_tienen_dato) ... ok
+test_rechaza_anios_codificados_futuros_duplicados_o_booleanos (test_verificar_fuente.FuenteTest.test_rechaza_anios_codificados_futuros_duplicados_o_booleanos) ... ok
+test_rechaza_areas_negativas_texto_booleano_o_no_finitas (test_verificar_fuente.FuenteTest.test_rechaza_areas_negativas_texto_booleano_o_no_finitas) ... ok
+test_rechaza_filas_con_otra_unidad_o_campos_inesperados (test_verificar_fuente.FuenteTest.test_rechaza_filas_con_otra_unidad_o_campos_inesperados) ... ok
+test_rechaza_respuesta_error_y_demasiadas_filas (test_verificar_fuente.FuenteTest.test_rechaza_respuesta_error_y_demasiadas_filas) ... ok
+test_recibo_de_otro_territorio_criterio_o_acceso_no_se_adopta (test_verificar_fuente.FuenteTest.test_recibo_de_otro_territorio_criterio_o_acceso_no_se_adopta) ... ok
+test_revision_no_usa_red (test_verificar_fuente.FuenteTest.test_revision_no_usa_red) ... ok
+test_version_distinta_mutable_o_nueva_codificacion_requieren_revision (test_verificar_fuente.FuenteTest.test_version_distinta_mutable_o_nueva_codificacion_requieren_revision) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.142s
+
+OK

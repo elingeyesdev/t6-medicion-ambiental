@@ -1,0 +1,38 @@
+{
+  "metodo": "Geod WGS84; área exterior menos huecos, segmentos geodésicos entre vértices publicados",
+  "pyprojVersion": "3.7.2",
+  "catalogo": {
+    "id": "BO07",
+    "nombre": "Santa Cruz",
+    "archivoSha256": "9b04b7a4b8b75dd1e7cbe5abd95da68d1ae6368ce629e3aa7397968d65cf547b",
+    "tipo": "Polygon",
+    "componentes": 1,
+    "verticesConCierre": 19415,
+    "bbox": [
+      -64.84241285599995,
+      -20.473213712999893,
+      -57.45443352799998,
+      -13.475739208999926
+    ],
+    "areaGeodesicaKm2": 368770.2781281317
+  },
+  "gadm": {
+    "id": "BOL.8_1",
+    "nombre": "SantaCruz",
+    "archivoSha256": "206dad00c2d25488abac3b5ce3b7b04b5c496337c4ece99740404701259924a2",
+    "tipo": "MultiPolygon",
+    "componentes": 1,
+    "verticesConCierre": 2551,
+    "bbox": [
+      -64.8424,
+      -20.4732,
+      -57.4544,
+      -13.4759
+    ],
+    "areaGeodesicaKm2": 368660.1341133375
+  },
+  "diferenciaAreaTotalKm2": 110.14401479420485,
+  "geometriaIdentica": false,
+  "equivalenciaAdoptada": false,
+  "alcance": "Contraste de nombre, extensión y áreas de los archivos. Falta intersección, examen topológico y revisión de la equivalencia territorial."
+}

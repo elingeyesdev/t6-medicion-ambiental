@@ -1,0 +1,27 @@
+name: MET-03 fuente forestal
+
+on:
+  pull_request:
+    branches: [develop, main, 'feature/**', 'refactor/**', 'fix/**', 'hotfix/**', 'docs/**', 'test/**']
+    paths: ['herramientas/forestal/**', 'compartido/cobertura-forestal/**', 'docs/forestal116/**', '.github/workflows/met03.yml']
+  push:
+    branches: [develop]
+    paths: ['herramientas/forestal/**', 'compartido/cobertura-forestal/**', 'docs/forestal116/**', '.github/workflows/met03.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  fuente:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reproducir la captura y comprobar faltantes sin consultar proveedores
+        run: python -m unittest discover -s herramientas/forestal -p 'test_*.py' -v
