@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../../core/maps/map_base_styles.dart';
+import '../../../core/maps/map_chrome.dart';
+import '../../../core/maps/map_completo_actions.dart';
 import '../../../core/network/geocruz_api_client.dart';
 import '../../../core/theme/geocruz_theme.dart';
 import '../../hotspots/model/hotspot_models.dart';
@@ -10,13 +13,13 @@ import '../model/drought_repository.dart';
 import 'drought_detail_screen.dart';
 
 class DroughtScreen extends StatefulWidget {
-  const DroughtScreen({
+  DroughtScreen({
     required this.apiClient,
-    this.initialMonth = '2024-09',
+    String? initialMonth,
     this.showAppBar = true,
     this.repository,
     super.key,
-  });
+  }) : initialMonth = initialMonth ?? DroughtFilters.defaultMesFinal();
 
   final GeoCruzApiClient apiClient;
   final String initialMonth;
@@ -45,6 +48,9 @@ class _DroughtScreenState extends State<DroughtScreen>
   String? _errorMessage;
   bool _mapReady = false;
   int _request = 0;
+  MapBaseStyle _mapStyle = MapBaseStyle.relieve;
+  LatLng? _searchPin;
+  String? _searchPinLabel;
 
   @override
   void initState() {
@@ -97,7 +103,7 @@ class _DroughtScreenState extends State<DroughtScreen>
     } on GeoCruzApiException catch (e) {
       if (!mounted || request != _request) return;
       setState(() {
-        _errorMessage = e.message;
+        _errorMessage = _friendlyDroughtError(e);
         _loading = false;
       });
     } catch (_) {
@@ -275,14 +281,14 @@ class _DroughtScreenState extends State<DroughtScreen>
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 8),
                     TextFormField(
                       initialValue: selectedMonth,
                       decoration: const InputDecoration(
                         labelText: 'Mes final (AAAA-MM)',
                         hintText: 'Ej. 2024-09',
                         helperText:
-                            'Ventana de 3 meses que termina en este mes (UTC)',
+                            'Piloto disponible: 2024-09 · ventana de 3 meses (UTC)',
                         prefixIcon: Icon(Icons.calendar_month_outlined),
                         border: OutlineInputBorder(),
                       ),
@@ -302,7 +308,7 @@ class _DroughtScreenState extends State<DroughtScreen>
                       items: [
                         const DropdownMenuItem<String?>(
                           value: null,
-                          child: Text('Todo Santa Cruz'),
+                          child: Text('Todas las provincias'),
                         ),
                         ...provinces.map(
                           (p) => DropdownMenuItem<String?>(
@@ -382,7 +388,6 @@ class _DroughtScreenState extends State<DroughtScreen>
     super.build(context);
     final response = _response;
     final summary = response?.resumen;
-    final coverage = response?.cobertura;
 
     final body = _loading || _catalogLoading
         ? const Center(
@@ -426,11 +431,10 @@ class _DroughtScreenState extends State<DroughtScreen>
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         if (!widget.showAppBar) _buildTopControls(),
-                        _buildSummaryCard(summary, coverage),
+                        _buildSummaryCard(summary),
                         _buildMapCard(response.datos),
                         _buildLegend(),
                         _buildSamplesList(response.datos),
-                        _buildWarningsSection(response.advertencias),
                         const SizedBox(height: 24),
                       ],
                     ),
@@ -456,6 +460,10 @@ class _DroughtScreenState extends State<DroughtScreen>
           ],
         ),
         actions: [
+          ...mapCompletoActions(
+            onSearch: _openPlaceSearch,
+            onWeather: _openWeather,
+          ),
           IconButton(
             icon: const Icon(Icons.tune),
             tooltip: 'Filtros',
@@ -471,6 +479,37 @@ class _DroughtScreenState extends State<DroughtScreen>
       body: body,
     );
   }
+
+  LatLng _focusPoint() {
+    if (_selectedSample != null) {
+      return LatLng(_selectedSample!.lat, _selectedSample!.lon);
+    }
+    if (_searchPin != null) return _searchPin!;
+    if (_mapReady) return _mapController.camera.center;
+    return const LatLng(-17.8, -63.1);
+  }
+
+  Future<void> _openPlaceSearch() async {
+    final result = await openPlaceSearch(
+      context: context,
+      api: widget.apiClient,
+      near: _focusPoint(),
+    );
+    if (!mounted || result == null) return;
+    final point = LatLng(result.latitude, result.longitude);
+    setState(() {
+      _searchPin = point;
+      _searchPinLabel = result.name;
+    });
+    if (_mapReady) _mapController.move(point, 9);
+  }
+
+  Future<void> _openWeather() => openWeatherSheet(
+        context: context,
+        api: widget.apiClient,
+        point: _focusPoint(),
+        title: _searchPinLabel ?? 'Tiempo',
+      );
 
   Widget _buildTopControls() {
     return Padding(
@@ -492,12 +531,24 @@ class _DroughtScreenState extends State<DroughtScreen>
               ],
             ),
           ),
+          IconButton.filledTonal(
+            onPressed: _openPlaceSearch,
+            icon: const Icon(Icons.search_rounded, size: 18),
+            tooltip: 'Buscar lugar',
+          ),
+          const SizedBox(width: 4),
+          IconButton.filledTonal(
+            onPressed: _openWeather,
+            icon: const Icon(Icons.wb_cloudy_outlined, size: 18),
+            tooltip: 'Tiempo',
+          ),
+          const SizedBox(width: 4),
           FilledButton.tonalIcon(
             onPressed: _openFiltersDialog,
             icon: const Icon(Icons.tune, size: 18),
             label: const Text('Filtros'),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 4),
           IconButton.filledTonal(
             onPressed: _executeQuery,
             icon: const Icon(Icons.refresh, size: 18),
@@ -508,8 +559,29 @@ class _DroughtScreenState extends State<DroughtScreen>
     );
   }
 
-  Widget _buildSummaryCard(DroughtSummary? summary, DroughtCoverage? coverage) {
+  String _friendlyDroughtError(GeoCruzApiException error) {
+    final msg = error.message.toLowerCase();
+    final vencidos = error.code == 'PERIODO_NO_DISPONIBLE' ||
+        msg.contains('vencieron') ||
+        msg.contains('vencida') ||
+        msg.contains('caducad');
+    if (vencidos) {
+      return 'Los datos de sequías están vencidos. '
+          'Hay que actualizarlos; cambiar el mes no lo resuelve.';
+    }
+    if (error.code == 'MUESTRAS_NO_DISPONIBLES' ||
+        msg.contains('no hay resultados preparados') ||
+        msg.contains('sequias:preparar') ||
+        msg.contains('petición web')) {
+      return 'No hay datos de sequías para ese mes. '
+          'Prueba otro mes en Filtros (p. ej. 2024-09).';
+    }
+    return error.message;
+  }
+
+  Widget _buildSummaryCard(DroughtSummary? summary) {
     if (summary == null) return const SizedBox.shrink();
+    final coverage = _response?.cobertura;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -566,7 +638,10 @@ class _DroughtScreenState extends State<DroughtScreen>
               const SizedBox(height: 8),
               Text(
                 'Datos para ${coverage.municipiosConDatos} de ${coverage.municipiosEnFiltro} municipios consultados.',
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: 4),
               Text(
@@ -608,108 +683,132 @@ class _DroughtScreenState extends State<DroughtScreen>
   }
 
   Widget _buildMapCard(List<DroughtSample> datos) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: SizedBox(
-        height: 320,
-        child: Stack(
-          children: [
-            FlutterMap(
-              key: ValueKey('drought-map-$_request'),
-              mapController: _mapController,
-              options: MapOptions(
-                initialCenter: const LatLng(-17.8, -63.1),
-                initialZoom: 7.2,
-                onMapReady: () {
-                  _mapReady = true;
-                  if (datos.isNotEmpty) _fitBounds(datos);
-                },
+    final markers = datos.map((sample) {
+      final cat = sample.spi.categoryInfo;
+      final isSelected = _selectedSample?.idMuestra == sample.idMuestra;
+      return Marker(
+        point: LatLng(sample.lat, sample.lon),
+        width: isSelected ? 40 : 30,
+        height: isSelected ? 40 : 30,
+        child: GestureDetector(
+          onTap: () => _onSampleTapped(sample),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            decoration: BoxDecoration(
+              color: cat.color,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: isSelected ? Colors.white : Colors.black87,
+                width: isSelected ? 3 : 1.5,
               ),
-              children: [
-                TileLayer(
-                  urlTemplate:
-                      'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  userAgentPackageName: 'bo.edu.univalle.geocruz',
-                ),
-                MarkerLayer(
-                  markers: datos.map((sample) {
-                    final cat = sample.spi.categoryInfo;
-                    final isSelected =
-                        _selectedSample?.idMuestra == sample.idMuestra;
-
-                    return Marker(
-                      point: LatLng(sample.lat, sample.lon),
-                      width: isSelected ? 40 : 30,
-                      height: isSelected ? 40 : 30,
-                      child: GestureDetector(
-                        onTap: () => _onSampleTapped(sample),
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          decoration: BoxDecoration(
-                            color: cat.color,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: isSelected ? Colors.white : Colors.black87,
-                              width: isSelected ? 3 : 1.5,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.3),
-                                blurRadius: 4,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: Icon(
-                            Icons.water_drop,
-                            color: Colors.white,
-                            size: isSelected ? 22 : 16,
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.3),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
-            Positioned(
-              right: 12,
-              top: 12,
-              child: Column(
-                children: [
-                  FloatingActionButton.small(
-                    heroTag: 'drought_zoom_in',
-                    onPressed: () {
+            child: Icon(
+              Icons.water_drop,
+              color: Colors.white,
+              size: isSelected ? 22 : 16,
+            ),
+          ),
+        ),
+      );
+    }).toList();
+    if (_searchPin != null) {
+      markers.add(
+        Marker(
+          point: _searchPin!,
+          width: 44,
+          height: 48,
+          child: Tooltip(
+            message: _searchPinLabel ?? 'Lugar buscado',
+            child: Icon(
+              Icons.place_rounded,
+              size: 40,
+              color: Theme.of(context).colorScheme.tertiary,
+              shadows: const [Shadow(color: Colors.white, blurRadius: 4)],
+            ),
+          ),
+        ),
+      );
+    }
+    final fitBounds = datos.length > 1
+        ? LatLngBounds.fromPoints(
+            datos.map((d) => LatLng(d.lat, d.lon)).toList(),
+          )
+        : null;
+    final mapHeight = MediaQuery.sizeOf(context).height * 0.42;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: ColoredBox(
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
+          child: SizedBox(
+            height: mapHeight.clamp(260.0, 480.0),
+            child: Stack(
+              children: [
+                FlutterMap(
+                  key: ValueKey('drought-map-$_request-$_mapStyle'),
+                  mapController: _mapController,
+                  options: MapOptions(
+                    initialCenter: const LatLng(-17.8, -63.1),
+                    initialZoom: 7.2,
+                    onMapReady: () {
+                      _mapReady = true;
+                      if (datos.isNotEmpty) _fitBounds(datos);
+                    },
+                  ),
+                  children: [
+                    _mapStyle.toLayer(),
+                    MarkerLayer(markers: markers),
+                    RichAttributionWidget(
+                      alignment: AttributionAlignment.bottomLeft,
+                      attributions: [
+                        TextSourceAttribution(_mapStyle.attribution),
+                      ],
+                    ),
+                  ],
+                ),
+                Positioned.fill(
+                  child: MapChrome(
+                    style: _mapStyle,
+                    onStyleChanged: (style) =>
+                        setState(() => _mapStyle = style),
+                    onZoomIn: () {
+                      if (!_mapReady) return;
                       _mapController.move(
                         _mapController.camera.center,
                         _mapController.camera.zoom + 1,
                       );
                     },
-                    child: const Icon(Icons.add),
-                  ),
-                  const SizedBox(height: 6),
-                  FloatingActionButton.small(
-                    heroTag: 'drought_zoom_out',
-                    onPressed: () {
+                    onZoomOut: () {
+                      if (!_mapReady) return;
                       _mapController.move(
                         _mapController.camera.center,
                         _mapController.camera.zoom - 1,
                       );
                     },
-                    child: const Icon(Icons.remove),
+                    onFit: () => _fitBounds(datos),
+                    onFullscreen: () => openFullscreenMap(
+                      context: context,
+                      title: 'Sequías',
+                      center: const LatLng(-17.8, -63.1),
+                      zoom: 7.2,
+                      markers: markers,
+                      fitBounds: fitBounds,
+                      initialStyle: _mapStyle,
+                    ),
                   ),
-                  const SizedBox(height: 6),
-                  FloatingActionButton.small(
-                    heroTag: 'drought_center',
-                    onPressed: () => _fitBounds(datos),
-                    child: const Icon(Icons.my_location),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -816,7 +915,7 @@ class _DroughtScreenState extends State<DroughtScreen>
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  'Mostrando 10 de ${datos.length} puntos. Toca un punto en el mapa para ver su ficha completa.',
+                  'Mostrando 10 de ${datos.length}. Toca el mapa para más detalle.',
                   style: const TextStyle(fontSize: 14, color: Colors.black54),
                 ),
               ),
@@ -826,62 +925,4 @@ class _DroughtScreenState extends State<DroughtScreen>
     );
   }
 
-  Widget _buildWarningsSection(List<String> advertencias) {
-    final filtered = advertencias;
-    if (filtered.isEmpty) return const SizedBox.shrink();
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: Colors.grey.shade300),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Row(
-                children: [
-                  Icon(Icons.info_outline, size: 20, color: GeoCruzColors.green),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Sobre estos datos y advertencias',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'Fuente: Open-Meteo ERA5 (reanálisis 0.25°, precipitation_sum en mm, licencia CC BY 4.0). Base de referencia 1991–2020.',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 6),
-              ...filtered.map(
-                (adv) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('• ', style: TextStyle(fontWeight: FontWeight.bold)),
-                      Expanded(
-                        child: Text(
-                          adv,
-                          style: const TextStyle(fontSize: 14, color: Colors.black87),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }

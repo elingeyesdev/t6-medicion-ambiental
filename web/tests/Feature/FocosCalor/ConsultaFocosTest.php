@@ -251,4 +251,38 @@ class ConsultaFocosTest extends TestCase
         $this->getJson('/api/incendios')->assertNotFound();
         Http::assertNothingSent();
     }
+
+    public function test_la_consulta_sin_alcance_conserva_santa_cruz_y_no_usa_country(): void
+    {
+        $this->nasa();
+        $this->getJson(self::BASE)->assertOk()
+            ->assertJsonPath('consulta.territorio.identificador', 'BO07');
+        Http::assertNotSent(fn ($request) => str_contains($request->url(), '/country/'));
+    }
+
+    public function test_un_alcance_no_admitido_se_rechaza_sin_sustituirlo_por_santa_cruz(): void
+    {
+        $this->getJson(self::BASE.'&alcance=sudamerica')->assertStatus(422)
+            ->assertJsonPath('error.codigo', 'FILTROS_INVALIDOS')
+            ->assertJsonMissingPath('datos');
+        Http::assertNothingSent();
+    }
+
+    public function test_la_consulta_movil_admite_el_alcance_explicito_de_santa_cruz(): void
+    {
+        $this->nasa();
+        $this->getJson(self::BASE.'&alcance=santacruz&modo=externo&pagina=1&tamanioPagina=25')
+            ->assertOk()->assertJsonPath('consulta.territorio.identificador', 'BO07')
+            ->assertJsonCount(0, 'datos');
+        Http::assertNotSent(fn ($request) => str_contains($request->url(), '/country/'));
+    }
+
+    public function test_el_alcance_repetido_o_en_lista_se_rechaza_sin_consultar(): void
+    {
+        foreach (['alcance=santacruz&alcance=santacruz', 'alcance[]=santacruz'] as $query) {
+            $this->getJson(self::BASE.'&'.$query)->assertStatus(422)
+                ->assertJsonPath('error.codigo', 'FILTROS_INVALIDOS');
+        }
+        Http::assertNothingSent();
+    }
 }

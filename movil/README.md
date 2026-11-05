@@ -6,6 +6,14 @@ filtros, fechas, procedencia, fuente, unidad y coordenadas de cada lectura; los
 puntos sin lecturas no se convierten en ceros. La información del mapa se
 consulta con la cuenta iniciada. El mapa base usa OpenStreetMap.
 
+## Plantilla UI
+
+La plantilla móvil instalada es **UIKits / anoochit** (`uikits2`, MIT), guardada
+en `templates/uikits/` con `procedencia.json`. La app la aplica en
+`lib/uikits/` (tema Material 3, navegación, perfil y acceso estilo SignUp/Profile).
+No se usa `dynamic_color` del demo (rompe Gradle en este entorno). No hay
+plantillas vacías de Android Studio ni `material_3_demo` / `responsive_dashboard`.
+
 ## Requisitos
 
 - Flutter 3.38.3 con Dart 3.10.1 o compatible.

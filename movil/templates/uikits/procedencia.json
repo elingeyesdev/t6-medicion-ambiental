@@ -1,0 +1,10 @@
+{
+  "paquete": "uikits2",
+  "nombre": "UIKits (anoochit)",
+  "version": "2.2.0+2",
+  "fuente": "https://github.com/anoochit/uikits",
+  "licencia": "MIT",
+  "copyright": "Copyright (c) 2024 Anuchit Chalothorn",
+  "uso_en_geosur": "Plantilla móvil aplicada vía movil/lib/uikits (tema DynamicColor/Material 3, navegación, perfil, acceso). Los demos originales quedan en templates/uikits/lib para comparación.",
+  "instalado": "2026-11-03"
+}

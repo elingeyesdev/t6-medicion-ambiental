@@ -11,7 +11,7 @@ final class FocosCalorController
 {
     public function __invoke(Request $request, ConsultaFocos $consulta): JsonResponse
     {
-        $p = ParametrosConsulta::leer($request, ['provincia', 'municipio', 'desde', 'hasta', 'modo', 'confianza', 'pagina', 'tamanioPagina', 'versionConjunto']);
+        $p = ParametrosConsulta::leer($request, ['provincia', 'municipio', 'desde', 'hasta', 'modo', 'confianza', 'pagina', 'tamanioPagina', 'versionConjunto', 'alcance']);
 
         return response()->json($consulta->ejecutar($p))->header('Cache-Control', 'no-store');
     }

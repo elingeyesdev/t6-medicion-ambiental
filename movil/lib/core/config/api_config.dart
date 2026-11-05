@@ -1,3 +1,7 @@
+import 'dart:io' show Platform;
+
+import 'package:flutter/foundation.dart';
+
 class ApiConfig {
   const ApiConfig._();
 
@@ -6,7 +10,14 @@ class ApiConfig {
     defaultValue: 'http://127.0.0.1:8002/api/v1/',
   );
 
-  static Uri fromEnvironment() => parseBaseUrl(_configuredBaseUrl);
+  /// En emulador Android, 127.0.0.1 es el propio emulador: usar 10.0.2.2 (host).
+  static Uri fromEnvironment() {
+    var url = _configuredBaseUrl;
+    if (!kIsWeb && Platform.isAndroid && url.contains('127.0.0.1')) {
+      url = url.replaceFirst('127.0.0.1', '10.0.2.2');
+    }
+    return parseBaseUrl(url);
+  }
 
   static Uri parseBaseUrl(String value) {
     final trimmed = value.trim();

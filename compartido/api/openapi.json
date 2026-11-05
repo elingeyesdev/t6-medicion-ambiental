@@ -329,6 +329,19 @@
               "maximum": 500,
               "default": 100
             }
+          },
+          {
+            "name": "alcance",
+            "in": "query",
+            "required": false,
+            "description": "Compatibilidad con Flutter. Solo admite santacruz; omitirlo conserva la misma cobertura. Otros alcances devuelven 422 sin sustituir el territorio.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "santacruz"
+              ],
+              "default": "santacruz"
+            }
           }
         ],
         "responses": {

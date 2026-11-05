@@ -15,6 +15,16 @@ class GeoSurUser {
   final String role;
   final Set<String> permissions;
 
+  bool get canManageSimulations =>
+      permissions.contains('simulaciones.gestionar');
+
+  bool get canViewReports => permissions.contains('reportes.ver');
+
+  bool get canCreateReports => permissions.contains('reportes.crear');
+
+  bool get canAcknowledgeAlerts =>
+      permissions.contains('alertas.gestionar');
+
   factory GeoSurUser.fromJson(Object? value) {
     if (value is! Map) {
       throw const FormatException('La API devolvió una cuenta inválida.');
@@ -38,9 +48,12 @@ class AuthRepository {
     : _storage = storage ?? const FlutterSecureStorage();
 
   static const _tokenKey = 'geosur_mobile_token';
+  static const _emailKey = 'geosur_mobile_email';
 
   final GeoCruzApiClient api;
   final FlutterSecureStorage _storage;
+
+  Future<String?> rememberedEmail() => _storage.read(key: _emailKey);
 
   Future<GeoSurUser?> restoreSession() async {
     final token = await _storage.read(key: _tokenKey);
@@ -50,14 +63,20 @@ class AuthRepository {
       final payload = await api.getJson(
         'cuenta',
         authenticated: true,
-        timeoutOverride: const Duration(seconds: 4),
+        timeoutOverride: const Duration(seconds: 12),
       );
-      return GeoSurUser.fromJson(_map(payload)['usuario']);
+      final user = GeoSurUser.fromJson(_map(payload)['usuario']);
+      if (user.email.isNotEmpty) {
+        await _storage.write(key: _emailKey, value: user.email);
+      }
+      return user;
     } on GeoCruzApiException catch (error) {
       if (error.statusCode == 401 || error.statusCode == 403) {
         await clearSession();
+        // Sesión inválida: vuelve al login sin gritar; el correo se conserva.
         return null;
       }
+      // Red / servidor caído: no borrar el token; el usuario puede reintentar.
       rethrow;
     }
   }
@@ -97,6 +116,7 @@ class AuthRepository {
   Future<void> clearSession() async {
     api.bearerToken = null;
     await _storage.delete(key: _tokenKey);
+    // Conserva el correo recordado para rellenar el login.
   }
 
   Future<GeoSurUser> _authorize(
@@ -110,6 +130,10 @@ class AuthRepository {
       throw const FormatException('La API no entregó un token de acceso.');
     }
     await _storage.write(key: _tokenKey, value: token);
+    final email = values['email'];
+    if (email != null && email.isNotEmpty) {
+      await _storage.write(key: _emailKey, value: email);
+    }
     api.bearerToken = token;
     return GeoSurUser.fromJson(response['usuario']);
   }

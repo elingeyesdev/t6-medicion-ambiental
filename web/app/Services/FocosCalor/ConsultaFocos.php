@@ -31,6 +31,9 @@ final class ConsultaFocos
         if (! in_array($modo, ['externo', 'demostracion'], true)) {
             throw new ErrorConsulta('FILTROS_INVALIDOS', 'Modo desconocido.');
         }
+        if (($p['alcance'] ?? 'santacruz') !== 'santacruz') {
+            throw new ErrorConsulta('FILTROS_INVALIDOS', 'La consulta de focos está disponible para Santa Cruz.');
+        }
         $seleccion = $this->catalogo->resolverFiltros($p['provincia'] ?? null, $p['municipio'] ?? null);
         $pagina = Parametros::entero($p, 'pagina', 1, 1000000);
         $tamanio = Parametros::entero($p, 'tamanioPagina', 100, 500);

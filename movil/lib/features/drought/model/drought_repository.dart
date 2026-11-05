@@ -27,7 +27,7 @@ class DroughtRepository {
     return response;
   }
 
-  /// Carga el catálogo territorial oficial de Santa Cruz.
+  /// Carga el catálogo territorial (piloto sequías = Santa Cruz / BO07).
   Future<List<TerritoryOption>> loadTerritories() async {
     final payload = await apiClient.getJson(
       'territorios',
