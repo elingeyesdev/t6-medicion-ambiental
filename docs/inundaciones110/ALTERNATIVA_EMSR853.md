@@ -13,3 +13,5 @@ La descarga del producto 2155 respondió HTTP 200. El ZIP contiene el polígono 
 El producto puede servir como referencia de contraste para Santa Rosa del Sara. Antes de adoptarlo, hay que revisar qué observación y fecha sustentan cada polígono y elegir imágenes independientes y comparables. El caso alternativo sigue sujeto al acuerdo de #110 y #111 sigue pendiente.
 
 [Condiciones de uso](https://mapping.emergency.copernicus.eu/terms-and-conditions/) y [atribución del producto](https://mapping.emergency.copernicus.eu/about/citation-guidelines/). Copernicus Emergency Management Service (© 2025 European Union), [EMSR853] Santa Rosa del Sara (AOI02): Delineation Map.
+
+La [prueba óptica del 06/11](evidencias/sara-20261106/README.md) midió una pareja por cada fecha de comparación compatible. En este recorte, ninguna de las nueve parejas de catálogo puede superar 16,39 % de cobertura conjunta con la máscara candidata. Se conserva la delimitación oficial como referencia de contraste y se propone revisar otra fuente de imágenes antes de adoptar el piloto.
