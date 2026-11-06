@@ -334,3 +334,5 @@ de #119/#120. Esta rama no consulta ni ejecuta CI remoto por CLI.
 Para continuar #111 hacen falta #39 y el método revisado de #110; después siguen #112 y #113. El piloto forestal #117 espera #115 y #116. Las revisiones y acuerdos pendientes no se sustituyen por crear este índice. Las advertencias de aceptación académica quedan separadas de los bloqueos técnicos: el ingeniero aprueba el corte hacia main.
 
 Las verificaciones CI de la captura identifican el SHA observado desde el navegador. `unknown` se conserva donde no se comprobó; generar este documento no consulta CI ni acredita entrega. La captura es un corte histórico: si cambian los PR o las tareas, se toma otra y se genera otro directorio.
+
+Para el estado posterior de M3 y las pruebas de datos, API y web de M4, consulta [la revisión del 06/11](REVISION-20261106.md).
