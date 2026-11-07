@@ -2,9 +2,11 @@
 
 Propuesta de imagen PHP 8.3 con Apache y PostgreSQL. Se construye desde la raíz del repositorio para conservar web y compartido. El arranque lee PORT, usa el directorio público de Laravel y exige una APP_KEY persistente. El contexto excluye referencias, móvil, temporales, dependencias locales, bases SQLite y archivos .env.
 
-## Prueba local pendiente
+## Construcción y prueba de contenedores
 
-Docker está instalado en el equipo, pero su motor Linux no estaba disponible durante la preparación del 07/11/2026. Se revisó la sintaxis del script con Bash. La construcción, migraciones, reinicio y pruebas HTTP del contenedor están pendientes.
+El 07/11/2026 pasó la [ejecución de GitHub Actions](https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/42415348983) sobre el commit a790866. Se construyó la imagen desde el repositorio, se ejecutaron las migraciones en PostgreSQL 16 temporal y respondieron salud, login y catálogo territorial. Un archivo de prueba en storage sobrevivió al reemplazo del contenedor web con el mismo volumen.
+
+El script herramientas/despliegue/probar-contenedor.sh reproduce esta comprobación en un equipo Linux con Docker, Bash, curl, OpenSSL y Python 3. Sus contenedores, red, volumen y credenciales son exclusivos de la prueba y se retiran al terminar. Aún faltan HTTPS detrás del proxy, publicaciones ambientales reales, copia y recuperación, y la prueba desde Flutter en la URL final. El motor local de Docker continúa apagado.
 
 Cuando el motor esté disponible, construir desde la raíz con `docker build -t geosur-web:revision .`. Mantener un archivo de variables local fuera de Git. Usar una base PostgreSQL y un volumen nuevos para la prueba. Ejemplo de arranque con un puerto local acotado:
 
@@ -20,7 +22,7 @@ La imagen usa producción con depuración desactivada. Las migraciones se ejecut
 
 ## Revisión para Railway
 
-La decisión vigente es trabajar en local. Esta preparación queda como borrador de #49. Para publicar faltan la cuenta/proyecto de Railway, revisión de Jaziel y el corte de código aprobado.
+La decisión vigente es trabajar en local. Esta preparación queda para revisión en el PR #156 de #49. Para publicar faltan la cuenta/proyecto de Railway, revisión de Jaziel y el corte de código aprobado.
 
 Configurar el Dockerfile de la raíz, PORT, las variables anteriores, PostgreSQL y un volumen montado en /var/www/geosur/web/storage. Comprobar /api/salud como salud de la aplicación, además de una consulta real que confirme la base y las publicaciones. Probar HTTPS, cookies de sesión y cabeceras del proxy de Railway con el dominio definitivo. Revisar explícitamente la política de despliegue de develop y main y la posibilidad de volver a una versión anterior.
 
