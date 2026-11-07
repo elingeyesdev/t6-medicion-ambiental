@@ -1,0 +1,28 @@
+name: MET-02 escenas y calidad
+
+on:
+  pull_request:
+    branches: [develop, main, 'feature/**', 'docs/**', 'refactor/**']
+    paths: ['herramientas/met110/**', 'herramientas/inundaciones/catalogo.py', 'compartido/inundaciones/metodo-m4.json', 'docs/inundaciones110/**', '.github/workflows/met02.yml']
+  push:
+    branches: [develop]
+    paths: ['herramientas/met110/**', 'compartido/inundaciones/metodo-m4.json', 'docs/inundaciones110/**', '.github/workflows/met02.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  preparacion:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r herramientas/met110/requirements.txt
+      - name: Comprobar el catálogo guardado y la calidad con casos controlados, sin red
+        run: python -m unittest discover -s herramientas/met110 -p 'test_*.py' -v
