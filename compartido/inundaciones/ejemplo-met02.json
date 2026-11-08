@@ -1,0 +1,48 @@
+{
+  "version_contrato": "propuesta-met02-1",
+  "ejemplo_de_contrato": true,
+  "implementado": false,
+  "metodo_aprobado": false,
+  "estado": "sin_producto_validado",
+  "bbox_tecnico": [
+    -62.99,
+    -17.75,
+    -62.9,
+    -17.65
+  ],
+  "crs_bbox": "OGC:CRS84",
+  "ambito_calidad": "ventana_exterior_en_malla_20m",
+  "cobertura_municipal_completa": false,
+  "comprobaciones": [
+    {
+      "escenas": [
+        "S2B_MSIL2A_20250225T141719_R010_T20KNF_20250225T175457",
+        "S2B_MSIL2A_20250307T141709_R010_T20KNF_20250307T175719"
+      ],
+      "fraccion_comparable_ambas": 0.09493527483648777,
+      "pixeles_ventana": 264812
+    },
+    {
+      "escenas": [
+        "S2C_MSIL2A_20250220T142101_R010_T20KNF_20250220T223412",
+        "S2C_MSIL2A_20250322T141811_R010_T20KNF_20250322T185816"
+      ],
+      "fraccion_comparable_ambas": 0.007745117290757216,
+      "pixeles_ventana": 264812
+    }
+  ],
+  "politica_scl_candidata": [
+    4,
+    5,
+    6
+  ],
+  "umbral_minimo_aprobado": null,
+  "unidad_area": "ha",
+  "metodo_area": null,
+  "area_agua_persistente_ha": null,
+  "area_agua_nueva_ha": null,
+  "area_agua_disminuida_ha": null,
+  "area_inundacion_validada_ha": null,
+  "capa": null,
+  "advertencia": "Las comprobaciones de acceso y calidad no son un producto validado de inundaciones."
+}

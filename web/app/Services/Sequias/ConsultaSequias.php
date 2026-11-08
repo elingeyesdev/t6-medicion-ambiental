@@ -83,7 +83,7 @@ final class ConsultaSequias
             }
         }
         if ($datos === []) {
-            throw new ErrorConsulta('MUESTRAS_NO_DISPONIBLES', 'No hay resultados preparados para este filtro y mes. Ejecuta sequias:preparar-consulta fuera de la petición web.', 503);
+            throw new ErrorConsulta('MUESTRAS_NO_DISPONIBLES', 'No hay resultados preparados para este filtro y mes. Prueba el mes del piloto (2024-09) o espera a que el equipo renueve la captura.', 503);
         }
         usort($datos, fn ($a, $b) => strcmp($a['idMuestra'], $b['idMuestra']));
         ksort($capturas);

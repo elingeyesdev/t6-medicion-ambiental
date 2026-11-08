@@ -10,7 +10,7 @@ La recuperación del sistema principal de GeoSur añade una [consulta privada de
 
 - `GET /api/v1/territorios`: `tipo` (departamento/provincia/municipio), `padre`, `pagina`, `tamanioPagina`. Los tres primeros filtros son opcionales; sin filtros devuelve el catálogo. Una página fuera del rango devuelve `datos=[]` conservando el total.
 - `GET /api/v1/territorios/{identificador}/limite`: Feature GeoJSON, versión, licencia y procedencia. Ejemplo `BO070101`. No acepta query. ID desconocido: 404; recurso inaccesible: 503.
-- `GET /api/v1/focos-calor`: `desde` y `hasta` obligatorios, `provincia`, `municipio`, `confianza`, `modo`, `pagina`, `tamanioPagina`, `versionConjunto` opcionales.
+- `GET /api/v1/focos-calor`: `desde` y `hasta` obligatorios, `provincia`, `municipio`, `confianza`, `modo`, `pagina`, `tamanioPagina`, `versionConjunto` y `alcance` opcionales.
 
 Las consultas son públicas, sin sesión ni clave NASA en el cliente. Se limita a 30 solicitudes/minuto por IP. Errores y respuestas JSON llevan `Cache-Control: no-store`; la caché de backend es independiente. La prueba de salud `/api/salud` mantiene el contrato de #15.
 
@@ -23,6 +23,8 @@ M3 añade la [API de sequías y su OpenAPI separado](sequias/README.md): consult
 Fechas ISO 8601 con segundos y zona explícita, normalizadas a UTC. Ejemplo válido: `2026-10-10T00:00:00-04:00`; los signos `+` deben codificarse como `%2B`. Intervalo positivo de **máximo 168 horas**, inicio incluido y final excluido. NASA recibe días de calendario UTC en bloques de máximo cinco días; el backend aplica después los instantes exactos. No se amplía silenciosamente el período efectivo.
 
 Solo producto **VIIRS_SNPP_NRT**. Se consulta la disponibilidad publicada antes de pedir CSV de área. Intersección parcial: cobertura `parcial`; rango completamente exterior: `sin_cobertura` con referencia a la disponibilidad; de lo contrario `desconocida`, porque la disponibilidad temporal no prueba observación completa del territorio. Una colección vacía no significa ausencia de incendios. El final publicado por NASA se convierte al inicio exclusivo del día siguiente.
+
+`alcance=santacruz` se acepta por compatibilidad con Flutter. Omitirlo conserva la misma consulta. No amplía la cobertura a Sudamérica; cualquier otro valor devuelve 422 antes de consultar al proveedor.
 
 Sin provincia/municipio: BO07 completo. Solo municipio: obtiene provincia desde el catálogo. Ambos deben ser compatibles. Los PCODE son OCHA/COD-AB, no códigos oficiales INE. Filtro por polígono Polygon/MultiPolygon con huecos, no por la caja enviada a NASA. Se incluyen puntos de borde, una sola vez por identificador en cada consulta. Un punto compartido por varios municipios conserva municipio nulo y `motivoAsignacion=frontera_compartida`; no se asigna por orden o proximidad. Consultas independientes de municipios vecinos pueden compartir esos puntos, por lo que sus totales no se suman sin deduplicar. Tolerancia numérica 1e-10 grados; sin buffer cartográfico.
 

@@ -1,0 +1,49 @@
+{
+  "estado": "exploracion_para_revision",
+  "referenciaAmpliada": "2025-02-01T00:00:00Z/2025-03-03T23:59:59Z",
+  "consultaReferenciaUTC": "2026-11-04T03:19:40.285Z",
+  "comparacionReutilizadaUTC": "2026-10-31T05:34:32.118078+00:00",
+  "escenas": {
+    "A": 11,
+    "B": 10
+  },
+  "haySiguientePagina": {
+    "A": false,
+    "B": false
+  },
+  "parejasCompatibles": 10,
+  "parejasConReferenciaNueva": [
+    {
+      "referencia": "S2B_MSIL2A_20250205T141709_R010_T20KNF_20250205T161732",
+      "comparacion": "S2B_MSIL2A_20250307T141709_R010_T20KNF_20250307T175719",
+      "separacionDias": 30.0,
+      "peorNubeEscena": 57.803124,
+      "aprobada": false
+    },
+    {
+      "referencia": "S2B_MSIL2A_20250205T141709_R010_T20KNF_20250205T161732",
+      "comparacion": "S2B_MSIL2A_20250317T141709_R010_T20KNF_20250317T194113",
+      "separacionDias": 40.0,
+      "peorNubeEscena": 99.892396,
+      "aprobada": false
+    }
+  ],
+  "calidadLocalComprobadaParaReferenciasNuevas": false,
+  "cotasPorComparacionConocida": [
+    {
+      "referencia": "S2B_MSIL2A_20250205T141709_R010_T20KNF_20250205T161732",
+      "comparacion": "S2B_MSIL2A_20250307T141709_R010_T20KNF_20250307T175719",
+      "limiteSuperiorFraccionComparable": 0.16856109239762548,
+      "interpretacion": "La intersección A y B nunca supera las celdas válidas de B."
+    },
+    {
+      "referencia": "S2B_MSIL2A_20250205T141709_R010_T20KNF_20250205T161732",
+      "comparacion": "S2B_MSIL2A_20250317T141709_R010_T20KNF_20250317T194113",
+      "limiteSuperiorFraccionComparable": 0.0,
+      "interpretacion": "La intersección A y B nunca supera las celdas válidas de B."
+    }
+  ],
+  "calidadPreviaSha256": "048451609fc9ef023ddd7fe88e0f04791f39c108b37036149a6b1691d2069fc5",
+  "bandasDescargadas": false,
+  "metodoAprobado": false
+}

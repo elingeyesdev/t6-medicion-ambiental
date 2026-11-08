@@ -1,0 +1,16 @@
+test_ausencia_scl_no_implica_activo_descargable (test_catalogo.CatalogoTest.test_ausencia_scl_no_implica_activo_descargable) ... ok
+test_fallo_http_json_invalido_y_respuesta_excesiva_no_se_interpretan (test_catalogo.CatalogoTest.test_fallo_http_json_invalido_y_respuesta_excesiva_no_se_interpretan) ... ok
+test_fecha_fuera_de_ventana_otra_coleccion_y_duplicados_se_rechazan (test_catalogo.CatalogoTest.test_fecha_fuera_de_ventana_otra_coleccion_y_duplicados_se_rechazan) ... ok
+test_geometria_y_nubosidad_incompatibles_no_pasan_como_datos_validos (test_catalogo.CatalogoTest.test_geometria_y_nubosidad_incompatibles_no_pasan_como_datos_validos) ... ok
+test_http_200_html_no_equivale_a_catalogo_sin_escenas (test_catalogo.CatalogoTest.test_http_200_html_no_equivale_a_catalogo_sin_escenas) ... ok
+test_no_hay_resultado_de_agua_al_encontrar_metadatos (test_catalogo.CatalogoTest.test_no_hay_resultado_de_agua_al_encontrar_metadatos) ... ok
+test_no_se_guardan_urls_firmadas_o_credenciales_en_el_resumen (test_catalogo.CatalogoTest.test_no_se_guardan_urls_firmadas_o_credenciales_en_el_resumen) ... ok
+test_nubosidad_desconocida_no_se_convierte_en_cero (test_catalogo.CatalogoTest.test_nubosidad_desconocida_no_se_convierte_en_cero) ... ok
+test_originales_congelados_y_resumen_conservan_hash_parametros_y_faltantes (test_catalogo.CatalogoTest.test_originales_congelados_y_resumen_conservan_hash_parametros_y_faltantes) ... ok
+test_paginacion_pendiente_se_conserva_y_no_se_descarga_automaticamente (test_catalogo.CatalogoTest.test_paginacion_pendiente_se_conserva_y_no_se_descarga_automaticamente) ... ok
+test_solo_feature_collection_valida_vacia_acredita_cero_coincidencias (test_catalogo.CatalogoTest.test_solo_feature_collection_valida_vacia_acredita_cero_coincidencias) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.079s
+
+OK

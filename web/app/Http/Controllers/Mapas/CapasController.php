@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Mapas;
 use App\Services\Api\ErrorConsulta;
 use App\Services\Mapas\Capas\VariablesRaster;
 use App\Services\Mapas\Radar\CatalogoRaster;
+use Illuminate\Http\Request;
 
 final class CapasController
 {
-    public function index(CatalogoRaster $catalogo)
+    public function index(Request $request, CatalogoRaster $catalogo)
     {
         try {
             $publicacion = $catalogo->cargar();
@@ -21,7 +22,7 @@ final class CapasController
                     }
                     $cuadros[] = array_intersect_key($c, array_flip([
                         'id', 'instante', 'ancho', 'alto', 'codificacion', 'fuente', 'producto', 'rejilla',
-                    ])) + ['url' => route('mapa.capas.imagen', ['cuadro' => $c['id']], absolute: false), 'origen' => 'estimado'];
+                    ])) + ['url' => $this->urlImagen($request, $c['id']), 'origen' => 'estimado'];
                 }
                 $capas[] = ['id' => $id, 'nombre' => $variable['nombre'], 'unidad' => $variable['unidad'], 'cuadros' => $cuadros];
             }
@@ -35,6 +36,15 @@ final class CapasController
         } catch (ErrorConsulta $e) {
             return $this->error($e);
         }
+    }
+
+    private function urlImagen(Request $request, string $cuadroId): string
+    {
+        if ($request->is('api/*')) {
+            return url('/api/v1/mapa/capas/cuadros/'.$cuadroId.'.png');
+        }
+
+        return route('mapa.capas.imagen', ['cuadro' => $cuadroId], absolute: false);
     }
 
     public function imagen(string $cuadro, CatalogoRaster $catalogo)
