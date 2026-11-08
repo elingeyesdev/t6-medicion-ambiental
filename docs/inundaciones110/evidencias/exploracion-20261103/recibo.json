@@ -1,0 +1,9 @@
+{
+  "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=sentinel-2-l2a&bbox=-62.99%2C-17.75%2C-62.9%2C-17.65&datetime=2025-02-01T00%3A00%3A00Z%2F2025-03-03T23%3A59%3A59Z&limit=100",
+  "consultadoUTC": "2026-11-04T03:19:40.285Z",
+  "http": 200,
+  "tipo": "application/geo+json; charset=utf-8",
+  "bytes": 169156,
+  "sha256": "f8d061be534b54ae8e9f8159d89a4028da387a5d624061201b0e17861df15ec1",
+  "rasterDescargado": false
+}

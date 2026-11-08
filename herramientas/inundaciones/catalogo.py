@@ -34,7 +34,7 @@ def url_consulta(proveedor, ventana):
     })
 
 
-def interpretar(cuerpo, tipo, estado, ventana):
+def interpretar(cuerpo, tipo, estado, ventana, config=None):
     """Un HTTP 200 HTML o JSON incompatible es fallo, nunca cero escenas."""
     if not 200 <= estado < 300:
         raise ValueError("ERROR_HTTP")
@@ -46,7 +46,7 @@ def interpretar(cuerpo, tipo, estado, ventana):
         documento = json.loads(cuerpo.decode("utf-8"))
     except (ValueError, UnicodeError) as error:
         raise ValueError("JSON_INVALIDO") from error
-    c = configuracion()
+    c = configuracion() if config is None else config
     if not isinstance(documento, dict) or documento.get("type") != "FeatureCollection" or not isinstance(documento.get("features"), list) or not isinstance(documento.get("links"), list):
         raise ValueError("CATALOGO_INCOMPATIBLE")
     if len(documento["features"]) > c["limitePrimeraPagina"]:
