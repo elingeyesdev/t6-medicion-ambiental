@@ -12,7 +12,11 @@ red, `gh`, subprocessos, tokens ni credenciales. La captura REST real la realiza
 el responsable aparte. No se consulta Actions, check-runs ni CI por CLI; un enlace
 de evidencia recibido se conserva y no se visita.
 
-## Corte vigente · 04/11/2026
+## Estado de revisión al 08/11/2026
+
+La [nota actualizada](REVISION-20261108.md) registra las integraciones de #120, #123 y #138, la base actual de #139 y las revisiones pendientes. No modifica los snapshots ni el PDF históricos. M4 sigue abierto.
+
+## Corte histórico · 04/11/2026
 
 El [resumen de revisión](REVISION-20261104.md) reúne el avance de las consultas #138 y la vista local #139, el contraste forestal de #119 y las decisiones pendientes. La [captura del 04/11](evidencias/2026-11-04/snapshot.json) conserva 22 tareas y 17 PR; el [índice nuevo](evidencias/2026-11-04/preparacion/indice.md) mantiene sus dependencias. El PDF en output/pdf/resumen-m4-20261104.pdf es un resumen de preparación, no un paquete final.
 
