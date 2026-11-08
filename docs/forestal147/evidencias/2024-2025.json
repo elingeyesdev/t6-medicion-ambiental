@@ -1,0 +1,106 @@
+{
+  "contrato": "propuesta-met03-1",
+  "estado_metodo": "pendiente_revision",
+  "integrado_en_api": false,
+  "unidad": "ha",
+  "decimales": "cadena_decimal",
+  "fuente": {
+    "producto": "umd_tree_cover_loss",
+    "version": "v1.13",
+    "anios": [
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "frecuencia": "anual",
+    "resolucion_nominal_m": 30,
+    "licencia_datos": "CC-BY-4.0",
+    "atribucion": "Hansen/UMD/Google/USGS/NASA; consulta GFW"
+  },
+  "criterio": {
+    "base_cobertura_anio": 2000,
+    "campo": "umd_tree_cover_density_2000__percent",
+    "operador": ">=",
+    "valor": 30,
+    "adoptado": false
+  },
+  "territorio": {
+    "nombre_proveedor": "Santa Cruz",
+    "pais_proveedor": "BOL",
+    "region_proveedor": "8",
+    "proveedor": "GADM",
+    "version": "4.1",
+    "nivel": "departamento_proveedor",
+    "equivalencia_catalogo_local": "pendiente",
+    "id_catalogo_local": null,
+    "resultados_municipales": false
+  },
+  "cobertura": {
+    "es_cobertura_completa_de_observacion": null,
+    "fraccion_valida": null,
+    "nota": "La serie no informa la fracción de observaciones válidas; no se inventa 100%."
+  },
+  "serie": [
+    {
+      "anio": 2024,
+      "estado": "dato",
+      "perdida_ha": "1323408.83757"
+    },
+    {
+      "anio": 2025,
+      "estado": "dato",
+      "perdida_ha": "396845.74137"
+    }
+  ],
+  "resumen": {
+    "anios_con_dato": 2,
+    "anios_sin_dato": [],
+    "subtotal_informado_ha": "1720254.57894",
+    "total_periodo_ha": "1720254.57894"
+  },
+  "capa": null,
+  "limites": [
+    "Pérdida de cobertura arbórea del producto; no causa ni ilegalidad.",
+    "No equivale a deforestación confirmada, pérdida neta o cobertura actual.",
+    "No hay datos de 2026 en esta versión ni frecuencia diaria.",
+    "La suma del proveedor no es una estimación de área ajustada por exactitud.",
+    "No valida límites municipales ni la equivalencia con el catálogo local."
+  ],
+  "consulta": {
+    "desde": 2024,
+    "hasta": 2025,
+    "extremos_incluidos": true
+  },
+  "reproduccion": {
+    "recibos_sha256": "6dd3cccee5062c502c47a9469ae1d36e9ac6b8e22cb639e860cf59978078c41e",
+    "archivos_sha256": {
+      "producto.json": "d6fda9a9023de671aee5f71dc5e1a08da9c48de8df526bec14f866c777b00abd",
+      "version.json": "97445659c2d16830eeb76ba717d059e9b08eb349c33f8133c1b570efc622c404",
+      "campos.json": "358e1140fbc02171bb78f1a118aab4d4d02ec92ec0b6fefeec912b468c5be811",
+      "serie.json": "7681ecc4254117fbd8f758e4071ae59c40965d91d749f9c70bf0e8396b7f2e47"
+    },
+    "lectura": "captura_local_verificada"
+  }
+}

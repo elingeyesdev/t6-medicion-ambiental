@@ -3,10 +3,10 @@ name: MET-03 fuente forestal
 on:
   pull_request:
     branches: [develop, main, 'feature/**', 'refactor/**', 'fix/**', 'hotfix/**', 'docs/**', 'test/**']
-    paths: ['herramientas/forestal/**', 'compartido/cobertura-forestal/**', 'docs/forestal116/**', '.github/workflows/met03.yml']
+    paths: ['herramientas/forestal/**', 'compartido/cobertura-forestal/**', 'docs/forestal116/**', 'docs/forestal147/**', '.github/workflows/met03.yml']
   push:
     branches: [develop]
-    paths: ['herramientas/forestal/**', 'compartido/cobertura-forestal/**', 'docs/forestal116/**', '.github/workflows/met03.yml']
+    paths: ['herramientas/forestal/**', 'compartido/cobertura-forestal/**', 'docs/forestal116/**', 'docs/forestal147/**', '.github/workflows/met03.yml']
 
 permissions:
   contents: read
