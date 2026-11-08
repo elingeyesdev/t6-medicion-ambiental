@@ -1,0 +1,10 @@
+test_esfuerzo_no_se_suma_como_duracion_de_red (test_extraer.PlannerTest.test_esfuerzo_no_se_suma_como_duracion_de_red) ... ok
+test_otra_rama_mas_larga_cambia_camino_critico (test_extraer.PlannerTest.test_otra_rama_mas_larga_cambia_camino_critico) ... ok
+test_rechaza_ciclo_sin_asignar_fechas_o_horas_actuales (test_extraer.PlannerTest.test_rechaza_ciclo_sin_asignar_fechas_o_horas_actuales) ... ok
+test_rechaza_identificadores_repetidos_y_predecesoras_ausentes (test_extraer.PlannerTest.test_rechaza_identificadores_repetidos_y_predecesoras_ausentes) ... ok
+test_red_original_no_es_un_pronostico_y_conserva_discrepancia_m2 (test_extraer.PlannerTest.test_red_original_no_es_un_pronostico_y_conserva_discrepancia_m2) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.041s
+
+OK
