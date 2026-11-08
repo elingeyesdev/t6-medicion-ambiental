@@ -1,6 +1,6 @@
 # Revisión web de agua · #113
 
-Preparación sobre el PR #138 (contrato #112), sin resultado ambiental real de #111. Conserva el mapa, menú, botones, cuentas y tipografía del frente recuperado de EnviroSense. No añade una entrada pública pendiente.
+Preparación sobre develop, con el contrato #112 del PR #138 ya integrado. Todavía no incluye el resultado ambiental real de #111. Conserva el mapa, menú, botones, cuentas y tipografía del frente recuperado de EnviroSense. No añade una entrada pública pendiente.
 
 ## Abrir localmente
 
