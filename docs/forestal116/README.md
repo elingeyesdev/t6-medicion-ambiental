@@ -63,3 +63,7 @@ Jaziel debe revisar producto/versión, parámetro de cobertura, período, geomet
 ## Continuación de acceso y territorio · 03/11/2026
 
 La [captura posterior y el contraste territorial](evidencias/contraste-20261103/README.md) completan los cuatro HTTP 200 de GFW y verifican la identidad departamental de GADM. Se conservan 25 años informados, con sus decimales originales. Los contornos GADM y local difieren; la consulta conserva la identidad del territorio del proveedor. El verificador de acceso y las pruebas locales están adjuntos para la revisión del criterio y del piloto.
+
+## Dependencias de la comprobación territorial
+
+Las cinco pruebas de contraste territorial necesitan pyproj. Instala primero el requirements.txt del [contraste territorial](evidencias/contraste-20261103/README.md#reproducción) y ejecútalas con el intérprete del entorno creado. Las trece pruebas del verificador de fuente indicadas arriba usan la biblioteca estándar.

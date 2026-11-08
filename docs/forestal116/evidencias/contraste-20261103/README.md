@@ -14,7 +14,25 @@ La correspondencia de nombre y código queda comprobada. La equivalencia de lím
 
 ## Reproducción
 
-Desde la raíz del repositorio, con Python y las [dependencias del contraste](requirements.txt) en un entorno aislado:
+Desde la raíz del repositorio, crea un entorno aislado e instala las [dependencias del contraste](requirements.txt). Estas cinco pruebas territoriales usan pyproj. El verificador de fuente y sus trece pruebas usan solo la biblioteca estándar.
+
+En Windows, con PowerShell:
+
+```powershell
+python -m venv tmp/venv-forestal116
+./tmp/venv-forestal116/Scripts/python.exe -m pip install -r docs/forestal116/evidencias/contraste-20261103/requirements.txt
+./tmp/venv-forestal116/Scripts/python.exe -B -m unittest discover -s docs/forestal116/evidencias/contraste-20261103 -p 'test_*.py' -v
+```
+
+En Linux o macOS:
+
+```sh
+python3 -m venv tmp/venv-forestal116
+./tmp/venv-forestal116/bin/python -m pip install -r docs/forestal116/evidencias/contraste-20261103/requirements.txt
+./tmp/venv-forestal116/bin/python -B -m unittest discover -s docs/forestal116/evidencias/contraste-20261103 -p 'test_*.py' -v
+```
+
+Para repetir las consultas guardadas y el contraste geométrico, usa el mismo intérprete del entorno en cada comando. En Windows, sustituye `python` por `./tmp/venv-forestal116/Scripts/python.exe` en los ejemplos siguientes:
 
 ```powershell
 python -B herramientas/forestal/verificar_fuente.py revisar --directorio docs/forestal116/evidencias/contraste-20261103/acceso
