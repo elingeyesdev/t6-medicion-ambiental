@@ -33,7 +33,7 @@ export function iniciarRevisionAgua(mapa,L) {
         el('agua-resultado').hidden=false;
         if(capasPorId.size){const bounds=L.latLngBounds([]);for(const c of capasPorId.values())bounds.extend(c.getBounds());mapa.fitBounds(bounds,{paddingTopLeft:window.innerWidth>700?[panel.offsetWidth+30,30]:[25,25],paddingBottomRight:window.innerWidth>700?[70,70]:[25,panel.offsetHeight+25],maxZoom:13,animate:false});}
     }
-    const consultar=crearConsultaAgua(async caso=>{if(caso==='error')throw new Error('Prueba controlada');return ejemplos[caso];},mostrar);
+    const consultar=crearConsultaAgua(async caso=>{if(caso==='error')throw new Error('Prueba controlada');return ejemplos[caso];},mostrar,{permitirPrueba:true});
     el('agua-consultar').addEventListener('click',()=>consultar(el('agua-caso').value));
     el('agua-cerrar').addEventListener('click',()=>{panel.hidden=true;el('agua-reabrir').hidden=false;el('agua-reabrir').focus();});
     el('agua-reabrir').addEventListener('click',()=>{panel.hidden=false;el('agua-reabrir').hidden=true;el('agua-cerrar').focus();});

@@ -23,7 +23,7 @@ export function leerAgua(d, permitirPrueba = false) {
     return d;
 }
 
-export function crearConsultaAgua(cargar, mostrar) {
+export function crearConsultaAgua(cargar, mostrar, {permitirPrueba = false} = {}) {
     let secuencia=0, abortar=null;
     return async caso => {
         const turno=++secuencia;
@@ -31,9 +31,23 @@ export function crearConsultaAgua(cargar, mostrar) {
         mostrar({estado:'cargando'});
         try {
             const dato=await cargar(caso, abortar.signal);
-            if(turno===secuencia) mostrar({estado:'resultado',dato:leerAgua(dato,true)});
+            if(turno===secuencia) mostrar({estado:'resultado',dato:leerAgua(dato, permitirPrueba === true)});
         } catch(error) {
-            if(turno===secuencia&&error.name!=='AbortError') mostrar({estado:'error',mensaje:'No se pudo cargar la comparación. Inténtalo otra vez.'});
+            if(turno===secuencia&&error?.name!=='AbortError') mostrar({estado:'error',mensaje:mensajeErrorAgua(error)});
         }
     };
+}
+
+const mensajesAgua = Object.freeze({
+    PRODUCTO_NO_DISPONIBLE: 'No hay una comparación disponible para ese lugar y fechas.',
+    TERRITORIO_NO_DISPONIBLE: 'No hay datos disponibles para ese lugar.',
+    FILTROS_INVALIDOS: 'Revisa el lugar y las fechas.',
+    FILTROS_INCOMPATIBLES: 'La fecha inicial debe ser anterior a la final.',
+    SESION_REQUERIDA: 'Vuelve a ingresar para consultar.',
+    ACCESO_DENEGADO: 'Tu cuenta no tiene acceso a esta consulta.',
+    LIMITE_CONSULTAS: 'Espera un momento y vuelve a intentarlo.',
+});
+
+export function mensajeErrorAgua(error) {
+    return Object.hasOwn(mensajesAgua, error?.codigo ?? '') ? mensajesAgua[error.codigo] : 'No se pudo cargar la comparación. Inténtalo otra vez.';
 }

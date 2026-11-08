@@ -15,3 +15,11 @@ Las capturas en ../evidencias/agua113 corresponden a HTML renderizado por Larave
 Pruebas: php artisan test --compact --filter="RevisionAguaTest|ConsultaAguaTest|BaseWebTest"; node --test tests/Js/agua.test.mjs desde web.
 
 Faltan producto real, catálogo de pares aprobados, consulta operativa y prueba de punta a punta. No se da #113 por terminado ni se habilita Inundaciones para usuarios. Flutter queda a cargo de Jaziel.
+
+## Transporte de consulta del 08/11/2026
+
+agua-api.js prepara cargarAgua y crearConsultaAguaApi para la ruta autenticada /api/v1/inundaciones/consulta. Usa credenciales del mismo sitio, no sigue redirecciones y exige JSON compatible con el contrato. Una respuesta HTML, un error de red o un producto ausente no se convierten en resultados vacíos ni en figuras de ejemplo. Los códigos conocidos se presentan con mensajes breves; los detalles internos del servidor no se muestran.
+
+crearConsultaAgua rechaza datos de prueba por defecto. Solo el recorrido local de revisión pasa permitirPrueba: true. El transporte de API siempre exige resultado_validado. La respuesta sintética usada por sus pruebas verifica el contrato, no acredita un producto real ni su aceptación.
+
+Pasaron 17 pruebas del visor/transporte y las 198 de JavaScript. En esta PC se ejecutó cada archivo con node --test --test-isolation=none para evitar consolas secundarias. Esta preparación todavía no añade la conexión al mapa público, filtros de productos ni navegación nueva: espera el producto de #111 y su catálogo. La revisión local conserva sus figuras controladas y el aviso permanente.
