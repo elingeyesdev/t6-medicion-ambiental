@@ -6,7 +6,7 @@ Propuesta de imagen PHP 8.3 con Apache y PostgreSQL. Se construye desde la raíz
 
 El 07/11/2026 pasó la [ejecución de GitHub Actions](https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/42415348983) sobre el commit a790866. Se construyó la imagen desde el repositorio, se ejecutaron las migraciones en PostgreSQL 16 temporal y respondieron salud, login y catálogo territorial. Un archivo de prueba en storage sobrevivió al reemplazo del contenedor web con el mismo volumen.
 
-El script herramientas/despliegue/probar-contenedor.sh reproduce esta comprobación en un equipo Linux con Docker, Bash, curl, OpenSSL y Python 3. Sus contenedores, red, volumen y credenciales son exclusivos de la prueba y se retiran al terminar. La ampliación del 08/11 añade una prueba de copia y recuperación en recursos nuevos; su resultado se registra abajo cuando termine. Aún faltan HTTPS detrás del proxy, publicaciones ambientales reales y la prueba desde Flutter en la URL final. El motor local de Docker continúa apagado.
+El script herramientas/despliegue/probar-contenedor.sh reproduce esta comprobación en un equipo Linux con Docker, Bash, curl, OpenSSL y Python 3. Sus contenedores, red, volumen y credenciales son exclusivos de la prueba y se retiran al terminar. La ampliación del 08/11 comprobó la copia y recuperación en recursos nuevos; la evidencia se registra abajo. Aún faltan HTTPS detrás del proxy, publicaciones ambientales reales y la prueba desde Flutter en la URL final. El motor local de Docker continúa apagado.
 
 Cuando el motor esté disponible, construir desde la raíz con `docker build -t geosur-web:revision .`. Mantener un archivo de variables local fuera de Git. Usar una base PostgreSQL y un volumen nuevos para la prueba. Ejemplo de arranque con un puerto local acotado:
 
@@ -28,12 +28,12 @@ Configurar el Dockerfile de la raíz, PORT, las variables anteriores, PostgreSQL
 
 Fuentes oficiales consultadas el 07/11/2026: [Dockerfiles](https://docs.railway.com/builds/dockerfiles), [volúmenes](https://docs.railway.com/volumes), [puerto y arranque](https://docs.railway.com/deployments/start-command). La configuración de Railway se completará al elegir el proyecto y el entorno.
 
-## Prueba de recuperación preparada el 08/11/2026
+## Recuperación comprobada el 08/11/2026
 
 El mismo script amplía la comprobación: crea un registro de control en PostgreSQL y un archivo cifrado con la APP_KEY de la prueba. Después de comprobar el reemplazo de la web, detiene su único escritor, genera un pg_dump en formato custom y copia storage en un archivo tar.gz. Conserva huellas SHA-256 de ambas copias en una carpeta temporal privada.
 
 Luego elimina los contenedores y volúmenes originales que creó el propio script. Inicia otro PostgreSQL con un identificador de clúster distinto y una base vacía; restaura el dump y los archivos en volúmenes nuevos. Comprueba el registro, las migraciones, el archivo de storage y el descifrado usando la misma APP_KEY, además de salud, login y catálogo. La limpieza retira únicamente los recursos con el identificador aleatorio de esta ejecución. Las copias no se publican como artefactos ni se conservan después de la prueba.
 
-Es un ensayo aislado con datos de control, no una copia de datos personales ni una recuperación de publicaciones ambientales reales. No conecta a un servidor existente ni necesita que esté encendido Docker en la laptop. El resultado completo se comprobará en el PR #156; la revisión de sintaxis local por sí sola no acredita recuperación.
+Es un ensayo aislado con datos de control, no una copia de datos personales ni una recuperación de publicaciones ambientales reales. No conecta a un servidor existente ni necesita que esté encendido Docker en la laptop. La [ejecución completa de GitHub](https://github.com/elingeyesdev/t6-medicion-ambiental/actions/runs/42529688275) pasó sobre d74a632426de95713377a8c33f7776d3cbefb879. También pasó la ejecución del evento push del mismo commit. Se verificaron las huellas de ambas copias y todos los pasos de recuperación descritos arriba. La revisión local de sintaxis se realizó antes de esa comprobación completa.
 
 Para una recuperación del entorno definitivo se deben conservar por separado la APP_KEY y las demás variables, la versión de aplicación y sus migraciones, la copia consistente de PostgreSQL y los archivos de storage. La clave y las contraseñas se guardan por un canal privado, nunca dentro de Git, capturas ni registros de CI. La retención, cifrado de las copias, destino externo y recuperación de datos ambientales reales se acuerdan antes de publicar; esta prueba no configura ese servicio de respaldo.
