@@ -57,7 +57,9 @@ final class RepositorioRevisionForestalTest extends TestCase
                     'paso_grados' => 0.00025, 'ancho' => 40000, 'alto' => 40000]],
         ];
         foreach (range(2001, 2025) as $anio) {
-            $r['serie'][] = ['anio' => $anio, 'perdida_ha' => match ($anio) {2001 => 0.1, 2024 => 0.2, 2025 => 0.3, default => 0.0}];
+            $r['serie'][] = ['anio' => $anio, 'perdida_ha' => match ($anio) {
+                2001 => 0.1, 2024 => 0.2, 2025 => 0.3, default => 0.0
+            }];
         }
         $c = ['type' => 'FeatureCollection', 'features' => [
             $this->celda(28000, 25200, 2001, 0.1),
@@ -217,7 +219,9 @@ final class RepositorioRevisionForestalTest extends TestCase
         ];
         foreach ($cambios as $nombre => $cambio) {
             [$r, $c] = $this->sintetico();
-            $id = $this->paquete($r, $c, function (&$m) use ($cambio) {$cambio($m['identidad']);});
+            $id = $this->paquete($r, $c, function (&$m) use ($cambio) {
+                $cambio($m['identidad']);
+            });
             $this->rechaza(fn () => $this->consultar($id), caso: $nombre);
         }
     }
@@ -296,7 +300,9 @@ final class RepositorioRevisionForestalTest extends TestCase
     {
         $cambios = [
             'duplicado' => fn (&$c) => $c['features'][0] = $c['features'][1],
-            'misma celda otro anio' => function (&$c) {$c['features'][0]['id'] = $c['features'][1]['id'];},
+            'misma celda otro anio' => function (&$c) {
+                $c['features'][0]['id'] = $c['features'][1]['id'];
+            },
             'id ajeno' => fn (&$c) => $c['features'][0]['id'] = '28000-25202',
             'id ambiguo' => fn (&$c) => $c['features'][0]['id'] = '028000-25200',
             'id numero' => fn (&$c) => $c['features'][0]['id'] = 1,

@@ -12,9 +12,13 @@ use stdClass;
 final class RepositorioRevisionForestal
 {
     private const MAX_MANIFIESTO = 65536;
+
     private const MAX_RESUMEN = 2097152;
+
     private const MAX_CAPA = 33554432;
+
     private const MAX_CELDAS = 100000;
+
     private const EPS_COORDENADA = 1e-10;
 
     public function __construct(private readonly string $directorio) {}
