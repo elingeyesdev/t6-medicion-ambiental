@@ -31,3 +31,11 @@ php vendor/phpunit/phpunit/phpunit --filter ParametrosConsultaForestal --no-prog
 Las pruebas están incluidas en la suite Feature y no arrancan Laravel ni usan red o procesos desde PHP. La ejecución local reutilizó vendor mediante un bootstrap privado que apunta a las clases de este worktree. Se comprobaron sintaxis y formato con Pint. No se modificó móvil.
 
 Las capturas y los resultados del recorte permanecen en docs/forestal147. Este avance no completa #148 ni sustituye la aceptación del método y del piloto.
+
+## Resumen anual preparado
+
+ResumenForestal::acotar recibe la serie del contrato propuesto y años inclusivos. Verifica años, duplicados, estados, unidad y cadenas decimales antes de seleccionar la ventana. Conserva los metadatos y el estado de revisión; no acredita la procedencia ni la aceptación científica del producto. El catálogo deberá validar esas partes antes de invocarlo.
+
+Las áreas se suman como dígitos decimales, sin float ni nuevas extensiones. La entrada admite hasta 40 cifras enteras y 30 decimales, sin signo, exponentes ni ceros iniciales ambiguos. Se conserva la escala decimal. Un cero informado produce un total cero. Un año ausente o no_informado produce un total nulo y solo el subtotal conocido; si no hay datos, ambos quedan nulos. No se reutiliza el total anterior del producto. Una serie corrupta falla con PRODUCTO_INVALIDO incluso si el problema queda fuera del intervalo elegido.
+
+Pasaron 118 casos y 308 aserciones de PHP. Las seis pruebas nuevas contrastan los resultados guardados de Python para 2001–2025 y 2024–2025, conservación de identidad, cero, faltantes, duplicados, años ajenos, unidades incorrectas y suma exacta por encima de 28 cifras. No se añadieron rutas ni se cambió el estado de aprobación del producto.
