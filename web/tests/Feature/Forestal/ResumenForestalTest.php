@@ -94,6 +94,7 @@ final class ResumenForestalTest extends TestCase
             fn (&$p) => $p['serie'][0]['estado'] = 'no_informado',
             fn (&$p) => $p['serie'] = array_combine(range(1, 25), $p['serie']),
             fn (&$p) => $p['unidad'] = 'km2',
+            fn (&$p) => $p['capa'] = ['type' => 'FeatureCollection', 'features' => []],
             fn (&$p) => $p['fuente']['anios'][] = 2001,
         ];
         foreach ($cambios as $cambio) {

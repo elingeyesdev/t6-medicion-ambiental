@@ -38,4 +38,6 @@ ResumenForestal::acotar recibe la serie del contrato propuesto y años inclusivo
 
 Las áreas se suman como dígitos decimales, sin float ni nuevas extensiones. La entrada admite hasta 40 cifras enteras y 30 decimales, sin signo, exponentes ni ceros iniciales ambiguos. Se conserva la escala decimal. Un cero informado produce un total cero. Un año ausente o no_informado produce un total nulo y solo el subtotal conocido; si no hay datos, ambos quedan nulos. No se reutiliza el total anterior del producto. Una serie corrupta falla con PRODUCTO_INVALIDO incluso si el problema queda fuera del intervalo elegido.
 
-Pasaron 118 casos y 308 aserciones de PHP. Las seis pruebas nuevas contrastan los resultados guardados de Python para 2001–2025 y 2024–2025, conservación de identidad, cero, faltantes, duplicados, años ajenos, unidades incorrectas y suma exacta por encima de 28 cifras. No se añadieron rutas ni se cambió el estado de aprobación del producto.
+Pasaron 118 casos y 310 aserciones de PHP. Las seis pruebas nuevas contrastan los resultados guardados de Python para 2001–2025 y 2024–2025, conservación de identidad, cero, faltantes, duplicados, años ajenos, unidades incorrectas y suma exacta por encima de 28 cifras. No se añadieron rutas ni se cambió el estado de aprobación del producto.
+
+Este servicio solo admite la serie propuesta con capa nula. Una capa presente se rechaza: no se debe conservar una geometría de otros años al reducir el intervalo. El filtrado de una capa validada se integrará por separado.

@@ -15,7 +15,8 @@ final class ResumenForestal
         if (($producto['contrato'] ?? null) !== 'propuesta-met03-1'
             || ($producto['unidad'] ?? null) !== 'ha'
             || ($producto['decimales'] ?? null) !== 'cadena_decimal'
-            || ! is_array($producto['fuente'] ?? null)) {
+            || ! is_array($producto['fuente'] ?? null)
+            || ! array_key_exists('capa', $producto) || $producto['capa'] !== null) {
             $this->invalido();
         }
         try {
