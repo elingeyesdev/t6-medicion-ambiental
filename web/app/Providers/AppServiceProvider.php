@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Enums\RolCuenta;
+use App\Http\Middleware\RevisionForestalLocal;
 use App\Models\User;
 use App\Services\Sequias\AlmacenPublicacionesSequias;
 use App\Services\Sequias\Experimental\CatalogoMuestrasSequias;
@@ -13,6 +14,8 @@ use App\Services\Sequias\ValidadorSeriePrecipitacion;
 use App\Services\Territorios\CatalogoTerritorial;
 use App\Services\Territorios\GeometriaTerritorial;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Contracts\Auth\Middleware\AuthenticatesRequests;
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
@@ -43,6 +46,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // El cierre local debe preceder auth incluso con el ordenamiento de Laravel.
+        $this->app->make(Kernel::class)->addToMiddlewarePriorityBefore(
+            AuthenticatesRequests::class, RevisionForestalLocal::class);
+
         RateLimiter::for('mapa-busquedas', fn (Request $request) => Limit::perMinute(12)->by((string) $request->user()?->id));
         RateLimiter::for('tiempo-consultas', fn (Request $request) => Limit::perMinute(12)->by((string) $request->user()?->id));
         RateLimiter::for('aire-consultas', fn (Request $request) => Limit::perMinute(12)->by((string) $request->user()?->id));
