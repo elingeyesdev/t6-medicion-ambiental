@@ -26,3 +26,23 @@ Esta rama depende del PR #119 y prepara el cálculo temporal de #147. No da por 
 ## Verificación
 
 Pasaron las 32 pruebas de fuente y ventana temporal: 13 regresiones existentes y 19 del cálculo nuevo. Se comprobaron cero, faltantes, años no publicados, captura alterada, cambio de recibos durante la lectura, suma con más de 28 cifras, repetición de la evidencia y protección de archivos existentes. [Salida local](evidencias/pruebas.txt). El resultado de GitHub se comprueba por separado en el PR.
+
+## Recorte raster oficial pequeño
+
+Se comprobó una segunda vía para #147 sin credenciales: leer solo rangos del GeoTIFF oficial. La [captura del 08/11](evidencias/recorte-20261108/README.md) conserva las respuestas y permite repetir el cálculo sin Internet. Es un recorte técnico de 64 por 64 píxeles; no reemplaza el piloto municipal de #117 ni el total GADM del ejemplo temporal.
+
+Instalar las dos dependencias en un entorno virtual y ejecutar desde la raíz:
+
+~~~powershell
+python -m pip install -r herramientas/forestal/requirements-raster.txt
+python herramientas/forestal/recorte_raster.py --columna 25200 --fila 28000 --ancho 64 --alto 64 --umbral 30 --desde 2024 --hasta 2025 --captura docs/forestal147/evidencias/recorte-20261108/captura --salida tmp/recorte-repetido --reproducir
+python -m unittest discover -s herramientas/forestal -p 'test_*.py' -v
+~~~
+
+La carpeta de salida debe ser nueva. Para una captura nueva, quitar --reproducir y elegir otra carpeta de captura también nueva. Las direcciones de descarga están fijadas a las tres bandas de GFC-2025-v1.13, tesela 10S_070W. No se admiten archivos locales arbitrarios, otras teselas ni una descarga completa. Los límites actuales son 128 por 128 píxeles, 24 peticiones, 3 MB por rango y 8 MB en total. Si cambia el formato, la cuadrícula, la versión durante la lectura o el servidor ignora Range, el proceso falla.
+
+El resultado entrega resumen anual, píxeles originales en PNG y polígonos individuales de las celdas con pérdida en los años elegidos. PNG conserva los valores, no es una imagen satelital de color natural. La geometría es WGS84 y el área se calcula por fila sobre el elipsoide, sin asumir 900 m² por píxel.
+
+La capa continúa fuera de la API y sin pantalla pública. Antes de usarla faltan método acordado, recorte al territorio aprobado, contraste independiente y tratamiento de incertidumbre. No se deben equiparar los valores de esta ventana con los del departamento GADM o con el área actual de bosque.
+
+Ahora pasan 51 pruebas: las 32 anteriores y 19 del raster. La automatización instala las mismas versiones de Pillow y pyproj y repite las capturas en Linux y Windows, sin consultar al proveedor.

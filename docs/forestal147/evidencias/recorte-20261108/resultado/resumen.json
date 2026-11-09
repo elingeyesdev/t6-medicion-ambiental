@@ -1,0 +1,173 @@
+{
+  "estado": "recorte_tecnico_no_validado",
+  "integrado_en_api": false,
+  "criterio": {
+    "base": 2000,
+    "operador": ">=",
+    "porcentaje": 30,
+    "adoptado": false
+  },
+  "consulta": {
+    "desde": 2024,
+    "hasta": 2025,
+    "extremos_incluidos": true
+  },
+  "ventana_pixeles": {
+    "columna": 25200,
+    "fila": 28000,
+    "ancho": 64,
+    "alto": 64
+  },
+  "bbox": [
+    -63.7,
+    -17.016,
+    -63.684,
+    -17.0
+  ],
+  "conteos_pixeles": {
+    "sin_dato_base": 0,
+    "agua_base": 0,
+    "tierra_base": 4096,
+    "arbolado_base": 2838,
+    "perdida_periodo": 26
+  },
+  "serie": [
+    {
+      "anio": 2001,
+      "perdida_ha": 6.18677457
+    },
+    {
+      "anio": 2002,
+      "perdida_ha": 20.69574513
+    },
+    {
+      "anio": 2003,
+      "perdida_ha": 4.19800657
+    },
+    {
+      "anio": 2004,
+      "perdida_ha": 0.73649111
+    },
+    {
+      "anio": 2005,
+      "perdida_ha": 1.25207405
+    },
+    {
+      "anio": 2006,
+      "perdida_ha": 3.24064189
+    },
+    {
+      "anio": 2007,
+      "perdida_ha": 2.72509273
+    },
+    {
+      "anio": 2008,
+      "perdida_ha": 1.32574224
+    },
+    {
+      "anio": 2009,
+      "perdida_ha": 0.0
+    },
+    {
+      "anio": 2010,
+      "perdida_ha": 0.14730022
+    },
+    {
+      "anio": 2011,
+      "perdida_ha": 0.58919224
+    },
+    {
+      "anio": 2012,
+      "perdida_ha": 1.98854992
+    },
+    {
+      "anio": 2013,
+      "perdida_ha": 3.53524953
+    },
+    {
+      "anio": 2014,
+      "perdida_ha": 3.16707594
+    },
+    {
+      "anio": 2015,
+      "perdida_ha": 5.45009799
+    },
+    {
+      "anio": 2016,
+      "perdida_ha": 5.81846548
+    },
+    {
+      "anio": 2017,
+      "perdida_ha": 2.57777333
+    },
+    {
+      "anio": 2018,
+      "perdida_ha": 0.36825357
+    },
+    {
+      "anio": 2019,
+      "perdida_ha": 2.43054559
+    },
+    {
+      "anio": 2020,
+      "perdida_ha": 3.90355757
+    },
+    {
+      "anio": 2021,
+      "perdida_ha": 0.44191619
+    },
+    {
+      "anio": 2022,
+      "perdida_ha": 8.32259104
+    },
+    {
+      "anio": 2023,
+      "perdida_ha": 1.32569237
+    },
+    {
+      "anio": 2024,
+      "perdida_ha": 1.84124289
+    },
+    {
+      "anio": 2025,
+      "perdida_ha": 0.07364891
+    }
+  ],
+  "total_periodo_ha": 1.9148918,
+  "cobertura_observaciones_fraccion": null,
+  "limites": [
+    "Ventana rectangular técnica sin equivalencia municipal ni piloto aprobado.",
+    "La pérdida de cobertura arbórea no identifica por sí sola deforestación ni su causa.",
+    "datamask describe la base; no acredita observación anual completa.",
+    "El área usa WGS84 por fila. Los decimales no representan exactitud de medición.",
+    "Los años posteriores a 2010 tienen cambios metodológicos en la fuente.",
+    "Área cartografiada sin ajuste estadístico ni intervalo de confianza; no es una estimación definitiva."
+  ],
+  "fuente": {
+    "producto": "Hansen GFC",
+    "version": "GFC-2025-v1.13",
+    "tesela": "10S_070W",
+    "licencia": "CC BY 4.0",
+    "licencia_url": "https://creativecommons.org/licenses/by/4.0/",
+    "transformaciones": "Recorte, filtro base y año, vectorización por celda y área geodésica.",
+    "atribucion": "Hansen/UMD/Google/USGS/NASA",
+    "documentacion": "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2025-v1.13/download.html",
+    "cuadricula": {
+      "epsg": 4326,
+      "pixel": "area",
+      "oeste": -70,
+      "norte": -10,
+      "paso_grados": 0.00025,
+      "ancho": 40000,
+      "alto": 40000
+    },
+    "bytes_transferidos_captura": 1103455,
+    "rangos": 21,
+    "etag": {
+      "lossyear": "\"690de81c9d086fdf2b7834cad9147b70\"",
+      "treecover2000": "\"9295d92883e3588462a0d952c14df07a\"",
+      "datamask": "\"e06ba55026ff530984e0af38c4732355\""
+    },
+    "captura_sha256": "1daf113c667df759df41359811b9dc9c751fa128d87ea07a165a3298a59f102f"
+  }
+}
