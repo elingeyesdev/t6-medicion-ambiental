@@ -79,16 +79,16 @@ final class CatalogoProductosAgua
             return;
         }
         try {
-            $catalogo = json_decode($this->leer($indice, 16_384, $raiz), true, 64, JSON_THROW_ON_ERROR);
-            if (! is_array($catalogo) || count($catalogo) !== 2 || ($catalogo['version'] ?? null) !== 'agua-publicaciones-1'
-                || ! is_array($catalogo['productos'] ?? null) || ! array_is_list($catalogo['productos'])
-                || count($catalogo['productos']) > self::MAX_PRODUCTOS) {
+            $catalogo = json_decode($this->leer($indice, 16_384, $raiz), false, 64, JSON_THROW_ON_ERROR);
+            if (! $catalogo instanceof \stdClass || count(get_object_vars($catalogo)) !== 2 || ($catalogo->version ?? null) !== 'agua-publicaciones-1'
+                || ! is_array($catalogo->productos ?? null) || ! array_is_list($catalogo->productos)
+                || count($catalogo->productos) > self::MAX_PRODUCTOS) {
                 $this->invalido();
             }
             $vistos = [];
             $identidades = [];
             $total = 0;
-            foreach ($catalogo['productos'] as $sha) {
+            foreach ($catalogo->productos as $sha) {
                 if (! is_string($sha) || ! preg_match('/^[a-f0-9]{64}$/D', $sha) || isset($vistos[$sha])) {
                     $this->invalido();
                 }
@@ -98,11 +98,11 @@ final class CatalogoProductosAgua
                 if ($total > self::MAX_TOTAL || ! hash_equals($sha, hash('sha256', $raw))) {
                     $this->invalido();
                 }
-                $dato = json_decode($raw, true, 64, JSON_THROW_ON_ERROR);
-                if (! is_array($dato)) {
+                $dato = json_decode($raw, false, 64, JSON_THROW_ON_ERROR);
+                if (! $dato instanceof \stdClass) {
                     $this->invalido();
                 }
-                $this->validador->validar($dato);
+                $dato = $this->validador->validar($dato);
                 $id = $dato['territorio']['identificador'];
                 $identidad = json_encode([$id, $dato['comparacion']['referencia'], $dato['comparacion']['comparacion']], JSON_THROW_ON_ERROR);
                 if (isset($identidades[$identidad])) {

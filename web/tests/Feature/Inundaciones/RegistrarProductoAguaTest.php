@@ -148,4 +148,15 @@ class RegistrarProductoAguaTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->app->make(ValidadorProductoAgua::class)->validar([]);
     }
+
+    public function test_el_comando_no_convierte_objetos_json_en_listas(): void
+    {
+        mkdir($this->directorio, 0700);
+        $entrada = $this->directorio.'/entrada-controlada.json';
+        $dato = $this->dato();
+        $dato['capa']['features'] = (object) [];
+        file_put_contents($entrada, json_encode($dato, JSON_THROW_ON_ERROR));
+        $this->artisan('agua:registrar', ['archivo' => $entrada])->assertFailed();
+        $this->assertFileDoesNotExist($this->directorio.'/indice.json');
+    }
 }
