@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Enums\RolCuenta;
 use App\Models\User;
+use App\Services\Inundaciones\CatalogoProductosAgua;
+use App\Services\Inundaciones\PublicadorProductosAgua;
+use App\Services\Inundaciones\ValidadorProductoAgua;
 use App\Services\Sequias\AlmacenPublicacionesSequias;
 use App\Services\Sequias\Experimental\CatalogoMuestrasSequias;
 use App\Services\Sequias\LectorJsonLocal;
@@ -25,6 +28,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->singleton(CatalogoProductosAgua::class,
+            fn ($app) => new CatalogoProductosAgua(config('productos_agua.directorio'),
+                $app->make(ValidadorProductoAgua::class)));
+        $this->app->singleton(PublicadorProductosAgua::class,
+            fn ($app) => new PublicadorProductosAgua(config('productos_agua.directorio'),
+                $app->make(ValidadorProductoAgua::class), $app->make(CatalogoProductosAgua::class)));
         $this->app->singleton(CatalogoTerritorial::class,
             fn () => new CatalogoTerritorial(config('focos.datos_territoriales')));
         $this->app->singleton(RepositorioSeriesPrecipitacion::class,
