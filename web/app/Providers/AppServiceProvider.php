@@ -15,10 +15,12 @@ use App\Services\Sequias\RepositorioSeriesPrecipitacion;
 use App\Services\Sequias\ValidadorSeriePrecipitacion;
 use App\Services\Territorios\CatalogoTerritorial;
 use App\Services\Territorios\GeometriaTerritorial;
+use App\View\Composers\MenuPanel;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -52,6 +54,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        View::composer('components.panel.menu', MenuPanel::class);
         RateLimiter::for('mapa-busquedas', fn (Request $request) => Limit::perMinute(12)->by((string) $request->user()?->id));
         RateLimiter::for('tiempo-consultas', fn (Request $request) => Limit::perMinute(12)->by((string) $request->user()?->id));
         RateLimiter::for('aire-consultas', fn (Request $request) => Limit::perMinute(12)->by((string) $request->user()?->id));
