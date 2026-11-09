@@ -46,3 +46,13 @@ El resultado entrega resumen anual, píxeles originales en PNG y polígonos indi
 La capa continúa fuera de la API y sin pantalla pública. Antes de usarla faltan método acordado, recorte al territorio aprobado, contraste independiente y tratamiento de incertidumbre. No se deben equiparar los valores de esta ventana con los del departamento GADM o con el área actual de bosque.
 
 Ahora pasan 51 pruebas: las 32 anteriores y 19 del raster. La automatización instala las mismas versiones de Pillow y pyproj y repite las capturas en Linux y Windows, sin consultar al proveedor.
+
+## Contraste local de integridad
+
+El verificador contrastar_recorte.py vuelve a leer los rangos capturados y comprueba los tres PNG contra sus píxeles originales. Recalcula el área de cada celda en sus coordenadas reales, sin usar el cálculo de resúmenes del generador. Comprueba años, conteos, total, extensión y cada polígono; detecta también duplicados o celdas ausentes. No es una validación de campo ni adopta el método.
+
+~~~powershell
+python herramientas/forestal/contrastar_recorte.py --directorio docs/forestal147/evidencias/recorte-20261108 --salida tmp/contraste-forestal.json
+~~~
+
+La salida debe ser nueva. Las 57 pruebas actuales incluyen seis casos de contraste, con alteraciones de coordenadas, área, año, resumen, imágenes y archivos fuente. El informe deja metodo_validado: false. [Resultado del contraste](evidencias/recorte-20261108/contraste-local.json).
