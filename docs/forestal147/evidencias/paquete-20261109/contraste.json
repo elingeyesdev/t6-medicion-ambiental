@@ -1,0 +1,10 @@
+{
+  "estado": "integridad_local_comprobada",
+  "metodo_validado": false,
+  "contraste_independiente_de_campo": false,
+  "pixeles": 4096,
+  "celdas_perdida_periodo": 1118,
+  "captura_sha256": "1daf113c667df759df41359811b9dc9c751fa128d87ea07a165a3298a59f102f",
+  "tolerancia_area_ha": 1e-07,
+  "diferencia_total_ha": -7.066489615681348e-09
+}

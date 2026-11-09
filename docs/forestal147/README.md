@@ -56,3 +56,7 @@ python herramientas/forestal/contrastar_recorte.py --directorio docs/forestal147
 ~~~
 
 La salida debe ser nueva. Las 57 pruebas actuales incluyen seis casos de contraste, con alteraciones de coordenadas, área, año, resumen, imágenes y archivos fuente. El informe deja metodo_validado: false. [Resultado del contraste](evidencias/recorte-20261108/contraste-local.json).
+
+## Paquete para revisión privada
+
+La [receta del paquete completo](evidencias/paquete-20261109/README.md) prepara los años2001–2025 desde los mismos originales, sin nuevas descargas. Vincula versión, captura, criterio, zona y período con las huellas de la serie y la capa. El empaquetado no publica ni adopta el resultado. Pasaron 63 pruebas de Python.
