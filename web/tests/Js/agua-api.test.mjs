@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {cargarAgua, crearConsultaAguaApi} from '../../public/js/mapas/agua-api.js';
 import {crearConsultaAgua} from '../../public/js/mapas/agua-contrato.js';
 
-const filtros = {territorio:'BO07', referencia:'2024-09-01', comparacion:'2025-03-07'};
+const filtros = {territorio:'BO070101', referencia:'2024-09-01', comparacion:'2025-03-07'};
 const fixture = async () => JSON.parse(await readFile(new URL('../../../compartido/api/inundaciones/ejemplos/cambio.json', import.meta.url), 'utf8'));
 // Solo una respuesta sintética de contrato para probar el transporte, no evidencia ambiental.
 async function respuestaContrato() {
@@ -29,7 +29,7 @@ test('la consulta normal rechaza ejemplos y la revisión local los permite expre
 test('el transporte usa la ruta fija, señal, JSON y credenciales del mismo sitio', async () => {
     const signal=new AbortController().signal, dato=await respuestaContrato();
     const resultado=await cargarAgua(filtros,signal,async(url, opciones)=>{
-        assert.equal(url,'/api/v1/inundaciones/consulta?territorio=BO07&referencia=2024-09-01&comparacion=2025-03-07');
+        assert.equal(url,'/mapa/agua/consulta?territorio=BO070101&referencia=2024-09-01&comparacion=2025-03-07');
         assert.equal(opciones.signal,signal);
         assert.equal(opciones.headers.Accept,'application/json');
         assert.equal(opciones.credentials,'same-origin');
@@ -104,4 +104,54 @@ test('la respuesta atrasada no reemplaza la consulta nueva y se cancela su seña
     pendientes[0].resolve(json(dato));await primera;
     assert.deepEqual(estados.at(-1),{estado:'error',mensaje:'No hay datos disponibles para ese lugar.'});
     assert.equal(estados.filter(s=>s.estado==='resultado').length,0);
+});
+
+test('el catálogo exige productos identificados y no confunde vacío con error', async()=>{
+    const {leerCatalogoAgua}=await import('../../public/js/mapas/agua-api.js');
+    const d=await respuestaContrato();
+    const producto={id:'a'.repeat(64),territorio:d.territorio,comparacion:d.comparacion,estado:d.estado};
+    const base={versionContrato:'agua-0.1-candidata',estado:'disponible',productos:[producto]};
+    assert.deepEqual(leerCatalogoAgua(base),base);
+    assert.deepEqual(leerCatalogoAgua({...base,estado:'sin_productos_validados',productos:[]}).productos,[]);
+    for (const cambiar of [
+        x=>x.productos={},
+        x=>x.estado='sin_productos_validados',
+        x=>x.productos.push(x.productos[0]),
+        x=>x.productos.push({...x.productos[0],id:'b'.repeat(64)}),
+        x=>x.productos[0].id='../privado',
+        x=>x.productos[0].comparacion.referencia='2025-03-07',
+        x=>x.productos[0].territorio.alcance='todo_el_municipio',
+    ]) {
+        const copia=structuredClone(base);cambiar(copia);
+        assert.throws(()=>leerCatalogoAgua(copia));
+    }
+});
+test('el catálogo se consulta con la sesión web en el mismo sitio',async()=>{
+    const {cargarCatalogoAgua}=await import('../../public/js/mapas/agua-api.js');
+    const d=await cargarCatalogoAgua(null,async(url,opciones)=>{
+        assert.equal(url,'/mapa/agua/catalogo');
+        assert.equal(opciones.credentials,'same-origin');
+        return json({versionContrato:'agua-0.1-candidata',estado:'sin_productos_validados',productos:[]});
+    });
+    assert.deepEqual(d.productos,[]);
+});
+test('un resultado de otro lugar o fechas nunca reemplaza la comparación elegida',async()=>{
+    for (const modo of ['lugar','fecha']) {
+        const d=await respuestaContrato();
+        if (modo==='lugar') d.territorio.identificador='BO07';
+        else d.comparacion.comparacion='2025-03-08';
+        await assert.rejects(cargarAgua(filtros,null,async()=>json(d)),{codigo:'RESPUESTA_INVALIDA'});
+    }
+});
+test('si cambió la versión publicada se exige actualizar la lista',async()=>{
+    const d=await respuestaContrato();
+    const respuesta=()=>new Response(JSON.stringify(d),{headers:{'Content-Type':'application/json','X-Producto-SHA256':'a'.repeat(64)}});
+    assert.deepEqual(await cargarAgua(filtros,null,async()=>respuesta(),'a'.repeat(64)),d);
+    await assert.rejects(cargarAgua(filtros,null,async()=>respuesta(),'b'.repeat(64)),{codigo:'CATALOGO_CAMBIO'});
+});
+test('cancelar una consulta impide que reaparezca al actualizar el catálogo',async()=>{
+    const estados=[],dato=await respuestaContrato();let resolver;
+    const consultar=crearConsultaAgua(()=>new Promise(r=>{resolver=r;}),s=>estados.push(s));
+    const pendiente=consultar(filtros);consultar.cancelar();resolver(dato);await pendiente;
+    assert.deepEqual(estados,[{estado:'cargando'}]);
 });

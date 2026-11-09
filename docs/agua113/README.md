@@ -1,25 +1,29 @@
-# Revisión web de agua · #113
+# Agua dentro del mapa de GeoSur
 
-Preparación sobre develop, con el contrato #112 del PR #138 ya integrado. Todavía no incluye el resultado ambiental real de #111. Conserva el mapa, menú, botones, cuentas y tipografía del frente recuperado de EnviroSense. No añade una entrada pública pendiente.
+Avance de #113 sobre el PR #158 de #112. Conserva el frente recuperado de EnviroSense, su mapa, menú y componentes. Todavía falta el producto ambiental real y revisado de #111 y su contraste conjunto; este avance no da M4 por terminado.
 
-## Abrir localmente
+## Productos guardados
 
-En la copia de esta rama, configurar APP_ENV=local y AGUA_REVISION_LOCAL=true en el entorno local, iniciar Laravel con la configuración habitual y entrar con una cuenta activa. Abrir /revision/agua. No se cambia la cuenta demo ni su clave. Sin la opción, o en producción aunque la opción esté activa, devuelve 404. /mapa normal no incorpora los ejemplos. Los assets no contienen los ejemplos; se incluyen solo en la vista local autenticada.
+La entrada Agua e inundaciones aparece cuando hay productos registrados, coherentes y accesibles para la cuenta. Abre /mapa/agua. Sin productos, la entrada permanece oculta y la ruta no presenta una pantalla pendiente. Un catálogo alterado no se trata como un catálogo vacío.
 
-## Comprobar
+Lugar y Comparación ofrecen únicamente las opciones publicadas. Elegir otra opción carga la comparación y centra sus figuras. Seleccionar una ubicación centra esa figura y resalta su botón. El panel se puede cerrar y volver a abrir; la rueda acerca el mapa.
 
-Cambiar entre Cambios de agua, Sin cambios, Sin datos comparables y Error de consulta. Los tres primeros usan figuras controladas del contrato; el error también es controlado y borra el resultado anterior. El aviso Datos de prueba permanece incluso al cerrar el panel. Seleccionar una ubicación centra su figura y resalta la selección. Cerrar/reabrir conserva el mapa. Las clases se diferencian por color y borde; el área sin comparación no equivale a cero agua. No se calculan superficies en el navegador.
+El catálogo y el resultado se consultan por /mapa/agua/catalogo y /mapa/agua/consulta, con la sesión web y los mismos servicios de la API. No se incorpora un token al navegador. La API de Flutter conserva sus rutas /api/v1/inundaciones y su autenticación; no se modifica móvil.
 
-Las capturas en ../evidencias/agua113 corresponden a HTML renderizado por Laravel con cuenta de prueba, servido por un servidor estático temporal sin proveedor cartográfico configurado. Por eso el fondo se ve neutro; se verifican las figuras, selección y paneles, no la carga de imágenes externas ni un resultado real. Se revisaron escritorio y 390×844, selección, cierre/reapertura, falta de datos y error.
+La respuesta debe coincidir con el lugar, fechas y huella elegidos. Si se publicó otra versión entretanto, se pide actualizar la lista. Cambiar de selección cancela la consulta anterior. Un error elimina las figuras previas, sin usar ejemplos como respaldo. Cero, sin cambios y falta de datos conservan su significado.
 
-Pruebas: php artisan test --compact --filter="RevisionAguaTest|ConsultaAguaTest|BaseWebTest"; node --test tests/Js/agua.test.mjs desde web.
+En pantalla angosta, después de consultar se recogen los filtros para dejar visible el resumen. Cambiar lugar o fechas vuelve a abrirlos. El encabezado y su botón de cerrar permanecen accesibles al desplazar el panel. La fuente y las limitaciones relevantes quedan en el detalle. Si falla el fondo cartográfico, se avisa brevemente sin atribuir ese fallo al resultado del análisis.
 
-Faltan producto real, catálogo de pares aprobados, consulta operativa y prueba de punta a punta. No se da #113 por terminado ni se habilita Inundaciones para usuarios. Flutter queda a cargo de Jaziel.
+## Revisión local con ejemplos
 
-## Transporte de consulta del 08/11/2026
+/revision/agua sigue siendo una revisión separada. Requiere APP_ENV=local o testing, cuenta activa, permisos y AGUA_REVISION_LOCAL=true. En producción devuelve 404 aunque la opción esté activa. Sus figuras son sintéticas y el aviso Datos de prueba permanece visible.
 
-agua-api.js prepara cargarAgua y crearConsultaAguaApi para la ruta autenticada /api/v1/inundaciones/consulta. Usa credenciales del mismo sitio, no sigue redirecciones y exige JSON compatible con el contrato. Una respuesta HTML, un error de red o un producto ausente no se convierten en resultados vacíos ni en figuras de ejemplo. Los códigos conocidos se presentan con mensajes breves; los detalles internos del servidor no se muestran.
+La consulta de productos guardados no acepta prueba_controlada. Ningún ejemplo del repositorio se registra ni se publica automáticamente. Registrar un producto requiere el recorrido de #112 y la revisión ambiental de #110 y #111.
 
-crearConsultaAgua rechaza datos de prueba por defecto. Solo el recorrido local de revisión pasa permitirPrueba: true. El transporte de API siempre exige resultado_validado. La respuesta sintética usada por sus pruebas verifica el contrato, no acredita un producto real ni su aceptación.
+## Pruebas y capturas
 
-Pasaron 17 pruebas del visor/transporte y las 198 de JavaScript. En esta PC se ejecutó cada archivo con node --test --test-isolation=none para evitar consolas secundarias. Esta preparación todavía no añade la conexión al mapa público, filtros de productos ni navegación nueva: espera el producto de #111 y su catálogo. La revisión local conserva sus figuras controladas y el aviso permanente.
+Las pruebas PHP verifican menú condicional, rutas, cuenta activa, sesión web, productos guardados, errores sin rutas/trazas y bloqueo de la revisión local en producción. Las de JavaScript verifican contrato, identidad, versiones, catálogo, cancelación y falta de cobertura.
+
+Desde web se pueden repetir las pruebas de Inundaciones y BaseWebTest. La batería JavaScript se ejecuta con npm test en CI. Para ejecutar pruebas sin consolas secundarias en esta PC, se usa node --test --test-isolation=none por archivo.
+
+La [comprobación visual controlada](../evidencias/agua113/catalogo-20261108/README.md) recorre escritorio y 390 × 844. Es una prueba del visor con figuras sintéticas y respuestas renderizadas por Laravel. No acredita una inundación observada ni el recorrido final con el producto real.

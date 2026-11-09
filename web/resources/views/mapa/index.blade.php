@@ -1,15 +1,16 @@
 @extends('layouts.app')
-@section('titulo', 'Mapa de Monitoreo')
+@section('titulo', request()->routeIs('mapa.agua') ? 'Agua e inundaciones' : 'Mapa de Monitoreo')
 @section('clase-cuerpo', 'pagina-monitoreo')
+@php($aguaActiva = request()->routeIs('revision.agua', 'mapa.agua'))
 @push('estilos')
 <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
 <link rel="stylesheet" href="{{ asset('css/paginas/monitoreo.css') }}">
-@if(request()->routeIs('revision.agua'))<link rel="stylesheet" href="{{ asset('css/mapas/agua.css') }}">@endif
+@if($aguaActiva)<link rel="stylesheet" href="{{ asset('css/mapas/agua.css') }}">@endif
 @endpush
 
 @section('contenido')
 <div id="monitoreo-contenedor" class="monitoreo-contenedor" role="region" aria-label="Mapa ambiental y controles">
-    <aside @if(request()->routeIs('revision.agua')) hidden @endif class="monitoreo-consulta" aria-label="Consulta ambiental">
+    <aside @if($aguaActiva) hidden @endif class="monitoreo-consulta" aria-label="Consulta ambiental">
         <details id="filtros-monitoreo" open>
             <summary><h1>Navegación</h1><span aria-hidden="true">⌄</span></summary>
             <form id="consulta-monitoreo">
@@ -80,11 +81,13 @@
             <summary>Unidades de medida</summary>
             @include('cuentas.unidades')
         </details>
+        @unless($aguaActiva)
         <details class="monitoreo-unidades" open><summary>Fondo del mapa</summary><div class="monitoreo-fondo-opciones">
             <label class="visually-hidden" for="mon-base">Fondo del mapa</label>
             <select id="mon-base" class="form-select" disabled><option value="claro">Claro</option><option value="relieve">Relieve</option><option value="satelite">Satélite</option><option value="calles">Calles</option></select>
             <button id="mon-centrar" class="btn btn-outline-primary" type="button">Centrar puntos</button>
         </div></details>
+        @endunless
         <section class="monitoreo-buscador" aria-label="Buscar lugar">
             <form id="buscar-lugar" role="search">
                 <label for="tipo-busqueda" class="form-label">Qué buscas</label>
@@ -114,13 +117,13 @@
     </aside>
     <div class="monitoreo-barra" aria-label="Herramientas de monitoreo">
         <button type="button" id="mon-pantalla-completa" class="monitoreo-pantalla-completa" aria-label="Entrar en pantalla completa" title="Entrar en pantalla completa" aria-pressed="false" aria-controls="monitoreo-contenedor" aria-describedby="estado-pantalla-completa" disabled><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path data-expandir d="M9 4H4v5m11-5h5v5M4 15v5h5m6 0h5v-5"/><path data-contraer d="M4 9h5V4m6 0v5h5M9 20v-5H4m16 0h-5v5"/></svg></button>
-        <button type="button" id="abrir-ajustes-mapa" aria-label="Ajustes del mapa" title="Ajustes del mapa" aria-expanded="false" aria-controls="ajustes-monitoreo"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m10 3-1 3-3 1-2 3 2 2v3l3 2 1 3h4l1-3 3-2v-3l2-2-2-3-3-1-1-3Z"/><circle cx="12" cy="12" r="3"/></svg></button>
-        <button type="button" id="abrir-historial-mapa" aria-label="Período e historial" title="Período e historial"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></button>
-        <button type="button" id="abrir-buscador-mapa" aria-label="Buscar un lugar" title="Buscar un lugar"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></svg></button>
+        <button type="button" @if($aguaActiva) hidden @endif id="abrir-ajustes-mapa" aria-label="Ajustes del mapa" title="Ajustes del mapa" aria-expanded="false" aria-controls="ajustes-monitoreo"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m10 3-1 3-3 1-2 3 2 2v3l3 2 1 3h4l1-3 3-2v-3l2-2-2-3-3-1-1-3Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        <button type="button" @if($aguaActiva) hidden @endif id="abrir-historial-mapa" aria-label="Período e historial" title="Período e historial"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></button>
+        <button type="button" @if($aguaActiva) hidden @endif id="abrir-buscador-mapa" aria-label="Buscar un lugar" title="Buscar un lugar"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></svg></button>
         <a href="{{ route('simulaciones') }}" aria-label="Abrir Simulaciones" title="Abrir Simulaciones"><x-panel.icono nombre="flask" /></a>
         <p id="estado-pantalla-completa" class="monitoreo-pantalla-estado alert alert-info" role="status" aria-live="polite" hidden></p>
     </div>
-    @if(request()->routeIs('revision.agua'))@include('components.mapas.revision-agua')@endif
+    @if(request()->routeIs('revision.agua'))@include('components.mapas.revision-agua')@elseif(request()->routeIs('mapa.agua'))@include('components.mapas.productos-agua')@endif
     <section class="monitoreo-escena" aria-label="Mapa ambiental">
         <div id="mapa-monitoreo" tabindex="0" role="region" aria-label="Puntos de monitoreo ambiental"></div>
         <div class="monitoreo-leyenda"><span class="mon-punto con-datos" aria-hidden="true"></span>Con datos<span class="mon-punto" aria-hidden="true"></span>Sin datos del período</div>

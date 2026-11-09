@@ -4,6 +4,7 @@ use App\Http\Controllers\AccesoController;
 use App\Http\Controllers\AlertasController;
 use App\Http\Controllers\Api\BuscarLugarController;
 use App\Http\Controllers\Api\CalidadAireController;
+use App\Http\Controllers\Api\InundacionesController;
 use App\Http\Controllers\Api\TiempoController;
 use App\Http\Controllers\AvisosController;
 use App\Http\Controllers\CuentaController;
@@ -18,10 +19,23 @@ use App\Http\Controllers\SimulacionContinuaController;
 use App\Http\Controllers\SimulacionesController;
 use App\Http\Controllers\UnidadesController;
 use App\Http\Controllers\UsuariosController;
+use App\Services\Api\ErrorConsulta;
+use App\Services\Inundaciones\CatalogoProductosAgua;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'paginas.inicio')->name('inicio');
 Route::middleware(['auth', 'cuenta.activa', 'can:mapa.ver', 'can:datos.consultar'])->group(function (): void {
+    Route::get('/mapa/agua/catalogo', [InundacionesController::class, 'catalogo'])->middleware('throttle:30,1')->name('mapa.agua.catalogo');
+    Route::get('/mapa/agua/consulta', [InundacionesController::class, 'consultar'])->middleware('throttle:30,1')->name('mapa.agua.consulta');
+    Route::get('/mapa/agua', function (CatalogoProductosAgua $productos) {
+        try {
+            abort_if($productos->catalogo()['productos'] === [], 404);
+        } catch (ErrorConsulta $error) {
+            abort(503, $error->getMessage());
+        }
+
+        return app()->call([app(MapaMonitoreoController::class), '__invoke']);
+    })->name('mapa.agua');
     Route::get('/revision/agua', function () {
         abort_unless(app()->environment(['local', 'testing']) && config('inundaciones.revision_local'), 404);
 

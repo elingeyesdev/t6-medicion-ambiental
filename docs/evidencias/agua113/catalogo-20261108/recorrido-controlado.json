@@ -1,0 +1,36 @@
+{
+  "datos": "sintéticos, no observaciones ambientales",
+  "resultados": [
+    {
+      "viewport": {
+        "width": 1400,
+        "height": 900
+      },
+      "origen": "HTML y respuestas controladas de Laravel",
+      "seleccionCentraMapa": true,
+      "ubicacionesDistintas": true,
+      "cierreYReapertura": true,
+      "ruedaAcercaMapa": true,
+      "sinDesbordeHorizontal": true,
+      "errorNoDejaDatosAnteriores": true,
+      "catalogoVacioNoInventaResultado": true,
+      "erroresJs": []
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "origen": "HTML y respuestas controladas de Laravel",
+      "seleccionCentraMapa": true,
+      "ubicacionesDistintas": true,
+      "cierreYReapertura": true,
+      "ruedaAcercaMapa": true,
+      "sinDesbordeHorizontal": true,
+      "errorNoDejaDatosAnteriores": true,
+      "catalogoVacioNoInventaResultado": true,
+      "erroresJs": []
+    }
+  ],
+  "comprobadoUtc": "2026-11-09T00:24:42.513Z"
+}

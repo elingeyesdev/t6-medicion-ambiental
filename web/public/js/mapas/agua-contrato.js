@@ -25,7 +25,7 @@ export function leerAgua(d, permitirPrueba = false) {
 
 export function crearConsultaAgua(cargar, mostrar, {permitirPrueba = false} = {}) {
     let secuencia=0, abortar=null;
-    return async caso => {
+    const consultar = async caso => {
         const turno=++secuencia;
         abortar?.abort(); abortar=new AbortController();
         mostrar({estado:'cargando'});
@@ -36,10 +36,14 @@ export function crearConsultaAgua(cargar, mostrar, {permitirPrueba = false} = {}
             if(turno===secuencia&&error?.name!=='AbortError') mostrar({estado:'error',mensaje:mensajeErrorAgua(error)});
         }
     };
+    consultar.cancelar = () => { ++secuencia; abortar?.abort(); };
+    return consultar;
 }
 
 const mensajesAgua = Object.freeze({
     PRODUCTO_NO_DISPONIBLE: 'No hay una comparación disponible para ese lugar y fechas.',
+    CATALOGO_CAMBIO: 'La comparación cambió. Actualiza la lista.',
+    TERRITORIO_SIN_COBERTURA: 'No hay una comparación disponible para ese lugar.',
     TERRITORIO_NO_DISPONIBLE: 'No hay datos disponibles para ese lugar.',
     FILTROS_INVALIDOS: 'Revisa el lugar y las fechas.',
     FILTROS_INCOMPATIBLES: 'La fecha inicial debe ser anterior a la final.',

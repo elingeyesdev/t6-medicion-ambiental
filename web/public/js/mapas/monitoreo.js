@@ -1,4 +1,4 @@
-import { iniciarRevisionAgua } from './agua.js';
+import { iniciarAgua } from './agua.js';
 import { iniciarMapaBase } from './base.js';
 import { consultaMonitoreo } from './consulta-monitoreo.js';
 import { crearConsultaTiempo } from './tiempo.js';
@@ -88,7 +88,11 @@ cargarRegiones(inicial.get('region') ?? '');
 formulario.elements.namedItem('pais').addEventListener('change', () => cargarRegiones());
 puntoSeleccionado = inicial.get('punto');
 
-iniciarMapaBase(mapa, mensaje => avisar(mensaje, true), 'mon-base');
+iniciarMapaBase(mapa, mensaje => {
+    avisar(mensaje, true);
+    const estadoFondo = document.getElementById('agua-fondo-estado');
+    if (estadoFondo) { estadoFondo.textContent = 'No se pudo cargar el fondo del mapa.'; estadoFondo.hidden = false; }
+}, 'mon-base');
 iniciarCapas(mapa, L);
 
 function avisar(mensaje, error = false) {
@@ -399,10 +403,10 @@ async function consultar(pagina = 1) {
 }
 
 formulario.addEventListener('submit', evento => { evento.preventDefault(); consultar(); });
-document.getElementById('mon-centrar').addEventListener('click', () => { cerrarDetalle(); centrarPuntos(); });
+document.getElementById('mon-centrar')?.addEventListener('click', () => { cerrarDetalle(); centrarPuntos(); });
 document.getElementById('mon-cerrar').addEventListener('click', cerrarDetalle);
 document.getElementById('mon-anterior').addEventListener('click', () => consultar((respuestaActual?.pagina ?? 1) - 1));
 document.getElementById('mon-siguiente').addEventListener('click', () => consultar((respuestaActual?.pagina ?? 1) + 1));
 iniciarMapaContinua(mapa, L, configuracion, () => respuestaActual);
-if (document.getElementById('revision-agua')) iniciarRevisionAgua(mapa, L);
+if (document.querySelector('[data-panel-agua]')) iniciarAgua(mapa, L);
 else consultar();

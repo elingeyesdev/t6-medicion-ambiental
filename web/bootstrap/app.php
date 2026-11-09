@@ -38,7 +38,7 @@ return Application::configure(basePath: dirname(__DIR__))
         });
         $exceptions->dontReport([ErrorConsulta::class]);
         $exceptions->render(function (Throwable $e, Request $request) {
-            if (! $request->is('api/v1/*', 'mapa/puntos', 'mapa/tiempo', 'mapa/aire', 'mapa/buscar')) {
+            if (! $request->is('api/v1/*', 'mapa/puntos', 'mapa/tiempo', 'mapa/aire', 'mapa/buscar', 'mapa/agua/catalogo', 'mapa/agua/consulta')) {
                 return null;
             }
             $estado = 500;
