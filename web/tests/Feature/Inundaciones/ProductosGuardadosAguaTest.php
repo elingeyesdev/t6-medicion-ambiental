@@ -138,6 +138,10 @@ class ProductosGuardadosAguaTest extends TestCase
                 break;
             case 'clave_extra': file_put_contents($this->directorio.'/indice.json', '{"version":"agua-publicaciones-1","productos":[],"ruta":"privado"}');
                 break;
+            case 'objeto_vacio': file_put_contents($this->directorio.'/indice.json', '{"version":"agua-publicaciones-1","productos":{}}');
+                break;
+            case 'objeto_numerico': file_put_contents($this->directorio.'/indice.json', json_encode(['version' => 'agua-publicaciones-1', 'productos' => (object) [$sha]], JSON_THROW_ON_ERROR));
+                break;
             case 'json_roto': file_put_contents($this->directorio.'/indice.json', '{');
                 break;
             case 'tamano_indice': file_put_contents($this->directorio.'/indice.json', str_repeat(' ', 16385));
@@ -154,7 +158,7 @@ class ProductosGuardadosAguaTest extends TestCase
     public static function catalogosInvalidos(): array
     {
         return array_map(fn ($caso) => [$caso], ['duplicado', 'falta_archivo', 'alterado', 'ruta',
-            'demasiados', 'version', 'clave_extra', 'json_roto', 'tamano_indice', 'tamano_producto']);
+            'demasiados', 'version', 'clave_extra', 'objeto_vacio', 'objeto_numerico', 'json_roto', 'tamano_indice', 'tamano_producto']);
     }
 
     #[DataProvider('productosInvalidos')]
@@ -162,6 +166,12 @@ class ProductosGuardadosAguaTest extends TestCase
     {
         $dato = $this->dato();
         switch ($caso) {
+            case 'features_objeto': $dato['capa']['features'] = (object) [];
+                break;
+            case 'escenas_objeto': $dato['fuente']['escenas'] = (object) $dato['fuente']['escenas'];
+                break;
+            case 'advertencias_objeto': $dato['advertencias'] = (object) $dato['advertencias'];
+                break;
             case 'prueba': $dato['tipoEvidencia'] = 'prueba_controlada';
                 break;
             case 'futuro': $dato['comparacion']['comparacion'] = '2099-01-01';
@@ -197,7 +207,7 @@ class ProductosGuardadosAguaTest extends TestCase
 
     public static function productosInvalidos(): array
     {
-        return array_map(fn ($caso) => [$caso], ['prueba', 'futuro', 'fecha_nula', 'fecha_imposible',
+        return array_map(fn ($caso) => [$caso], ['features_objeto', 'escenas_objeto', 'advertencias_objeto', 'prueba', 'futuro', 'fecha_nula', 'fecha_imposible',
             'falta_campo', 'campo_privado', 'area', 'booleano', 'fraccion', 'inundacion',
             'anillo', 'coordenada', 'id_duplicado', 'territorio']);
     }

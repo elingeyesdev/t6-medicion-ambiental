@@ -29,12 +29,12 @@ final class PublicadorProductosAgua
             $this->error('PRODUCTO_INVALIDO', 'El producto no se puede leer o supera el tamaño permitido.');
         }
         try {
-            $dato = json_decode($raw, true, 64, JSON_THROW_ON_ERROR);
-            if (! is_array($dato)) {
+            $dato = json_decode($raw, false, 64, JSON_THROW_ON_ERROR);
+            if (! $dato instanceof \stdClass) {
                 throw new InvalidArgumentException;
             }
 
-            return $this->registrar($dato, $reemplazar);
+            return $this->registrar($this->validador->validar($dato), $reemplazar);
         } catch (JsonException|InvalidArgumentException) {
             $this->error('PRODUCTO_INVALIDO', 'El producto no coincide con el contrato de agua.');
         }
@@ -43,7 +43,7 @@ final class PublicadorProductosAgua
     public function registrar(array $dato, bool $reemplazar = false): string
     {
         try {
-            $this->validador->validar($dato);
+            $dato = $this->validador->validar($dato);
             $raw = json_encode($dato, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR);
         } catch (JsonException|InvalidArgumentException) {
             $this->error('PRODUCTO_INVALIDO', 'El producto no coincide con el contrato de agua.');

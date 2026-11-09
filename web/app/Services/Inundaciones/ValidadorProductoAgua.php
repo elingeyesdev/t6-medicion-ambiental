@@ -14,10 +14,11 @@ final class ValidadorProductoAgua
 {
     public function __construct(private readonly CatalogoTerritorial $territorios) {}
 
-    public function validar(array $dato): void
+    public function validar(array|\stdClass $dato): array
     {
         $schema = json_decode(file_get_contents(base_path('../compartido/api/inundaciones/respuesta.schema.json')), true, 64, JSON_THROW_ON_ERROR);
         $this->estructura($dato, $schema);
+        $dato = json_decode(json_encode($dato, JSON_THROW_ON_ERROR | JSON_PRESERVE_ZERO_FRACTION), true, 64, JSON_THROW_ON_ERROR);
         $this->exigir(preg_match('/^BO07(?:[0-9]{2}){0,2}$/D', $dato['territorio']['identificador']) === 1);
         try {
             $this->territorios->buscar($dato['territorio']['identificador']);
@@ -51,6 +52,8 @@ final class ValidadorProductoAgua
             $this->exigir($dato['estado'] !== 'sin_datos' || $clase === 'no_comparable');
             $this->exigir($dato['estado'] !== 'sin_cambios' || ! in_array($clase, ['agua_nueva', 'agua_retirada'], true));
         }
+
+        return $dato;
     }
 
     /** Solo los términos usados por este contrato; una ampliación desconocida falla. */
@@ -71,7 +74,7 @@ final class ValidadorProductoAgua
             $coincide = false;
             foreach ($tipos as $tipo) {
                 $coincide = $coincide || match ($tipo) {
-                    'object' => is_array($valor) && ! array_is_list($valor),
+                    'object' => $valor instanceof \stdClass || (is_array($valor) && ! array_is_list($valor)),
                     'array' => is_array($valor) && array_is_list($valor),
                     'string' => is_string($valor),
                     'number' => (is_int($valor) || is_float($valor)) && is_finite((float) $valor),
@@ -97,6 +100,7 @@ final class ValidadorProductoAgua
             $this->exigir(! isset($schema['exclusiveMinimum']) || $valor > $schema['exclusiveMinimum']);
         }
         if (($schema['type'] ?? null) === 'object') {
+            $valor = $valor instanceof \stdClass ? get_object_vars($valor) : $valor;
             $propiedades = $schema['properties'] ?? [];
             $this->exigir(array_diff($schema['required'] ?? [], array_keys($valor)) === []);
             if (($schema['additionalProperties'] ?? true) === false) {
