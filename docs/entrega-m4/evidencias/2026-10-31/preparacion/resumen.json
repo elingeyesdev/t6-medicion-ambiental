@@ -1,0 +1,1901 @@
+{
+  "report_version": 1,
+  "purpose": "PREPARACION_118",
+  "delivery_status": "not_evaluated",
+  "repository": "elingeyesdev/t6-medicion-ambiental",
+  "source": "provided_snapshot",
+  "snapshot_sha256": "3c60b91bd65cd6770304e528946be85948f7b906e6fcfad73ffc487217d487c5",
+  "captured_at": "2026-10-31T06:27:50Z",
+  "evaluated_at": "2026-10-31T06:28:38Z",
+  "max_age_hours": 24,
+  "freshness": "within_limit",
+  "validation_reported": {
+    "by": "JosuePadillaUnivalle",
+    "at": "2026-10-31T06:27:50Z"
+  },
+  "notice": "Observaciones declaradas en un snapshot; no verificadas contra GitHub. No certifica M4, CI, aprobación ni entrega.",
+  "scope_constraints": [
+    "Este informe no certifica producto de agua ni entrega final.",
+    "M3 no se incorpora como trabajo terminado de M4.",
+    "No se infiere cronograma ni capacidad.",
+    "Sin PDF ni paquete final."
+  ],
+  "context_as_of": "2026-10-31",
+  "main_context_2026_10_31": "M2 según el contexto comunicado; no determina el estado de main en capturas posteriores.",
+  "milestones_reported": [
+    {
+      "number": 3,
+      "phase": "M3",
+      "title": "M3 - Reingeniería de EnviroSense como GeoSur",
+      "state": "open",
+      "updated_at": "2026-10-31T06:24:47Z",
+      "target_date": "2026-10-29",
+      "academic_deadline_confirmed": null
+    },
+    {
+      "number": 4,
+      "phase": "M4",
+      "title": "M4 - Inundaciones y avance de deforestación",
+      "state": "open",
+      "updated_at": "2026-10-31T05:53:16Z",
+      "target_date": "2026-11-05",
+      "academic_deadline_confirmed": false
+    }
+  ],
+  "missing_issues": [],
+  "groups": {
+    "M3": [
+      {
+        "number": 34,
+        "title": "MOV-03 - Integrar y verificar Flutter con el backend Laravel actual",
+        "group": "M3",
+        "milestone_reported": 3,
+        "phase_reported": "M3",
+        "state_reported": "closed",
+        "implementation_reported": "unknown",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": null,
+        "dependencies_reported": [],
+        "dependencies_considered": [],
+        "context_note_2026_10_31": null,
+        "pending_codes": [
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "closed_issue_is_not_delivery",
+          "pull_request_evidence_missing"
+        ],
+        "technical_pending_codes": [
+          "implementation_not_confirmed",
+          "pull_request_evidence_missing"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed",
+          "closed_issue_is_not_delivery"
+        ],
+        "unresolved_dependencies": [],
+        "dependency_assessment": "no_local_gaps_detected"
+      },
+      {
+        "number": 35,
+        "title": "MET-01 - Acordar fuente método y contrato del módulo de sequías",
+        "group": "M3",
+        "milestone_reported": 3,
+        "phase_reported": "M3",
+        "state_reported": "closed",
+        "implementation_reported": "unknown",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": null,
+        "dependencies_reported": [],
+        "dependencies_considered": [],
+        "context_note_2026_10_31": null,
+        "pending_codes": [
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "closed_issue_is_not_delivery",
+          "pull_request_evidence_missing"
+        ],
+        "technical_pending_codes": [
+          "implementation_not_confirmed",
+          "pull_request_evidence_missing"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed",
+          "closed_issue_is_not_delivery"
+        ],
+        "unresolved_dependencies": [],
+        "dependency_assessment": "no_local_gaps_detected"
+      },
+      {
+        "number": 36,
+        "title": "API-02 - Implementar consulta y cálculo de sequías en Laravel",
+        "group": "M3",
+        "milestone_reported": 3,
+        "phase_reported": "M3",
+        "state_reported": "closed",
+        "implementation_reported": "unknown",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": null,
+        "dependencies_reported": [
+          35
+        ],
+        "dependencies_considered": [
+          35
+        ],
+        "context_note_2026_10_31": null,
+        "pending_codes": [
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "closed_issue_is_not_delivery",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "technical_pending_codes": [
+          "implementation_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed",
+          "closed_issue_is_not_delivery"
+        ],
+        "unresolved_dependencies": [
+          35
+        ],
+        "dependency_assessment": "pending"
+      },
+      {
+        "number": 37,
+        "title": "WEB-02 - Implementar consulta mapa detalle y resumen de sequías",
+        "group": "M3",
+        "milestone_reported": 3,
+        "phase_reported": "M3",
+        "state_reported": "closed",
+        "implementation_reported": "unknown",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": null,
+        "dependencies_reported": [
+          36
+        ],
+        "dependencies_considered": [
+          36
+        ],
+        "context_note_2026_10_31": null,
+        "pending_codes": [
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "closed_issue_is_not_delivery",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "technical_pending_codes": [
+          "implementation_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed",
+          "closed_issue_is_not_delivery"
+        ],
+        "unresolved_dependencies": [
+          36
+        ],
+        "dependency_assessment": "pending"
+      },
+      {
+        "number": 38,
+        "title": "MOV-04 - Consultar sequías en Flutter mediante la API común",
+        "group": "M3",
+        "milestone_reported": 3,
+        "phase_reported": "M3",
+        "state_reported": "closed",
+        "implementation_reported": "unknown",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": null,
+        "dependencies_reported": [
+          36,
+          34
+        ],
+        "dependencies_considered": [
+          34,
+          36
+        ],
+        "context_note_2026_10_31": null,
+        "pending_codes": [
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "closed_issue_is_not_delivery",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "technical_pending_codes": [
+          "implementation_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed",
+          "closed_issue_is_not_delivery"
+        ],
+        "unresolved_dependencies": [
+          34,
+          36
+        ],
+        "dependency_assessment": "pending"
+      },
+      {
+        "number": 39,
+        "title": "QA-02 - Verificar cálculo e integración de sequías en web y móvil",
+        "group": "M3",
+        "milestone_reported": 3,
+        "phase_reported": "M3",
+        "state_reported": "open",
+        "implementation_reported": "in_progress",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": [
+          88
+        ],
+        "dependencies_reported": [
+          37,
+          38
+        ],
+        "dependencies_considered": [
+          37,
+          38
+        ],
+        "context_note_2026_10_31": "Se comunicaron tres fallos Flutter y cambios solicitados en b176111; confirmar SHA completo y vigencia.",
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_pending",
+          "dependency_unresolved"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_pending",
+          "dependency_unresolved"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [
+          37,
+          38
+        ],
+        "dependency_assessment": "pending"
+      },
+      {
+        "number": 40,
+        "title": "ANA-01 - Preparar método y avance de análisis de inundaciones",
+        "group": "M3",
+        "milestone_reported": 3,
+        "phase_reported": "M3",
+        "state_reported": "open",
+        "implementation_reported": "proposal",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": [
+          46
+        ],
+        "dependencies_reported": [
+          39
+        ],
+        "dependencies_considered": [
+          39
+        ],
+        "context_note_2026_10_31": null,
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_pending",
+          "dependency_unresolved"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_pending",
+          "dependency_unresolved"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [
+          39
+        ],
+        "dependency_assessment": "pending"
+      },
+      {
+        "number": 41,
+        "title": "ENT-03 - Consolidar evidencias y revisión de la tercera entrega",
+        "group": "M3",
+        "milestone_reported": 3,
+        "phase_reported": "M3",
+        "state_reported": "open",
+        "implementation_reported": "in_progress",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": [
+          96
+        ],
+        "dependencies_reported": [
+          34,
+          39,
+          40
+        ],
+        "dependencies_considered": [
+          34,
+          39,
+          40
+        ],
+        "context_note_2026_10_31": null,
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_pending",
+          "dependency_unresolved"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_pending",
+          "dependency_unresolved"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [
+          34,
+          39,
+          40
+        ],
+        "dependency_assessment": "pending"
+      },
+      {
+        "number": 47,
+        "title": "REF-WEB - Mantener EnviroSense como base web de GeoSur",
+        "group": "M3",
+        "milestone_reported": 3,
+        "phase_reported": "M3",
+        "state_reported": "open",
+        "implementation_reported": "in_progress",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": [
+          98
+        ],
+        "dependencies_reported": [],
+        "dependencies_considered": [],
+        "context_note_2026_10_31": null,
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_pending"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_pending"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [],
+        "dependency_assessment": "no_local_gaps_detected"
+      },
+      {
+        "number": 64,
+        "title": "REP-01 - Recuperar reportes plantillas y gráficos de EnviroSense",
+        "group": "M3",
+        "milestone_reported": 3,
+        "phase_reported": "M3",
+        "state_reported": "open",
+        "implementation_reported": "in_progress",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": [
+          121
+        ],
+        "dependencies_reported": [],
+        "dependencies_considered": [],
+        "context_note_2026_10_31": null,
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_pending"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_pending"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [],
+        "dependency_assessment": "no_local_gaps_detected"
+      }
+    ],
+    "M4": [
+      {
+        "number": 109,
+        "title": "PLAN-02 - Ajustar el cronograma al alcance actual de GeoSur",
+        "group": "M4",
+        "milestone_reported": 4,
+        "phase_reported": "M4",
+        "state_reported": "open",
+        "implementation_reported": "unknown",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": null,
+        "dependencies_reported": [],
+        "dependencies_considered": [],
+        "context_note_2026_10_31": "Planificación pendiente de Jaziel y capacidad; sin cronograma confirmado.",
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_evidence_missing"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_evidence_missing"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [],
+        "dependency_assessment": "no_local_gaps_detected"
+      },
+      {
+        "number": 110,
+        "title": "MET-02 - Elegir el caso y cerrar el método de agua e inundaciones",
+        "group": "M4",
+        "milestone_reported": 4,
+        "phase_reported": "M4",
+        "state_reported": "open",
+        "implementation_reported": "proposal",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": [
+          120
+        ],
+        "dependencies_reported": [
+          40
+        ],
+        "dependencies_considered": [
+          40
+        ],
+        "context_note_2026_10_31": "Propuesta de inundaciones / PR #120; recapturar HEAD tras ampliar pruebas SCL y metadata radar. No acredita producto de agua ni CI actual.",
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_pending",
+          "dependency_unresolved"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_pending",
+          "dependency_unresolved"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [
+          40
+        ],
+        "dependency_assessment": "pending"
+      },
+      {
+        "number": 111,
+        "title": "DAT-05 - Procesar y comprobar los cambios de agua del caso elegido",
+        "group": "M4",
+        "milestone_reported": 4,
+        "phase_reported": "M4",
+        "state_reported": "open",
+        "implementation_reported": "unknown",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": null,
+        "dependencies_reported": [
+          110,
+          39
+        ],
+        "dependencies_considered": [
+          39,
+          110
+        ],
+        "context_note_2026_10_31": null,
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [
+          39,
+          110
+        ],
+        "dependency_assessment": "pending"
+      },
+      {
+        "number": 112,
+        "title": "API-03 - Compartir la consulta de agua e inundaciones con web y móvil",
+        "group": "M4",
+        "milestone_reported": 4,
+        "phase_reported": "M4",
+        "state_reported": "open",
+        "implementation_reported": "unknown",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": null,
+        "dependencies_reported": [
+          111
+        ],
+        "dependencies_considered": [
+          111
+        ],
+        "context_note_2026_10_31": null,
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [
+          111
+        ],
+        "dependency_assessment": "pending"
+      },
+      {
+        "number": 113,
+        "title": "WEB-04 - Incorporar agua e inundaciones al mapa de GeoSur",
+        "group": "M4",
+        "milestone_reported": 4,
+        "phase_reported": "M4",
+        "state_reported": "open",
+        "implementation_reported": "unknown",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": null,
+        "dependencies_reported": [
+          112,
+          47
+        ],
+        "dependencies_considered": [
+          47,
+          112
+        ],
+        "context_note_2026_10_31": null,
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [
+          47,
+          112
+        ],
+        "dependency_assessment": "pending"
+      },
+      {
+        "number": 114,
+        "title": "MOV-05 - Consultar agua e inundaciones desde Flutter",
+        "group": "M4",
+        "milestone_reported": 4,
+        "phase_reported": "M4",
+        "state_reported": "open",
+        "implementation_reported": "unknown",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": null,
+        "dependencies_reported": [
+          112
+        ],
+        "dependencies_considered": [
+          112
+        ],
+        "context_note_2026_10_31": "Flutter a cargo de Jaziel; requiere su implementación y evidencia propia.",
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [
+          112
+        ],
+        "dependency_assessment": "pending"
+      },
+      {
+        "number": 115,
+        "title": "QA-03 - Contrastar el análisis de agua y su consulta en ambos clientes",
+        "group": "M4",
+        "milestone_reported": 4,
+        "phase_reported": "M4",
+        "state_reported": "open",
+        "implementation_reported": "unknown",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": null,
+        "dependencies_reported": [
+          111,
+          113,
+          114
+        ],
+        "dependencies_considered": [
+          111,
+          113,
+          114
+        ],
+        "context_note_2026_10_31": null,
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [
+          111,
+          113,
+          114
+        ],
+        "dependency_assessment": "pending"
+      },
+      {
+        "number": 116,
+        "title": "MET-03 - Acordar la fuente y el método de pérdida de cobertura forestal",
+        "group": "M4",
+        "milestone_reported": 4,
+        "phase_reported": "M4",
+        "state_reported": "open",
+        "implementation_reported": "proposal",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": [
+          119
+        ],
+        "dependencies_reported": [],
+        "dependencies_considered": [],
+        "context_note_2026_10_31": "Forestal / PR #119 en revisión; no acredita aprobación ni integración.",
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_pending"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_pending"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [],
+        "dependency_assessment": "no_local_gaps_detected"
+      },
+      {
+        "number": 117,
+        "title": "ANA-02 - Preparar el primer resultado verificable de cobertura forestal",
+        "group": "M4",
+        "milestone_reported": 4,
+        "phase_reported": "M4",
+        "state_reported": "open",
+        "implementation_reported": "unknown",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": null,
+        "dependencies_reported": [
+          116,
+          115
+        ],
+        "dependencies_considered": [
+          115,
+          116
+        ],
+        "context_note_2026_10_31": null,
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [
+          115,
+          116
+        ],
+        "dependency_assessment": "pending"
+      },
+      {
+        "number": 118,
+        "title": "ENT-04 - Reunir evidencias y preparar la revisión de M4",
+        "group": "M4",
+        "milestone_reported": 4,
+        "phase_reported": "M4",
+        "state_reported": "open",
+        "implementation_reported": "proposal",
+        "engineer_acceptance_reported": {
+          "status": "unknown",
+          "by": null,
+          "at": null,
+          "evidence_url": null
+        },
+        "pull_requests": null,
+        "dependencies_reported": [
+          41,
+          109,
+          115,
+          117
+        ],
+        "dependencies_considered": [
+          41,
+          109,
+          115,
+          117
+        ],
+        "context_note_2026_10_31": "Preparar documentos no completa M4 ni la entrega al ingeniero.",
+        "pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "engineer_acceptance_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "technical_pending_codes": [
+          "issue_open",
+          "implementation_not_confirmed",
+          "pull_request_evidence_missing",
+          "dependency_unresolved"
+        ],
+        "delivery_warning_codes": [
+          "engineer_acceptance_not_confirmed"
+        ],
+        "unresolved_dependencies": [
+          41,
+          109,
+          115,
+          117
+        ],
+        "dependency_assessment": "pending"
+      }
+    ],
+    "unassigned": []
+  },
+  "pull_requests": [
+    {
+      "number": 46,
+      "head_sha": "fba0319696bd5fe707bf71b68315c23ffecfb191",
+      "state_reported": "open",
+      "merged_at_reported": null,
+      "reviews_reported": [],
+      "reviews_complete_reported": true,
+      "merged_reported": false,
+      "merge_observation": "open",
+      "review_observation": "no_current_approval",
+      "current_sha_approvals_reported": [],
+      "outdated_approvals_reported": [],
+      "changes_requested_by": [],
+      "checks_reported": {
+        "status": "unknown",
+        "sha": null,
+        "evidence_url": null
+      },
+      "checks_observation": "unknown",
+      "pending_codes": [
+        "merge_not_confirmed",
+        "current_sha_approval_missing",
+        "checks_not_confirmed_success"
+      ]
+    },
+    {
+      "number": 88,
+      "head_sha": "b1761113b161bd5d8d9634cd2396a4120fa2a12d",
+      "state_reported": "open",
+      "merged_at_reported": null,
+      "reviews_reported": [
+        {
+          "id": 5703829084,
+          "by": "JosuePadillaUnivalle",
+          "state": "COMMENTED",
+          "commit_sha": "1604a1aa685018c950a99de6e547808445b59236",
+          "submitted_at": "2026-10-29T19:33:10Z"
+        },
+        {
+          "id": 5721392681,
+          "by": "JosuePadillaUnivalle",
+          "state": "CHANGES_REQUESTED",
+          "commit_sha": "b1761113b161bd5d8d9634cd2396a4120fa2a12d",
+          "submitted_at": "2026-10-31T05:05:19Z"
+        }
+      ],
+      "reviews_complete_reported": true,
+      "merged_reported": false,
+      "merge_observation": "open",
+      "review_observation": "changes_requested",
+      "current_sha_approvals_reported": [],
+      "outdated_approvals_reported": [],
+      "changes_requested_by": [
+        "JosuePadillaUnivalle"
+      ],
+      "checks_reported": {
+        "status": "success",
+        "sha": "b1761113b161bd5d8d9634cd2396a4120fa2a12d",
+        "evidence_url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/88"
+      },
+      "checks_observation": "success",
+      "pending_codes": [
+        "merge_not_confirmed",
+        "changes_requested"
+      ]
+    },
+    {
+      "number": 96,
+      "head_sha": "f74bb7d0decb15644e1666b90fc6910b50b22995",
+      "state_reported": "open",
+      "merged_at_reported": null,
+      "reviews_reported": [],
+      "reviews_complete_reported": true,
+      "merged_reported": false,
+      "merge_observation": "open",
+      "review_observation": "no_current_approval",
+      "current_sha_approvals_reported": [],
+      "outdated_approvals_reported": [],
+      "changes_requested_by": [],
+      "checks_reported": {
+        "status": "unknown",
+        "sha": null,
+        "evidence_url": null
+      },
+      "checks_observation": "unknown",
+      "pending_codes": [
+        "merge_not_confirmed",
+        "draft_pull_request",
+        "current_sha_approval_missing",
+        "checks_not_confirmed_success"
+      ]
+    },
+    {
+      "number": 98,
+      "head_sha": "d8b89140fd3bf0e84314211a27a952db448b7d74",
+      "state_reported": "open",
+      "merged_at_reported": null,
+      "reviews_reported": [],
+      "reviews_complete_reported": true,
+      "merged_reported": false,
+      "merge_observation": "open",
+      "review_observation": "no_current_approval",
+      "current_sha_approvals_reported": [],
+      "outdated_approvals_reported": [],
+      "changes_requested_by": [],
+      "checks_reported": {
+        "status": "unknown",
+        "sha": null,
+        "evidence_url": null
+      },
+      "checks_observation": "unknown",
+      "pending_codes": [
+        "merge_not_confirmed",
+        "current_sha_approval_missing",
+        "checks_not_confirmed_success"
+      ]
+    },
+    {
+      "number": 119,
+      "head_sha": "09cffb9c72154a42b624c44238dbde1f6db632d9",
+      "state_reported": "open",
+      "merged_at_reported": null,
+      "reviews_reported": [],
+      "reviews_complete_reported": true,
+      "merged_reported": false,
+      "merge_observation": "open",
+      "review_observation": "no_current_approval",
+      "current_sha_approvals_reported": [],
+      "outdated_approvals_reported": [],
+      "changes_requested_by": [],
+      "checks_reported": {
+        "status": "success",
+        "sha": "09cffb9c72154a42b624c44238dbde1f6db632d9",
+        "evidence_url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/119"
+      },
+      "checks_observation": "success",
+      "pending_codes": [
+        "merge_not_confirmed",
+        "current_sha_approval_missing"
+      ]
+    },
+    {
+      "number": 120,
+      "head_sha": "c2f6ed6d0e468d039c3d91db16c725356cc37917",
+      "state_reported": "open",
+      "merged_at_reported": null,
+      "reviews_reported": [],
+      "reviews_complete_reported": true,
+      "merged_reported": false,
+      "merge_observation": "open",
+      "review_observation": "no_current_approval",
+      "current_sha_approvals_reported": [],
+      "outdated_approvals_reported": [],
+      "changes_requested_by": [],
+      "checks_reported": {
+        "status": "success",
+        "sha": "c2f6ed6d0e468d039c3d91db16c725356cc37917",
+        "evidence_url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/120"
+      },
+      "checks_observation": "success",
+      "pending_codes": [
+        "merge_not_confirmed",
+        "current_sha_approval_missing"
+      ]
+    },
+    {
+      "number": 121,
+      "head_sha": "fb3a42b988cf87d64ecd0e2c14d76aed8f3f4c19",
+      "state_reported": "open",
+      "merged_at_reported": null,
+      "reviews_reported": [],
+      "reviews_complete_reported": true,
+      "merged_reported": false,
+      "merge_observation": "open",
+      "review_observation": "no_current_approval",
+      "current_sha_approvals_reported": [],
+      "outdated_approvals_reported": [],
+      "changes_requested_by": [],
+      "checks_reported": {
+        "status": "unknown",
+        "sha": null,
+        "evidence_url": null
+      },
+      "checks_observation": "unknown",
+      "pending_codes": [
+        "merge_not_confirmed",
+        "current_sha_approval_missing",
+        "checks_not_confirmed_success"
+      ]
+    }
+  ],
+  "pending": [
+    {
+      "code": "merge_not_confirmed",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: merge_not_confirmed.",
+      "issue": null,
+      "pull_request": 46
+    },
+    {
+      "code": "current_sha_approval_missing",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: current_sha_approval_missing.",
+      "issue": null,
+      "pull_request": 46
+    },
+    {
+      "code": "checks_not_confirmed_success",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: checks_not_confirmed_success.",
+      "issue": null,
+      "pull_request": 46
+    },
+    {
+      "code": "merge_not_confirmed",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: merge_not_confirmed.",
+      "issue": null,
+      "pull_request": 88
+    },
+    {
+      "code": "changes_requested",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: changes_requested.",
+      "issue": null,
+      "pull_request": 88
+    },
+    {
+      "code": "merge_not_confirmed",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: merge_not_confirmed.",
+      "issue": null,
+      "pull_request": 96
+    },
+    {
+      "code": "draft_pull_request",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: draft_pull_request.",
+      "issue": null,
+      "pull_request": 96
+    },
+    {
+      "code": "current_sha_approval_missing",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: current_sha_approval_missing.",
+      "issue": null,
+      "pull_request": 96
+    },
+    {
+      "code": "checks_not_confirmed_success",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: checks_not_confirmed_success.",
+      "issue": null,
+      "pull_request": 96
+    },
+    {
+      "code": "merge_not_confirmed",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: merge_not_confirmed.",
+      "issue": null,
+      "pull_request": 98
+    },
+    {
+      "code": "current_sha_approval_missing",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: current_sha_approval_missing.",
+      "issue": null,
+      "pull_request": 98
+    },
+    {
+      "code": "checks_not_confirmed_success",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: checks_not_confirmed_success.",
+      "issue": null,
+      "pull_request": 98
+    },
+    {
+      "code": "merge_not_confirmed",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: merge_not_confirmed.",
+      "issue": null,
+      "pull_request": 119
+    },
+    {
+      "code": "current_sha_approval_missing",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: current_sha_approval_missing.",
+      "issue": null,
+      "pull_request": 119
+    },
+    {
+      "code": "merge_not_confirmed",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: merge_not_confirmed.",
+      "issue": null,
+      "pull_request": 120
+    },
+    {
+      "code": "current_sha_approval_missing",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: current_sha_approval_missing.",
+      "issue": null,
+      "pull_request": 120
+    },
+    {
+      "code": "merge_not_confirmed",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: merge_not_confirmed.",
+      "issue": null,
+      "pull_request": 121
+    },
+    {
+      "code": "current_sha_approval_missing",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: current_sha_approval_missing.",
+      "issue": null,
+      "pull_request": 121
+    },
+    {
+      "code": "checks_not_confirmed_success",
+      "category": "technical",
+      "message": "PR con evidencia pendiente: checks_not_confirmed_success.",
+      "issue": null,
+      "pull_request": 121
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 34,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 34,
+      "pull_request": null
+    },
+    {
+      "code": "closed_issue_is_not_delivery",
+      "category": "delivery_warning",
+      "message": "Cerrar una issue no acredita aceptación académica del corte main.",
+      "issue": 34,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_evidence_missing",
+      "category": "technical",
+      "message": "No hay lista de PR con evidencia suficiente; no inferir integración.",
+      "issue": 34,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 35,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 35,
+      "pull_request": null
+    },
+    {
+      "code": "closed_issue_is_not_delivery",
+      "category": "delivery_warning",
+      "message": "Cerrar una issue no acredita aceptación académica del corte main.",
+      "issue": 35,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_evidence_missing",
+      "category": "technical",
+      "message": "No hay lista de PR con evidencia suficiente; no inferir integración.",
+      "issue": 35,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 36,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 36,
+      "pull_request": null
+    },
+    {
+      "code": "closed_issue_is_not_delivery",
+      "category": "delivery_warning",
+      "message": "Cerrar una issue no acredita aceptación académica del corte main.",
+      "issue": 36,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_evidence_missing",
+      "category": "technical",
+      "message": "No hay lista de PR con evidencia suficiente; no inferir integración.",
+      "issue": 36,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 37,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 37,
+      "pull_request": null
+    },
+    {
+      "code": "closed_issue_is_not_delivery",
+      "category": "delivery_warning",
+      "message": "Cerrar una issue no acredita aceptación académica del corte main.",
+      "issue": 37,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_evidence_missing",
+      "category": "technical",
+      "message": "No hay lista de PR con evidencia suficiente; no inferir integración.",
+      "issue": 37,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 38,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 38,
+      "pull_request": null
+    },
+    {
+      "code": "closed_issue_is_not_delivery",
+      "category": "delivery_warning",
+      "message": "Cerrar una issue no acredita aceptación académica del corte main.",
+      "issue": 38,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_evidence_missing",
+      "category": "technical",
+      "message": "No hay lista de PR con evidencia suficiente; no inferir integración.",
+      "issue": 38,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 39,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 39,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 39,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_pending",
+      "category": "technical",
+      "message": "PR asociado con integración, revisión o checks pendientes.",
+      "issue": 39,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 40,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 40,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 40,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_pending",
+      "category": "technical",
+      "message": "PR asociado con integración, revisión o checks pendientes.",
+      "issue": 40,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 41,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 41,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 41,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_pending",
+      "category": "technical",
+      "message": "PR asociado con integración, revisión o checks pendientes.",
+      "issue": 41,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 47,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 47,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 47,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_pending",
+      "category": "technical",
+      "message": "PR asociado con integración, revisión o checks pendientes.",
+      "issue": 47,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 64,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 64,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 64,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_pending",
+      "category": "technical",
+      "message": "PR asociado con integración, revisión o checks pendientes.",
+      "issue": 64,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 109,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 109,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 109,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_evidence_missing",
+      "category": "technical",
+      "message": "No hay lista de PR con evidencia suficiente; no inferir integración.",
+      "issue": 109,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 110,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 110,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 110,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_pending",
+      "category": "technical",
+      "message": "PR asociado con integración, revisión o checks pendientes.",
+      "issue": 110,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 111,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 111,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 111,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_evidence_missing",
+      "category": "technical",
+      "message": "No hay lista de PR con evidencia suficiente; no inferir integración.",
+      "issue": 111,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 112,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 112,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 112,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_evidence_missing",
+      "category": "technical",
+      "message": "No hay lista de PR con evidencia suficiente; no inferir integración.",
+      "issue": 112,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 113,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 113,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 113,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_evidence_missing",
+      "category": "technical",
+      "message": "No hay lista de PR con evidencia suficiente; no inferir integración.",
+      "issue": 113,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 114,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 114,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 114,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_evidence_missing",
+      "category": "technical",
+      "message": "No hay lista de PR con evidencia suficiente; no inferir integración.",
+      "issue": 114,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 115,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 115,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 115,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_evidence_missing",
+      "category": "technical",
+      "message": "No hay lista de PR con evidencia suficiente; no inferir integración.",
+      "issue": 115,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 116,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 116,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 116,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_pending",
+      "category": "technical",
+      "message": "PR asociado con integración, revisión o checks pendientes.",
+      "issue": 116,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 117,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 117,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 117,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_evidence_missing",
+      "category": "technical",
+      "message": "No hay lista de PR con evidencia suficiente; no inferir integración.",
+      "issue": 117,
+      "pull_request": null
+    },
+    {
+      "code": "issue_open",
+      "category": "technical",
+      "message": "La tarea sigue abierta según el snapshot.",
+      "issue": 118,
+      "pull_request": null
+    },
+    {
+      "code": "implementation_not_confirmed",
+      "category": "technical",
+      "message": "No hay implementación declarada completa.",
+      "issue": 118,
+      "pull_request": null
+    },
+    {
+      "code": "engineer_acceptance_not_confirmed",
+      "category": "delivery_warning",
+      "message": "Sin aceptación individual declarada del ingeniero; dato de entrega, no bloqueo técnico.",
+      "issue": 118,
+      "pull_request": null
+    },
+    {
+      "code": "pull_request_evidence_missing",
+      "category": "technical",
+      "message": "No hay lista de PR con evidencia suficiente; no inferir integración.",
+      "issue": 118,
+      "pull_request": null
+    },
+    {
+      "code": "dependency_unresolved",
+      "category": "technical",
+      "message": "Dependencias ausentes o con evidencia pendiente.",
+      "issue": 36,
+      "pull_request": null
+    },
+    {
+      "code": "dependency_unresolved",
+      "category": "technical",
+      "message": "Dependencias ausentes o con evidencia pendiente.",
+      "issue": 37,
+      "pull_request": null
+    },
+    {
+      "code": "dependency_unresolved",
+      "category": "technical",
+      "message": "Dependencias ausentes o con evidencia pendiente.",
+      "issue": 38,
+      "pull_request": null
+    },
+    {
+      "code": "dependency_unresolved",
+      "category": "technical",
+      "message": "Dependencias ausentes o con evidencia pendiente.",
+      "issue": 39,
+      "pull_request": null
+    },
+    {
+      "code": "dependency_unresolved",
+      "category": "technical",
+      "message": "Dependencias ausentes o con evidencia pendiente.",
+      "issue": 40,
+      "pull_request": null
+    },
+    {
+      "code": "dependency_unresolved",
+      "category": "technical",
+      "message": "Dependencias ausentes o con evidencia pendiente.",
+      "issue": 41,
+      "pull_request": null
+    },
+    {
+      "code": "dependency_unresolved",
+      "category": "technical",
+      "message": "Dependencias ausentes o con evidencia pendiente.",
+      "issue": 110,
+      "pull_request": null
+    },
+    {
+      "code": "dependency_unresolved",
+      "category": "technical",
+      "message": "Dependencias ausentes o con evidencia pendiente.",
+      "issue": 111,
+      "pull_request": null
+    },
+    {
+      "code": "dependency_unresolved",
+      "category": "technical",
+      "message": "Dependencias ausentes o con evidencia pendiente.",
+      "issue": 112,
+      "pull_request": null
+    },
+    {
+      "code": "dependency_unresolved",
+      "category": "technical",
+      "message": "Dependencias ausentes o con evidencia pendiente.",
+      "issue": 113,
+      "pull_request": null
+    },
+    {
+      "code": "dependency_unresolved",
+      "category": "technical",
+      "message": "Dependencias ausentes o con evidencia pendiente.",
+      "issue": 114,
+      "pull_request": null
+    },
+    {
+      "code": "dependency_unresolved",
+      "category": "technical",
+      "message": "Dependencias ausentes o con evidencia pendiente.",
+      "issue": 115,
+      "pull_request": null
+    },
+    {
+      "code": "dependency_unresolved",
+      "category": "technical",
+      "message": "Dependencias ausentes o con evidencia pendiente.",
+      "issue": 117,
+      "pull_request": null
+    },
+    {
+      "code": "dependency_unresolved",
+      "category": "technical",
+      "message": "Dependencias ausentes o con evidencia pendiente.",
+      "issue": 118,
+      "pull_request": null
+    }
+  ],
+  "pending_count": 113
+}
