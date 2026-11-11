@@ -89,6 +89,7 @@ class _HomeShellState extends State<HomeShell> {
           ? EnvironmentalConsultationScreen(
               key: const PageStorageKey('geosur-consultas'),
               apiClient: widget.apiClient,
+              onUnauthorized: widget.onUnauthorized,
             )
           : const SizedBox.shrink(),
       _visitedTabs.contains(2)

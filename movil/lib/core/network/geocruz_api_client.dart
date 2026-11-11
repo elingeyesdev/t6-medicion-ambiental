@@ -35,6 +35,25 @@ class GeoCruzApiClient {
     );
   }
 
+  /// Decodes large JSON responses on a background isolate and reports timing
+  /// only in debug builds. Kept separate so existing API client overrides do
+  /// not need a signature change.
+  Future<Object?> getJsonWithProfiling(
+    String endpoint, {
+    Map<String, String> queryParameters = const {},
+    Duration? timeoutOverride,
+    bool authenticated = false,
+    required String profileLabel,
+  }) => _requestJson(
+    'GET',
+    endpoint,
+    queryParameters: queryParameters,
+    timeoutOverride: timeoutOverride,
+    authenticated: authenticated,
+    decodeLargeJsonOffMain: true,
+    profileLabel: profileLabel,
+  );
+
   /// Descarga bytes (p. ej. PNG de capas GFS) con el mismo token Sanctum.
   Future<Uint8List> getBytes(
     String endpoint, {
@@ -50,7 +69,8 @@ class GeoCruzApiClient {
       accept: 'image/png, application/json',
     );
     // Algunos proxies omiten content-type; se valida firma PNG.
-    final png = bytes.length >= 8 &&
+    final png =
+        bytes.length >= 8 &&
         bytes[0] == 0x89 &&
         bytes[1] == 0x50 &&
         bytes[2] == 0x4E &&
@@ -169,6 +189,8 @@ class GeoCruzApiClient {
     Object? body,
     bool authenticated = false,
     Duration? timeoutOverride,
+    bool decodeLargeJsonOffMain = false,
+    String? profileLabel,
   }) async {
     final normalizedEndpoint = endpoint.replaceFirst(RegExp(r'^/+'), '');
     if (normalizedEndpoint.isEmpty ||
@@ -178,9 +200,7 @@ class GeoCruzApiClient {
       throw ArgumentError.value(endpoint, 'endpoint', 'Ruta no válida.');
     }
 
-    final headers = <String, String>{
-      'Accept': 'application/json',
-    };
+    final headers = <String, String>{'Accept': 'application/json'};
     if (body != null) headers['Content-Type'] = 'application/json';
     if (authenticated) {
       final token = bearerToken;
@@ -193,7 +213,9 @@ class GeoCruzApiClient {
       }
       headers['Authorization'] = 'Bearer $token';
     }
-    final encodedBody = body != null ? jsonEncode(body) : jsonEncode(const <String, Object?>{});
+    final encodedBody = body != null
+        ? jsonEncode(body)
+        : jsonEncode(const <String, Object?>{});
 
     Future<http.Response> sendTo(Uri base, Duration requestTimeout) {
       final uri = base
@@ -212,12 +234,41 @@ class GeoCruzApiClient {
     }
 
     final targetTimeout = timeoutOverride ?? timeout;
-    final response = await sendTo(_baseUrl, targetTimeout);
+    final requestTimer = Stopwatch()..start();
+    late final http.Response response;
+    try {
+      response = await sendTo(_baseUrl, targetTimeout);
+    } catch (_) {
+      requestTimer.stop();
+      _logRequestTiming(
+        profileLabel,
+        requestTimer.elapsedMilliseconds,
+        null,
+        false,
+      );
+      rethrow;
+    }
+    requestTimer.stop();
 
     Object? payload;
+    final decodeInBackground =
+        decodeLargeJsonOffMain &&
+        response.bodyBytes.length >= _backgroundDecodeThreshold;
+    final decodeTimer = Stopwatch()..start();
     try {
-      payload = _decodeJsonBody(response);
+      payload = await _decodeJsonBody(
+        response,
+        decodeInBackground: decodeInBackground,
+      );
     } on FormatException catch (error) {
+      decodeTimer.stop();
+      _logRequestTiming(
+        profileLabel,
+        requestTimer.elapsedMilliseconds,
+        decodeTimer.elapsedMilliseconds,
+        decodeInBackground,
+        bytes: response.bodyBytes.length,
+      );
       debugPrint(
         'Respuesta JSON inválida: HTTP ${response.statusCode}, '
         'bytes=${response.bodyBytes.length}, '
@@ -233,8 +284,8 @@ class GeoCruzApiClient {
               ),
               allowMalformed: true,
             );
-      final looksHtml = response.headers['content-type']?.contains('text/html') ==
-              true ||
+      final looksHtml =
+          response.headers['content-type']?.contains('text/html') == true ||
           head.contains('<');
       throw GeoCruzApiException(
         statusCode: response.statusCode,
@@ -243,6 +294,14 @@ class GeoCruzApiClient {
             : 'La API devolvió una respuesta que no es JSON válido (HTTP ${response.statusCode}).',
       );
     }
+    decodeTimer.stop();
+    _logRequestTiming(
+      profileLabel,
+      requestTimer.elapsedMilliseconds,
+      decodeTimer.elapsedMilliseconds,
+      decodeInBackground,
+      bytes: response.bodyBytes.length,
+    );
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
       final error = payload is Map<String, dynamic> ? payload['error'] : null;
@@ -265,8 +324,44 @@ class GeoCruzApiClient {
   void close() => _client.close();
 }
 
-Object? _decodeJsonBody(http.Response response) {
-  var bytes = response.bodyBytes;
+const _backgroundDecodeThreshold = 64 * 1024;
+
+Future<Object?> _decodeJsonBody(
+  http.Response response, {
+  required bool decodeInBackground,
+}) async {
+  if (decodeInBackground) {
+    final outcome = await compute(
+      _decodeJsonBytesInBackground,
+      response.bodyBytes,
+      debugLabel: 'GeoCruz JSON grande',
+    );
+    if (outcome[0] != true) {
+      throw FormatException(
+        outcome[1] as String,
+        null,
+        outcome[2] as int?,
+      );
+    }
+    return outcome[1];
+  }
+  final body = _prepareJsonBody(response.bodyBytes);
+  if (body.isEmpty) throw const FormatException('cuerpo vacío');
+  return _decodeJsonContent(body);
+}
+
+List<Object?> _decodeJsonBytesInBackground(Uint8List input) {
+  try {
+    final body = _prepareJsonBody(input);
+    if (body.isEmpty) return const [false, 'cuerpo vacío', -1];
+    return [true, _decodeJsonContent(body), -1];
+  } on FormatException catch (error) {
+    return [false, error.message, error.offset ?? -1];
+  }
+}
+
+String _prepareJsonBody(Uint8List input) {
+  var bytes = input;
   // Algunos stacks Android entregan gzip sin Content-Encoding usable.
   if (bytes.length >= 2 && bytes[0] == 0x1f && bytes[1] == 0x8b) {
     try {
@@ -292,9 +387,10 @@ Object? _decodeJsonBody(http.Response response) {
     };
     if (start >= 0) body = body.substring(start);
   }
-  if (body.isEmpty) {
-    throw const FormatException('cuerpo vacío');
-  }
+  return body;
+}
+
+Object? _decodeJsonContent(String body) {
   try {
     return jsonDecode(body);
   } on FormatException {
@@ -302,11 +398,24 @@ Object? _decodeJsonBody(http.Response response) {
     final endObject = body.lastIndexOf('}');
     final endArray = body.lastIndexOf(']');
     final end = endObject > endArray ? endObject : endArray;
-    if (end > 0) {
-      return jsonDecode(body.substring(0, end + 1));
-    }
+    if (end > 0) return jsonDecode(body.substring(0, end + 1));
     rethrow;
   }
+}
+
+void _logRequestTiming(
+  String? label,
+  int requestMs,
+  int? decodeMs,
+  bool backgroundDecode, {
+  int? bytes,
+}) {
+  if (!kDebugMode || label == null) return;
+  debugPrint(
+    '[rendimiento][$label] red=${requestMs}ms '
+    'json=${decodeMs == null ? 'sin respuesta' : '${decodeMs}ms'} '
+    'bytes=${bytes ?? 0} isolate=${backgroundDecode ? 'sí' : 'no'}',
+  );
 }
 
 String _mensajeConCampos(String mensaje, Object? campos) {

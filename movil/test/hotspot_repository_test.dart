@@ -13,25 +13,28 @@ import 'package:http/testing.dart';
 
 void main() {
   group('MOV-02 revisión de consultas pendientes', () {
-    test('cerrar durante catálogo no notifica ni inicia otra consulta', () async {
-      final pending = Completer<http.Response>();
-      var calls = 0;
-      final api = GeoCruzApiClient(
-        baseUrl: Uri.parse('http://localhost/api/v1/'),
-        client: MockClient((_) {
-          calls++;
-          return pending.future;
-        }),
-      );
-      final controller = HotspotsViewModel(HotspotRepository(api));
-      final task = controller.initialize();
-      controller.dispose();
-      pending.complete(_json(_catalog()));
-      await task;
-      expect(calls, 1);
-      expect(controller.response, isNull);
-      api.close();
-    });
+    test(
+      'cerrar durante catálogo no notifica ni inicia otra consulta',
+      () async {
+        final pending = Completer<http.Response>();
+        var calls = 0;
+        final api = GeoCruzApiClient(
+          baseUrl: Uri.parse('http://localhost/api/v1/'),
+          client: MockClient((_) {
+            calls++;
+            return pending.future;
+          }),
+        );
+        final controller = HotspotsViewModel(HotspotRepository(api));
+        final task = controller.initialize();
+        controller.dispose();
+        pending.complete(_json(_catalog()));
+        await task;
+        expect(calls, 1);
+        expect(controller.response, isNull);
+        api.close();
+      },
+    );
 
     test('cerrar durante consulta descarta la respuesta tardía', () async {
       final pending = Completer<http.Response>();
@@ -48,41 +51,48 @@ void main() {
       api.close();
     });
 
-    testWidgets('cero registros con sin_cobertura no afirma ausencia', (
+    testWidgets(
+      'cero registros sin cobertura no muestra un aviso de cobertura',
+      (tester) async {
+        final payload = _response(total: 0);
+        payload['datos'] = <Object>[];
+        payload['cobertura'] = {
+          'estado': 'sin_cobertura',
+          'fundamento': 'Cobertura de prueba controlada.',
+        };
+        final api = GeoCruzApiClient(
+          baseUrl: Uri.parse('http://localhost/api/v1/'),
+          client: MockClient((request) async {
+            if (request.url.path.endsWith('/territorios')) {
+              return _json(_catalog());
+            }
+            if (request.url.path.endsWith('/focos-calor')) {
+              return _json(payload);
+            }
+            return _json(_boundary());
+          }),
+        );
+        await tester.pumpWidget(
+          MaterialApp(home: HotspotsScreen(apiClient: api)),
+        );
+        for (var i = 0; i < 8; i++) {
+          await tester.pump(const Duration(milliseconds: 50));
+        }
+        expect(find.text('Sin cobertura comprobada'), findsNothing);
+        expect(find.textContaining('Cobertura desconocida'), findsNothing);
+        expect(find.text('Sin detecciones para estos filtros'), findsNothing);
+        expect(
+          find.text('No hay detecciones en el período consultado.'),
+          findsNothing,
+        );
+        await tester.pumpWidget(const SizedBox());
+        api.close();
+      },
+    );
+
+    testWidgets('cobertura parcial con detecciones no muestra aviso', (
       tester,
     ) async {
-      final payload = _response(total: 0);
-      payload['datos'] = <Object>[];
-      payload['cobertura'] = {
-        'estado': 'sin_cobertura',
-        'fundamento': 'Cobertura de prueba controlada.',
-      };
-      final api = GeoCruzApiClient(
-        baseUrl: Uri.parse('http://localhost/api/v1/'),
-        client: MockClient((request) async {
-          if (request.url.path.endsWith('/territorios')) {
-            return _json(_catalog());
-          }
-          if (request.url.path.endsWith('/focos-calor')) {
-            return _json(payload);
-          }
-          return _json(_boundary());
-        }),
-      );
-      await tester.pumpWidget(
-        MaterialApp(home: HotspotsScreen(apiClient: api)),
-      );
-      for (var i = 0; i < 8; i++) {
-        await tester.pump(const Duration(milliseconds: 50));
-      }
-      expect(find.text('Sin cobertura comprobada'), findsOneWidget);
-      expect(find.text('Sin detecciones para estos filtros'), findsNothing);
-      expect(find.text('No hay detecciones en el período consultado.'), findsNothing);
-      await tester.pumpWidget(const SizedBox());
-      api.close();
-    });
-
-    testWidgets('cobertura parcial con detecciones no muestra aviso', (tester) async {
       tester.view.physicalSize = const Size(800, 2400);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
@@ -95,8 +105,12 @@ void main() {
       final api = GeoCruzApiClient(
         baseUrl: Uri.parse('http://localhost/api/v1/'),
         client: MockClient((request) async {
-          if (request.url.path.endsWith('/territorios')) return _json(_catalog());
-          if (request.url.path.endsWith('/focos-calor')) return _json(payload);
+          if (request.url.path.endsWith('/territorios')) {
+            return _json(_catalog());
+          }
+          if (request.url.path.endsWith('/focos-calor')) {
+            return _json(payload);
+          }
           return _json(_boundary());
         }),
       );
@@ -113,12 +127,16 @@ void main() {
       api.close();
     });
 
-    testWidgets('un fallo posterior avisa sin ocultar reiniciar', (tester) async {
+    testWidgets('un fallo posterior avisa sin ocultar reiniciar', (
+      tester,
+    ) async {
       var consultas = 0;
       final api = GeoCruzApiClient(
         baseUrl: Uri.parse('http://localhost/api/v1/'),
         client: MockClient((request) async {
-          if (request.url.path.endsWith('/territorios')) return _json(_catalog());
+          if (request.url.path.endsWith('/territorios')) {
+            return _json(_catalog());
+          }
           if (request.url.path.endsWith('/focos-calor')) {
             consultas++;
             if (consultas == 1) return _json(_response());
@@ -201,6 +219,57 @@ void main() {
       controller.dispose();
       api.close();
     });
+
+    test(
+      'si el período inicial sale de cobertura usa la última semana publicada',
+      () async {
+        final requests = <Uri>[];
+        var queries = 0;
+        final api = GeoCruzApiClient(
+          baseUrl: Uri.parse('http://localhost/api/v1/'),
+          client: MockClient((request) async {
+            if (request.url.path.endsWith('/territorios')) {
+              return _json(_catalog());
+            }
+            if (request.url.path.endsWith('/focos-calor')) {
+              requests.add(request.url);
+              queries++;
+              if (queries == 1) {
+                final unavailable = _response(total: 0);
+                unavailable['datos'] = <Object>[];
+                unavailable['cobertura'] = {
+                  'estado': 'sin_cobertura',
+                  'periodoDisponible': {
+                    'desde': '2026-08-01T00:00:00Z',
+                    'hasta': '2026-11-03T00:00:00Z',
+                  },
+                };
+                return _json(unavailable);
+              }
+              return _json(_response());
+            }
+            return _json(_boundary());
+          }),
+        );
+        final controller = HotspotsViewModel(HotspotRepository(api));
+        controller.filters = HotspotsViewModel.defaultFilters(
+          now: DateTime.utc(2026, 11, 10),
+        );
+
+        await controller.initialize();
+
+        expect(queries, 2);
+        expect(requests.first.queryParameters['desde'], '2026-11-03T00:00:00Z');
+        expect(requests.first.queryParameters['hasta'], '2026-11-10T00:00:00Z');
+        expect(requests.last.queryParameters['desde'], '2026-10-27T00:00:00Z');
+        expect(requests.last.queryParameters['hasta'], '2026-11-03T00:00:00Z');
+        expect(controller.filters.fromUtc, DateTime.utc(2026, 10, 27));
+        expect(controller.filters.untilUtc, DateTime.utc(2026, 11, 3));
+        expect(controller.response?.total, 1);
+        controller.dispose();
+        api.close();
+      },
+    );
 
     test(
       'rechaza período mayor a 168 horas y territorio incompatible',

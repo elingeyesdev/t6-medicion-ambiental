@@ -79,11 +79,11 @@ class _HotspotsScreenState extends State<HotspotsScreen>
   }
 
   Future<void> _openWeather() => openWeatherSheet(
-        context: context,
-        api: widget.apiClient,
-        point: _focusPoint(),
-        title: _weatherTitle(),
-      );
+    context: context,
+    api: widget.apiClient,
+    point: _focusPoint(),
+    title: _weatherTitle(),
+  );
 
   String _weatherTitle() {
     final pin = _searchPinLabel?.trim();
@@ -229,89 +229,129 @@ class _HotspotsScreenState extends State<HotspotsScreen>
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, _) {
-      final response = _controller.response;
-      final body = (_controller.loadingCatalog && _controller.territories.isEmpty) ||
-              (_controller.loading && response == null)
-          ? const Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 12),
-                  Text('Consultando focos…'),
-                ],
-              ),
-            )
-          : _controller.catalogError != null && _controller.territories.isEmpty
-              ? _catalogFailure(context)
-              : _controller.queryError != null && response == null
-                  ? Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(24),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(Icons.warning_amber_rounded,
-                                size: 48, color: Colors.orange),
-                            const SizedBox(height: 12),
-                            Text(
-                              _controller.queryError!,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 15),
-                            ),
-                            const SizedBox(height: 16),
-                            FilledButton.icon(
-                              onPressed: () => _controller.apply(_controller.filters),
-                              icon: const Icon(Icons.refresh),
-                              label: const Text('Reintentar'),
-                            ),
-                          ],
-                        ),
+        final response = _controller.response;
+        final body =
+            (_controller.loadingCatalog && _controller.territories.isEmpty) ||
+                (_controller.loading && response == null)
+            ? const Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 12),
+                    Text('Consultando focos…'),
+                  ],
+                ),
+              )
+            : _controller.catalogError != null &&
+                  _controller.territories.isEmpty
+            ? _catalogFailure(context)
+            : _controller.queryError != null && response == null
+            ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.warning_amber_rounded,
+                        size: 48,
+                        color: Colors.orange,
                       ),
-                    )
-                  : ListView(
-                      key: const PageStorageKey<String>('hotspots-scroll'),
-                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-                      children: [
-                        if (!widget.showAppBar && response != null)
-                          _buildTopControls(context, response),
-                        if (widget.showAppBar) ...[
-                          _searchButton(context),
-                          const SizedBox(height: 10),
-                        ],
-                        _queryStatus(context, response),
-                        if (response != null) ...[
-                          if (response.total > 0)
+                      const SizedBox(height: 12),
+                      Text(
+                        _controller.queryError!,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                      const SizedBox(height: 16),
+                      FilledButton.icon(
+                        onPressed: () => _controller.apply(_controller.filters),
+                        icon: const Icon(Icons.refresh),
+                        label: const Text('Reintentar'),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : response == null
+            ? const SizedBox.shrink()
+            : Stack(
+                fit: StackFit.expand,
+                children: [
+                  _detectionMap(context, response),
+                  if (!widget.showAppBar)
+                    Positioned(
+                      top: 8,
+                      left: 12,
+                      right: 58,
+                      child: _buildTopControls(context, response),
+                    ),
+                  DraggableScrollableSheet(
+                    initialChildSize: 0.30,
+                    minChildSize: 0.22,
+                    maxChildSize: 0.82,
+                    snap: true,
+                    snapSizes: const [0.30, 0.82],
+                    builder: (context, scrollController) => Material(
+                      color: Theme.of(context).colorScheme.surface,
+                      elevation: 8,
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(24),
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: ListView(
+                        controller: scrollController,
+                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
+                        children: [
+                          Center(
+                            child: Container(
+                              width: 34,
+                              height: 4,
+                              margin: const EdgeInsets.only(bottom: 12),
+                              decoration: BoxDecoration(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.outlineVariant,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                          ),
+                          _queryStatus(context, response),
+                          if (response.total > 0) ...[
                             _buildHotspotsSummaryCard(context, response),
-                          const SizedBox(height: 10),
-                          _detectionMap(context, response),
+                            _pageControls(context, response),
+                          ],
                         ],
-                      ],
-                    );
+                      ),
+                    ),
+                  ),
+                ],
+              );
 
-      if (!widget.showAppBar) {
-        return body;
-      }
+        if (!widget.showAppBar) {
+          return body;
+        }
 
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Focos de calor'),
-          actions: [
-            ...mapCompletoActions(
-              onSearch: _openPlaceSearch,
-              onWeather: _openWeather,
-            ),
-            IconButton(
-              tooltip: 'Filtros',
-              onPressed: _controller.loadingCatalog ? null : _openFilters,
-              icon: const Icon(Icons.tune_rounded),
-            ),
-          ],
-        ),
-        body: body,
-      );
-    },
-  );
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Focos de calor'),
+            actions: [
+              ...mapCompletoActions(
+                onSearch: _openPlaceSearch,
+                onWeather: _openWeather,
+              ),
+              IconButton(
+                tooltip: 'Filtros',
+                onPressed: _controller.loadingCatalog ? null : _openFilters,
+                icon: const Icon(Icons.tune_rounded),
+              ),
+            ],
+          ),
+          body: body,
+        );
+      },
+    );
   }
 
   Widget _catalogFailure(BuildContext context) => Center(
@@ -383,6 +423,9 @@ class _HotspotsScreenState extends State<HotspotsScreen>
     }
 
     final coverage = response.coverageState;
+    // La tarjeta que explicaba cobertura confundía la vista cuando el API
+    // no tenía un período publicado. Se conserva el estado en el modelo/API.
+    if (coverage == 'sin_cobertura') return const SizedBox.shrink();
     // Cobertura parcial: se omite el aviso en pantalla (sigue en la API).
     if (coverage == 'parcial') {
       if (response.total > 0) return const SizedBox.shrink();
@@ -394,26 +437,10 @@ class _HotspotsScreenState extends State<HotspotsScreen>
         tone: _StatusTone.neutral,
       );
     }
-    if (response.total > 0 && coverage != 'sin_cobertura') {
-      return const SizedBox.shrink();
-    }
-    final title = switch (coverage) {
-      'sin_cobertura' => 'Sin cobertura comprobada',
-      _ => response.total == 0
-          ? 'Sin detecciones para estos filtros'
-          : 'Consulta lista',
-    };
-    final message = switch (coverage) {
-      'sin_cobertura' =>
-        'La fuente no cubre el período solicitado. No se puede inferir ausencia de detecciones. '
-            '${response.coverage['fundamento'] ?? ''}',
-      _ => response.total == 0
-          ? 'La consulta respondió sin detecciones; revisa la cobertura publicada.'
-          : response.coverage['fundamento']?.toString() ?? '',
-    };
-    final tone = coverage == 'sin_cobertura'
-        ? _StatusTone.warning
-        : _StatusTone.success;
+    if (response.total > 0) return const SizedBox.shrink();
+    const title = 'Sin detecciones para estos filtros';
+    const message = 'La consulta no devolvió focos para el período elegido.';
+    const tone = _StatusTone.neutral;
     return _StatusCard(
       icon: tone == _StatusTone.warning
           ? Icons.warning_amber_rounded
@@ -424,15 +451,6 @@ class _HotspotsScreenState extends State<HotspotsScreen>
     );
   }
 
-  Widget _searchButton(BuildContext context) => SizedBox(
-    width: double.infinity,
-    child: FilledButton.icon(
-      onPressed: _controller.loadingCatalog ? null : _openFilters,
-      icon: const Icon(Icons.search_rounded),
-      label: const Text('Buscar focos'),
-    ),
-  );
-
   Widget _detectionMap(BuildContext context, HotspotResponse response) {
     final records = response.records
         .where((record) => record.coordinates != null)
@@ -440,30 +458,27 @@ class _HotspotsScreenState extends State<HotspotsScreen>
     final center = records.isEmpty
         ? const LatLng(-17.78, -63.18)
         : records.first.coordinates!;
-    final pageCount = (response.total / response.pageSize).ceil();
-    final markers = records
-        .map((record) {
-          final selected = record.identifier == _selectedRecord?.identifier;
-          return Marker(
-            point: record.coordinates!,
-            width: 44,
-            height: 48,
-            child: Semantics(
-              button: true,
-              label: 'Detección ${record.identifier}, tocar para ver datos',
-              child: GestureDetector(
-                onTap: () => _selectRecord(record),
-                child: Icon(
-                  Icons.local_fire_department_rounded,
-                  size: selected ? 42 : 34,
-                  color: selected ? GeoCruzColors.clay : GeoCruzColors.green,
-                  shadows: const [Shadow(color: Colors.white, blurRadius: 5)],
-                ),
-              ),
+    final markers = records.map((record) {
+      final selected = record.identifier == _selectedRecord?.identifier;
+      return Marker(
+        point: record.coordinates!,
+        width: 44,
+        height: 48,
+        child: Semantics(
+          button: true,
+          label: 'Detección ${record.identifier}, tocar para ver datos',
+          child: GestureDetector(
+            onTap: () => _selectRecord(record),
+            child: Icon(
+              Icons.local_fire_department_rounded,
+              size: selected ? 42 : 34,
+              color: selected ? GeoCruzColors.clay : GeoCruzColors.green,
+              shadows: const [Shadow(color: Colors.white, blurRadius: 5)],
             ),
-          );
-        })
-        .toList();
+          ),
+        ),
+      );
+    }).toList();
     if (_searchPin != null) {
       markers.add(
         Marker(
@@ -486,128 +501,94 @@ class _HotspotsScreenState extends State<HotspotsScreen>
     final fitBounds = records.length > 1
         ? LatLngBounds.fromPoints(records.map((r) => r.coordinates!).toList())
         : null;
-    final mapHeight = MediaQuery.sizeOf(context).height * 0.48;
-
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: ColoredBox(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        FlutterMap(
+          key: ValueKey(
+            'hotspots-${response.setVersion}-${response.page}-$_mapStyle',
+          ),
+          mapController: _mapController,
+          options: MapOptions(
+            initialCenter: center,
+            initialZoom: 7,
+            initialCameraFit: fitBounds == null
+                ? null
+                : CameraFit.bounds(
+                    bounds: fitBounds,
+                    padding: const EdgeInsets.all(44),
+                    maxZoom: 10,
+                  ),
+            minZoom: 2,
+            maxZoom: 18,
+            onMapReady: () {
+              _mapReady = true;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (mounted) _fitPage(records);
+              });
+            },
+          ),
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(14, 12, 8, 4),
-              child: Row(
-                children: [
-                  const Icon(Icons.local_fire_department_outlined, size: 20),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      records.isEmpty
-                          ? 'Mapa · sin focos en este período'
-                          : 'Mapa · ${response.total} focos',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ),
-                ],
-              ),
+            _mapStyle.toLayer(),
+            MarkerLayer(markers: markers),
+            RichAttributionWidget(
+              alignment: AttributionAlignment.bottomLeft,
+              attributions: [TextSourceAttribution(_mapStyle.attribution)],
             ),
-            SizedBox(
-              height: mapHeight.clamp(280.0, 520.0),
-              child: Stack(
-                children: [
-                  FlutterMap(
-                    key: ValueKey(
-                      'hotspots-${response.setVersion}-${response.page}-$_mapStyle',
-                    ),
-                    mapController: _mapController,
-                    options: MapOptions(
-                      initialCenter: center,
-                      initialZoom: 7,
-                      initialCameraFit: fitBounds == null
-                          ? null
-                          : CameraFit.bounds(
-                              bounds: fitBounds,
-                              padding: const EdgeInsets.all(44),
-                              maxZoom: 10,
-                            ),
-                      minZoom: 2,
-                      maxZoom: 18,
-                      onMapReady: () {
-                        _mapReady = true;
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          if (mounted) _fitPage(records);
-                        });
-                      },
-                    ),
-                    children: [
-                      _mapStyle.toLayer(),
-                      MarkerLayer(markers: markers),
-                      RichAttributionWidget(
-                        alignment: AttributionAlignment.bottomLeft,
-                        attributions: [
-                          TextSourceAttribution(_mapStyle.attribution),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Positioned.fill(
-                    child: MapChrome(
-                      style: _mapStyle,
-                      onStyleChanged: (style) =>
-                          setState(() => _mapStyle = style),
-                      onZoomIn: () => _zoom(1),
-                      onZoomOut: () => _zoom(-1),
-                      onFit: () => _fitPage(records),
-                      onFullscreen: () => openFullscreenMap(
-                        context: context,
-                        title: 'Focos de calor',
-                        center: center,
-                        zoom: 6,
-                        markers: markers,
-                        fitBounds: fitBounds,
-                        initialStyle: _mapStyle,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            if (pageCount > 1)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        records.isEmpty
-                            ? 'Cambia el período en Filtros'
-                            : 'Toca un foco · pág. ${response.page}/$pageCount',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ),
-                    IconButton(
-                      tooltip: 'Anterior',
-                      visualDensity: VisualDensity.compact,
-                      onPressed: !_controller.loading && response.page > 1
-                          ? () => _changePage(_controller.previousPage)
-                          : null,
-                      icon: const Icon(Icons.chevron_left),
-                    ),
-                    IconButton(
-                      tooltip: 'Siguiente',
-                      visualDensity: VisualDensity.compact,
-                      onPressed:
-                          response.nextPage != null && !_controller.loading
-                          ? () => _changePage(_controller.nextPage)
-                          : null,
-                      icon: const Icon(Icons.chevron_right),
-                    ),
-                  ],
-                ),
-              ),
           ],
         ),
+        Positioned.fill(
+          child: MapChrome(
+            style: _mapStyle,
+            onStyleChanged: (style) => setState(() => _mapStyle = style),
+            onZoomIn: () => _zoom(1),
+            onZoomOut: () => _zoom(-1),
+            onFit: () => _fitPage(records),
+            onFullscreen: () => openFullscreenMap(
+              context: context,
+              title: 'Focos de calor',
+              center: center,
+              zoom: 6,
+              markers: markers,
+              fitBounds: fitBounds,
+              initialStyle: _mapStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _pageControls(BuildContext context, HotspotResponse response) {
+    final pageCount = (response.total / response.pageSize).ceil();
+    if (pageCount <= 1) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              'Toca un foco · pág. ${response.page}/$pageCount',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+          IconButton(
+            tooltip: 'Anterior',
+            visualDensity: VisualDensity.compact,
+            onPressed: !_controller.loading && response.page > 1
+                ? () => _changePage(_controller.previousPage)
+                : null,
+            icon: const Icon(Icons.chevron_left),
+          ),
+          IconButton(
+            tooltip: 'Siguiente',
+            visualDensity: VisualDensity.compact,
+            onPressed: response.nextPage != null && !_controller.loading
+                ? () => _changePage(_controller.nextPage)
+                : null,
+            icon: const Icon(Icons.chevron_right),
+          ),
+        ],
       ),
     );
   }
@@ -621,65 +602,72 @@ class _HotspotsScreenState extends State<HotspotsScreen>
     final period = BoliviaTime.interval(
       response.periodFrom,
       response.periodUntil,
-    );
-    final oldResults =
-        _controller.loading || _controller.queryError != null;
+    ).replaceFirst(' (fin excluido)', '');
+    final oldResults = _controller.loading || _controller.queryError != null;
     final scheme = Theme.of(context).colorScheme;
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 4, 0, 10),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _controller.territoryName(response.territoryId),
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  '$period${oldResults ? ' · datos anteriores' : ''}',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: scheme.onSurfaceVariant,
-                      ),
-                ),
-              ],
+    return Material(
+      elevation: 3,
+      color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.96),
+      borderRadius: BorderRadius.circular(18),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 4, 4, 4),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _controller.territoryName(response.territoryId),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    '$period${oldResults ? ' · datos anteriores' : ''}',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: scheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          IconButton.filledTonal(
-            onPressed: _openPlaceSearch,
-            icon: const Icon(Icons.search_rounded),
-            tooltip: 'Buscar lugar',
-          ),
-          const SizedBox(width: 4),
-          IconButton.filledTonal(
-            onPressed: _openWeather,
-            icon: const Icon(Icons.wb_cloudy_outlined),
-            tooltip: 'Tiempo',
-          ),
-          const SizedBox(width: 4),
-          IconButton.filledTonal(
-            onPressed: _controller.loadingCatalog ? null : _openFilters,
-            icon: const Icon(Icons.tune_rounded),
-            tooltip: 'Filtros',
-          ),
-          const SizedBox(width: 4),
-          IconButton.filledTonal(
-            onPressed: _controller.loading
-                ? null
-                : () => _controller.apply(_controller.filters),
-            icon: const Icon(Icons.refresh_rounded),
-            tooltip: 'Recargar',
-          ),
-        ],
+            IconButton.filledTonal(
+              onPressed: _openPlaceSearch,
+              icon: const Icon(Icons.search_rounded),
+              tooltip: 'Buscar lugar',
+            ),
+            const SizedBox(width: 4),
+            IconButton.filledTonal(
+              onPressed: _openWeather,
+              icon: const Icon(Icons.wb_cloudy_outlined),
+              tooltip: 'Tiempo',
+            ),
+            const SizedBox(width: 4),
+            IconButton.filledTonal(
+              onPressed: _controller.loadingCatalog ? null : _openFilters,
+              icon: const Icon(Icons.tune_rounded),
+              tooltip: 'Filtros',
+            ),
+            const SizedBox(width: 4),
+            IconButton.filledTonal(
+              onPressed: _controller.loading
+                  ? null
+                  : () => _controller.apply(_controller.filters),
+              icon: const Icon(Icons.refresh_rounded),
+              tooltip: 'Recargar',
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildHotspotsSummaryCard(BuildContext context, HotspotResponse response) {
+  Widget _buildHotspotsSummaryCard(
+    BuildContext context,
+    HotspotResponse response,
+  ) {
     final highIndicator = response.indicator('focosConfianzaAlta');
     final maxFrp = response.indicator('potenciaMaxima');
 
@@ -719,8 +707,6 @@ class _HotspotsScreenState extends State<HotspotsScreen>
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          _CoverageCard(response: response),
         ],
       ),
     );
@@ -753,52 +739,6 @@ class _HotspotsScreenState extends State<HotspotsScreen>
     if (value == null) return 'Sin dato';
     if (value is num) return NumberFormat('###,##0.##', 'es_BO').format(value);
     return '$value';
-  }
-}
-
-class _CoverageCard extends StatelessWidget {
-  const _CoverageCard({required this.response});
-
-  final HotspotResponse response;
-
-  @override
-  Widget build(BuildContext context) {
-    if (response.coverageState == 'parcial') {
-      return const SizedBox.shrink();
-    }
-    final (icon, color) = switch (response.coverageState) {
-      'sin_cobertura' => (
-          Icons.signal_wifi_statusbar_null_rounded,
-          GeoCruzColors.amber,
-        ),
-      'disponible' => (Icons.check_circle_outline_rounded, GeoCruzColors.green),
-      _ => (Icons.help_outline_rounded, GeoCruzColors.textSoft),
-    };
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: color, size: 19),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              '${switch (response.coverageState) {
-                'disponible' => 'Datos disponibles con límites del producto',
-                'sin_cobertura' => 'Sin cobertura comprobada',
-                'desconocida' => 'Cobertura desconocida',
-                _ => 'Cobertura no informada',
-              }}. ${response.coverage['fundamento'] ?? ''}',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
 
