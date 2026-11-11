@@ -1,0 +1,20 @@
+{
+  "anios": 25,
+  "aniosConDiferenciaDecimal": 2,
+  "maximaDiferenciaAbsolutaHa": "2E-11",
+  "diferenciaSumaHa": "-3E-11",
+  "diferencias": [
+    {
+      "anio": 2003,
+      "anteriorHa": "112755.04112000001",
+      "actualHa": "112755.04112",
+      "diferenciaHa": "-1E-11"
+    },
+    {
+      "anio": 2011,
+      "anteriorHa": "210299.86339",
+      "actualHa": "210299.86338999998",
+      "diferenciaHa": "-2E-11"
+    }
+  ]
+}

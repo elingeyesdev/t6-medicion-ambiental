@@ -1,0 +1,40 @@
+Revisión #116 / MET-03 — 03/11/2026 (America/La_Paz)
+Registro UTC: 2026-11-04T03:24:20.515Z
+Base: 09cffb9c72154a42b624c44238dbde1f6db632d9; Python 3.14.5
+Ejecución oculta mediante run-hidden.mjs; sin cambios en herramientas ni evidencia histórica.
+
+> python -B -m unittest discover -s herramientas/forestal -p test_*.py -v
+Salida: 0
+
+test_ausencia_y_nulo_no_son_cero (test_verificar_fuente.FuenteTest.test_ausencia_y_nulo_no_son_cero) ... ok
+test_captura_manipulada_no_se_valida (test_verificar_fuente.FuenteTest.test_captura_manipulada_no_se_valida) ... ok
+test_captura_real_y_ejemplo_reproducible (test_verificar_fuente.FuenteTest.test_captura_real_y_ejemplo_reproducible) ... ok
+test_cero_valido_y_cobertura_parcial (test_verificar_fuente.FuenteTest.test_cero_valido_y_cobertura_parcial) ... ok
+test_json_estricto_no_finito_y_claves_repetidas (test_verificar_fuente.FuenteTest.test_json_estricto_no_finito_y_claves_repetidas) ... ok
+test_orden_y_total_solo_si_todos_los_anios_tienen_dato (test_verificar_fuente.FuenteTest.test_orden_y_total_solo_si_todos_los_anios_tienen_dato) ... ok
+test_rechaza_anios_codificados_futuros_duplicados_o_booleanos (test_verificar_fuente.FuenteTest.test_rechaza_anios_codificados_futuros_duplicados_o_booleanos) ... ok
+test_rechaza_areas_negativas_texto_booleano_o_no_finitas (test_verificar_fuente.FuenteTest.test_rechaza_areas_negativas_texto_booleano_o_no_finitas) ... ok
+test_rechaza_filas_con_otra_unidad_o_campos_inesperados (test_verificar_fuente.FuenteTest.test_rechaza_filas_con_otra_unidad_o_campos_inesperados) ... ok
+test_rechaza_respuesta_error_y_demasiadas_filas (test_verificar_fuente.FuenteTest.test_rechaza_respuesta_error_y_demasiadas_filas) ... ok
+test_recibo_de_otro_territorio_criterio_o_acceso_no_se_adopta (test_verificar_fuente.FuenteTest.test_recibo_de_otro_territorio_criterio_o_acceso_no_se_adopta) ... ok
+test_revision_no_usa_red (test_verificar_fuente.FuenteTest.test_revision_no_usa_red) ... ok
+test_version_distinta_mutable_o_nueva_codificacion_requieren_revision (test_verificar_fuente.FuenteTest.test_version_distinta_mutable_o_nueva_codificacion_requieren_revision) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.047s
+
+OK
+
+> python -B herramientas/forestal/verificar_fuente.py revisar --directorio docs/forestal116/evidencias
+Salida: 0
+{"anios_con_dato": 25, "anios_sin_dato": [], "subtotal_informado_ha": "7357100.46266000003", "total_periodo_ha": "7357100.46266000003"}
+
+Acceso público actual: se intentó GET https://data-api.globalforestwatch.org/dataset/umd_tree_cover_loss sin credenciales, con límite de lectura de 12 s y sin redirecciones.
+Resultado: TimeoutError de lectura en el primer recurso; no se obtuvo una captura nueva. No prueba indisponibilidad general del proveedor.
+Los cuatro HTTP 200 son los del 31/10/2026; se conservan sus originales, fechas y SHA-256.
+Las páginas oficiales consultadas mediante browse constan enlazadas en DECISION-JAZIEL.md, README.md y ALTERNATIVAS.md.
+Método pendiente de revisión; sin aprobación, commits, publicaciones ni pruebas de API/Flutter.
+
+Verificación offline adicional: misma acción revisar con OpenerDirector.open y socket.create_connection bloqueados mediante unittest.mock.
+Salida: 0
+{"anios_con_dato": 25, "anios_sin_dato": [], "subtotal_informado_ha": "7357100.46266000003", "total_periodo_ha": "7357100.46266000003"}
