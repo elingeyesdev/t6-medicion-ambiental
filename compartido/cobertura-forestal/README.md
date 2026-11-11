@@ -8,7 +8,7 @@ La operación futura recibirá territorio y años inicial/final inclusivos. Solo
 
 El ejemplo disponible contiene el departamento **del proveedor** GADM 4.1 BOL/8 y todos los años 2001–2025; no contiene una equivalencia aprobada con nuestro departamento ni con municipios. Un territorio no soportado deberá producir `sin_cobertura`, no heredar el resultado departamental. No se asigna aún un nombre de ruta hasta adoptar método y geometría.
 
-La primera comprobación propuesta abarca 2001–2025 completos. En futuras subconsultas, `fuente.anios` seguirá indicando la disponibilidad de la versión; `serie` incluirá cada año solicitado y `resumen` solo esa ventana. El verificador y el ejemplo actuales comprueban exclusivamente la ventana completa, sin acreditar subconsultas ni una API implementada.
+La primera comprobación propuesta abarca 2001–2025 completos. En futuras subconsultas, `fuente.anios` seguirá indicando la disponibilidad de la versión; `serie` incluirá cada año solicitado y `resumen` solo esa ventana. El verificador y el ejemplo de #116 comprueban exclusivamente la ventana completa. El cálculo local de #147 permite seleccionar años desde esa captura, sin acreditar una API implementada.
 
 ## Respuesta propuesta
 
@@ -29,3 +29,7 @@ La primera comprobación propuesta abarca 2001–2025 completos. En futuras subc
 La futura API distinguirá `dato`, `sin_cobertura`, `producto_no_disponible`, `consulta_invalida` y `error_proveedor`. La autenticación y permisos serán los ya existentes. Un error del proveedor no será una serie vacía exitosa ni se reemplazará por simulación. Los errores de red, HTML en vez de JSON, cambios de esquema o de período requieren revisión; no se completan con cero.
 
 Estos estados y sus respuestas de error deben incorporarse a OpenAPI y contrastarse con Jaziel al implementar H. No hay API ni pruebas Flutter acreditadas por este ejemplo. El procesamiento #117 espera el cierre de G / #115.
+
+## Cálculo temporal local de #147
+
+La [guía del resumen anual](../../docs/forestal147/README.md) explica cómo elegir un intervalo inclusivo, recalcular sus totales con decimales y conservar las identidades y los faltantes. La captura se verifica antes de cada cálculo. Se mantienen integrado_en_api: false, estado_metodo: pendiente_revision y criterio.adoptado: false. Esta preparación no publica el producto ni reemplaza el piloto espacial pendiente.

@@ -3,10 +3,10 @@ name: MET-03 fuente forestal
 on:
   pull_request:
     branches: [develop, main, 'feature/**', 'refactor/**', 'fix/**', 'hotfix/**', 'docs/**', 'test/**']
-    paths: ['herramientas/forestal/**', 'compartido/cobertura-forestal/**', 'docs/forestal116/**', '.github/workflows/met03.yml']
+    paths: ['herramientas/forestal/**', 'compartido/cobertura-forestal/**', 'docs/forestal116/**', 'docs/forestal147/**', '.github/workflows/met03.yml']
   push:
     branches: [develop]
-    paths: ['herramientas/forestal/**', 'compartido/cobertura-forestal/**', 'docs/forestal116/**', '.github/workflows/met03.yml']
+    paths: ['herramientas/forestal/**', 'compartido/cobertura-forestal/**', 'docs/forestal116/**', 'docs/forestal147/**', '.github/workflows/met03.yml']
 
 permissions:
   contents: read
@@ -23,5 +23,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Instalar lectores de la captura raster
+        run: python -m pip install -r herramientas/forestal/requirements-raster.txt
       - name: Reproducir la captura y comprobar faltantes sin consultar proveedores
         run: python -m unittest discover -s herramientas/forestal -p 'test_*.py' -v

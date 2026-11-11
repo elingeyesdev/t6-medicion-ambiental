@@ -3,3 +3,6 @@
 *.geojson text eol=lf
 # Un PDF debe conservar sus offsets y sus bytes al descargarse o clonarse.
 *.pdf binary
+
+# Rangos raster originales: no transformar saltos de línea.
+*.bin binary
