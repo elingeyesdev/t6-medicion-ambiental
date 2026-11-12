@@ -31,9 +31,9 @@ export function validarPeriodoLocal(inicio, fin, ahora = Date.now()) {
     return { desde, hasta };
 }
 
-export function filtrosDelFormulario(formulario) {
+export function filtrosDelFormulario(formulario, ahora = Date.now()) {
     const datos = new FormData(formulario);
-    const { desde, hasta } = validarPeriodoLocal(datos.get('desde'), datos.get('hasta'));
+    const { desde, hasta } = validarPeriodoLocal(datos.get('desde'), datos.get('hasta'), ahora);
     const filtros = { desde, hasta, modo: 'externo' };
     for (const nombre of ['provincia', 'municipio', 'confianza']) {
         if (datos.get(nombre)) filtros[nombre] = datos.get(nombre);

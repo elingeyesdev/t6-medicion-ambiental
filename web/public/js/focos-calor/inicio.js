@@ -1,11 +1,13 @@
-import { aLocal, filtrosDelFormulario, solicitarJson, validarInstanteUrl } from './contrato.js';
+import { aLocal, filtrosDelFormulario, solicitarJson, validarInstanteUrl, ErrorApi } from './contrato.js';
 import { ConsultaFocosWeb } from './consulta.js';
 import { VistaFocos } from './vista.js';
 import { ajustarCalendarios, periodoReciente } from './periodo.js';
+import { crearRelojServidor } from './reloj.js';
 
 function iniciar() {
     const raiz = document.getElementById('visor-focos');
     if (!raiz) return;
+    const reloj = crearRelojServidor(raiz.dataset.horaServidor);
     const formulario = document.getElementById('filtros-focos');
     const provincia = document.getElementById('provincia');
     const municipio = document.getElementById('municipio');
@@ -22,6 +24,24 @@ function iniciar() {
         }
     });
     let territorios = [];
+    let intentoHora = 0;
+    async function conHoraActual(accion) {
+        const intento = ++intentoHora;
+        const control = new AbortController();
+        const limite = setTimeout(() => control.abort(), 5000);
+        try {
+            const url = new URL('../salud', raiz.dataset.api.replace(/\/$/, '') + '/');
+            const respuesta = await solicitarJson(url.href, control.signal);
+            if (intento !== intentoHora) return;
+            reloj.sincronizar(respuesta.fecha);
+            accion();
+        } catch {
+            if (intento === intentoHora) {
+                consulta.editar();
+                consulta.emitir({ fase: 'error', error: new ErrorApi('No se pudo comprobar la hora. Reintenta la consulta.', 'HORA_NO_DISPONIBLE'), pendiente: null });
+            }
+        } finally { clearTimeout(limite); }
+    }
     const opciones = (select, elementos, titulo, valor = '') => {
         select.replaceChildren(new Option(titulo, ''), ...elementos.map(t => new Option(t.nombre, t.identificador)));
         select.value = elementos.some(t => t.identificador === valor) ? valor : '';
@@ -33,9 +53,9 @@ function iniciar() {
         document.getElementById('confianza').value = filtros?.confianza ?? '';
         if (filtros?.desde) document.getElementById('desde').value = aLocal(filtros.desde);
         if (filtros?.hasta) document.getElementById('hasta').value = aLocal(filtros.hasta);
-        ajustarCalendarios(desde, hasta);
+        ajustarCalendarios(desde, hasta, reloj.ahora());
     };
-    const defecto = periodoReciente();
+    const defecto = periodoReciente(7, reloj.ahora());
     restaurar(defecto);
     let inicial = { ...defecto };
     const parametros = new URLSearchParams(location.search);
@@ -79,7 +99,7 @@ function iniciar() {
                 validarInstanteUrl(preseleccion.desde); validarInstanteUrl(preseleccion.hasta);
                 restaurar(preseleccion);
                 inicial = { ...preseleccion };
-                await consulta.consultar(filtrosDelFormulario(formulario));
+                await consulta.consultar(filtrosDelFormulario(formulario, reloj.ahora()));
             }
         } catch (error) {
             document.getElementById('estado-catalogo').textContent = `No se pudo preparar la selección: ${error.message || 'comprueba la conexión'}`;
@@ -90,33 +110,39 @@ function iniciar() {
     municipio.addEventListener('change', () => {
         if (municipio.value && !provincia.value) { const valor = municipio.value; provincia.value = territorios.find(t => t.identificador === valor).padre; actualizarMunicipios(valor); }
     });
-    formulario.addEventListener('input', () => consulta.editar());
-    formulario.addEventListener('change', () => consulta.editar());
+    formulario.addEventListener('input', () => { ++intentoHora; consulta.editar(); });
+    formulario.addEventListener('change', () => { ++intentoHora; consulta.editar(); });
     for (const fecha of [desde, hasta]) {
-        fecha.addEventListener('focus', () => ajustarCalendarios(desde, hasta));
-        fecha.addEventListener('input', () => ajustarCalendarios(desde, hasta));
-        fecha.addEventListener('change', () => ajustarCalendarios(desde, hasta));
+        fecha.addEventListener('focus', () => ajustarCalendarios(desde, hasta, reloj.ahora()));
+        fecha.addEventListener('input', () => ajustarCalendarios(desde, hasta, reloj.ahora()));
+        fecha.addEventListener('change', () => ajustarCalendarios(desde, hasta, reloj.ahora()));
     }
     for (const boton of document.querySelectorAll('[data-periodo-dias]')) {
-        boton.addEventListener('click', () => {
-            restaurar({ provincia: provincia.value, municipio: municipio.value, confianza: document.getElementById('confianza').value, ...periodoReciente(Number(boton.dataset.periodoDias)) });
+        boton.addEventListener('click', () => conHoraActual(() => {
+            restaurar({ provincia: provincia.value, municipio: municipio.value, confianza: document.getElementById('confianza').value, ...periodoReciente(Number(boton.dataset.periodoDias), reloj.ahora()) });
             consulta.editar();
-        });
+        }));
     }
     document.getElementById('limpiar-periodo').addEventListener('click', () => {
-        desde.value = ''; hasta.value = ''; ajustarCalendarios(desde, hasta); consulta.editar(); desde.focus();
+        ++intentoHora;
+        desde.value = ''; hasta.value = ''; ajustarCalendarios(desde, hasta, reloj.ahora()); consulta.editar(); desde.focus();
     });
     formulario.addEventListener('submit', e => {
         e.preventDefault();
-        ajustarCalendarios(desde, hasta);
-        try { consulta.consultar(filtrosDelFormulario(formulario)); }
-        catch (error) { consulta.editar(); consulta.emitir({ fase: 'error', error, pendiente: null }); }
+        conHoraActual(() => {
+            ajustarCalendarios(desde, hasta, reloj.ahora());
+            try { consulta.consultar(filtrosDelFormulario(formulario, reloj.ahora())); }
+            catch (error) { consulta.editar(); consulta.emitir({ fase: 'error', error, pendiente: null }); }
+        });
     });
-    document.getElementById('cancelar-filtros').addEventListener('click', () => { restaurar(consulta.estado.actual?.filtros ?? inicial); consulta.restaurar(); });
+    document.getElementById('cancelar-filtros').addEventListener('click', () => { ++intentoHora; restaurar(consulta.estado.actual?.filtros ?? inicial); consulta.restaurar(); });
     document.getElementById('anterior').addEventListener('click', () => consulta.paginar(consulta.estado.actual.respuesta.paginacion.pagina - 1));
     document.getElementById('siguiente').addEventListener('click', () => consulta.paginar(consulta.estado.actual.respuesta.paginacion.siguiente));
-    document.getElementById('reintentar').addEventListener('click', () => consulta.reintentar());
-    document.getElementById('reiniciar').addEventListener('click', () => consulta.reiniciar());
+    document.getElementById('reintentar').addEventListener('click', () => {
+        if (consulta.estado.pendiente) consulta.reintentar();
+        else formulario.requestSubmit();
+    });
+    document.getElementById('reiniciar').addEventListener('click', () => { ++intentoHora; consulta.reiniciar(); });
     document.getElementById('reintentar-catalogo').addEventListener('click', cargarCatalogo);
     cargarCatalogo();
 }

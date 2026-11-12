@@ -76,7 +76,7 @@ export class VistaFocos {
         texto('titulo-estado', titulo); texto('mensaje-estado', mensaje);
         // La confirmación normal se anuncia sin añadir otra tarjeta al mapa.
         aviso.classList.toggle('solo-lector', titulo === 'Consulta lista' && !anterior && !cargando && estado.fase !== 'error');
-        document.getElementById('reintentar').hidden = estado.fase !== 'error' || estado.error?.codigo === 'CONJUNTO_CAMBIADO' || !estado.pendiente;
+        document.getElementById('reintentar').hidden = estado.fase !== 'error' || estado.error?.codigo === 'CONJUNTO_CAMBIADO' || (!estado.pendiente && estado.error?.codigo !== 'HORA_NO_DISPONIBLE');
         document.getElementById('reiniciar').hidden = estado.error?.codigo !== 'CONJUNTO_CAMBIADO';
         document.getElementById('cancelar-filtros').hidden = !estado.borrador;
         document.getElementById('consultar').disabled = cargando;
