@@ -1,0 +1,563 @@
+{
+  "schema_version": 1,
+  "repository": "elingeyesdev/t6-medicion-ambiental",
+  "source": "provided_snapshot",
+  "captured_at": "2026-10-31T06:27:50Z",
+  "validation": {
+    "by": "JosuePadillaUnivalle",
+    "at": "2026-10-31T06:27:50Z"
+  },
+  "milestones": [
+    {
+      "number": 3,
+      "phase": "M3",
+      "title": "M3 - Reingeniería de EnviroSense como GeoSur",
+      "state": "open",
+      "updated_at": "2026-10-31T06:24:47Z",
+      "target_date": "2026-10-29",
+      "academic_deadline_confirmed": null
+    },
+    {
+      "number": 4,
+      "phase": "M4",
+      "title": "M4 - Inundaciones y avance de deforestación",
+      "state": "open",
+      "updated_at": "2026-10-31T05:53:16Z",
+      "target_date": "2026-11-05",
+      "academic_deadline_confirmed": false
+    }
+  ],
+  "issues": [
+    {
+      "number": 34,
+      "title": "MOV-03 - Integrar y verificar Flutter con el backend Laravel actual",
+      "milestone": 3,
+      "state": "closed",
+      "updated_at": "2026-10-26T16:40:49Z",
+      "dependencies": [],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 35,
+      "title": "MET-01 - Acordar fuente método y contrato del módulo de sequías",
+      "milestone": 3,
+      "state": "closed",
+      "updated_at": "2026-10-25T17:42:03Z",
+      "dependencies": [],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 36,
+      "title": "API-02 - Implementar consulta y cálculo de sequías en Laravel",
+      "milestone": 3,
+      "state": "closed",
+      "updated_at": "2026-10-26T16:40:54Z",
+      "dependencies": [
+        35
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 37,
+      "title": "WEB-02 - Implementar consulta mapa detalle y resumen de sequías",
+      "milestone": 3,
+      "state": "closed",
+      "updated_at": "2026-10-27T05:00:40Z",
+      "dependencies": [
+        36
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 38,
+      "title": "MOV-04 - Consultar sequías en Flutter mediante la API común",
+      "milestone": 3,
+      "state": "closed",
+      "updated_at": "2026-10-29T12:32:35Z",
+      "dependencies": [
+        36,
+        34
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 39,
+      "title": "QA-02 - Verificar cálculo e integración de sequías en web y móvil",
+      "milestone": 3,
+      "state": "open",
+      "updated_at": "2026-10-31T05:12:51Z",
+      "dependencies": [
+        37,
+        38
+      ],
+      "pull_requests": [
+        88
+      ],
+      "implementation": "in_progress",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 40,
+      "title": "ANA-01 - Preparar método y avance de análisis de inundaciones",
+      "milestone": 3,
+      "state": "open",
+      "updated_at": "2026-10-25T21:48:43Z",
+      "dependencies": [
+        39
+      ],
+      "pull_requests": [
+        46
+      ],
+      "implementation": "proposal",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 41,
+      "title": "ENT-03 - Consolidar evidencias y revisión de la tercera entrega",
+      "milestone": 3,
+      "state": "open",
+      "updated_at": "2026-10-30T06:56:15Z",
+      "dependencies": [
+        34,
+        39,
+        40
+      ],
+      "pull_requests": [
+        96
+      ],
+      "implementation": "in_progress",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 47,
+      "title": "REF-WEB - Mantener EnviroSense como base web de GeoSur",
+      "milestone": 3,
+      "state": "open",
+      "updated_at": "2026-10-30T01:41:16Z",
+      "dependencies": [],
+      "pull_requests": [
+        98
+      ],
+      "implementation": "in_progress",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 64,
+      "title": "REP-01 - Recuperar reportes plantillas y gráficos de EnviroSense",
+      "milestone": 3,
+      "state": "open",
+      "updated_at": "2026-10-31T06:24:52Z",
+      "dependencies": [],
+      "pull_requests": [
+        121
+      ],
+      "implementation": "in_progress",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 109,
+      "title": "PLAN-02 - Ajustar el cronograma al alcance actual de GeoSur",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-31T04:21:58Z",
+      "dependencies": [],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 110,
+      "title": "MET-02 - Elegir el caso y cerrar el método de agua e inundaciones",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-31T06:26:29Z",
+      "dependencies": [
+        40
+      ],
+      "pull_requests": [
+        120
+      ],
+      "implementation": "proposal",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 111,
+      "title": "DAT-05 - Procesar y comprobar los cambios de agua del caso elegido",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-31T04:22:04Z",
+      "dependencies": [
+        110,
+        39
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 112,
+      "title": "API-03 - Compartir la consulta de agua e inundaciones con web y móvil",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-31T04:22:10Z",
+      "dependencies": [
+        111
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 113,
+      "title": "WEB-04 - Incorporar agua e inundaciones al mapa de GeoSur",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-31T04:22:13Z",
+      "dependencies": [
+        112,
+        47
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 114,
+      "title": "MOV-05 - Consultar agua e inundaciones desde Flutter",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-31T04:22:18Z",
+      "dependencies": [
+        112
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 115,
+      "title": "QA-03 - Contrastar el análisis de agua y su consulta en ambos clientes",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-31T04:22:21Z",
+      "dependencies": [
+        111,
+        113,
+        114
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 116,
+      "title": "MET-03 - Acordar la fuente y el método de pérdida de cobertura forestal",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-31T05:12:49Z",
+      "dependencies": [],
+      "pull_requests": [
+        119
+      ],
+      "implementation": "proposal",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 117,
+      "title": "ANA-02 - Preparar el primer resultado verificable de cobertura forestal",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-31T04:22:29Z",
+      "dependencies": [
+        116,
+        115
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 118,
+      "title": "ENT-04 - Reunir evidencias y preparar la revisión de M4",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-31T04:22:33Z",
+      "dependencies": [
+        41,
+        109,
+        115,
+        117
+      ],
+      "pull_requests": null,
+      "implementation": "proposal",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    }
+  ],
+  "pull_requests": [
+    {
+      "number": 46,
+      "title": "ANA-01: preparar metodo y exploracion de metadatos de agua",
+      "issues": [
+        40
+      ],
+      "state": "open",
+      "merged": false,
+      "draft": false,
+      "head_sha": "fba0319696bd5fe707bf71b68315c23ffecfb191",
+      "updated_at": "2026-10-29T12:39:38Z",
+      "merged_at": null,
+      "reviews_complete": true,
+      "reviews": [],
+      "checks": {
+        "status": "unknown",
+        "sha": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 88,
+      "title": "Feature/39 pruebas sequias",
+      "issues": [
+        39
+      ],
+      "state": "open",
+      "merged": false,
+      "draft": false,
+      "head_sha": "b1761113b161bd5d8d9634cd2396a4120fa2a12d",
+      "updated_at": "2026-10-31T05:05:19Z",
+      "merged_at": null,
+      "reviews_complete": true,
+      "reviews": [
+        {
+          "id": 5703829084,
+          "by": "JosuePadillaUnivalle",
+          "state": "COMMENTED",
+          "commit_sha": "1604a1aa685018c950a99de6e547808445b59236",
+          "submitted_at": "2026-10-29T19:33:10Z"
+        },
+        {
+          "id": 5721392681,
+          "by": "JosuePadillaUnivalle",
+          "state": "CHANGES_REQUESTED",
+          "commit_sha": "b1761113b161bd5d8d9634cd2396a4120fa2a12d",
+          "submitted_at": "2026-10-31T05:05:19Z"
+        }
+      ],
+      "checks": {
+        "status": "success",
+        "sha": "b1761113b161bd5d8d9634cd2396a4120fa2a12d",
+        "evidence_url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/88"
+      }
+    },
+    {
+      "number": 96,
+      "title": "Reunir la recuperación web y las evidencias de M3",
+      "issues": [
+        41
+      ],
+      "state": "open",
+      "merged": false,
+      "draft": true,
+      "head_sha": "f74bb7d0decb15644e1666b90fc6910b50b22995",
+      "updated_at": "2026-10-30T06:56:36Z",
+      "merged_at": null,
+      "reviews_complete": true,
+      "reviews": [],
+      "checks": {
+        "status": "unknown",
+        "sha": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 98,
+      "title": "Recuperar el frente de EnviroSense dentro de GeoSur",
+      "issues": [
+        47
+      ],
+      "state": "open",
+      "merged": false,
+      "draft": false,
+      "head_sha": "d8b89140fd3bf0e84314211a27a952db448b7d74",
+      "updated_at": "2026-10-30T01:46:33Z",
+      "merged_at": null,
+      "reviews_complete": true,
+      "reviews": [],
+      "checks": {
+        "status": "unknown",
+        "sha": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 119,
+      "title": "Revisar la fuente forestal y preparar su contrato compartido",
+      "issues": [
+        116
+      ],
+      "state": "open",
+      "merged": false,
+      "draft": false,
+      "head_sha": "09cffb9c72154a42b624c44238dbde1f6db632d9",
+      "updated_at": "2026-10-31T05:08:19Z",
+      "merged_at": null,
+      "reviews_complete": true,
+      "reviews": [],
+      "checks": {
+        "status": "success",
+        "sha": "09cffb9c72154a42b624c44238dbde1f6db632d9",
+        "evidence_url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/119"
+      }
+    },
+    {
+      "number": 120,
+      "title": "Comprobar las escenas y preparar el caso de inundaciones de M4",
+      "issues": [
+        110
+      ],
+      "state": "open",
+      "merged": false,
+      "draft": false,
+      "head_sha": "c2f6ed6d0e468d039c3d91db16c725356cc37917",
+      "updated_at": "2026-10-31T06:26:26Z",
+      "merged_at": null,
+      "reviews_complete": true,
+      "reviews": [],
+      "checks": {
+        "status": "success",
+        "sha": "c2f6ed6d0e468d039c3d91db16c725356cc37917",
+        "evidence_url": "https://github.com/elingeyesdev/t6-medicion-ambiental/pull/120"
+      }
+    },
+    {
+      "number": 121,
+      "title": "Mostrar en el PDF qué datos no están disponibles",
+      "issues": [
+        64
+      ],
+      "state": "open",
+      "merged": false,
+      "draft": false,
+      "head_sha": "fb3a42b988cf87d64ecd0e2c14d76aed8f3f4c19",
+      "updated_at": "2026-10-31T06:24:50Z",
+      "merged_at": null,
+      "reviews_complete": true,
+      "reviews": [],
+      "checks": {
+        "status": "unknown",
+        "sha": null,
+        "evidence_url": null
+      }
+    }
+  ]
+}

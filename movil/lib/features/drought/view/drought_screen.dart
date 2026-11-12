@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../../core/maps/map_base_styles.dart';
+import '../../../core/maps/map_chrome.dart';
+import '../../../core/maps/map_completo_actions.dart';
 import '../../../core/network/geocruz_api_client.dart';
 import '../../../core/theme/geocruz_theme.dart';
 import '../../hotspots/model/hotspot_models.dart';
@@ -10,13 +13,13 @@ import '../model/drought_repository.dart';
 import 'drought_detail_screen.dart';
 
 class DroughtScreen extends StatefulWidget {
-  const DroughtScreen({
+  DroughtScreen({
     required this.apiClient,
-    this.initialMonth = '2024-09',
+    String? initialMonth,
     this.showAppBar = true,
     this.repository,
     super.key,
-  });
+  }) : initialMonth = initialMonth ?? DroughtFilters.defaultMesFinal();
 
   final GeoCruzApiClient apiClient;
   final String initialMonth;
@@ -45,6 +48,9 @@ class _DroughtScreenState extends State<DroughtScreen>
   String? _errorMessage;
   bool _mapReady = false;
   int _request = 0;
+  MapBaseStyle _mapStyle = MapBaseStyle.relieve;
+  LatLng? _searchPin;
+  String? _searchPinLabel;
 
   @override
   void initState() {
@@ -97,7 +103,7 @@ class _DroughtScreenState extends State<DroughtScreen>
     } on GeoCruzApiException catch (e) {
       if (!mounted || request != _request) return;
       setState(() {
-        _errorMessage = e.message;
+        _errorMessage = _friendlyDroughtError(e);
         _loading = false;
       });
     } catch (_) {
@@ -119,10 +125,7 @@ class _DroughtScreenState extends State<DroughtScreen>
   void _fitBounds(List<DroughtSample> datos) {
     if (datos.isEmpty) return;
     if (datos.length == 1) {
-      _mapController.move(
-        LatLng(datos.first.lat, datos.first.lon),
-        9.0,
-      );
+      _mapController.move(LatLng(datos.first.lat, datos.first.lon), 7.5);
       return;
     }
     double minLat = 90.0, maxLat = -90.0, minLon = 180.0, maxLon = -180.0;
@@ -191,7 +194,10 @@ class _DroughtScreenState extends State<DroughtScreen>
               ),
               Text(
                 '${category.label} · $spiText · Lluvia $rainfall',
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
               const SizedBox(height: 4),
               Text(
@@ -247,9 +253,11 @@ class _DroughtScreenState extends State<DroughtScreen>
         return StatefulBuilder(
           builder: (ctx, setSheetState) {
             final munList = _territories
-                .where((t) =>
-                    t.type == 'municipio' &&
-                    (selectedProv == null || t.parentId == selectedProv))
+                .where(
+                  (t) =>
+                      t.type == 'municipio' &&
+                      (selectedProv == null || t.parentId == selectedProv),
+                )
                 .toList();
 
             return SafeArea(
@@ -269,110 +277,135 @@ class _DroughtScreenState extends State<DroughtScreen>
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                    Text(
-                      'Filtros de sequías',
-                      style: Theme.of(ctx).textTheme.titleLarge?.copyWith(
+                        Text(
+                          'Filtros de sequías',
+                          style: Theme.of(ctx).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      initialValue: selectedMonth,
-                      decoration: const InputDecoration(
-                        labelText: 'Mes final (AAAA-MM)',
-                        hintText: 'Ej. 2024-09',
-                        helperText:
-                            'Ventana de 3 meses que termina en este mes (UTC)',
-                        prefixIcon: Icon(Icons.calendar_month_outlined),
-                        border: OutlineInputBorder(),
-                      ),
-                      onChanged: (val) => selectedMonth = val.trim(),
-                    ),
-                    const SizedBox(height: 16),
-                    DropdownButtonFormField<String?>(
-                      key: const Key('drought-province'),
-                      initialValue: selectedProv,
-                      isExpanded: true,
-                      decoration: const InputDecoration(
-                        labelText: 'Provincia',
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                        isDense: true,
-                      ),
-                      items: [
-                        const DropdownMenuItem<String?>(
-                          value: null,
-                          child: Text('Todo Santa Cruz'),
                         ),
-                        ...provinces.map(
-                          (p) => DropdownMenuItem<String?>(
-                            value: p.identifier,
-                            child: Text(p.name, overflow: TextOverflow.ellipsis),
+                        const SizedBox(height: 8),
+                        TextFormField(
+                          initialValue: selectedMonth,
+                          decoration: const InputDecoration(
+                            labelText: 'Mes final (AAAA-MM)',
+                            hintText: 'Ej. 2024-09',
+                            helperText:
+                                'Piloto disponible: 2024-09 · ventana de 3 meses (UTC)',
+                            prefixIcon: Icon(Icons.calendar_month_outlined),
+                            border: OutlineInputBorder(),
                           ),
+                          onChanged: (val) => selectedMonth = val.trim(),
+                        ),
+                        const SizedBox(height: 16),
+                        DropdownButtonFormField<String?>(
+                          key: const Key('drought-province'),
+                          initialValue: selectedProv,
+                          isExpanded: true,
+                          decoration: const InputDecoration(
+                            labelText: 'Provincia',
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 12,
+                            ),
+                            isDense: true,
+                          ),
+                          items: [
+                            const DropdownMenuItem<String?>(
+                              value: null,
+                              child: Text('Todas las provincias'),
+                            ),
+                            ...provinces.map(
+                              (p) => DropdownMenuItem<String?>(
+                                value: p.identifier,
+                                child: Text(
+                                  p.name,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
+                          ],
+                          onChanged: (val) {
+                            setSheetState(() {
+                              selectedProv = val;
+                              selectedMun = null;
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        DropdownButtonFormField<String?>(
+                          key: ValueKey(
+                            'drought-municipality-${selectedProv ?? 'all'}',
+                          ),
+                          initialValue: selectedMun,
+                          isExpanded: true,
+                          decoration: const InputDecoration(
+                            labelText: 'Municipio',
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 12,
+                            ),
+                            isDense: true,
+                          ),
+                          items: [
+                            const DropdownMenuItem<String?>(
+                              value: null,
+                              child: Text('Todos los municipios'),
+                            ),
+                            ...munList.map(
+                              (m) => DropdownMenuItem<String?>(
+                                value: m.identifier,
+                                child: Text(
+                                  m.name,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
+                          ],
+                          onChanged: (val) {
+                            setSheetState(() => selectedMun = val);
+                          },
+                        ),
+                        const SizedBox(height: 24),
+                        if (validationError != null)
+                          Text(
+                            validationError!,
+                            style: TextStyle(
+                              color: Theme.of(ctx).colorScheme.error,
+                            ),
+                          ),
+                        FilledButton.icon(
+                          icon: const Icon(Icons.check),
+                          label: const Text('Aplicar filtros'),
+                          onPressed: () {
+                            final next = DroughtFilters(
+                              mesFinal: selectedMonth,
+                              provincia: selectedProv,
+                              municipio: selectedMun,
+                            );
+                            try {
+                              next.validate(DateTime.now().toUtc());
+                            } on FormatException catch (error) {
+                              setSheetState(
+                                () => validationError = error.message,
+                              );
+                              return;
+                            }
+                            Navigator.of(ctx).pop();
+                            if (!mounted) return;
+                            setState(() => _filters = next);
+                            _executeQuery();
+                          },
                         ),
                       ],
-                      onChanged: (val) {
-                        setSheetState(() {
-                          selectedProv = val;
-                          selectedMun = null;
-                        });
-                      },
                     ),
-                    const SizedBox(height: 16),
-                    DropdownButtonFormField<String?>(
-                      key: ValueKey('drought-municipality-${selectedProv ?? 'all'}'),
-                      initialValue: selectedMun,
-                      isExpanded: true,
-                      decoration: const InputDecoration(
-                        labelText: 'Municipio',
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                        isDense: true,
-                      ),
-                      items: [
-                        const DropdownMenuItem<String?>(
-                          value: null,
-                          child: Text('Todos los municipios'),
-                        ),
-                        ...munList.map(
-                          (m) => DropdownMenuItem<String?>(
-                            value: m.identifier,
-                            child: Text(m.name, overflow: TextOverflow.ellipsis),
-                          ),
-                        ),
-                      ],
-                      onChanged: (val) {
-                        setSheetState(() => selectedMun = val);
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    if (validationError != null)
-                      Text(validationError!, style: TextStyle(color: Theme.of(ctx).colorScheme.error)),
-                    FilledButton.icon(
-                      icon: const Icon(Icons.check),
-                      label: const Text('Aplicar filtros'),
-                      onPressed: () {
-                        final next = DroughtFilters(mesFinal: selectedMonth, provincia: selectedProv, municipio: selectedMun);
-                        try {
-                          next.validate(DateTime.now().toUtc());
-                        } on FormatException catch (error) {
-                          setSheetState(() => validationError = error.message);
-                          return;
-                        }
-                        Navigator.of(ctx).pop();
-                        if (!mounted) return;
-                        setState(() => _filters = next);
-                        _executeQuery();
-                      },
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         );
-      },
-    );
       },
     );
   }
@@ -382,7 +415,6 @@ class _DroughtScreenState extends State<DroughtScreen>
     super.build(context);
     final response = _response;
     final summary = response?.resumen;
-    final coverage = response?.cobertura;
 
     final body = _loading || _catalogLoading
         ? const Center(
@@ -396,45 +428,82 @@ class _DroughtScreenState extends State<DroughtScreen>
             ),
           )
         : _errorMessage != null
-            ? ListView(
-                padding: const EdgeInsets.fromLTRB(16, 4, 16, 30),
-                children: [
-                  if (!widget.showAppBar) _buildTopControls(),
-                  const SizedBox(height: 24),
-                  const Center(
-                    child: Icon(Icons.warning_amber_rounded,
-                        size: 48, color: Colors.orange),
+        ? ListView(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 30),
+            children: [
+              if (!widget.showAppBar) _buildTopControls(),
+              const SizedBox(height: 24),
+              const Center(
+                child: Icon(
+                  Icons.warning_amber_rounded,
+                  size: 48,
+                  color: Colors.orange,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                _errorMessage!,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 15),
+              ),
+              const SizedBox(height: 16),
+              FilledButton.icon(
+                onPressed: _executeQuery,
+                icon: const Icon(Icons.refresh),
+                label: const Text('Reintentar'),
+              ),
+            ],
+          )
+        : response == null
+        ? const SizedBox.shrink()
+        : Stack(
+            fit: StackFit.expand,
+            children: [
+              _buildMapCard(response.datos),
+              if (!widget.showAppBar)
+                Positioned(
+                  top: 10,
+                  left: 10,
+                  right: 58,
+                  child: _buildTopControls(),
+                ),
+              DraggableScrollableSheet(
+                initialChildSize: 0.30,
+                minChildSize: 0.22,
+                maxChildSize: 0.82,
+                snap: true,
+                snapSizes: const [0.30, 0.82],
+                builder: (context, scrollController) => Material(
+                  color: Theme.of(context).colorScheme.surface,
+                  elevation: 8,
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(24),
                   ),
-                  const SizedBox(height: 12),
-                  Text(
-                    _errorMessage!,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 15),
+                  clipBehavior: Clip.antiAlias,
+                  child: ListView(
+                    controller: scrollController,
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
+                    children: [
+                      Center(
+                        child: Container(
+                          width: 34,
+                          height: 4,
+                          margin: const EdgeInsets.only(bottom: 12),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.outlineVariant,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      ),
+                      _buildSummaryCard(summary),
+                      _buildLegend(),
+                      _buildSamplesList(response.datos),
+                    ],
                   ),
-                  const SizedBox(height: 16),
-                  FilledButton.icon(
-                    onPressed: _executeQuery,
-                    icon: const Icon(Icons.refresh),
-                    label: const Text('Reintentar'),
-                  ),
-                ],
-              )
-            : response == null
-                ? const SizedBox.shrink()
-                : SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        if (!widget.showAppBar) _buildTopControls(),
-                        _buildSummaryCard(summary, coverage),
-                        _buildMapCard(response.datos),
-                        _buildLegend(),
-                        _buildSamplesList(response.datos),
-                        _buildWarningsSection(response.advertencias),
-                        const SizedBox(height: 24),
-                      ],
-                    ),
-                  );
+                ),
+              ),
+            ],
+          );
 
     if (!widget.showAppBar) {
       return body;
@@ -456,6 +525,10 @@ class _DroughtScreenState extends State<DroughtScreen>
           ],
         ),
         actions: [
+          ...mapCompletoActions(
+            onSearch: _openPlaceSearch,
+            onWeather: _openWeather,
+          ),
           IconButton(
             icon: const Icon(Icons.tune),
             tooltip: 'Filtros',
@@ -472,112 +545,163 @@ class _DroughtScreenState extends State<DroughtScreen>
     );
   }
 
+  LatLng _focusPoint() {
+    if (_selectedSample != null) {
+      return LatLng(_selectedSample!.lat, _selectedSample!.lon);
+    }
+    if (_searchPin != null) return _searchPin!;
+    if (_mapReady) return _mapController.camera.center;
+    return const LatLng(-17.8, -63.1);
+  }
+
+  Future<void> _openPlaceSearch() async {
+    final result = await openPlaceSearch(
+      context: context,
+      api: widget.apiClient,
+      near: _focusPoint(),
+    );
+    if (!mounted || result == null) return;
+    final point = LatLng(result.latitude, result.longitude);
+    setState(() {
+      _searchPin = point;
+      _searchPinLabel = result.name;
+    });
+    if (_mapReady) _mapController.move(point, 9);
+  }
+
+  Future<void> _openWeather() {
+    final pin = _searchPinLabel?.trim();
+    return openWeatherSheet(
+      context: context,
+      api: widget.apiClient,
+      point: _focusPoint(),
+      title: (pin != null && pin.isNotEmpty) ? pin : 'Tiempo en este lugar',
+    );
+  }
+
   Widget _buildTopControls() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Mes final ${_filters.mesFinal}',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                ),
-                const Text(
-                  'Ventana de 3 meses · ERA5',
-                  style: TextStyle(fontSize: 14, color: Colors.black54),
-                ),
-              ],
+    final place = _filters.municipio != null
+        ? _territoryName(_filters.municipio)
+        : _filters.provincia != null
+        ? _territoryName(_filters.provincia)
+        : 'Santa Cruz';
+    return Material(
+      elevation: 3,
+      color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.96),
+      borderRadius: BorderRadius.circular(18),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 4, 4, 4),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    place,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  Text(
+                    'Mes final ${_filters.mesFinal} · 3 meses · ERA5',
+                    style: TextStyle(fontSize: 14, color: Colors.black54),
+                  ),
+                ],
+              ),
             ),
-          ),
-          FilledButton.tonalIcon(
-            onPressed: _openFiltersDialog,
-            icon: const Icon(Icons.tune, size: 18),
-            label: const Text('Filtros'),
-          ),
-          const SizedBox(width: 8),
-          IconButton.filledTonal(
-            onPressed: _executeQuery,
-            icon: const Icon(Icons.refresh, size: 18),
-            tooltip: 'Recargar',
-          ),
-        ],
+            IconButton.filledTonal(
+              onPressed: _openPlaceSearch,
+              icon: const Icon(Icons.search_rounded, size: 18),
+              tooltip: 'Buscar lugar',
+            ),
+            const SizedBox(width: 4),
+            IconButton.filledTonal(
+              onPressed: _openWeather,
+              icon: const Icon(Icons.wb_cloudy_outlined, size: 18),
+              tooltip: 'Tiempo',
+            ),
+            const SizedBox(width: 4),
+            IconButton.filledTonal(
+              onPressed: _openFiltersDialog,
+              icon: const Icon(Icons.tune_rounded, size: 18),
+              tooltip: 'Filtros',
+            ),
+            const SizedBox(width: 4),
+            IconButton.filledTonal(
+              onPressed: _executeQuery,
+              icon: const Icon(Icons.refresh, size: 18),
+              tooltip: 'Recargar',
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildSummaryCard(DroughtSummary? summary, DroughtCoverage? coverage) {
+  String _friendlyDroughtError(GeoCruzApiException error) {
+    final msg = error.message.toLowerCase();
+    final vencidos =
+        error.code == 'PERIODO_NO_DISPONIBLE' ||
+        msg.contains('vencieron') ||
+        msg.contains('vencida') ||
+        msg.contains('caducad');
+    if (vencidos) {
+      return 'Los datos de sequías están vencidos. '
+          'Hay que actualizarlos; cambiar el mes no lo resuelve.';
+    }
+    if (error.code == 'MUESTRAS_NO_DISPONIBLES' ||
+        msg.contains('no hay resultados preparados') ||
+        msg.contains('sequias:preparar') ||
+        msg.contains('petición web')) {
+      return 'No hay datos de sequías para ese mes. '
+          'Prueba otro mes en Filtros (p. ej. 2024-09).';
+    }
+    return error.message;
+  }
+
+  Widget _buildSummaryCard(DroughtSummary? summary) {
     if (summary == null) return const SizedBox.shrink();
+    final coverage = _response?.cobertura;
 
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const Icon(Icons.water_drop_outlined,
-                    color: GeoCruzColors.green, size: 20),
-                const SizedBox(width: 8),
-                Text(
-                  'Resumen de sequías',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                _metricItem(
-                  '${summary.totalMuestras}',
-                  'Evaluados',
-                  Colors.blueGrey.shade800,
-                ),
-                _metricItem(
-                  '${summary.muestrasConIndice}',
-                  'Con índice',
-                  GeoCruzColors.green,
-                ),
-                _metricItem(
-                  '${summary.muestrasSinIndice}',
-                  'Sin índice',
-                  Colors.grey.shade600,
-                ),
-                _metricItem(
-                  '${summary.muestrasConDeficit}',
-                  'Déficit (≤-1)',
-                  summary.muestrasConDeficit > 0
-                      ? const Color(0xFFBC673B)
-                      : Colors.black54,
-                ),
-              ],
-            ),
-            if (coverage != null) ...[
-              const SizedBox(height: 12),
-              const Divider(height: 1),
-              const SizedBox(height: 8),
-              Text(
-                'Datos para ${coverage.municipiosConDatos} de ${coverage.municipiosEnFiltro} municipios consultados.',
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+      margin: const EdgeInsets.only(bottom: 10),
+      child: ExpansionTile(
+        leading: const Icon(Icons.water_drop_outlined),
+        title: const Text('Datos de la consulta'),
+        subtitle: Text(
+          '${summary.totalMuestras} ${summary.totalMuestras == 1 ? 'muestra' : 'muestras'} · ${coverage?.municipiosConDatos ?? 0} de ${coverage?.municipiosEnFiltro ?? 0} municipios',
+        ),
+        childrenPadding: const EdgeInsets.fromLTRB(12, 0, 12, 14),
+        children: [
+          Row(
+            children: [
+              _metricItem(
+                '${summary.totalMuestras}',
+                'Evaluados',
+                Colors.blueGrey.shade800,
               ),
-              const SizedBox(height: 4),
-              Text(
-                coverage.esParcial
-                    ? 'Cobertura parcial. Faltan datos; eso no significa que no haya sequía.'
-                    : 'Son puntos de referencia; no describen todo el municipio.',
-                style: const TextStyle(fontSize: 14, color: Colors.black54),
+              _metricItem(
+                '${summary.muestrasConIndice}',
+                'Con índice',
+                GeoCruzColors.green,
+              ),
+              _metricItem(
+                '${summary.muestrasSinIndice}',
+                'Sin índice',
+                Colors.grey.shade600,
+              ),
+              _metricItem(
+                '${summary.muestrasConDeficit}',
+                'Déficit (≤-1)',
+                summary.muestrasConDeficit > 0
+                    ? const Color(0xFFBC673B)
+                    : Colors.black54,
               ),
             ],
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -608,110 +732,118 @@ class _DroughtScreenState extends State<DroughtScreen>
   }
 
   Widget _buildMapCard(List<DroughtSample> datos) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: SizedBox(
-        height: 320,
-        child: Stack(
-          children: [
-            FlutterMap(
-              key: ValueKey('drought-map-$_request'),
-              mapController: _mapController,
-              options: MapOptions(
-                initialCenter: const LatLng(-17.8, -63.1),
-                initialZoom: 7.2,
-                onMapReady: () {
-                  _mapReady = true;
-                  if (datos.isNotEmpty) _fitBounds(datos);
-                },
+    final markers = datos.map((sample) {
+      final cat = sample.spi.categoryInfo;
+      final isSelected = _selectedSample?.idMuestra == sample.idMuestra;
+      return Marker(
+        point: LatLng(sample.lat, sample.lon),
+        width: isSelected ? 40 : 30,
+        height: isSelected ? 40 : 30,
+        child: GestureDetector(
+          onTap: () => _onSampleTapped(sample),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            decoration: BoxDecoration(
+              color: cat.color,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: isSelected ? Colors.white : Colors.black87,
+                width: isSelected ? 3 : 1.5,
               ),
-              children: [
-                TileLayer(
-                  urlTemplate:
-                      'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  userAgentPackageName: 'bo.edu.univalle.geocruz',
-                ),
-                MarkerLayer(
-                  markers: datos.map((sample) {
-                    final cat = sample.spi.categoryInfo;
-                    final isSelected =
-                        _selectedSample?.idMuestra == sample.idMuestra;
-
-                    return Marker(
-                      point: LatLng(sample.lat, sample.lon),
-                      width: isSelected ? 40 : 30,
-                      height: isSelected ? 40 : 30,
-                      child: GestureDetector(
-                        onTap: () => _onSampleTapped(sample),
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          decoration: BoxDecoration(
-                            color: cat.color,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: isSelected ? Colors.white : Colors.black87,
-                              width: isSelected ? 3 : 1.5,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.3),
-                                blurRadius: 4,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: Icon(
-                            Icons.water_drop,
-                            color: Colors.white,
-                            size: isSelected ? 22 : 16,
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.3),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
-            Positioned(
-              right: 12,
-              top: 12,
-              child: Column(
-                children: [
-                  FloatingActionButton.small(
-                    heroTag: 'drought_zoom_in',
-                    onPressed: () {
-                      _mapController.move(
-                        _mapController.camera.center,
-                        _mapController.camera.zoom + 1,
-                      );
-                    },
-                    child: const Icon(Icons.add),
-                  ),
-                  const SizedBox(height: 6),
-                  FloatingActionButton.small(
-                    heroTag: 'drought_zoom_out',
-                    onPressed: () {
-                      _mapController.move(
-                        _mapController.camera.center,
-                        _mapController.camera.zoom - 1,
-                      );
-                    },
-                    child: const Icon(Icons.remove),
-                  ),
-                  const SizedBox(height: 6),
-                  FloatingActionButton.small(
-                    heroTag: 'drought_center',
-                    onPressed: () => _fitBounds(datos),
-                    child: const Icon(Icons.my_location),
-                  ),
-                ],
-              ),
+            child: Icon(
+              Icons.water_drop,
+              color: Colors.white,
+              size: isSelected ? 22 : 16,
+            ),
+          ),
+        ),
+      );
+    }).toList();
+    if (_searchPin != null) {
+      markers.add(
+        Marker(
+          point: _searchPin!,
+          width: 44,
+          height: 48,
+          child: Tooltip(
+            message: _searchPinLabel ?? 'Lugar buscado',
+            child: Icon(
+              Icons.place_rounded,
+              size: 40,
+              color: Theme.of(context).colorScheme.tertiary,
+              shadows: const [Shadow(color: Colors.white, blurRadius: 4)],
+            ),
+          ),
+        ),
+      );
+    }
+    final fitBounds = datos.length > 1
+        ? LatLngBounds.fromPoints(
+            datos.map((d) => LatLng(d.lat, d.lon)).toList(),
+          )
+        : null;
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        FlutterMap(
+          key: ValueKey('drought-map-$_request-$_mapStyle'),
+          mapController: _mapController,
+          options: MapOptions(
+            initialCenter: const LatLng(-17.8, -63.1),
+            initialZoom: 7.2,
+            onMapReady: () {
+              _mapReady = true;
+              if (datos.isNotEmpty) _fitBounds(datos);
+            },
+          ),
+          children: [
+            _mapStyle.toLayer(),
+            MarkerLayer(markers: markers),
+            RichAttributionWidget(
+              alignment: AttributionAlignment.bottomLeft,
+              attributions: [TextSourceAttribution(_mapStyle.attribution)],
             ),
           ],
         ),
-      ),
+        Positioned.fill(
+          child: MapChrome(
+            style: _mapStyle,
+            onStyleChanged: (style) => setState(() => _mapStyle = style),
+            onZoomIn: () {
+              if (!_mapReady) return;
+              _mapController.move(
+                _mapController.camera.center,
+                _mapController.camera.zoom + 1,
+              );
+            },
+            onZoomOut: () {
+              if (!_mapReady) return;
+              _mapController.move(
+                _mapController.camera.center,
+                _mapController.camera.zoom - 1,
+              );
+            },
+            onFit: () => _fitBounds(datos),
+            onFullscreen: () => openFullscreenMap(
+              context: context,
+              title: 'Sequías',
+              center: const LatLng(-17.8, -63.1),
+              zoom: 7.2,
+              markers: markers,
+              fitBounds: fitBounds,
+              initialStyle: _mapStyle,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -765,9 +897,9 @@ class _DroughtScreenState extends State<DroughtScreen>
           children: [
             Text(
               'Puntos con datos (${datos.length})',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             ListView.separated(
@@ -788,13 +920,18 @@ class _DroughtScreenState extends State<DroughtScreen>
                   leading: CircleAvatar(
                     radius: 14,
                     backgroundColor: cat.color,
-                    child: const Icon(Icons.water_drop,
-                        size: 14, color: Colors.white),
+                    child: const Icon(
+                      Icons.water_drop,
+                      size: 14,
+                      color: Colors.white,
+                    ),
                   ),
                   title: Text(
                     '${d.idMuestra} · ${_territoryName(d.territorioContexto)}',
                     style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w600),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   subtitle: Text(
                     '${cat.label} · Lluvia: ${d.precipitacionAcumuladaMm?.toStringAsFixed(1) ?? '—'} mm',
@@ -816,70 +953,11 @@ class _DroughtScreenState extends State<DroughtScreen>
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  'Mostrando 10 de ${datos.length} puntos. Toca un punto en el mapa para ver su ficha completa.',
+                  'Mostrando 10 de ${datos.length}. Toca el mapa para más detalle.',
                   style: const TextStyle(fontSize: 14, color: Colors.black54),
                 ),
               ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildWarningsSection(List<String> advertencias) {
-    final filtered = advertencias;
-    if (filtered.isEmpty) return const SizedBox.shrink();
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: Colors.grey.shade300),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Row(
-                children: [
-                  Icon(Icons.info_outline, size: 20, color: GeoCruzColors.green),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Sobre estos datos y advertencias',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'Fuente: Open-Meteo ERA5 (reanálisis 0.25°, precipitation_sum en mm, licencia CC BY 4.0). Base de referencia 1991–2020.',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 6),
-              ...filtered.map(
-                (adv) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('• ', style: TextStyle(fontWeight: FontWeight.bold)),
-                      Expanded(
-                        child: Text(
-                          adv,
-                          style: const TextStyle(fontSize: 14, color: Colors.black87),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

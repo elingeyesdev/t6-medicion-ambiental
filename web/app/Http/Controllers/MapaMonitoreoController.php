@@ -11,7 +11,7 @@ class MapaMonitoreoController extends Controller
     public function __invoke(Request $request, CatalogoAmbiental $catalogo, RegionesEnvirosense $regiones)
     {
         // Los enlaces antiguos de focos conservan su destino al separar el mapa principal.
-        if ($request->has('modo') || $request->has('confianza') || $request->has('territorio')) {
+        if ($request->routeIs('mapa') && ($request->has('modo') || $request->has('confianza') || $request->has('territorio'))) {
             return redirect()->route('modulos.mostrar', ['modulo' => 'focos-calor'] + $request->query());
         }
 

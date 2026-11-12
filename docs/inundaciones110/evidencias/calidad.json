@@ -1,0 +1,84 @@
+{
+  "comprobado_utc": "2026-10-31T05:40:29.137968+00:00",
+  "tipo": "viabilidad_tecnica_sin_analisis_de_agua",
+  "metodoAprobado": false,
+  "escenas": [
+    {
+      "id": "S2B_MSIL2A_20250225T141719_R010_T20KNF_20250225T175457",
+      "urlSinFirma": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2025/02/25/S2B_MSIL2A_20250225T141719_N0511_R010_T20KNF_20250225T175457.SAFE/GRANULE/L2A_T20KNF_A041649_20250225T141713/IMG_DATA/R20m/T20KNF_20250225T141719_SCL_20m.tif",
+      "http": 206,
+      "bytes": 4647298,
+      "sha256": "02773fb53a6b0dfb4c931ba66a9ea520a46331ce077c672813889374d968f965",
+      "epsg": 32720,
+      "tamanoRaster": [
+        5490,
+        5490
+      ],
+      "ventanaColumnasFilas": [
+        54,
+        2575,
+        532,
+        3129
+      ],
+      "resolucionMetros": [
+        20,
+        20
+      ],
+      "tamanoRecorte": [
+        478,
+        554
+      ],
+      "sha256PixelesRecorte": "1919a9c37776f7b8c07476a70627f59fd6ad9d0716d4fdfab02f0f5b8b750134",
+      "muestreo": "celdas originales, ventana exterior; sin remuestreo",
+      "georreferenciaComprobada": true
+    },
+    {
+      "id": "S2B_MSIL2A_20250307T141709_R010_T20KNF_20250307T175719",
+      "urlSinFirma": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2025/03/07/S2B_MSIL2A_20250307T141709_N0511_R010_T20KNF_20250307T175719.SAFE/GRANULE/L2A_T20KNF_A041792_20250307T141712/IMG_DATA/R20m/T20KNF_20250307T141709_SCL_20m.tif",
+      "http": 206,
+      "bytes": 3972201,
+      "sha256": "e39ed40ffd5a098fb4fb49412953e0fb54cefdd78651002619bf8d3c6efdda9a",
+      "epsg": 32720,
+      "tamanoRaster": [
+        5490,
+        5490
+      ],
+      "ventanaColumnasFilas": [
+        54,
+        2575,
+        532,
+        3129
+      ],
+      "resolucionMetros": [
+        20,
+        20
+      ],
+      "tamanoRecorte": [
+        478,
+        554
+      ],
+      "sha256PixelesRecorte": "2a6c0d2a7943875109a7fcb0199e692399d83a7ecda75fa7c2a633b21e4667f1",
+      "muestreo": "celdas originales, ventana exterior; sin remuestreo",
+      "georreferenciaComprobada": true
+    }
+  ],
+  "calidad": {
+    "pixelesRecorte": 264812,
+    "fraccionComparableA": 0.49010241227738927,
+    "fraccionComparableB": 0.16856109239762548,
+    "fraccionComparableAmbas": 0.09493527483648777,
+    "politicaComparables": [
+      4,
+      5,
+      6
+    ],
+    "politicaAdoptada": false,
+    "umbralMinimoAprobado": null,
+    "pixelesAgua": null,
+    "superficieInundadaHa": null
+  },
+  "firmasGuardadas": false,
+  "clavesDeCuentaUtilizadas": false,
+  "atribucion": "Contains modified Copernicus Sentinel data (2025); distribución Microsoft Planetary Computer.",
+  "limite": "La calidad evalúa la política candidata de clases; no valida exactitud de SCL ni una inundación."
+}

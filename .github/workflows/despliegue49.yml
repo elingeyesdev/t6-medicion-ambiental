@@ -1,0 +1,23 @@
+name: Contenedor web
+on:
+  pull_request:
+    paths:
+      - 'Dockerfile'
+      - '.dockerignore'
+      - 'herramientas/despliegue/**'
+      - '.github/workflows/despliegue49.yml'
+  push:
+    branches: ['ci/49-railway-postgres']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  construir-y-probar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Construir la imagen Laravel
+        run: docker build --tag geosur-web:revision .
+      - name: Probar persistencia y recuperar PostgreSQL y archivos en volúmenes nuevos
+        run: bash herramientas/despliegue/probar-contenedor.sh geosur-web:revision

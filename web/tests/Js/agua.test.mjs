@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {leerAgua,crearConsultaAgua} from '../../public/js/mapas/agua-contrato.js';
+const base=new URL('../../../compartido/api/inundaciones/ejemplos/',import.meta.url);
+const ejemplo=async(n='cambio')=>JSON.parse(await readFile(new URL(n+'.json',base),'utf8'));
+test('los ejemplos de prueba necesitan permiso explícito',async()=>{const d=await ejemplo();assert.throws(()=>leerAgua(d));assert.equal(leerAgua(d,true),d);});
+test('distingue cero conocido de faltante',async()=>{assert.equal(leerAgua(await ejemplo('sin-cambios'),true).resumen.aguaNuevaKm2,0);assert.equal(leerAgua(await ejemplo('sin-datos'),true).resumen.aguaNuevaKm2,null);const d=await ejemplo('sin-datos');d.resumen.aguaNuevaKm2=0;assert.throws(()=>leerAgua(d,true));});
+test('rechaza superficie o fracción fuera de cobertura',async()=>{for(const v of [NaN,-1,2]){const d=await ejemplo();d.cobertura.fraccionComparable=v;assert.throws(()=>leerAgua(d,true));}});
+test('no dibuja geometrías abiertas, inválidas o duplicadas',async()=>{for(const modo of ['abierta','fuera','duplicada']){const d=await ejemplo();if(modo==='duplicada')d.capa.features.push(d.capa.features[0]);else d.capa.features[0].geometry.coordinates[0][0]=modo==='fuera'?[999,0]:[0,0];assert.throws(()=>leerAgua(d,true));}});
+test('no acepta inundación confirmada ni una capa contradictoria',async()=>{const d=await ejemplo();d.resumen.inundacionConfirmada=true;assert.throws(()=>leerAgua(d,true));const s=await ejemplo('sin-cambios');s.capa.features[0].properties.clase='agua_nueva';assert.throws(()=>leerAgua(s,true));});
+test('una respuesta atrasada no reemplaza la selección nueva',async()=>{const d=await ejemplo(),s=await ejemplo('sin-datos'),vistos=[],pendientes=[];const consultar=crearConsultaAgua(()=>new Promise(r=>pendientes.push(r)),v=>vistos.push(v),{permitirPrueba:true});const a=consultar('a'),b=consultar('b');pendientes[1](s);await b;pendientes[0](d);await a;assert.equal(vistos.at(-1).dato.estado,'sin_datos');assert.equal(vistos.filter(v=>v.estado==='resultado').length,1);});
+test('un error borra el resultado anterior y nunca cae en un ejemplo',async()=>{const d=await ejemplo(),vistos=[];let fallo=false;const consultar=crearConsultaAgua(async()=>{if(fallo)throw Error('fallo');return d;},v=>vistos.push(v),{permitirPrueba:true});await consultar('a');fallo=true;await consultar('b');assert.equal(vistos.at(-2).estado,'cargando');assert.equal(vistos.at(-1).estado,'error');assert.equal(vistos.at(-1).dato,undefined);});

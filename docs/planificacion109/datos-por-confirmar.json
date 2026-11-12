@@ -1,0 +1,502 @@
+{
+  "tipo": "plantilla_pendiente_no_estimaciones_aprobadas",
+  "unidadEstimacionRestante": "horas de esfuerzo por integrante; no jornadas de duración ni tiempo ya trabajado",
+  "actualizado_utc": "2026-11-04T04:32:53.702Z",
+  "responsablePlanificacion": "Jaziel Díaz",
+  "apoyoPlanificacion": "Josué Padilla",
+  "estadoEstimacionesRestantes": "pendientes_de_confirmar_con_ambos",
+  "estadoOrdenYAsignacion": "propuesta_pendiente_de_revision_con_Jaziel",
+  "fuenteResponsablesYPrecedencias": "referencia-extraida.json; responsables propuestos y precedencias históricas, sujetos a revisión",
+  "dependenciasIssues": "trazabilidad.json: revisionDependencias.dependenciasM4Revisadas; conservar vínculos cubiertos y estimar solo pendientes",
+  "capacidadConjuntaDiariaDeclarada": {
+    "minimo": 4,
+    "maximo": 6,
+    "unidad": "horas-persona por día con ambos disponibles",
+    "estado": "confirmada_por_usuario",
+    "duracionCalendarioHoras": null
+  },
+  "criterioCarga": "Contar solo esfuerzo restante por integrante. Calendario semanal lunes a domingo confirmado; inicio, horarios, vigencia y ausencias desconocidos. La capacidad no es duración ni pronóstico. Consolidar G/H una vez, sin sumar el padre histórico.",
+  "personas": [
+    {
+      "nombre": "Josué Padilla",
+      "trabajoPrincipal": "web, datos, integración y apoyo a planificación",
+      "horasPorDiaDeclaradas": {
+        "minimo": 2,
+        "maximo": 3,
+        "unidad": "horas por día disponible",
+        "estado": "confirmada_por_usuario"
+      },
+      "horasPorSemanaConfirmadas": {
+        "minimo": 14,
+        "maximo": 21,
+        "unidad": "horas-persona por semana completa sin ausencias",
+        "estado": "derivado_de_disponibilidad_declarada"
+      },
+      "calendarioConfirmado": {
+        "diasSemanaISO": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "zona": "America/La_Paz",
+        "estado": "confirmado_por_usuario",
+        "horarios": null
+      },
+      "desde": null,
+      "hasta": null,
+      "ausencias": null
+    },
+    {
+      "nombre": "Jaziel Díaz",
+      "trabajoPrincipal": "Flutter, planificación y revisión compartida",
+      "horasPorDiaDeclaradas": {
+        "minimo": 2,
+        "maximo": 3,
+        "unidad": "horas por día disponible",
+        "estado": "confirmada_por_usuario"
+      },
+      "horasPorSemanaConfirmadas": {
+        "minimo": 14,
+        "maximo": 21,
+        "unidad": "horas-persona por semana completa sin ausencias",
+        "estado": "derivado_de_disponibilidad_declarada"
+      },
+      "calendarioConfirmado": {
+        "diasSemanaISO": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "zona": "America/La_Paz",
+        "estado": "confirmado_por_usuario",
+        "horarios": null
+      },
+      "desde": null,
+      "hasta": null,
+      "ausencias": null
+    }
+  ],
+  "trabajoRestante": [
+    {
+      "actividad": "A",
+      "responsablesPropuestos": [
+        "Josué Padilla",
+        "Jaziel Díaz"
+      ],
+      "predecesorasActividadReferencia": [],
+      "issuesRelacionadas": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "descripcionTrabajoRestante": null,
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "B",
+      "responsablesPropuestos": [
+        "Josué Padilla",
+        "Jaziel Díaz"
+      ],
+      "predecesorasActividadReferencia": [
+        "A"
+      ],
+      "issuesRelacionadas": [
+        2,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "descripcionTrabajoRestante": null,
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "C",
+      "responsablesPropuestos": [
+        "Josué Padilla"
+      ],
+      "predecesorasActividadReferencia": [
+        "B"
+      ],
+      "issuesRelacionadas": [
+        15,
+        16
+      ],
+      "descripcionTrabajoRestante": null,
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "D",
+      "responsablesPropuestos": [
+        "Jaziel Díaz"
+      ],
+      "predecesorasActividadReferencia": [
+        "B"
+      ],
+      "issuesRelacionadas": [
+        17
+      ],
+      "descripcionTrabajoRestante": null,
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "E",
+      "responsablesPropuestos": [
+        "Josué Padilla",
+        "Jaziel Díaz"
+      ],
+      "predecesorasActividadReferencia": [
+        "C",
+        "D"
+      ],
+      "issuesRelacionadas": [
+        18,
+        19,
+        20,
+        21
+      ],
+      "descripcionTrabajoRestante": null,
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "F",
+      "responsablesPropuestos": [
+        "Josué Padilla",
+        "Jaziel Díaz"
+      ],
+      "predecesorasActividadReferencia": [
+        "E"
+      ],
+      "issuesRelacionadas": [
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
+      "descripcionTrabajoRestante": null,
+      "apoyo": "QA #39 cerrada / PR #88 integrado: no volver a estimar ese trabajo. Describir cualquier remanente comprobado antes de asignarle horas.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "G",
+      "paquete": "4.3 G",
+      "responsablesPropuestos": [
+        "Josué Padilla",
+        "Jaziel Díaz"
+      ],
+      "predecesorasActividadReferencia": [
+        "F"
+      ],
+      "issuesRelacionadas": [
+        40,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "descripcionTrabajoRestante": "Acordar #110/#40, producir y verificar #111, completar la publicación real de #112 y su integración #113, Flutter #114 y comparación #115. Las preparaciones #138/#139 ya existen y no se estiman otra vez como trabajo nuevo.",
+      "apoyo": "4.3 G: #46 integrado es preparación; #40 sigue abierta y #110 / PR #120 pendiente de revisión. #111 espera #110; siguen #112, #113, #114 y #115. #39 y la base #47 están cubiertas. Consolidar subtareas una vez en G. Preparación del 04/11: API candidata #138 y revisión web local #139, sin producto real ni cierre de dependencias.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "H",
+      "paquete": "4.4 H",
+      "responsablesPropuestos": [
+        "Josué Padilla",
+        "Jaziel Díaz"
+      ],
+      "predecesorasActividadReferencia": [
+        "G"
+      ],
+      "issuesRelacionadas": [
+        116,
+        117
+      ],
+      "descripcionTrabajoRestante": "Acordar criterio, equivalencia territorial y piloto #116; después del contraste #115 preparar el resultado parcial #117. #119 ya documenta acceso y territorio, que no deben estimarse como si faltaran.",
+      "apoyo": "4.4 H: #116 / PR #119 pendiente de revisión; #117 es avance parcial y espera #116 y #115. Estimar solo trabajo forestal restante, separado de G, sin duplicar subtareas ni dar por completado todo H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "I",
+      "responsablesPropuestos": [
+        "Josué Padilla",
+        "Jaziel Díaz"
+      ],
+      "predecesorasActividadReferencia": [
+        "H"
+      ],
+      "issuesRelacionadas": [],
+      "descripcionTrabajoRestante": null,
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "J",
+      "responsablesPropuestos": [
+        "Josué Padilla",
+        "Jaziel Díaz"
+      ],
+      "predecesorasActividadReferencia": [
+        "I"
+      ],
+      "issuesRelacionadas": [],
+      "descripcionTrabajoRestante": null,
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "K",
+      "responsablesPropuestos": [
+        "Josué Padilla",
+        "Jaziel Díaz"
+      ],
+      "predecesorasActividadReferencia": [
+        "J"
+      ],
+      "issuesRelacionadas": [],
+      "descripcionTrabajoRestante": null,
+      "apoyo": "Comparar con las issues relacionadas; contar solo lo que falta y evitar duplicar trabajo dentro de G/H.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    },
+    {
+      "actividad": "L",
+      "responsablesPropuestos": [
+        "Josué Padilla",
+        "Jaziel Díaz"
+      ],
+      "predecesorasActividadReferencia": [
+        "K"
+      ],
+      "issuesRelacionadas": [
+        22,
+        41,
+        118
+      ],
+      "descripcionTrabajoRestante": null,
+      "apoyo": "Paquete M3 de #41 integrado por #96. #118 / PR #122 sigue pendiente de revisión y de #109, #115 y #117; describir solo el remanente de evidencias y entrega.",
+      "estimacionesPorIntegrante": [
+        {
+          "nombre": "Josué Padilla",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        },
+        {
+          "nombre": "Jaziel Díaz",
+          "optimistaHoras": null,
+          "probableHoras": null,
+          "pesimistaHoras": null,
+          "fuenteDeEstimacion": null
+        }
+      ],
+      "esperasExternas": null
+    }
+  ],
+  "alcanceAmpliadoEnviroSense": {
+    "fuente": "revisionDependencias.m3AbiertasInformadas de trazabilidad.json: #40, #49 y #89; el inventario tareasDeM3AbiertasEnCorte conserva solo el estado histórico del 31/10. Asignar cada pendiente a un paquete antes de estimarlo.",
+    "estimacionAcordada": false,
+    "regla": "Las funciones y revisiones agregadas deben estimarse; no heredan automáticamente las treinta jornadas originales."
+  },
+  "pronosticoActual": null,
+  "fuenteDisponibilidad": "Confirmado por Josué en esta conversación el 04/11/2026: 2–3 horas diarias por persona y trabajo de lunes a domingo."
+}

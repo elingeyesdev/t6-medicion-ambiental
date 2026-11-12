@@ -1,0 +1,331 @@
+{
+  "schema_version": 1,
+  "repository": "elingeyesdev/t6-medicion-ambiental",
+  "source": "controlled_fixture",
+  "captured_at": "2026-10-31T00:00:00Z",
+  "validation": {
+    "by": null,
+    "at": null
+  },
+  "milestones": [
+    {
+      "number": 3,
+      "phase": "M3",
+      "title": "FIXTURE: milestone M3",
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "target_date": null,
+      "academic_deadline_confirmed": null
+    },
+    {
+      "number": 4,
+      "phase": "M4",
+      "title": "FIXTURE: milestone M4",
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "target_date": "2026-11-05",
+      "academic_deadline_confirmed": false
+    }
+  ],
+  "issues": [
+    {
+      "number": 39,
+      "title": "FIXTURE: Comparación web y Flutter pendiente",
+      "milestone": 3,
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "dependencies": [],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 40,
+      "title": "FIXTURE: Investigación previa de inundaciones",
+      "milestone": 3,
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "dependencies": [
+        39
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 41,
+      "title": "FIXTURE: Consolidación de evidencia M3 pendiente",
+      "milestone": 3,
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "dependencies": [
+        39,
+        40
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 47,
+      "title": "FIXTURE: Dependencia de interfaz",
+      "milestone": 3,
+      "state": "closed",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "dependencies": [],
+      "pull_requests": null,
+      "implementation": "implemented",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 109,
+      "title": "FIXTURE: Planificación pendiente de Jaziel y capacidad",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "dependencies": [],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 110,
+      "title": "FIXTURE: Propuesta de inundaciones",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "dependencies": [
+        40
+      ],
+      "pull_requests": [
+        120
+      ],
+      "implementation": "proposal",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 111,
+      "title": "FIXTURE: Preparación dependiente de 39 y 110",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "dependencies": [
+        39,
+        110
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 112,
+      "title": "FIXTURE: Preparación dependiente de 111",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "dependencies": [
+        111
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 113,
+      "title": "FIXTURE: Preparación dependiente de 112 y 47",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "dependencies": [
+        112,
+        47
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 114,
+      "title": "FIXTURE: Flutter a cargo de Jaziel",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "dependencies": [
+        112
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 115,
+      "title": "FIXTURE: Integración pendiente de 111, 113 y 114",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "dependencies": [
+        111,
+        113,
+        114
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 116,
+      "title": "FIXTURE: Forestal en revisión",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "dependencies": [],
+      "pull_requests": [
+        119
+      ],
+      "implementation": "in_progress",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 117,
+      "title": "FIXTURE: Verificación pendiente de 115 y 116",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "dependencies": [
+        115,
+        116
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 118,
+      "title": "FIXTURE: Preparación de evidencias M4",
+      "milestone": 4,
+      "state": "open",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "dependencies": [
+        41,
+        109,
+        115,
+        117
+      ],
+      "pull_requests": null,
+      "implementation": "unknown",
+      "engineer_acceptance": {
+        "status": "unknown",
+        "by": null,
+        "at": null,
+        "evidence_url": null
+      }
+    }
+  ],
+  "pull_requests": [
+    {
+      "number": 119,
+      "title": "FIXTURE: propuesta forestal en revisión",
+      "issues": [
+        116
+      ],
+      "state": "open",
+      "merged": false,
+      "draft": false,
+      "head_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "merged_at": null,
+      "reviews_complete": true,
+      "reviews": [],
+      "checks": {
+        "status": "unknown",
+        "sha": null,
+        "evidence_url": null
+      }
+    },
+    {
+      "number": 120,
+      "title": "FIXTURE: propuesta de inundaciones",
+      "issues": [
+        110
+      ],
+      "state": "open",
+      "merged": false,
+      "draft": false,
+      "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "updated_at": "2026-10-30T23:00:00Z",
+      "merged_at": null,
+      "reviews_complete": true,
+      "reviews": [],
+      "checks": {
+        "status": "unknown",
+        "sha": null,
+        "evidence_url": null
+      }
+    }
+  ]
+}

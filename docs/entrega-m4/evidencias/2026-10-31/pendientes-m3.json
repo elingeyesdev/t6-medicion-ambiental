@@ -1,0 +1,190 @@
+{
+  "repositorio": "elingeyesdev/t6-medicion-ambiental",
+  "consultado_utc": "2026-10-31T06:30:22Z",
+  "fuente": "GitHub REST: issues?milestone=3&state=open&per_page=100",
+  "alcance": "todas las issues abiertas de M3, excluyendo los PR; el estado abierto no mide implementación",
+  "tareas": [
+    {
+      "numero": 107,
+      "titulo": "DAT-04 - Recuperar radiación y evaporación potencial con sus unidades",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/107",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 105,
+      "titulo": "MAP-03 - Recuperar las partículas de viento de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/105",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 103,
+      "titulo": "REP-02 - Verificar reportes atmosféricos y separar las escalas del aire",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/103",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 101,
+      "titulo": "DAT-03 - Recuperar la consulta de calidad del aire en el mapa",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/101",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 99,
+      "titulo": "DAT-02 - Actualizar automáticamente las capas del mapa",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/99",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 89,
+      "titulo": "Recuperar en Flutter las funciones restantes de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/89",
+      "estado": "open",
+      "responsables": [
+        "Jazielle"
+      ]
+    },
+    {
+      "numero": 66,
+      "titulo": "DAT-01 - Recuperar sensores histórico y cargas de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/66",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 65,
+      "titulo": "ALT-01 - Recuperar alertas umbrales y notificaciones de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/65",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 64,
+      "titulo": "REP-01 - Recuperar reportes plantillas y gráficos de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/64",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 63,
+      "titulo": "ACC-02 - Recuperar cuentas roles y preferencias de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/63",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 62,
+      "titulo": "GEO-02 - Recuperar países y capas del mapa de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/62",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 61,
+      "titulo": "MIG-02 - Mantener EnviroSense completo como base de GeoSur",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/61",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 52,
+      "titulo": "SIM-01 - Recuperar Simulaciones como módulo de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/52",
+      "estado": "open",
+      "responsables": [
+        "Jazielle",
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 50,
+      "titulo": "GIT-01 - Ajustar ramas revisiones y entregas a la guía del curso",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/50",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 49,
+      "titulo": "DEP-01 - Preparar Railway con PostgreSQL y despliegue revisado",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/49",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 47,
+      "titulo": "REF-WEB - Mantener EnviroSense como base web de GeoSur",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/47",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 41,
+      "titulo": "ENT-03 - Consolidar evidencias y revisión de la tercera entrega",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/41",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 40,
+      "titulo": "ANA-01 - Preparar método y avance de análisis de inundaciones",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/40",
+      "estado": "open",
+      "responsables": [
+        "Jazielle",
+        "JosuePadillaUnivalle"
+      ]
+    },
+    {
+      "numero": 39,
+      "titulo": "QA-02 - Verificar cálculo e integración de sequías en web y móvil",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/39",
+      "estado": "open",
+      "responsables": [
+        "Jazielle"
+      ]
+    },
+    {
+      "numero": 29,
+      "titulo": "MIG-01 - Integrar GeoCruz en la adaptación de EnviroSense",
+      "url": "https://github.com/elingeyesdev/t6-medicion-ambiental/issues/29",
+      "estado": "open",
+      "responsables": [
+        "JosuePadillaUnivalle"
+      ]
+    }
+  ]
+}

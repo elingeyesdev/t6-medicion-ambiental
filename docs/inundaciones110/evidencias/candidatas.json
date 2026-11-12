@@ -1,0 +1,693 @@
+{
+  "estado": "propuesta_pendiente_revision",
+  "bbox": [
+    -62.99,
+    -17.75,
+    -62.9,
+    -17.65
+  ],
+  "escenas": {
+    "A": [
+      {
+        "id": "S2C_MSIL2A_20250302T141811_R010_T20KNF_20250302T194812",
+        "fecha": "2025-03-02T14:18:11.025000Z",
+        "tile": "20KNF",
+        "plataforma": "Sentinel-2C",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 97.114438,
+        "bboxContieneArea": true,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2025/03/02/S2C_MSIL2A_20250302T141811_N0511_R010_T20KNF_20250302T194812.SAFE/GRANULE/L2A_T20KNF_A002554_20250302T142639/IMG_DATA/R20m/T20KNF_20250302T141811_SCL_20m.tif",
+          "proj:bbox": [
+            499980.0,
+            7990240.0,
+            609780.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            499980.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2C_MSIL2A_20250302T141811_R010_T20KMF_20250302T194812",
+        "fecha": "2025-03-02T14:18:11.025000Z",
+        "tile": "20KMF",
+        "plataforma": "Sentinel-2C",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 99.709678,
+        "bboxContieneArea": false,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/MF/2025/03/02/S2C_MSIL2A_20250302T141811_N0511_R010_T20KMF_20250302T194812.SAFE/GRANULE/L2A_T20KMF_A002554_20250302T142639/IMG_DATA/R20m/T20KMF_20250302T141811_SCL_20m.tif",
+          "proj:bbox": [
+            399960.0,
+            7990240.0,
+            509760.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            399960.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2B_MSIL2A_20250225T141719_R010_T20KNF_20250225T175457",
+        "fecha": "2025-02-25T14:17:19.024000Z",
+        "tile": "20KNF",
+        "plataforma": "Sentinel-2B",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 28.362325,
+        "bboxContieneArea": true,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2025/02/25/S2B_MSIL2A_20250225T141719_N0511_R010_T20KNF_20250225T175457.SAFE/GRANULE/L2A_T20KNF_A041649_20250225T141713/IMG_DATA/R20m/T20KNF_20250225T141719_SCL_20m.tif",
+          "proj:bbox": [
+            499980.0,
+            7990240.0,
+            609780.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            499980.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2B_MSIL2A_20250225T141719_R010_T20KMF_20250225T175457",
+        "fecha": "2025-02-25T14:17:19.024000Z",
+        "tile": "20KMF",
+        "plataforma": "Sentinel-2B",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 42.842317,
+        "bboxContieneArea": false,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/MF/2025/02/25/S2B_MSIL2A_20250225T141719_N0511_R010_T20KMF_20250225T175457.SAFE/GRANULE/L2A_T20KMF_A041649_20250225T141713/IMG_DATA/R20m/T20KMF_20250225T141719_SCL_20m.tif",
+          "proj:bbox": [
+            399960.0,
+            7990240.0,
+            509760.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            399960.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2C_MSIL2A_20250220T142101_R010_T20KNF_20250220T223412",
+        "fecha": "2025-02-20T14:21:01.025000Z",
+        "tile": "20KNF",
+        "plataforma": "Sentinel-2C",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 59.616983,
+        "bboxContieneArea": true,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2025/02/20/S2C_MSIL2A_20250220T142101_N0511_R010_T20KNF_20250220T223412.SAFE/GRANULE/L2A_T20KNF_A002411_20250220T142059/IMG_DATA/R20m/T20KNF_20250220T142101_SCL_20m.tif",
+          "proj:bbox": [
+            499980.0,
+            7990240.0,
+            609780.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            499980.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2C_MSIL2A_20250220T142101_R010_T20KMF_20250220T223412",
+        "fecha": "2025-02-20T14:21:01.025000Z",
+        "tile": "20KMF",
+        "plataforma": "Sentinel-2C",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 64.180923,
+        "bboxContieneArea": false,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/MF/2025/02/20/S2C_MSIL2A_20250220T142101_N0511_R010_T20KMF_20250220T223412.SAFE/GRANULE/L2A_T20KMF_A002411_20250220T142059/IMG_DATA/R20m/T20KMF_20250220T142101_SCL_20m.tif",
+          "proj:bbox": [
+            399960.0,
+            7990240.0,
+            509760.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            399960.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2B_MSIL2A_20250215T141719_R010_T20KNF_20250215T175651",
+        "fecha": "2025-02-15T14:17:19.024000Z",
+        "tile": "20KNF",
+        "plataforma": "Sentinel-2B",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 96.487117,
+        "bboxContieneArea": true,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2025/02/15/S2B_MSIL2A_20250215T141719_N0511_R010_T20KNF_20250215T175651.SAFE/GRANULE/L2A_T20KNF_A041506_20250215T142731/IMG_DATA/R20m/T20KNF_20250215T141719_SCL_20m.tif",
+          "proj:bbox": [
+            499980.0,
+            7990240.0,
+            609780.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            499980.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2B_MSIL2A_20250215T141719_R010_T20KMF_20250215T175651",
+        "fecha": "2025-02-15T14:17:19.024000Z",
+        "tile": "20KMF",
+        "plataforma": "Sentinel-2B",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 89.508307,
+        "bboxContieneArea": false,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/MF/2025/02/15/S2B_MSIL2A_20250215T141719_N0511_R010_T20KMF_20250215T175651.SAFE/GRANULE/L2A_T20KMF_A041506_20250215T142731/IMG_DATA/R20m/T20KMF_20250215T141719_SCL_20m.tif",
+          "proj:bbox": [
+            399960.0,
+            7990240.0,
+            509760.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            399960.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      }
+    ],
+    "B": [
+      {
+        "id": "S2A_MSIL2A_20250324T142051_R010_T20KNF_20250324T161512",
+        "fecha": "2025-03-24T14:20:51.024000Z",
+        "tile": "20KNF",
+        "plataforma": "Sentinel-2A",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 100.0,
+        "bboxContieneArea": true,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2025/03/24/S2A_MSIL2A_20250324T142051_N0511_R010_T20KNF_20250324T161512.SAFE/GRANULE/L2A_T20KNF_A050944_20250324T142045/IMG_DATA/R20m/T20KNF_20250324T142051_SCL_20m.tif",
+          "proj:bbox": [
+            499980.0,
+            7990240.0,
+            609780.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            499980.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2A_MSIL2A_20250324T142051_R010_T20KMF_20250324T161512",
+        "fecha": "2025-03-24T14:20:51.024000Z",
+        "tile": "20KMF",
+        "plataforma": "Sentinel-2A",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 100.0,
+        "bboxContieneArea": false,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/MF/2025/03/24/S2A_MSIL2A_20250324T142051_N0511_R010_T20KMF_20250324T161512.SAFE/GRANULE/L2A_T20KMF_A050944_20250324T142045/IMG_DATA/R20m/T20KMF_20250324T142051_SCL_20m.tif",
+          "proj:bbox": [
+            399960.0,
+            7990240.0,
+            509760.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            399960.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2C_MSIL2A_20250322T141811_R010_T20KNF_20250322T185816",
+        "fecha": "2025-03-22T14:18:11.025000Z",
+        "tile": "20KNF",
+        "plataforma": "Sentinel-2C",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 49.149987,
+        "bboxContieneArea": true,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2025/03/22/S2C_MSIL2A_20250322T141811_N0511_R010_T20KNF_20250322T185816.SAFE/GRANULE/L2A_T20KNF_A002840_20250322T142605/IMG_DATA/R20m/T20KNF_20250322T141811_SCL_20m.tif",
+          "proj:bbox": [
+            499980.0,
+            7990240.0,
+            609780.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            499980.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2C_MSIL2A_20250322T141811_R010_T20KMF_20250322T185816",
+        "fecha": "2025-03-22T14:18:11.025000Z",
+        "tile": "20KMF",
+        "plataforma": "Sentinel-2C",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 64.745903,
+        "bboxContieneArea": false,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/MF/2025/03/22/S2C_MSIL2A_20250322T141811_N0511_R010_T20KMF_20250322T185816.SAFE/GRANULE/L2A_T20KMF_A002840_20250322T142605/IMG_DATA/R20m/T20KMF_20250322T141811_SCL_20m.tif",
+          "proj:bbox": [
+            399960.0,
+            7990240.0,
+            509760.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            399960.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2B_MSIL2A_20250317T141709_R010_T20KNF_20250317T194113",
+        "fecha": "2025-03-17T14:17:09.024000Z",
+        "tile": "20KNF",
+        "plataforma": "Sentinel-2B",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 99.892396,
+        "bboxContieneArea": true,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2025/03/17/S2B_MSIL2A_20250317T141709_N0511_R010_T20KNF_20250317T194113.SAFE/GRANULE/L2A_T20KNF_A041935_20250317T142052/IMG_DATA/R20m/T20KNF_20250317T141709_SCL_20m.tif",
+          "proj:bbox": [
+            499980.0,
+            7990240.0,
+            609780.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            499980.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2B_MSIL2A_20250317T141709_R010_T20KMF_20250317T194113",
+        "fecha": "2025-03-17T14:17:09.024000Z",
+        "tile": "20KMF",
+        "plataforma": "Sentinel-2B",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 97.552407,
+        "bboxContieneArea": false,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/MF/2025/03/17/S2B_MSIL2A_20250317T141709_N0511_R010_T20KMF_20250317T194113.SAFE/GRANULE/L2A_T20KMF_A041935_20250317T142052/IMG_DATA/R20m/T20KMF_20250317T141709_SCL_20m.tif",
+          "proj:bbox": [
+            399960.0,
+            7990240.0,
+            509760.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            399960.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2C_MSIL2A_20250312T141811_R010_T20KNF_20250312T192804",
+        "fecha": "2025-03-12T14:18:11.025000Z",
+        "tile": "20KNF",
+        "plataforma": "Sentinel-2C",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 97.937185,
+        "bboxContieneArea": true,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2025/03/12/S2C_MSIL2A_20250312T141811_N0511_R010_T20KNF_20250312T192804.SAFE/GRANULE/L2A_T20KNF_A002697_20250312T142431/IMG_DATA/R20m/T20KNF_20250312T141811_SCL_20m.tif",
+          "proj:bbox": [
+            499980.0,
+            7990240.0,
+            609780.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            499980.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2C_MSIL2A_20250312T141811_R010_T20KMF_20250312T192804",
+        "fecha": "2025-03-12T14:18:11.025000Z",
+        "tile": "20KMF",
+        "plataforma": "Sentinel-2C",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 97.082257,
+        "bboxContieneArea": false,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/MF/2025/03/12/S2C_MSIL2A_20250312T141811_N0511_R010_T20KMF_20250312T192804.SAFE/GRANULE/L2A_T20KMF_A002697_20250312T142431/IMG_DATA/R20m/T20KMF_20250312T141811_SCL_20m.tif",
+          "proj:bbox": [
+            399960.0,
+            7990240.0,
+            509760.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            399960.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2B_MSIL2A_20250307T141709_R010_T20KNF_20250307T175719",
+        "fecha": "2025-03-07T14:17:09.024000Z",
+        "tile": "20KNF",
+        "plataforma": "Sentinel-2B",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 57.803124,
+        "bboxContieneArea": true,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/NF/2025/03/07/S2B_MSIL2A_20250307T141709_N0511_R010_T20KNF_20250307T175719.SAFE/GRANULE/L2A_T20KNF_A041792_20250307T141712/IMG_DATA/R20m/T20KNF_20250307T141709_SCL_20m.tif",
+          "proj:bbox": [
+            499980.0,
+            7990240.0,
+            609780.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            499980.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      },
+      {
+        "id": "S2B_MSIL2A_20250307T141709_R010_T20KMF_20250307T175719",
+        "fecha": "2025-03-07T14:17:09.024000Z",
+        "tile": "20KMF",
+        "plataforma": "Sentinel-2B",
+        "orbita": 10,
+        "baseline": "05.11",
+        "epsg": 32720,
+        "nubesEscenaPorcentaje": 68.845576,
+        "bboxContieneArea": false,
+        "scl": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/20/K/MF/2025/03/07/S2B_MSIL2A_20250307T141709_N0511_R010_T20KMF_20250307T175719.SAFE/GRANULE/L2A_T20KMF_A041792_20250307T141712/IMG_DATA/R20m/T20KMF_20250307T141709_SCL_20m.tif",
+          "proj:bbox": [
+            399960.0,
+            7990240.0,
+            509760.0,
+            8100040.0
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20.0,
+            0.0,
+            399960.0,
+            0.0,
+            -20.0,
+            8100040.0
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      }
+    ]
+  },
+  "haySiguientePagina": {
+    "A": false,
+    "B": false
+  },
+  "parejasCandidatas": [
+    {
+      "referencia": "S2B_MSIL2A_20250225T141719_R010_T20KNF_20250225T175457",
+      "comparacion": "S2B_MSIL2A_20250307T141709_R010_T20KNF_20250307T175719",
+      "separacionDias": 9.99988425925926,
+      "peorNubeEscena": 57.803124,
+      "aprobada": false
+    },
+    {
+      "referencia": "S2C_MSIL2A_20250220T142101_R010_T20KNF_20250220T223412",
+      "comparacion": "S2C_MSIL2A_20250322T141811_R010_T20KNF_20250322T185816",
+      "separacionDias": 29.998032407407408,
+      "peorNubeEscena": 59.616983,
+      "aprobada": false
+    },
+    {
+      "referencia": "S2B_MSIL2A_20250215T141719_R010_T20KNF_20250215T175651",
+      "comparacion": "S2B_MSIL2A_20250307T141709_R010_T20KNF_20250307T175719",
+      "separacionDias": 19.99988425925926,
+      "peorNubeEscena": 96.487117,
+      "aprobada": false
+    },
+    {
+      "referencia": "S2C_MSIL2A_20250302T141811_R010_T20KNF_20250302T194812",
+      "comparacion": "S2C_MSIL2A_20250322T141811_R010_T20KNF_20250322T185816",
+      "separacionDias": 20.0,
+      "peorNubeEscena": 97.114438,
+      "aprobada": false
+    },
+    {
+      "referencia": "S2C_MSIL2A_20250302T141811_R010_T20KNF_20250302T194812",
+      "comparacion": "S2C_MSIL2A_20250312T141811_R010_T20KNF_20250312T192804",
+      "separacionDias": 10.0,
+      "peorNubeEscena": 97.937185,
+      "aprobada": false
+    },
+    {
+      "referencia": "S2C_MSIL2A_20250220T142101_R010_T20KNF_20250220T223412",
+      "comparacion": "S2C_MSIL2A_20250312T141811_R010_T20KNF_20250312T192804",
+      "separacionDias": 19.998032407407408,
+      "peorNubeEscena": 97.937185,
+      "aprobada": false
+    },
+    {
+      "referencia": "S2B_MSIL2A_20250225T141719_R010_T20KNF_20250225T175457",
+      "comparacion": "S2B_MSIL2A_20250317T141709_R010_T20KNF_20250317T194113",
+      "separacionDias": 19.99988425925926,
+      "peorNubeEscena": 99.892396,
+      "aprobada": false
+    },
+    {
+      "referencia": "S2B_MSIL2A_20250215T141719_R010_T20KNF_20250215T175651",
+      "comparacion": "S2B_MSIL2A_20250317T141709_R010_T20KNF_20250317T194113",
+      "separacionDias": 29.99988425925926,
+      "peorNubeEscena": 99.892396,
+      "aprobada": false
+    }
+  ],
+  "calidadLocalComprobadaPorCatalogo": false,
+  "nota": "El orden solo prioriza consultas de acceso; no adopta un par ni prueba agua.",
+  "metodoAprobado": false,
+  "superficieInundadaHa": null
+}

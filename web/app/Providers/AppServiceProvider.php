@@ -5,6 +5,9 @@ namespace App\Providers;
 use App\Enums\RolCuenta;
 use App\Http\Middleware\RevisionForestalLocal;
 use App\Models\User;
+use App\Services\Inundaciones\CatalogoProductosAgua;
+use App\Services\Inundaciones\PublicadorProductosAgua;
+use App\Services\Inundaciones\ValidadorProductoAgua;
 use App\Services\Sequias\AlmacenPublicacionesSequias;
 use App\Services\Sequias\Experimental\CatalogoMuestrasSequias;
 use App\Services\Sequias\LectorJsonLocal;
@@ -13,12 +16,14 @@ use App\Services\Sequias\RepositorioSeriesPrecipitacion;
 use App\Services\Sequias\ValidadorSeriePrecipitacion;
 use App\Services\Territorios\CatalogoTerritorial;
 use App\Services\Territorios\GeometriaTerritorial;
+use App\View\Composers\MenuPanel;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Auth\Middleware\AuthenticatesRequests;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,6 +33,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->singleton(CatalogoProductosAgua::class,
+            fn ($app) => new CatalogoProductosAgua(config('productos_agua.directorio'),
+                $app->make(ValidadorProductoAgua::class)));
+        $this->app->singleton(PublicadorProductosAgua::class,
+            fn ($app) => new PublicadorProductosAgua(config('productos_agua.directorio'),
+                $app->make(ValidadorProductoAgua::class), $app->make(CatalogoProductosAgua::class)));
         $this->app->singleton(CatalogoTerritorial::class,
             fn () => new CatalogoTerritorial(config('focos.datos_territoriales')));
         $this->app->singleton(RepositorioSeriesPrecipitacion::class,
@@ -50,6 +61,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->make(Kernel::class)->addToMiddlewarePriorityBefore(
             AuthenticatesRequests::class, RevisionForestalLocal::class);
 
+        View::composer('components.panel.menu', MenuPanel::class);
         RateLimiter::for('mapa-busquedas', fn (Request $request) => Limit::perMinute(12)->by((string) $request->user()?->id));
         RateLimiter::for('tiempo-consultas', fn (Request $request) => Limit::perMinute(12)->by((string) $request->user()?->id));
         RateLimiter::for('aire-consultas', fn (Request $request) => Limit::perMinute(12)->by((string) $request->user()?->id));

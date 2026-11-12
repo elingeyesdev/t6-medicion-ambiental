@@ -20,6 +20,9 @@
             <a class="enviro-enlace {{ request()->routeIs('plantillas*') ? 'activo' : '' }}" href="{{ route('plantillas') }}" title="Plantillas"><x-panel.icono nombre="layout-dashboard" /><span>Plantillas</span></a>
         @endcan
         <div class="enviro-seccion enviro-seccion-modulos">Análisis GeoSur</div>
+        @if($aguaDisponible ?? false)
+            <a class="enviro-enlace {{ request()->routeIs('mapa.agua') ? 'activo' : '' }}" href="{{ route('mapa.agua') }}" title="Agua e inundaciones" @if(request()->routeIs('mapa.agua')) aria-current="page" @endif><x-panel.icono nombre="cloud-rain" /><span>Agua e inundaciones</span></a>
+        @endif
         @foreach($modulos as $id => $item)
             <a class="enviro-enlace {{ request()->route('modulo') === $id ? 'activo' : '' }}" href="{{ route('modulos.mostrar', $id) }}" title="{{ $item['nombre'] }}" aria-label="Abrir {{ $item['nombre'] }}" @if(request()->route('modulo') === $id) aria-current="page" @endif>
                 <x-panel.icono :nombre="$item['icono']" /><span>{{ $item['nombre'] }}</span>

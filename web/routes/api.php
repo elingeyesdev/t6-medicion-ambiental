@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\BuscarLugarController;
 use App\Http\Controllers\Api\CalidadAireController;
 use App\Http\Controllers\Api\CuentaController;
 use App\Http\Controllers\Api\FocosCalorController;
+use App\Http\Controllers\Api\InundacionesController;
 use App\Http\Controllers\Api\MapaMonitoreoController;
 use App\Http\Controllers\Api\PaisesController;
 use App\Http\Controllers\Api\SensoresController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Api\TerritoriosController;
 use App\Http\Controllers\Api\TiempoController;
 use App\Http\Controllers\Api\UsuariosController;
 use App\Http\Controllers\AvisosController;
+use App\Http\Controllers\Mapas\CapasController;
 use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\SaludController;
@@ -36,7 +38,17 @@ Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
         Route::post('/simulacion-continua/accion', [SimulacionContinuaController::class, 'accion'])
             ->middleware('can:simulaciones.gestionar');
         Route::middleware('can:datos.consultar')->group(function (): void {
+            Route::get('/inundaciones/catalogo', [InundacionesController::class, 'catalogo']);
+            Route::get('/inundaciones/consulta', [InundacionesController::class, 'consultar']);
             Route::get('/mapa/buscar', BuscarLugarController::class)->middleware('throttle:mapa-busquedas');
+            // Sin el throttle:30,1 del grupo: si no, cada PNG cuenta dos veces y corta el recorrido (~16).
+            Route::get('/mapa/capas', [CapasController::class, 'index'])
+                ->withoutMiddleware('throttle:30,1')
+                ->middleware('throttle:120,1,mapa-capas-api');
+            Route::get('/mapa/capas/cuadros/{cuadro}.png', [CapasController::class, 'imagen'])
+                ->where('cuadro', '[a-z0-9][a-z0-9_-]{0,79}')
+                ->withoutMiddleware('throttle:30,1')
+                ->middleware('throttle:120,1,mapa-capas-api');
             Route::get('/tiempo', TiempoController::class)->middleware('throttle:tiempo-consultas');
             Route::get('/aire', CalidadAireController::class)->middleware('throttle:aire-consultas');
             Route::get('/alertas', [AlertasController::class, 'index']);

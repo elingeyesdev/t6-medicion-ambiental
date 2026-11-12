@@ -123,6 +123,7 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
       HotspotFilters(
         fromUtc: _from.toUtc(),
         untilUtc: _until.toUtc(),
+        alcance: 'santacruz',
         provinceId: _provinceId,
         municipalityId: _municipalityId,
         confidence: _confidence,
@@ -168,24 +169,6 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 6),
-              Text(
-                'Elige el período y acota la consulta dentro de la cobertura disponible.',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 14),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondaryContainer,
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: const Text(
-                  'Por ahora, la API consulta focos solo en Santa Cruz, Bolivia. '
-                  'Los demás países de Sudamérica todavía no están habilitados para este análisis.',
-                ),
-              ),
-              const SizedBox(height: 14),
               Text(
                 'Período · hora de Bolivia',
                 style: Theme.of(context).textTheme.titleLarge,
@@ -242,7 +225,7 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
                       items: [
                         const DropdownMenuItem(
                           value: '',
-                          child: Text('Todo el departamento'),
+                          child: Text('Sin filtrar provincia'),
                         ),
                         for (final province in widget.provinces)
                           DropdownMenuItem(
@@ -360,7 +343,7 @@ class _HotspotFiltersSheetState extends State<HotspotFiltersSheet> {
   String _filterSummary() {
     final parts = <String>[];
     if (_provinceId == null) {
-      parts.add('Todo Santa Cruz');
+      parts.add('Todo el departamento');
     } else {
       parts.add(widget.nameFor(_provinceId));
     }

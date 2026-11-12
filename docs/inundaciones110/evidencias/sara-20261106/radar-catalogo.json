@@ -1,0 +1,146 @@
+{
+  "fecha": "2026-11-06",
+  "bbox": [
+    -63.64,
+    -16.81,
+    -63.52,
+    -16.675
+  ],
+  "crs": "OGC:CRS84",
+  "coleccion": "sentinel-1-rtc",
+  "licencia": "CC-BY-4.0",
+  "requiereCuenta": true,
+  "consultas": [
+    {
+      "window": "A",
+      "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=sentinel-1-rtc&bbox=-63.64%2C-16.81%2C-63.52%2C-16.675&datetime=2025-11-15T00%3A00%3A00Z%2F2025-12-13T22%3A59%3A59Z&limit=20",
+      "status": 200,
+      "next": false,
+      "items": [
+        {
+          "id": "S1C_IW_GRDH_1SDV_20251213T094214_20251213T094239_005431_00ACFC_rtc",
+          "datetime": "2025-12-13T09:42:27.390562Z",
+          "relativeOrbit": 10,
+          "direction": "descending",
+          "platform": "sentinel-1c",
+          "polarizations": [
+            "VV",
+            "VH"
+          ],
+          "bbox": [
+            -64.03117851158693,
+            -17.70202161077553,
+            -61.37027945702948,
+            -15.667568218471693
+          ],
+          "containsBox": true
+        },
+        {
+          "id": "S1C_IW_GRDH_1SDV_20251206T095018_20251206T095043_005329_00A983_rtc",
+          "datetime": "2025-12-06T09:50:30.940595Z",
+          "relativeOrbit": 83,
+          "direction": "descending",
+          "platform": "sentinel-1c",
+          "polarizations": [
+            "VV",
+            "VH"
+          ],
+          "bbox": [
+            -65.93288160349631,
+            -17.081836067147552,
+            -63.27556949939465,
+            -15.049731644548736
+          ],
+          "containsBox": true
+        },
+        {
+          "id": "S1C_IW_GRDH_1SDV_20251201T094215_20251201T094240_005256_00A6FA_rtc",
+          "datetime": "2025-12-01T09:42:27.981939Z",
+          "relativeOrbit": 10,
+          "direction": "descending",
+          "platform": "sentinel-1c",
+          "polarizations": [
+            "VV",
+            "VH"
+          ],
+          "bbox": [
+            -64.03071043596474,
+            -17.70210833316682,
+            -61.369530561261236,
+            -15.667569872560799
+          ],
+          "containsBox": true
+        },
+        {
+          "id": "S1C_IW_GRDH_1SDV_20251124T095019_20251124T095044_005154_00A399_rtc",
+          "datetime": "2025-11-24T09:50:31.560390Z",
+          "relativeOrbit": 83,
+          "direction": "descending",
+          "platform": "sentinel-1c",
+          "polarizations": [
+            "VV",
+            "VH"
+          ],
+          "bbox": [
+            -65.93381898311412,
+            -17.081834286068673,
+            -63.276129121399094,
+            -15.049631925030239
+          ],
+          "containsBox": true
+        },
+        {
+          "id": "S1C_IW_GRDH_1SDV_20251119T094216_20251119T094241_005081_00A119_rtc",
+          "datetime": "2025-11-19T09:42:28.566763Z",
+          "relativeOrbit": 10,
+          "direction": "descending",
+          "platform": "sentinel-1c",
+          "polarizations": [
+            "VV",
+            "VH"
+          ],
+          "bbox": [
+            -64.03118150822822,
+            -17.702290282102183,
+            -61.369997414910294,
+            -15.667658067873692
+          ],
+          "containsBox": true
+        }
+      ]
+    },
+    {
+      "window": "B",
+      "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=sentinel-1-rtc&bbox=-63.64%2C-16.81%2C-63.52%2C-16.675&datetime=2025-12-14T00%3A00%3A00Z%2F2025-12-24T23%3A59%3A59Z&limit=20",
+      "status": 200,
+      "next": false,
+      "items": [
+        {
+          "id": "S1C_IW_GRDH_1SDV_20251218T095018_20251218T095043_005504_00AF78_rtc",
+          "datetime": "2025-12-18T09:50:30.533692Z",
+          "relativeOrbit": 83,
+          "direction": "descending",
+          "platform": "sentinel-1c",
+          "polarizations": [
+            "VV",
+            "VH"
+          ],
+          "bbox": [
+            -65.93353954522377,
+            -17.081834879935816,
+            -63.27603597173106,
+            -15.04981779008576
+          ],
+          "containsBox": true
+        }
+      ]
+    }
+  ],
+  "referenciaContraste": {
+    "producto": 2155,
+    "origen": 3,
+    "sensor": "COSMO-SkyMed",
+    "adquisicion": "2025-12-17T10:22:00Z"
+  },
+  "bandasDescargadas": false
+}

@@ -1,0 +1,46 @@
+test_cero_comparable_no_es_cero_inundacion (test_lote.LoteTest.test_cero_comparable_no_es_cero_inundacion) ... ok
+test_completitud_no_oculta_un_activo_ausente (test_lote.LoteTest.test_completitud_no_oculta_un_activo_ausente) ... ok
+test_el_recibo_de_lote_reutiliza_activos_sin_recortar_su_lista (test_lote.LoteTest.test_el_recibo_de_lote_reutiliza_activos_sin_recortar_su_lista) ... ok
+test_no_admite_aumentar_presupuesto_o_sustituir_un_directorio_existente (test_lote.LoteTest.test_no_admite_aumentar_presupuesto_o_sustituir_un_directorio_existente) ... ok
+test_presupuesto_conjunto_limita_la_siguiente_lectura_y_no_da_exito_parcial (test_lote.LoteTest.test_presupuesto_conjunto_limita_la_siguiente_lectura_y_no_da_exito_parcial) ... ok
+test_prioriza_visibilidad_local_aunque_la_nube_global_diga_lo_contrario (test_lote.LoteTest.test_prioriza_visibilidad_local_aunque_la_nube_global_diga_lo_contrario) ... ok
+test_reusa_solo_tiff_integros_y_el_href_exacto_sin_firma (test_lote.LoteTest.test_reusa_solo_tiff_integros_y_el_href_exacto_sin_firma) ... ok
+test_sin_opcion_de_red_no_inicia_descargas (test_lote.LoteTest.test_sin_opcion_de_red_no_inicia_descargas) ... ok
+test_ventanas_distintas_no_se_parean_por_tener_el_mismo_tamano (test_lote.LoteTest.test_ventanas_distintas_no_se_parean_por_tener_el_mismo_tamano) ... ok
+test_faltantes_sombras_nubes_y_nieve_no_comparables (test_metodo.CalidadTest.test_faltantes_sombras_nubes_y_nieve_no_comparables) ... ok
+test_interseccion_no_es_union_y_no_data_no_es_agua_ausente (test_metodo.CalidadTest.test_interseccion_no_es_union_y_no_data_no_es_agua_ausente) ... ok
+test_rango_demasiado_grande_y_url_firmada_se_rechazan_sin_leer (test_metodo.CalidadTest.test_rango_demasiado_grande_y_url_firmada_se_rechazan_sin_leer) ... ok
+test_rechaza_clases_mallas_o_tipo_invalidos (test_metodo.CalidadTest.test_rechaza_clases_mallas_o_tipo_invalidos) ... ok
+test_tiff_controlado_comprueba_ventana_sin_remuestrear (test_metodo.CalidadTest.test_tiff_controlado_comprueba_ventana_sin_remuestrear) ... ok
+test_catalogo_real_y_candidatas_se_reproducen (test_metodo.EscenasTest.test_catalogo_real_y_candidatas_se_reproducen) ... ok
+test_html_y_fecha_fuera_de_ventana_no_son_cero_escenas (test_metodo.EscenasTest.test_html_y_fecha_fuera_de_ventana_no_son_cero_escenas) ... ok
+test_no_parear_bbox_parcial_o_resolucion_distinta (test_metodo.EscenasTest.test_no_parear_bbox_parcial_o_resolucion_distinta) ... ok
+test_no_parear_plataformas_mallas_orbitas_o_baselines_distintos (test_metodo.EscenasTest.test_no_parear_plataformas_mallas_orbitas_o_baselines_distintos) ... ok
+test_pagina_incompleta_no_es_catalogo_completo (test_metodo.EscenasTest.test_pagina_incompleta_no_es_catalogo_completo) ... ok
+test_recibo_alterado_otra_consulta_y_archivo_repetido_se_rechazan (test_metodo.EscenasTest.test_recibo_alterado_otra_consulta_y_archivo_repetido_se_rechazan) ... ok
+test_catalogo_real_se_repite_sin_leer_pixeles_ni_afirmar_acceso (test_radar.RadarTest.test_catalogo_real_se_repite_sin_leer_pixeles_ni_afirmar_acceso) ... ok
+test_pagina_siguiente_no_se_oculta_como_busqueda_agotada (test_radar.RadarTest.test_pagina_siguiente_no_se_oculta_como_busqueda_agotada) ... ok
+test_rechaza_escena_duplicada_fuera_de_fecha_o_de_otra_coleccion (test_radar.RadarTest.test_rechaza_escena_duplicada_fuera_de_fecha_o_de_otra_coleccion) ... ok
+test_rechaza_recibo_alterado_y_enlaces_con_firma (test_radar.RadarTest.test_rechaza_recibo_alterado_y_enlaces_con_firma) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.300s
+
+OK
+
+test_ausencia_scl_no_implica_activo_descargable (test_catalogo.CatalogoTest.test_ausencia_scl_no_implica_activo_descargable) ... ok
+test_fallo_http_json_invalido_y_respuesta_excesiva_no_se_interpretan (test_catalogo.CatalogoTest.test_fallo_http_json_invalido_y_respuesta_excesiva_no_se_interpretan) ... ok
+test_fecha_fuera_de_ventana_otra_coleccion_y_duplicados_se_rechazan (test_catalogo.CatalogoTest.test_fecha_fuera_de_ventana_otra_coleccion_y_duplicados_se_rechazan) ... ok
+test_geometria_y_nubosidad_incompatibles_no_pasan_como_datos_validos (test_catalogo.CatalogoTest.test_geometria_y_nubosidad_incompatibles_no_pasan_como_datos_validos) ... ok
+test_http_200_html_no_equivale_a_catalogo_sin_escenas (test_catalogo.CatalogoTest.test_http_200_html_no_equivale_a_catalogo_sin_escenas) ... ok
+test_no_hay_resultado_de_agua_al_encontrar_metadatos (test_catalogo.CatalogoTest.test_no_hay_resultado_de_agua_al_encontrar_metadatos) ... ok
+test_no_se_guardan_urls_firmadas_o_credenciales_en_el_resumen (test_catalogo.CatalogoTest.test_no_se_guardan_urls_firmadas_o_credenciales_en_el_resumen) ... ok
+test_nubosidad_desconocida_no_se_convierte_en_cero (test_catalogo.CatalogoTest.test_nubosidad_desconocida_no_se_convierte_en_cero) ... ok
+test_originales_congelados_y_resumen_conservan_hash_parametros_y_faltantes (test_catalogo.CatalogoTest.test_originales_congelados_y_resumen_conservan_hash_parametros_y_faltantes) ... ok
+test_paginacion_pendiente_se_conserva_y_no_se_descarga_automaticamente (test_catalogo.CatalogoTest.test_paginacion_pendiente_se_conserva_y_no_se_descarga_automaticamente) ... ok
+test_solo_feature_collection_valida_vacia_acredita_cero_coincidencias (test_catalogo.CatalogoTest.test_solo_feature_collection_valida_vacia_acredita_cero_coincidencias) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.145s
+
+OK
