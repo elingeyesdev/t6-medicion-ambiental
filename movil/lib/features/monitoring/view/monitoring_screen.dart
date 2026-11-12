@@ -70,7 +70,11 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
     super.initState();
     _repository = widget.repository ?? MonitoringRepository(widget.api);
     final period = ConsultationPeriod.lastSevenDays();
-    _filters = MonitoringFilters(from: period.from, until: period.until);
+    _filters = MonitoringFilters(
+      from: period.from,
+      until: period.until,
+      origin: 'todos',
+    );
     _initialize();
   }
 

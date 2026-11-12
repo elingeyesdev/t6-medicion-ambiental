@@ -4,16 +4,19 @@ import '../../../core/network/geocruz_api_client.dart';
 import '../../../uikits/models/nav_menu.dart';
 import '../../drought/view/drought_screen.dart';
 import '../../hotspots/view/hotspots_screen.dart';
+import '../../inundations/view/inundations_screen.dart';
 
 /// Consultas con selector móvil; ambas vistas viven en IndexedStack para
 /// no recargar al cambiar de Focos ↔ Sequías.
 class EnvironmentalConsultationScreen extends StatefulWidget {
   const EnvironmentalConsultationScreen({
     required this.apiClient,
+    required this.onUnauthorized,
     super.key,
   });
 
   final GeoCruzApiClient apiClient;
+  final VoidCallback onUnauthorized;
 
   @override
   State<EnvironmentalConsultationScreen> createState() =>
@@ -23,6 +26,7 @@ class EnvironmentalConsultationScreen extends StatefulWidget {
 class _EnvironmentalConsultationScreenState
     extends State<EnvironmentalConsultationScreen> {
   int _index = 0;
+  final Set<int> _visitedSections = {0};
 
   static const _sections = <UiKitNavMenu>[
     UiKitNavMenu(
@@ -31,6 +35,7 @@ class _EnvironmentalConsultationScreenState
       Icons.local_fire_department,
     ),
     UiKitNavMenu('Sequías', Icons.water_drop_outlined, Icons.water_drop),
+    UiKitNavMenu('Agua', Icons.water_drop_outlined, Icons.water_drop),
   ];
 
   @override
@@ -53,12 +58,18 @@ class _EnvironmentalConsultationScreenState
                           ? _sections[i].selectedIcon
                           : _sections[i].icon,
                     ),
-                    label: Text(_sections[i].title),
+              label: Text(
+                _sections[i].title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
                   ),
               ],
               selected: {_index},
-              onSelectionChanged: (values) =>
-                  setState(() => _index = values.first),
+              onSelectionChanged: (values) => setState(() {
+                _index = values.first;
+                _visitedSections.add(_index);
+              }),
               style: ButtonStyle(
                 visualDensity: VisualDensity.compact,
                 backgroundColor: WidgetStateProperty.resolveWith((states) {
@@ -76,16 +87,28 @@ class _EnvironmentalConsultationScreenState
         index: _index,
         sizing: StackFit.expand,
         children: [
-          HotspotsScreen(
-            key: const PageStorageKey('env-hotspots'),
-            apiClient: widget.apiClient,
-            showAppBar: false,
-          ),
-          DroughtScreen(
-            key: const PageStorageKey('env-drought'),
-            apiClient: widget.apiClient,
-            showAppBar: false,
-          ),
+          _visitedSections.contains(0)
+              ? HotspotsScreen(
+                  key: const PageStorageKey('env-hotspots'),
+                  apiClient: widget.apiClient,
+                  showAppBar: false,
+                )
+              : const SizedBox.shrink(),
+          _visitedSections.contains(1)
+              ? DroughtScreen(
+                  key: const PageStorageKey('env-drought'),
+                  apiClient: widget.apiClient,
+                  showAppBar: false,
+                )
+              : const SizedBox.shrink(),
+          _visitedSections.contains(2)
+              ? InundationsScreen(
+                  key: const PageStorageKey('env-inundations'),
+                  api: widget.apiClient,
+                  onUnauthorized: widget.onUnauthorized,
+                  showAppBar: false,
+                )
+              : const SizedBox.shrink(),
         ],
       ),
     );

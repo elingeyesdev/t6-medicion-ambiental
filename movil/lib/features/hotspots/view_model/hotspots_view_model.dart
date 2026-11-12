@@ -24,6 +24,7 @@ class HotspotsViewModel extends ChangeNotifier {
   _PendingQuery? _pending;
   int _requestGeneration = 0;
   bool _disposed = false;
+  bool _useLatestAvailablePeriod = true;
 
   @override
   void dispose() {
@@ -71,7 +72,10 @@ class HotspotsViewModel extends ChangeNotifier {
       territories = loaded;
       loadingCatalog = false;
       notifyListeners();
-      if (runInitialQuery) await apply(filters);
+      if (runInitialQuery) {
+        _useLatestAvailablePeriod = true;
+        await _request(_validateAndNormalize(filters), page: 1);
+      }
     } catch (error) {
       if (_disposed) return;
       loadingCatalog = false;
@@ -81,6 +85,7 @@ class HotspotsViewModel extends ChangeNotifier {
   }
 
   Future<void> apply(HotspotFilters next) {
+    _useLatestAvailablePeriod = false;
     final normalized = _validateAndNormalize(next);
     return _request(normalized, page: 1);
   }
@@ -194,6 +199,44 @@ class HotspotsViewModel extends ChangeNotifier {
       }
 
       if (generation != _requestGeneration) return;
+      if (_useLatestAvailablePeriod &&
+          page == 1 &&
+          result.coverageState == 'sin_cobertura') {
+        _useLatestAvailablePeriod = false;
+        final available = result.coverage['periodoDisponible'];
+        if (available is Map) {
+          final availableFrom = DateTime.tryParse(
+            '${available['desde'] ?? ''}',
+          );
+          final availableUntil = DateTime.tryParse(
+            '${available['hasta'] ?? ''}',
+          );
+          if (availableFrom != null &&
+              availableUntil != null &&
+              availableUntil.isAfter(availableFrom)) {
+            final duration = requested.untilUtc.difference(requested.fromUtc);
+            final fallbackUntil = availableUntil.toUtc();
+            final fallbackFrom = fallbackUntil.subtract(duration);
+            final effectiveFrom = fallbackFrom.isBefore(availableFrom.toUtc())
+                ? availableFrom.toUtc()
+                : fallbackFrom;
+            if (fallbackUntil.isAfter(effectiveFrom)) {
+              await _request(
+                HotspotFilters(
+                  fromUtc: effectiveFrom,
+                  untilUtc: fallbackUntil,
+                  alcance: requested.alcance,
+                  provinceId: requested.provinceId,
+                  municipalityId: requested.municipalityId,
+                  confidence: requested.confidence,
+                ),
+                page: 1,
+              );
+              return;
+            }
+          }
+        }
+      }
       response = result;
       filters = requested;
       _pending = null;
