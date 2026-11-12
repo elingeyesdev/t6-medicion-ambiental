@@ -447,40 +447,54 @@ class _InundationsScreenState extends State<InundationsScreen> {
     isScrollControlled: true,
     useSafeArea: true,
     showDragHandle: true,
-    builder: (sheetContext) => Padding(
-      padding: const EdgeInsets.fromLTRB(18, 4, 18, 24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Lugar y fechas',
-            style: Theme.of(sheetContext).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 12),
-          if (_comparisons.isEmpty)
-            const Padding(
-              padding: EdgeInsets.only(bottom: 8),
-              child: Text('No hay comparaciones publicadas para filtrar.'),
-            )
-          else ...[
-            _filters(sheetContext),
-            const SizedBox(height: 12),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton.icon(
-                onPressed: _loadingResult
-                    ? null
-                    : () {
-                        Navigator.of(sheetContext).pop();
-                        _query();
-                      },
-                icon: const Icon(Icons.compare_arrows_rounded),
-                label: const Text('Ver comparación'),
-              ),
+    // El panel modal es una ruta separada: necesita su propio estado para que
+    // la lista de fechas se reconstruya al cambiar el lugar.
+    builder: (sheetContext) => StatefulBuilder(
+      builder: (context, setSheetState) => Padding(
+        padding: const EdgeInsets.fromLTRB(18, 4, 18, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Lugar y fechas',
+              style: Theme.of(context).textTheme.titleLarge,
             ),
+            const SizedBox(height: 12),
+            if (_comparisons.isEmpty)
+              const Padding(
+                padding: EdgeInsets.only(bottom: 8),
+                child: Text('No hay comparaciones publicadas para filtrar.'),
+              )
+            else ...[
+              _filters(
+                context,
+                onPlaceChanged: (place) {
+                  _changePlace(place);
+                  setSheetState(() {});
+                },
+                onComparisonChanged: (id) {
+                  _changeComparison(id);
+                  setSheetState(() {});
+                },
+              ),
+              const SizedBox(height: 12),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  onPressed: _loadingResult
+                      ? null
+                      : () {
+                          Navigator.of(sheetContext).pop();
+                          _query();
+                        },
+                  icon: const Icon(Icons.compare_arrows_rounded),
+                  label: const Text('Ver comparación'),
+                ),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     ),
   );
@@ -560,7 +574,11 @@ class _InundationsScreenState extends State<InundationsScreen> {
     );
   }
 
-  Widget _filters(BuildContext context) {
+  Widget _filters(
+    BuildContext context, {
+    ValueChanged<String?>? onPlaceChanged,
+    ValueChanged<String?>? onComparisonChanged,
+  }) {
     final selected = _selectedProduct;
     if (selected == null) return const SizedBox.shrink();
     final products = _comparisons;
@@ -585,7 +603,7 @@ class _InundationsScreenState extends State<InundationsScreen> {
                 child: Text(entry.value, overflow: TextOverflow.ellipsis),
               ),
           ],
-          onChanged: _changePlace,
+          onChanged: onPlaceChanged ?? _changePlace,
         ),
         const SizedBox(height: 10),
         DropdownButtonFormField<String>(
@@ -606,7 +624,7 @@ class _InundationsScreenState extends State<InundationsScreen> {
                 ),
               ),
           ],
-          onChanged: _changeComparison,
+          onChanged: onComparisonChanged ?? _changeComparison,
         ),
       ],
     );
