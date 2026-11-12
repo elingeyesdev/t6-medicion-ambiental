@@ -8,7 +8,7 @@
 @endpush
 
 @section('contenido')
-<div id="visor-focos" data-api="{{ url('/api/v1') }}">
+<div id="visor-focos" data-api="{{ url('/api/v1') }}" data-hora-servidor="{{ now()->toIso8601String() }}">
     @include('modulos.focos-calor.mapa')
     <div class="enviro-controles">
         <details class="enviro-consulta" id="controles-mapa" open>
