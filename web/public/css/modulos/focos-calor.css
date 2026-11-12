@@ -105,3 +105,8 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 .detalle-extra summary { cursor: pointer; font-weight: 600; }
 .detalle-extra .campos-detalle { margin-top: 16px; }
 [data-bs-theme="dark"] .fila-foco .accion-foco, [data-bs-theme="dark"] .opcion-grupo .accion-foco { color: #a9e8bc; }
+
+.compartir-deteccion { padding: 1rem; border-top: 1px solid var(--borde, #d3ddd7); }
+.compartir-deteccion p:empty { display: none; }
+.compartir-deteccion p { margin: .75rem 0 0; }
+.compartir-deteccion textarea { width: 100%; margin-top: .75rem; padding: .75rem; font: inherit; color: inherit; background: #fff; border: 1px solid #9db2a5; border-radius: .375rem; resize: vertical; }
