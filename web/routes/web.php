@@ -14,16 +14,27 @@ use App\Http\Controllers\Mapas\CapasController;
 use App\Http\Controllers\Mapas\PoiController;
 use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\ReportesController;
+use App\Http\Controllers\RevisionForestalController;
 use App\Http\Controllers\SensoresController;
 use App\Http\Controllers\SimulacionContinuaController;
 use App\Http\Controllers\SimulacionesController;
 use App\Http\Controllers\UnidadesController;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Middleware\RevisionForestalLocal;
 use App\Services\Api\ErrorConsulta;
 use App\Services\Inundaciones\CatalogoProductosAgua;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'paginas.inicio')->name('inicio');
+// Revisión privada: sin entrada pública ni enlace en el menú.
+Route::prefix('revision/forestal')->middleware([
+    RevisionForestalLocal::class, 'auth', 'cuenta.activa', 'can:mapa.ver', 'can:datos.consultar',
+])->group(function (): void {
+    Route::get('/', [RevisionForestalController::class, 'index'])
+        ->middleware('throttle:30,1,forestal-revision-vista')->name('revision.forestal');
+    Route::get('/consulta', [RevisionForestalController::class, 'consultar'])
+        ->middleware('throttle:12,1,forestal-revision-consulta')->name('revision.forestal.consulta');
+});
 Route::middleware(['auth', 'cuenta.activa', 'can:mapa.ver', 'can:datos.consultar'])->group(function (): void {
     Route::get('/mapa/agua/catalogo', [InundacionesController::class, 'catalogo'])->middleware('throttle:30,1')->name('mapa.agua.catalogo');
     Route::get('/mapa/agua/consulta', [InundacionesController::class, 'consultar'])->middleware('throttle:30,1')->name('mapa.agua.consulta');
