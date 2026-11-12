@@ -16,6 +16,11 @@
     <section id="detalle-foco" class="panel-detalle" aria-labelledby="titulo-detalle" hidden>
         <div class="encabezado-panel"><h3 id="titulo-detalle" tabindex="-1">Detección seleccionada</h3><button type="button" id="cerrar-detalle" aria-label="Cerrar detalle" class="boton-suave">Cerrar</button></div>
         <dl id="campos-detalle" class="campos-detalle"></dl>
+        <div class="compartir-deteccion">
+            <button type="button" id="copiar-deteccion" class="boton-suave" disabled>Copiar ubicación y fecha</button>
+            <p id="estado-copiado" role="status" aria-live="polite"></p>
+            <textarea id="texto-deteccion" rows="7" readonly hidden aria-label="Texto para compartir la detección"></textarea>
+        </div>
         <details class="detalle-extra"><summary>Ubicación y fuente</summary>
             <dl id="campos-detalle-extra" class="campos-detalle"></dl>
             <p id="faltantes-detalle" class="ayuda-filtros"></p>
