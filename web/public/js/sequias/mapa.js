@@ -6,7 +6,13 @@ export class MapaSequias {
     constructor(base, version, seleccionar, avisar) {
         Object.assign(this, { base, version, seleccionar, avisar }); this.generacion = 0; this.porId = new Map();
     }
-    async mostrar(respuesta) {
+    mostrar(respuesta) {
+        return this.actualizar(respuesta.datos, respuesta.consulta.municipio ?? respuesta.consulta.provincia ?? 'BO07');
+    }
+    contexto(id = 'BO07') {
+        return this.actualizar([], id);
+    }
+    async actualizar(datos, id) {
         const turno = ++this.generacion;
         this.control?.abort(); const control = new AbortController(); this.control = control;
         this.avisar(null);
@@ -19,7 +25,7 @@ export class MapaSequias {
         }
         this.puntos.clearLayers(); this.porId.clear(); this.limite?.remove(); this.limite = null;
         const grupos = new Map();
-        for (const d of respuesta.datos) {
+        for (const d of datos) {
             const clave = d.coordenadaCelda.join(',');
             if (!grupos.has(clave)) grupos.set(clave, []);
             grupos.get(clave).push(d);
@@ -28,12 +34,12 @@ export class MapaSequias {
             const d = grupo[0]; const [lon, lat] = d.coordenadaCelda;
             const color = grupo.every(m => m.spi.categoria === d.spi.categoria) ? categorias[d.spi.categoria]?.[1] ?? '#7d8183' : '#7d8183';
             const marcador = L.circleMarker([lat, lon], { radius: grupo.length > 1 ? 10 : 8, color: '#fff', weight: 2, fillColor: color, fillOpacity: .95 }).addTo(this.puntos);
-            const titulo = grupo.length > 1 ? `${grupo.length} puntos comparten esta ubicación. Elegir punto` : `Punto ${respuesta.datos.indexOf(d) + 1} · ${categoria(d)}. Abrir detalle`;
+            const titulo = grupo.length > 1 ? `${grupo.length} puntos comparten esta ubicación. Elegir punto` : `Punto ${datos.indexOf(d) + 1} · ${categoria(d)}. Abrir detalle`;
             const abrir = () => {
                 if (grupo.length === 1) { this.seleccionar(d.idMuestra, marcador.getElement()); return; }
                 const opciones = document.createElement('div');
                 for (const m of grupo) {
-                    const boton = document.createElement('button'); boton.type = 'button'; boton.className = 'sq-mapa-opcion'; boton.textContent = `Punto ${respuesta.datos.indexOf(m) + 1} · ${categoria(m)}`;
+                    const boton = document.createElement('button'); boton.type = 'button'; boton.className = 'sq-mapa-opcion'; boton.textContent = `Punto ${datos.indexOf(m) + 1} · ${categoria(m)}`;
                     boton.addEventListener('click', () => { this.seleccionar(m.idMuestra, marcador.getElement()); this.mapa.closePopup(); }); opciones.append(boton);
                 }
                 marcador.bindPopup(opciones).openPopup();
@@ -47,7 +53,6 @@ export class MapaSequias {
             for (const m of grupo) this.porId.set(m.idMuestra, marcador);
         }
         requestAnimationFrame(() => { this.mapa.invalidateSize(); this.centrar(); });
-        const id = respuesta.consulta.municipio ?? respuesta.consulta.provincia ?? 'BO07';
         const temporizador = setTimeout(() => control.abort(), 15000);
         try {
             const r = await pedirJson(`${this.base}/territorios/${encodeURIComponent(id)}/limite`, control.signal);

@@ -44,7 +44,14 @@ function seleccionar(id, origen) {
 function renderizar(e) {
     const anterior = !!e.actual && (e.fase !== 'listo' || e.borrador);
     $('sq-estado').dataset.fase = e.fase;
+    $('sq-estado').hidden = e.fase === 'inicial' && !e.borrador;
     $('sq-resultados').hidden = !e.actual;
+    const hayPuntos = !!e.actual?.respuesta.datos.length;
+    $('sq-leyenda').hidden = !hayPuntos;
+    $('sq-contexto-mapa').hidden = hayPuntos;
+    $('sq-contexto-mapa').textContent = e.actual ? 'No hay puntos publicados para estos filtros.' : 'Elige una zona y un mes para consultar las condiciones de lluvia.';
+    $('sq-explicacion-mapa').hidden = !hayPuntos;
+    $('sq-titulo-mapa').textContent = anterior ? 'Mapa de la consulta anterior' : 'Mapa de consulta';
     $('sq-resultados').setAttribute('aria-busy', String(e.fase === 'cargando'));
     $('sq-vigencia').textContent = anterior ? 'Resultado anterior' : 'Resultados';
     $('sq-restaurar').hidden = !e.actual || (!e.borrador && e.fase !== 'error');
@@ -100,7 +107,12 @@ $('sq-cerrar').addEventListener('click', () => { vista.cerrar(); mapa.resaltar(n
 function abrirEnlace() {
     try {
         const enlace = leerEnlace(location.search, catalogos);
-        if (!enlace) { control.limpiar(); renderizado = null; return; }
+        if (!enlace) {
+            control.limpiar(); renderizado = null;
+            mapa.contexto().catch(() => { $('sq-error-mapa').hidden = false; $('sq-error-mapa').textContent = 'No se pudo preparar el mapa. Puedes usar los filtros y consultar de nuevo.'; });
+            return;
+        }
+        if (!mapa.mapa) mapa.contexto(enlace.filtros.municipio ?? enlace.filtros.provincia ?? 'BO07').catch(() => { $('sq-error-mapa').hidden = false; $('sq-error-mapa').textContent = 'No se pudo preparar el mapa. Puedes consultar los datos igualmente.'; });
         aplicarFormulario(enlace.filtros); seleccionPendiente = enlace.seleccion; control.consultar(enlace.filtros);
     } catch (error) { control.editar(); control.emitir({ fase: 'error', error: error instanceof Error ? error : new ErrorConsulta('Enlace no válido.') }); }
 }
