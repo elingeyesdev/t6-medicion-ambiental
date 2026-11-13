@@ -239,6 +239,37 @@ class ConsultaSequiasTest extends TestCase
         Http::assertNothingSent();
     }
 
+    public function test_renovacion_programada_reutiliza_base_y_conserva_el_resultado_ante_lluvia_incompleta(): void
+    {
+        $this->travelTo(Carbon::parse('2024-10-07T12:00:00Z'));
+        $primera = $this->publicar();
+        $serie = $this->serie('2024-07-01', '2024-09-30', nulo: '2024-09-29');
+        $lluvia = json_decode(file_get_contents($this->directorio.'/series/'.$serie['identificador'].'/captura.json'), true, flags: JSON_THROW_ON_ERROR);
+        $lluvia['latitude'] = -17.75;
+        $lluvia['longitude'] = -63.25;
+        Http::fake(['archive-api.open-meteo.com/*' => Http::response(json_encode($lluvia, JSON_THROW_ON_ERROR))]);
+        $this->assertSame(0, Artisan::call('sequias:renovar-piloto'));
+        Http::assertNothingSent();
+
+        $this->travel(19)->hours();
+        $this->assertSame(1, Artisan::call('sequias:renovar-piloto'));
+        $this->assertStringContainsString('no permite calcular el SPI-3', Artisan::output());
+        Http::assertSentCount(1);
+        $this->getJson(self::CONSULTA)->assertOk()->assertJsonPath('consulta.obtencion.vigenteHasta', $primera['datos']['vigenteHasta']);
+    }
+
+    public function test_renovacion_espera_cinco_dias_antes_de_elegir_el_mes_recien_cerrado(): void
+    {
+        $this->travelTo(Carbon::parse('2024-10-05T12:00:00Z'));
+        Http::fake(['archive-api.open-meteo.com/*' => Http::response('no disponible', 503)]);
+        $this->assertSame(1, Artisan::call('sequias:renovar-piloto'));
+        Http::assertSent(fn ($peticion) => str_contains($peticion->url(), 'end_date=2024-08-31'));
+
+        $this->travelTo(Carbon::parse('2024-10-06T12:00:00Z'));
+        $this->assertSame(1, Artisan::call('sequias:renovar-piloto'));
+        Http::assertSent(fn ($peticion) => str_contains($peticion->url(), 'end_date=2024-09-30'));
+    }
+
     public function test_codigo_o_catalogo_distinto_requiere_repreparar_y_no_oculta_el_problema(): void
     {
         $r = $this->publicar();

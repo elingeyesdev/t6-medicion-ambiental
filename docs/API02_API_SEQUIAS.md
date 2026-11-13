@@ -65,6 +65,20 @@ La entrada debe ser captura externa ERA5 de la ventana exacta y del punto regist
 
 Se preparan y conservan los doce ajustes por hash de base, celda y motor. La preparación reutiliza sus parámetros mensuales para el cálculo; una base incompleta mantiene los null/motivos acordados. La base y sus versiones no caducan automáticamente; su revisión exige renovar explícitamente. El objetivo caduca a las 24 h desde recuperación si tiene índice, a los 15 min si es null. Republicar o recalcular no rejuvenece el dato.
 
+## Renovación local de la muestra piloto
+
+Una vez publicada la base del piloto, `php artisan sequias:renovar-piloto` comprueba la vigencia cada vez que se ejecuta. Elige el último mes completo tras descontar cinco días UTC, según el [retraso de ERA5](https://open-meteo.com/en/docs/historical-weather-api#data_sources). Reutiliza la base de la celda y descarga la ventana de tres meses cuando faltan seis horas o menos para que venza. Si falla la descarga o el SPI no es calculable, conserva la publicación previa y registra el código del fallo en el log de Laravel.
+
+Desde la raíz en Windows, con las rutas del Python y PHP locales:
+
+```powershell
+./herramientas/sequias/programar-local.ps1 -Accion instalar -Pythonw C:/ruta/pythonw.exe -Php C:/ruta/php.exe -Ini C:/ruta/php.ini
+./herramientas/sequias/programar-local.ps1 -Accion estado
+./herramientas/sequias/programar-local.ps1 -Accion pausar
+```
+
+Windows comprueba la vigencia cada hora mientras la sesión esté abierta. La última salida de la tarea queda en `web/storage/logs/sequias-tarea.log`. Para comprobar una renovación sin esperar al umbral, ejecutar `php artisan sequias:renovar-piloto --ahora`.
+
 ## Consulta, errores y almacenamiento
 
 El controlador solo lee publicaciones preparadas. No descarga, ajusta Gamma ni escribe resultados durante HTTP. Relee los originales para comprobar su integridad y reconstruye las ventanas para contrastar el contexto; el SPI guardado no se recalcula en cada visita. Una publicación de otro catálogo/motor se rechaza y debe prepararse otra vez.
@@ -73,7 +87,7 @@ Consulta/detalle tienen nueve campos comunes; el resumen omite los tres campos d
 
 Las muestras sin publicación se enumeran como pendientes. Una publicación válida con faltantes aparece con SPI/categoría null y motivo: no se omite ni se etiqueta normal. Un registro presente pero corrupto/vencido hace fallar la consulta. Sin ninguna muestra preparada: 503 explícito, nunca 200 vacío. Errores mantienen `identificadorConsulta` y no exponen trazas ni cuerpos del proveedor.
 
-Los originales permanecen en `storage/app/private/sequias/series/`. Las publicaciones/ajustes se guardan en `storage/app/private/sequias/publicaciones/`: JSON inmutable identificado por hash y un índice sustituido al finalizar. Versiones anteriores conservadas, escrituras con archivo temporal y bloqueo. Ante una carga nueva fallida permanece la publicación previa, utilizable solo mientras siga vigente. No hay fallback a simulación ni renovación automática.
+Los originales permanecen en `storage/app/private/sequias/series/`. Las publicaciones/ajustes se guardan en `storage/app/private/sequias/publicaciones/`: JSON inmutable identificado por hash y un índice sustituido al finalizar. Versiones anteriores conservadas, escrituras con archivo temporal y bloqueo. Ante una carga nueva fallida permanece la publicación previa, utilizable solo mientras siga vigente. Las consultas HTTP leen únicamente los datos publicados. La tarea local puede renovar la muestra piloto por consola.
 
 ## Organización del código
 
