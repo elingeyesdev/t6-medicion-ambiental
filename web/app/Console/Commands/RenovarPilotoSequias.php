@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 
 final class RenovarPilotoSequias extends Command
 {
-    protected $signature = 'sequias:renovar-piloto {--ahora : Consultar aunque la publicación siga vigente} {--provincia= : Renovar los puntos preparados de la provincia}';
+    protected $signature = 'sequias:renovar-piloto {--ahora : Consultar aunque la publicación siga vigente} {--provincia= : Renovar puntos de los códigos provinciales separados por comas}';
 
     protected $description = 'Renovar la muestra piloto ERA5 con la base histórica local';
 
@@ -26,7 +26,10 @@ final class RenovarPilotoSequias extends Command
         try {
             $muestras = $provincia === null
                 ? ['scz-piloto-01']
-                : array_column($catalogo->consultar(provincia: $provincia)['datos'], 'identificador');
+                : array_merge(...array_map(
+                    fn (string $codigo): array => array_column($catalogo->consultar(provincia: $codigo)['datos'], 'identificador'),
+                    array_unique(explode(',', $provincia)),
+                ));
         } catch (SeriePrecipitacionInvalida $error) {
             $this->error($error->getMessage());
 

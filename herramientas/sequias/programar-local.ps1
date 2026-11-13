@@ -4,7 +4,7 @@ param(
     [string]$Pythonw,
     [string]$Php,
     [string]$Ini,
-    [ValidatePattern('^BO[0-9]{4}$')][string]$Provincia
+    [ValidatePattern('^BO[0-9]{4}(,BO[0-9]{4})*$')][string]$Provincia
 )
 
 $ErrorActionPreference = 'Stop'
