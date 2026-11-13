@@ -10,6 +10,7 @@ def main() -> int:
     parser.add_argument("--php", required=True, type=Path)
     parser.add_argument("--ini", required=True, type=Path)
     parser.add_argument("--ahora", action="store_true")
+    parser.add_argument("--provincia")
     args = parser.parse_args()
     web = Path(__file__).resolve().parents[2] / "web"
     registro = web / "storage" / "logs" / "sequias-tarea.log"
@@ -17,11 +18,13 @@ def main() -> int:
                "sequias:renovar-piloto", "--no-interaction"]
     if args.ahora:
         comando.append("--ahora")
+    if args.provincia:
+        comando.extend(["--provincia", args.provincia])
     with registro.open("wb") as salida:
         try:
             resultado = subprocess.run(
                 comando, cwd=web, stdin=subprocess.DEVNULL, stdout=salida,
-                stderr=subprocess.STDOUT, timeout=110,
+                stderr=subprocess.STDOUT, timeout=180,
                 creationflags=subprocess.CREATE_NO_WINDOW, check=False,
             )
         except (OSError, subprocess.TimeoutExpired) as error:

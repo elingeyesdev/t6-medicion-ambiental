@@ -3,7 +3,8 @@ param(
     [ValidateSet('instalar', 'estado', 'pausar')][string]$Accion = 'estado',
     [string]$Pythonw,
     [string]$Php,
-    [string]$Ini
+    [string]$Ini,
+    [ValidatePattern('^BO[0-9]{4}$')][string]$Provincia
 )
 
 $ErrorActionPreference = 'Stop'
@@ -53,9 +54,10 @@ if ([IO.Path]::GetFileName($Pythonw) -ine 'pythonw.exe') {
 $Php = (Resolve-Path -LiteralPath $Php).Path
 $Ini = (Resolve-Path -LiteralPath $Ini).Path
 $argumentos = '"{0}" --php "{1}" --ini "{2}"' -f $script, $Php, $Ini
+if ($Provincia) { $argumentos += " --provincia $Provincia" }
 $accionTarea = New-ScheduledTaskAction -Execute $Pythonw -Argument $argumentos -WorkingDirectory $raiz
 $inicio = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(1) -RepetitionInterval (New-TimeSpan -Hours 1)
-$opciones = New-ScheduledTaskSettingsSet -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -MultipleInstances IgnoreNew -ExecutionTimeLimit (New-TimeSpan -Minutes 3) -Hidden
+$opciones = New-ScheduledTaskSettingsSet -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -MultipleInstances IgnoreNew -ExecutionTimeLimit (New-TimeSpan -Minutes 4) -Hidden
 $usuario = [Security.Principal.WindowsIdentity]::GetCurrent().Name
 $principal = New-ScheduledTaskPrincipal -UserId $usuario -LogonType Interactive -RunLevel Limited
 Register-ScheduledTask -TaskName $nombre -Action $accionTarea -Trigger $inicio -Settings $opciones -Principal $principal -Description 'Comprueba y renueva la publicación piloto de Sequías de GeoSur.' -Force | Out-Null
