@@ -7,8 +7,8 @@ const $ = id => document.getElementById(id);
 const catalogos = JSON.parse($('sq-catalogos').textContent);
 const formulario = $('sq-formulario');
 let control, renderizado = null, seleccionPendiente = null, origenDetalle = null, vigencia;
-const mapa = new MapaSequias($('visor-sequias').dataset.api, catalogos.versionTerritorial, seleccionar, mensaje => { $('sq-error-mapa').hidden = !mensaje; $('sq-error-mapa').textContent = mensaje ?? ''; });
 const vista = new VistaSequias(catalogos, seleccionar);
+const mapa = new MapaSequias($('visor-sequias').dataset.api, catalogos.versionTerritorial, seleccionar, mensaje => { $('sq-error-mapa').hidden = !mensaje; $('sq-error-mapa').textContent = mensaje ?? ''; }, id => vista.nombre(id));
 
 function opciones(select, entradas, titulo, elegido = '') {
     select.replaceChildren(new Option(titulo, ''));

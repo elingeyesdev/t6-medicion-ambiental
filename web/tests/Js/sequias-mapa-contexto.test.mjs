@@ -22,7 +22,7 @@ function entorno() {
 test('el mapa inicial carga el territorio sin pedir índices ni dibujar puntos de sequía', async () => {
     const e = entorno();
     try {
-        const mapa = new MapaSequias('/api/v1', 'prueba-v1', () => {}, () => {});
+        const mapa = new MapaSequias('/api/v1', 'prueba-v1', () => {}, () => {}, id => id);
         await mapa.contexto();
         assert.deepEqual(e.peticiones, ['/api/v1/territorios/BO07/limite']);
         assert.equal(e.figuras.length, 0); assert.equal(mapa.porId.size, 0);
@@ -33,7 +33,7 @@ test('el mapa inicial carga el territorio sin pedir índices ni dibujar puntos d
 test('volver al contexto retira los puntos de la consulta anterior y conserva un mapa operativo', async () => {
     const e = entorno();
     try {
-        const mapa = new MapaSequias('/api/v1', 'prueba-v1', () => {}, () => {});
+        const mapa = new MapaSequias('/api/v1', 'prueba-v1', () => {}, () => {}, id => id);
         await mapa.mostrar({ datos: [{ idMuestra: 'punto-prueba', coordenadaCelda: [-63, -17], spi: { categoria: 'normal' } }], consulta: { municipio: 'BO070101' } });
         assert.equal(mapa.porId.size, 1); assert.equal(e.figuras.length, 1);
         await mapa.contexto();
