@@ -56,7 +56,7 @@ function renderizar(e) {
         if (e.error.codigo === 'PERIODO_NO_DISPONIBLE') titulo = 'Datos no disponibles';
         const explicaciones = {
             MUESTRAS_NO_DISPONIBLES: 'No hay datos publicados para el territorio y el mes elegidos. Prueba otro territorio o período.',
-            PERIODO_NO_DISPONIBLE: 'Los datos de este período no están disponibles. Prueba otras fechas o reintenta más tarde.',
+            PERIODO_NO_DISPONIBLE: 'La publicación de este período venció. Reintenta cuando se renueve.',
             DATOS_INVALIDOS: 'No se pudo leer la información. Reintenta más tarde.',
         };
         mensaje = (explicaciones[e.error.codigo] ?? e.error.message) + (e.actual ? ' Se conserva la consulta anterior.' : '');
