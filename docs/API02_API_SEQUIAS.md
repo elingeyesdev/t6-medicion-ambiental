@@ -77,7 +77,7 @@ Desde la raíz en Windows, con las rutas del Python y PHP locales:
 ./herramientas/sequias/programar-local.ps1 -Accion pausar
 ```
 
-Windows comprueba la vigencia cada hora mientras la sesión esté abierta. La opción Provincia admite varios códigos separados por comas. El ejemplo renueva en serie los puntos de Andrés Ibáñez y Warnes. Cada celda debe tener su base histórica preparada antes de activar esta opción. La última salida de la tarea queda en `web/storage/logs/sequias-tarea.log`. Para comprobar una renovación sin esperar al umbral, ejecutar `php artisan sequias:renovar-piloto --ahora`.
+Windows comprueba la vigencia cada hora mientras la sesión esté abierta. La opción Provincia admite varios códigos separados por comas. El ejemplo renueva en serie los puntos de Andrés Ibáñez y Warnes. Para renovar el catálogo departamental, pasa los códigos de sus quince provincias (BO0701 a BO0715). La tarea permite hasta 35 minutos para recorrer los puntos, con un límite externo de 40 minutos en Windows. Cada celda debe tener su base histórica preparada antes de activar esta opción. La última salida de la tarea queda en `web/storage/logs/sequias-tarea.log`. Para comprobar una renovación sin esperar al umbral, ejecutar `php artisan sequias:renovar-piloto --ahora`.
 
 ## Consulta, errores y almacenamiento
 

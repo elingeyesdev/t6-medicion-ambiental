@@ -24,7 +24,7 @@ def main() -> int:
         try:
             resultado = subprocess.run(
                 comando, cwd=web, stdin=subprocess.DEVNULL, stdout=salida,
-                stderr=subprocess.STDOUT, timeout=180,
+                stderr=subprocess.STDOUT, timeout=2100,
                 creationflags=subprocess.CREATE_NO_WINDOW, check=False,
             )
         except (OSError, subprocess.TimeoutExpired) as error:

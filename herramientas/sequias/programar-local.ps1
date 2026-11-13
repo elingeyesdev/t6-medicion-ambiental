@@ -57,7 +57,7 @@ $argumentos = '"{0}" --php "{1}" --ini "{2}"' -f $script, $Php, $Ini
 if ($Provincia) { $argumentos += " --provincia $Provincia" }
 $accionTarea = New-ScheduledTaskAction -Execute $Pythonw -Argument $argumentos -WorkingDirectory $raiz
 $inicio = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(1) -RepetitionInterval (New-TimeSpan -Hours 1)
-$opciones = New-ScheduledTaskSettingsSet -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -MultipleInstances IgnoreNew -ExecutionTimeLimit (New-TimeSpan -Minutes 4) -Hidden
+$opciones = New-ScheduledTaskSettingsSet -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -MultipleInstances IgnoreNew -ExecutionTimeLimit (New-TimeSpan -Minutes 40) -Hidden
 $usuario = [Security.Principal.WindowsIdentity]::GetCurrent().Name
 $principal = New-ScheduledTaskPrincipal -UserId $usuario -LogonType Interactive -RunLevel Limited
 Register-ScheduledTask -TaskName $nombre -Action $accionTarea -Trigger $inicio -Settings $opciones -Principal $principal -Description 'Comprueba y renueva la publicación piloto de Sequías de GeoSur.' -Force | Out-Null
