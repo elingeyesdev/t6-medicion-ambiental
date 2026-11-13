@@ -21,7 +21,7 @@ export class VistaSequias {
         poner('sq-periodo', `${dia(c.desde)} al ${dia(c.hastaIncluido)}`);
         poner('sq-total', numero(s.totalMuestras)); poner('sq-seleccionadas', `de ${numero(cobertura.muestrasSeleccionadas)} puntos elegidos`);
         poner('sq-sin-indice', numero(s.muestrasSinIndice)); poner('sq-pendientes', numero(cobertura.muestrasSinPreparar.length));
-        poner('sq-cobertura', `Hay datos de ${cobertura.municipiosConDatos} de los ${cobertura.municipiosEnFiltro} municipios elegidos.${cobertura.estadoDatos === 'parcial' ? ' La consulta no cubre todo el territorio.' : ''}`);
+        poner('sq-cobertura', `Hay datos de ${cobertura.municipiosConDatos} de los ${cobertura.municipiosEnFiltro} municipios elegidos, en ${numero(cobertura.celdasUnicas)} celdas ERA5.${cobertura.estadoDatos === 'parcial' ? ' La consulta no cubre todo el territorio.' : ''}`);
         const lista = document.getElementById('sq-lista'); lista.replaceChildren();
         poner('sq-conteo', `${r.datos.length} en el conjunto`);
         for (const d of r.datos) {
