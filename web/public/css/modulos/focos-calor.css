@@ -105,3 +105,19 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 .detalle-extra summary { cursor: pointer; font-weight: 600; }
 .detalle-extra .campos-detalle { margin-top: 16px; }
 [data-bs-theme="dark"] .fila-foco .accion-foco, [data-bs-theme="dark"] .opcion-grupo .accion-foco { color: #a9e8bc; }
+
+/* El selector de fechas conserva los controles y colores del panel. */
+.geosur-calendario.flatpickr-calendar { width: 350px; max-width: calc(100vw - 24px); font: inherit; font-size: 16px; border: 1px solid #b8c9be; box-shadow: 0 4px 14px #132b221f; }
+.geosur-calendario .flatpickr-months { padding: 8px 4px; background: #e7f2eb; border-radius: 5px 5px 0 0; }
+.geosur-calendario .flatpickr-current-month { padding-top: 5px; font-size: 17px; }
+.geosur-calendario .flatpickr-monthDropdown-months { font-size: 17px; }
+.geosur-calendario .flatpickr-months .flatpickr-prev-month, .geosur-calendario .flatpickr-months .flatpickr-next-month { top: 8px; padding: 10px; }
+.geosur-calendario .flatpickr-innerContainer, .geosur-calendario .flatpickr-rContainer, .geosur-calendario .flatpickr-days, .geosur-calendario .dayContainer { width: 100%; min-width: 0; max-width: none; }
+.geosur-calendario .dayContainer { padding: 4px; }
+.geosur-calendario .flatpickr-day { max-width: none; height: 42px; line-height: 42px; border-radius: 5px; }
+.geosur-calendario .flatpickr-day.selected { background: #157c43; border-color: #157c43; color: #fff; }
+.geosur-calendario .flatpickr-day.today { border-color: #157c43; }
+.geosur-calendario span.flatpickr-weekday { color: #294c39; font-size: 15px; }
+.geosur-calendario .flatpickr-time { height: 48px; line-height: 48px; border-color: #b8c9be; }
+.geosur-calendario .flatpickr-time input { font-size: 19px; }
+.geosur-calendario .flatpickr-day:focus-visible { outline: 2px solid #157c43; outline-offset: -2px; }

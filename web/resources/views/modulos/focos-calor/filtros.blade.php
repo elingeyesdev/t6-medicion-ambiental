@@ -11,7 +11,7 @@
                     <label>Desde<input class="form-control" type="datetime-local" id="desde" name="desde" required step="1" aria-describedby="ayuda-fechas"></label>
                     <label>Hasta<input class="form-control" type="datetime-local" id="hasta" name="hasta" required step="1" aria-describedby="ayuda-fechas"></label>
                     <p class="hora-consulta">Hora de Bolivia · Máximo 7 días.</p>
-                    <div class="acciones-filtros"><button type="submit" class="btn boton-principal" id="consultar">Consultar focos</button><button type="button" class="btn boton-suave" id="limpiar-periodo">Limpiar fechas</button><button type="button" class="btn boton-suave" id="cancelar-filtros" hidden>Deshacer cambios</button></div>
+                    <div class="acciones-filtros"><button type="submit" class="btn boton-principal" id="consultar">Consultar focos</button><button type="button" class="btn boton-suave" id="limpiar-periodo">Cambiar período</button><button type="button" class="btn boton-suave" id="cancelar-filtros" hidden>Deshacer cambios</button></div>
                 </div>
             </fieldset>
         </form>
