@@ -27,7 +27,13 @@ export function iniciarCalendarios(...campos) {
     if (typeof globalThis.flatpickr !== 'function' || !globalThis.flatpickr.l10ns?.es) return;
     for (const campo of campos) {
         const selector = globalThis.flatpickr(campo, {
-            locale: globalThis.flatpickr.l10ns.es,
+            locale: {
+                ...globalThis.flatpickr.l10ns.es,
+                yearAriaLabel: 'Año',
+                monthAriaLabel: 'Mes',
+                hourAriaLabel: 'Hora',
+                minuteAriaLabel: 'Minuto',
+            },
             dateFormat: formato,
             altInput: true,
             altFormat: 'd/m/Y H:i',
@@ -37,7 +43,16 @@ export function iniciarCalendarios(...campos) {
             disableMobile: true,
             monthSelectorType: 'dropdown',
             onOpen: () => campo.dispatchEvent(new Event('focus')),
-            onReady: (_, __, instancia) => instancia.calendarContainer.classList.add('geosur-calendario'),
+            onReady: (_, __, instancia) => {
+                const calendario = instancia.calendarContainer;
+                calendario.classList.add('geosur-calendario');
+                calendario.addEventListener('click', evento => {
+                    if (evento.target.closest('.flatpickr-day:not(.flatpickr-disabled):not(.notAllowed)')) {
+                        // Flatpickr procesa el día y detiene la propagación del clic.
+                        queueMicrotask(() => instancia.close());
+                    }
+                }, { capture: true });
+            },
         });
         selector.altInput.setAttribute('aria-label', campo.name === 'desde' ? 'Fecha y hora desde' : 'Fecha y hora hasta');
         selector.altInput.setAttribute('aria-describedby', 'ayuda-fechas');
