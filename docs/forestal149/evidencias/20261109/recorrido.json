@@ -1,0 +1,36 @@
+{
+  "consultadoUtc": "2026-11-09T12:39:10.893Z",
+  "paquete": "78a62654465d330e4aa0f241d74e237bfa65de709dee827099dc8594d4e88730",
+  "origen": "Laravel aislado con lector real; navegador sobre respuestas capturadas",
+  "mapaBase": "Proveedor externo no comprobado",
+  "casos": [
+    {
+      "viewport": {
+        "width": 1400,
+        "height": 900
+      },
+      "poligonos2024_2025": 26,
+      "poligonos2025": 1,
+      "poligonos2009": 0,
+      "seleccionCentra": true,
+      "zoomMapa": true,
+      "sinDesborde": true,
+      "errorLimpia": true,
+      "sinErroresJS": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "poligonos2024_2025": 26,
+      "poligonos2025": 1,
+      "poligonos2009": 0,
+      "seleccionCentra": true,
+      "zoomMapa": true,
+      "sinDesborde": true,
+      "errorLimpia": true,
+      "sinErroresJS": true
+    }
+  ]
+}
