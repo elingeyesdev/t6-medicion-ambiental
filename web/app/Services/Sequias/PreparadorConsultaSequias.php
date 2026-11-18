@@ -45,20 +45,20 @@ final class PreparadorConsultaSequias
         return hash('sha256', json_encode(['Open-Meteo', 'ERA5', $p['coordenadaCelda']], JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR));
     }
 
-    public function ejecutar(string $muestra, string $mes, ?string $base, ?string $objetivo, bool $consultar = false, bool $capturarBase = false, bool $renovar = false): array
+    public function ejecutar(string $muestra, string $mes, ?string $base, ?string $objetivo, bool $consultar = false, bool $capturarBase = false, bool $renovar = false, bool $exigirIndice = false): array
     {
         $lock = $consultar || $capturarBase ? Cache::lock('sequias:carga:proveedor', 120) : null;
         if ($lock !== null && ! $lock->get()) {
             throw new SeriePrecipitacionInvalida('CARGA_OCUPADA', 'Hay otra carga de lluvia en curso. Se preparan en serie para limitar consultas al proveedor.');
         }
         try {
-            return $this->preparar($muestra, $mes, $base, $objetivo, $consultar, $capturarBase, $renovar);
+            return $this->preparar($muestra, $mes, $base, $objetivo, $consultar, $capturarBase, $renovar, $exigirIndice);
         } finally {
             $lock?->release();
         }
     }
 
-    private function preparar(string $muestra, string $mes, ?string $base, ?string $objetivo, bool $consultar, bool $capturarBase, bool $renovar): array
+    private function preparar(string $muestra, string $mes, ?string $base, ?string $objetivo, bool $consultar, bool $capturarBase, bool $renovar, bool $exigirIndice): array
     {
         $periodo = self::periodo($mes);
         $seleccion = $this->catalogo->consultar(muestra: $muestra);
@@ -112,6 +112,9 @@ final class PreparadorConsultaSequias
             throw new SeriePrecipitacionInvalida('PUBLICACION_INVALIDA', 'El ajuste mensual no corresponde a las ventanas de la base verificada.');
         }
         $r = $this->ensayo->calcularPreparado($preparado, $delMes['parametrosAjuste']);
+        if ($exigirIndice && $r['resultado']['valor'] === null) {
+            throw new SeriePrecipitacionInvalida('INDICE_NO_CALCULABLE', 'La nueva captura no permite calcular el SPI-3. Se conserva la publicación previa.');
+        }
         $instante = new DateTimeImmutable($this->procedencias->instante($o['obtenidoEn']));
         $ttl = $r['resultado']['valor'] === null ? 900 : 86400;
         $expira = $instante->modify('+'.$ttl.' seconds');

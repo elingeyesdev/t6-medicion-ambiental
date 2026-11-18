@@ -2,6 +2,7 @@ import { fechaBolivia, numero } from './contrato.js';
 import { MapaFocos } from './mapa.js';
 import { etiquetaDeteccion } from './representacion.js';
 import { crearContenidoFoco } from './elementos.js';
+import { CompartirFoco } from './compartir.js';
 
 const texto = (id, valor) => { document.getElementById(id).textContent = valor; };
 const nodo = (tipo, contenido, clase) => {
@@ -14,6 +15,7 @@ const nodo = (tipo, contenido, clase) => {
 export class VistaFocos {
     constructor() {
         this.nombres = new Map();
+        this.compartir = new CompartirFoco(document.getElementById('copiar-deteccion'), document.getElementById('estado-copiado'), document.getElementById('texto-deteccion'));
         this.resultadosOcultos = false;
         this.mapa = new MapaFocos('mapa-focos', (id, origen) => this.detalle(id, origen), mensaje => {
             texto('error-mapa', mensaje ?? ''); document.getElementById('error-mapa').hidden = !mensaje;
@@ -30,6 +32,7 @@ export class VistaFocos {
         document.getElementById('mostrar-resultados').addEventListener('click', () => this.mostrarPanelResultados(this.resultadosOcultos));
         document.getElementById('cerrar-detalle').addEventListener('click', () => {
             document.getElementById('detalle-foco').hidden = true;
+            this.compartir.limpiar();
             this.mapa.seleccionar(null);
             document.querySelectorAll('.fila-foco').forEach(b => b.setAttribute('aria-pressed', 'false'));
             if (this.origenDetalle?.isConnected) this.origenDetalle.focus();
@@ -76,7 +79,7 @@ export class VistaFocos {
         texto('titulo-estado', titulo); texto('mensaje-estado', mensaje);
         // La confirmación normal se anuncia sin añadir otra tarjeta al mapa.
         aviso.classList.toggle('solo-lector', titulo === 'Consulta lista' && !anterior && !cargando && estado.fase !== 'error');
-        document.getElementById('reintentar').hidden = estado.fase !== 'error' || estado.error?.codigo === 'CONJUNTO_CAMBIADO' || !estado.pendiente;
+        document.getElementById('reintentar').hidden = estado.fase !== 'error' || estado.error?.codigo === 'CONJUNTO_CAMBIADO' || (!estado.pendiente && estado.error?.codigo !== 'HORA_NO_DISPONIBLE');
         document.getElementById('reiniciar').hidden = estado.error?.codigo !== 'CONJUNTO_CAMBIADO';
         document.getElementById('cancelar-filtros').hidden = !estado.borrador;
         document.getElementById('consultar').disabled = cargando;
@@ -113,6 +116,7 @@ export class VistaFocos {
             lista.append(boton);
         }
         document.getElementById('detalle-foco').hidden = true;
+        this.compartir.limpiar();
         const procedencia = document.getElementById('procedencia-consulta'); procedencia.replaceChildren();
         procedencia.append(nodo('p', `Fuente: ${[...new Set(r.fuentes.map(f => f.proveedor))].join(' · ')}.`));
         procedencia.append(nodo('p', 'Límites de referencia: OCHA/HDX · CC BY 3.0 IGO.'));
@@ -123,6 +127,7 @@ export class VistaFocos {
         const r = this.actual?.respuesta;
         const f = r?.datos.find(foco => foco.identificador === id);
         if (!f) return;
+        this.compartir.seleccionar(f, { municipio: this.nombres.get(f.territorio.municipio), provincia: this.nombres.get(f.territorio.provincia), fuentes: r.fuentes });
         this.mostrarPanelResultados(true);
         this.origenDetalle = origen;
         document.querySelectorAll('.fila-foco').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.foco === id)));
