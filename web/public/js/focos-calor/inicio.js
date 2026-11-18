@@ -3,6 +3,7 @@ import { ConsultaFocosWeb } from './consulta.js';
 import { VistaFocos } from './vista.js';
 import { ajustarCalendarios, periodoReciente } from './periodo.js';
 import { crearRelojServidor } from './reloj.js';
+import { iniciarCalendarios } from './calendario.js';
 
 function iniciar() {
     const raiz = document.getElementById('visor-focos');
@@ -13,6 +14,7 @@ function iniciar() {
     const municipio = document.getElementById('municipio');
     const desde = document.getElementById('desde');
     const hasta = document.getElementById('hasta');
+    iniciarCalendarios(desde, hasta);
     const vista = new VistaFocos();
     const consulta = new ConsultaFocosWeb(raiz.dataset.api, estado => {
         vista.mostrar(estado);

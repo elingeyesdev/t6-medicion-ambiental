@@ -2,6 +2,7 @@
 @section('titulo', 'Focos de calor')
 @section('clase-cuerpo', 'pagina-focos')
 @push('estilos')
+<link rel="stylesheet" href="{{ asset('vendor/flatpickr/flatpickr.min.css') }}">
 <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
 <link rel="stylesheet" href="{{ asset('css/modulos/focos-calor.css') }}">
 <link rel="stylesheet" href="{{ asset('css/modulos/mapa-monitoreo.css') }}">
@@ -26,5 +27,7 @@
 
 @push('scripts')
 <script src="{{ asset('vendor/leaflet/leaflet.js') }}" defer></script>
+<script src="{{ asset('vendor/flatpickr/flatpickr.min.js') }}" defer></script>
+<script src="{{ asset('vendor/flatpickr/es.js') }}" defer></script>
 <script type="module" src="{{ asset('js/focos-calor/inicio.js') }}"></script>
 @endpush

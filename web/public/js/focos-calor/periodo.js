@@ -1,4 +1,5 @@
 import { aLocal, aUtc } from './contrato.js';
+import { sincronizarCalendario } from './calendario.js';
 
 const semana = 7 * 86400000;
 const instante = valor => { try { return new Date(aUtc(valor)).getTime(); } catch { return null; } };
@@ -24,5 +25,6 @@ export function ajustarCalendarios(desde, hasta, ahora = Date.now()) {
             if (reglas[atributo]) campo.setAttribute(atributo, reglas[atributo]);
             else campo.removeAttribute(atributo);
         }
+        sincronizarCalendario(campo);
     }
 }
