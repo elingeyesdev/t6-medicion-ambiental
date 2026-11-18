@@ -37,7 +37,10 @@ class _AirSheetState extends State<AirSheet> {
   );
 
   void _retry() {
-    setState(() => _future = _consultAir());
+    final consulta = _consultAir();
+    setState(() {
+      _future = consulta;
+    });
   }
 
   @override
