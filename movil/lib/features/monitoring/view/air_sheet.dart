@@ -23,15 +23,21 @@ class AirSheet extends StatefulWidget {
 }
 
 class _AirSheetState extends State<AirSheet> {
-  late final Future<AirSnapshot> _future;
+  late Future<AirSnapshot> _future;
 
   @override
   void initState() {
     super.initState();
-    _future = AirRepository(widget.api).quality(
-      latitude: widget.point.latitude,
-      longitude: widget.point.longitude,
-    );
+    _future = _consultAir();
+  }
+
+  Future<AirSnapshot> _consultAir() => AirRepository(widget.api).quality(
+    latitude: widget.point.latitude,
+    longitude: widget.point.longitude,
+  );
+
+  void _retry() {
+    setState(() => _future = _consultAir());
   }
 
   @override
@@ -54,7 +60,20 @@ class _AirSheetState extends State<AirSheet> {
                 final message = snapshot.error is GeoCruzApiException
                     ? (snapshot.error as GeoCruzApiException).message
                     : 'No se pudo cargar la calidad del aire.';
-                return Center(child: Text(message, textAlign: TextAlign.center));
+                return ListView(
+                  controller: controller,
+                  children: [
+                    Text(message, textAlign: TextAlign.center),
+                    const SizedBox(height: 12),
+                    Center(
+                      child: OutlinedButton.icon(
+                        onPressed: _retry,
+                        icon: const Icon(Icons.refresh),
+                        label: const Text('Reintentar'),
+                      ),
+                    ),
+                  ],
+                );
               }
               final air = snapshot.data!;
               final current = air.current;

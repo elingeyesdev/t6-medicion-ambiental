@@ -59,10 +59,22 @@ void main() {
     expect(find.text('0 µg/m³'), findsOneWidget);
   });
 
-  testWidgets('Aire muestra el aviso de la API si la consulta no está disponible', (
+  testWidgets('Aire permite recuperar la consulta después de un error de la API', (
     tester,
   ) async {
-    final api = _airApi((_) async {
+    var attempts = 0;
+    final api = _airApi((request) async {
+      expect(request.url.queryParameters['latitud'], '-17.7833');
+      expect(request.url.queryParameters['longitud'], '-63.1812');
+      attempts++;
+      if (attempts == 2) {
+        return _json({
+          'actual': {'indice': 28},
+          'variables': {
+            'indice': {'unidad': 'EAQI'},
+          },
+        });
+      }
       return _json({
         'error': {'mensaje': 'La calidad del aire no está disponible.'},
       }, 503);
@@ -73,6 +85,14 @@ void main() {
 
     expect(find.text('La calidad del aire no está disponible.'), findsOneWidget);
     expect(find.text('Últimas horas'), findsNothing);
+    expect(attempts, 1);
+
+    await tester.tap(find.text('Reintentar'));
+    await tester.pumpAndSettle();
+
+    expect(attempts, 2);
+    expect(find.text('28 EAQI'), findsOneWidget);
+    expect(find.text('Reintentar'), findsNothing);
   });
 }
 
