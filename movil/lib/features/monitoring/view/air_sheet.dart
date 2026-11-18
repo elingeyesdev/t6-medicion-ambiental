@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../../core/formatters/bolivia_time.dart';
 import '../../../core/network/geocruz_api_client.dart';
 import '../model/air_repository.dart';
 
@@ -58,11 +58,11 @@ class _AirSheetState extends State<AirSheet> {
               }
               final air = snapshot.data!;
               final current = air.current;
-              final fmt = DateFormat('dd/MM HH:mm');
+              final updatedAt = _formatInstant(current['instante']);
               String valueOf(String key) {
                 final raw = current[key];
                 final unit = air.unitOf(key) ?? '';
-                if (raw is! num) return '—';
+                if (raw is! num) return 'Sin dato';
                 return '$raw $unit'.trim();
               }
 
@@ -78,10 +78,10 @@ class _AirSheetState extends State<AirSheet> {
                     'Estimado · CAMS global · Open-Meteo',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  if (current['instante'] is String) ...[
+                  if (updatedAt != null) ...[
                     const SizedBox(height: 4),
                     Text(
-                      'Actualizado ${fmt.format(DateTime.tryParse(current['instante'] as String)?.toLocal() ?? DateTime.now())}',
+                      'Actualizado $updatedAt · Bolivia',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
@@ -100,13 +100,8 @@ class _AirSheetState extends State<AirSheet> {
                     ),
                     const SizedBox(height: 8),
                     ...air.hours.reversed.take(8).map((hour) {
-                      final instante = hour['instante'];
-                      final label = instante is String
-                          ? fmt.format(
-                              DateTime.tryParse(instante)?.toLocal() ??
-                                  DateTime.now(),
-                            )
-                          : '—';
+                      final label =
+                          _formatInstant(hour['instante']) ?? 'Sin fecha';
                       final indice = hour['indice'];
                       return ListTile(
                         dense: true,
@@ -126,6 +121,11 @@ class _AirSheetState extends State<AirSheet> {
         );
       },
     );
+  }
+
+  String? _formatInstant(Object? raw) {
+    final instant = raw is String ? DateTime.tryParse(raw) : null;
+    return instant == null ? null : BoliviaTime.dateTime(instant);
   }
 
   Widget _metric(BuildContext context, String label, String value) {
