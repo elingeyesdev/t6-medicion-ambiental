@@ -192,9 +192,15 @@ class _AuthScreenState extends State<AuthScreen> {
                             ),
                           ),
                         ),
-                        validator: (value) => (value?.length ?? 0) < 12
-                            ? 'Usa al menos 12 caracteres.'
-                            : null,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Escribe tu contraseña.';
+                          }
+                          if (_registering && value.length < 12) {
+                            return 'Usa al menos 12 caracteres.';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                     if (_registering) ...[
