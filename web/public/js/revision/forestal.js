@@ -62,7 +62,7 @@ export function pintarResumen(doc, datos) {
         ['Licencia', f.licencia], ['Licencia · referencia', f.licencia_url], ['Documentación', f.documentacion], ['Transformaciones', f.transformaciones],
         ['Estado del recorte', r.estado],
         ['Fracción de observaciones', r.cobertura_observaciones_fraccion]];
-    for (const [clave, valor] of [['Versión', f.version], ['Base de cobertura', c.base == null ? null : 'Año ' + texto(c.base) + ', umbral propuesto ' + texto(c.operador) + ' ' + texto(c.porcentaje) + ' %'],
+    for (const [clave, valor] of [['Versión', f.version], ['Base de cobertura', c.base == null ? null : 'Año ' + texto(c.base) + ', umbral aplicado ' + (c.operador === '>=' ? '≥' : texto(c.operador)) + ' ' + texto(c.porcentaje) + ' %'],
         ['Ventana de píxeles', v ? 'Columna ' + texto(v.columna) + ', fila ' + texto(v.fila) + ', ancho ' + texto(v.ancho) + ', alto ' + texto(v.alto) : null]]) nodo('rf-contexto').append(elemento('dt', clave), elemento('dd', valor));
     for (const [clave, valor] of fuente) nodo('rf-fuente').append(elemento('dt', clave), elemento('dd', valor));
     nodo('rf-limites').replaceChildren();
