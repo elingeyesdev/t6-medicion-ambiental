@@ -193,13 +193,14 @@ class _ForestalScreenState extends State<ForestalScreen> {
           onChanged: _loading
               ? null
               : (year) {
-                  if (year != null)
+                  if (year != null) {
                     setState(() {
                       update(year);
                       _result = null;
                       _selected = null;
                       _error = null;
                     });
+                  }
                 },
         ),
       ),

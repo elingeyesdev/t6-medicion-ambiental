@@ -18,11 +18,11 @@ use App\Http\Controllers\Mapas\CapasController;
 use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\RevisionForestalController;
-use App\Http\Middleware\RevisionForestalLocal;
 use App\Http\Controllers\SaludController;
 use App\Http\Controllers\SimulacionContinuaController;
 use App\Http\Controllers\SimulacionesController;
 use App\Http\Controllers\UnidadesController;
+use App\Http\Middleware\RevisionForestalLocal;
 use App\Services\Api\ErrorConsulta;
 use Illuminate\Support\Facades\Route;
 
