@@ -211,6 +211,7 @@ class _ForestalScreenState extends State<ForestalScreen> {
   Widget build(BuildContext context) {
     final result = _result;
     final selected = _selected;
+    final period = _from == _to ? '$_from' : '$_from–$_to';
     return Scaffold(
       appBar: AppBar(title: const Text('Cobertura forestal')),
       body: ListView(
@@ -255,7 +256,9 @@ class _ForestalScreenState extends State<ForestalScreen> {
           if (result != null) ...[
             const SizedBox(height: 12),
             Text(result.area, style: Theme.of(context).textTheme.headlineSmall),
-            Text('${result.cells.length} polígonos · $_from–$_to'),
+            Text(
+              '${result.cells.length} ${result.cells.length == 1 ? 'polígono' : 'polígonos'} · $period',
+            ),
             Text(result.coverage),
             const SizedBox(height: 12),
             SizedBox(
