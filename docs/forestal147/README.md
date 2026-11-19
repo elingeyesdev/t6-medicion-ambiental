@@ -60,3 +60,20 @@ La salida debe ser nueva. Las 57 pruebas actuales incluyen seis casos de contras
 ## Paquete para revisión privada
 
 La [receta del paquete completo](evidencias/paquete-20261109/README.md) prepara los años2001–2025 desde los mismos originales, sin nuevas descargas. Vincula versión, captura, criterio, zona y período con las huellas de la serie y la capa. El empaquetado no publica ni adopta el resultado. Pasaron 63 pruebas de Python.
+
+## Candidato de Santa Rosa para #147
+
+La ventana de 64 × 64 celdas está íntegramente dentro del municipio Santa Rosa, BO070602 en el catálogo local. El rectángulo WGS84 se conserva en el [recibo reproducible](evidencias/piloto-santa-rosa.json). El alcance propuesto es esa ventana y el período 2001–2025, con la versión GFC-2025-v1.13 y la cohorte de copa de 2000. La fuente y las capas llevan atribución Hansen/UMD/Google/USGS/NASA y licencia CC BY 4.0.
+
+La captura contiene 4.096 celdas de tierra y cero faltantes en la máscara de base. Con el criterio candidato de copa `≥30 %`, 2.838 celdas pasan el filtro y 1.118 registran pérdida en el período. El total de la ventana es 82,34172106 ha. Con `>30 %`, el total sería 82,19441566 ha. Las dos celdas que explican la diferencia se registraron en 2019 y 2020. La cobertura de observaciones anuales sigue sin cuantificar.
+
+Para reproducir el contraste, prepara el directorio `tmp/forestal-completo` con los pasos de [Paquete completo](evidencias/paquete-20261109/README.md). Instala también Shapely 2.1.2 en el mismo entorno.
+
+~~~powershell
+python -m pip install shapely==2.1.2
+python herramientas/forestal/verificar_piloto_santa_rosa.py tmp/forestal-completo
+~~~
+
+El verificador coteja los PNG y la capa con los rangos originales, valida el total y las celdas únicas, y comprueba la contención frente al límite municipal versionado. La repetición con los insumos de Git reprodujo el mismo recibo y la identidad del paquete `78a62654465d330e4aa0f241d74e237bfa65de709dee827099dc8594d4e88730`. Pasaron 63 pruebas forestales.
+
+Para el contraste independiente de #117 se revisó la [Colección 4 de MapBiomas Bolivia](https://bolivia.mapbiomas.org/downloads/mapas-para-descargar-geotiff/). Los enlaces oficiales de 2023 y 2025 devolvieron 403 al pedir un rango de bytes. La clasificación de uso y cobertura terrestre requiere su propia interpretación y no se suma a la serie GFC. Quedan por acordar el umbral y el perímetro de publicación, y por completar el contraste independiente. Hasta entonces se usa el visor privado de revisión.
