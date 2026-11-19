@@ -1,0 +1,51 @@
+{
+  "estado": "candidato_para_revision",
+  "version": "GFC-2025-v1.13",
+  "tesela": "10S_070W",
+  "licencia": "CC BY 4.0",
+  "municipio_referencia": "BO070602",
+  "nombre_municipio": "Santa Rosa",
+  "limites_sha256": "d9293e6f8805fced5eca24b9b90882bc461c5a1390ddac4cd1cfc4a1dd06c83d",
+  "bbox": [
+    -63.7,
+    -17.016,
+    -63.684,
+    -17.0
+  ],
+  "consulta": {
+    "desde": 2001,
+    "hasta": 2025,
+    "extremos_incluidos": true
+  },
+  "criterio": {
+    "base": 2000,
+    "operador": ">=",
+    "porcentaje": 30,
+    "adoptado": false
+  },
+  "conteos_pixeles": {
+    "sin_dato_base": 0,
+    "agua_base": 0,
+    "tierra_base": 4096,
+    "arbolado_base": 2838,
+    "perdida_periodo": 1118
+  },
+  "celdas_con_copa_exactamente_30": 11,
+  "diferencia_por_anio_ha": {
+    "2019": 0.0736538,
+    "2020": 0.0736516
+  },
+  "total_mayor_o_igual_a_30_ha": 82.34172106,
+  "total_mayor_a_30_ha": 82.19441566,
+  "diferencia_total_ha": 0.1473054,
+  "verificacion_raster_y_capa": {
+    "estado": "integridad_local_comprobada",
+    "metodo_validado": false,
+    "contraste_independiente_de_campo": false,
+    "pixeles": 4096,
+    "celdas_perdida_periodo": 1118,
+    "captura_sha256": "1daf113c667df759df41359811b9dc9c751fa128d87ea07a165a3298a59f102f",
+    "tolerancia_area_ha": 1e-07,
+    "diferencia_total_ha": -7.066489615681348e-09
+  }
+}

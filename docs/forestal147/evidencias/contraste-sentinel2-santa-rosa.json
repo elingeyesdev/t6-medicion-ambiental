@@ -1,0 +1,825 @@
+{
+  "fuente": "Copernicus Sentinel-2 L2A, Microsoft Planetary Computer",
+  "seleccion": "Seis escenas de menor nubosidad por año y las restantes de 2019, julio y agosto, tesela 20KMG, órbita 53. Los resultados usan todas las escenas válidas por celda.",
+  "celdas": {
+    "421": [
+      -63.690625,
+      -17.001625
+    ],
+    "1875": [
+      -63.695125,
+      -17.007375
+    ]
+  },
+  "escenas": [
+    {
+      "id": "S2A_MSIL2A_20180710T142751_R053_T20KMG_20201011T140716",
+      "fecha": "2018-07-10T14:27:51.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 3.173197,
+      "error": "RasterioIOError"
+    },
+    {
+      "id": "S2B_MSIL2A_20180715T142849_R053_T20KMG_20201011T161524",
+      "fecha": "2018-07-15T14:28:49.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 2.16614,
+      "error": "RasterioIOError"
+    },
+    {
+      "id": "S2B_MSIL2A_20180725T142849_R053_T20KMG_20201011T200215",
+      "fecha": "2018-07-25T14:28:49.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 0.00884,
+      "celdas": {
+        "421": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.8023,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        "1875": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.5811,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2A_MSIL2A_20180819T142751_R053_T20KMG_20201011T035712",
+      "fecha": "2018-08-19T14:27:51.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 9.555027,
+      "celdas": {
+        "421": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.7588,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        "1875": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.476,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2B_MSIL2A_20180824T142849_R053_T20KMG_20201011T063159",
+      "fecha": "2018-08-24T14:28:49.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 3.426827,
+      "error": "RasterioIOError"
+    },
+    {
+      "id": "S2A_MSIL2A_20180829T142751_R053_T20KMG_20201103T112151",
+      "fecha": "2018-08-29T14:27:51.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 0.012421,
+      "celdas": {
+        "421": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.7459,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        "1875": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.5086,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2A_MSIL2A_20190705T142801_R053_T20KMG_20201005T093557",
+      "fecha": "2019-07-05T14:28:01.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 99.996706,
+      "celdas": {
+        "421": {
+          "puntosValidos": 0,
+          "puntosTotales": 9,
+          "ndviMediana": null,
+          "clasesScl": [
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9
+          ]
+        },
+        "1875": {
+          "puntosValidos": 0,
+          "puntosTotales": 9,
+          "ndviMediana": null,
+          "clasesScl": [
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2B_MSIL2A_20190710T142759_R053_T20KMG_20201005T121155",
+      "fecha": "2019-07-10T14:27:59.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 0.023495,
+      "error": "RasterioIOError"
+    },
+    {
+      "id": "S2A_MSIL2A_20190715T142801_R053_T20KMG_20201005T142240",
+      "fecha": "2019-07-15T14:28:01.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 25.316592,
+      "error": "RasterioIOError"
+    },
+    {
+      "id": "S2B_MSIL2A_20190720T142759_R053_T20KMG_20201005T170943",
+      "fecha": "2019-07-20T14:27:59.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 3.999772,
+      "celdas": {
+        "421": {
+          "puntosValidos": 0,
+          "puntosTotales": 9,
+          "ndviMediana": null,
+          "clasesScl": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ]
+        },
+        "1875": {
+          "puntosValidos": 0,
+          "puntosTotales": 9,
+          "ndviMediana": null,
+          "clasesScl": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2A_MSIL2A_20190725T142801_R053_T20KMG_20201005T192252",
+      "fecha": "2019-07-25T14:28:01.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 99.997391,
+      "celdas": {
+        "421": {
+          "puntosValidos": 0,
+          "puntosTotales": 9,
+          "ndviMediana": null,
+          "clasesScl": [
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9
+          ]
+        },
+        "1875": {
+          "puntosValidos": 0,
+          "puntosTotales": 9,
+          "ndviMediana": null,
+          "clasesScl": [
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2B_MSIL2A_20190730T142759_R053_T20KMG_20201005T200559",
+      "fecha": "2019-07-30T14:27:59.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 0.021571,
+      "error": "RasterioIOError"
+    },
+    {
+      "id": "S2A_MSIL2A_20190804T142801_R053_T20KMG_20201004T201813",
+      "fecha": "2019-08-04T14:28:01.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 0.640748,
+      "error": "RasterioIOError"
+    },
+    {
+      "id": "S2B_MSIL2A_20190809T142759_R053_T20KMG_20201004T222802",
+      "fecha": "2019-08-09T14:27:59.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 0.930415,
+      "error": "RasterioIOError"
+    },
+    {
+      "id": "S2A_MSIL2A_20190814T142801_R053_T20KMG_20201005T001435",
+      "fecha": "2019-08-14T14:28:01.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 10.082023,
+      "celdas": {
+        "421": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.8048,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        "1875": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.5013,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2B_MSIL2A_20190819T142759_R053_T20KMG_20201005T022647",
+      "fecha": "2019-08-19T14:27:59.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 37.949929,
+      "celdas": {
+        "421": {
+          "puntosValidos": 0,
+          "puntosTotales": 9,
+          "ndviMediana": null,
+          "clasesScl": [
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9
+          ]
+        },
+        "1875": {
+          "puntosValidos": 0,
+          "puntosTotales": 9,
+          "ndviMediana": null,
+          "clasesScl": [
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2A_MSIL2A_20190824T142751_R053_T20KMG_20201005T041443",
+      "fecha": "2019-08-24T14:27:51.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 0.038383,
+      "celdas": {
+        "421": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.7449,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        "1875": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.4773,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2B_MSIL2A_20190829T142759_R053_T20KMG_20201005T063527",
+      "fecha": "2019-08-29T14:27:59.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 0.045609,
+      "error": "RasterioIOError"
+    },
+    {
+      "id": "S2B_MSIL2A_20200704T142739_R053_T20KMG_20200825T054732",
+      "fecha": "2020-07-04T14:27:39.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 5.142368,
+      "celdas": {
+        "421": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.6112,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        "1875": {
+          "puntosValidos": 0,
+          "puntosTotales": 9,
+          "ndviMediana": null,
+          "clasesScl": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2A_MSIL2A_20200719T142741_R053_T20KMG_20200816T173526",
+      "fecha": "2020-07-19T14:27:41.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 0.013652,
+      "celdas": {
+        "421": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.6312,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        "1875": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.5902,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2B_MSIL2A_20200803T142739_R053_T20KMG_20200816T012910",
+      "fecha": "2020-08-03T14:27:39.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 16.499642,
+      "error": "RasterioIOError"
+    },
+    {
+      "id": "S2A_MSIL2A_20200808T142741_R053_T20KMG_20200815T111156",
+      "fecha": "2020-08-08T14:27:41.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 2.16098,
+      "error": "RasterioIOError"
+    },
+    {
+      "id": "S2B_MSIL2A_20200823T142739_R053_T20KMG_20200908T111741",
+      "fecha": "2020-08-23T14:27:39.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 0.883336,
+      "error": "RasterioIOError"
+    },
+    {
+      "id": "S2A_MSIL2A_20200828T142741_R053_T20KMG_20200907T120302",
+      "fecha": "2020-08-28T14:27:41.024000Z",
+      "baseline": "02.12",
+      "nubosidad": 1.215411,
+      "celdas": {
+        "421": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.5721,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        "1875": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.5403,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2A_MSIL2A_20210704T142731_R053_T20KMG_20210705T050448",
+      "fecha": "2021-07-04T14:27:31.024000Z",
+      "baseline": "03.00",
+      "nubosidad": 0.023297,
+      "celdas": {
+        "421": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.568,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        "1875": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.7006,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2A_MSIL2A_20210724T142731_R053_T20KMG_20210724T230249",
+      "fecha": "2021-07-24T14:27:31.024000Z",
+      "baseline": "03.00",
+      "nubosidad": 0.012687,
+      "celdas": {
+        "421": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.5982,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        "1875": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.6845,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2B_MSIL2A_20210808T142729_R053_T20KMG_20210809T015848",
+      "fecha": "2021-08-08T14:27:29.024000Z",
+      "baseline": "03.00",
+      "nubosidad": 0.007848,
+      "celdas": {
+        "421": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.4957,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        "1875": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.6069,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2A_MSIL2A_20210813T142731_R053_T20KMG_20210814T043146",
+      "fecha": "2021-08-13T14:27:31.024000Z",
+      "baseline": "03.00",
+      "nubosidad": 1.716878,
+      "celdas": {
+        "421": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.4562,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        "1875": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.561,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": "S2B_MSIL2A_20210818T142729_R053_T20KMG_20210819T014216",
+      "fecha": "2021-08-18T14:27:29.024000Z",
+      "baseline": "03.00",
+      "nubosidad": 0.039846,
+      "error": "RasterioIOError"
+    },
+    {
+      "id": "S2A_MSIL2A_20210823T142731_R053_T20KMG_20210824T025757",
+      "fecha": "2021-08-23T14:27:31.024000Z",
+      "baseline": "03.00",
+      "nubosidad": 1.546084,
+      "celdas": {
+        "421": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.4146,
+          "clasesScl": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        "1875": {
+          "puntosValidos": 9,
+          "puntosTotales": 9,
+          "ndviMediana": 0.5519,
+          "clasesScl": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        }
+      }
+    }
+  ],
+  "resumen": {
+    "421": {
+      "2018": {
+        "escenasValidas": 3,
+        "mediana": 0.7588
+      },
+      "2019": {
+        "escenasValidas": 2,
+        "mediana": 0.7749
+      },
+      "2020": {
+        "escenasValidas": 3,
+        "mediana": 0.6112
+      },
+      "2021": {
+        "escenasValidas": 5,
+        "mediana": 0.4957
+      }
+    },
+    "1875": {
+      "2018": {
+        "escenasValidas": 3,
+        "mediana": 0.5086
+      },
+      "2019": {
+        "escenasValidas": 2,
+        "mediana": 0.4893
+      },
+      "2020": {
+        "escenasValidas": 2,
+        "mediana": 0.5653
+      },
+      "2021": {
+        "escenasValidas": 5,
+        "mediana": 0.6069
+      }
+    }
+  }
+}
