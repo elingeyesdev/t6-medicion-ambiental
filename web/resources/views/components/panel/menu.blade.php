@@ -28,6 +28,11 @@
                 <x-panel.icono :nombre="$item['icono']" /><span>{{ $item['nombre'] }}</span>
             </a>
         @endforeach
+        @can('mapa.ver')
+            @can('datos.consultar')
+                <a class="enviro-enlace {{ request()->routeIs('seguimiento.*') ? 'activo' : '' }}" href="{{ route('seguimiento.index') }}" title="Seguimiento territorial" @if(request()->routeIs('seguimiento.*')) aria-current="page" @endif><x-panel.icono nombre="map-pin" /><span>Seguimiento territorial</span></a>
+            @endcan
+        @endcan
         <div class="enviro-seccion">Cuenta</div>
         <a class="enviro-enlace {{ request()->routeIs('cuenta*') ? 'activo' : '' }}" href="{{ route('cuenta') }}" title="Mi cuenta" @if(request()->routeIs('cuenta*')) aria-current="page" @endif><x-panel.icono nombre="map-pin" /><span>Mi cuenta</span></a>
         @can('usuarios.administrar')

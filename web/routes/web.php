@@ -15,6 +15,7 @@ use App\Http\Controllers\Mapas\PoiController;
 use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\RevisionForestalController;
+use App\Http\Controllers\SeguimientoController;
 use App\Http\Controllers\SensoresController;
 use App\Http\Controllers\SimulacionContinuaController;
 use App\Http\Controllers\SimulacionesController;
@@ -70,6 +71,17 @@ Route::middleware('guest')->group(function (): void {
     Route::get('/restablecer-acceso/{token}', [RecuperacionController::class, 'formulario'])->name('password.reset');
     Route::post('/restablecer-acceso', [RecuperacionController::class, 'restablecer'])->middleware('throttle:cuentas-restablecer')->name('password.update');
 });
+Route::prefix('seguimiento')->name('seguimiento.')->middleware(['auth', 'cuenta.activa', 'can:mapa.ver', 'can:datos.consultar'])->group(function (): void {
+    Route::get('/', [SeguimientoController::class, 'index'])->name('index');
+    Route::post('/', [SeguimientoController::class, 'guardar'])->name('guardar');
+    Route::get('/{id}', [SeguimientoController::class, 'index'])->whereNumber('id')->name('zona');
+    Route::post('/{id}/evaluar', [SeguimientoController::class, 'evaluar'])->whereNumber('id')
+        ->middleware('throttle:12,1,evaluar-zona')->name('evaluar');
+    Route::post('/{id}/tareas', [SeguimientoController::class, 'crearTarea'])->whereNumber('id')->name('tareas');
+    Route::patch('/{id}/tareas/{tarea}', [SeguimientoController::class, 'registrarResultado'])
+        ->whereNumber(['id', 'tarea'])->name('resultado');
+});
+
 Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
     Route::get('/simulacion-continua/estado', [SimulacionContinuaController::class, 'estado'])
         ->middleware(['can:datos.consultar', 'throttle:120,1']);
