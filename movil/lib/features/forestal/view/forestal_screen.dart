@@ -31,7 +31,7 @@ class ForestalScreen extends StatefulWidget {
 }
 
 class _ForestalScreenState extends State<ForestalScreen> {
-  static const _base = MapBaseStyle.claro;
+  static const _base = MapBaseStyle.satelite;
   final _format = NumberFormat('0.###', 'es_BO');
   final _hits = ValueNotifier<LayerHitResult<int>?>(null);
   int _from = 2024;
