@@ -155,7 +155,7 @@ test('markup reutiliza layout/Leaflet y detalles; JS no usa sumideros HTML', asy
     const blade = await readFile(new URL('../../resources/views/revision/forestal.blade.php', import.meta.url), 'utf8');
     const js = await readFile(new URL('../../public/js/revision/forestal.js', import.meta.url), 'utf8');
     assert.match(blade, /@extends\('layouts.app'\)/); assert.match(blade, /<details><summary>Fuente y límites/);
-    assert.match(blade, /Revisión técnica\. Método pendiente de aprobación\./);
+    assert.match(blade, /Resultado en revisión para publicación\./);
     assert.doesNotMatch(js, /innerHTML|outerHTML|insertAdjacentHTML|eval\(/);
     assert.doesNotMatch(blade, /Acceso privado ·|Leyenda ·|Id SHA256/);
 });
