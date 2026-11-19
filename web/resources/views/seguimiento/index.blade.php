@@ -99,6 +99,7 @@
                     @if($evaluacion !== null)
                         <form class="seguimiento-consulta" method="post" action="{{ route('seguimiento.tareas', $zona->id) }}">
                             @csrf
+                            <input type="hidden" name="version_evaluacion" value="{{ hash('sha256', $zona->evaluacion) }}">
                             <label>Acción a realizar
                                 <input name="titulo" class="form-control" value="{{ old('titulo') }}" placeholder="Verificar el acceso norte" maxlength="140" required>
                             </label>

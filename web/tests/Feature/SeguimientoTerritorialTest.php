@@ -19,7 +19,7 @@ final class SeguimientoTerritorialTest extends TestCase
         config(['focos.clave' => 'abcdefghijklmnop']);
         $producto = config('focos.producto');
         Http::fake([
-            '*/data_availability/*' => Http::response("data_id,min_date,max_date\n{$producto},2026-11-01,2026-11-15\n"),
+            '*/data_availability/*' => fn () => Http::response("data_id,min_date,max_date\n{$producto},2026-11-01,2026-11-15\n"),
             '*/area/*' => fn () => Http::response(
                 "latitude,longitude,acq_date,acq_time,confidence,satellite,instrument,version,frp\n"
                 ."-17.7900,-63.1800,2026-11-10,1530,h,N,VIIRS,2.0NRT,3\n"
@@ -39,7 +39,20 @@ final class SeguimientoTerritorialTest extends TestCase
         $this->assertSame(1, $evaluacion['detecciones']);
         $this->assertSame(1, $evaluacion['confianzaAlta']);
 
-        $this->post(route('seguimiento.tareas', 1), ['titulo' => 'Verificar la entrada'])->assertRedirect(route('seguimiento.zona', 1));
+        $versionAnterior = hash('sha256', DB::table('zonas_seguimiento')->value('evaluacion'));
+        $this->post(route('seguimiento.evaluar', 1), ['fecha' => '2026-11-11'])->assertRedirect(route('seguimiento.zona', 1));
+        $this->post(route('seguimiento.tareas', 1), [
+            'titulo' => 'Verificar la entrada', 'version_evaluacion' => $versionAnterior,
+        ])->assertRedirect(route('seguimiento.zona', 1))->assertSessionHasErrors('titulo');
+        $this->assertDatabaseCount('tareas_seguimiento', 0);
+
+        $actual = DB::table('zonas_seguimiento')->value('evaluacion');
+        $version = hash('sha256', $actual);
+        $this->get(route('seguimiento.zona', 1))->assertOk()->assertSee('value="'.$version.'"', false);
+        $this->post(route('seguimiento.tareas', 1), [
+            'titulo' => 'Verificar la entrada', 'version_evaluacion' => $version,
+        ])->assertRedirect(route('seguimiento.zona', 1));
+        $this->assertSame(json_decode($actual, true), json_decode(DB::table('tareas_seguimiento')->value('evaluacion'), true));
         $this->assertDatabaseHas('tareas_seguimiento', ['id' => 1, 'resultado_tipo' => null]);
         $this->patch(route('seguimiento.resultado', [1, 1]), [
             'resultado_tipo' => 'sin_incendio', 'resultado_nota' => 'Acceso revisado.',
@@ -71,7 +84,7 @@ final class SeguimientoTerritorialTest extends TestCase
         $this->travelTo(CarbonImmutable::parse('2026-11-15T15:00:00Z'));
         config(['focos.clave' => 'abcdefghijklmnop']);
         $producto = config('focos.producto');
-        Http::fake(['*/data_availability/*' => Http::response("data_id,min_date,max_date\n{$producto},2026-10-01,2026-10-15\n")]);
+        Http::fake(['*/data_availability/*' => fn () => Http::response("data_id,min_date,max_date\n{$producto},2026-10-01,2026-10-15\n")]);
 
         $this->actingAs(User::factory()->create());
         $this->post(route('seguimiento.guardar'), ['nombre' => 'Fuera', 'latitud' => 0, 'longitud' => 0, 'radio_km' => 10])

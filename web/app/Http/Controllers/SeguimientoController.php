@@ -91,11 +91,21 @@ final class SeguimientoController extends Controller
     public function crearTarea(Request $request, int $id): RedirectResponse
     {
         $zona = $this->zona($request, $id);
-        $datos = $request->validate(['titulo' => ['required', 'string', 'max:140']]);
         abort_if($zona->evaluacion === null, 409, 'Evalúa la zona antes de crear una tarea.');
+        $datos = $request->validate([
+            'titulo' => ['required', 'string', 'max:140'],
+            'version_evaluacion' => ['required', 'string', 'size:64'],
+        ]);
 
-        DB::table('tareas_seguimiento')->insert($datos + [
+        if (! hash_equals(hash('sha256', $zona->evaluacion), $datos['version_evaluacion'])) {
+            return to_route('seguimiento.zona', $id)
+                ->withInput()
+                ->withErrors(['titulo' => 'La evaluación cambió. Revisa los datos actualizados antes de crear la tarea.']);
+        }
+
+        DB::table('tareas_seguimiento')->insert([
             'zona_id' => $id,
+            'titulo' => $datos['titulo'],
             'evaluacion' => $zona->evaluacion,
             'created_at' => now(),
             'updated_at' => now(),
