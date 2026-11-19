@@ -288,9 +288,8 @@ class _DroughtScreenState extends State<DroughtScreen>
                           initialValue: selectedMonth,
                           decoration: const InputDecoration(
                             labelText: 'Mes final (AAAA-MM)',
-                            hintText: 'Ej. 2024-09',
                             helperText:
-                                'Piloto disponible: 2024-09 · ventana de 3 meses (UTC)',
+                                'Incluye el mes elegido y los dos anteriores (UTC)',
                             prefixIcon: Icon(Icons.calendar_month_outlined),
                             border: OutlineInputBorder(),
                           ),
@@ -656,7 +655,7 @@ class _DroughtScreenState extends State<DroughtScreen>
         msg.contains('sequias:preparar') ||
         msg.contains('petición web')) {
       return 'No hay datos de sequías para ese mes. '
-          'Prueba otro mes en Filtros (p. ej. 2024-09).';
+          'Elige otro mes o territorio en Filtros.';
     }
     return error.message;
   }

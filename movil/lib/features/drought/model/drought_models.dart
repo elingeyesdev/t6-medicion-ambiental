@@ -370,9 +370,14 @@ class DroughtFilters {
     this.muestra,
   });
 
-  /// Mes del piloto publicado (mismo ejemplo que la web: septiembre 2024).
-  /// Otros meses requieren preparación en el servidor.
-  static String defaultMesFinal({DateTime? now}) => '2024-09';
+  /// Último mes completo con el margen de cinco días de la renovación ERA5.
+  static String defaultMesFinal({DateTime? now}) {
+    final cutoff = (now ?? DateTime.now()).toUtc().subtract(
+      const Duration(days: 5),
+    );
+    final month = DateTime.utc(cutoff.year, cutoff.month - 1);
+    return '${month.year}-${month.month.toString().padLeft(2, '0')}';
+  }
 
   final String mesFinal;
   final String? provincia;
