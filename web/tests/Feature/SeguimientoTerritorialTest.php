@@ -56,6 +56,16 @@ final class SeguimientoTerritorialTest extends TestCase
         $this->get(route('seguimiento.index'))->assertOk()->assertDontSee('Parcela de prueba');
     }
 
+    public function test_precarga_coordenadas_validas_sin_crear_la_zona(): void
+    {
+        $this->actingAs(User::factory()->create());
+        $this->get(route('seguimiento.index', ['latitud' => '-17.783391', 'longitud' => '-63.181258']))
+            ->assertOk()->assertSee('value="-17.783391"', false)->assertSee('value="-63.181258"', false);
+        $this->get(route('seguimiento.index', ['latitud' => ['-17.783391'], 'longitud' => '999']))
+            ->assertOk()->assertDontSee('value="-17.783391"', false)->assertDontSee('value="999"', false);
+        $this->assertDatabaseCount('zonas_seguimiento', 0);
+    }
+
     public function test_distingue_falta_de_cobertura_y_rechaza_zonas_fuera_de_santa_cruz(): void
     {
         $this->travelTo(CarbonImmutable::parse('2026-11-15T15:00:00Z'));

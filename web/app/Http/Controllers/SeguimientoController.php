@@ -11,12 +11,18 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 final class SeguimientoController extends Controller
 {
+    private const COORDENADAS = [
+        'latitud' => ['required', 'numeric', 'between:-90,90'],
+        'longitud' => ['required', 'numeric', 'between:-180,180'],
+    ];
+
     private const RESULTADOS = [
         'incendio_confirmado' => 'Incendio confirmado en campo',
         'sin_incendio' => 'Sin incendio en la revisión',
@@ -27,11 +33,13 @@ final class SeguimientoController extends Controller
     {
         $zonas = $this->zonas($request)->orderByDesc('id')->paginate(12);
         $zona = $id === null ? null : $this->zona($request, $id);
+        $ubicacion = Validator::make($request->query(), self::COORDENADAS);
 
         return view('seguimiento.index', [
             'modulos' => array_filter(config('geocruz.modulos'), fn ($modulo) => $modulo['habilitado']),
             'zonas' => $zonas,
             'zona' => $zona,
+            'coordenadasIniciales' => $zona === null && $ubicacion->passes() ? $ubicacion->validated() : [],
             'evaluacion' => $zona?->evaluacion === null ? null : json_decode($zona->evaluacion, true),
             'tareas' => $zona === null ? null : DB::table('tareas_seguimiento')->where('zona_id', $zona->id)
                 ->orderByDesc('id')->paginate(10, ['*'], 'tareas'),
@@ -44,10 +52,8 @@ final class SeguimientoController extends Controller
     {
         $datos = $request->validate([
             'nombre' => ['required', 'string', 'max:100'],
-            'latitud' => ['required', 'numeric', 'between:-90,90'],
-            'longitud' => ['required', 'numeric', 'between:-180,180'],
             'radio_km' => ['required', 'integer', 'between:1,50'],
-        ]);
+        ] + self::COORDENADAS);
         $datos['latitud'] = round((float) $datos['latitud'], 5);
         $datos['longitud'] = round((float) $datos['longitud'], 5);
         if (! $geografia->contiene($catalogo->limite('BO07')['geometry'], $datos['longitud'], $datos['latitud'])) {

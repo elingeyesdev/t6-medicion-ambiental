@@ -51,8 +51,8 @@
                         @csrf
                         <label>Nombre de la zona <input name="nombre" class="form-control" value="{{ old('nombre') }}" placeholder="Parcela San Miguel" maxlength="100" required></label>
                         <div class="seguimiento-coordenadas">
-                            <label>Latitud <input name="latitud" class="form-control" type="number" step="any" min="-90" max="90" value="{{ old('latitud') }}" placeholder="-17.78333" required></label>
-                            <label>Longitud <input name="longitud" class="form-control" type="number" step="any" min="-180" max="180" value="{{ old('longitud') }}" placeholder="-63.18120" required></label>
+                            <label>Latitud <input name="latitud" class="form-control" type="number" step="any" min="-90" max="90" value="{{ old('latitud', $coordenadasIniciales['latitud'] ?? '') }}" placeholder="-17.78333" required></label>
+                            <label>Longitud <input name="longitud" class="form-control" type="number" step="any" min="-180" max="180" value="{{ old('longitud', $coordenadasIniciales['longitud'] ?? '') }}" placeholder="-63.18120" required></label>
                             <label>Radio (km) <input name="radio_km" class="form-control" type="number" min="1" max="50" value="{{ old('radio_km', 10) }}" required></label>
                         </div>
                         <button class="btn btn-primary" type="submit">Guardar zona</button>

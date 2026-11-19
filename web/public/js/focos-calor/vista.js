@@ -133,7 +133,17 @@ export class VistaFocos {
         document.querySelectorAll('.fila-foco').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.foco === id)));
         const campos = document.getElementById('campos-detalle'); campos.replaceChildren();
         const extras = document.getElementById('campos-detalle-extra'); extras.replaceChildren();
-        const coordenadas = f.geometria?.type === 'Point' ? `${f.geometria.coordinates[1]}, ${f.geometria.coordinates[0]} (latitud, longitud)` : 'No informadas';
+        const [lon, lat] = f.geometria?.type === 'Point' ? f.geometria.coordinates : [];
+        const guardarZona = document.getElementById('guardar-zona-deteccion');
+        if (guardarZona) {
+            guardarZona.hidden = !Number.isFinite(lat) || !Number.isFinite(lon);
+            if (!guardarZona.hidden) {
+                const destino = new URL(guardarZona.href);
+                destino.search = new URLSearchParams({ latitud: lat, longitud: lon }).toString();
+                guardarZona.href = destino.href;
+            }
+        }
+        const coordenadas = Number.isFinite(lat) && Number.isFinite(lon) ? `${lat}, ${lon} (latitud, longitud)` : 'No informadas';
         const valores = [
             ['Fecha y hora (Bolivia)', fechaBolivia(f.fechas.observadoDesde)], ['Nivel de confianza', f.atributos.confianza],
             ['Municipio', this.nombres.get(f.territorio.municipio) ?? 'No determinado'], ['Provincia', this.nombres.get(f.territorio.provincia) ?? 'No determinada'],

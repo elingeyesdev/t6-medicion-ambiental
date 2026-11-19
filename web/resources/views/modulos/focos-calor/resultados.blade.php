@@ -18,6 +18,11 @@
         <dl id="campos-detalle" class="campos-detalle"></dl>
         <div class="compartir-deteccion">
             <button type="button" id="copiar-deteccion" class="boton-suave" disabled>Copiar ubicación y fecha</button>
+            @can('mapa.ver')
+                @can('datos.consultar')
+                    <a id="guardar-zona-deteccion" class="boton-suave" href="{{ route('seguimiento.index') }}" hidden>Guardar zona desde este foco</a>
+                @endcan
+            @endcan
             <p id="estado-copiado" role="status" aria-live="polite"></p>
             <textarea id="texto-deteccion" rows="7" readonly hidden aria-label="Texto para compartir la detección"></textarea>
         </div>
