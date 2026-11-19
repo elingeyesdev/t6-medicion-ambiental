@@ -17,6 +17,8 @@ use App\Http\Controllers\AvisosController;
 use App\Http\Controllers\Mapas\CapasController;
 use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\ReportesController;
+use App\Http\Controllers\RevisionForestalController;
+use App\Http\Middleware\RevisionForestalLocal;
 use App\Http\Controllers\SaludController;
 use App\Http\Controllers\SimulacionContinuaController;
 use App\Http\Controllers\SimulacionesController;
@@ -38,6 +40,8 @@ Route::prefix('v1')->middleware('throttle:30,1')->group(function (): void {
         Route::post('/simulacion-continua/accion', [SimulacionContinuaController::class, 'accion'])
             ->middleware('can:simulaciones.gestionar');
         Route::middleware('can:datos.consultar')->group(function (): void {
+            Route::get('/forestal/piloto', [RevisionForestalController::class, 'consultarPiloto'])
+                ->middleware([RevisionForestalLocal::class, 'can:mapa.ver', 'throttle:12,1,forestal-piloto']);
             Route::get('/inundaciones/catalogo', [InundacionesController::class, 'catalogo']);
             Route::get('/inundaciones/consulta', [InundacionesController::class, 'consultar']);
             Route::get('/mapa/buscar', BuscarLugarController::class)->middleware('throttle:mapa-busquedas');

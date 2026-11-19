@@ -43,11 +43,27 @@ class RevisionForestalController extends Controller
         }
     }
 
-    private function parametros(Request $request, bool $obligatorios): array
+    public function consultarPiloto(Request $request): JsonResponse
     {
-        $p = ParametrosConsulta::leer($request, ['id', 'desde', 'hasta']);
+        $id = config('forestal.piloto_id');
+        if (! is_string($id) || ! preg_match('/^[a-f0-9]{64}$/D', $id)) {
+            throw new ErrorConsulta('REVISION_NO_DISPONIBLE', 'El piloto forestal no está disponible en este entorno.', 503);
+        }
+
+        $p = $this->parametros($request, true, $id);
+        $resultado = $this->consultarPaquete($id, (int) $p['desde'], (int) $p['hasta']);
+
+        return response()->json($resultado, 200, [], JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION);
+    }
+
+    private function parametros(Request $request, bool $obligatorios, ?string $idFijo = null): array
+    {
+        $p = ParametrosConsulta::leer($request, $idFijo === null ? ['id', 'desde', 'hasta'] : ['desde', 'hasta']);
+        if ($idFijo !== null) {
+            $p['id'] = $idFijo;
+        }
         if ($obligatorios && count($p) !== 3) {
-            throw new ErrorConsulta('FILTROS_INVALIDOS', 'Se requieren id, desde y hasta.');
+            throw new ErrorConsulta('FILTROS_INVALIDOS', $idFijo === null ? 'Se requieren id, desde y hasta.' : 'Se requieren los años desde y hasta.');
         }
         if (isset($p['id']) && ! preg_match('/^[a-f0-9]{64}$/D', $p['id'])) {
             throw new ErrorConsulta('FILTROS_INVALIDOS', 'El código del paquete no es válido.');

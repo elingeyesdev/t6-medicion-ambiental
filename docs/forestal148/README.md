@@ -41,3 +41,9 @@ Las áreas se suman como dígitos decimales, sin float ni nuevas extensiones. La
 Pasaron 118 casos y 310 aserciones de PHP. Las seis pruebas nuevas contrastan los resultados guardados de Python para 2001–2025 y 2024–2025, conservación de identidad, cero, faltantes, duplicados, años ajenos, unidades incorrectas y suma exacta por encima de 28 cifras. No se añadieron rutas ni se cambió el estado de aprobación del producto.
 
 Este servicio solo admite la serie propuesta con capa nula. Una capa presente se rechaza: no se debe conservar una geometría de otros años al reducir el intervalo. El filtrado de una capa validada se integrará por separado.
+
+## Consulta compartida del piloto de Santa Rosa
+
+En un servidor local con `FORESTAL_REVISION_LOCAL=true` y `FORESTAL_REVISION_DIR` apuntando al directorio de paquetes privados, `GET /api/v1/forestal/piloto?desde=2024&hasta=2025` usa un token de cuenta activa y los permisos de mapa y consulta. El servidor fija la identidad del paquete revisado. La respuesta es la misma que produce el lector del visor web para ese paquete y período. La ruta de revisión se deshabilita fuera de los entornos local y testing.
+
+En Android, compila el APK de revisión con `--dart-define=GEOSUR_FORESTAL_PILOTO=true` y configura `GEOCRUZ_API_BASE_URL` para alcanzar ese servidor. En el emulador de Android Studio con GeoSur en el puerto 8003 del host, usa `http://10.0.2.2:8003/api/v1/`. Entra con una cuenta habilitada, abre **Consultas → Forestal** y compara 2024–2025 con el visor web. El recorte tiene 26 polígonos y 1,91489180 ha en ese intervalo. Para 2009–2009, se esperan 0 ha y ningún polígono. En ambos intervalos, la cobertura observacional del paquete está sin informar.
