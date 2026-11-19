@@ -123,7 +123,7 @@ class RevisionForestalWebTest extends TestCase
     {
         $this->actingAs($this->usuario());
         $r = $this->get('/revision/forestal?id='.self::ID);
-        $r->assertOk()->assertSeeText('Revisión técnica. Método pendiente de aprobación.')
+        $r->assertOk()->assertSeeText('Resultado en revisión para publicación.')
             ->assertSee('vendor/tabler/tabler.min.css')->assertSee('vendor/leaflet/leaflet.js')
             ->assertSee('js/revision/forestal-inicio.js')->assertSee('configuracion-mapa')
             ->assertSee('value="'.self::ID.'"', false)->assertDontSee('total municipal');
