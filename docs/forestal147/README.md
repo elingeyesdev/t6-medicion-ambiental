@@ -76,7 +76,7 @@ python herramientas/forestal/verificar_piloto_santa_rosa.py tmp/forestal-complet
 
 El verificador coteja los PNG y la capa con los rangos originales, valida el total y las celdas únicas, y comprueba la contención frente al límite municipal versionado. La repetición con los insumos de Git reprodujo el mismo recibo y la identidad del paquete `78a62654465d330e4aa0f241d74e237bfa65de709dee827099dc8594d4e88730`. Pasaron 63 pruebas forestales.
 
-Para el contraste independiente de #117 se revisó la [Colección 4 de MapBiomas Bolivia](https://bolivia.mapbiomas.org/downloads/mapas-para-descargar-geotiff/). Los enlaces oficiales de 2023 y 2025 devolvieron 403 al pedir un rango de bytes. La clasificación de uso y cobertura terrestre requiere su propia interpretación y no se suma a la serie GFC. Quedan por acordar el umbral y el perímetro de publicación, y por completar el contraste independiente. Hasta entonces se usa el visor privado de revisión.
+Para el contraste independiente de #117 se revisó la [Colección 4 de MapBiomas Bolivia](https://bolivia.mapbiomas.org/downloads/mapas-para-descargar-geotiff/). Los enlaces oficiales de 2023 y 2025 devolvieron 403 al pedir un rango de bytes. La clasificación de uso y cobertura terrestre requiere su propia interpretación y no se suma a la serie GFC. Tras la revisión se adoptaron el umbral y el recorte descritos arriba. El visor privado se usa para la revisión del resultado.
 
 ### Contraste con Sentinel-2 de las dos celdas sensibles al umbral
 
