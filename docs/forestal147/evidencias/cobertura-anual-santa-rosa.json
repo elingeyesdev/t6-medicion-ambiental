@@ -1,0 +1,140 @@
+{
+  "estado": "contraste_clasificaciones",
+  "fuente": "Impact Observatory, Microsoft y Esri. Sentinel-2, 10m Annual Land Use Land Cover (9-class), CC BY 4.0.",
+  "malla_comun": "Centros de las 4096 celdas Hansen en EPSG:4326, vecino más cercano desde 10 m UTM 20S.",
+  "definicion": "Para cada pérdida GFC en t, clase Trees en t-1 y clase sin Trees tanto en t+1 como t+2.",
+  "bbox": [
+    -63.7,
+    -17.016,
+    -63.684,
+    -17.0
+  ],
+  "huella_gfc": "1daf113c667df759df41359811b9dc9c751fa128d87ea07a165a3298a59f102f",
+  "total_celdas_perdida_gfc": 1118,
+  "celdas_periodo_con_contraste": 210,
+  "cobertura_clases_por_anio": {
+    "2017": 4096,
+    "2018": 4096,
+    "2019": 4096,
+    "2020": 4096,
+    "2021": 4096,
+    "2022": 4096,
+    "2023": 4096,
+    "2024": 4096
+  },
+  "rasters": {
+    "2017": {
+      "fuente": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/20K_2017.tif",
+      "etag": "\"a8d207282bf7a45d48624d9768835742-20\"",
+      "sha256_clases_64x64": "76443bf46a23b384524dd7464986d9678e7bd7d2d241f3d10119b357e92f0b2d"
+    },
+    "2018": {
+      "fuente": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/20K_2018.tif",
+      "etag": "\"0bc802a962e57a0d243c0a8aa876eabc-19\"",
+      "sha256_clases_64x64": "b45dfd03f135a235e1d0a2596a1c1b92b54718278f367a3d9d8670f3c86b864d"
+    },
+    "2019": {
+      "fuente": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/20K_2019.tif",
+      "etag": "\"169e9067f8b9b9229d9c6eecab0976a8-19\"",
+      "sha256_clases_64x64": "4f3e51f0c81a87936027a64a55c08019d4e146620caa2e785541619010916996"
+    },
+    "2020": {
+      "fuente": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/20K_2020.tif",
+      "etag": "\"debea811910ca02ce90a652f9ca58fde-19\"",
+      "sha256_clases_64x64": "b059539d1ed257d31a0c7fce1f5ec359b595886abf09bb6a8cbb8e8301dbe819"
+    },
+    "2021": {
+      "fuente": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/20K_2021.tif",
+      "etag": "\"bcd3544999d5e78121ffa6ba2f538b86-20\"",
+      "sha256_clases_64x64": "9885347fbaee0519464d1e86c6441172926d7daaab464986ee028d2998adf397"
+    },
+    "2022": {
+      "fuente": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/20K_2022.tif",
+      "etag": "\"3db3231d9c1fd7a98f3e54d16d0028f8-20\"",
+      "sha256_clases_64x64": "c6b95e0f80aebcbfda754259527bf45807cd18773907e330db0a246a8673becf"
+    },
+    "2023": {
+      "fuente": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/20K_2023.tif",
+      "etag": "\"fc20cb7539369e97ffef8d6e9f98df18-17\"",
+      "sha256_clases_64x64": "aa8b54a4e691e2dc7eb21564956a6ad21527dea393c7f9f117e218f5b19738b5"
+    },
+    "2024": {
+      "fuente": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/20K_2024.tif",
+      "etag": "\"087b740f972d954e5524c755e458bd57-17\"",
+      "sha256_clases_64x64": "21624c8b3845139497e55ef8e91172fddd83c50128673ad51652b949c972dd9b"
+    }
+  },
+  "resultados_por_anio": {
+    "2018": {
+      "celdas_gfc": 5,
+      "conteo": {
+        "arbolado_en_ambos_posteriores": 5
+      }
+    },
+    "2019": {
+      "celdas_gfc": 33,
+      "conteo": {
+        "arbolado_en_ambos_posteriores": 4,
+        "clase_anterior_no_arbolado": 7,
+        "posteriores_mixtos": 1,
+        "transicion_persistente": 21
+      }
+    },
+    "2020": {
+      "celdas_gfc": 53,
+      "conteo": {
+        "arbolado_en_ambos_posteriores": 11,
+        "clase_anterior_no_arbolado": 3,
+        "posteriores_mixtos": 4,
+        "transicion_persistente": 35
+      }
+    },
+    "2021": {
+      "celdas_gfc": 6,
+      "conteo": {
+        "arbolado_en_ambos_posteriores": 4,
+        "posteriores_mixtos": 1,
+        "transicion_persistente": 1
+      }
+    },
+    "2022": {
+      "celdas_gfc": 113,
+      "conteo": {
+        "arbolado_en_ambos_posteriores": 32,
+        "clase_anterior_no_arbolado": 20,
+        "posteriores_mixtos": 14,
+        "transicion_persistente": 47
+      }
+    }
+  },
+  "celdas_sensibles": [
+    {
+      "celda": 421,
+      "anio_gfc": 2019,
+      "clases_por_anio": {
+        "2017": 2,
+        "2018": 2,
+        "2019": 11,
+        "2020": 11,
+        "2021": 11,
+        "2022": 11,
+        "2023": 11,
+        "2024": 11
+      }
+    },
+    {
+      "celda": 1875,
+      "anio_gfc": 2020,
+      "clases_por_anio": {
+        "2017": 2,
+        "2018": 11,
+        "2019": 11,
+        "2020": 11,
+        "2021": 11,
+        "2022": 11,
+        "2023": 11,
+        "2024": 11
+      }
+    }
+  ]
+}

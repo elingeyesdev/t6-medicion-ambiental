@@ -76,7 +76,7 @@ python herramientas/forestal/verificar_piloto_santa_rosa.py tmp/forestal-complet
 
 El verificador coteja los PNG y la capa con los rangos originales, valida el total y las celdas únicas, y comprueba la contención frente al límite municipal versionado. La repetición con los insumos de Git reprodujo el mismo recibo y la identidad del paquete `78a62654465d330e4aa0f241d74e237bfa65de709dee827099dc8594d4e88730`. Pasaron 63 pruebas forestales.
 
-Para el contraste independiente de #117 se revisó la [Colección 4 de MapBiomas Bolivia](https://bolivia.mapbiomas.org/downloads/mapas-para-descargar-geotiff/). Los enlaces oficiales de 2023 y 2025 devolvieron 403 al pedir un rango de bytes. La clasificación de uso y cobertura terrestre requiere su propia interpretación y no se suma a la serie GFC. Quedan por acordar el umbral y el perímetro de publicación, y por completar el contraste independiente. Hasta entonces se usa el visor privado de revisión.
+Para el contraste independiente de #117 se revisó la [Colección 4 de MapBiomas Bolivia](https://bolivia.mapbiomas.org/downloads/mapas-para-descargar-geotiff/). Los enlaces oficiales de 2023 y 2025 devolvieron 403 al pedir un rango de bytes. La clasificación de uso y cobertura terrestre requiere su propia interpretación y no se suma a la serie GFC. Tras la revisión se adoptaron el umbral y el recorte descritos arriba. El visor privado se usa para la revisión del resultado.
 
 ### Contraste con Sentinel-2 de las dos celdas sensibles al umbral
 
@@ -88,3 +88,19 @@ Se estimó el NDVI como (B08 − B04) / (B08 + B04) en nueve puntos de una malla
 - Celda 1875, pérdida GFC registrada en 2020. El NDVI mediano pasó de 0,4893 en 2019 (dos escenas) a 0,5653 en 2020 (dos) y 0,6069 en 2021 (cinco).
 
 En la primera celda se observa una disminución posterior en la señal de vegetación. En la segunda, el índice aumentó. El NDVI también responde a cultivos, rebrote y variación estacional. Estas dos muestras orientan la revisión de campo y no validan el año de pérdida, el umbral de copa ni la superficie del piloto. Fuente óptica [Copernicus Sentinel-2 MSI Level-2A](https://sentinels.copernicus.eu/sentinel-data-access/sentinel-products/sentinel-2-data-products/collection-0-level-2a), catálogo [Microsoft Planetary Computer](https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a).
+
+### Contraste independiente con la clasificación anual de Sentinel-2
+
+Desde la raíz del repositorio, con Python 3.12 o posterior, instala las dependencias raster en el entorno que ejecutará el contraste.
+
+~~~powershell
+python -m pip install -r herramientas/forestal/requirements-raster.txt
+~~~
+
+Prepara `tmp/forestal-completo` con la [receta del paquete completo](evidencias/paquete-20261109/README.md). El contraste usa el recorte local de Hansen y consulta por HTTPS los GeoTIFF públicos de la clasificación anual de Impact Observatory.
+
+~~~powershell
+python herramientas/forestal/contrastar_cobertura_anual.py tmp/forestal-completo --salida tmp/cobertura-anual-santa-rosa.json
+~~~
+
+El archivo indicado en `--salida` debe ser nuevo. Usa el [resultado de Santa Rosa](evidencias/cobertura-anual-santa-rosa.json) para comparar los conteos anuales, la cobertura de clases y las huellas de los rásteres consultados.

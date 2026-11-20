@@ -9,7 +9,7 @@
 @section('contenido')
 <div id="revision-forestal" class="rf-contenido" data-consulta="{{ route('revision.forestal.consulta') }}">
     <header class="rf-cabecera"><div><h1>Revisión forestal</h1></div></header>
-    <p class="alert alert-warning rf-aviso"><strong>Revisión técnica. Método pendiente de aprobación.</strong></p>
+    <p class="alert alert-warning rf-aviso"><strong>Resultado en revisión para publicación.</strong></p>
     <p>Consulta la pérdida de cobertura arbórea en la ventana técnica del paquete. La pérdida no identifica por sí sola deforestación ni su causa.</p>
     <section class="card rf-panel" aria-labelledby="rf-titulo-consulta">
         <div class="card-body">
