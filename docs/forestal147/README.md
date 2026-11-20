@@ -88,3 +88,19 @@ Se estimó el NDVI como (B08 − B04) / (B08 + B04) en nueve puntos de una malla
 - Celda 1875, pérdida GFC registrada en 2020. El NDVI mediano pasó de 0,4893 en 2019 (dos escenas) a 0,5653 en 2020 (dos) y 0,6069 en 2021 (cinco).
 
 En la primera celda se observa una disminución posterior en la señal de vegetación. En la segunda, el índice aumentó. El NDVI también responde a cultivos, rebrote y variación estacional. Estas dos muestras orientan la revisión de campo y no validan el año de pérdida, el umbral de copa ni la superficie del piloto. Fuente óptica [Copernicus Sentinel-2 MSI Level-2A](https://sentinels.copernicus.eu/sentinel-data-access/sentinel-products/sentinel-2-data-products/collection-0-level-2a), catálogo [Microsoft Planetary Computer](https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a).
+
+### Contraste independiente con la clasificación anual de Sentinel-2
+
+Desde la raíz del repositorio, con Python 3.12 o posterior, instala las dependencias raster en el entorno que ejecutará el contraste.
+
+~~~powershell
+python -m pip install -r herramientas/forestal/requirements-raster.txt
+~~~
+
+Prepara `tmp/forestal-completo` con la [receta del paquete completo](evidencias/paquete-20261109/README.md). El contraste usa el recorte local de Hansen y consulta por HTTPS los GeoTIFF públicos de la clasificación anual de Impact Observatory.
+
+~~~powershell
+python herramientas/forestal/contrastar_cobertura_anual.py tmp/forestal-completo --salida tmp/cobertura-anual-santa-rosa.json
+~~~
+
+El archivo indicado en `--salida` debe ser nuevo. Usa el [resultado de Santa Rosa](evidencias/cobertura-anual-santa-rosa.json) para comparar los conteos anuales, la cobertura de clases y las huellas de los rásteres consultados.
