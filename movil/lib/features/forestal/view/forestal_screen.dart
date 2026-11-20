@@ -132,9 +132,11 @@ class _ForestalScreenState extends State<ForestalScreen> {
         if (mounted) Navigator.of(context).pop();
       } else {
         setState(
-          () => _error = error.statusCode == 404
-              ? 'El piloto forestal no está habilitado en este servidor.'
-              : error.message,
+          () => _error = switch (error.statusCode) {
+            404 => 'El piloto forestal no está habilitado en este servidor.',
+            503 => 'Los datos del piloto no están disponibles en este momento.',
+            _ => error.message,
+          },
         );
       }
     } catch (_) {
@@ -243,7 +245,7 @@ class _ForestalScreenState extends State<ForestalScreen> {
           const SizedBox(height: 8),
           FilledButton(
             onPressed: _loading || _from > _to ? null : _load,
-            child: const Text('Consultar'),
+            child: Text(_error == null ? 'Consultar' : 'Reintentar'),
           ),
           if (_loading) const LinearProgressIndicator(),
           if (_error case final error?)
