@@ -1,0 +1,245 @@
+{
+  "estado": "revision_tecnica",
+  "fechas": [
+    "2025-12-06",
+    "2025-12-18"
+  ],
+  "candidato": 18,
+  "radio_metros": 500,
+  "crs": "EPSG:32720",
+  "resolucion_metros": 30,
+  "sha256_referencia": "b577f6f92e904e59e23c081d3636b8ab66158103c9c511f2d0e382a46da60168",
+  "sha256_recorte_radar": "c00e7526034b31fbca3d753152a31fe89b1a5792ddf2359b776be53ed2dd22d3",
+  "fuentes": [
+    {
+      "tipo": "wtr",
+      "fecha": "2025-12-06",
+      "archivo": "OPERA_L3_DSWx-S1_T20KMG_20251206T095036Z_20260413T201253Z_S1C_30_v1.0_B01_WTR.tif",
+      "url": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/OPERA_L3_DSWX-S1_V1/OPERA_L3_DSWx-S1_T20KMG_20251206T095036Z_20260413T201253Z_S1C_30_v1.0_B01_WTR.tif",
+      "md5": "ea49def7f44a53f78399f37733634899",
+      "bytes": 226230,
+      "sha256": "812c12fd0300f39e6d3b232fd2b67294207ac7b645b3f5768c3cb4c133a8fed5"
+    },
+    {
+      "tipo": "wtr",
+      "fecha": "2025-12-18",
+      "archivo": "OPERA_L3_DSWx-S1_T20KMG_20251218T095044Z_20251218T162455Z_S1C_30_v1.0_B01_WTR.tif",
+      "url": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/OPERA_L3_DSWX-S1_V1/OPERA_L3_DSWx-S1_T20KMG_20251218T095044Z_20251218T162455Z_S1C_30_v1.0_B01_WTR.tif",
+      "md5": "ab5be9cb11c81aa667f7b838ed7fe4fc",
+      "bytes": 237616,
+      "sha256": "56dec9693e3c6829f06ae54d93d5449b0566e2c1857915fbdd35af075665f435"
+    },
+    {
+      "tipo": "rtc",
+      "fecha": "2025-12-06",
+      "archivo": "OPERA_L2_RTC-S1_T083-177307-IW1_20251206T095035Z_20251206T125450Z_S1C_30_v1.0_mask.tif",
+      "url": "https://cumulus.asf.earthdatacloud.nasa.gov/OPERA/OPERA_L2_RTC-S1/OPERA_L2_RTC-S1_T083-177307-IW1_20251206T095035Z_20251206T125450Z_S1C_30_v1.0/OPERA_L2_RTC-S1_T083-177307-IW1_20251206T095035Z_20251206T125450Z_S1C_30_v1.0_mask.tif",
+      "md5": "e291a56ccc579d383dad772123a6059a",
+      "bytes": 50924,
+      "sha256": "7e2c935cc97a88b9cfd5b365b3dd6a0ee099a0c9441cdaa73901127b78c41c7c"
+    },
+    {
+      "tipo": "rtc",
+      "fecha": "2025-12-18",
+      "archivo": "OPERA_L2_RTC-S1_T083-177307-IW1_20251218T095035Z_20251218T134238Z_S1C_30_v1.0_mask.tif",
+      "url": "https://cumulus.asf.earthdatacloud.nasa.gov/OPERA/OPERA_L2_RTC-S1/OPERA_L2_RTC-S1_T083-177307-IW1_20251218T095035Z_20251218T134238Z_S1C_30_v1.0/OPERA_L2_RTC-S1_T083-177307-IW1_20251218T095035Z_20251218T134238Z_S1C_30_v1.0_mask.tif",
+      "md5": "15f537d21e0e998433d58d00c44da8e8",
+      "bytes": 50931,
+      "sha256": "03f3ef2f6ded4a91125db2ee7e5073c5313ed67074134aa47e42e094548e7bdb"
+    }
+  ],
+  "cobertura_radiometrica": {
+    "poligono": {
+      "celdas": 392,
+      "comparables": 392,
+      "coberturaPct": 100.0
+    },
+    "entorno500m": {
+      "celdas": 2974,
+      "comparables": 2490,
+      "coberturaPct": 83.7256
+    },
+    "fueraDeReferenciaEnEntorno": {
+      "celdas": 2197,
+      "comparables": 1713,
+      "coberturaPct": 77.97
+    }
+  },
+  "rtc_con_mascaras": {
+    "poligono": {
+      "celdas": 392,
+      "comparables": 392,
+      "coberturaPct": 100.0
+    },
+    "entorno500m": {
+      "celdas": 2974,
+      "comparables": 2490,
+      "coberturaPct": 83.7256
+    },
+    "fueraDeReferenciaEnEntorno": {
+      "celdas": 2197,
+      "comparables": 1713,
+      "coberturaPct": 77.97
+    }
+  },
+  "dswx": {
+    "poligono": {
+      "celdas": 392,
+      "comparables": 392,
+      "coberturaPct": 100.0,
+      "clases": {
+        "aguaNueva": {
+          "celdas": 237,
+          "ha": 21.33
+        },
+        "aguaPersistente": {
+          "celdas": 60,
+          "ha": 5.4
+        },
+        "aguaPerdida": {
+          "celdas": 14,
+          "ha": 1.26
+        },
+        "sinAguaEnAmbas": {
+          "celdas": 81,
+          "ha": 7.29
+        }
+      }
+    },
+    "entorno500m": {
+      "celdas": 2974,
+      "comparables": 2540,
+      "coberturaPct": 85.4069,
+      "clases": {
+        "aguaNueva": {
+          "celdas": 552,
+          "ha": 49.68
+        },
+        "aguaPersistente": {
+          "celdas": 70,
+          "ha": 6.3
+        },
+        "aguaPerdida": {
+          "celdas": 63,
+          "ha": 5.67
+        },
+        "sinAguaEnAmbas": {
+          "celdas": 1855,
+          "ha": 166.95
+        }
+      }
+    },
+    "fueraDeReferenciaEnEntorno": {
+      "celdas": 2197,
+      "comparables": 1763,
+      "coberturaPct": 80.2458,
+      "clases": {
+        "aguaNueva": {
+          "celdas": 96,
+          "ha": 8.64
+        },
+        "aguaPersistente": {
+          "celdas": 9,
+          "ha": 0.81
+        },
+        "aguaPerdida": {
+          "celdas": 40,
+          "ha": 3.6
+        },
+        "sinAguaEnAmbas": {
+          "celdas": 1618,
+          "ha": 145.62
+        }
+      }
+    }
+  },
+  "dswx_en_interseccion_con_rtc": {
+    "poligono": {
+      "celdas": 392,
+      "comparables": 392,
+      "coberturaPct": 100.0,
+      "clases": {
+        "aguaNueva": {
+          "celdas": 237,
+          "ha": 21.33
+        },
+        "aguaPersistente": {
+          "celdas": 60,
+          "ha": 5.4
+        },
+        "aguaPerdida": {
+          "celdas": 14,
+          "ha": 1.26
+        },
+        "sinAguaEnAmbas": {
+          "celdas": 81,
+          "ha": 7.29
+        }
+      }
+    },
+    "entorno500m": {
+      "celdas": 2974,
+      "comparables": 2490,
+      "coberturaPct": 83.7256,
+      "clases": {
+        "aguaNueva": {
+          "celdas": 552,
+          "ha": 49.68
+        },
+        "aguaPersistente": {
+          "celdas": 70,
+          "ha": 6.3
+        },
+        "aguaPerdida": {
+          "celdas": 63,
+          "ha": 5.67
+        },
+        "sinAguaEnAmbas": {
+          "celdas": 1805,
+          "ha": 162.45
+        }
+      }
+    },
+    "fueraDeReferenciaEnEntorno": {
+      "celdas": 2197,
+      "comparables": 1713,
+      "coberturaPct": 77.97,
+      "clases": {
+        "aguaNueva": {
+          "celdas": 96,
+          "ha": 8.64
+        },
+        "aguaPersistente": {
+          "celdas": 9,
+          "ha": 0.81
+        },
+        "aguaPerdida": {
+          "celdas": 40,
+          "ha": 3.6
+        },
+        "sinAguaEnAmbas": {
+          "celdas": 1568,
+          "ha": 141.12
+        }
+      }
+    }
+  },
+  "vectorizacion": {
+    "agua_nueva": {
+      "celdas": 552,
+      "poligonos": 32
+    },
+    "agua_persistente": {
+      "celdas": 70,
+      "poligonos": 20
+    },
+    "agua_retirada": {
+      "celdas": 63,
+      "poligonos": 24
+    },
+    "no_comparable": {
+      "celdas": 484,
+      "poligonos": 1
+    }
+  }
+}

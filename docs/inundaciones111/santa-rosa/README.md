@@ -17,6 +17,14 @@ python docs/inundaciones111/santa-rosa/reproducir.py tmp/agua111-insumos RUTA_A_
 
 Sustituye `RUTA_A_LOS_CUATRO_GEOTIFF` por la carpeta de descargas. Usa comillas si el nombre contiene espacios. Los directorios de salida deben ser nuevos. La receta comprueba el tamaño y MD5 publicados por CMR para los cuatro GeoTIFF, las huellas de Copernicus y los conteos de cobertura del recorte de Sentinel-1. Guarda `contraste.json` con procedencia y métricas, y `capa-revision.geojson` en WGS84.
 
+## Revisar la evidencia sin Earthdata
+
+- [Informe de contraste](evidencia/contraste.json). Abre `dswx_en_interseccion_con_rtc.entorno500m` para comprobar cobertura y superficies. Las diferencias fuera de los polígonos de Copernicus se registran en `fueraDeReferenciaEnEntorno`.
+- [Capa GeoJSON de revisión](evidencia/capa-revision.geojson). Contiene 77 polígonos en WGS84. El atributo `clase` distingue agua nueva, persistente, retirada y área no comparable.
+- [Mapas antes y después](evidencia/comparacion-antes-despues.png) y [mapa de cambios frente a Copernicus](evidencia/comparacion-cambios-copernicus.png). Los dos se generaron con los GeoTIFF originales y el mismo recorte.
+
+Para recalcular desde los píxeles, usa la receta anterior con los cuatro originales de OPERA.
+
 ## Resultado que debe obtener el revisor
 
 - 2.490 de 2.974 celdas comparables a 30 m en UTM 20S (83,7256 %). Se conservan 484 celdas como no comparables.
