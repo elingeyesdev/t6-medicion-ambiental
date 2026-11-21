@@ -20,11 +20,13 @@ class ForestalScreen extends StatefulWidget {
   const ForestalScreen({
     required this.api,
     required this.onUnauthorized,
+    this.showAppBar = true,
     super.key,
   });
 
   final GeoCruzApiClient api;
   final VoidCallback onUnauthorized;
+  final bool showAppBar;
 
   @override
   State<ForestalScreen> createState() => _ForestalScreenState();
@@ -212,146 +214,192 @@ class _ForestalScreenState extends State<ForestalScreen> {
   @override
   Widget build(BuildContext context) {
     final result = _result;
-    final selected = _selected;
-    final period = _from == _to ? '$_from' : '$_from–$_to';
     return Scaffold(
-      appBar: AppBar(title: const Text('Cobertura forestal')),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          Text(
-            'Piloto de Santa Rosa',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Pérdida de cobertura arbórea en el recorte técnico. Resultado en revisión para publicación.',
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: _yearInput('Desde', _from, (year) => _from = year),
-              ),
-              const SizedBox(width: 12),
-              Expanded(child: _yearInput('Hasta', _to, (year) => _to = year)),
+      appBar: widget.showAppBar
+          ? AppBar(title: const Text('Cobertura forestal'))
+          : null,
+      body: result == null
+          ? _queryPanel(context, scrollController: null)
+          : Stack(
+              fit: StackFit.expand,
+              children: [
+                _forestMap(result),
+                DraggableScrollableSheet(
+                  initialChildSize: 0.38,
+                  minChildSize: 0.25,
+                  maxChildSize: 0.82,
+                  snap: true,
+                  snapSizes: const [0.38, 0.82],
+                  builder: (context, scrollController) => Material(
+                    color: Theme.of(context).colorScheme.surface,
+                    elevation: 8,
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(24),
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: _queryPanel(
+                      context,
+                      scrollController: scrollController,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+    );
+  }
+
+  Widget _forestMap(_Result result) {
+    final selected = _selected;
+    return FlutterMap(
+      options: MapOptions(
+        initialCameraFit: CameraFit.bounds(
+          bounds: result.bounds,
+          padding: const EdgeInsets.all(24),
+        ),
+        maxZoom: 18,
+      ),
+      children: [
+        _base.toLayer(),
+        GestureDetector(
+          onTap: () {
+            final id = _hits.value?.hitValues.firstOrNull;
+            if (id != null) setState(() => _selected = id);
+          },
+          child: PolygonLayer<int>(
+            hitNotifier: _hits,
+            polygons: [
+              for (final (i, cell) in result.cells.indexed)
+                Polygon<int>(
+                  points: cell.points,
+                  color: _color(
+                    cell.year,
+                  ).withValues(alpha: i == selected ? .9 : .6),
+                  borderColor: i == selected ? Colors.black : _color(cell.year),
+                  borderStrokeWidth: i == selected ? 3 : 1,
+                  hitValue: i,
+                ),
             ],
           ),
-          if (_from > _to)
+        ),
+        RichAttributionWidget(
+          attributions: [TextSourceAttribution(_base.attribution)],
+        ),
+      ],
+    );
+  }
+
+  Widget _queryPanel(
+    BuildContext context, {
+    required ScrollController? scrollController,
+  }) {
+    final result = _result;
+    final selected = _selected;
+    final period = _from == _to ? '$_from' : '$_from–$_to';
+    return ListView(
+      controller: scrollController,
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
+      children: [
+        if (scrollController != null)
+          Center(
+            child: Container(
+              width: 34,
+              height: 4,
+              margin: const EdgeInsets.only(bottom: 12),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.outlineVariant,
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+          ),
+        Text(
+          'Piloto forestal · Santa Rosa',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'Pérdida de cobertura arbórea en revisión técnica.',
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+        ),
+        const SizedBox(height: 14),
+        Row(
+          children: [
+            Expanded(child: _yearInput('Desde', _from, (year) => _from = year)),
+            const SizedBox(width: 12),
+            Expanded(child: _yearInput('Hasta', _to, (year) => _to = year)),
+          ],
+        ),
+        if (_from > _to)
+          const Padding(
+            padding: EdgeInsets.only(top: 8),
+            child: Text('El año inicial debe ser anterior o igual al final.'),
+          ),
+        const SizedBox(height: 8),
+        FilledButton(
+          onPressed: _loading || _from > _to ? null : _load,
+          child: Text(_error == null ? 'Consultar' : 'Reintentar'),
+        ),
+        if (_loading) const LinearProgressIndicator(),
+        if (_error case final error?)
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Text(error),
+            ),
+          ),
+        if (result != null) ...[
+          const SizedBox(height: 12),
+          Text(result.area, style: Theme.of(context).textTheme.headlineSmall),
+          Text(
+            '${result.cells.length} ${result.cells.length == 1 ? 'polígono' : 'polígonos'} · $period',
+          ),
+          Text(result.coverage),
+          if (selected != null)
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text('Polígono ${selected + 1}'),
+              subtitle: Text(
+                '${result.cells[selected].year} · ${_area(result.cells[selected].area)}',
+              ),
+            )
+          else if (result.cells.isEmpty)
             const Padding(
-              padding: EdgeInsets.only(top: 8),
-              child: Text('El año inicial debe ser anterior o igual al final.'),
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: Text('No hay polígonos de pérdida en este período.'),
+            )
+          else
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: Text(
+                'Toca un polígono del mapa para consultar su año y superficie.',
+              ),
+            ),
+          if (result.cells.isNotEmpty)
+            OutlinedButton.icon(
+              onPressed: () => _pickCell(result.cells),
+              icon: const Icon(Icons.list_rounded),
+              label: const Text('Ver lista de polígonos'),
+            ),
+          if (result.years.isNotEmpty)
+            Wrap(
+              spacing: 12,
+              children: [
+                for (final year in result.years)
+                  Chip(
+                    avatar: CircleAvatar(backgroundColor: _color(year)),
+                    label: Text('$year'),
+                  ),
+              ],
             ),
           const SizedBox(height: 8),
-          FilledButton(
-            onPressed: _loading || _from > _to ? null : _load,
-            child: Text(_error == null ? 'Consultar' : 'Reintentar'),
+          Text('Fuente: Hansen GFC · ${result.version}'),
+          const Text('Cobertura base 2000 · Umbral de copa ≥ 30 %'),
+          const Text(
+            'El resultado describe el recorte observado. La causa de la pérdida requiere verificación.',
           ),
-          if (_loading) const LinearProgressIndicator(),
-          if (_error case final error?)
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(error),
-              ),
-            ),
-          if (result != null) ...[
-            const SizedBox(height: 12),
-            Text(result.area, style: Theme.of(context).textTheme.headlineSmall),
-            Text(
-              '${result.cells.length} ${result.cells.length == 1 ? 'polígono' : 'polígonos'} · $period',
-            ),
-            Text(result.coverage),
-            const SizedBox(height: 12),
-            SizedBox(
-              height: 290,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: FlutterMap(
-                  options: MapOptions(
-                    initialCameraFit: CameraFit.bounds(
-                      bounds: result.bounds,
-                      padding: const EdgeInsets.all(12),
-                    ),
-                    maxZoom: 18,
-                  ),
-                  children: [
-                    _base.toLayer(),
-                    GestureDetector(
-                      onTap: () {
-                        final id = _hits.value?.hitValues.firstOrNull;
-                        if (id != null) setState(() => _selected = id);
-                      },
-                      child: PolygonLayer<int>(
-                        hitNotifier: _hits,
-                        polygons: [
-                          for (final (i, cell) in result.cells.indexed)
-                            Polygon<int>(
-                              points: cell.points,
-                              color: _color(
-                                cell.year,
-                              ).withValues(alpha: i == selected ? .9 : .6),
-                              borderColor: i == selected
-                                  ? Colors.black
-                                  : _color(cell.year),
-                              borderStrokeWidth: i == selected ? 3 : 1,
-                              hitValue: i,
-                            ),
-                        ],
-                      ),
-                    ),
-                    RichAttributionWidget(
-                      attributions: [TextSourceAttribution(_base.attribution)],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            if (selected != null)
-              ListTile(
-                title: Text('Polígono ${selected + 1}'),
-                subtitle: Text(
-                  '${result.cells[selected].year} · ${_area(result.cells[selected].area)}',
-                ),
-              )
-            else if (result.cells.isEmpty)
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Text('No hay polígonos de pérdida en este período.'),
-              )
-            else
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  'Toca un polígono para consultar su año y superficie.',
-                ),
-              ),
-            if (result.cells.isNotEmpty)
-              OutlinedButton.icon(
-                onPressed: () => _pickCell(result.cells),
-                icon: const Icon(Icons.list_rounded),
-                label: const Text('Ver lista de polígonos'),
-              ),
-            if (result.years.isNotEmpty)
-              Wrap(
-                spacing: 12,
-                children: [
-                  for (final year in result.years)
-                    Chip(
-                      avatar: CircleAvatar(backgroundColor: _color(year)),
-                      label: Text('$year'),
-                    ),
-                ],
-              ),
-            const SizedBox(height: 8),
-            Text('Fuente: Hansen GFC · ${result.version}'),
-            const Text('Cobertura base 2000 · Umbral de copa ≥ 30 %'),
-            const Text(
-              'El resultado describe el recorte observado. La causa de la pérdida requiere verificación.',
-            ),
-          ],
         ],
-      ),
+      ],
     );
   }
 }
