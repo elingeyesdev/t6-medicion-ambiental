@@ -131,7 +131,6 @@ class _ForestalScreenState extends State<ForestalScreen> {
       if (!mounted) return;
       if (error.statusCode == 401) {
         widget.onUnauthorized();
-        if (mounted) Navigator.of(context).pop();
       } else {
         setState(
           () => _error = switch (error.statusCode) {
