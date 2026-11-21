@@ -70,7 +70,11 @@ class _GeoCruzAppState extends State<GeoCruzApp> {
 
   Future<void> _expireSession() async {
     await _auth.clearSession();
-    if (mounted) setState(() => _user = null);
+    if (!mounted) return;
+    setState(() {
+      _user = null;
+      _sessionError = 'Tu sesión venció. Vuelve a iniciar sesión.';
+    });
   }
 
   Future<void> _signOut() async {

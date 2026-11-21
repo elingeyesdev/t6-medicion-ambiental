@@ -452,6 +452,186 @@
         }
       }
     },
+    "/api/v1/forestal/piloto": {
+      "get": {
+        "summary": "Consultar el piloto forestal de Santa Rosa",
+        "description": "Disponible en entornos de revisión habilitados, con cuenta activa y permisos de mapa y datos. Los años son inclusivos (2001–2025). El área corresponde al recorte técnico. Cero es un resultado válido; la cobertura observacional puede permanecer sin informar.",
+        "security": [
+          {
+            "TokenCuenta": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "desde",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 2001,
+              "maximum": 2025
+            }
+          },
+          {
+            "name": "hasta",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 2001,
+              "maximum": 2025
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resumen y polígonos del mismo intervalo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "revision",
+                    "resumen",
+                    "capa"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "revision": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "resumen": {
+                      "type": "object",
+                      "required": [
+                        "consulta",
+                        "total_periodo_ha",
+                        "serie",
+                        "bbox"
+                      ],
+                      "properties": {
+                        "consulta": {
+                          "type": "object"
+                        },
+                        "total_periodo_ha": {
+                          "type": "string",
+                          "description": "Área decimal en hectáreas"
+                        },
+                        "serie": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "bbox": {
+                          "type": "array",
+                          "minItems": 4,
+                          "maxItems": 4,
+                          "items": {
+                            "type": "number"
+                          }
+                        },
+                        "cobertura_observaciones_fraccion": {
+                          "type": "number",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "capa": {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "features"
+                      ],
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "FeatureCollection"
+                          ]
+                        },
+                        "features": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sesión requerida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Cuenta sin acceso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Revisión deshabilitada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Años o filtros inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Límite de consultas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Paquete de revisión no disponible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/deforestacion": {
       "get": {
         "summary": "Integración pendiente; responde 503",
@@ -488,6 +668,9 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "TokenCuenta": { "type": "http", "scheme": "bearer" }
+    },
     "schemas": {
       "Territorio": {
         "type": "object",

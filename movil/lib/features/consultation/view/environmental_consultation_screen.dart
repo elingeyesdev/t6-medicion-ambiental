@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/network/geocruz_api_client.dart';
 import '../../../uikits/models/nav_menu.dart';
 import '../../drought/view/drought_screen.dart';
+import '../../forestal/view/forestal_screen.dart';
 import '../../hotspots/view/hotspots_screen.dart';
 import '../../inundations/view/inundations_screen.dart';
 
@@ -44,6 +45,21 @@ class _EnvironmentalConsultationScreenState
     return Scaffold(
       appBar: AppBar(
         title: const Text('Consultas'),
+        actions: [
+          if (const bool.fromEnvironment('GEOSUR_FORESTAL_PILOTO'))
+            TextButton.icon(
+              icon: const Icon(Icons.forest_outlined),
+              label: const Text('Forestal'),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => ForestalScreen(
+                    api: widget.apiClient,
+                    onUnauthorized: widget.onUnauthorized,
+                  ),
+                ),
+              ),
+            ),
+        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(52),
           child: Padding(
@@ -58,11 +74,11 @@ class _EnvironmentalConsultationScreenState
                           ? _sections[i].selectedIcon
                           : _sections[i].icon,
                     ),
-              label: Text(
-                _sections[i].title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+                    label: Text(
+                      _sections[i].title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
               ],
               selected: {_index},
