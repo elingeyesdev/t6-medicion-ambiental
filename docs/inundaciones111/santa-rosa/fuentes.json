@@ -1,0 +1,73 @@
+{
+  "copernicus": {
+    "url": "https://rapidmapping.emergency.copernicus.eu/backend/EMSR853/AOI02/DEL_PRODUCT/EMSR853_AOI02_DEL_PRODUCT_v2.zip",
+    "bytes": 8491433,
+    "sha256": "fb6d6a3947f3e533b10bc9b355a54cd94232729ca666063a597746186a4fdba9",
+    "capa": "EMSR853_AOI02_DEL_PRODUCT_observedEventA_v2.json",
+    "sha256Capa": "b577f6f92e904e59e23c081d3636b8ab66158103c9c511f2d0e382a46da60168"
+  },
+  "sentinel1": [
+    {
+      "escena": "S1C_IW_GRDH_1SDV_20251206T095018_20251206T095043_005329_00A983_rtc",
+      "banda": "vv",
+      "url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/12/6/IW/DV/S1C_IW_GRDH_1SDV_20251206T095018_20251206T095043_005329_00A983_737F/measurement/iw-vv.rtc.tiff",
+      "pixelesValidos": 146892,
+      "sha256PixelesFloat32LE": "f075329616d8d2effcf42a64ab96c4d86243a0578f7d022d4d3d110468acf6de"
+    },
+    {
+      "escena": "S1C_IW_GRDH_1SDV_20251206T095018_20251206T095043_005329_00A983_rtc",
+      "banda": "vh",
+      "url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/12/6/IW/DV/S1C_IW_GRDH_1SDV_20251206T095018_20251206T095043_005329_00A983_737F/measurement/iw-vh.rtc.tiff",
+      "pixelesValidos": 146892,
+      "sha256PixelesFloat32LE": "2fdb25df4f6563eb376971d03e2c50edbba75e44131f5fd5c56889d8ba2df34a"
+    },
+    {
+      "escena": "S1C_IW_GRDH_1SDV_20251218T095018_20251218T095043_005504_00AF78_rtc",
+      "banda": "vv",
+      "url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/12/18/IW/DV/S1C_IW_GRDH_1SDV_20251218T095018_20251218T095043_005504_00AF78_3225/measurement/iw-vv.rtc.tiff",
+      "pixelesValidos": 145885,
+      "sha256PixelesFloat32LE": "39ca58dc836cc82a3ca0b68d58be5d96c0eccd981d329e67247c0a60f749b733"
+    },
+    {
+      "escena": "S1C_IW_GRDH_1SDV_20251218T095018_20251218T095043_005504_00AF78_rtc",
+      "banda": "vh",
+      "url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/12/18/IW/DV/S1C_IW_GRDH_1SDV_20251218T095018_20251218T095043_005504_00AF78_3225/measurement/iw-vh.rtc.tiff",
+      "pixelesValidos": 145885,
+      "sha256PixelesFloat32LE": "80669646cef42eeda523d45e9c5b01d567e8cd7ea0f369692099c9603fe99625"
+    }
+  ],
+  "opera": [
+    {
+      "tipo": "wtr",
+      "fecha": "2025-12-06",
+      "archivo": "OPERA_L3_DSWx-S1_T20KMG_20251206T095036Z_20260413T201253Z_S1C_30_v1.0_B01_WTR.tif",
+      "url": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/OPERA_L3_DSWX-S1_V1/OPERA_L3_DSWx-S1_T20KMG_20251206T095036Z_20260413T201253Z_S1C_30_v1.0_B01_WTR.tif",
+      "md5": "ea49def7f44a53f78399f37733634899",
+      "bytes": 226230
+    },
+    {
+      "tipo": "wtr",
+      "fecha": "2025-12-18",
+      "archivo": "OPERA_L3_DSWx-S1_T20KMG_20251218T095044Z_20251218T162455Z_S1C_30_v1.0_B01_WTR.tif",
+      "url": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/OPERA_L3_DSWX-S1_V1/OPERA_L3_DSWx-S1_T20KMG_20251218T095044Z_20251218T162455Z_S1C_30_v1.0_B01_WTR.tif",
+      "md5": "ab5be9cb11c81aa667f7b838ed7fe4fc",
+      "bytes": 237616
+    },
+    {
+      "tipo": "rtc",
+      "fecha": "2025-12-06",
+      "archivo": "OPERA_L2_RTC-S1_T083-177307-IW1_20251206T095035Z_20251206T125450Z_S1C_30_v1.0_mask.tif",
+      "url": "https://cumulus.asf.earthdatacloud.nasa.gov/OPERA/OPERA_L2_RTC-S1/OPERA_L2_RTC-S1_T083-177307-IW1_20251206T095035Z_20251206T125450Z_S1C_30_v1.0/OPERA_L2_RTC-S1_T083-177307-IW1_20251206T095035Z_20251206T125450Z_S1C_30_v1.0_mask.tif",
+      "md5": "e291a56ccc579d383dad772123a6059a",
+      "bytes": 50924
+    },
+    {
+      "tipo": "rtc",
+      "fecha": "2025-12-18",
+      "archivo": "OPERA_L2_RTC-S1_T083-177307-IW1_20251218T095035Z_20251218T134238Z_S1C_30_v1.0_mask.tif",
+      "url": "https://cumulus.asf.earthdatacloud.nasa.gov/OPERA/OPERA_L2_RTC-S1/OPERA_L2_RTC-S1_T083-177307-IW1_20251218T095035Z_20251218T134238Z_S1C_30_v1.0/OPERA_L2_RTC-S1_T083-177307-IW1_20251218T095035Z_20251218T134238Z_S1C_30_v1.0_mask.tif",
+      "md5": "15f537d21e0e998433d58d00c44da8e8",
+      "bytes": 50931
+    }
+  ]
+}
