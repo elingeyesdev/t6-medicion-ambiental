@@ -44,7 +44,7 @@ function iniciar() {
     restaurar(defecto);
     let inicial = { ...defecto };
     const parametros = new URLSearchParams(location.search);
-    const consultaEnUrl = parametros.has('desde') && parametros.has('hasta');
+    const consultaEnUrl = parametros.has('desde') || parametros.has('hasta');
 
     async function cargarCatalogo() {
         document.getElementById('estado-catalogo').textContent = 'Cargando…';
@@ -72,24 +72,30 @@ function iniciar() {
             }
             document.getElementById('campos-filtros').disabled = false;
             document.getElementById('estado-catalogo').textContent = '';
-            if (consultaEnUrl) {
-                const preseleccion = Object.fromEntries(['desde', 'hasta', 'provincia', 'municipio', 'confianza'].filter(k => parametros.has(k)).map(k => [k, parametros.get(k)]));
-                // Una URL desconocida no se transforma silenciosamente en el departamento completo.
-                for (const [nombre, tipo] of [['provincia', 'provincia'], ['municipio', 'municipio']]) {
-                    if (preseleccion[nombre] && !territorios.some(t => t.identificador === preseleccion[nombre] && t.tipo === tipo)) throw new Error('La URL contiene un territorio desconocido. Revisa los filtros antes de consultar.');
-                }
-                if (preseleccion.provincia && preseleccion.municipio && territorios.find(t => t.identificador === preseleccion.municipio)?.padre !== preseleccion.provincia) throw new Error('La provincia y el municipio de la URL son incompatibles.');
-                if (preseleccion.municipio && !preseleccion.provincia) preseleccion.provincia = territorios.find(t => t.identificador === preseleccion.municipio).padre;
-                if (preseleccion.confianza && !['alta', 'nominal', 'baja', 'desconocida'].includes(preseleccion.confianza)) throw new Error('La confianza de la URL no es válida.');
-                validarInstanteUrl(preseleccion.desde); validarInstanteUrl(preseleccion.hasta);
-                restaurar(preseleccion);
-                inicial = { ...preseleccion };
-                await consulta.consultar(filtrosDelFormulario(formulario, reloj.ahora()));
-            }
         } catch (error) {
             document.getElementById('estado-catalogo').textContent = `No se pudo preparar la selección: ${error.message || 'comprueba la conexión'}`;
             document.getElementById('reintentar-catalogo').hidden = false;
+            return;
         } finally { clearTimeout(tiempo); }
+        if (!consultaEnUrl) return;
+        try {
+            const preseleccion = Object.fromEntries(['desde', 'hasta', 'provincia', 'municipio', 'confianza'].filter(k => parametros.has(k)).map(k => [k, parametros.get(k)]));
+            // Una URL desconocida no se transforma silenciosamente en el departamento completo.
+            for (const [nombre, tipo] of [['provincia', 'provincia'], ['municipio', 'municipio']]) {
+                if (preseleccion[nombre] && !territorios.some(t => t.identificador === preseleccion[nombre] && t.tipo === tipo)) throw new Error('La URL contiene un territorio desconocido. Revisa los filtros antes de consultar.');
+            }
+            if (preseleccion.provincia && preseleccion.municipio && territorios.find(t => t.identificador === preseleccion.municipio)?.padre !== preseleccion.provincia) throw new Error('La provincia y el municipio de la URL son incompatibles.');
+            if (preseleccion.municipio && !preseleccion.provincia) preseleccion.provincia = territorios.find(t => t.identificador === preseleccion.municipio).padre;
+            if (preseleccion.confianza && !['alta', 'nominal', 'baja', 'desconocida'].includes(preseleccion.confianza)) throw new Error('La confianza de la URL no es válida.');
+            validarInstanteUrl(preseleccion.desde); validarInstanteUrl(preseleccion.hasta);
+            restaurar(preseleccion);
+            const filtros = filtrosDelFormulario(formulario, reloj.ahora());
+            inicial = { ...filtros };
+            await consulta.consultar(filtros);
+        } catch (error) {
+            consulta.editar();
+            consulta.emitir({ fase: 'error', error, pendiente: null });
+        }
     }
     provincia.addEventListener('change', () => actualizarMunicipios());
     municipio.addEventListener('change', () => {
