@@ -1,6 +1,6 @@
 @props(['nombre'])
 @php
-    $originales = ['map', 'report', 'users', 'bell', 'mail', 'flask'];
+    $originales = ['map', 'report', 'users', 'bell', 'mail', 'flask', 'mediciones'];
     $permitidos = ['world', 'layout-dashboard', 'map-pin', 'flame', 'cloud-rain', 'arrow-right', ...$originales];
     $icono = in_array($nombre, $permitidos, true) ? $nombre : 'world';
 @endphp

@@ -18,7 +18,7 @@ export function iniciarAgua(mapa,L) {
         no_comparable:{color:'#555',fillColor:'#bbb',dashArray:'2 5',fillOpacity:.2},
     };
     let alMostrarResultado=()=>{},alMostrarError=()=>{};
-    const etiquetas={aguaPersistenteKm2:'Agua en ambas fechas',aguaNuevaKm2:'Agua nueva',aguaRetiradaKm2:'Agua retirada'};
+    const indicadores={agua_persistente:'aguaPersistenteKm2',agua_nueva:'aguaNuevaKm2',agua_retirada:'aguaRetiradaKm2'};
     function encuadrar(bounds,maxZoom) {
         const grande=window.innerWidth>700;
         mapa.fitBounds(bounds,{
@@ -35,7 +35,9 @@ export function iniciarAgua(mapa,L) {
         texto.textContent=clasesAgua[feature.properties.clase];
         capa.bindPopup(texto).openPopup();
         for (const boton of el('agua-ubicaciones').querySelectorAll('button')) {
-            boton.setAttribute('aria-pressed',String(boton.dataset.id===feature.id));
+            const activo=boton.dataset.id===feature.id;
+            boton.setAttribute('aria-pressed',String(activo));
+            if (activo) boton.closest('details').open=true;
         }
     }
     function mostrar(estado) {
@@ -51,28 +53,54 @@ export function iniciarAgua(mapa,L) {
         escribir('agua-fechas',fecha(dato.comparacion.referencia)+' al '+fecha(dato.comparacion.comparacion));
         escribir('agua-cobertura','Área comparable: '+num.format(dato.cobertura.areaComparableKm2)+' de '+
             num.format(dato.cobertura.areaEstudiadaKm2)+' km² ('+num.format(100*dato.cobertura.fraccionComparable)+' %).');
-        for (const [clave,nombre] of Object.entries(etiquetas)) {
+        for (const [clase,clave] of Object.entries(indicadores)) {
+            const tarjeta=document.createElement('div');
+            tarjeta.dataset.clase=clase;
             const termino=document.createElement('dt'),valor=document.createElement('dd');
-            termino.textContent=nombre;
+            termino.textContent=clasesAgua[clase];
             valor.textContent=dato.resumen[clave]===null?'Sin datos':num.format(dato.resumen[clave])+' km²';
-            el('agua-resumen').append(termino,valor);
+            tarjeta.append(termino,valor);
+            el('agua-resumen').append(tarjeta);
         }
         escribir('agua-fuente',dato.fuente.nombre+'; '+dato.fuente.metodo+'; '+dato.fuente.resolucionMetros+' m.');
         for (const advertencia of dato.advertencias ?? []) {
             const nota=document.createElement('li');nota.textContent=advertencia;el('agua-advertencias').append(nota);
         }
+        const grupos=new Map(Object.keys(clasesAgua).map(clase=>[clase,[]]));
         for (const feature of dato.capa.features) {
-            const capa=L.geoJSON(feature,{style:{...estilos[feature.properties.clase],weight:2,
-                fillOpacity:feature.properties.clase==='no_comparable'?.2:.6}}).addTo(capas);
+            const clase=feature.properties.clase;
+            const capa=L.geoJSON(feature,{style:{...estilos[clase],weight:2,
+                fillOpacity:clase==='no_comparable'?.2:.6}}).addTo(capas);
             capasPorId.set(feature.id,capa);
             capa.on('click',()=>seleccionar(feature));
-            const fila=document.createElement('li'),boton=document.createElement('button');
-            boton.type='button';boton.className='btn btn-outline-primary';
-            boton.dataset.id=feature.id;boton.textContent=clasesAgua[feature.properties.clase]+' (ver en el mapa)';
-            boton.setAttribute('aria-pressed','false');
-            boton.addEventListener('click',()=>seleccionar(feature));
-            fila.append(boton);el('agua-ubicaciones').append(fila);
+            grupos.get(clase).push(feature);
         }
+        for (const [clase,features] of grupos) {
+            if (!features.length) continue;
+            const grupo=document.createElement('details'),titulo=document.createElement('summary');
+            const categoria=document.createElement('span'),total=document.createElement('span');
+            const lista=document.createElement('ul');
+            grupo.dataset.clase=clase;
+            categoria.textContent=clasesAgua[clase];
+            total.className='agua-total';
+            total.textContent=num.format(features.length);
+            titulo.append(categoria,total);
+            for (const [indice,feature] of features.entries()) {
+                const fila=document.createElement('li'),boton=document.createElement('button');
+                boton.type='button';
+                boton.className='btn btn-outline-primary';
+                boton.dataset.id=feature.id;
+                boton.textContent='Ubicación '+(indice+1);
+                boton.setAttribute('aria-label',clasesAgua[clase]+', ubicación '+(indice+1)+' (ver en el mapa)');
+                boton.setAttribute('aria-pressed','false');
+                boton.addEventListener('click',()=>seleccionar(feature));
+                fila.append(boton);
+                lista.append(fila);
+            }
+            grupo.append(titulo,lista);
+            el('agua-ubicaciones').append(grupo);
+        }
+        el('agua-listado').hidden=!capasPorId.size;
         el('agua-resultado').hidden=false;alMostrarResultado();
         if (capasPorId.size) {
             const bounds=L.latLngBounds([]);

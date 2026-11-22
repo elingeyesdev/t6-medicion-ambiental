@@ -11,7 +11,7 @@
         </a>
         @can('datos.consultar')
             <a class="enviro-enlace {{ request()->routeIs('simulaciones*') ? 'activo' : '' }}" href="{{ route('simulaciones') }}" title="Simulaciones" @if(request()->routeIs('simulaciones*')) aria-current="page" @endif><x-panel.icono nombre="flask" /><span>Simulaciones</span></a>
-            <a class="enviro-enlace {{ request()->routeIs('sensores*') ? 'activo' : '' }}" href="{{ route('sensores') }}" title="Mediciones" @if(request()->routeIs('sensores*')) aria-current="page" @endif><x-panel.icono nombre="layout-dashboard" /><span>Mediciones</span></a>
+            <a class="enviro-enlace {{ request()->routeIs('sensores*') ? 'activo' : '' }}" href="{{ route('sensores') }}" title="Mediciones" @if(request()->routeIs('sensores*')) aria-current="page" @endif><x-panel.icono nombre="mediciones" /><span>Mediciones</span></a>
             <a class="enviro-enlace {{ request()->routeIs('alertas*', 'umbrales') ? 'activo' : '' }}" href="{{ route('alertas') }}" title="Alertas"><x-panel.icono nombre="bell" /><span>Alertas</span></a>
             <a class="enviro-enlace {{ request()->routeIs('avisos*') ? 'activo' : '' }}" href="{{ route('avisos') }}" title="Notificaciones"><x-panel.icono nombre="mail" /><span>Notificaciones</span></a>
         @endcan
