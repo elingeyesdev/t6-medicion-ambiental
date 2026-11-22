@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Datos\CatalogoAmbiental;
+use App\Services\Territorios\CatalogoTerritorial;
 use App\Services\Territorios\RegionesEnvirosense;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,9 @@ class MapaMonitoreoController extends Controller
         return view('mapa.index', [
             'modulos' => array_filter(config('geocruz.modulos'), fn ($modulo) => $modulo['habilitado']),
             'paises' => $catalogo->paises(), 'metricas' => $catalogo->metricas(),
+            'territoriosAgua' => $request->routeIs('mapa.agua')
+                ? app(CatalogoTerritorial::class)->listar()
+                : [],
             'configuracionMonitoreo' => [
                 'api' => route('mapa.puntos'), 'historial' => route('sensores'), 'tiempo' => route('mapa.tiempo'), 'buscar' => route('mapa.buscar'),
                 'aire' => route('mapa.aire'),

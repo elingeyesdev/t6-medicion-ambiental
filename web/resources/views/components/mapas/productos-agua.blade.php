@@ -4,7 +4,8 @@
     <button type="button" class="btn btn-outline-primary agua-cambiar" id="agua-filtros" aria-controls="agua-seleccion" aria-expanded="true">Ocultar filtros</button>
     <form id="agua-seleccion">
         <label for="agua-territorio" class="form-label">Lugar</label>
-        <select id="agua-territorio" class="form-select" disabled></select>
+        <select id="agua-territorio" class="form-select" aria-describedby="agua-disponibilidad" disabled></select>
+        <p id="agua-disponibilidad" class="agua-nota"></p>
         <label for="agua-comparacion" class="form-label">Comparación</label>
         <select id="agua-comparacion" class="form-select" disabled></select>
         <div class="d-flex gap-2 flex-wrap">
@@ -16,3 +17,5 @@
     @include('components.mapas.resultado-agua')
 </section>
 <button type="button" id="agua-reabrir" class="btn btn-primary agua-reabrir" hidden>Cambios de agua</button>
+
+<script type="application/json" id="agua-territorios">{!! json_encode(array_map(fn ($lugar) => \Illuminate\Support\Arr::only($lugar, ['identificador', 'nombre', 'tipo']), $territoriosAgua), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_THROW_ON_ERROR) !!}</script>
