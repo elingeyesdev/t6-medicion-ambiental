@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Services\Api\ErrorConsulta;
 use App\Services\Api\ParametrosConsulta;
-use App\Services\Sequias\ConsultaSequias;
 use App\Services\Api\RespuestaJsonComprimible;
+use App\Services\Sequias\ConsultaSequias;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
