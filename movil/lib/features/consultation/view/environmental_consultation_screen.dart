@@ -7,8 +7,8 @@ import '../../forestal/view/forestal_screen.dart';
 import '../../hotspots/view/hotspots_screen.dart';
 import '../../inundations/view/inundations_screen.dart';
 
-/// Consultas con selector móvil; ambas vistas viven en IndexedStack para
-/// no recargar al cambiar de Focos ↔ Sequías.
+/// Consultas ambientales en una única navegación. Las pantallas visitadas se
+/// conservan para no volver a cargar sus datos al cambiar de módulo.
 class EnvironmentalConsultationScreen extends StatefulWidget {
   const EnvironmentalConsultationScreen({
     required this.apiClient,
@@ -29,72 +29,91 @@ class _EnvironmentalConsultationScreenState
   int _index = 0;
   final Set<int> _visitedSections = {0};
 
-  static const _sections = <UiKitNavMenu>[
+  static const _publishedSections = <UiKitNavMenu>[
     UiKitNavMenu(
-      'Focos',
+      'Focos de calor',
       Icons.local_fire_department_outlined,
       Icons.local_fire_department,
     ),
     UiKitNavMenu('Sequías', Icons.water_drop_outlined, Icons.water_drop),
-    UiKitNavMenu('Agua', Icons.water_drop_outlined, Icons.water_drop),
+    UiKitNavMenu('Inundaciones', Icons.flood_outlined, Icons.flood),
   ];
+  static const _forestalPilot = UiKitNavMenu(
+    'Forestal · piloto',
+    Icons.forest_outlined,
+    Icons.forest,
+  );
+
+  static const _forestalEnabled = bool.fromEnvironment(
+    'GEOSUR_FORESTAL_PILOTO',
+  );
+
+  List<UiKitNavMenu> get _sections => [
+    ..._publishedSections,
+    if (_forestalEnabled) _forestalPilot,
+  ];
+
+  void _selectSection(int index) {
+    setState(() {
+      _index = index;
+      _visitedSections.add(index);
+    });
+  }
+
+  Widget _sectionButton(BuildContext context, int index) {
+    final selected = _index == index;
+    final section = _sections[index];
+    final scheme = Theme.of(context).colorScheme;
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(2),
+        child: TextButton.icon(
+          onPressed: () => _selectSection(index),
+          icon: Icon(selected ? section.selectedIcon : section.icon, size: 20),
+          label: Text(
+            section.title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          style: TextButton.styleFrom(
+            foregroundColor: selected
+                ? scheme.primary
+                : scheme.onSurfaceVariant,
+            backgroundColor: selected ? scheme.primaryContainer : null,
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Consultas'),
-        actions: [
-          if (const bool.fromEnvironment('GEOSUR_FORESTAL_PILOTO'))
-            TextButton.icon(
-              icon: const Icon(Icons.forest_outlined),
-              label: const Text('Forestal'),
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => ForestalScreen(
-                    api: widget.apiClient,
-                    onUnauthorized: widget.onUnauthorized,
-                  ),
-                ),
-              ),
-            ),
-        ],
+        title: const Text('Consultas ambientales'),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(52),
+          preferredSize: const Size.fromHeight(96),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
-            child: SegmentedButton<int>(
-              segments: [
-                for (var i = 0; i < _sections.length; i++)
-                  ButtonSegment<int>(
-                    value: i,
-                    icon: Icon(
-                      _index == i
-                          ? _sections[i].selectedIcon
-                          : _sections[i].icon,
-                    ),
-                    label: Text(
-                      _sections[i].title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
+            padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    _sectionButton(context, 0),
+                    _sectionButton(context, 1),
+                  ],
+                ),
+                Row(
+                  children: [
+                    _sectionButton(context, 2),
+                    if (_forestalEnabled) _sectionButton(context, 3),
+                  ],
+                ),
               ],
-              selected: {_index},
-              onSelectionChanged: (values) => setState(() {
-                _index = values.first;
-                _visitedSections.add(_index);
-              }),
-              style: ButtonStyle(
-                visualDensity: VisualDensity.compact,
-                backgroundColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return scheme.primaryContainer;
-                  }
-                  return scheme.surfaceContainerHighest;
-                }),
-              ),
             ),
           ),
         ),
@@ -125,6 +144,15 @@ class _EnvironmentalConsultationScreenState
                   showAppBar: false,
                 )
               : const SizedBox.shrink(),
+          if (_forestalEnabled)
+            _visitedSections.contains(3)
+                ? ForestalScreen(
+                    key: const PageStorageKey('env-forestal'),
+                    api: widget.apiClient,
+                    onUnauthorized: widget.onUnauthorized,
+                    showAppBar: false,
+                  )
+                : const SizedBox.shrink(),
         ],
       ),
     );
