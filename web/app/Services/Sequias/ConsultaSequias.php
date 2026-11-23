@@ -55,6 +55,7 @@ final class ConsultaSequias
         $seleccion = $this->catalogo->consultar($p['provincia'] ?? null, $p['municipio'] ?? null, $p['muestra'] ?? null);
         $datos = $capturas = $faltantes = $fechasObjetivo = $caducidades = $preparados = $celdas = $municipiosIndice = [];
         $motor = $this->calculos->motor();
+        $publicacionVencida = null;
         foreach ($seleccion['datos'] as $s) {
             $publicado = $this->almacen->leer('consultas', PreparadorConsultaSequias::clave($s['identificador'], $periodo['mesFinal']));
             if ($publicado === null) {
@@ -62,7 +63,18 @@ final class ConsultaSequias
 
                 continue;
             }
-            $r = $this->verificar($publicado, $s, $seleccion['catalogo'], $motor, $periodo);
+            try {
+                $r = $this->verificar($publicado, $s, $seleccion['catalogo'], $motor, $periodo);
+            } catch (ErrorConsulta $error) {
+                if ($error->codigo !== 'PERIODO_NO_DISPONIBLE') {
+                    throw $error;
+                }
+
+                $publicacionVencida ??= $error;
+                $faltantes[] = $s['identificador'];
+
+                continue;
+            }
             [$lon, $lat] = $r['coordenadaCelda'];
             $centro = $this->geografia->asignar($lon, $lat)['municipio'];
             $datos[] = ['idMuestra' => $s['identificador'], 'territorioContexto' => $s['municipio'], 'municipioDelCentroCelda' => $centro,
@@ -83,6 +95,10 @@ final class ConsultaSequias
             }
         }
         if ($datos === []) {
+            if ($publicacionVencida !== null) {
+                throw $publicacionVencida;
+            }
+
             throw new ErrorConsulta('MUESTRAS_NO_DISPONIBLES', 'No hay resultados preparados para este filtro y mes. Prueba el mes del piloto (2024-09) o espera a que el equipo renueve la captura.', 503);
         }
         usort($datos, fn ($a, $b) => strcmp($a['idMuestra'], $b['idMuestra']));
@@ -92,7 +108,7 @@ final class ConsultaSequias
             'Resultados de muestras puntuales: no representan promedio, superficie ni daño de todo el municipio.',
             'La captura y su cálculo se prepararon fuera de esta petición; reutilizar no actualiza los datos históricos.'];
         if ($faltantes !== []) {
-            $advertencias[] = 'Cobertura parcial: '.count($faltantes).' muestras seleccionadas no tienen datos preparados para este mes.';
+            $advertencias[] = 'Cobertura parcial: '.count($faltantes).' muestras seleccionadas no tienen una publicación vigente para este mes.';
         }
         if (count($indices) !== count($datos)) {
             $advertencias[] = 'Hay muestras sin índice; consultar su motivo. Un null no significa normal ni ausencia de sequía.';
