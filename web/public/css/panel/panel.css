@@ -26,6 +26,7 @@ body { margin: 0; font-family: var(--tblr-font-sans-serif); font-size: 16px; lin
 .enviro-seccion { font-size: 16px; font-weight: 500; color: var(--enviro-secundario); padding: 5px 10px 12px; white-space: nowrap; }
 .enviro-seccion-modulos { padding-top: 28px; }
 .enviro-enlace { display: flex; gap: 10px; align-items: center; padding: 11px 10px; margin-bottom: 4px; border-radius: 6px; color: var(--enviro-secundario); font-size: 16px; font-weight: 500; text-decoration: none; white-space: nowrap; }
+.enviro-enlace > span:not(.icono-panel) { min-width: 0; white-space: normal; line-height: 1.25; }
 .enviro-enlace:hover { background: var(--enviro-fondo); color: var(--enviro-texto); text-decoration: none; }
 .enviro-enlace.activo { background: var(--enviro-suave); color: #096d35; font-weight: 600; box-shadow: inset 3px 0 #15803d; }
 [data-bs-theme="dark"] .enviro-enlace.activo { color: #c4f2d1; background: #214830; }
