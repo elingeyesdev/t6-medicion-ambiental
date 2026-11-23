@@ -1,7 +1,7 @@
 import { aLocal, filtrosDelFormulario, solicitarJson, validarInstanteUrl } from './contrato.js';
 import { ConsultaFocosWeb } from './consulta.js';
 import { VistaFocos } from './vista.js';
-import { ajustarCalendarios, periodoReciente } from './periodo.js';
+import { ajustarCalendarios, periodoReciente, ultimoPeriodoDisponible } from './periodo.js';
 import { crearRelojServidor } from './reloj.js';
 import { iniciarCalendarios } from './calendario.js';
 
@@ -18,7 +18,7 @@ function iniciar() {
     iniciarCalendarios(desde, hasta);
     const vista = new VistaFocos();
     const consulta = new ConsultaFocosWeb(raiz.dataset.api, estado => {
-        vista.mostrar(estado);
+        vista.mostrar(estado, reloj.ahora());
         if (estado.fase === 'listo' && estado.actual) {
             const url = new URL(location.href);
             url.search = new URLSearchParams(estado.actual.filtros).toString();
@@ -77,7 +77,12 @@ function iniciar() {
             document.getElementById('reintentar-catalogo').hidden = false;
             return;
         } finally { clearTimeout(tiempo); }
-        if (!consultaEnUrl) return;
+        if (!consultaEnUrl) {
+            if (!consulta.estado.actual && !consulta.estado.borrador && consulta.estado.fase === 'inicial') {
+                await consulta.consultar(filtrosDelFormulario(formulario, reloj.ahora()));
+            }
+            return;
+        }
         try {
             const preseleccion = Object.fromEntries(['desde', 'hasta', 'provincia', 'municipio', 'confianza'].filter(k => parametros.has(k)).map(k => [k, parametros.get(k)]));
             // Una URL desconocida no se transforma silenciosamente en el departamento completo.
@@ -122,6 +127,13 @@ function iniciar() {
         ajustarCalendarios(desde, hasta, reloj.ahora());
         try { consulta.consultar(filtrosDelFormulario(formulario, reloj.ahora())); }
         catch (error) { consulta.editar(); consulta.emitir({ fase: 'error', error, pendiente: null }); }
+    });
+    document.getElementById('ultimo-periodo-disponible').addEventListener('click', () => {
+        const actual = consulta.estado.actual;
+        const periodo = ultimoPeriodoDisponible(actual?.respuesta.cobertura?.periodoDisponible, reloj.ahora());
+        if (!periodo) return;
+        restaurar({ ...actual.filtros, ...periodo });
+        formulario.requestSubmit();
     });
     document.getElementById('cancelar-filtros').addEventListener('click', () => { restaurar(consulta.estado.actual?.filtros ?? inicial); consulta.restaurar(); });
     document.getElementById('anterior').addEventListener('click', () => consulta.paginar(consulta.estado.actual.respuesta.paginacion.pagina - 1));

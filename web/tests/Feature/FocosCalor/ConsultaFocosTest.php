@@ -24,7 +24,7 @@ class ConsultaFocosTest extends TestCase
     private function nasa(string $filas = '', string $desde = '2026-10-01', string $hasta = '2026-10-16'): void
     {
         Http::fake([
-            '*/data_availability/*' => fn () => Http::response("data_id,min_date,max_date\nVIIRS_SNPP_NRT,$desde,$hasta\n"),
+            '*/data_availability/*' => fn () => Http::response("data_id,min_date,max_date\nVIIRS_NOAA20_NRT,$desde,$hasta\nVIIRS_SNPP_SP,2012-01-20,2026-08-31\nVIIRS_NOAA21_NRT,2024-01-17,2026-10-16\n"),
             '*/area/*' => fn () => Http::response("latitude,longitude,acq_date,acq_time,satellite,instrument,confidence,frp,version\n".$filas),
         ]);
     }
@@ -182,7 +182,7 @@ class ConsultaFocosTest extends TestCase
     public function test_respuesta_html_200_o_csv_roto_es_error_no_vacio(): void
     {
         foreach (['<html>Error</html>', 'latitude,longitude,acq_date,acq_time'."\n-17,-63,2026-10-10\n"] as $cuerpo) {
-            Http::fake(['*/data_availability/*' => Http::response("data_id,min_date,max_date\nVIIRS_SNPP_NRT,2026-10-01,2026-10-16\n"), '*/area/*' => Http::response($cuerpo)]);
+            Http::fake(['*/data_availability/*' => Http::response("data_id,min_date,max_date\nVIIRS_NOAA20_NRT,2026-10-01,2026-10-16\nVIIRS_SNPP_SP,2012-01-20,2026-08-31\nVIIRS_NOAA21_NRT,2024-01-17,2026-10-16\n"), '*/area/*' => Http::response($cuerpo)]);
             $this->getJson(self::BASE)->assertStatus(503)->assertJsonPath('error.codigo', 'PROVEEDOR_NO_DISPONIBLE');
         }
     }
@@ -201,7 +201,8 @@ class ConsultaFocosTest extends TestCase
     {
         $this->nasa('', '2026-10-12', '2026-10-16');
         $this->getJson(self::BASE)->assertOk()->assertJsonPath('cobertura.estado', 'sin_cobertura')->assertJsonCount(0, 'datos');
-        Http::assertSentCount(1);
+        Http::assertSentCount(2);
+        Http::assertNotSent(fn ($r) => str_contains($r->url(), '/area/'));
     }
 
     public function test_conjunto_expirado_y_cambio_de_filtros_producen_409(): void

@@ -46,7 +46,7 @@ final class ConsultaFocos
             'desde' => Parametros::utc($desde), 'hasta' => Parametros::utc($hasta),
             'modo' => $modo, 'confianza' => $p['confianza'] ?? null,
         ];
-        $huella = hash('sha256', json_encode([$efectivos, $this->catalogo->metadatos()['version'], config('focos.producto')]));
+        $huella = hash('sha256', json_encode([$efectivos, $this->catalogo->metadatos()['version'], config('focos.producto'), config('focos.producto_reciente_respaldo'), config('focos.producto_historico')]));
         $token = $p['versionConjunto'] ?? null;
         $esCache = false;
         if ($token !== null) {
@@ -93,12 +93,7 @@ final class ConsultaFocos
                 'fechaConsulta' => now()->toIso8601ZuluString(),
                 'obtencion' => ['tipo' => $esCache ? 'cache' : 'consulta_proveedor', 'fechaRecuperacion' => $conjunto['fechaRecuperacion'], 'fechaActualizacion' => null, 'antiguedadSegundos' => max(0, now()->timestamp - (new DateTimeImmutable($conjunto['fechaRecuperacion']))->getTimestamp()), 'expiraEn' => $conjunto['expiraEn']],
             ],
-            'fuentes' => [[
-                'identificador' => 'nasa-firms-snpp-nrt', 'proveedor' => 'NASA FIRMS', 'producto' => config('focos.producto'),
-                'version' => count($conjunto['versiones']) === 1 ? $conjunto['versiones'][0] : null,
-                'referencia' => 'https://firms.modaps.eosdis.nasa.gov/api/area/', 'naturaleza' => 'observacion',
-                'resolucion' => ['valor' => 375, 'unidad' => 'm', 'descripcion' => 'Resolución nominal VIIRS; no precisión del punto ni superficie quemada.'],
-            ]],
+            'fuentes' => $conjunto['fuentes'],
             'resumen' => ['totalRegistros' => $total, 'registrosValidos' => $total, 'registrosConFaltantes' => count(array_filter($todos, fn ($f) => $f['faltantes'] !== [])),
                 'indicadores' => [$indicador('totalFocos', $total, 'registros', $total, 'conteo'), $indicador('focosConfianzaAlta', $altos, 'registros', $total, 'conteo_confianza_alta'), $indicador('potenciaMaxima', $potencias === [] ? null : max($potencias), 'MW', count($potencias), 'maximo')]],
             'cobertura' => $conjunto['cobertura'], 'advertencias' => $conjunto['advertencias'],
@@ -109,30 +104,64 @@ final class ConsultaFocos
 
     private function preparar(DateTimeImmutable $desde, DateTimeImmutable $hasta, array $seleccion, ?string $confianza): array
     {
-        $disponible = $this->nasa->disponibilidad();
-        $inicioProducto = new DateTimeImmutable($disponible['desde']);
-        $finProducto = new DateTimeImmutable($disponible['hasta']);
-        $sinCobertura = $hasta <= $inicioProducto || $desde >= $finProducto;
-        $parcial = $desde < $inicioProducto || $hasta > $finProducto;
+        $reciente = config('focos.producto');
+        $historico = config('focos.producto_historico');
+        $disponible = $this->nasa->disponibilidad($reciente);
+        $respaldo = config('focos.producto_reciente_respaldo');
+        if ($reciente !== $respaldo && $desde >= new DateTimeImmutable($disponible['hasta'])) {
+            $alternativa = $this->nasa->disponibilidad($respaldo);
+            if ($alternativa['hasta'] > $disponible['hasta']) {
+                $reciente = $respaldo;
+                $disponible = $alternativa;
+            }
+        }
+        $inicioReciente = new DateTimeImmutable($disponible['desde']);
+        $intervalos = [$reciente => [$inicioReciente, new DateTimeImmutable($disponible['hasta'])]];
+        if ($desde < $inicioReciente) {
+            $archivo = $this->nasa->disponibilidad($historico);
+            $inicioArchivo = new DateTimeImmutable($archivo['desde']);
+            $finArchivo = new DateTimeImmutable($archivo['hasta']);
+            // El archivo cubre las fechas anteriores al producto reciente. El solapamiento se consulta una sola vez.
+            $intervalos[$historico] = [$inicioArchivo, min($finArchivo, $inicioReciente)];
+            if ($inicioArchivo < $inicioReciente && $finArchivo >= $inicioReciente) {
+                $disponible['desde'] = $archivo['desde'];
+            }
+        }
+        $tramos = [];
+        $segundosCubiertos = 0;
+        foreach ($intervalos as $producto => [$inicioProducto, $finProducto]) {
+            $inicio = max($desde, $inicioProducto);
+            $fin = min($hasta, $finProducto);
+            if ($inicio < $fin) {
+                $tramos[$producto] = [$inicio, $fin];
+                $segundosCubiertos += $fin->getTimestamp() - $inicio->getTimestamp();
+            }
+        }
+        $sinCobertura = $tramos === [];
+        $parcial = $segundosCubiertos < $hasta->getTimestamp() - $desde->getTimestamp();
         $geometria = $this->catalogo->limite($seleccion['territorioEfectivo']['identificador'])['geometry'];
         $caja = $this->geografia->caja($geometria);
         $datos = [];
         $invalidos = $duplicados = $conflictos = $fuera = 0;
         $versiones = [];
-        if (! $sinCobertura) {
-            $inicio = max($desde, $inicioProducto)->setTime(0, 0);
-            $fin = min($hasta, $finProducto);
+        $totalFilas = 0;
+        foreach ($tramos as $producto => [$desdeTramo, $hastaTramo]) {
+            $inicio = $desdeTramo->setTime(0, 0);
             $filas = [];
-            while ($inicio < $fin) {
-                $dias = min(5, (int) ceil(($fin->getTimestamp() - $inicio->getTimestamp()) / 86400));
-                array_push($filas, ...$this->nasa->area($caja, $inicio, $dias));
-                if (count($filas) > config('focos.maximo_filas')) {
+            while ($inicio < $hastaTramo) {
+                $dias = min(5, (int) ceil(($hastaTramo->getTimestamp() - $inicio->getTimestamp()) / 86400));
+                $bloque = $this->nasa->area($caja, $inicio, $dias, $producto);
+                $totalFilas += count($bloque);
+                if ($totalFilas > config('focos.maximo_filas')) {
                     throw new ErrorConsulta('PROVEEDOR_NO_DISPONIBLE', 'La consulta excede el volumen admitido. Reduce el período o territorio.', 503);
                 }
+                array_push($filas, ...$bloque);
                 $inicio = $inicio->modify('+'.$dias.' days');
             }
+            $inicioUtc = Parametros::utc($desdeTramo);
+            $finUtc = Parametros::utc($hastaTramo);
             foreach ($filas as $fila) {
-                $foco = $this->normalizador->convertir($fila);
+                $foco = $this->normalizador->convertir($fila, $producto);
                 if ($foco === null) {
                     $invalidos++;
 
@@ -140,7 +169,7 @@ final class ConsultaFocos
                 }
                 $fecha = $foco['fechas']['observadoDesde'];
                 [$x, $y] = $foco['geometria']['coordinates'];
-                if ($fecha < Parametros::utc($desde) || $fecha >= Parametros::utc($hasta) || ! $this->geografia->contiene($geometria, $x, $y)) {
+                if ($fecha < $inicioUtc || $fecha >= $finUtc || ! $this->geografia->contiene($geometria, $x, $y)) {
                     $fuera++;
 
                     continue;
@@ -160,21 +189,21 @@ final class ConsultaFocos
                 }
                 $datos[$id] = $foco;
             }
-            foreach ($datos as $id => &$foco) {
-                if ($confianza !== null && $foco['atributos']['confianza'] !== $confianza) {
-                    unset($datos[$id]);
-
-                    continue;
-                }
-                $asignacion = $this->geografia->asignar(...$foco['geometria']['coordinates']);
-                $foco['territorio'] = $this->territorio($this->catalogo->buscar('BO07'), $asignacion);
-                if ($asignacion['motivoAsignacion'] !== null) {
-                    $foco['faltantes'][] = ['campo' => 'territorio.municipio', 'motivo' => $asignacion['motivoAsignacion']];
-                }
-                $versiones[] = $foco['atributos']['versionOriginal'];
-            }
-            unset($foco);
         }
+        foreach ($datos as $id => &$foco) {
+            if ($confianza !== null && $foco['atributos']['confianza'] !== $confianza) {
+                unset($datos[$id]);
+
+                continue;
+            }
+            $asignacion = $this->geografia->asignar(...$foco['geometria']['coordinates']);
+            $foco['territorio'] = $this->territorio($this->catalogo->buscar('BO07'), $asignacion);
+            if ($asignacion['motivoAsignacion'] !== null) {
+                $foco['faltantes'][] = ['campo' => 'territorio.municipio', 'motivo' => $asignacion['motivoAsignacion']];
+            }
+            $versiones[$foco['fuentesRef'][0]][] = $foco['atributos']['versionOriginal'];
+        }
+        unset($foco);
         $datos = array_values($datos);
         usort($datos, fn ($a, $b) => strcmp($b['fechas']['observadoDesde'], $a['fechas']['observadoDesde']) ?: strcmp($a['identificador'], $b['identificador']));
         $avisos = [
@@ -188,16 +217,29 @@ final class ConsultaFocos
                 $avisos[] = ['codigo' => $codigo, 'mensaje' => 'Registros afectados: '.$cantidad, 'cantidad' => $cantidad];
             }
         }
-        if ($versiones === [] || in_array(null, $versiones, true) || count(array_unique($versiones)) > 1) {
+        $fuentes = [];
+        $versionIncierta = false;
+        foreach (array_keys($tramos ?: $intervalos) as $producto) {
+            $referencia = ClienteFirms::referencia($producto);
+            $versionesProducto = array_values(array_unique($versiones[$referencia] ?? []));
+            $version = count($versionesProducto) === 1 ? $versionesProducto[0] : null;
+            $versionIncierta = $versionIncierta || $version === null;
+            $fuentes[] = [
+                'identificador' => $referencia, 'proveedor' => 'NASA FIRMS', 'producto' => $producto,
+                'version' => $version, 'referencia' => 'https://firms.modaps.eosdis.nasa.gov/api/area/', 'naturaleza' => 'observacion',
+                'resolucion' => ['valor' => 375, 'unidad' => 'm', 'descripcion' => 'Resolución nominal VIIRS; no precisión del punto ni superficie quemada.'],
+            ];
+        }
+        if ($versionIncierta) {
             $avisos[] = ['codigo' => 'VERSION_PRODUCTO_NO_UNICA', 'mensaje' => 'Versión de producto no informada o múltiple; se conserva la versión original por registro.'];
         }
 
         return [
-            'datos' => $datos, 'versiones' => array_values(array_unique($versiones)), 'advertencias' => $avisos,
+            'datos' => $datos, 'fuentes' => $fuentes, 'advertencias' => $avisos,
             'fechaRecuperacion' => now()->toIso8601ZuluString(),
             'cobertura' => [
                 'estado' => $sinCobertura ? 'sin_cobertura' : ($parcial || $invalidos > 0 ? 'parcial' : 'desconocida'),
-                'fundamento' => $sinCobertura ? 'Período fuera de la disponibilidad publicada del producto.' : 'Disponibilidad temporal publicada; las detecciones no acreditan observación completa de cada municipio. Filas inválidas y períodos no disponibles se advierten.',
+                'fundamento' => $sinCobertura ? 'Período fuera de la disponibilidad publicada de NASA FIRMS.' : 'Disponibilidad temporal publicada; las detecciones no acreditan observación completa de cada municipio. Filas inválidas y períodos no disponibles se advierten.',
                 'referenciaEvidencia' => 'https://firms.modaps.eosdis.nasa.gov/api/data_availability/',
                 'periodoDisponible' => $disponible, 'ambitoDisponible' => 'Producto global consultado mediante caja y filtrado al polígono territorial de referencia.',
             ],
