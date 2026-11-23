@@ -26,7 +26,8 @@ export function validarPeriodoLocal(inicio, fin, ahora = Date.now()) {
     const desde = aUtc(inicio);
     const hasta = aUtc(fin);
     const diferencia = new Date(hasta) - new Date(desde);
-    if (diferencia <= 0 || diferencia > 7 * 86400000) throw new Error('Desde debe ser anterior a Hasta. El máximo es de 7 días (168 horas).');
+    if (diferencia <= 0) throw new Error('Desde debe ser anterior a Hasta.');
+    if (diferencia > 7 * 86400000) throw new Error('El período máximo es de 7 días (168 horas).');
     if (new Date(hasta).getTime() > ahora) throw new Error('Elige fechas hasta el momento actual. No se pueden consultar días futuros.');
     return { desde, hasta };
 }
