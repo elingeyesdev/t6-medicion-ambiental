@@ -37,6 +37,10 @@ Route::prefix('revision/forestal')->middleware([
         ->middleware('throttle:12,1,forestal-revision-consulta')->name('revision.forestal.consulta');
 });
 Route::middleware(['auth', 'cuenta.activa', 'can:mapa.ver', 'can:datos.consultar'])->group(function (): void {
+    Route::get('/mapa/forestal', fn () => view('mapas.forestal', [
+        'modulos' => array_filter(config('geocruz.modulos'), fn ($modulo) => $modulo['habilitado']),
+        'capa' => config('forestal.capa_publicada'),
+    ]))->name('mapa.forestal');
     Route::get('/mapa/agua/catalogo', [InundacionesController::class, 'catalogo'])->middleware('throttle:30,1')->name('mapa.agua.catalogo');
     Route::get('/mapa/agua/consulta', [InundacionesController::class, 'consultar'])->middleware('throttle:30,1')->name('mapa.agua.consulta');
     Route::get('/mapa/agua', function (CatalogoProductosAgua $productos) {

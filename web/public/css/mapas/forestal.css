@@ -1,0 +1,9 @@
+.forestal-publicado { max-width: 88rem; margin: 0 auto; }
+.forestal-publicado header { margin-bottom: 1rem; }
+.forestal-controles, .forestal-controles form, .forestal-mapa-controles { display: flex; gap: .75rem; align-items: end; flex-wrap: wrap; }
+.forestal-controles { justify-content: space-between; }
+.forestal-controles input { width: 6.75rem; }
+.forestal-mapa-controles select { width: auto; }
+#forestal-mapa { height: clamp(20rem, 56vh, 44rem); isolation: isolate; background: #dce4db; }
+.forestal-contexto p { margin-bottom: .4rem; }
+.forestal-muestra { display: inline-block; width: .85em; height: .85em; border: 1px solid #a0365c; background: #e34d85; vertical-align: baseline; }

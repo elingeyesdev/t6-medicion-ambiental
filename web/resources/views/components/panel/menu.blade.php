@@ -30,6 +30,7 @@
         @endforeach
         @can('mapa.ver')
             @can('datos.consultar')
+                <a class="enviro-enlace {{ request()->routeIs('mapa.forestal') ? 'activo' : '' }}" href="{{ route('mapa.forestal') }}" title="Cobertura forestal" @if(request()->routeIs('mapa.forestal')) aria-current="page" @endif><x-publico.enviro-icono nombre="leaf" /><span>Cobertura forestal</span></a>
                 <a class="enviro-enlace {{ request()->routeIs('seguimiento.*') ? 'activo' : '' }}" href="{{ route('seguimiento.index') }}" title="Seguimiento territorial" @if(request()->routeIs('seguimiento.*')) aria-current="page" @endif><x-panel.icono nombre="map-pin" /><span>Seguimiento territorial</span></a>
             @endcan
         @endcan
