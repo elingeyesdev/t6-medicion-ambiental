@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Services\Api\ErrorConsulta;
 use App\Services\Api\ParametrosConsulta;
 use App\Services\Sequias\ConsultaSequias;
+use App\Services\Api\RespuestaJsonComprimible;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\AcceptHeader;
 
 final class SequiasController
 {
@@ -42,21 +42,8 @@ final class SequiasController
     {
         $respuesta = response()->json($r, 200, [], JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION);
 
-        $contenido = $respuesta->getContent();
-        $codificaciones = AcceptHeader::fromString($request->headers->get('Accept-Encoding'));
-        $gzip = $codificaciones->get('gzip');
+        $respuesta->header('Cache-Control', 'no-store');
 
-        if (strlen($contenido) >= 4096 && $gzip !== null && $gzip->getQuality() > 0 && function_exists('gzencode')) {
-            $comprimido = gzencode($contenido);
-            if ($comprimido !== false) {
-                $respuesta->setContent($comprimido);
-                $respuesta->header('Content-Encoding', 'gzip');
-            }
-        }
-
-        $respuesta->setVary('Accept-Encoding', false);
-
-        return $respuesta->header('Cache-Control', 'no-store')
-            ->header('Content-Length', (string) strlen($respuesta->getContent()));
+        return RespuestaJsonComprimible::preparar($request, $respuesta);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\Api\ErrorConsulta;
 use App\Services\Api\ParametrosConsulta;
+use App\Services\Api\RespuestaJsonComprimible;
 use App\Services\Forestal\RepositorioRevisionForestal;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -53,7 +54,9 @@ class RevisionForestalController extends Controller
         $p = $this->parametros($request, true, $id);
         $resultado = $this->consultarPaquete($id, (int) $p['desde'], (int) $p['hasta']);
 
-        return response()->json($resultado, 200, [], JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION);
+        $respuesta = response()->json($resultado, 200, [], JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION);
+
+        return RespuestaJsonComprimible::preparar($request, $respuesta);
     }
 
     private function parametros(Request $request, bool $obligatorios, ?string $idFijo = null): array
