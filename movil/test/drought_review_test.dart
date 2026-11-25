@@ -68,7 +68,7 @@ void main() {
   });
 
   testWidgets(
-    'salir durante el catálogo no inicia una consulta ni actualiza una pantalla cerrada',
+    'la consulta inicial empieza sin esperar el catálogo y se ignora al salir',
     (tester) async {
       final api = GeoCruzApiClient(
         baseUrl: Uri.parse('http://localhost/api/v1/'),
@@ -80,10 +80,14 @@ void main() {
           home: DroughtScreen(apiClient: api, repository: repository),
         ),
       );
+      expect(repository.queries.length, 1);
       await tester.pumpWidget(const SizedBox.shrink());
       repository.catalog.complete([]);
+      repository.queries.single.complete(
+        DroughtResponse.fromJson(droughtResponse()),
+      );
       await advance(tester);
-      expect(repository.queries, isEmpty);
+      expect(repository.queries.length, 1);
       expect(tester.takeException(), isNull);
     },
   );
@@ -116,6 +120,67 @@ void main() {
     expect(find.text('Consulta reciente'), findsOneWidget);
     expect(find.text('Respuesta anterior'), findsNothing);
     expect(tester.takeException(), isNull);
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
+
+  testWidgets('el territorio compartido conserva el mes propio de Sequías', (
+    tester,
+  ) async {
+    final api = GeoCruzApiClient(
+      baseUrl: Uri.parse('http://localhost/api/v1/'),
+    );
+    addTearDown(api.close);
+    final repository = _Repository(api)
+      ..catalog.complete(const [
+        TerritoryOption(
+          identifier: 'a',
+          name: 'Provincia A',
+          type: 'provincia',
+        ),
+        TerritoryOption(
+          identifier: 'b',
+          name: 'Provincia B',
+          type: 'provincia',
+        ),
+        TerritoryOption(
+          identifier: 'a1',
+          name: 'Municipio A',
+          type: 'municipio',
+          parentId: 'a',
+        ),
+        TerritoryOption(
+          identifier: 'b1',
+          name: 'Municipio B',
+          type: 'municipio',
+          parentId: 'b',
+        ),
+      ]);
+    Widget screen(String territory) => MaterialApp(
+      home: DroughtScreen(
+        key: const ValueKey('shared-drought'),
+        apiClient: api,
+        repository: repository,
+        initialMonth: '2024-08',
+        sharedTerritoryId: territory,
+      ),
+    );
+
+    await tester.pumpWidget(screen('a1'));
+    await advance(tester);
+    expect(repository.filters.single.provincia, 'a');
+    expect(repository.filters.single.municipio, 'a1');
+    expect(repository.filters.single.mesFinal, '2024-08');
+
+    await tester.pumpWidget(screen('b1'));
+    await advance(tester);
+    expect(repository.filters.last.provincia, 'b');
+    expect(repository.filters.last.municipio, 'b1');
+    expect(repository.filters.last.mesFinal, '2024-08');
+    repository.queries.first.completeError(
+      const GeoCruzApiException(statusCode: 503, message: 'Respuesta vieja'),
+    );
+    await advance(tester);
+    expect(find.text('Respuesta vieja'), findsNothing);
     await tester.pumpWidget(const SizedBox.shrink());
   });
 
