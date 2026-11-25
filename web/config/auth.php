@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\BrigadistaIncendios;
 use App\Models\User;
 
 return [
@@ -63,7 +64,7 @@ return [
     */
 
     'providers' => [
-        'portal_brigadistas' => ['driver' => 'eloquent', 'model' => \App\Models\BrigadistaIncendios::class],
+        'portal_brigadistas' => ['driver' => 'eloquent', 'model' => BrigadistaIncendios::class],
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', User::class),

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CuentaActiva;
+use App\Http\Middleware\SesionPortalIncendios;
 use App\Services\Api\ErrorConsulta;
 use App\Services\Mapas\Capas\ErroresConsultaMapa;
 use App\Services\Territorios\FiltroTerritorialInvalido;
@@ -23,7 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->prependToGroup('web', \App\Http\Middleware\SesionPortalIncendios::class);
+        $middleware->prependToGroup('web', SesionPortalIncendios::class);
         $middleware->redirectGuestsTo(fn () => route('login'));
         $middleware->redirectUsersTo(fn () => route('mapa'));
         $middleware->alias(['cuenta.activa' => CuentaActiva::class, 'abilities' => CheckAbilities::class]);
