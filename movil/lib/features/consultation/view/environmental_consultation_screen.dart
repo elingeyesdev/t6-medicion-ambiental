@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/maps/map_base_styles.dart';
 import '../../../core/network/geocruz_api_client.dart';
 import '../../../uikits/models/nav_menu.dart';
 import '../../drought/view/drought_screen.dart';
@@ -28,6 +29,16 @@ class _EnvironmentalConsultationScreenState
     extends State<EnvironmentalConsultationScreen> {
   int _index = 0;
   final Set<int> _visitedSections = {0};
+  String _territoryId = 'BO07';
+  MapBaseStyle _mapStyle = MapBaseStyle.relieve;
+
+  void _rememberTerritory(String id) {
+    if (_territoryId != id) setState(() => _territoryId = id);
+  }
+
+  void _rememberMapStyle(MapBaseStyle style) {
+    if (_mapStyle != style) setState(() => _mapStyle = style);
+  }
 
   static const _publishedSections = <UiKitNavMenu>[
     UiKitNavMenu(
@@ -54,11 +65,22 @@ class _EnvironmentalConsultationScreenState
   ];
 
   void _selectSection(int index) {
+    if (index == _index) return;
     setState(() {
       _index = index;
       _visitedSections.add(index);
     });
   }
+
+  String? get _scopeNotice => switch (_index) {
+    1 =>
+      'Sequías usa meses completos; conserva su propio mes final. El lugar se comparte con Focos.',
+    2 =>
+      'Inundaciones solo permite lugares y pares de fechas publicados. Revisa la selección antes de consultar.',
+    3 =>
+      'El piloto forestal solo cubre Santa Rosa y usa años; los filtros de otros módulos no se aplican.',
+    _ => null,
+  };
 
   Widget _sectionButton(BuildContext context, int index) {
     final selected = _index == index;
@@ -118,41 +140,80 @@ class _EnvironmentalConsultationScreenState
           ),
         ),
       ),
-      body: IndexedStack(
-        index: _index,
-        sizing: StackFit.expand,
+      body: Column(
         children: [
-          _visitedSections.contains(0)
-              ? HotspotsScreen(
-                  key: const PageStorageKey('env-hotspots'),
-                  apiClient: widget.apiClient,
-                  showAppBar: false,
-                )
-              : const SizedBox.shrink(),
-          _visitedSections.contains(1)
-              ? DroughtScreen(
-                  key: const PageStorageKey('env-drought'),
-                  apiClient: widget.apiClient,
-                  showAppBar: false,
-                )
-              : const SizedBox.shrink(),
-          _visitedSections.contains(2)
-              ? InundationsScreen(
-                  key: const PageStorageKey('env-inundations'),
-                  api: widget.apiClient,
-                  onUnauthorized: widget.onUnauthorized,
-                  showAppBar: false,
-                )
-              : const SizedBox.shrink(),
-          if (_forestalEnabled)
-            _visitedSections.contains(3)
-                ? ForestalScreen(
-                    key: const PageStorageKey('env-forestal'),
-                    api: widget.apiClient,
-                    onUnauthorized: widget.onUnauthorized,
-                    showAppBar: false,
-                  )
-                : const SizedBox.shrink(),
+          if (_scopeNotice case final notice?)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+              child: Row(
+                children: [
+                  const Icon(Icons.info_outline, size: 18),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      notice,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          Expanded(
+            child: IndexedStack(
+              index: _index,
+              sizing: StackFit.expand,
+              children: [
+                _visitedSections.contains(0)
+                    ? HotspotsScreen(
+                        key: const PageStorageKey('env-hotspots'),
+                        apiClient: widget.apiClient,
+                        showAppBar: false,
+                        active: _index == 0,
+                        sharedTerritoryId: _territoryId,
+                        onTerritoryChanged: _rememberTerritory,
+                        sharedMapStyle: _mapStyle,
+                        onMapStyleChanged: _rememberMapStyle,
+                      )
+                    : const SizedBox.shrink(),
+                _visitedSections.contains(1)
+                    ? DroughtScreen(
+                        key: const PageStorageKey('env-drought'),
+                        apiClient: widget.apiClient,
+                        showAppBar: false,
+                        active: _index == 1,
+                        sharedTerritoryId: _territoryId,
+                        onTerritoryChanged: _rememberTerritory,
+                        sharedMapStyle: _mapStyle,
+                        onMapStyleChanged: _rememberMapStyle,
+                      )
+                    : const SizedBox.shrink(),
+                _visitedSections.contains(2)
+                    ? InundationsScreen(
+                        key: const PageStorageKey('env-inundations'),
+                        api: widget.apiClient,
+                        onUnauthorized: widget.onUnauthorized,
+                        showAppBar: false,
+                        active: _index == 2,
+                        sharedTerritoryId: _territoryId,
+                        onTerritoryChanged: _rememberTerritory,
+                        sharedMapStyle: _mapStyle,
+                        onMapStyleChanged: _rememberMapStyle,
+                      )
+                    : const SizedBox.shrink(),
+                if (_forestalEnabled)
+                  _visitedSections.contains(3)
+                      ? ForestalScreen(
+                          key: const PageStorageKey('env-forestal'),
+                          api: widget.apiClient,
+                          onUnauthorized: widget.onUnauthorized,
+                          showAppBar: false,
+                          sharedMapStyle: _mapStyle,
+                          onMapStyleChanged: _rememberMapStyle,
+                        )
+                      : const SizedBox.shrink(),
+              ],
+            ),
+          ),
         ],
       ),
     );
