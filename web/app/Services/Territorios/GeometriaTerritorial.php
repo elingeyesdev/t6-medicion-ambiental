@@ -153,26 +153,31 @@ final class GeometriaTerritorial
         $cubetas = [];
         $n = count($anillo);
         for ($i = 0, $j = $n - 1; $i < $n; $j = $i++) {
-            $ax = (float) $anillo[$j][0];
             $ay = (float) $anillo[$j][1];
-            $bx = (float) $anillo[$i][0];
             $by = (float) $anillo[$i][1];
             $desde = (int) floor((min($ay, $by) - 1e-8) / self::PASO_LATITUD);
             $hasta = (int) floor((max($ay, $by) + 1e-8) / self::PASO_LATITUD);
             for ($k = $desde; $k <= $hasta; $k++) {
-                $cubetas[$k][] = [$ax, $ay, $bx, $by];
+                // La arista termina en este vértice del anillo.
+                $cubetas[$k][] = $i;
             }
         }
 
-        return $cubetas;
+        return ['anillo' => $anillo, 'aristasPorLatitud' => $cubetas];
     }
 
     // 0 fuera, 1 dentro, 2 borde; tolerancia numérica de 1e-10 grados, sin buffer territorial.
-    private function clasificar(array $cubetas, float $x, float $y): int
+    private function clasificar(array $indice, float $x, float $y): int
     {
-        $aristas = $cubetas[(int) floor($y / self::PASO_LATITUD)] ?? [];
+        $aristas = $indice['aristasPorLatitud'][(int) floor($y / self::PASO_LATITUD)] ?? [];
+        $anillo = $indice['anillo'];
         $dentro = false;
-        foreach ($aristas as [$ax, $ay, $bx, $by]) {
+        foreach ($aristas as $i) {
+            $j = $i === 0 ? count($anillo) - 1 : $i - 1;
+            $ax = (float) $anillo[$j][0];
+            $ay = (float) $anillo[$j][1];
+            $bx = (float) $anillo[$i][0];
+            $by = (float) $anillo[$i][1];
             if ($x >= min($ax, $bx) - self::TOLERANCIA && $x <= max($ax, $bx) + self::TOLERANCIA
                 && $y >= min($ay, $by) - self::TOLERANCIA && $y <= max($ay, $by) + self::TOLERANCIA) {
                 $dx = $bx - $ax;
