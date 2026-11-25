@@ -41,8 +41,8 @@ class MapaAguaPublicadaTest extends TestCase
 
     public function test_no_hay_pantalla_ni_entrada_pendiente_sin_productos(): void
     {
-        $this->get('/mapa')->assertOk()->assertDontSee('Agua e inundaciones');
-        $this->get('/cuenta')->assertOk()->assertDontSee('Agua e inundaciones');
+        $this->get('/mapa')->assertOk()->assertDontSee(route('mapa.agua'), false);
+        $this->get('/cuenta')->assertOk()->assertDontSee(route('mapa.agua'), false);
         $this->get('/mapa/agua')->assertNotFound();
         Http::assertNothingSent();
     }
@@ -50,7 +50,7 @@ class MapaAguaPublicadaTest extends TestCase
     public function test_el_menu_y_el_viso_solo_se_activan_con_un_producto_y_conservan_el_frente(): void
     {
         $this->registrar();
-        $this->get('/cuenta')->assertOk()->assertSee('Agua e inundaciones')->assertSee(route('mapa.agua'), false);
+        $this->get('/cuenta')->assertOk()->assertSee('Inundaciones')->assertSee(route('mapa.agua'), false);
         $respuesta = $this->get('/mapa/agua')->assertOk()->assertSee('id="mapa-monitoreo"', false)
             ->assertSee('data-panel-agua data-modo="publicado"', false)->assertSee('Actualizar lista')
             ->assertSee('Lugar')->assertSee('Comparación')->assertSee('Cerrar agua y cambios')
@@ -83,7 +83,7 @@ class MapaAguaPublicadaTest extends TestCase
         file_put_contents($this->directorio.'/indice.json', '{"version":"agua-publicaciones-1","productos":{}}');
         $this->getJson('/mapa/agua/catalogo')->assertStatus(503)->assertJsonPath('error.codigo', 'PRODUCTO_INVALIDO')
             ->assertJsonMissingPath('exception')->assertJsonMissingPath('file')->assertJsonMissingPath('trace');
-        $this->get('/mapa')->assertOk()->assertDontSee('Agua e inundaciones');
+        $this->get('/mapa')->assertOk()->assertDontSee(route('mapa.agua'), false);
         $this->getJson('/mapa/agua/consulta?territorio=BO070101&referencia=2024-09-01&comparacion=2025-03-07&modo=prueba')
             ->assertStatus(422)->assertJsonPath('error.codigo', 'FILTROS_INVALIDOS');
     }

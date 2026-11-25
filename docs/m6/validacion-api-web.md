@@ -1,6 +1,6 @@
 # M6 · Evidencia de API y web
 
-Verificación del 24 de noviembre de 2026, hora de Bolivia. Los ejemplos con datos se consultaron en Laravel local. Las tres rutas que requieren cuenta se probaron con un usuario temporal en una base separada. El contraste web se repitió en el navegador integrado con la copia local. Quedan pendientes Android y la repetición sobre el commit integrado.
+Verificación del 24 de noviembre de 2026, hora de Bolivia. Los ejemplos con datos se consultaron en Laravel local. Las tres rutas que requieren cuenta se probaron con un usuario temporal en una base separada. El contraste web se repitió en el navegador integrado con la copia local. La prueba manual en Android cubre las consultas principales. Queda pendiente repetir el recorrido sobre el commit integrado.
 
 ## Recorridos
 
@@ -32,3 +32,14 @@ Después de los arreglos pasaron 86 pruebas PHP de geografía, Focos y Sequías,
 ## Tarea adicional
 
 [Issue #194 · Validar el registro y la atención del portal](https://github.com/elingeyesdev/t6-medicion-ambiental/issues/194) quedó abierto dentro de M6 para repetir la validación sobre la versión integrada.
+
+## Recorrido manual en Android
+
+APK debug del PR #195, instalado como variante separada y conectado a la API local con una cuenta desechable.
+
+- Focos. Cargaron 2.123 detecciones en 85 páginas para los últimos siete días. La ficha previa desde el mapa mostró San Ignacio, 24/11/2026 14:38 en Bolivia, confianza nominal, 7,67 MW y NASA FIRMS.
+- Sequías. Octubre de 2026 mostró una muestra de 56 municipios. El detalle de Santa Cruz de La Sierra mostró SPI-3 1,81, 326,4 mm y Open-Meteo ERA5. El centro de la celda está en Porongo.
+- Inundaciones. San Pedro cargó la comparación del 6 al 18 de diciembre de 2025. Área comparable de 2,241 km², cobertura del 83,726 % y 0,497 km² de agua nueva redondeada.
+- Aire. La ficha para el centro del mapa (-16,500, -63,500) mostró 37 EAQI, PM2,5 de 13,6 µg/m³ y serie horaria de CAMS global / Open-Meteo.
+- Forestal. Con la variante que habilita la revisión forestal, Santa Rosa mostró 26 polígonos y 1,915 ha en 2024–2025. La vista indica revisión técnica y conserva la fuente Hansen GFC y el umbral de copa ≥30 %. Se abrió la lista y se seleccionó el polígono 1 (2024, 0,074 ha). Al detener la API aislada apareció Reintentar. Al restaurarla y pulsar ese botón se recuperaron el mapa y las cifras.
+- Sesión vencida. Se invalidó solo el token de la cuenta de pruebas. Forestal devolvió la app a Iniciar sesión con el mensaje de vencimiento. Tras ingresar otra vez se abrió el mapa.
