@@ -139,15 +139,18 @@ final class ConsultaFocos
         }
         $sinCobertura = $tramos === [];
         $parcial = $segundosCubiertos < $hasta->getTimestamp() - $desde->getTimestamp();
+        // El índice espacial solo vive durante la preparación, antes de serializar el resultado.
+        $geografia = clone $this->geografia;
         $geometria = $this->catalogo->limite($seleccion['territorioEfectivo']['identificador'])['geometry'];
-        $caja = $this->geografia->caja($geometria);
+        $caja = $geografia->caja($geometria);
         $datos = [];
         $invalidos = $duplicados = $conflictos = $fuera = 0;
         $versiones = [];
         $totalFilas = 0;
         foreach ($tramos as $producto => [$desdeTramo, $hastaTramo]) {
             $inicio = $desdeTramo->setTime(0, 0);
-            $filas = [];
+            $inicioUtc = Parametros::utc($desdeTramo);
+            $finUtc = Parametros::utc($hastaTramo);
             while ($inicio < $hastaTramo) {
                 $dias = min(5, (int) ceil(($hastaTramo->getTimestamp() - $inicio->getTimestamp()) / 86400));
                 $bloque = $this->nasa->area($caja, $inicio, $dias, $producto);
@@ -155,39 +158,37 @@ final class ConsultaFocos
                 if ($totalFilas > config('focos.maximo_filas')) {
                     throw new ErrorConsulta('PROVEEDOR_NO_DISPONIBLE', 'La consulta excede el volumen admitido. Reduce el período o territorio.', 503);
                 }
-                array_push($filas, ...$bloque);
-                $inicio = $inicio->modify('+'.$dias.' days');
-            }
-            $inicioUtc = Parametros::utc($desdeTramo);
-            $finUtc = Parametros::utc($hastaTramo);
-            foreach ($filas as $fila) {
-                $foco = $this->normalizador->convertir($fila, $producto);
-                if ($foco === null) {
-                    $invalidos++;
+                foreach ($bloque as $fila) {
+                    $foco = $this->normalizador->convertir($fila, $producto);
+                    if ($foco === null) {
+                        $invalidos++;
 
-                    continue;
-                }
-                $fecha = $foco['fechas']['observadoDesde'];
-                [$x, $y] = $foco['geometria']['coordinates'];
-                if ($fecha < $inicioUtc || $fecha >= $finUtc || ! $this->geografia->contiene($geometria, $x, $y)) {
-                    $fuera++;
-
-                    continue;
-                }
-                $id = $foco['identificador'];
-                if (isset($datos[$id])) {
-                    $duplicados++;
-                    if ($datos[$id]['atributos'] !== $foco['atributos']) {
-                        $conflictos++;
-                        // Elección reproducible entre variantes; se informa el conflicto.
-                        if (strcmp(json_encode($datos[$id]['atributos']), json_encode($foco['atributos'])) <= 0) {
-                            continue;
-                        }
-                    } else {
                         continue;
                     }
+                    $fecha = $foco['fechas']['observadoDesde'];
+                    [$x, $y] = $foco['geometria']['coordinates'];
+                    if ($fecha < $inicioUtc || $fecha >= $finUtc || ! $geografia->contiene($geometria, $x, $y)) {
+                        $fuera++;
+
+                        continue;
+                    }
+                    $id = $foco['identificador'];
+                    if (isset($datos[$id])) {
+                        $duplicados++;
+                        if ($datos[$id]['atributos'] !== $foco['atributos']) {
+                            $conflictos++;
+                            // Elección reproducible entre variantes; se informa el conflicto.
+                            if (strcmp(json_encode($datos[$id]['atributos']), json_encode($foco['atributos'])) <= 0) {
+                                continue;
+                            }
+                        } else {
+                            continue;
+                        }
+                    }
+                    $datos[$id] = $foco;
                 }
-                $datos[$id] = $foco;
+                unset($bloque);
+                $inicio = $inicio->modify('+'.$dias.' days');
             }
         }
         foreach ($datos as $id => &$foco) {
@@ -196,7 +197,7 @@ final class ConsultaFocos
 
                 continue;
             }
-            $asignacion = $this->geografia->asignar(...$foco['geometria']['coordinates']);
+            $asignacion = $geografia->asignar(...$foco['geometria']['coordinates']);
             $foco['territorio'] = $this->territorio($this->catalogo->buscar('BO07'), $asignacion);
             if ($asignacion['motivoAsignacion'] !== null) {
                 $foco['faltantes'][] = ['campo' => 'territorio.municipio', 'motivo' => $asignacion['motivoAsignacion']];

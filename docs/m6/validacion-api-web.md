@@ -43,3 +43,32 @@ APK debug del PR #195, instalado como variante separada y conectado a la API loc
 - Aire. La ficha para el centro del mapa (-16,500, -63,500) mostró 37 EAQI, PM2,5 de 13,6 µg/m³ y serie horaria de CAMS global / Open-Meteo.
 - Forestal. Con la variante que habilita la revisión forestal, Santa Rosa mostró 26 polígonos y 1,915 ha en 2024–2025. La vista indica revisión técnica y conserva la fuente Hansen GFC y el umbral de copa ≥30 %. Se abrió la lista y se seleccionó el polígono 1 (2024, 0,074 ha). Al detener la API aislada apareció Reintentar. Al restaurarla y pulsar ese botón se recuperaron el mapa y las cifras.
 - Sesión vencida. Se invalidó solo el token de la cuenta de pruebas. Forestal devolvió la app a Iniciar sesión con el mensaje de vencimiento. Tras ingresar otra vez se abrió el mapa.
+
+## Contraste con los filtros de Android · #193
+
+Se repitieron las consultas en la API local con una cuenta temporal para las rutas autenticadas. Los cinco casos devolvieron HTTP 200.
+
+- **Focos.** Santa Cruz (BO07), desde 2026-11-18 02:58 UTC hasta 2026-11-25 02:58 UTC, con extremo final excluido. El conjunto contiene 2.123 detecciones y 25 por página, equivalentes a 85 páginas en Android. La ficha de San Ignacio (BO070301), del 24/11 a las 14:38 en Bolivia, corresponde a `firms-5fd251df1d58652e562a8a8a74fb7eda2d52e7e417b4067840d443122ded5232`, NASA FIRMS NOAA-20 NRT, con 7,67 MW.
+- **Sequías.** Muestra `scz-piloto-01`, mes final `2026-10`, acumulado agosto–octubre. API, web y Android coinciden en 326,4 mm. El SPI-3 de 1,8081424489 de la API aparece como 1,81 en ambos clientes.
+- **Inundaciones.** San Pedro (BO071005), 6–18 de diciembre de 2025. La API devuelve 2,241 km² comparables, 83,725622 % de cobertura y 0,4968 km² de agua nueva. Web muestra 2,24 km², 83,73 % y 0,50 km². Android muestra 2,241 km², 83,726 % y 0,497 km². Las cifras coinciden al aplicar la precisión de cada cliente.
+- **Aire.** Centro del mapa de Android, latitud −16,5 y longitud −63,5. Para las 23:00 del 24/11 en Bolivia, API y Android muestran 37 EAQI y PM2,5 de 13,6 µg/m³. La API devuelve 24 registros de CAMS global vía Open-Meteo. El 25/11 se abrió la consulta web autenticada /mapa/aire en el navegador integrado de Codex, con las mismas coordenadas. En la serie horaria, el instante 2026-11-25T03:00:00Z (24/11 a las 23:00 en Bolivia) devolvió los mismos 37 EAQI y 13,6 µg/m³.
+- **Forestal.** Recorte técnico de Santa Rosa, 2024–2025 y copa ≥30 %. API y Android coinciden en 26 polígonos y un total de 1,91489180 ha que la app muestra como 1,915 ha. El primer polígono de 2024 tiene 0,07365255 ha y aparece como 0,074 ha. El 25/11 se cargó el mismo paquete y período en el visor técnico /revision/forestal del navegador integrado. El visor mostró 26 polígonos, 1,915 ha y 0,074 ha en el primer polígono de 2024. Al repetir manualmente Android, la primera petición agotó el tiempo de espera y Reintentar recuperó el mapa y las cifras.
+
+Tras la fusión, repetir los casos sobre el SHA de `develop`, registrar ese SHA y conservar las capturas y las respuestas de API correspondientes a cada filtro. Para Aire, usar las mismas coordenadas y la misma hora en ambos clientes. Para Forestal, comparar únicamente el recorte y el período equivalentes.
+
+## Regresión manual del portal · #194
+
+El 25/11 se usó el navegador integrado de Codex con una segunda base SQLite aislada. Las cuentas y los avisos eran de prueba.
+
+- La ficha pública mostró ubicación aproximada, hora de Bolivia y NASA FIRMS. Al registrar la primera cuenta desde la ficha, volvió al mismo aviso y permitió tomarlo. Pasó a En verificación y mostró el formulario de resultado para su responsable.
+- Tras cerrar sesión, el registro con el mismo correo redirigió a Acceso de brigada, conservó el aviso en la URL y mostró «Si ya tienes una cuenta, puedes iniciar sesión».
+- Una segunda cuenta registrada con otro correo volvió a la misma ficha. Vio «Una brigada ya se hizo cargo del aviso», sin botones para tomar el aviso ni guardar un resultado.
+- Sin iniciar sesión, el aviso de prueba publicado hacía 72 horas y un minuto quedó fuera de Activos y apareció en Historial con el estado Vencido sin atención.
+
+Queda repetir estos escenarios sobre el commit integrado en develop.
+
+## Regresión móvil y consulta de siete días · 25/11
+
+- Sequías en Android rechazó un mes mal formado. Septiembre de 2026 mostró el mensaje de falta de datos sin reutilizar la muestra de octubre. Al pasar a Inundaciones se conservaron su territorio y su comparación propios.
+- En modo avión, Inundaciones mostró el error de consulta, Focos ofreció reintentar el catálogo y Aire ofreció repetir la consulta. Tras reconectar, Aire volvió a mostrar el índice y la serie horaria. Inundaciones recuperó San Pedro con 2,241 km² comparables y cobertura del 83,726 %.
+- Focos devolvía HTTP 500 en PHP con 128 MB al consultar los últimos siete días. El registro señaló memoria agotada en ConsultaFocos. Se cambió a procesar y liberar cada bloque FIRMS antes de solicitar el siguiente, con deduplicación y límites acumulados para el período. El índice espacial vive solo hasta terminar la preparación, antes de serializar el conjunto para la caché. La misma petición dio HTTP 200 con 2.340 detecciones; en el navegador integrado y por API se comprobaron dos páginas de 25 registros, con el mismo total y sin identificadores repetidos. Se usó SQLite para la caché y se mantuvo el límite de 128 MB. En Android, Reintentar en una ventana de siete días distinta recuperó 2.352 detecciones y el mapa.
