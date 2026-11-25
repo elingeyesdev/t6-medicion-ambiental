@@ -14,6 +14,11 @@ class InundationsScreen extends StatefulWidget {
     required this.api,
     required this.onUnauthorized,
     this.showAppBar = true,
+    this.active = true,
+    this.sharedTerritoryId,
+    this.onTerritoryChanged,
+    this.sharedMapStyle,
+    this.onMapStyleChanged,
     this.repository,
     super.key,
   });
@@ -21,6 +26,11 @@ class InundationsScreen extends StatefulWidget {
   final GeoCruzApiClient api;
   final VoidCallback onUnauthorized;
   final bool showAppBar;
+  final bool active;
+  final String? sharedTerritoryId;
+  final ValueChanged<String>? onTerritoryChanged;
+  final MapBaseStyle? sharedMapStyle;
+  final ValueChanged<MapBaseStyle>? onMapStyleChanged;
   final InundationsRepository? repository;
 
   @override
@@ -39,6 +49,7 @@ class _InundationsScreenState extends State<InundationsScreen> {
   WaterResult? _result;
   WaterFeature? _selectedFeature;
   String? _selectedPlace;
+  String? _unavailableTerritoryId;
   Object? _catalogError;
   Object? _queryError;
   bool _loadingCatalog = true;
@@ -53,7 +64,60 @@ class _InundationsScreenState extends State<InundationsScreen> {
   void initState() {
     super.initState();
     _repository = widget.repository ?? InundationsRepository(widget.api);
+    _mapStyle = widget.sharedMapStyle ?? _mapStyle;
     _loadCatalog();
+  }
+
+  @override
+  void didUpdateWidget(covariant InundationsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.active &&
+        (!oldWidget.active ||
+            widget.sharedTerritoryId != oldWidget.sharedTerritoryId)) {
+      _syncSharedTerritory();
+    }
+    if (widget.sharedMapStyle != null && widget.sharedMapStyle != _mapStyle) {
+      setState(() => _mapStyle = widget.sharedMapStyle!);
+    }
+  }
+
+  void _syncSharedTerritory() {
+    final id = widget.sharedTerritoryId;
+    final catalog = _catalog;
+    if (!widget.active || id == null || catalog == null || _loadingCatalog) {
+      return;
+    }
+    if (id == 'BO07') {
+      if (_selectedProduct == null && catalog.products.isNotEmpty) {
+        _selectPublishedProduct(catalog.products.first);
+      }
+      return;
+    }
+    final match = catalog.products
+        .where((product) => product.territoryId == id)
+        .firstOrNull;
+    if (match == null) {
+      ++_queryRequest;
+      setState(() {
+        _unavailableTerritoryId = id;
+        _selectedProduct = null;
+        _selectedPlace = null;
+        _result = null;
+        _loadingResult = false;
+      });
+    } else if (_selectedProduct?.territoryId != id) {
+      _selectPublishedProduct(match);
+    }
+  }
+
+  void _selectPublishedProduct(WaterProductOption product) {
+    setState(() {
+      _unavailableTerritoryId = null;
+      _selectedPlace = product.territoryId;
+      _selectedProduct = product;
+      _result = null;
+    });
+    _query(product);
   }
 
   @override
@@ -89,11 +153,20 @@ class _InundationsScreenState extends State<InundationsScreen> {
           }
         }
       }
-      selected ??= catalog.products.firstOrNull;
+      final sharedId = widget.active ? widget.sharedTerritoryId : null;
+      if (sharedId != null && sharedId != 'BO07') {
+        selected = catalog.products
+            .where((product) => product.territoryId == sharedId)
+            .firstOrNull;
+      } else {
+        selected ??= catalog.products.firstOrNull;
+      }
       setState(() {
         _catalog = catalog;
         _selectedProduct = selected;
         _selectedPlace = selected?.territoryId;
+        _unavailableTerritoryId =
+            selected == null && catalog.products.isNotEmpty ? sharedId : null;
         _loadingCatalog = false;
       });
       // La lista y el resultado se consultan una sola vez cada uno al abrir.
@@ -158,6 +231,7 @@ class _InundationsScreenState extends State<InundationsScreen> {
     if (options.isEmpty) return;
     ++_queryRequest;
     setState(() {
+      _unavailableTerritoryId = null;
       _selectedPlace = place;
       _selectedProduct = options.first;
       _result = null;
@@ -165,6 +239,7 @@ class _InundationsScreenState extends State<InundationsScreen> {
       _loadingResult = false;
       _selectedFeature = null;
     });
+    widget.onTerritoryChanged?.call(place);
   }
 
   void _changeComparison(String? id) {
@@ -313,7 +388,10 @@ class _InundationsScreenState extends State<InundationsScreen> {
           Positioned.fill(
             child: MapChrome(
               style: _mapStyle,
-              onStyleChanged: (style) => setState(() => _mapStyle = style),
+              onStyleChanged: (style) {
+                setState(() => _mapStyle = style);
+                widget.onMapStyleChanged?.call(style);
+              },
               onZoomIn: () => _zoom(1),
               onZoomOut: () => _zoom(-1),
               onFit: _fitToResult,
@@ -536,7 +614,20 @@ class _InundationsScreenState extends State<InundationsScreen> {
           )
         else if (catalog?.products.isEmpty ?? true)
           const _EmptyState()
-        else ...[
+        else if (_unavailableTerritoryId != null) ...[
+          Text(
+            'No hay comparación publicada para el lugar elegido en el módulo anterior.',
+          ),
+          const SizedBox(height: 10),
+          OutlinedButton(
+            onPressed: () {
+              final first = catalog!.products.first;
+              widget.onTerritoryChanged?.call(first.territoryId);
+              _selectPublishedProduct(first);
+            },
+            child: const Text('Elegir un lugar publicado'),
+          ),
+        ] else ...[
           _filters(context),
           const SizedBox(height: 10),
           SizedBox(
@@ -737,6 +828,7 @@ class _InundationsScreenState extends State<InundationsScreen> {
         const SizedBox(height: 8),
         Card(
           child: ExpansionTile(
+            key: const PageStorageKey('water-source-details'),
             leading: const Icon(Icons.info_outline_rounded),
             title: const Text('Fuente y alcance'),
             childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),

@@ -58,7 +58,13 @@ class HotspotsViewModel extends ChangeNotifier {
       (id == 'BO07' ? 'Santa Cruz' : id ?? 'Santa Cruz');
 
   Future<void> initialize() async {
-    await loadCatalog(runInitialQuery: true);
+    // La consulta inicial de Santa Cruz no depende del catálogo territorial.
+    // Lanzarlas juntas evita esperar el catálogo antes de pedir los focos.
+    _useLatestAvailablePeriod = true;
+    await Future.wait([
+      loadCatalog(),
+      _request(_validateAndNormalize(filters), page: 1),
+    ]);
   }
 
   Future<void> loadCatalog({bool runInitialQuery = false}) async {

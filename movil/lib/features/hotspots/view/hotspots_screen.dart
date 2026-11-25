@@ -19,11 +19,21 @@ class HotspotsScreen extends StatefulWidget {
   const HotspotsScreen({
     required this.apiClient,
     this.showAppBar = true,
+    this.active = true,
+    this.sharedTerritoryId,
+    this.onTerritoryChanged,
+    this.sharedMapStyle,
+    this.onMapStyleChanged,
     super.key,
   });
 
   final GeoCruzApiClient apiClient;
   final bool showAppBar;
+  final bool active;
+  final String? sharedTerritoryId;
+  final ValueChanged<String>? onTerritoryChanged;
+  final MapBaseStyle? sharedMapStyle;
+  final ValueChanged<MapBaseStyle>? onMapStyleChanged;
 
   @override
   State<HotspotsScreen> createState() => _HotspotsScreenState();
@@ -46,7 +56,51 @@ class _HotspotsScreenState extends State<HotspotsScreen>
   void initState() {
     super.initState();
     _controller = HotspotsViewModel(HotspotRepository(widget.apiClient));
-    _controller.initialize();
+    _controller.initialize().then((_) {
+      if (mounted) _syncSharedTerritory();
+    });
+    _mapStyle = widget.sharedMapStyle ?? _mapStyle;
+  }
+
+  @override
+  void didUpdateWidget(covariant HotspotsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.active &&
+        (!oldWidget.active ||
+            widget.sharedTerritoryId != oldWidget.sharedTerritoryId)) {
+      _syncSharedTerritory();
+    }
+    if (widget.sharedMapStyle != null && widget.sharedMapStyle != _mapStyle) {
+      setState(() => _mapStyle = widget.sharedMapStyle!);
+    }
+  }
+
+  Future<void> _syncSharedTerritory() async {
+    final id = widget.sharedTerritoryId;
+    if (!widget.active || id == null || _controller.territories.isEmpty) return;
+    final territory = id == 'BO07' ? null : _controller.territoryById(id);
+    if (id != 'BO07' && territory == null) return;
+    final province = territory?.type == 'provincia'
+        ? id
+        : territory?.type == 'municipio'
+        ? territory?.parentId
+        : null;
+    final municipality = territory?.type == 'municipio' ? id : null;
+    final current = _controller.filters;
+    if (current.provinceId == province &&
+        current.municipalityId == municipality) {
+      return;
+    }
+    setState(() => _selectedRecord = null);
+    await _controller.apply(
+      HotspotFilters(
+        fromUtc: current.fromUtc,
+        untilUtc: current.untilUtc,
+        provinceId: province,
+        municipalityId: municipality,
+        confidence: current.confidence,
+      ),
+    );
   }
 
   @override
@@ -118,6 +172,11 @@ class _HotspotsScreenState extends State<HotspotsScreen>
     try {
       setState(() => _selectedRecord = null);
       await _controller.apply(selected);
+      if (_controller.queryError == null) {
+        widget.onTerritoryChanged?.call(
+          selected.municipalityId ?? selected.provinceId ?? 'BO07',
+        );
+      }
     } on FormatException catch (error) {
       if (!mounted) return;
       ScaffoldMessenger.of(
@@ -230,9 +289,7 @@ class _HotspotsScreenState extends State<HotspotsScreen>
       animation: _controller,
       builder: (context, _) {
         final response = _controller.response;
-        final body =
-            (_controller.loadingCatalog && _controller.territories.isEmpty) ||
-                (_controller.loading && response == null)
+        final body = _controller.loading && response == null
             ? const Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -244,7 +301,9 @@ class _HotspotsScreenState extends State<HotspotsScreen>
                 ),
               )
             : _controller.catalogError != null &&
-                  _controller.territories.isEmpty
+                  _controller.territories.isEmpty &&
+                  response == null &&
+                  _controller.queryError == null
             ? _catalogFailure(context)
             : _controller.queryError != null && response == null
             ? Center(
@@ -540,7 +599,10 @@ class _HotspotsScreenState extends State<HotspotsScreen>
         Positioned.fill(
           child: MapChrome(
             style: _mapStyle,
-            onStyleChanged: (style) => setState(() => _mapStyle = style),
+            onStyleChanged: (style) {
+              setState(() => _mapStyle = style);
+              widget.onMapStyleChanged?.call(style);
+            },
             onZoomIn: () => _zoom(1),
             onZoomOut: () => _zoom(-1),
             onFit: () => _fitPage(records),

@@ -17,6 +17,11 @@ class DroughtScreen extends StatefulWidget {
     required this.apiClient,
     String? initialMonth,
     this.showAppBar = true,
+    this.active = true,
+    this.sharedTerritoryId,
+    this.onTerritoryChanged,
+    this.sharedMapStyle,
+    this.onMapStyleChanged,
     this.repository,
     super.key,
   }) : initialMonth = initialMonth ?? DroughtFilters.defaultMesFinal();
@@ -24,6 +29,11 @@ class DroughtScreen extends StatefulWidget {
   final GeoCruzApiClient apiClient;
   final String initialMonth;
   final bool showAppBar;
+  final bool active;
+  final String? sharedTerritoryId;
+  final ValueChanged<String>? onTerritoryChanged;
+  final MapBaseStyle? sharedMapStyle;
+  final ValueChanged<MapBaseStyle>? onMapStyleChanged;
   final DroughtRepository? repository;
 
   @override
@@ -57,7 +67,48 @@ class _DroughtScreenState extends State<DroughtScreen>
     super.initState();
     _repository = widget.repository ?? DroughtRepository(widget.apiClient);
     _filters = DroughtFilters(mesFinal: widget.initialMonth);
+    _mapStyle = widget.sharedMapStyle ?? _mapStyle;
     _loadCatalogAndQuery();
+  }
+
+  @override
+  void didUpdateWidget(covariant DroughtScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.active &&
+        (!oldWidget.active ||
+            widget.sharedTerritoryId != oldWidget.sharedTerritoryId)) {
+      _syncSharedTerritory();
+    }
+    if (widget.sharedMapStyle != null && widget.sharedMapStyle != _mapStyle) {
+      setState(() => _mapStyle = widget.sharedMapStyle!);
+    }
+  }
+
+  Future<bool> _syncSharedTerritory() async {
+    final id = widget.sharedTerritoryId;
+    if (!widget.active || id == null || _catalogLoading) return false;
+    final territory = id == 'BO07'
+        ? null
+        : _territories.where((item) => item.identifier == id).firstOrNull;
+    if (id != 'BO07' && territory == null) return false;
+    final province = territory?.type == 'provincia'
+        ? id
+        : territory?.type == 'municipio'
+        ? territory?.parentId
+        : null;
+    final municipality = territory?.type == 'municipio' ? id : null;
+    if (_filters.provincia == province && _filters.municipio == municipality) {
+      return false;
+    }
+    setState(
+      () => _filters = DroughtFilters(
+        mesFinal: _filters.mesFinal,
+        provincia: province,
+        municipio: municipality,
+      ),
+    );
+    await _executeQuery();
+    return true;
   }
 
   Future<void> _loadCatalogAndQuery() async {
@@ -65,6 +116,11 @@ class _DroughtScreenState extends State<DroughtScreen>
       _catalogLoading = true;
       _errorMessage = null;
     });
+
+    // La consulta general de Santa Cruz no necesita esperar el catálogo.
+    final queryStarted =
+        widget.sharedTerritoryId == null || widget.sharedTerritoryId == 'BO07';
+    final initialQuery = queryStarted ? _executeQuery() : null;
 
     try {
       _territories = await _repository.loadTerritories();
@@ -74,7 +130,10 @@ class _DroughtScreenState extends State<DroughtScreen>
       if (mounted) setState(() => _catalogLoading = false);
     }
 
-    if (mounted) await _executeQuery();
+    if (mounted) {
+      final synchronized = await _syncSharedTerritory();
+      if (!synchronized && mounted) await (initialQuery ?? _executeQuery());
+    }
   }
 
   Future<void> _executeQuery() async {
@@ -84,6 +143,7 @@ class _DroughtScreenState extends State<DroughtScreen>
       _loading = true;
       _errorMessage = null;
       _selectedSample = null;
+      _response = null;
       _mapReady = false;
     });
 
@@ -377,7 +437,7 @@ class _DroughtScreenState extends State<DroughtScreen>
                         FilledButton.icon(
                           icon: const Icon(Icons.check),
                           label: const Text('Aplicar filtros'),
-                          onPressed: () {
+                          onPressed: () async {
                             final next = DroughtFilters(
                               mesFinal: selectedMonth,
                               provincia: selectedProv,
@@ -394,7 +454,12 @@ class _DroughtScreenState extends State<DroughtScreen>
                             Navigator.of(ctx).pop();
                             if (!mounted) return;
                             setState(() => _filters = next);
-                            _executeQuery();
+                            await _executeQuery();
+                            if (mounted && _errorMessage == null) {
+                              widget.onTerritoryChanged?.call(
+                                selectedMun ?? selectedProv ?? 'BO07',
+                              );
+                            }
                           },
                         ),
                       ],
@@ -415,7 +480,7 @@ class _DroughtScreenState extends State<DroughtScreen>
     final response = _response;
     final summary = response?.resumen;
 
-    final body = _loading || _catalogLoading
+    final body = _loading
         ? const Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -667,6 +732,7 @@ class _DroughtScreenState extends State<DroughtScreen>
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
       child: ExpansionTile(
+        key: const PageStorageKey('drought-summary-details'),
         leading: const Icon(Icons.water_drop_outlined),
         title: const Text('Datos de la consulta'),
         subtitle: Text(
@@ -815,7 +881,10 @@ class _DroughtScreenState extends State<DroughtScreen>
         Positioned.fill(
           child: MapChrome(
             style: _mapStyle,
-            onStyleChanged: (style) => setState(() => _mapStyle = style),
+            onStyleChanged: (style) {
+              setState(() => _mapStyle = style);
+              widget.onMapStyleChanged?.call(style);
+            },
             onZoomIn: () {
               if (!_mapReady) return;
               _mapController.move(

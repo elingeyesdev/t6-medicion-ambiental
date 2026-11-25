@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../../core/maps/map_base_styles.dart';
+import '../../../core/maps/map_chrome.dart';
+import '../../../core/maps/map_completo_actions.dart';
 import '../../../core/network/geocruz_api_client.dart';
 
 typedef _Cell = ({int year, double area, List<LatLng> points});
@@ -21,43 +23,64 @@ class ForestalScreen extends StatefulWidget {
     required this.api,
     required this.onUnauthorized,
     this.showAppBar = true,
+    this.sharedMapStyle,
+    this.onMapStyleChanged,
     super.key,
   });
 
   final GeoCruzApiClient api;
   final VoidCallback onUnauthorized;
   final bool showAppBar;
+  final MapBaseStyle? sharedMapStyle;
+  final ValueChanged<MapBaseStyle>? onMapStyleChanged;
 
   @override
   State<ForestalScreen> createState() => _ForestalScreenState();
 }
 
 class _ForestalScreenState extends State<ForestalScreen> {
-  static const _base = MapBaseStyle.satelite;
   final _format = NumberFormat('0.###', 'es_BO');
   final _hits = ValueNotifier<LayerHitResult<int>?>(null);
+  final _mapController = MapController();
+  MapBaseStyle _mapStyle = MapBaseStyle.satelite;
+  bool _mapReady = false;
+  LatLng? _searchPin;
+  String? _searchPinLabel;
   int _from = 2024;
   int _to = 2025;
   int? _selected;
   bool _loading = false;
+  int _request = 0;
   String? _error;
   _Result? _result;
 
   @override
   void initState() {
     super.initState();
+    _mapStyle = widget.sharedMapStyle ?? _mapStyle;
     _load();
   }
 
   @override
+  void didUpdateWidget(covariant ForestalScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.sharedMapStyle != null && widget.sharedMapStyle != _mapStyle) {
+      setState(() => _mapStyle = widget.sharedMapStyle!);
+    }
+  }
+
+  @override
   void dispose() {
+    _request++;
     _hits.dispose();
+    _mapController.dispose();
     super.dispose();
   }
 
   String _area(double value) => '${_format.format(value)} ha';
 
   Future<void> _load() async {
+    final request = ++_request;
     final from = _from;
     final to = _to;
     setState(() {
@@ -65,6 +88,7 @@ class _ForestalScreenState extends State<ForestalScreen> {
       _error = null;
       _selected = null;
       _result = null;
+      _mapReady = false;
     });
     try {
       final data =
@@ -85,7 +109,7 @@ class _ForestalScreenState extends State<ForestalScreen> {
         throw const FormatException('Período o capa incorrectos.');
       }
       final bbox = (summary['bbox'] as List).cast<num>();
-      final bounds = LatLngBounds(
+      final territoryBounds = LatLngBounds(
         LatLng(bbox[1].toDouble(), bbox[0].toDouble()),
         LatLng(bbox[3].toDouble(), bbox[2].toDouble()),
       );
@@ -110,11 +134,15 @@ class _ForestalScreenState extends State<ForestalScreen> {
           ],
         ));
       }
+      final points = cells.expand((cell) => cell.points).toList();
+      final bounds = points.isEmpty
+          ? territoryBounds
+          : LatLngBounds.fromPoints(points);
       final coverage = summary['cobertura_observaciones_fraccion'] as num?;
       final total = double.parse(summary['total_periodo_ha'] as String);
       final version =
           (summary['fuente'] as Map<String, dynamic>)['version'] as String;
-      if (!mounted) return;
+      if (!mounted || request != _request) return;
       setState(() {
         _result = (
           area: _area(total),
@@ -128,7 +156,7 @@ class _ForestalScreenState extends State<ForestalScreen> {
         );
       });
     } on GeoCruzApiException catch (error) {
-      if (!mounted) return;
+      if (!mounted || request != _request) return;
       if (error.statusCode == 401) {
         widget.onUnauthorized();
       } else {
@@ -141,13 +169,13 @@ class _ForestalScreenState extends State<ForestalScreen> {
         );
       }
     } catch (_) {
-      if (!mounted) return;
+      if (!mounted || request != _request) return;
       setState(
         () => _error =
             'No se pudo consultar el piloto. Revisa la conexión e inténtalo de nuevo.',
       );
     } finally {
-      if (mounted) setState(() => _loading = false);
+      if (mounted && request == _request) setState(() => _loading = false);
     }
   }
 
@@ -198,10 +226,13 @@ class _ForestalScreenState extends State<ForestalScreen> {
               : (year) {
                   if (year != null) {
                     setState(() {
+                      _request++;
                       update(year);
                       _result = null;
                       _selected = null;
                       _error = null;
+                      _loading = false;
+                      _mapReady = false;
                     });
                   }
                 },
@@ -209,6 +240,219 @@ class _ForestalScreenState extends State<ForestalScreen> {
       ),
     );
   }
+
+  void _zoom(double change) {
+    if (!_mapReady) return;
+    final camera = _mapController.camera;
+    _mapController.move(camera.center, (camera.zoom + change).clamp(3, 18));
+  }
+
+  void _fitResult() {
+    final result = _result;
+    if (!_mapReady || result == null) return;
+    _mapController.fitCamera(
+      CameraFit.bounds(
+        bounds: result.bounds,
+        padding: const EdgeInsets.all(40),
+        maxZoom: 15,
+      ),
+    );
+  }
+
+  Future<void> _openPlaceSearch() async {
+    final result = await openPlaceSearch(
+      context: context,
+      api: widget.api,
+      near: _mapReady ? _mapController.camera.center : _result?.bounds.center,
+    );
+    if (!mounted || result == null) return;
+    final point = LatLng(result.latitude, result.longitude);
+    setState(() {
+      _searchPin = point;
+      _searchPinLabel = result.name;
+    });
+    if (_mapReady) _mapController.move(point, 10);
+  }
+
+  Future<void> _openWeather() => openWeatherSheet(
+    context: context,
+    api: widget.api,
+    point:
+        _searchPin ??
+        (_mapReady
+            ? _mapController.camera.center
+            : _result?.bounds.center ?? const LatLng(-16.5, -64)),
+    title: _searchPinLabel ?? 'Piloto forestal · Santa Rosa',
+  );
+
+  Future<void> _openFullscreen() {
+    final result = _result;
+    if (result == null) return Future<void>.value();
+    return openFullscreenMap(
+      context: context,
+      title: 'Cobertura forestal · Santa Rosa',
+      center: _mapReady ? _mapController.camera.center : result.bounds.center,
+      zoom: _mapReady ? _mapController.camera.zoom : 12,
+      markers: [
+        if (_searchPin case final point?)
+          Marker(
+            point: point,
+            width: 40,
+            height: 40,
+            child: const Icon(Icons.place, color: Colors.red),
+          ),
+      ],
+      polygons: [
+        for (final (i, cell) in result.cells.indexed)
+          Polygon(
+            points: cell.points,
+            color: _color(
+              cell.year,
+            ).withValues(alpha: i == _selected ? .9 : .6),
+            borderColor: i == _selected ? Colors.black : _color(cell.year),
+            borderStrokeWidth: i == _selected ? 3 : 1,
+          ),
+      ],
+      fitBounds: result.bounds,
+      initialStyle: _mapStyle,
+    );
+  }
+
+  Future<void> _openFilters() async {
+    var from = _from;
+    var to = _to;
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      showDragHandle: true,
+      builder: (sheetContext) => StatefulBuilder(
+        builder: (context, updateSheet) => Padding(
+          padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Filtros del piloto forestal',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Lugar: Santa Rosa. El piloto todavía no permite elegir otro territorio.',
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  for (final entry in [('Desde', from), ('Hasta', to)]) ...[
+                    Expanded(
+                      child: DropdownButtonFormField<int>(
+                        initialValue: entry.$2,
+                        decoration: InputDecoration(
+                          labelText: entry.$1,
+                          border: const OutlineInputBorder(),
+                        ),
+                        items: [
+                          for (var year = 2025; year >= 2001; year--)
+                            DropdownMenuItem(value: year, child: Text('$year')),
+                        ],
+                        onChanged: (year) {
+                          if (year == null) return;
+                          updateSheet(() {
+                            if (entry.$1 == 'Desde') {
+                              from = year;
+                            } else {
+                              to = year;
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    if (entry.$1 == 'Desde') const SizedBox(width: 12),
+                  ],
+                ],
+              ),
+              if (from > to)
+                const Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Text(
+                    'El año inicial debe ser anterior o igual al final.',
+                  ),
+                ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: from > to
+                      ? null
+                      : () {
+                          Navigator.of(sheetContext).pop();
+                          setState(() {
+                            _from = from;
+                            _to = to;
+                          });
+                          _load();
+                        },
+                  child: const Text('Consultar'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _topControls(BuildContext context) => Material(
+    elevation: 2,
+    color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.96),
+    borderRadius: BorderRadius.circular(18),
+    child: Padding(
+      padding: const EdgeInsets.fromLTRB(10, 4, 4, 4),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Santa Rosa',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                Text(
+                  '$_from–$_to · Piloto',
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+              ],
+            ),
+          ),
+          IconButton.filledTonal(
+            tooltip: 'Buscar lugar',
+            onPressed: _openPlaceSearch,
+            icon: const Icon(Icons.search_rounded, size: 19),
+          ),
+          IconButton.filledTonal(
+            tooltip: 'Tiempo y pronóstico',
+            onPressed: _openWeather,
+            icon: const Icon(Icons.cloud_outlined, size: 19),
+          ),
+          IconButton.filledTonal(
+            tooltip: 'Filtros',
+            onPressed: _openFilters,
+            icon: const Icon(Icons.tune_rounded, size: 19),
+          ),
+          IconButton.filledTonal(
+            tooltip: 'Actualizar',
+            onPressed: _loading ? null : _load,
+            icon: const Icon(Icons.refresh_rounded, size: 19),
+          ),
+        ],
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -223,6 +467,26 @@ class _ForestalScreenState extends State<ForestalScreen> {
               fit: StackFit.expand,
               children: [
                 _forestMap(result),
+                Positioned.fill(
+                  child: MapChrome(
+                    style: _mapStyle,
+                    onStyleChanged: (style) {
+                      setState(() => _mapStyle = style);
+                      widget.onMapStyleChanged?.call(style);
+                    },
+                    onZoomIn: () => _zoom(1),
+                    onZoomOut: () => _zoom(-1),
+                    onFit: _fitResult,
+                    onFullscreen: _openFullscreen,
+                  ),
+                ),
+                if (!widget.showAppBar)
+                  Positioned(
+                    top: 10,
+                    left: 10,
+                    right: 58,
+                    child: _topControls(context),
+                  ),
                 DraggableScrollableSheet(
                   initialChildSize: 0.38,
                   minChildSize: 0.25,
@@ -250,15 +514,22 @@ class _ForestalScreenState extends State<ForestalScreen> {
   Widget _forestMap(_Result result) {
     final selected = _selected;
     return FlutterMap(
+      mapController: _mapController,
       options: MapOptions(
         initialCameraFit: CameraFit.bounds(
           bounds: result.bounds,
           padding: const EdgeInsets.all(24),
         ),
         maxZoom: 18,
+        onMapReady: () {
+          _mapReady = true;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) _fitResult();
+          });
+        },
       ),
       children: [
-        _base.toLayer(),
+        _mapStyle.toLayer(),
         GestureDetector(
           onTap: () {
             final id = _hits.value?.hitValues.firstOrNull;
@@ -280,8 +551,19 @@ class _ForestalScreenState extends State<ForestalScreen> {
             ],
           ),
         ),
+        if (_searchPin case final point?)
+          MarkerLayer(
+            markers: [
+              Marker(
+                point: point,
+                width: 40,
+                height: 40,
+                child: const Icon(Icons.place, color: Colors.red),
+              ),
+            ],
+          ),
         RichAttributionWidget(
-          attributions: [TextSourceAttribution(_base.attribution)],
+          attributions: [TextSourceAttribution(_mapStyle.attribution)],
         ),
       ],
     );
