@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Avisos de incendio · GeoSur</title>
+    <link rel="icon" href="{{ asset('img/marca/geosur-simbolo.svg') }}">
+    <link rel="stylesheet" href="{{ asset('css/envirosense/fuentes.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/portal-incendios.css') }}?v=panel-atencion">
+</head>
+<body>
+    <a href="#contenido-portal" class="salto-contenido">Saltar al contenido</a>
+    <header class="barra">
+        <div class="marco barra-interior">
+            <a class="marca" href="{{ route('portal-incendios.index') }}"><img src="{{ asset('img/marca/geosur-simbolo.svg') }}" alt="" width="35" height="35"> GeoSur <span>Avisos de incendio</span></a>
+            <div class="acceso-portal">
+                @unless($brigadista)
+                    <a class="boton boton-claro" href="{{ route('portal-incendios.brigada', $aviso ? ['aviso' => $aviso->id] : []) }}">Acceso de brigada</a>
+                @else
+                    <span class="identidad-portal"><strong>Brigada de incendios</strong><small>{{ $cuentaBrigada->nombre }}</small></span>
+                    <form action="{{ route('portal-incendios.brigada.salir') }}" method="post">
+                        @csrf
+                        <button class="boton boton-claro" type="submit">Cerrar sesión</button>
+                    </form>
+                @endunless
+            </div>
+        </div>
+    </header>
+    <main class="marco" id="contenido-portal">
+        @if(!$aviso && !$historial && !$brigadista && $avisos->onFirstPage())
+            <section class="portada" aria-labelledby="titulo-portal">
+                <div class="portada-texto">
+                    <p class="portada-region"><span aria-hidden="true"></span> Santa Cruz, Bolivia</p>
+                    <h1 id="titulo-portal">Cuidar lo que está <em>en riesgo</em></h1>
+                    <p class="portada-intro">Un foco de calor es una señal para mirar más de cerca. Consulta dónde se detectó y sigue el estado de su verificación.</p>
+                    <a class="boton boton-portada" href="#avisos">Ver avisos en el mapa</a>
+                </div>
+                <figure class="portada-paisaje">
+                    <img src="{{ asset('img/portal-incendios/serrania-santiago.webp') }}" alt="Acantilados de la Serranía de Santiago sobre el bosque de la Chiquitanía" width="1280" height="720" fetchpriority="high">
+                    <figcaption>Serranía de Santiago <span>· <a href="https://commons.wikimedia.org/wiki/File:Acantilado_en_la_Serran%C3%ADa_de_Santiago_-_Santiago_de_Chiquitos,_Bolivia.jpg" rel="noopener noreferrer" target="_blank">Ruditaly</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener noreferrer" target="_blank">CC BY-SA 4.0</a></span></figcaption>
+                </figure>
+            </section>
+            <section class="guia-portal" aria-labelledby="titulo-guia">
+                <div>
+                    <h2 id="titulo-guia">Una detección, una decisión</h2>
+                    <p>NASA FIRMS localiza señales de calor. Cada aviso reúne la ubicación y la hora para que una brigada pueda revisar la zona y registrar lo que encontró.</p>
+                </div>
+            </section>
+        @else
+            @if($aviso || $historial)
+                <div class="cabecera-avisos cabecera-interior"><div><p>Avisos de incendio</p><h1>{{ $aviso ? $aviso->municipio : 'Historial de avisos' }}</h1></div></div>
+            @endif
+        @endif
+        @if(session('estado'))<p class="mensaje" role="status">{{ session('estado') }}</p>@endif
+        @if(!$aviso && !$historial)
+            <div class="cabecera-avisos" id="avisos" tabindex="-1">
+                <div>
+                    <p>Santa Cruz, Bolivia</p>
+                    @if($brigadista || !$avisos->onFirstPage())<h1>{{ $brigadista ? 'Panel de atención' : 'Situación en el territorio' }}</h1>
+                    @else<h2>Situación en el territorio</h2>@endif
+                </div>
+                <dl class="pulso">
+                    <div><dt>Por verificar</dt><dd>{{ $resumen['pendientes'] }}</dd></div>
+                    <div><dt>En verificación</dt><dd>{{ $resumen['en_verificacion'] }}</dd></div>
+                </dl>
+            </div>
+        @endif
+        <div class="columnas {{ $aviso || $brigadista ? 'columnas-atencion' : '' }}">
+            <section class="panel mapa-panel" aria-labelledby="titulo-mapa">
+                <div class="panel-cabecera"><h2 id="titulo-mapa">Mapa de avisos</h2><span>Santa Cruz · Bolivia</span></div>
+                <div id="portal-mapa" aria-label="Mapa de avisos publicados"></div>
+                <div class="pie-mapa">
+                    <span><i class="punto-estado" aria-hidden="true"></i> Por verificar</span>
+                    <span><i class="punto-estado punto-verificacion" aria-hidden="true"></i> En verificación</span>
+                    @if($historial || $aviso)<span><i class="punto-estado punto-archivo" aria-hidden="true"></i> Archivado</span>@endif
+                </div>
+            </section>
+            <section class="panel" aria-label="{{ $aviso ? 'Detalle del aviso' : 'Listado de avisos' }}">
+                @if($aviso)
+                    <div class="ficha">
+                        <a href="{{ route('portal-incendios.index', $historial ? ['vista' => 'historial'] : []) }}">Volver a los avisos</a>
+                        <h2>Ficha del aviso</h2>
+                        <span class="estado" data-estado="{{ $aviso->estado() }}">{{ $aviso->estado() }}</span>
+                        @php($estadoAviso = $aviso->estado())
+                        @if($estadoAviso === 'Por verificar' || $estadoAviso === 'En verificación')
+                            <section class="atencion-aviso" id="atencion" aria-labelledby="atencion-titulo">
+                                <h3 id="atencion-titulo">Atención del aviso</h3>
+                                @error('resultado')<p role="alert">{{ $message }}</p>@enderror
+                                @if($brigadista && $estadoAviso === 'Por verificar')
+                                    <p>Toma el aviso para asignarlo a tu cuenta y comenzar la verificación.</p>
+                                    <form method="post" action="{{ route('portal-incendios.tomar', $aviso) }}">
+                                        @csrf
+                                        <button class="boton boton-principal" type="submit">Tomar aviso</button>
+                                    </form>
+                                @elseif($brigadista && (int) $aviso->portal_brigadista_id === (int) $cuentaBrigada?->id)
+                                    <p>Este aviso está a cargo de tu cuenta.</p>
+                                    <form method="post" action="{{ route('portal-incendios.resolver', $aviso) }}">
+                                        @csrf
+                                        <label for="resultado">Resultado de la verificación</label>
+                                        <select required name="resultado" id="resultado">
+                                            <option value="">Elige un resultado</option>
+                                            @foreach(\App\Models\AvisoIncendio::RESULTADOS as $codigo => $nombre)
+                                                <option value="{{ $codigo }}">{{ $nombre }}</option>
+                                            @endforeach
+                                        </select>
+                                        <button class="boton boton-principal" type="submit">Guardar resultado</button>
+                                    </form>
+                                @elseif($estadoAviso === 'En verificación')
+                                    <p>Una brigada ya se hizo cargo del aviso.</p>
+                                @else
+                                    <p>Puedes tomar este aviso con una cuenta del portal.</p>
+                                    @unless($brigadista)
+                                        <a href="{{ route('portal-incendios.brigada', ['aviso' => $aviso->id]) }}">Ingresar como brigada</a>
+                                    @endunless
+                                @endif
+                            </section>
+                        @elseif($aviso->resultado)
+                            <section class="atencion-aviso cerrado" aria-label="Resultado registrado">
+                                <h3>Resultado registrado</h3>
+                                <p>{{ \App\Models\AvisoIncendio::RESULTADOS[$aviso->resultado] }} · {{ $aviso->resuelto_en->setTimezone('America/La_Paz')->format('d/m/Y · H:i') }}</p>
+                            </section>
+                        @else
+                            <p class="nota-operativa">Se archivó al cumplirse 72 horas sin asignación.</p>
+                        @endif
+                        <dl>
+                            <div><dt>Detección inicial</dt><dd>{{ $aviso->observado_en->setTimezone('America/La_Paz')->format('d/m/Y · H:i') }} · Bolivia</dd></div>
+                            <div><dt>Ubicación aproximada</dt><dd>{{ $aviso->latitud }}, {{ $aviso->longitud }}<br><a href="https://www.openstreetmap.org/?mlat={{ $aviso->latitud }}&amp;mlon={{ $aviso->longitud }}#map=13/{{ $aviso->latitud }}/{{ $aviso->longitud }}" target="_blank" rel="noopener noreferrer">Abrir ubicación</a></dd></div>
+                            <div><dt>Fuente inicial</dt><dd>NASA FIRMS · {{ $aviso->producto }}</dd></div>
+                            <div><dt>Detecciones agrupadas</dt><dd>{{ $aviso->detecciones }} · confianza alta</dd></div>
+                            @if(!$aviso->tomado_en)<div><dt>Vence sin atención</dt><dd>{{ $aviso->vence_en->setTimezone('America/La_Paz')->format('d/m/Y · H:i') }} · Bolivia</dd></div>@endif
+                        </dl>
+                    </div>
+                @else
+                    <div class="panel-cabecera"><h2>{{ $historial ? 'Historial' : 'Avisos activos' }}</h2></div>
+                    <nav class="pestanas" aria-label="Filtrar avisos">
+                        <a href="{{ route('portal-incendios.index') }}" @unless($historial) aria-current="page" @endunless>Activos</a>
+                        <a href="{{ route('portal-incendios.index', ['vista' => 'historial']) }}" @if($historial) aria-current="page" @endif>Historial</a>
+                    </nav>
+                    <ul class="lista">
+                        @forelse($avisos as $item)
+                            @php($estadoFila = $item->estado())
+                            <li class="fila-aviso">
+                                <a class="detalle-enlace" href="{{ route('portal-incendios.ficha', ['aviso' => $item] + ($historial ? ['vista' => 'historial'] : [])) }}">
+                                    <strong>{{ $item->municipio }}</strong><span class="estado" data-estado="{{ $estadoFila }}">{{ $estadoFila }}</span>
+                                    <small>{{ $item->observado_en->setTimezone('America/La_Paz')->format('d/m/Y · H:i') }} · {{ $item->detecciones }} {{ $item->detecciones === 1 ? 'detección' : 'detecciones' }}</small>
+                                </a>
+                                @if($brigadista && $estadoFila === 'Por verificar')
+                                    <form class="accion-fila" method="post" action="{{ route('portal-incendios.tomar', $item) }}">
+                                        @csrf
+                                        <button type="submit" class="boton boton-tomar">Tomar aviso<span class="solo-lector-portal"> en {{ $item->municipio }} del {{ $item->observado_en->setTimezone('America/La_Paz')->format('d/m/Y H:i') }}</span></button>
+                                    </form>
+                                @elseif($brigadista && $estadoFila === 'En verificación' && (int) $item->portal_brigadista_id === (int) $cuentaBrigada?->id)
+                                    <div class="accion-fila"><a class="boton boton-tomar" href="{{ route('portal-incendios.ficha', $item) }}#atencion">Registrar resultado</a></div>
+                                @endif
+                            </li>
+                        @empty
+                            <li class="vacio">{{ $historial ? 'Todavía no hay avisos archivados.' : 'No hay avisos activos registrados.' }}</li>
+                        @endforelse
+                    </ul>
+                    @if($avisos->hasPages())
+                        <nav class="paginacion" aria-label="Páginas de avisos">
+                            @if($avisos->previousPageUrl())<a href="{{ $avisos->previousPageUrl() }}">Anterior</a>@endif
+                            <span>{{ $avisos->currentPage() }} de {{ $avisos->lastPage() }}</span>
+                            @if($avisos->nextPageUrl())<a href="{{ $avisos->nextPageUrl() }}">Siguiente</a>@endif
+                        </nav>
+                    @endif
+                @endif
+            </section>
+        </div>
+        <footer><a href="https://firms.modaps.eosdis.nasa.gov/" target="_blank" rel="noopener noreferrer">NASA FIRMS</a> · Ubicaciones aproximadas. La salida a campo se coordina por los canales de cada brigada.</footer>
+    </main>
+    <script type="application/json" id="configuracion-mapa">@json(\App\Support\ConfiguracionMapa::paraWeb())</script>
+    <script type="application/json" id="datos-portal-mapa">
+        @json($mapaAvisos)
+    </script>
+    <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
+    <script type="module" src="{{ asset('js/portal-incendios.js') }}"></script>
+</body>
+</html>

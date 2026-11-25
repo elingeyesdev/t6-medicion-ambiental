@@ -150,3 +150,24 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
         Route::patch('/usuarios/{usuario}/estado', [UsuariosController::class, 'estado'])->name('usuarios.estado');
     });
 });
+
+Route::prefix('portal-incendios')->name('portal-incendios.')->group(function (): void {
+    Route::get('/', [\App\Http\Controllers\PortalIncendiosController::class, 'index'])->name('index');
+    Route::get('/detecciones/{observacion}', [\App\Http\Controllers\PortalIncendiosController::class, 'buscar'])
+        ->where('observacion', 'firms-[a-f0-9]{64}')->name('buscar');
+    Route::get('/brigada/solicitud', [\App\Http\Controllers\SolicitudBrigadaController::class, 'formulario'])->name('solicitud');
+    Route::post('/brigada/solicitud', [\App\Http\Controllers\SolicitudBrigadaController::class, 'registrar'])
+        ->middleware('throttle:5,1,portal-solicitud')->name('solicitud.registrar');
+    Route::get('/brigada', [\App\Http\Controllers\AccesoBrigadaController::class, 'formulario'])->name('brigada');
+    Route::post('/brigada', [\App\Http\Controllers\AccesoBrigadaController::class, 'entrar'])
+        ->middleware('throttle:8,1,portal-brigada')->name('brigada.entrar');
+    Route::post('/brigada/salir', [\App\Http\Controllers\AccesoBrigadaController::class, 'salir'])->name('brigada.salir');
+    Route::get('/avisos/{aviso}', [\App\Http\Controllers\PortalIncendiosController::class, 'index'])
+        ->whereUuid('aviso')->name('ficha');
+    Route::middleware('throttle:20,1,portal-atencion')->group(function (): void {
+        Route::post('/avisos/{aviso}/tomar', [\App\Http\Controllers\PortalIncendiosController::class, 'tomar'])
+            ->whereUuid('aviso')->name('tomar');
+        Route::post('/avisos/{aviso}/resolver', [\App\Http\Controllers\PortalIncendiosController::class, 'resolver'])
+            ->whereUuid('aviso')->name('resolver');
+    });
+});

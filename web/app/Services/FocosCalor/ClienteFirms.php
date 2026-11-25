@@ -47,7 +47,7 @@ final class ClienteFirms
     {
         $clave = config('focos.clave');
         if (! is_string($clave) || ! preg_match('/^[a-zA-Z0-9]{16,128}$/D', $clave)) {
-            throw new ErrorConsulta('PROVEEDOR_NO_DISPONIBLE', 'Configura NASA_FIRMS_CLAVE únicamente en el backend.', 503);
+            throw new ErrorConsulta('PROVEEDOR_NO_CONFIGURADO', 'NASA FIRMS aún no está configurado en este entorno.', 503);
         }
         try {
             // Destino fijo y sin redirecciones. No registrar URL: FIRMS lleva la clave en la ruta.

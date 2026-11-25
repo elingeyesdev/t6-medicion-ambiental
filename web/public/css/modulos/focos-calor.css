@@ -104,6 +104,7 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 .detalle-extra { border-top: 1px solid var(--enviro-borde); margin-top: 18px; padding-top: 14px; }
 .detalle-extra summary { cursor: pointer; font-weight: 600; }
 .detalle-extra .campos-detalle { margin-top: 16px; }
+.detalle-extra dd { overflow-wrap: anywhere; }
 [data-bs-theme="dark"] .fila-foco .accion-foco, [data-bs-theme="dark"] .opcion-grupo .accion-foco { color: #a9e8bc; }
 
 .compartir-deteccion { padding: 1rem; border-top: 1px solid var(--borde, #d3ddd7); }

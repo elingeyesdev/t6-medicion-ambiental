@@ -255,10 +255,13 @@ class HotspotsViewModel extends ChangeNotifier {
 
   String _friendlyError(Object error) {
     if (error is GeoCruzApiException) {
-      if (error.code == 'PROVEEDOR_NO_DISPONIBLE' ||
+      if (error.code == 'PROVEEDOR_NO_CONFIGURADO' ||
           error.message.contains('NASA_FIRMS_CLAVE')) {
         return 'Focos de calor usa detecciones reales de NASA FIRMS. '
             'La fuente aún no está configurada en este servidor; no se muestran datos de ejemplo.';
+      }
+      if (error.code == 'PROVEEDOR_NO_DISPONIBLE') {
+        return 'NASA FIRMS no está disponible en este momento. Reintenta más tarde.';
       }
       if (error.statusCode == 409 || error.code == 'CONJUNTO_CAMBIADO') {
         return 'El conjunto de resultados expiró o cambió. Reinicia la consulta para obtener uno nuevo.';

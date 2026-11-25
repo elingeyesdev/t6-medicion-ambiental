@@ -89,9 +89,16 @@ async function iniciar() {
     let capa;
     function aplicar() {
         hasta.setCustomValidity(desde.valueAsNumber > hasta.valueAsNumber ? 'El año final debe ser igual o posterior al inicial.' : '');
-        if (!formulario.reportValidity()) return;
+        if (!formulario.reportValidity()) {
+            estado.textContent = 'Revisa los años solicitados. La consulta anterior se conserva si ya estaba cargada.';
+            return;
+        }
         const inicio = desde.valueAsNumber;
         const fin = hasta.valueAsNumber;
+        const enlace = new URL(location.href);
+        enlace.searchParams.set('desde', String(inicio));
+        enlace.searchParams.set('hasta', String(fin));
+        history.replaceState(null, '', enlace);
         if (capa) mapa.removeLayer(capa);
         estado.textContent = 'Cargando observaciones satelitales…';
         leyenda.hidden = true;
@@ -114,6 +121,11 @@ async function iniciar() {
     }
     formulario.addEventListener('input', () => hasta.setCustomValidity(''));
     formulario.addEventListener('submit', evento => { evento.preventDefault(); aplicar(); });
+    const parametros = new URLSearchParams(location.search);
+    if (parametros.has('desde') || parametros.has('hasta')) {
+        desde.value = parametros.get('desde') ?? '';
+        hasta.value = parametros.get('hasta') ?? '';
+    }
     aplicar();
 }
 

@@ -1,0 +1,178 @@
+:root { color-scheme: light; font-family: 'Space Grotesk', system-ui, sans-serif; color: #23332c; background: #f1f3ee; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: #245c4a; text-underline-offset: .18em; }
+a:focus-visible, button:focus-visible, select:focus-visible { outline: 3px solid #a34b2d; outline-offset: 3px; }
+.marco { width: min(92%, 81rem); margin-inline: auto; }
+.barra { background: #233d32; color: white; }
+.barra-interior { min-height: 4.4rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.marca { display: inline-flex; align-items: center; gap: .6rem; color: white; font-size: 1.2rem; font-weight: 700; text-decoration: none; }
+.marca span, .brigada { font-size: .88rem; color: #d2e0d8; }
+.boton { display: inline-block; padding: .65rem .9rem; font: inherit; text-decoration: none; font-weight: 650; border: 1px solid; border-radius: .45rem; cursor: pointer; }
+.boton-claro { color: white; border-color: #adc1b3; background: transparent; }
+.boton-principal { color: white; background: #285747; border-color: #285747; }
+h1 { font-size: clamp(1.65rem, 4vw, 3rem); letter-spacing: -.045em; margin: 0; }
+h2 { font-size: 1.25rem; margin: 0; }
+.columnas { display: grid; grid-template-columns: minmax(0,1.4fr) minmax(19rem,1fr); align-items: start; gap: 1rem; }
+.panel { background: #fffdf7; border: 1px solid #cdd5ca; border-radius: .65rem; overflow: hidden; }
+.panel-cabecera { padding: .9rem 1rem; display: flex; justify-content: space-between; align-items: baseline; gap: .7rem; background: #e3ebe2; }
+.panel-cabecera span { color: #40554b; font-size: .88rem; }
+#portal-mapa { height: clamp(19rem, 51vh, 35rem); background: #dce5dc; }
+.pie-mapa, footer { padding: .8rem 1rem; margin: 0; font-size: .88rem; color: #40554b; }
+.pestanas, .paginacion { display: flex; gap: 1rem; padding: .75rem 1rem; border-bottom: 1px solid #dce2d8; }
+.pestanas a[aria-current] { font-weight: 700; }
+.lista { list-style: none; margin: 0; padding: 0; max-height: 28rem; overflow: auto; }
+.lista li + li { border-top: 1px solid #e2e7de; }
+.lista li > a { display: grid; grid-template-columns: 1fr auto; gap: .4rem; align-items: center; padding: .75rem 1rem; text-decoration: none; }
+.lista li > a:hover { background: #edf2e9; }
+.lista small { color: #46594f; }
+.vacio, .ficha { padding: 1rem; }
+.ficha h2 { font-size: clamp(1.4rem, 3vw, 2.1rem); margin: .65rem 0; }
+.estado { padding: .23rem .55rem; border-radius: .3rem; background: #e4ebe3; color: #284b3b; font-size: .86rem; font-weight: 650; }
+.estado[data-estado="Por verificar"] { background: #f3e2d8; color: #783b27; }
+.ficha dl { margin: 1.4rem 0; }
+.ficha dl > div { display: grid; grid-template-columns: minmax(7rem,1fr) 1.3fr; gap: .5rem; padding: .6rem 0; border-top: 1px solid #e2e7de; }
+.ficha dt { color: #40554b; }
+.ficha dd { margin: 0; font-weight: 650; overflow-wrap: anywhere; }
+.ficha select { display: block; margin: .4rem 0 .75rem; padding: .5rem; width: 100%; font: inherit; }
+.mensaje { padding: .7rem 1rem; background: #e0ece1; }
+@media (max-width: 52rem) { .columnas { grid-template-columns: 1fr; }  }
+@media (max-width: 35rem) { .marca span { display: none; } .lista li > a { grid-template-columns: 1fr; justify-items: start; } }
+
+.salto-contenido { position: absolute; top: .75rem; left: 1rem; padding: .65rem 1rem; z-index: 1100; background: white; color: #203d33; transform: translateY(-180%); }
+.salto-contenido:focus { transform: translateY(0); }
+.portada {
+    position: relative; isolation: isolate; display: grid; align-items: center; overflow: hidden;
+    min-height: clamp(30rem, 62vh, 42rem);
+    margin-top: clamp(1rem, 2vw, 1.65rem); border-radius: .75rem; background: #18322a; color: #fffaf0;
+}
+.portada-paisaje { position: absolute; inset: 0; margin: 0; z-index: -1; }
+.portada-paisaje img { width: 100%; height: 100%; object-fit: cover; object-position: 72% 47%; }
+.portada-paisaje::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(90deg, #132b23f5 0%, #152a22e0 29%, #182d2478 57%, #15261e12 86%),
+                linear-gradient(0deg, #12221aec, transparent 24%);
+    pointer-events: none;
+}
+.portada-paisaje figcaption {
+    position: absolute; z-index: 1; inset: auto 1.4rem 1.1rem auto;
+    padding: .45rem .65rem; background: #12221ace; border-radius: .22rem;
+    color: #fffaf0; font-size: .875rem; font-weight: 600;
+}
+.portada-paisaje figcaption span { font-weight: 400; }
+.portada-paisaje a { color: inherit; }
+.portada-texto { padding: clamp(2rem, 5vw, 5rem); padding-bottom: clamp(4.75rem, 7vw, 6rem); pointer-events: none; }
+.portada-texto > * { pointer-events: auto; }
+.portada-region {
+    display: flex; align-items: center; gap: .6rem; margin: 0 0 1.15rem;
+    color: #f3e9d5; font-size: .9rem; font-weight: 650; letter-spacing: .06em;
+}
+.portada-region span { width: 1.4rem; height: 2px; background: #e2a887; }
+.portada h1 {
+    max-width: 12ch; font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(2.8rem, 6.3vw, 6.1rem); line-height: 1.02; font-weight: 400; letter-spacing: -.055em;
+}
+.portada h1 em { color: #f2c5a8; }
+.portada-intro { max-width: 39ch; margin: 1.25rem 0 1.55rem; color: #fbf4eb; font-size: clamp(1rem, 1.5vw, 1.18rem); line-height: 1.55; }
+.boton-portada { color: #21372d; background: #f5e8ce; border-color: #f5e8ce; padding: .8rem 1.1rem; }
+.boton-portada:hover { background: #fff7e6; }
+.boton-portada:focus-visible, .portada-paisaje a:focus-visible { outline-color: #f6d9a5; }
+.guia-portal {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(16rem, .46fr); align-items: center;
+    gap: clamp(1rem, 5vw, 4.2rem); padding: clamp(1.4rem, 3.8vw, 3rem) clamp(.25rem, 2.4vw, 2rem);
+    border-bottom: 1px solid #cdd5ca;
+}
+.guia-portal h2, .cabecera-avisos h2 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.55rem, 2.65vw, 2.45rem); font-weight: 400; letter-spacing: -.03em; }
+.guia-portal > div p { max-width: 59ch; margin: .55rem 0 0; color: #46594f; line-height: 1.55; }
+.titulo-interior { margin-top: 1.5rem; }
+.cabecera-avisos { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1rem; margin: 1.7rem 0 .75rem; }
+.cabecera-avisos p { margin: 0; font-size: .93rem; color: #40554b; }
+.cabecera-avisos p strong { font-variant-numeric: tabular-nums; }
+#avisos { scroll-margin-top: 1rem; }
+@media (max-width: 45rem) {
+    .portada { align-items: end; min-height: clamp(30rem, 126vw, 37rem); }
+    .portada-paisaje img { object-position: 66% 44%; }
+    .portada-paisaje::after { background: linear-gradient(0deg, #132b23 3%, #142920e8 29%, #192d245e 76%, #16282010); }
+    .portada-texto { padding: 1.6rem 1.3rem 4.35rem; }
+    .portada h1 { max-width: 13ch; font-size: clamp(2.6rem, 10vw, 4.7rem); }
+    .portada-paisaje figcaption { inset-inline: .65rem; bottom: .65rem; width: fit-content; max-width: calc(100% - 1.3rem); }
+    .guia-portal { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+}
+
+.acceso-portal { display: flex; align-items: center; gap: 1rem; }
+.identidad-portal { display: grid; gap: .15rem; text-align: right; font-size: .88rem; }
+.identidad-portal small { color: #d2e0d8; font-size: .8rem; overflow-wrap: anywhere; }
+.cabecera-avisos { align-items: center; margin-top: clamp(1.55rem, 3vw, 2.6rem); }
+.cabecera-avisos h1, .cabecera-avisos h2 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-size: clamp(1.9rem, 3.5vw, 3.2rem); }
+.cabecera-avisos > div > p { font-size: .875rem; color: #426354; font-weight: 650; margin: 0 0 .35rem; }
+.pulso { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; margin: 0; }
+.pulso > div { display: flex; gap: .6rem; align-items: baseline; padding: .65rem .8rem; border: 1px solid #d9b6a5; border-radius: .45rem; background: #f4e5db; color: #713e2b; }
+.pulso > div + div { border-color: #b8cbbf; background: #e3ece4; color: #2c5749; }
+.pulso dt { font-size: .875rem; }
+.pulso dd { margin: 0; font-size: 1.32rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.panel-cabecera { background: #263f34; color: #fffaf0; min-height: 3.35rem; }
+.panel-cabecera span { color: #d5e3d9; }
+.columnas { gap: clamp(.8rem, 2vw, 1.5rem); }
+.columnas-atencion .panel:not(.mapa-panel) { grid-column: 2; grid-row: 1; }
+.columnas-atencion .mapa-panel { grid-column: 1; grid-row: 1; }
+.pie-mapa { display: flex; flex-wrap: wrap; gap: .5rem 1rem; }
+.pie-mapa span { display: inline-flex; align-items: center; gap: .35rem; }
+.punto-estado { display: inline-block; width: .62rem; height: .62rem; border-radius: 50%; background: #a34225; }
+.punto-verificacion { background: #2d6054; }
+.punto-archivo { background: #5d625d; }
+.pestanas a { padding: .35rem .65rem; text-decoration: none; border-radius: .35rem; }
+.pestanas a[aria-current] { background: #e5eee6; color: #224739; }
+.lista li > a.detalle-enlace { padding: .95rem 1rem; }
+.lista li:has(.accion-fila) > a.detalle-enlace { padding-bottom: .5rem; }
+.accion-fila { display: flex; justify-content: flex-end; margin: 0; padding: 0 1rem .9rem; }
+.boton-tomar { padding: .45rem .75rem; border-color: #abbfb1; background: #eaf0e8; color: #234d3c; font-size: .9rem; }
+.boton-tomar:hover { background: #dbe8dd; }
+.ficha { padding: clamp(1rem, 2.5vw, 1.6rem); }
+.ficha h2 { margin-top: .85rem; }
+.ficha dl { margin-bottom: 0; }
+.ficha dt { font-size: .94rem; }
+.atencion-aviso { margin-top: 1.1rem; padding: 1rem; border-left: 3px solid #567969; border-radius: 0 .5rem .5rem 0; background: #e9f0e8; }
+.atencion-aviso h3 { margin: 0 0 .3rem; font-size: 1.12rem; }
+.atencion-aviso p { margin: 0 0 .75rem; color: #354e41; }
+.atencion-aviso.cerrado p { margin: 0; }
+.nota-operativa { border-left: 3px solid #a16c4f; background: #f1e9dc; padding: .8rem 1rem; line-height: 1.45; }
+.solo-lector-portal { position: absolute; width: 1px; height: 1px; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 52rem) {
+    .columnas-atencion .panel:not(.mapa-panel) { grid-area: 1 / 1; }
+    .columnas-atencion .mapa-panel { grid-area: 2 / 1; }
+}
+@media (max-width: 36rem) {
+    .barra-interior { flex-wrap: wrap; padding-block: .65rem; }
+    .acceso-portal { gap: .55rem; }
+    .identidad-portal { text-align: left; }
+    .pulso { width: 100%; }
+    .pulso > div { align-items: center; justify-content: space-between; }
+    .accion-fila { justify-content: start; }
+}
+
+.acceso-marco { display: grid; grid-template-columns: minmax(0, 1fr) minmax(23rem, .8fr); overflow: hidden; border: 1px solid #cdd5ca; border-radius: .8rem; margin-block: clamp(1.3rem, 5vw, 4rem); background: #fffdf7; }
+.acceso-paisaje { display: flex; flex-direction: column; justify-content: space-between; gap: 4rem; min-height: 31rem; padding: clamp(1.4rem, 5vw, 3.7rem); background: linear-gradient(90deg, #152d24ef, #172a21a0), url('../img/portal-incendios/serrania-santiago.webp') 63% center / cover; color: #fffaf0; }
+.acceso-paisaje h2 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-size: clamp(2rem, 5vw, 4rem); letter-spacing: -.045em; line-height: 1; }
+.acceso-paisaje p { max-width: 33ch; line-height: 1.5; }
+.acceso-paisaje .acceso-credito { margin: 0; max-width: none; font-size: .88rem; }
+.acceso-credito a { color: inherit; }
+.acceso-formulario { align-self: center; padding: clamp(1.4rem, 5vw, 3.7rem); }
+.acceso-formulario h1 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-size: clamp(2rem, 4vw, 3.4rem); letter-spacing: -.045em; line-height: 1.05; }
+.acceso-formulario > p { color: #46594f; margin: .8rem 0 1.5rem; }
+.acceso-formulario form { display: grid; gap: 1rem; }
+.acceso-formulario label { display: block; margin-bottom: .35rem; font-weight: 650; }
+.acceso-formulario input:not([type="hidden"]) { width: 100%; min-height: 2.75rem; padding: .65rem .75rem; border: 1px solid #a9b9ae; border-radius: .38rem; background: white; color: inherit; font: inherit; }
+.acceso-formulario input:focus-visible { outline: 3px solid #527665; outline-offset: 2px; }
+.acceso-formulario form button { margin-top: .25rem; }
+.acceso-error { color: #8b3023; font-size: .9rem; margin: .36rem 0 0; }
+@media (max-width: 48rem) {
+    .acceso-marco { grid-template-columns: minmax(0, 1fr); }
+    .acceso-paisaje { min-height: 13rem; gap: .7rem; }
+}
+
+.solicitud-cuenta { width: min(100%, 54rem); margin: clamp(1.25rem, 5vw, 3.5rem) auto; }
+.solicitud-campos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.solicitud-cuenta form button { justify-self: start; }
+.solicitar-acceso { margin-bottom: 0; }
+.solicitar-acceso a { font-weight: 650; }
+@media (max-width: 40rem) { .solicitud-campos { grid-template-columns: 1fr; } }

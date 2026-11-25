@@ -20,7 +20,7 @@
             <button type="button" id="copiar-deteccion" class="boton-suave" disabled>Copiar ubicación y fecha</button>
             @can('mapa.ver')
                 @can('datos.consultar')
-                    <a id="guardar-zona-deteccion" class="boton-suave" href="{{ route('seguimiento.index') }}" hidden>Guardar zona desde este foco</a>
+                        <a id="aviso-portal-deteccion" class="boton-suave" href="{{ route('portal-incendios.index') }}" hidden>Consultar aviso público</a>
                 @endcan
             @endcan
             <p id="estado-copiado" role="status" aria-live="polite"></p>

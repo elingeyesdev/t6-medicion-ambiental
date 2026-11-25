@@ -117,7 +117,7 @@ class ConsultaFocosTest extends TestCase
     public function test_configuracion_ausente_es_503_y_demo_no_se_inventa(): void
     {
         config(['focos.clave' => '']);
-        $this->getJson(self::BASE)->assertStatus(503)->assertJsonPath('error.codigo', 'PROVEEDOR_NO_DISPONIBLE');
+        $this->getJson(self::BASE)->assertStatus(503)->assertJsonPath('error.codigo', 'PROVEEDOR_NO_CONFIGURADO');
         $this->getJson(self::BASE.'&modo=demostracion')->assertStatus(503)->assertJsonPath('error.codigo', 'MODULO_NO_DISPONIBLE');
         Http::assertNothingSent();
     }

@@ -18,4 +18,4 @@
 </section>
 <button type="button" id="agua-reabrir" class="btn btn-primary agua-reabrir" hidden>Cambios de agua</button>
 
-<script type="application/json" id="agua-territorios">{!! json_encode(array_map(fn ($lugar) => \Illuminate\Support\Arr::only($lugar, ['identificador', 'nombre', 'tipo']), $territoriosAgua), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_THROW_ON_ERROR) !!}</script>
+<script type="application/json" id="agua-territorios">{!! json_encode(array_map(fn ($lugar) => \Illuminate\Support\Arr::only($lugar, ['identificador', 'nombre', 'tipo', 'padre']), $territoriosAgua), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_THROW_ON_ERROR) !!}</script>

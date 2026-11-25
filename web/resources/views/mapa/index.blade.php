@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('titulo', request()->routeIs('mapa.agua') ? 'Agua e inundaciones' : 'Mapa de Monitoreo')
+@section('titulo', request()->routeIs('mapa.agua') ? 'Inundaciones' : 'Mapa de Monitoreo')
 @section('clase-cuerpo', 'pagina-monitoreo')
 @php($aguaActiva = request()->routeIs('revision.agua', 'mapa.agua'))
 @push('estilos')

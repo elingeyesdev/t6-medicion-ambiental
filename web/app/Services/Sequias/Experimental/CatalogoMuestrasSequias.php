@@ -119,6 +119,7 @@ final class CatalogoMuestrasSequias
         if (($capa['versionCatalogo'] ?? null) !== $d['versionCatalogoTerritorial']) {
             $this->invalido();
         }
+        $this->geografia->cargarMunicipios($capa);
         $geometrias = array_column($capa['features'], 'geometry', 'id');
         $municipios = $this->territorios->listar('municipio');
         if (count($d['muestras']) !== count($municipios) || count($geometrias) !== count($municipios)) {
@@ -154,7 +155,7 @@ final class CatalogoMuestrasSequias
             [$lon, $lat] = array_map(floatval(...), $s['coordenadaSolicitada']);
             if (($piloto && [$lon, $lat] !== [-63.1821, -17.7833])
                 || ! $this->geografia->interiorEstricto($geometrias[$s['municipio']], $lon, $lat)
-                || $this->geografia->asignar($lon, $lat)['municipio'] !== $s['municipio']) {
+                || $this->geografia->asignar($lon, $lat, conservarIndices: false)['municipio'] !== $s['municipio']) {
                 $this->invalido();
             }
             $s['coordenadaSolicitada'] = [$lon, $lat];

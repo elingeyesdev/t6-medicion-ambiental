@@ -2,7 +2,7 @@ import { ultimoPeriodoDisponible } from './periodo.js';
 import { fechaBolivia, numero } from './contrato.js';
 import { MapaFocos } from './mapa.js';
 import { etiquetaDeteccion } from './representacion.js';
-import { crearContenidoFoco } from './elementos.js';
+import { crearContenidoFoco, procedenciaFoco } from './elementos.js';
 import { CompartirFoco } from './compartir.js';
 
 const texto = (id, valor) => { document.getElementById(id).textContent = valor; };
@@ -79,7 +79,12 @@ export class VistaFocos {
         }
         if (estado.borrador) { titulo = 'Filtros modificados'; mensaje = r ? 'Aplica los cambios. El mapa conserva la consulta anterior.' : 'Pulsa Consultar focos.'; }
         if (cargando) { titulo = 'Cargando…'; mensaje = r ? 'El mapa conserva la consulta anterior.' : 'Espera unos segundos.'; }
-        if (estado.fase === 'error') { titulo = estado.error?.codigo === 'CONJUNTO_CAMBIADO' ? 'La consulta venció' : 'No se pudo consultar'; mensaje = `${estado.error?.message || 'Reintenta más tarde.'}${r ? ' Se conserva la consulta anterior.' : ''}`; }
+        if (estado.fase === 'error') { titulo = ({
+            CONJUNTO_CAMBIADO: 'La consulta venció',
+            PROVEEDOR_NO_CONFIGURADO: 'Fuente sin configurar',
+            PROVEEDOR_NO_DISPONIBLE: 'NASA FIRMS no está disponible',
+            NO_AUTENTICADO: 'Tu sesión venció',
+        })[estado.error?.codigo] ?? 'No se pudo consultar'; mensaje = `${estado.error?.message || 'Reintenta más tarde.'}${r ? ' Se conserva la consulta anterior.' : ''}`; }
         texto('titulo-estado', titulo); texto('mensaje-estado', mensaje);
         // La confirmación normal se anuncia sin añadir otra tarjeta al mapa.
         aviso.classList.toggle('solo-lector', titulo === 'Consulta lista' && !anterior && !cargando && estado.fase !== 'error');
@@ -110,7 +115,7 @@ export class VistaFocos {
         const sinCobertura = r.cobertura.estado === 'sin_cobertura';
         texto('total-focos', sinCobertura ? '' : numero(r.resumen.totalRegistros));
         texto('confianza-alta', sinCobertura ? '' : numero(indicador('focosConfianzaAlta')?.valor));
-        const cobertura = { desconocida: 'El mapa puede no incluir todas las detecciones.', parcial: 'Solo hay datos para parte de la consulta.', sin_cobertura: '', disponible: 'Datos disponibles para la consulta.' };
+        const cobertura = { desconocida: 'El producto está disponible. La cobertura de todo el territorio no está confirmada.', parcial: 'Solo hay datos para parte de la consulta.', sin_cobertura: '', disponible: 'Datos disponibles para la consulta.' };
         texto('estado-cobertura', cobertura[r.cobertura.estado] ?? cobertura.desconocida);
         texto('alcance-mapa', sinCobertura ? '' : `Mapa: ${numero(r.datos.length)} de ${numero(r.paginacion.total)} detecciones · página ${r.paginacion.pagina}`);
         texto('conteo-pagina', `${numero(r.datos.length)} en esta página`);
@@ -128,6 +133,12 @@ export class VistaFocos {
         const procedencia = document.getElementById('procedencia-consulta'); procedencia.replaceChildren();
         procedencia.append(nodo('p', `Fuente: ${[...new Set(r.fuentes.map(f => [f.proveedor, f.producto].filter(Boolean).join(' · ')))].join(' · ')}.`));
         procedencia.append(nodo('p', 'Límites de referencia: OCHA/HDX · CC BY 3.0 IGO.'));
+        const obtencion = r.consulta.obtencion;
+        if (obtencion?.fechaActualizacion) {
+            procedencia.append(nodo('p', 'Actualización de la fuente · ' + fechaBolivia(obtencion.fechaActualizacion)));
+        } else if (obtencion?.fechaRecuperacion) {
+            procedencia.append(nodo('p', 'Datos consultados · ' + fechaBolivia(obtencion.fechaRecuperacion)));
+        }
         if (r.resumen.registrosConFaltantes > 0) procedencia.append(nodo('p', 'Algunos puntos tienen información incompleta.'));
     }
 
@@ -142,20 +153,18 @@ export class VistaFocos {
         const campos = document.getElementById('campos-detalle'); campos.replaceChildren();
         const extras = document.getElementById('campos-detalle-extra'); extras.replaceChildren();
         const [lon, lat] = f.geometria?.type === 'Point' ? f.geometria.coordinates : [];
-        const guardarZona = document.getElementById('guardar-zona-deteccion');
-        if (guardarZona) {
-            guardarZona.hidden = !Number.isFinite(lat) || !Number.isFinite(lon);
-            if (!guardarZona.hidden) {
-                const destino = new URL(guardarZona.href);
-                destino.search = new URLSearchParams({ latitud: lat, longitud: lon }).toString();
-                guardarZona.href = destino.href;
-            }
+        const avisoPortal = document.getElementById('aviso-portal-deteccion');
+        if (avisoPortal) {
+            avisoPortal.hidden = f.atributos.confianza !== 'alta';
+            const destino = new URL(avisoPortal.getAttribute('href'), window.location.origin);
+            destino.pathname = destino.pathname.replace(/\/detecciones\/[^/]+$/, '') + '/detecciones/' + encodeURIComponent(f.identificador);
+            avisoPortal.href = destino.href;
         }
         const coordenadas = Number.isFinite(lat) && Number.isFinite(lon) ? `${lat}, ${lon} (latitud, longitud)` : 'No informadas';
         const valores = [
             ['Fecha y hora (Bolivia)', fechaBolivia(f.fechas.observadoDesde)], ['Nivel de confianza', f.atributos.confianza],
             ['Municipio', this.nombres.get(f.territorio.municipio) ?? 'No determinado'], ['Provincia', this.nombres.get(f.territorio.provincia) ?? 'No determinada'],
-            ['Ubicación', coordenadas], ['Fuente', [...new Set(r.fuentes.map(s => s.proveedor))].join(' · ')],
+            ['Ubicación', coordenadas], ...procedenciaFoco(f, r.fuentes),
         ];
         const principales = new Set(['Municipio', 'Provincia', 'Fecha y hora (Bolivia)', 'Nivel de confianza']);
         valores.forEach(([nombre, valor]) => { const grupo = nodo('div'); grupo.append(nodo('dt', nombre), nodo('dd', valor)); (principales.has(nombre) ? campos : extras).append(grupo); });

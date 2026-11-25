@@ -1,3 +1,4 @@
+import { recordarTerritorio, territorioAnterior } from '../panel/contexto-ambiental.js';
 import { aLocal, filtrosDelFormulario, solicitarJson, validarInstanteUrl } from './contrato.js';
 import { ConsultaFocosWeb } from './consulta.js';
 import { VistaFocos } from './vista.js';
@@ -20,6 +21,7 @@ function iniciar() {
     const consulta = new ConsultaFocosWeb(raiz.dataset.api, estado => {
         vista.mostrar(estado, reloj.ahora());
         if (estado.fase === 'listo' && estado.actual) {
+            recordarTerritorio(estado.actual.respuesta.consulta.filtrosEfectivos ?? estado.actual.filtros);
             const url = new URL(location.href);
             url.search = new URLSearchParams(estado.actual.filtros).toString();
             // Compartir filtros; nunca prometer un snapshot o página vigente al volver a abrir.
@@ -44,7 +46,8 @@ function iniciar() {
     restaurar(defecto);
     let inicial = { ...defecto };
     const parametros = new URLSearchParams(location.search);
-    const consultaEnUrl = parametros.has('desde') || parametros.has('hasta');
+    const periodoEnUrl = parametros.has('desde') || parametros.has('hasta');
+    const consultaEnUrl = periodoEnUrl || ['provincia', 'municipio', 'confianza'].some(k => parametros.has(k));
 
     async function cargarCatalogo() {
         document.getElementById('estado-catalogo').textContent = 'Cargando…';
@@ -58,6 +61,9 @@ function iniciar() {
             vista.nombres = new Map(territorios.map(t => [t.identificador, t.nombre]));
             opciones(provincia, territorios.filter(t => t.tipo === 'provincia'), 'Todo Santa Cruz');
             actualizarMunicipios('');
+            if (!consultaEnUrl && !consulta.estado.borrador && !consulta.estado.actual) {
+                restaurar({ ...defecto, ...territorioAnterior(territorios) });
+            }
             // EnviroSense abre directamente el mapa, sin inventar detecciones iniciales.
             // La geometría de contexto es local; NASA solo se consulta al aplicar filtros.
             if (!consultaEnUrl && !consulta.estado.actual) {
@@ -92,8 +98,11 @@ function iniciar() {
             if (preseleccion.provincia && preseleccion.municipio && territorios.find(t => t.identificador === preseleccion.municipio)?.padre !== preseleccion.provincia) throw new Error('La provincia y el municipio de la URL son incompatibles.');
             if (preseleccion.municipio && !preseleccion.provincia) preseleccion.provincia = territorios.find(t => t.identificador === preseleccion.municipio).padre;
             if (preseleccion.confianza && !['alta', 'nominal', 'baja', 'desconocida'].includes(preseleccion.confianza)) throw new Error('La confianza de la URL no es válida.');
-            validarInstanteUrl(preseleccion.desde); validarInstanteUrl(preseleccion.hasta);
-            restaurar(preseleccion);
+            if (periodoEnUrl) {
+                validarInstanteUrl(preseleccion.desde);
+                validarInstanteUrl(preseleccion.hasta);
+            }
+            restaurar({ ...defecto, ...preseleccion });
             const filtros = filtrosDelFormulario(formulario, reloj.ahora());
             inicial = { ...filtros };
             await consulta.consultar(filtros);
