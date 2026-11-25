@@ -25,7 +25,7 @@
             </form>
             <div class="forestal-mapa-controles">
                 <label for="forestal-base" class="visually-hidden">Fondo del mapa</label>
-                <select id="forestal-base" class="form-select" disabled><option value="claro">Claro</option><option value="relieve">Relieve</option><option value="satelite">Satélite</option><option value="calles">Calles</option></select>
+                <select id="forestal-base" class="form-select" disabled><option value="claro">Mapa claro</option><option value="relieve">Relieve</option><option value="satelite">Satélite</option><option value="calles">Calles</option></select>
                 <button class="btn btn-outline-primary" id="forestal-centrar" type="button" disabled>Centrar Santa Cruz</button>
             </div>
         </div>

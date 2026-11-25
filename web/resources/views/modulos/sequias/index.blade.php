@@ -11,7 +11,6 @@
     <div class="sq-intro"><div><h1>Sequías</h1></div></div>
     <p class="sq-interpretacion">Revisa cómo ha llovido en tu zona durante los últimos tres meses del período elegido.</p>
 
-    <div class="sq-explorar">
     <section class="sq-panel sq-filtros" aria-labelledby="sq-titulo-filtros">
         <div class="sq-encabezado"><h2 id="sq-titulo-filtros">Lugar y período</h2></div>
         <form id="sq-formulario">
@@ -34,7 +33,6 @@
                 <p id="sq-contexto-mapa" class="sq-ayuda">Elige una zona y un mes para consultar las condiciones de lluvia.</p>
                 <p id="sq-explicacion-mapa" class="sq-ayuda" hidden>Cada punto describe su zona cercana. Consulta su categoría en el detalle.</p>
     </section>
-    </div>
 
     <div class="sq-estado" id="sq-estado" role="status" aria-live="polite"><strong id="sq-titulo-estado">Elige territorio y mes</strong><p id="sq-mensaje-estado">Elige territorio y mes.</p><button type="button" class="btn sq-secundario" id="sq-reintentar" hidden>Reintentar consulta</button></div>
     <noscript><p class="sq-estado">Activa JavaScript para usar el mapa y los filtros.</p></noscript>
