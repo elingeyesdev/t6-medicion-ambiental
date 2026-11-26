@@ -77,10 +77,22 @@ class _DroughtScreenState extends State<DroughtScreen>
     if (widget.active &&
         (!oldWidget.active ||
             widget.sharedTerritoryId != oldWidget.sharedTerritoryId)) {
-      _syncSharedTerritory();
+      _refreshActiveQuery();
     }
     if (widget.sharedMapStyle != null && widget.sharedMapStyle != _mapStyle) {
       setState(() => _mapStyle = widget.sharedMapStyle!);
+    }
+  }
+
+  Future<void> _refreshActiveQuery() async {
+    if (await _syncSharedTerritory() || !mounted || !widget.active || _loading) {
+      return;
+    }
+    final obtained = _response?.consulta['obtencion'];
+    final validUntil = obtained is Map ? obtained['vigenteHasta'] : null;
+    final expiry = validUntil is String ? DateTime.tryParse(validUntil) : null;
+    if (expiry != null && !expiry.isAfter(DateTime.now())) {
+      await _executeQuery();
     }
   }
 
