@@ -1,3 +1,4 @@
+import { recordarTerritorio, territorioAnterior } from '../panel/contexto-ambiental.js';
 import { leerEnlace, validarFiltros, ErrorConsulta } from './contrato.js';
 import { ConsultaSequiasWeb } from './consulta.js';
 import { MapaSequias } from './mapa.js';
@@ -78,6 +79,7 @@ function renderizar(e) {
     $('sq-titulo-estado').textContent = titulo; $('sq-mensaje-estado').textContent = mensaje;
     if (e.actual && e.actual !== renderizado) {
         renderizado = e.actual; vista.mostrar(e.actual.respuesta);
+        recordarTerritorio(e.actual.respuesta.consulta);
         mapa.mostrar(e.actual.respuesta).catch(() => { $('sq-error-mapa').hidden = false; $('sq-error-mapa').textContent = 'No se pudo dibujar el mapa. Usa la lista y el detalle de las mismas muestras.'; });
         clearTimeout(vigencia);
         vigencia = setTimeout(() => control.verificarVigencia(), Math.max(1, Math.min(2147483647, Date.parse(e.actual.respuesta.consulta.obtencion.vigenteHasta) - Date.now() + 20)));
@@ -109,7 +111,9 @@ function abrirEnlace() {
         const enlace = leerEnlace(location.search, catalogos);
         if (!enlace) {
             control.limpiar(); renderizado = null;
-            mapa.contexto().catch(() => { $('sq-error-mapa').hidden = false; $('sq-error-mapa').textContent = 'No se pudo preparar el mapa. Puedes usar los filtros y consultar de nuevo.'; });
+            const territorio = territorioAnterior(catalogos.territorios);
+            aplicarFormulario({ ...territorio, mesFinal: $('sq-mes').defaultValue });
+            mapa.contexto(territorio.municipio ?? territorio.provincia ?? 'BO07').catch(() => { $('sq-error-mapa').hidden = false; $('sq-error-mapa').textContent = 'No se pudo preparar el mapa. Puedes usar los filtros y consultar de nuevo.'; });
             return;
         }
         if (!mapa.mapa) mapa.contexto(enlace.filtros.municipio ?? enlace.filtros.provincia ?? 'BO07').catch(() => { $('sq-error-mapa').hidden = false; $('sq-error-mapa').textContent = 'No se pudo preparar el mapa. Puedes consultar los datos igualmente.'; });

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\BrigadistaIncendios;
 use App\Models\User;
 
 return [
@@ -38,6 +39,7 @@ return [
     */
 
     'guards' => [
+        'brigada' => ['driver' => 'session', 'provider' => 'portal_brigadistas'],
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
@@ -62,6 +64,7 @@ return [
     */
 
     'providers' => [
+        'portal_brigadistas' => ['driver' => 'eloquent', 'model' => BrigadistaIncendios::class],
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', User::class),

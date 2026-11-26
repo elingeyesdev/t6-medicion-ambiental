@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\BrigadistaIncendios;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
@@ -42,6 +44,32 @@ class AccesoTest extends TestCase
             ->assertRedirect(url('/modulos/sequias?mesFinal=2024-09'));
         $this->assertAuthenticatedAs($usuario);
         $this->assertNotSame($sesionAnterior, session()->getId());
+    }
+
+    public function test_salir_del_portal_conserva_la_sesion_de_geosur(): void
+    {
+        $usuario = User::factory()->create(['email' => 'geo@example.test']);
+        BrigadistaIncendios::create([
+            'nombre' => 'Brigada QA',
+            'email' => 'brigada@example.test',
+            'password' => 'password',
+        ])->forceFill(['activo' => true])->save();
+
+        $this->post('/login', ['email' => $usuario->email, 'password' => 'password'])->assertRedirect('/mapa');
+        $this->post(route('portal-incendios.brigada.entrar'), [
+            'email' => 'brigada@example.test',
+            'password' => 'password',
+        ])->assertRedirect(route('portal-incendios.index'));
+        $sesionAnterior = session()->getId();
+        $tokenAnterior = session()->token();
+
+        $this->post(route('portal-incendios.brigada.salir'))
+            ->assertRedirect(route('portal-incendios.index'))
+            ->assertSessionHas(Auth::guard('web')->getName(), $usuario->getKey())
+            ->assertSessionMissing(Auth::guard('brigada')->getName());
+
+        $this->assertNotSame($sesionAnterior, session()->getId());
+        $this->assertNotSame($tokenAnterior, session()->token());
     }
 
     public function test_el_error_de_credenciales_es_generico_y_no_guarda_la_contrasena(): void

@@ -6,8 +6,9 @@ use DateTimeImmutable;
 
 final class NormalizadorFirms
 {
-    public function convertir(array $fila): ?array
+    public function convertir(array $fila, ?string $producto = null): ?array
     {
+        $producto ??= config('focos.producto');
         $x = $this->numero($fila['longitude'] ?? null);
         $y = $this->numero($fila['latitude'] ?? null);
         if ($x === null || $y === null || abs($x) > 180 || abs($y) > 90) {
@@ -48,11 +49,11 @@ final class NormalizadorFirms
         $fecha = $instante->format('Y-m-d\TH:i:s\Z');
 
         return [
-            'identificador' => 'firms-'.hash('sha256', json_encode([config('focos.producto'), $atributos['satelite'], $atributos['instrumento'], $fecha, $x, $y], JSON_PRESERVE_ZERO_FRACTION)),
+            'identificador' => 'firms-'.hash('sha256', json_encode([$producto, $atributos['satelite'], $atributos['instrumento'], $fecha, $x, $y], JSON_PRESERVE_ZERO_FRACTION)),
             'geometria' => ['type' => 'Point', 'coordinates' => [$x, $y]],
             'referenciaCapa' => null,
             'fechas' => ['observadoDesde' => $fecha, 'observadoHasta' => null, 'procesadoEn' => null, 'emitidoEn' => null],
-            'naturaleza' => 'observacion', 'fuentesRef' => ['nasa-firms-snpp-nrt'], 'metodo' => null,
+            'naturaleza' => 'observacion', 'fuentesRef' => [ClienteFirms::referencia($producto)], 'metodo' => null,
             'atributos' => $atributos + ['versionOriginal' => $version], 'faltantes' => $faltantes,
         ];
     }

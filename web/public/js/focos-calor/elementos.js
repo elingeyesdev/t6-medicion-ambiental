@@ -1,4 +1,4 @@
-import { fechaBolivia } from './contrato.js';
+import { fechaBolivia, numero } from './contrato.js';
 import { nombreCortoMunicipio } from './representacion.js';
 
 // Silueta derivada del icono flame de Tabler, licencia MIT en vendor/tabler-icons/.
@@ -37,5 +37,21 @@ export function crearContenidoFoco(foco, municipio) {
         nodo('span', fechaBolivia(foco.fechas.observadoDesde), 'fecha-foco'),
         insignia,
         nodo('span', 'Ver detalle →', 'accion-foco'),
+    ];
+}
+
+export function procedenciaFoco(foco, fuentes) {
+    const referencias = fuentes.filter(fuente => foco.fuentesRef?.includes(fuente.identificador));
+    const lista = clave => [...new Set(referencias.map(fuente => fuente[clave]).filter(Boolean))].join(' · ') || 'No informado';
+    const atributos = foco.atributos;
+    const potencia = Number.isFinite(atributos.potenciaRadiativa) && atributos.unidadPotenciaRadiativa
+        ? numero(atributos.potenciaRadiativa, atributos.unidadPotenciaRadiativa)
+        : 'No informada';
+    return [
+        ['Fuente', lista('proveedor')],
+        ['Producto', lista('producto')],
+        ['Tipo de dato', foco.naturaleza === 'observacion' ? 'Observación satelital' : 'No informado'],
+        ['Potencia radiativa', potencia],
+        ['Identificador', foco.identificador],
     ];
 }

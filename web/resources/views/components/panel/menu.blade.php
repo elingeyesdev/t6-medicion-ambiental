@@ -21,7 +21,7 @@
         @endcan
         <div class="enviro-seccion enviro-seccion-modulos">Análisis GeoSur</div>
         @if($aguaDisponible ?? false)
-            <a class="enviro-enlace {{ request()->routeIs('mapa.agua') ? 'activo' : '' }}" href="{{ route('mapa.agua') }}" title="Agua e inundaciones" @if(request()->routeIs('mapa.agua')) aria-current="page" @endif><x-panel.icono nombre="cloud-rain" /><span>Agua e inundaciones</span></a>
+            <a class="enviro-enlace {{ request()->routeIs('mapa.agua') ? 'activo' : '' }}" href="{{ route('mapa.agua') }}" title="Inundaciones" @if(request()->routeIs('mapa.agua')) aria-current="page" @endif><x-publico.enviro-icono nombre="waves" /><span>Inundaciones</span></a>
         @endif
         @foreach($modulos as $id => $item)
             <a class="enviro-enlace {{ request()->route('modulo') === $id ? 'activo' : '' }}" href="{{ route('modulos.mostrar', $id) }}" title="{{ $item['nombre'] }}" aria-label="Abrir {{ $item['nombre'] }}" @if(request()->route('modulo') === $id) aria-current="page" @endif>
@@ -30,7 +30,9 @@
         @endforeach
         @can('mapa.ver')
             @can('datos.consultar')
+                <a class="enviro-enlace {{ request()->routeIs('mapa.forestal') ? 'activo' : '' }}" href="{{ route('mapa.forestal') }}" title="Cobertura forestal" @if(request()->routeIs('mapa.forestal')) aria-current="page" @endif><x-publico.enviro-icono nombre="leaf" /><span>Cobertura forestal</span></a>
                 <a class="enviro-enlace {{ request()->routeIs('seguimiento.*') ? 'activo' : '' }}" href="{{ route('seguimiento.index') }}" title="Seguimiento territorial" @if(request()->routeIs('seguimiento.*')) aria-current="page" @endif><x-panel.icono nombre="map-pin" /><span>Seguimiento territorial</span></a>
+                <a class="enviro-enlace" href="{{ route('portal-incendios.index') }}" title="Avisos de incendio"><x-panel.icono nombre="bell" /><span>Avisos de incendio</span></a>
             @endcan
         @endcan
         <div class="enviro-seccion">Cuenta</div>

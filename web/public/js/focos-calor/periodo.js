@@ -9,6 +9,13 @@ export function periodoReciente(dias = 7, ahora = Date.now()) {
     return { desde: new Date(fin - dias * 86400000).toISOString(), hasta: new Date(fin).toISOString() };
 }
 
+export function ultimoPeriodoDisponible(disponibilidad, ahora = Date.now()) {
+    const hasta = Math.floor(Math.min(Date.parse(disponibilidad?.hasta), ahora) / 1000) * 1000;
+    const desde = Math.max(Math.ceil(Date.parse(disponibilidad?.desde) / 1000) * 1000, hasta - semana);
+    if (!Number.isFinite(desde) || !Number.isFinite(hasta) || desde >= hasta) return null;
+    return { desde: new Date(desde).toISOString(), hasta: new Date(hasta).toISOString() };
+}
+
 export function limitesPeriodo(desde, hasta, ahora = Date.now()) {
     const inicio = instante(desde), fin = instante(hasta);
     const presente = Math.floor(ahora / 1000) * 1000;

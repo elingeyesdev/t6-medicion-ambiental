@@ -4,6 +4,7 @@
 @case('arrow')<path d="M5 12h14m-7-7 7 7-7 7"/>@break
 @case('flame')<path d="M12 3c1 5 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-7 0 4 2 5 3 5 2-2 1-6 0-10Z"/>@break
 @case('rain')<path d="M6 14a4 4 0 1 1 1-8 6 6 0 0 1 11 3 3 3 0 0 1 0 6M8 17l-1 3m6-3-1 3m6-3-1 3"/>@break
+@case('waves')<path d="M2 7c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 13c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 19c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/>@break
 @case('cloud')<path d="M7 19a4 4 0 1 1 0-8 6 6 0 0 1 12-1 4.5 4.5 0 0 1-1 9Z"/>@break
 @case('chart')<path d="M3 3v18h18M6 15l4-4 4 3 6-7m-5 0h5v5"/>@break
 @case('shield')<path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Zm-4 9 3 3 5-6"/>@break

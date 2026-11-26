@@ -53,22 +53,25 @@ final class GeometriaTerritorial
         return false;
     }
 
-    public function asignar(float $x, float $y): array
+    public function asignar(float $x, float $y, bool $conservarIndices = true): array
     {
         if ($this->municipios === []) {
             // Cargar una sola vez la capa compartida y descartar por caja antes del polígono.
             $ruta = config('focos.datos_territoriales').'/limites/municipios.geojson';
-            $capa = json_decode(file_get_contents($ruta), true, 512, JSON_THROW_ON_ERROR);
-            if (($capa['versionCatalogo'] ?? null) !== $this->catalogo->metadatos()['version']) {
-                throw new \RuntimeException('Versiones territoriales incompatibles.');
-            }
-            foreach ($capa['features'] as $f) {
-                $this->municipios[] = [$f['id'], $this->construir($f['geometry']), $this->caja($f['geometry'])];
-            }
+            $this->cargarMunicipios(json_decode(file_get_contents($ruta), true, 512, JSON_THROW_ON_ERROR));
         }
         $coinciden = [];
-        foreach ($this->municipios as [$id, $indice, $b]) {
-            if ($x >= $b[0] && $y >= $b[1] && $x <= $b[2] && $y <= $b[3] && $this->contieneIndice($indice, $x, $y)) {
+        foreach ($this->municipios as $id => $municipio) {
+            [$esteMin, $norteMin, $esteMax, $norteMax] = $municipio['caja'];
+            if ($x < $esteMin || $y < $norteMin || $x > $esteMax || $y > $norteMax) {
+                continue;
+            }
+
+            $indice = $municipio['indice'] ?? $this->indice($municipio['geometria']);
+            if ($conservarIndices) {
+                $this->municipios[$id]['indice'] = $indice;
+            }
+            if ($this->contieneIndice($indice, $x, $y)) {
                 $coinciden[] = $this->catalogo->buscar($id);
             }
         }
@@ -79,6 +82,17 @@ final class GeometriaTerritorial
             'municipio' => count($coinciden) === 1 ? $coinciden[0]['identificador'] : null,
             'motivoAsignacion' => count($coinciden) === 1 ? null : (count($coinciden) > 1 ? 'frontera_compartida' : 'sin_coincidencia_municipal'),
         ];
+    }
+
+    public function cargarMunicipios(array $capa): void
+    {
+        if (($capa['versionCatalogo'] ?? null) !== $this->catalogo->metadatos()['version']) {
+            throw new \RuntimeException('Versiones territoriales incompatibles.');
+        }
+        $this->municipios = [];
+        foreach ($capa['features'] as $f) {
+            $this->municipios[$f['id']] = ['geometria' => $f['geometry'], 'caja' => $this->caja($f['geometry'])];
+        }
     }
 
     private function contieneIndice(array $indice, float $x, float $y): bool
@@ -139,26 +153,31 @@ final class GeometriaTerritorial
         $cubetas = [];
         $n = count($anillo);
         for ($i = 0, $j = $n - 1; $i < $n; $j = $i++) {
-            $ax = (float) $anillo[$j][0];
             $ay = (float) $anillo[$j][1];
-            $bx = (float) $anillo[$i][0];
             $by = (float) $anillo[$i][1];
             $desde = (int) floor((min($ay, $by) - 1e-8) / self::PASO_LATITUD);
             $hasta = (int) floor((max($ay, $by) + 1e-8) / self::PASO_LATITUD);
             for ($k = $desde; $k <= $hasta; $k++) {
-                $cubetas[$k][] = [$ax, $ay, $bx, $by];
+                // La arista termina en este vértice del anillo.
+                $cubetas[$k][] = $i;
             }
         }
 
-        return $cubetas;
+        return ['anillo' => $anillo, 'aristasPorLatitud' => $cubetas];
     }
 
     // 0 fuera, 1 dentro, 2 borde; tolerancia numérica de 1e-10 grados, sin buffer territorial.
-    private function clasificar(array $cubetas, float $x, float $y): int
+    private function clasificar(array $indice, float $x, float $y): int
     {
-        $aristas = $cubetas[(int) floor($y / self::PASO_LATITUD)] ?? [];
+        $aristas = $indice['aristasPorLatitud'][(int) floor($y / self::PASO_LATITUD)] ?? [];
+        $anillo = $indice['anillo'];
         $dentro = false;
-        foreach ($aristas as [$ax, $ay, $bx, $by]) {
+        foreach ($aristas as $i) {
+            $j = $i === 0 ? count($anillo) - 1 : $i - 1;
+            $ax = (float) $anillo[$j][0];
+            $ay = (float) $anillo[$j][1];
+            $bx = (float) $anillo[$i][0];
+            $by = (float) $anillo[$i][1];
             if ($x >= min($ax, $bx) - self::TOLERANCIA && $x <= max($ax, $bx) + self::TOLERANCIA
                 && $y >= min($ay, $by) - self::TOLERANCIA && $y <= max($ay, $by) + self::TOLERANCIA) {
                 $dx = $bx - $ax;

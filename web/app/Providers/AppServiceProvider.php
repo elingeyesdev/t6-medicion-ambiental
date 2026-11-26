@@ -41,13 +41,14 @@ class AppServiceProvider extends ServiceProvider
                 $app->make(ValidadorProductoAgua::class), $app->make(CatalogoProductosAgua::class)));
         $this->app->singleton(CatalogoTerritorial::class,
             fn () => new CatalogoTerritorial(config('focos.datos_territoriales')));
+        $this->app->scoped(GeometriaTerritorial::class);
         $this->app->singleton(RepositorioSeriesPrecipitacion::class,
             fn ($app) => new RepositorioSeriesPrecipitacion(config('sequias.directorio_series'),
                 $app->make(LectorJsonLocal::class), $app->make(ValidadorSeriePrecipitacion::class),
                 $app->make(ProcedenciaSeriePrecipitacion::class)));
         $this->app->singleton(AlmacenPublicacionesSequias::class,
             fn ($app) => new AlmacenPublicacionesSequias(config('sequias.directorio_publicaciones'), $app->make(LectorJsonLocal::class)));
-        $this->app->singleton(CatalogoMuestrasSequias::class,
+        $this->app->scoped(CatalogoMuestrasSequias::class,
             fn ($app) => new CatalogoMuestrasSequias(config('sequias.archivo_muestras'), dirname(config('focos.datos_territoriales')),
                 $app->make(LectorJsonLocal::class), $app->make(CatalogoTerritorial::class), $app->make(GeometriaTerritorial::class)));
     }

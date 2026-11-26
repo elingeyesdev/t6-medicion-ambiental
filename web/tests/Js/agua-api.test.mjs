@@ -66,6 +66,7 @@ test('sesión, permisos y límite de consultas tienen mensajes breves sin expone
         await crearConsultaAguaApi(s=>estados.push(s),{peticion:async()=>new Response('Detalle interno',{status:http})})(filtros);
         assert.equal(estados.at(-1).estado,'error');
         assert.equal(estados.at(-1).mensaje,texto);
+        assert.equal(estados.at(-1).codigo,http===401 ? 'SESION_REQUERIDA' : undefined);
     }
 });
 

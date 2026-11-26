@@ -84,7 +84,8 @@ final class SeguimientoTerritorialTest extends TestCase
         $this->travelTo(CarbonImmutable::parse('2026-11-15T15:00:00Z'));
         config(['focos.clave' => 'abcdefghijklmnop']);
         $producto = config('focos.producto');
-        Http::fake(['*/data_availability/*' => fn () => Http::response("data_id,min_date,max_date\n{$producto},2026-10-01,2026-10-15\n")]);
+        $respaldo = config('focos.producto_reciente_respaldo');
+        Http::fake(['*/data_availability/*' => fn () => Http::response("data_id,min_date,max_date\n{$producto},2026-10-01,2026-10-15\n{$respaldo},2026-10-01,2026-10-15\n")]);
 
         $this->actingAs(User::factory()->create());
         $this->post(route('seguimiento.guardar'), ['nombre' => 'Fuera', 'latitud' => 0, 'longitud' => 0, 'radio_km' => 10])

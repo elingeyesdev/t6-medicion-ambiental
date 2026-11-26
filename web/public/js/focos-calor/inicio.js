@@ -1,7 +1,8 @@
+import { recordarTerritorio, territorioAnterior } from '../panel/contexto-ambiental.js';
 import { aLocal, filtrosDelFormulario, solicitarJson, validarInstanteUrl } from './contrato.js';
 import { ConsultaFocosWeb } from './consulta.js';
 import { VistaFocos } from './vista.js';
-import { ajustarCalendarios, periodoReciente } from './periodo.js';
+import { ajustarCalendarios, periodoReciente, ultimoPeriodoDisponible } from './periodo.js';
 import { crearRelojServidor } from './reloj.js';
 import { iniciarCalendarios } from './calendario.js';
 
@@ -18,8 +19,9 @@ function iniciar() {
     iniciarCalendarios(desde, hasta);
     const vista = new VistaFocos();
     const consulta = new ConsultaFocosWeb(raiz.dataset.api, estado => {
-        vista.mostrar(estado);
+        vista.mostrar(estado, reloj.ahora());
         if (estado.fase === 'listo' && estado.actual) {
+            recordarTerritorio(estado.actual.respuesta.consulta.filtrosEfectivos ?? estado.actual.filtros);
             const url = new URL(location.href);
             url.search = new URLSearchParams(estado.actual.filtros).toString();
             // Compartir filtros; nunca prometer un snapshot o página vigente al volver a abrir.
@@ -44,7 +46,8 @@ function iniciar() {
     restaurar(defecto);
     let inicial = { ...defecto };
     const parametros = new URLSearchParams(location.search);
-    const consultaEnUrl = parametros.has('desde') || parametros.has('hasta');
+    const periodoEnUrl = parametros.has('desde') || parametros.has('hasta');
+    const consultaEnUrl = periodoEnUrl || ['provincia', 'municipio', 'confianza'].some(k => parametros.has(k));
 
     async function cargarCatalogo() {
         document.getElementById('estado-catalogo').textContent = 'Cargando…';
@@ -58,6 +61,9 @@ function iniciar() {
             vista.nombres = new Map(territorios.map(t => [t.identificador, t.nombre]));
             opciones(provincia, territorios.filter(t => t.tipo === 'provincia'), 'Todo Santa Cruz');
             actualizarMunicipios('');
+            if (!consultaEnUrl && !consulta.estado.borrador && !consulta.estado.actual) {
+                restaurar({ ...defecto, ...territorioAnterior(territorios) });
+            }
             // EnviroSense abre directamente el mapa, sin inventar detecciones iniciales.
             // La geometría de contexto es local; NASA solo se consulta al aplicar filtros.
             if (!consultaEnUrl && !consulta.estado.actual) {
@@ -77,7 +83,12 @@ function iniciar() {
             document.getElementById('reintentar-catalogo').hidden = false;
             return;
         } finally { clearTimeout(tiempo); }
-        if (!consultaEnUrl) return;
+        if (!consultaEnUrl) {
+            if (!consulta.estado.actual && !consulta.estado.borrador && consulta.estado.fase === 'inicial') {
+                await consulta.consultar(filtrosDelFormulario(formulario, reloj.ahora()));
+            }
+            return;
+        }
         try {
             const preseleccion = Object.fromEntries(['desde', 'hasta', 'provincia', 'municipio', 'confianza'].filter(k => parametros.has(k)).map(k => [k, parametros.get(k)]));
             // Una URL desconocida no se transforma silenciosamente en el departamento completo.
@@ -87,8 +98,11 @@ function iniciar() {
             if (preseleccion.provincia && preseleccion.municipio && territorios.find(t => t.identificador === preseleccion.municipio)?.padre !== preseleccion.provincia) throw new Error('La provincia y el municipio de la URL son incompatibles.');
             if (preseleccion.municipio && !preseleccion.provincia) preseleccion.provincia = territorios.find(t => t.identificador === preseleccion.municipio).padre;
             if (preseleccion.confianza && !['alta', 'nominal', 'baja', 'desconocida'].includes(preseleccion.confianza)) throw new Error('La confianza de la URL no es válida.');
-            validarInstanteUrl(preseleccion.desde); validarInstanteUrl(preseleccion.hasta);
-            restaurar(preseleccion);
+            if (periodoEnUrl) {
+                validarInstanteUrl(preseleccion.desde);
+                validarInstanteUrl(preseleccion.hasta);
+            }
+            restaurar({ ...defecto, ...preseleccion });
             const filtros = filtrosDelFormulario(formulario, reloj.ahora());
             inicial = { ...filtros };
             await consulta.consultar(filtros);
@@ -122,6 +136,13 @@ function iniciar() {
         ajustarCalendarios(desde, hasta, reloj.ahora());
         try { consulta.consultar(filtrosDelFormulario(formulario, reloj.ahora())); }
         catch (error) { consulta.editar(); consulta.emitir({ fase: 'error', error, pendiente: null }); }
+    });
+    document.getElementById('ultimo-periodo-disponible').addEventListener('click', () => {
+        const actual = consulta.estado.actual;
+        const periodo = ultimoPeriodoDisponible(actual?.respuesta.cobertura?.periodoDisponible, reloj.ahora());
+        if (!periodo) return;
+        restaurar({ ...actual.filtros, ...periodo });
+        formulario.requestSubmit();
     });
     document.getElementById('cancelar-filtros').addEventListener('click', () => { restaurar(consulta.estado.actual?.filtros ?? inicial); consulta.restaurar(); });
     document.getElementById('anterior').addEventListener('click', () => consulta.paginar(consulta.estado.actual.respuesta.paginacion.pagina - 1));

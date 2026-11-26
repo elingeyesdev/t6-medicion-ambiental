@@ -1,7 +1,8 @@
+import { ultimoPeriodoDisponible } from './periodo.js';
 import { fechaBolivia, numero } from './contrato.js';
 import { MapaFocos } from './mapa.js';
 import { etiquetaDeteccion } from './representacion.js';
-import { crearContenidoFoco } from './elementos.js';
+import { crearContenidoFoco, procedenciaFoco } from './elementos.js';
 import { CompartirFoco } from './compartir.js';
 
 const texto = (id, valor) => { document.getElementById(id).textContent = valor; };
@@ -41,7 +42,7 @@ export class VistaFocos {
 
     mostrarPanelResultados(mostrar) {
         this.resultadosOcultos = !mostrar;
-        const disponible = Boolean(this.actual?.respuesta);
+        const disponible = Boolean(this.actual?.respuesta) && this.actual.respuesta.cobertura.estado !== 'sin_cobertura';
         document.getElementById('resultados-focos').hidden = !disponible || !mostrar;
         const boton = document.getElementById('mostrar-resultados');
         boton.hidden = !disponible;
@@ -49,7 +50,7 @@ export class VistaFocos {
         boton.textContent = mostrar ? 'Ocultar resultados' : `Ver resultados (${numero(this.actual?.respuesta.resumen.totalRegistros)})`;
     }
 
-    mostrar(estado) {
+    mostrar(estado, ahora) {
         const r = estado.actual?.respuesta;
         const cargando = estado.fase === 'cargando';
         const anterior = Boolean(r && (cargando || estado.fase === 'error' || estado.borrador));
@@ -65,21 +66,32 @@ export class VistaFocos {
         let titulo = 'Elige los filtros';
         let mensaje = 'Elige territorio y fechas.';
         if (r) {
-            titulo = r.cobertura.estado === 'sin_cobertura' ? 'Sin cobertura para este período' : r.cobertura.estado === 'parcial' ? 'Resultados parciales' : 'Consulta lista';
+            titulo = r.cobertura.estado === 'sin_cobertura' ? 'Fechas fuera del registro satelital' : r.cobertura.estado === 'parcial' ? 'Resultados parciales' : 'Consulta lista';
             mensaje = 'Resultados del período seleccionado.';
             if (r.datos.length === 0) {
                 titulo = r.paginacion.total > 0 ? 'Página sin registros' : 'Sin registros para estos filtros';
                 mensaje = r.paginacion.total > 0 ? 'Vuelve a la página anterior.' : 'Sin detecciones publicadas. No descarta incendios.';
             }
-            if (r.cobertura.estado === 'sin_cobertura') titulo = 'Sin cobertura para este período';
+            if (r.cobertura.estado === 'sin_cobertura') {
+                titulo = 'Fechas fuera del registro satelital';
+                mensaje = 'Consulta las últimas fechas publicadas por NASA FIRMS o cambia el período.';
+            }
         }
         if (estado.borrador) { titulo = 'Filtros modificados'; mensaje = r ? 'Aplica los cambios. El mapa conserva la consulta anterior.' : 'Pulsa Consultar focos.'; }
         if (cargando) { titulo = 'Cargando…'; mensaje = r ? 'El mapa conserva la consulta anterior.' : 'Espera unos segundos.'; }
-        if (estado.fase === 'error') { titulo = estado.error?.codigo === 'CONJUNTO_CAMBIADO' ? 'La consulta venció' : 'No se pudo consultar'; mensaje = `${estado.error?.message || 'Reintenta más tarde.'}${r ? ' Se conserva la consulta anterior.' : ''}`; }
+        if (estado.fase === 'error') { titulo = ({
+            CONJUNTO_CAMBIADO: 'La consulta venció',
+            PROVEEDOR_NO_CONFIGURADO: 'Fuente sin configurar',
+            PROVEEDOR_NO_DISPONIBLE: 'NASA FIRMS no está disponible',
+            NO_AUTENTICADO: 'Tu sesión venció',
+        })[estado.error?.codigo] ?? 'No se pudo consultar'; mensaje = `${estado.error?.message || 'Reintenta más tarde.'}${r ? ' Se conserva la consulta anterior.' : ''}`; }
         texto('titulo-estado', titulo); texto('mensaje-estado', mensaje);
         // La confirmación normal se anuncia sin añadir otra tarjeta al mapa.
         aviso.classList.toggle('solo-lector', titulo === 'Consulta lista' && !anterior && !cargando && estado.fase !== 'error');
         document.getElementById('reintentar').hidden = estado.fase !== 'error' || estado.error?.codigo === 'CONJUNTO_CAMBIADO' || (!estado.pendiente && estado.error?.codigo !== 'HORA_NO_DISPONIBLE');
+        document.getElementById('ultimo-periodo-disponible').hidden = estado.fase !== 'listo'
+            || estado.borrador || r?.cobertura.estado !== 'sin_cobertura'
+            || !ultimoPeriodoDisponible(r.cobertura.periodoDisponible, ahora);
         document.getElementById('reiniciar').hidden = estado.error?.codigo !== 'CONJUNTO_CAMBIADO';
         document.getElementById('cancelar-filtros').hidden = !estado.borrador;
         document.getElementById('consultar').disabled = cargando;
@@ -100,11 +112,12 @@ export class VistaFocos {
         texto('titulo-resultados', this.nombres.get(territorio.identificador) ?? territorio.identificador);
         texto('periodo-aplicado', `${fechaBolivia(r.consulta.periodo.desde)} → ${fechaBolivia(r.consulta.periodo.hasta)} · Bolivia`);
         const indicador = codigo => r.resumen.indicadores.find(i => i.codigo === codigo);
-        texto('total-focos', numero(r.resumen.totalRegistros));
-        texto('confianza-alta', numero(indicador('focosConfianzaAlta')?.valor));
-        const cobertura = { desconocida: 'El mapa puede no incluir todas las detecciones.', parcial: 'Solo hay datos para parte de la consulta.', sin_cobertura: 'No hay datos disponibles para estas fechas.', disponible: 'Datos disponibles para la consulta.' };
+        const sinCobertura = r.cobertura.estado === 'sin_cobertura';
+        texto('total-focos', sinCobertura ? '' : numero(r.resumen.totalRegistros));
+        texto('confianza-alta', sinCobertura ? '' : numero(indicador('focosConfianzaAlta')?.valor));
+        const cobertura = { desconocida: 'El producto está disponible. La cobertura de todo el territorio no está confirmada.', parcial: 'Solo hay datos para parte de la consulta.', sin_cobertura: '', disponible: 'Datos disponibles para la consulta.' };
         texto('estado-cobertura', cobertura[r.cobertura.estado] ?? cobertura.desconocida);
-        texto('alcance-mapa', `Mapa: ${numero(r.datos.length)} de ${numero(r.paginacion.total)} detecciones · página ${r.paginacion.pagina}`);
+        texto('alcance-mapa', sinCobertura ? '' : `Mapa: ${numero(r.datos.length)} de ${numero(r.paginacion.total)} detecciones · página ${r.paginacion.pagina}`);
         texto('conteo-pagina', `${numero(r.datos.length)} en esta página`);
         texto('pagina-actual', `Página ${r.paginacion.pagina} de ${Math.max(1, Math.ceil(r.paginacion.total / r.paginacion.tamanioPagina))}`);
         const lista = document.getElementById('lista-focos'); lista.replaceChildren();
@@ -118,8 +131,14 @@ export class VistaFocos {
         document.getElementById('detalle-foco').hidden = true;
         this.compartir.limpiar();
         const procedencia = document.getElementById('procedencia-consulta'); procedencia.replaceChildren();
-        procedencia.append(nodo('p', `Fuente: ${[...new Set(r.fuentes.map(f => f.proveedor))].join(' · ')}.`));
+        procedencia.append(nodo('p', `Fuente: ${[...new Set(r.fuentes.map(f => [f.proveedor, f.producto].filter(Boolean).join(' · ')))].join(' · ')}.`));
         procedencia.append(nodo('p', 'Límites de referencia: OCHA/HDX · CC BY 3.0 IGO.'));
+        const obtencion = r.consulta.obtencion;
+        if (obtencion?.fechaActualizacion) {
+            procedencia.append(nodo('p', 'Actualización de la fuente · ' + fechaBolivia(obtencion.fechaActualizacion)));
+        } else if (obtencion?.fechaRecuperacion) {
+            procedencia.append(nodo('p', 'Datos consultados · ' + fechaBolivia(obtencion.fechaRecuperacion)));
+        }
         if (r.resumen.registrosConFaltantes > 0) procedencia.append(nodo('p', 'Algunos puntos tienen información incompleta.'));
     }
 
@@ -134,20 +153,18 @@ export class VistaFocos {
         const campos = document.getElementById('campos-detalle'); campos.replaceChildren();
         const extras = document.getElementById('campos-detalle-extra'); extras.replaceChildren();
         const [lon, lat] = f.geometria?.type === 'Point' ? f.geometria.coordinates : [];
-        const guardarZona = document.getElementById('guardar-zona-deteccion');
-        if (guardarZona) {
-            guardarZona.hidden = !Number.isFinite(lat) || !Number.isFinite(lon);
-            if (!guardarZona.hidden) {
-                const destino = new URL(guardarZona.href);
-                destino.search = new URLSearchParams({ latitud: lat, longitud: lon }).toString();
-                guardarZona.href = destino.href;
-            }
+        const avisoPortal = document.getElementById('aviso-portal-deteccion');
+        if (avisoPortal) {
+            avisoPortal.hidden = f.atributos.confianza !== 'alta';
+            const destino = new URL(avisoPortal.getAttribute('href'), window.location.origin);
+            destino.pathname = destino.pathname.replace(/\/detecciones\/[^/]+$/, '') + '/detecciones/' + encodeURIComponent(f.identificador);
+            avisoPortal.href = destino.href;
         }
         const coordenadas = Number.isFinite(lat) && Number.isFinite(lon) ? `${lat}, ${lon} (latitud, longitud)` : 'No informadas';
         const valores = [
             ['Fecha y hora (Bolivia)', fechaBolivia(f.fechas.observadoDesde)], ['Nivel de confianza', f.atributos.confianza],
             ['Municipio', this.nombres.get(f.territorio.municipio) ?? 'No determinado'], ['Provincia', this.nombres.get(f.territorio.provincia) ?? 'No determinada'],
-            ['Ubicación', coordenadas], ['Fuente', [...new Set(r.fuentes.map(s => s.proveedor))].join(' · ')],
+            ['Ubicación', coordenadas], ...procedenciaFoco(f, r.fuentes),
         ];
         const principales = new Set(['Municipio', 'Provincia', 'Fecha y hora (Bolivia)', 'Nivel de confianza']);
         valores.forEach(([nombre, valor]) => { const grupo = nodo('div'); grupo.append(nodo('dt', nombre), nodo('dd', valor)); (principales.has(nombre) ? campos : extras).append(grupo); });

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccesoBrigadaController;
 use App\Http\Controllers\AccesoController;
 use App\Http\Controllers\AlertasController;
 use App\Http\Controllers\Api\BuscarLugarController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MapaMonitoreoController;
 use App\Http\Controllers\Mapas\CapasController;
 use App\Http\Controllers\Mapas\PoiController;
+use App\Http\Controllers\PortalIncendiosController;
 use App\Http\Controllers\RecuperacionController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\RevisionForestalController;
@@ -19,6 +21,7 @@ use App\Http\Controllers\SeguimientoController;
 use App\Http\Controllers\SensoresController;
 use App\Http\Controllers\SimulacionContinuaController;
 use App\Http\Controllers\SimulacionesController;
+use App\Http\Controllers\SolicitudBrigadaController;
 use App\Http\Controllers\UnidadesController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Middleware\RevisionForestalLocal;
@@ -37,6 +40,10 @@ Route::prefix('revision/forestal')->middleware([
         ->middleware('throttle:12,1,forestal-revision-consulta')->name('revision.forestal.consulta');
 });
 Route::middleware(['auth', 'cuenta.activa', 'can:mapa.ver', 'can:datos.consultar'])->group(function (): void {
+    Route::get('/mapa/forestal', fn () => view('mapas.forestal', [
+        'modulos' => array_filter(config('geocruz.modulos'), fn ($modulo) => $modulo['habilitado']),
+        'capa' => config('forestal.capa_publicada'),
+    ]))->name('mapa.forestal');
     Route::get('/mapa/agua/catalogo', [InundacionesController::class, 'catalogo'])->middleware('throttle:30,1')->name('mapa.agua.catalogo');
     Route::get('/mapa/agua/consulta', [InundacionesController::class, 'consultar'])->middleware('throttle:30,1')->name('mapa.agua.consulta');
     Route::get('/mapa/agua', function (CatalogoProductosAgua $productos) {
@@ -144,5 +151,26 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
         Route::get('/usuarios', [UsuariosController::class, 'index'])->name('usuarios');
         Route::patch('/usuarios/{usuario}/rol', [UsuariosController::class, 'rol'])->name('usuarios.rol');
         Route::patch('/usuarios/{usuario}/estado', [UsuariosController::class, 'estado'])->name('usuarios.estado');
+    });
+});
+
+Route::prefix('portal-incendios')->name('portal-incendios.')->group(function (): void {
+    Route::get('/', [PortalIncendiosController::class, 'index'])->name('index');
+    Route::get('/detecciones/{observacion}', [PortalIncendiosController::class, 'buscar'])
+        ->where('observacion', 'firms-[a-f0-9]{64}')->name('buscar');
+    Route::get('/brigada/solicitud', [SolicitudBrigadaController::class, 'formulario'])->name('solicitud');
+    Route::post('/brigada/solicitud', [SolicitudBrigadaController::class, 'registrar'])
+        ->middleware('throttle:5,1,portal-solicitud')->name('solicitud.registrar');
+    Route::get('/brigada', [AccesoBrigadaController::class, 'formulario'])->name('brigada');
+    Route::post('/brigada', [AccesoBrigadaController::class, 'entrar'])
+        ->middleware('throttle:8,1,portal-brigada')->name('brigada.entrar');
+    Route::post('/brigada/salir', [AccesoBrigadaController::class, 'salir'])->name('brigada.salir');
+    Route::get('/avisos/{aviso}', [PortalIncendiosController::class, 'index'])
+        ->whereUuid('aviso')->name('ficha');
+    Route::middleware('throttle:20,1,portal-atencion')->group(function (): void {
+        Route::post('/avisos/{aviso}/tomar', [PortalIncendiosController::class, 'tomar'])
+            ->whereUuid('aviso')->name('tomar');
+        Route::post('/avisos/{aviso}/resolver', [PortalIncendiosController::class, 'resolver'])
+            ->whereUuid('aviso')->name('resolver');
     });
 });

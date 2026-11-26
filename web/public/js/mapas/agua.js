@@ -1,5 +1,6 @@
 import {clasesAgua, crearConsultaAgua, mensajeErrorAgua} from './agua-contrato.js';
 import {cargarAgua, cargarCatalogoAgua} from './agua-api.js';
+import {recordarTerritorio, territorioAnterior} from '../panel/contexto-ambiental.js';
 
 function redondearAnillo(anillo) {
     const vertices=anillo.slice(0,-1);
@@ -65,7 +66,9 @@ export function iniciarAgua(mapa,L) {
             if (activo) boton.closest('details').open=true;
         }
     }
+    const reingresar=el('agua-reingresar');
     function mostrar(estado) {
+        if (reingresar) reingresar.hidden=estado.codigo!=='SESION_REQUERIDA';
         capas.clearLayers();capasPorId.clear();
         el('agua-ubicaciones').replaceChildren();el('agua-resumen').replaceChildren();el('agua-advertencias').replaceChildren();
         el('agua-resultado').hidden=true;
@@ -130,7 +133,7 @@ export function iniciarAgua(mapa,L) {
         }
         el('agua-listado').hidden=!capasPorId.size;
         el('agua-contornos').hidden=!capasPorId.size;
-        el('agua-resultado').hidden=false;alMostrarResultado();
+        el('agua-resultado').hidden=false;alMostrarResultado(dato);
         if (capasPorId.size) {
             const bounds=L.latLngBounds([]);
             for (const {capa} of capasPorId.values()) bounds.extend(capa.getBounds());
@@ -167,7 +170,15 @@ export function iniciarAgua(mapa,L) {
         }
         cambiar.addEventListener('click',()=>filtros(!formulario.hidden));
         const redimensionar=()=>filtros(false);movil.addEventListener('change',redimensionar);
-        alMostrarResultado=()=>{filtros(true);panel.scrollTop=0;};alMostrarError=()=>filtros(false);
+        alMostrarResultado=dato=>{
+            const efectivo=territorios.find(t=>t.identificador===dato.territorio.identificador);
+            if (efectivo) recordarTerritorio({
+                provincia:efectivo.tipo==='municipio' ? efectivo.padre : (efectivo.tipo==='provincia' ? efectivo.identificador : null),
+                municipio:efectivo.tipo==='municipio' ? efectivo.identificador : null,
+            });
+            filtros(true);panel.scrollTop=0;
+        };
+        alMostrarError=()=>filtros(false);
         const productoElegido=()=>productos.find(p=>p.id===comparacion.value);
         function elegir() {
             const producto=productoElegido();
@@ -227,7 +238,15 @@ export function iniciarAgua(mapa,L) {
                 llenarLugares();
                 const parametros=new URL(location.href).searchParams;
                 const solicitado=inicial ? parametros.get('producto') : anterior?.id;
-                const territorioSolicitado=inicial ? parametros.get('territorio') : seleccionAnterior;
+                const recordado=territorioAnterior(territorios);
+                const territorioSolicitado=inicial
+                    ? parametros.get('territorio') ?? recordado.municipio ?? recordado.provincia
+                    : seleccionAnterior;
+                if (inicial && !solicitado && parametros.has('territorio') && !territorios.some(t=>t.identificador===territorioSolicitado)) {
+                    llenarComparaciones();
+                    escribir('agua-estado','Ese lugar no está en el catálogo de Santa Cruz. Elige otro.');
+                    return;
+                }
                 if (!solicitado && territorios.some(t=>t.identificador===territorioSolicitado)) {
                     lugar.value=territorioSolicitado;
                     llenarComparaciones();
@@ -251,7 +270,7 @@ export function iniciarAgua(mapa,L) {
                 lugar.value=elegido.territorio.identificador;llenarComparaciones(elegido.id);elegir();
             } catch (error) {
                 if (turno===turnoCatalogo && error?.name!=='AbortError') {
-                    escribir('agua-estado',mensajeErrorAgua(error));
+                    mostrar({estado:'error',codigo:error?.codigo,mensaje:mensajeErrorAgua(error)});
                 }
             }
         }
@@ -259,6 +278,7 @@ export function iniciarAgua(mapa,L) {
         comparacion.addEventListener('change',()=>{consultar.cancelar();if (comparacion.value) elegir();});
         el('agua-seleccion').addEventListener('submit',evento=>{evento.preventDefault();elegir();});
         el('agua-actualizar').addEventListener('click',()=>actualizar());
+        reingresar.addEventListener('click',()=>location.reload());
         cancelarCatalogo=()=>{++turnoCatalogo;peticion?.abort();movil.removeEventListener('change',redimensionar);};
         actualizar(true);
     }

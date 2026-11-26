@@ -8,11 +8,16 @@ use Illuminate\Support\Facades\Http;
 
 final class ClienteFirms
 {
-    public function disponibilidad(): array
+    public static function referencia(string $producto): string
     {
-        $filas = $this->csv($this->descargar('data_availability', config('focos.producto')), ['data_id', 'min_date', 'max_date']);
+        return 'nasa-firms-'.strtolower(str_replace('_', '-', substr($producto, strlen('VIIRS_'))));
+    }
+
+    public function disponibilidad(string $producto): array
+    {
+        $filas = $this->csv($this->descargar('data_availability', $producto), ['data_id', 'min_date', 'max_date']);
         foreach ($filas as $f) {
-            if ($f['data_id'] === config('focos.producto')) {
+            if ($f['data_id'] === $producto) {
                 foreach (['min_date', 'max_date'] as $columna) {
                     $d = DateTimeImmutable::createFromFormat('!Y-m-d', $f[$columna]);
                     if (! $d || $d->format('Y-m-d') !== $f[$columna]) {
@@ -29,11 +34,11 @@ final class ClienteFirms
         $this->fallo();
     }
 
-    public function area(array $caja, DateTimeImmutable $inicio, int $dias): array
+    public function area(array $caja, DateTimeImmutable $inicio, int $dias, string $producto): array
     {
         // Redondear hacia afuera solo la consulta al proveedor; el filtro usa el polígono exacto.
         $bbox = implode(',', [floor($caja[0] * 10000) / 10000, floor($caja[1] * 10000) / 10000, ceil($caja[2] * 10000) / 10000, ceil($caja[3] * 10000) / 10000]);
-        $sufijo = config('focos.producto').'/'.$bbox.'/'.$dias.'/'.$inicio->format('Y-m-d');
+        $sufijo = $producto.'/'.$bbox.'/'.$dias.'/'.$inicio->format('Y-m-d');
 
         return $this->csv($this->descargar('area', $sufijo), ['latitude', 'longitude', 'acq_date', 'acq_time']);
     }
@@ -42,7 +47,7 @@ final class ClienteFirms
     {
         $clave = config('focos.clave');
         if (! is_string($clave) || ! preg_match('/^[a-zA-Z0-9]{16,128}$/D', $clave)) {
-            throw new ErrorConsulta('PROVEEDOR_NO_DISPONIBLE', 'Configura NASA_FIRMS_CLAVE únicamente en el backend.', 503);
+            throw new ErrorConsulta('PROVEEDOR_NO_CONFIGURADO', 'NASA FIRMS aún no está configurado en este entorno.', 503);
         }
         try {
             // Destino fijo y sin redirecciones. No registrar URL: FIRMS lleva la clave en la ruta.
