@@ -38,7 +38,7 @@
 .boton-suave { background: var(--enviro-panel); color: var(--enviro-secundario); border-color: var(--enviro-borde); }
 .acciones-filtros { gap: 6px; }
 .acciones-filtros .boton-principal { width: 100%; margin-top: 3px; font-size: 16px; min-height: 48px; }
-.acciones-filtros .boton-suave { flex: 1; padding: 6px; font-size: 16px; }
+.acciones-filtros .boton-suave { flex: 1 1 120px; min-width: 0; padding: 6px; font-size: 16px; white-space: normal; }
 .hora-consulta { margin: -2px 0 0; grid-column: 1 / -1; font-size: 16px; color: var(--enviro-secundario); }
 .periodo-rapido { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .periodo-rapido .btn { font-size: 16px; white-space: normal; min-height: 48px; padding: 7px; color: #166534; border-color: #a2c9ad; background: #edf7f0; }
