@@ -41,8 +41,7 @@ final class AccesoBrigadaController extends Controller
     public function salir(Request $request): RedirectResponse
     {
         Auth::guard('brigada')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $request->session()->regenerate(true);
 
         return redirect()->route('portal-incendios.index');
     }

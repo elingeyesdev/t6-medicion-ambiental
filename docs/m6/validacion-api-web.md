@@ -82,3 +82,18 @@ El índice espacial conserva una referencia al anillo y guarda números de vért
 En el navegador integrado se abrió una detección desde la lista de Focos y se comprobó el texto para compartir, con lugar, hora, coordenadas, confianza y NASA FIRMS. El acceso de Reportes abrió Mediciones, Plantillas cambió entre Activas y Archivadas, y el botón principal del portal llevó a los avisos. El historial público conservó los estados Resuelto y Vencido sin atención.
 
 Mejoras visuales pendientes. En paneles estrechos, dar espacio a los nombres completos de los filtros de Focos y mostrar la fuente junto a la fecha en la ficha. En Mediciones, explicar cómo recuperar puntos disponibles y evitar que Ver registros repita una consulta sin punto. En el portal, mostrar los contadores de avisos junto al acceso al mapa para que el estado operativo se vea desde la portada.
+
+
+## Regresión de integración · 25/11/2026
+
+Se calculó localmente la combinación de `bada8b8` (PR #195) y `b855c18` (develop). Su árbol web coincide con el del PR antes de la corrección de cierre de sesión descrita abajo. Se usó una copia de SQLite y cuentas ficticias.
+
+- **Focos, San Ignacio (BO070301).** Del 18 al 25 de noviembre a las 17:52 de Bolivia. La API devolvió 345 detecciones y 2 de confianza alta. Coincide con el contraste de los tres clientes registrado en #193.
+- **Sequías, Santa Cruz.** Agosto–octubre de 2026, Open-Meteo/ERA5. La API devolvió 326,4 mm y SPI-3 1,8081424489 en la única muestra vigente de los 56 municipios seleccionados. Septiembre devolvió 503, `MUESTRAS_NO_DISPONIBLES`.
+- **Inundaciones, San Pedro (BO071005).** 6–18 de diciembre de 2025, NASA OPERA. La API devolvió 2,241 de 2,6766 km² comparables y cobertura de 83,725622 %. La web mostró 2,24 de 2,68 km² y 83,73 %. Para Santa Cruz de la Sierra la API devolvió 404, `TERRITORIO_SIN_COBERTURA`.
+- **Forestal, recorte técnico de Santa Rosa.** 2024–2025, Hansen GFC v1.13, copa ≥30 %. La API devolvió 26 píxeles y 1,91489180 ha. El visor técnico mostró 26 y 1,915 ha. La capa departamental tiene un alcance distinto.
+- **Aire, latitud −16,5 y longitud −63,5.** A las 21:00 del 25/11 en Bolivia, la API y la ruta web autenticada devolvieron 35 EAQI y PM2,5 de 12,7 µg/m³, CAMS vía Open-Meteo. Sin sesión, la API devolvió 401, `NO_AUTENTICADO`.
+
+En #194 se repitieron en el navegador el mapa y la ficha pública, el rechazo de contraseñas distintas y del correo duplicado, el registro de dos brigadas, el retorno a la ficha, la toma y el cierre como Sin incendio. La segunda cuenta vio que el aviso tenía responsable y carecía de controles para tomarlo o cerrarlo. Sin sesión, el historial mostró el aviso resuelto y el aviso sintético publicado 72 horas y un minuto antes como Vencido sin atención. Al salir del portal se perdía también la sesión web de GeoSur. Se corrigió el cierre de brigada para rotar la sesión y el token CSRF conservando la autenticación web. En el navegador se comprobó que el portal vuelve a la vista pública y GeoSur sigue abriendo Inundaciones sin pedir credenciales. La prueba específica de Laravel pasó con 10 aserciones.
+
+Queda repetir la regresión con el SHA de `develop` una vez fusionado el PR #195.
