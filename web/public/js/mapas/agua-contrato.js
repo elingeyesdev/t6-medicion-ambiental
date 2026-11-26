@@ -33,7 +33,11 @@ export function crearConsultaAgua(cargar, mostrar, {permitirPrueba = false} = {}
             const dato=await cargar(caso, abortar.signal);
             if(turno===secuencia) mostrar({estado:'resultado',dato:leerAgua(dato, permitirPrueba === true)});
         } catch(error) {
-            if(turno===secuencia&&error?.name!=='AbortError') mostrar({estado:'error',mensaje:mensajeErrorAgua(error)});
+            if (turno===secuencia && error?.name!=='AbortError') {
+                const estado = {estado:'error',mensaje:mensajeErrorAgua(error)};
+                if (error?.codigo==='SESION_REQUERIDA') estado.codigo=error.codigo;
+                mostrar(estado);
+            }
         }
     };
     consultar.cancelar = () => { ++secuencia; abortar?.abort(); };

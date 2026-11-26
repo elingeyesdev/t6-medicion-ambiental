@@ -97,3 +97,7 @@ Se calculó localmente la combinación de `bada8b8` (PR #195) y `b855c18` (devel
 En #194 se repitieron en el navegador el mapa y la ficha pública, el rechazo de contraseñas distintas y del correo duplicado, el registro de dos brigadas, el retorno a la ficha, la toma y el cierre como Sin incendio. La segunda cuenta vio que el aviso tenía responsable y carecía de controles para tomarlo o cerrarlo. Sin sesión, el historial mostró el aviso resuelto y el aviso sintético publicado 72 horas y un minuto antes como Vencido sin atención. Al salir del portal se perdía también la sesión web de GeoSur. Se corrigió el cierre de brigada para rotar la sesión y el token CSRF conservando la autenticación web. En el navegador se comprobó que el portal vuelve a la vista pública y GeoSur sigue abriendo Inundaciones sin pedir credenciales. La prueba específica de Laravel pasó con 10 aserciones.
 
 Queda repetir la regresión con el SHA de `develop` una vez fusionado el PR #195.
+
+## Sesión vencida en Inundaciones · #192
+
+En el navegador integrado, abrí la comparación de San Pedro del 6 al 18 de diciembre de 2025. Invalidé únicamente la sesión de una cuenta ficticia en la base SQLite aislada. Tanto Consultar como Actualizar lista mostraron el aviso de sesión vencida y el botón Volver a iniciar sesión. Tras pulsarlo e ingresar, se recuperó el mismo producto desde la URL. Volvió a mostrarse el 83,73 % de área comparable. Las 22 pruebas de JavaScript de Inundaciones pasaron.

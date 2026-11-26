@@ -66,7 +66,9 @@ export function iniciarAgua(mapa,L) {
             if (activo) boton.closest('details').open=true;
         }
     }
+    const reingresar=el('agua-reingresar');
     function mostrar(estado) {
+        if (reingresar) reingresar.hidden=estado.codigo!=='SESION_REQUERIDA';
         capas.clearLayers();capasPorId.clear();
         el('agua-ubicaciones').replaceChildren();el('agua-resumen').replaceChildren();el('agua-advertencias').replaceChildren();
         el('agua-resultado').hidden=true;
@@ -268,7 +270,7 @@ export function iniciarAgua(mapa,L) {
                 lugar.value=elegido.territorio.identificador;llenarComparaciones(elegido.id);elegir();
             } catch (error) {
                 if (turno===turnoCatalogo && error?.name!=='AbortError') {
-                    escribir('agua-estado',mensajeErrorAgua(error));
+                    mostrar({estado:'error',codigo:error?.codigo,mensaje:mensajeErrorAgua(error)});
                 }
             }
         }
@@ -276,6 +278,7 @@ export function iniciarAgua(mapa,L) {
         comparacion.addEventListener('change',()=>{consultar.cancelar();if (comparacion.value) elegir();});
         el('agua-seleccion').addEventListener('submit',evento=>{evento.preventDefault();elegir();});
         el('agua-actualizar').addEventListener('click',()=>actualizar());
+        reingresar.addEventListener('click',()=>location.reload());
         cancelarCatalogo=()=>{++turnoCatalogo;peticion?.abort();movil.removeEventListener('change',redimensionar);};
         actualizar(true);
     }

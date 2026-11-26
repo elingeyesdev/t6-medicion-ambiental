@@ -14,6 +14,7 @@
         </div>
     </form>
     <p id="agua-estado" role="status" aria-live="polite">Cargando…</p>
+    <button type="button" class="btn btn-primary" id="agua-reingresar" hidden>Volver a iniciar sesión</button>
     @include('components.mapas.resultado-agua')
 </section>
 <button type="button" id="agua-reabrir" class="btn btn-primary agua-reabrir" hidden>Cambios de agua</button>
