@@ -178,6 +178,51 @@ void main() {
       api.close();
     });
 
+    testWidgets('fecha inválida no usa la hora de descarga', (tester) async {
+      tester.view.physicalSize = const Size(800, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final api = GeoCruzApiClient(
+        baseUrl: Uri.parse('http://localhost/api/v1/'),
+        client: MockClient((request) async {
+          if (request.url.path.endsWith('/territorios')) {
+            return _json(_catalog());
+          }
+          if (request.url.path.endsWith('/focos-calor')) {
+            return _json(_response(observedAt: 'fecha-inválida'));
+          }
+          return _json(_boundary());
+        }),
+      );
+      addTearDown(api.close);
+      await tester.pumpWidget(
+        MaterialApp(home: HotspotsScreen(apiClient: api, showAppBar: false)),
+      );
+      for (var i = 0; i < 8; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+
+      await tester.tap(find.text('Datos de la consulta'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Ver lista de detecciones'));
+      await tester.pumpAndSettle();
+      expect(
+        find.textContaining('Fecha observada no informada'),
+        findsOneWidget,
+      );
+
+      await tester.tap(
+        find.byKey(const ValueKey('hotspot-record-firms-prueba-001')),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('Fecha observada no informada'), findsOneWidget);
+      await tester.tap(find.text('Ver todos los datos'));
+      await tester.pumpAndSettle();
+      expect(find.text('Fecha observada no informada'), findsOneWidget);
+      expect(find.textContaining('18/10/2026'), findsNothing);
+    });
+
     testWidgets('un fallo posterior avisa sin ocultar reiniciar', (
       tester,
     ) async {
@@ -463,6 +508,7 @@ Map<String, dynamic> _response({
   int? nextPage,
   int total = 1,
   num? radiantPower = 0,
+  String? observedAt = '2026-10-17T18:30:00Z',
 }) => {
   'versionContrato': '1.0-m2-candidata',
   'datos': [
@@ -472,7 +518,7 @@ Map<String, dynamic> _response({
         'type': 'Point',
         'coordinates': [-63.18, -16.5],
       },
-      'fechas': {'observadoDesde': '2026-10-17T18:30:00Z'},
+      'fechas': {'observadoDesde': observedAt},
       'naturaleza': 'observacion',
       'fuentesRef': ['nasa-firms-snpp-nrt'],
       'metodo': null,

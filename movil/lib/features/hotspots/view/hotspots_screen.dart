@@ -201,9 +201,7 @@ class _HotspotsScreenState extends State<HotspotsScreen>
         final place = _controller.territoryName(
           record.territory['municipio']?.toString(),
         );
-        final observed = record.observedAt == null
-            ? 'Fecha no informada'
-            : '${BoliviaTime.dateTime(DateTime.tryParse(record.observedAt!) ?? response.queryFetchedAt)} · Bolivia';
+        final observed = _observedDate(record);
         final frp = record.radiantPower == null
             ? 'FRP sin dato'
             : 'FRP ${_formatNumber(record.radiantPower)} ${record.radiantPowerUnit ?? 'MW'}';
@@ -296,12 +294,7 @@ class _HotspotsScreenState extends State<HotspotsScreen>
             final place = _controller.territoryName(
               record.territory['municipio']?.toString(),
             );
-            final observed = record.observedAt == null
-                ? 'Fecha no informada'
-                : BoliviaTime.dateTime(
-                    DateTime.tryParse(record.observedAt!) ??
-                        response.queryFetchedAt,
-                  );
+            final observed = _observedDate(record);
             return ListTile(
               key: ValueKey('hotspot-record-${record.identifier}'),
               leading: const Icon(Icons.local_fire_department_rounded),
@@ -315,6 +308,13 @@ class _HotspotsScreenState extends State<HotspotsScreen>
       ),
     );
     if (mounted && picked != null) _selectRecord(picked);
+  }
+
+  String _observedDate(HotspotRecord record) {
+    final date = DateTime.tryParse(record.observedAt ?? '');
+    return date == null
+        ? 'Fecha observada no informada'
+        : '${BoliviaTime.dateTime(date)} · Bolivia';
   }
 
   @override
