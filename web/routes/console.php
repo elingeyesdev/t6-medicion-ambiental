@@ -13,6 +13,10 @@ Artisan::command('inspire', function () {
 Schedule::command('capas:actualizar --consultar-noaa --programada')
     ->hourly()->withoutOverlapping(10)->when(fn () => config('capas.actualizacion.habilitada'));
 
+Schedule::command('geosur:capturar-tiempo --todos --consultar-proveedor')
+    ->hourly()->withoutOverlapping(45)
+    ->when(fn () => config('datos.tiempo_habilitado') && config('datos.tiempo_programado'));
+
 Artisan::command('portal-incendios:importar', function (ImportarAvisos $importador): int {
     try {
         $this->info($importador->ejecutar().' avisos nuevos publicados.');

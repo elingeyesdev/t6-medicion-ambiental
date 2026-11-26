@@ -14,12 +14,14 @@ import '../../../core/widgets/geosur_brand.dart';
 import '../../../core/widgets/units_scope.dart';
 import '../model/capas_overlay_state.dart';
 import '../model/monitoring_models.dart';
+import '../model/monitoring_comparison.dart';
 import '../model/monitoring_repository.dart';
 import '../model/place_search_repository.dart';
 import 'air_sheet.dart';
 import 'capas_panel.dart';
 import 'place_search_sheet.dart';
 import 'weather_sheet.dart';
+import 'monitoring_comparison_card.dart';
 
 /// Métricas del catálogo EnviroSense (puntos). Pronóstico vía `/tiempo`;
 /// calidad del aire puntual vía `/aire`; capas raster GFS vía `/mapa/capas`.
@@ -55,6 +57,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
   List<RegionOption> _regions = const [];
   MonitoringResponse? _response;
   MonitoringPoint? _selected;
+  MonitoringSelection? _comparisonReference;
   Object? _error;
   bool _loading = true;
   bool _catalogReady = false;
@@ -218,14 +221,18 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
   Future<void> _choosePeriod() async {
     final now = DateTime.now().toUtc();
     final today = ConsultationPeriod.boliviaDay(now);
-    final initialEnd = ConsultationPeriod.boliviaDay(_filters.until.subtract(const Duration(seconds: 1)));
+    final initialEnd = ConsultationPeriod.boliviaDay(
+      _filters.until.subtract(const Duration(seconds: 1)),
+    );
     final initialStart = ConsultationPeriod.boliviaDay(_filters.from);
     final selected = await showDateRangePicker(
       context: context,
       firstDate: DateTime(today.year - 5, today.month, today.day),
       lastDate: today,
       initialDateRange: DateTimeRange(
-        start: initialEnd.difference(initialStart).inDays > 6 ? DateTime(initialEnd.year, initialEnd.month, initialEnd.day - 6) : initialStart,
+        start: initialEnd.difference(initialStart).inDays > 6
+            ? DateTime(initialEnd.year, initialEnd.month, initialEnd.day - 6)
+            : initialStart,
         end: initialEnd,
       ),
       helpText: 'Elige un período de hasta 7 días',
@@ -233,16 +240,26 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
     );
     if (!mounted || selected == null) return;
     try {
-      final period = ConsultationPeriod.selectedDays(selected.start, selected.end);
+      final period = ConsultationPeriod.selectedDays(
+        selected.start,
+        selected.end,
+      );
       setState(() {
-        _filters = _filters.copyWith(from: period.from, until: period.until, page: 1);
+        _filters = _filters.copyWith(
+          from: period.from,
+          until: period.until,
+          page: 1,
+        );
       });
     } on FormatException catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.message)));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.message)));
     }
   }
 
-  String _periodLabel() => '${BoliviaTime.interval(_filters.from, _filters.until)} · Bolivia';
+  String _periodLabel() =>
+      '${BoliviaTime.interval(_filters.from, _filters.until)} · Bolivia';
 
   String _countryName(String? code) =>
       _countries
@@ -335,6 +352,22 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                 onRetry: _catalogReady ? _query : _initialize,
               )
             else if (response != null) ...[
+              if (_comparisonReference case final reference?)
+                Card(
+                  key: const ValueKey('monitoring-reference-banner'),
+                  child: ListTile(
+                    title: Text('Referencia: ${reference.point.name}'),
+                    subtitle: Text(
+                      '${_metrics[reference.metric] ?? reference.metric} · Elige otro punto en el mapa o la lista.',
+                    ),
+                    trailing: IconButton(
+                      tooltip: 'Quitar comparación',
+                      icon: const Icon(Icons.close),
+                      onPressed: () =>
+                          setState(() => _comparisonReference = null),
+                    ),
+                  ),
+                ),
               _mapCard(context, response),
               if (_selected != null) ...[
                 const SizedBox(height: 10),
@@ -421,13 +454,13 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                         onChanged: _loading
                             ? null
                             : (value) => setState(() {
-                                  _filters = _filters.copyWith(
-                                    country: value,
-                                    clearCountry: value == null,
-                                    clearRegion: true,
-                                    page: 1,
-                                  );
-                                }),
+                                _filters = _filters.copyWith(
+                                  country: value,
+                                  clearCountry: value == null,
+                                  clearRegion: true,
+                                  page: 1,
+                                );
+                              }),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -473,12 +506,12 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                         onChanged: _loading || _filters.country == null
                             ? null
                             : (value) => setState(() {
-                                  _filters = _filters.copyWith(
-                                    region: value,
-                                    clearRegion: value == null,
-                                    page: 1,
-                                  );
-                                }),
+                                _filters = _filters.copyWith(
+                                  region: value,
+                                  clearRegion: value == null,
+                                  page: 1,
+                                );
+                              }),
                       ),
                     ),
                   ],
@@ -512,13 +545,13 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                         onChanged: _loading
                             ? null
                             : (value) => setState(() {
-                                  if (value != null) {
-                                    _filters = _filters.copyWith(
-                                      metric: value,
-                                      page: 1,
-                                    );
-                                  }
-                                }),
+                                if (value != null) {
+                                  _filters = _filters.copyWith(
+                                    metric: value,
+                                    page: 1,
+                                  );
+                                }
+                              }),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -575,12 +608,12 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                         onChanged: _loading
                             ? null
                             : (value) => setState(() {
-                                  _filters = _filters.copyWith(
-                                    origin: value,
-                                    clearOrigin: value == null,
-                                    page: 1,
-                                  );
-                                }),
+                                _filters = _filters.copyWith(
+                                  origin: value,
+                                  clearOrigin: value == null,
+                                  page: 1,
+                                );
+                              }),
                       ),
                     ),
                   ],
@@ -608,9 +641,9 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                 ),
                 const SizedBox(height: 5),
               ],
-        ),
-      ),
-    ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -675,6 +708,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
     }
     final mapHeight = MediaQuery.sizeOf(context).height * 0.46;
     return ClipRRect(
+      key: const ValueKey('monitoring-map-card'),
       borderRadius: BorderRadius.circular(20),
       child: ColoredBox(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
@@ -850,10 +884,38 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
             '${point.type} · ${point.code}',
             style: Theme.of(context).textTheme.bodySmall,
           ),
+          const Text(
+            'Localidad de consulta ambiental. Las estimaciones meteorológicas describen el entorno de estas coordenadas.',
+          ),
+          const SizedBox(height: 12),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainerLow,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextButton.icon(
+                    onPressed: _openWeather,
+                    icon: const Icon(Icons.cloud_outlined, size: 20),
+                    label: const Text('Tiempo'),
+                  ),
+                ),
+                Expanded(
+                  child: TextButton.icon(
+                    onPressed: _openAir,
+                    icon: const Icon(Icons.air, size: 20),
+                    label: const Text('Aire'),
+                  ),
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 8),
           if (point.readings.isEmpty)
             const Text(
-              'Sin lecturas para este período. Esto no significa que el valor sea cero.',
+              'No hay lecturas guardadas para esta variable y período. Puedes consultar el tiempo y el aire de esta localidad con los botones de arriba.',
             ),
           for (final reading in point.readings) ...[
             const Divider(height: 18),
@@ -890,11 +952,59 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
               ],
             ),
           ],
-          const SizedBox(height: 10),
-          OutlinedButton.icon(
-            onPressed: () => _showHistory(point),
-            icon: const Icon(Icons.timeline),
-            label: const Text('Ver historial'),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  _comparisonReference == null
+                      ? 'Comparar puntos'
+                      : 'Comparación',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              Flexible(
+                child: TextButton(
+                  key: const Key('monitoring-pin-reference'),
+                  onPressed: () => setState(() {
+                    _comparisonReference = MonitoringSelection(point, response);
+                  }),
+                  child: Text(
+                    _comparisonReference == null
+                        ? 'Fijar para comparar'
+                        : 'Cambiar referencia',
+                  ),
+                ),
+              ),
+            ],
+          ),
+          if (_comparisonReference case final reference?
+              when reference.point.code != point.code ||
+                  reference.from != response.from ||
+                  reference.until != response.until)
+            MonitoringComparisonCard(
+              reference: reference,
+              selection: MonitoringSelection(point, response),
+              onShowLocations: (row) =>
+                  _showComparisonLocations(reference, point, row),
+            ),
+          if (_comparisonReference != null)
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton.icon(
+                key: const Key('monitoring-clear-comparison'),
+                onPressed: () => setState(() => _comparisonReference = null),
+                icon: const Icon(Icons.close, size: 18),
+                label: const Text('Quitar comparación'),
+              ),
+            ),
+          const SizedBox(height: 8),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.history),
+            title: const Text('Ver historial'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => _showHistory(point),
           ),
         ],
       ),
@@ -904,6 +1014,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
   Widget _pointsList(BuildContext context, MonitoringResponse response) {
     final points = response.points;
     return Card(
+      key: const ValueKey('monitoring-points-card'),
       child: ExpansionTile(
         key: const PageStorageKey<String>('monitoring-points'),
         title: const Text('Puntos'),
@@ -974,6 +1085,42 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
           ],
         ),
       );
+
+  Future<void> _showComparisonLocations(
+    MonitoringSelection reference,
+    MonitoringPoint selection,
+    MonitoringComparisonRow row,
+  ) async {
+    LatLng location(MonitoringPoint point, MonitoringReading? reading) =>
+        LatLng(
+          reading?.latitude ?? point.latitude,
+          reading?.longitude ?? point.longitude,
+        );
+    final first = location(reference.point, row.reference);
+    final second = location(selection, row.selection);
+    Marker marker(LatLng point, String label) => Marker(
+      point: point,
+      width: 48,
+      height: 42,
+      child: Semantics(
+        label: label == 'A'
+            ? 'Referencia: ${reference.point.name}'
+            : 'Selección: ${selection.name}',
+        child: CircleAvatar(child: Text(label)),
+      ),
+    );
+    await openFullscreenMap(
+      context: context,
+      title: 'A: ${reference.point.name} · B: ${selection.name}',
+      center: first,
+      zoom: 6,
+      markers: first == second
+          ? [marker(first, 'A/B')]
+          : [marker(first, 'A'), marker(second, 'B')],
+      fitBounds: LatLngBounds.fromPoints([first, second]),
+      initialStyle: _mapStyle,
+    );
+  }
 
   Future<void> _showHistory(MonitoringPoint point) async {
     showModalBottomSheet<void>(
@@ -1083,11 +1230,7 @@ class _HistorySheetState extends State<_HistorySheet> {
                     return ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        _formatHistoryRow(
-                          context,
-                          widget.filters.metric,
-                          row,
-                        ),
+                        _formatHistoryRow(context, widget.filters.metric, row),
                       ),
                       subtitle: Text(
                         '${row['origen'] ?? ''} · ${row['fuente'] ?? ''}',
@@ -1172,11 +1315,7 @@ IconData _originIcon(String origin) => switch (origin) {
   _ => Icons.circle_outlined,
 };
 
-String _formatHistoryRow(
-  BuildContext context,
-  String metric,
-  Map row,
-) {
+String _formatHistoryRow(BuildContext context, String metric, Map row) {
   final raw = row['valor'];
   final base = '${row['unidad'] ?? ''}';
   if (raw is! num) return 'Sin dato $base'.trim();

@@ -144,9 +144,14 @@ function seleccionar(punto) {
     informacion.replaceChildren();
     informacion.append(nodo('p', paises.get(punto.pais) ?? punto.pais));
     informacion.append(nodo('p', punto.tipo === 'referencia' ? 'Punto de referencia' : 'Punto de monitoreo'));
+    informacion.append(nodo('p', 'Localidad de consulta ambiental. Las estimaciones meteorológicas describen el entorno de estas coordenadas.'));
+    const tiempoLocalidad = nodo('button', 'Tiempo de esta localidad', 'btn btn-outline-primary');
+    tiempoLocalidad.type = 'button';
+    tiempoLocalidad.addEventListener('click', () => abrirTiempo(punto.latitud, punto.longitud, punto.nombre));
+    informacion.append(tiempoLocalidad);
     const enComparacion = referenciaComparacion?.metrica === respuestaActual.metrica && referenciaComparacion?.unidad === respuestaActual.unidad;
     if (!punto.lecturas.length && !enComparacion) {
-        informacion.append(nodo('p', 'Sin registros para esta variable, origen y período.'));
+        informacion.append(nodo('p', 'No hay lecturas guardadas para esta variable, origen y período. Puedes consultar el tiempo y el aire de esta localidad desde esta ficha.'));
     } else if (!enComparacion) {
         informacion.append(nodo('p', respuestaActual.momento ? 'Lecturas disponibles hasta el momento elegido.' : 'Última lectura del período, por origen y fuente.'));
     }

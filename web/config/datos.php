@@ -2,6 +2,7 @@
 
 return [
     'tiempo_habilitado' => (bool) env('GEOSUR_TIEMPO_HABILITADO', false),
+    'tiempo_programado' => (bool) env('GEOSUR_TIEMPO_PROGRAMADO', false),
     'mqtt' => [
         'habilitado' => (bool) env('GEOSUR_MQTT_HABILITADO', false),
         'url' => env('GEOSUR_MQTT_URL', ''),
