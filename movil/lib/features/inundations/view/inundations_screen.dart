@@ -314,8 +314,118 @@ class _InundationsScreenState extends State<InundationsScreen> {
         .where((item) => item.id == id)
         .firstOrNull;
     if (feature == null) return;
-    setState(() => _selectedFeature = feature);
+    _selectFeature(feature);
   }
+
+  void _selectFeature(WaterFeature feature) {
+    final result = _result;
+    if (result == null) return;
+    setState(() => _selectedFeature = feature);
+    _showFeatureDetails(feature, result);
+  }
+
+  Future<void> _pickFeature(WaterResult result) async {
+    final picked = await showModalBottomSheet<WaterFeature>(
+      context: context,
+      useSafeArea: true,
+      showDragHandle: true,
+      builder: (sheetContext) => SafeArea(
+        child: ListView.separated(
+          itemCount: result.features.length,
+          separatorBuilder: (_, _) => const Divider(height: 1),
+          itemBuilder: (context, index) {
+            final feature = result.features[index];
+            return ListTile(
+              key: ValueKey('water-feature-${feature.id}'),
+              leading: Icon(
+                Icons.water_drop_outlined,
+                color: _colorFor(feature.kind),
+              ),
+              title: Text(waterClasses[feature.kind]!),
+              subtitle: Text(feature.id),
+              selected: feature.id == _selectedFeature?.id,
+              onTap: () => Navigator.of(sheetContext).pop(feature),
+            );
+          },
+        ),
+      ),
+    );
+    if (mounted && picked != null) _selectFeature(picked);
+  }
+
+  Future<void> _showFeatureDetails(
+    WaterFeature feature,
+    WaterResult result,
+  ) => showModalBottomSheet<void>(
+    context: context,
+    useSafeArea: true,
+    showDragHandle: true,
+    isScrollControlled: true,
+    builder: (sheetContext) => SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Detalle de zona de agua',
+            style: Theme.of(sheetContext).textTheme.headlineSmall,
+          ),
+          const SizedBox(height: 4),
+          Text(waterClasses[feature.kind]!),
+          const Divider(height: 24),
+          _detailRow(sheetContext, 'Identificador', feature.id),
+          _detailRow(sheetContext, 'Territorio', result.territoryName),
+          _detailRow(
+            sheetContext,
+            'Período',
+            '${_date(result.referenceDate)} a ${_date(result.comparisonDate)}',
+          ),
+          _detailRow(sheetContext, 'Clase', waterClasses[feature.kind]!),
+          _detailRow(
+            sheetContext,
+            'Fuente',
+            '${result.sourceName} · ${result.sourceProduct}',
+          ),
+          _detailRow(sheetContext, 'Método', result.method),
+          _detailRow(
+            sheetContext,
+            'Resolución',
+            '${_formatArea(result.resolutionMeters)} m',
+          ),
+          _detailRow(sheetContext, 'Tipo de dato', 'Resultado validado'),
+          _detailRow(sheetContext, 'Unidad del resumen', 'km²'),
+          const SizedBox(height: 12),
+          const Text(
+            'El análisis corresponde a un recorte parcial y no confirma por sí solo una inundación.',
+          ),
+        ],
+      ),
+    ),
+  );
+
+  Widget _detailRow(BuildContext context, String label, String value) =>
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 122,
+              child: Text(label, style: Theme.of(context).textTheme.bodySmall),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: SelectableText(
+                value,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+              ),
+            ),
+          ],
+        ),
+      );
 
   void _zoom(double change) {
     if (!_mapReady) return;
@@ -809,7 +919,8 @@ class _InundationsScreenState extends State<InundationsScreen> {
                 color: _colorFor(feature.kind),
               ),
               title: Text(waterClasses[feature.kind]!),
-              subtitle: const Text('Clase de la zona seleccionada'),
+              subtitle: Text(feature.id),
+              onTap: () => _selectFeature(feature),
               trailing: IconButton(
                 tooltip: 'Cerrar detalle',
                 onPressed: () => setState(() => _selectedFeature = null),
@@ -823,6 +934,15 @@ class _InundationsScreenState extends State<InundationsScreen> {
             child: Text(
               'Toca una figura del mapa para ver su clase.',
               style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+        if (result.features.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: OutlinedButton.icon(
+              onPressed: () => _pickFeature(result),
+              icon: const Icon(Icons.list_rounded),
+              label: const Text('Ver lista de zonas'),
             ),
           ),
         const SizedBox(height: 8),

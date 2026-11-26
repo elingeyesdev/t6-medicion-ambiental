@@ -127,6 +127,57 @@ void main() {
       api.close();
     });
 
+    testWidgets('MOV-08 abre la misma detección desde la lista', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(800, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final api = GeoCruzApiClient(
+        baseUrl: Uri.parse('http://localhost/api/v1/'),
+        client: MockClient((request) async {
+          if (request.url.path.endsWith('/territorios')) {
+            return _json(_catalog());
+          }
+          if (request.url.path.endsWith('/focos-calor')) {
+            return _json(_response(radiantPower: 12.5));
+          }
+          return _json(_boundary());
+        }),
+      );
+      await tester.pumpWidget(
+        MaterialApp(home: HotspotsScreen(apiClient: api, showAppBar: false)),
+      );
+      for (var i = 0; i < 8; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+
+      await tester.tap(find.text('Datos de la consulta'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Ver lista de detecciones'));
+      await tester.pumpAndSettle();
+      expect(find.text('firms-prueba-001'), findsOneWidget);
+      expect(find.textContaining('Santa Cruz de la Sierra'), findsWidgets);
+
+      await tester.tap(
+        find.byKey(const ValueKey('hotspot-record-firms-prueba-001')),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('Detección satelital · NASA FIRMS'), findsOneWidget);
+      expect(find.textContaining('FRP 12,5 MW'), findsOneWidget);
+
+      await tester.tap(find.text('Ver todos los datos'));
+      await tester.pumpAndSettle();
+      expect(find.text('Detalle de detección'), findsOneWidget);
+      expect(find.byKey(const Key('hotspot-identifier')), findsOneWidget);
+      expect(find.text('firms-prueba-001'), findsOneWidget);
+      expect(find.text('Santa Cruz de la Sierra'), findsOneWidget);
+
+      await tester.pumpWidget(const SizedBox());
+      api.close();
+    });
+
     testWidgets('un fallo posterior avisa sin ocultar reiniciar', (
       tester,
     ) async {
