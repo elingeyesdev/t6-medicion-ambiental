@@ -23,6 +23,7 @@ class DroughtScreen extends StatefulWidget {
     this.sharedMapStyle,
     this.onMapStyleChanged,
     this.repository,
+    this.onUnauthorized,
     super.key,
   }) : initialMonth = initialMonth ?? DroughtFilters.defaultMesFinal();
 
@@ -35,6 +36,7 @@ class DroughtScreen extends StatefulWidget {
   final MapBaseStyle? sharedMapStyle;
   final ValueChanged<MapBaseStyle>? onMapStyleChanged;
   final DroughtRepository? repository;
+  final VoidCallback? onUnauthorized;
 
   @override
   State<DroughtScreen> createState() => _DroughtScreenState();
@@ -85,7 +87,10 @@ class _DroughtScreenState extends State<DroughtScreen>
   }
 
   Future<void> _refreshActiveQuery() async {
-    if (await _syncSharedTerritory() || !mounted || !widget.active || _loading) {
+    if (await _syncSharedTerritory() ||
+        !mounted ||
+        !widget.active ||
+        _loading) {
       return;
     }
     final obtained = _response?.consulta['obtencion'];
@@ -178,6 +183,7 @@ class _DroughtScreenState extends State<DroughtScreen>
         _errorMessage = _friendlyDroughtError(e);
         _loading = false;
       });
+      if (e.statusCode == 401) widget.onUnauthorized?.call();
     } catch (_) {
       if (!mounted || request != _request) return;
       setState(() {
@@ -717,6 +723,9 @@ class _DroughtScreenState extends State<DroughtScreen>
   }
 
   String _friendlyDroughtError(GeoCruzApiException error) {
+    if (error.statusCode == 401) {
+      return 'Tu sesión venció. Vuelve a iniciar sesión.';
+    }
     final msg = error.message.toLowerCase();
     final vencidos =
         error.code == 'PERIODO_NO_DISPONIBLE' ||
@@ -752,6 +761,14 @@ class _DroughtScreenState extends State<DroughtScreen>
         ),
         childrenPadding: const EdgeInsets.fromLTRB(12, 0, 12, 14),
         children: [
+          if (coverage != null) ...[
+            Text(
+              coverage.esParcial
+                  ? 'Cobertura parcial: ${coverage.municipiosConDatos} de ${coverage.municipiosEnFiltro} municipios con datos. Hay muestras pendientes o zonas sin cobertura.'
+                  : 'Cobertura completa para las muestras seleccionadas; no representa toda la superficie del territorio.',
+            ),
+            const SizedBox(height: 10),
+          ],
           Row(
             children: [
               _metricItem(

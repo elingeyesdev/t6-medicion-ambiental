@@ -24,6 +24,7 @@ class HotspotsScreen extends StatefulWidget {
     this.onTerritoryChanged,
     this.sharedMapStyle,
     this.onMapStyleChanged,
+    this.onUnauthorized,
     super.key,
   });
 
@@ -34,6 +35,7 @@ class HotspotsScreen extends StatefulWidget {
   final ValueChanged<String>? onTerritoryChanged;
   final MapBaseStyle? sharedMapStyle;
   final ValueChanged<MapBaseStyle>? onMapStyleChanged;
+  final VoidCallback? onUnauthorized;
 
   @override
   State<HotspotsScreen> createState() => _HotspotsScreenState();
@@ -55,7 +57,10 @@ class _HotspotsScreenState extends State<HotspotsScreen>
   @override
   void initState() {
     super.initState();
-    _controller = HotspotsViewModel(HotspotRepository(widget.apiClient));
+    _controller = HotspotsViewModel(
+      HotspotRepository(widget.apiClient),
+      onUnauthorized: widget.onUnauthorized,
+    );
     _controller.initialize().then((_) {
       if (mounted) _syncSharedTerritory();
     });
@@ -497,7 +502,8 @@ class _HotspotsScreenState extends State<HotspotsScreen>
         title: _controller.queryExpired
             ? 'El conjunto de resultados expiró'
             : 'No se pudo completar la consulta',
-        message: _controller.queryError!,
+        message:
+            '${_controller.queryError!}${response == null ? '' : ' Los resultados anteriores no corresponden a una consulta recuperada.'}',
         tone: _StatusTone.error,
         action: _controller.queryExpired
             ? () => _controller.restartExpiredQuery()
@@ -517,18 +523,22 @@ class _HotspotsScreenState extends State<HotspotsScreen>
     }
 
     final coverage = response.coverageState;
-    // La tarjeta que explicaba cobertura confundía la vista cuando el API
-    // no tenía un período publicado. Se conserva el estado en el modelo/API.
-    if (coverage == 'sin_cobertura') return const SizedBox.shrink();
-    // Cobertura parcial: se omite el aviso en pantalla (sigue en la API).
-    if (coverage == 'parcial') {
-      if (response.total > 0) return const SizedBox.shrink();
+    if (coverage == 'sin_cobertura') {
       return const _StatusCard(
         icon: Icons.info_outline_rounded,
-        title: 'Sin detecciones para estos filtros',
+        title: 'Sin publicación para estos filtros',
         message:
-            'La consulta respondió sin detecciones; revisa el período o el territorio.',
-        tone: _StatusTone.neutral,
+            'No hay cobertura publicada para este territorio y período. No significa que no existan focos.',
+        tone: _StatusTone.warning,
+      );
+    }
+    if (coverage == 'parcial') {
+      return const _StatusCard(
+        icon: Icons.warning_amber_rounded,
+        title: 'Resultados con cobertura parcial',
+        message:
+            'Falta cobertura de parte del territorio o período. Los totales corresponden al conjunto disponible, no solo a esta página.',
+        tone: _StatusTone.warning,
       );
     }
     if (response.total > 0) return const SizedBox.shrink();
@@ -774,7 +784,9 @@ class _HotspotsScreenState extends State<HotspotsScreen>
         key: const PageStorageKey<String>('hotspots-summary'),
         leading: const Icon(Icons.info_outline_rounded),
         title: const Text('Datos de la consulta'),
-        subtitle: Text('${_formatNumber(response.total)} detecciones'),
+        subtitle: Text(
+          '${_formatNumber(response.total)} detecciones · ${response.records.length} en esta página',
+        ),
         childrenPadding: const EdgeInsets.fromLTRB(12, 0, 12, 14),
         children: [
           Row(
@@ -788,17 +800,15 @@ class _HotspotsScreenState extends State<HotspotsScreen>
               ),
               Expanded(
                 child: _metricItem(
-                  (highIndicator?['valor'] ?? 0).toString(),
+                  _formatNumber(highIndicator?['valor']),
                   'Alta conf.',
                   GeoCruzColors.green,
                 ),
               ),
               Expanded(
                 child: _metricItem(
-                  maxFrp?['valor'] != null
-                      ? (maxFrp!['valor'] as num).toStringAsFixed(1)
-                      : '—',
-                  'FRP máx',
+                  _formatNumber(maxFrp?['valor']),
+                  'FRP máx (${maxFrp?['unidad'] ?? 'sin unidad'})',
                   const Color(0xFFBC673B),
                 ),
               ),

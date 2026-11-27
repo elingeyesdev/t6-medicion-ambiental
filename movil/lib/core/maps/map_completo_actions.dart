@@ -42,13 +42,16 @@ Future<void> openAirSheet({
   required GeoCruzApiClient api,
   required LatLng point,
   String? title,
+  VoidCallback? onUnauthorized,
 }) {
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
     showDragHandle: true,
-    builder: (_) => AirSheet(api: api, point: point, title: title),
+    builder: (_) => AirSheet(
+      api: api, point: point, title: title, onUnauthorized: onUnauthorized,
+    ),
   );
 }
 

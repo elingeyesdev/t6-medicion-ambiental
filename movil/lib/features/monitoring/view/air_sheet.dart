@@ -11,12 +11,14 @@ class AirSheet extends StatefulWidget {
     required this.api,
     required this.point,
     this.title,
+    this.onUnauthorized,
     super.key,
   });
 
   final GeoCruzApiClient api;
   final LatLng point;
   final String? title;
+  final VoidCallback? onUnauthorized;
 
   @override
   State<AirSheet> createState() => _AirSheetState();
@@ -31,10 +33,17 @@ class _AirSheetState extends State<AirSheet> {
     _future = _consultAir();
   }
 
-  Future<AirSnapshot> _consultAir() => AirRepository(widget.api).quality(
-    latitude: widget.point.latitude,
-    longitude: widget.point.longitude,
-  );
+  Future<AirSnapshot> _consultAir() async {
+    try {
+      return await AirRepository(widget.api).quality(
+        latitude: widget.point.latitude,
+        longitude: widget.point.longitude,
+      );
+    } on GeoCruzApiException catch (error) {
+      if (mounted && error.statusCode == 401) widget.onUnauthorized?.call();
+      rethrow;
+    }
+  }
 
   void _retry() {
     final consulta = _consultAir();
@@ -61,7 +70,9 @@ class _AirSheetState extends State<AirSheet> {
               }
               if (snapshot.hasError) {
                 final message = snapshot.error is GeoCruzApiException
-                    ? (snapshot.error as GeoCruzApiException).message
+                    ? (snapshot.error as GeoCruzApiException).statusCode == 401
+                          ? 'Tu sesión venció. Vuelve a iniciar sesión.'
+                          : (snapshot.error as GeoCruzApiException).message
                     : 'No se pudo cargar la calidad del aire.';
                 return ListView(
                   controller: controller,
@@ -100,6 +111,34 @@ class _AirSheetState extends State<AirSheet> {
                     'Estimado · CAMS global · Open-Meteo',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
+                  if (const [
+                    'indice',
+                    'pm25',
+                    'pm10',
+                    'no2',
+                    'ozono',
+                    'so2',
+                  ].any((key) => current[key] is! num))
+                    Text(
+                      const [
+                            'indice',
+                            'pm25',
+                            'pm10',
+                            'no2',
+                            'ozono',
+                            'so2',
+                          ].every((key) => current[key] is! num)
+                          ? 'No se recibieron datos de aire para este punto.'
+                          : 'Cobertura parcial: algunas variables no tienen datos. No se reemplazan por cero.',
+                    ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton.icon(
+                      onPressed: _retry,
+                      icon: const Icon(Icons.refresh),
+                      label: const Text('Actualizar'),
+                    ),
+                  ),
                   if (updatedAt != null) ...[
                     const SizedBox(height: 4),
                     Text(
@@ -109,10 +148,22 @@ class _AirSheetState extends State<AirSheet> {
                   ],
                   const SizedBox(height: 16),
                   _metric(context, 'Índice europeo (EAQI)', valueOf('indice')),
-                  _metric(context, air.labelOf('pm25') ?? 'PM2,5', valueOf('pm25')),
-                  _metric(context, air.labelOf('pm10') ?? 'PM10', valueOf('pm10')),
+                  _metric(
+                    context,
+                    air.labelOf('pm25') ?? 'PM2,5',
+                    valueOf('pm25'),
+                  ),
+                  _metric(
+                    context,
+                    air.labelOf('pm10') ?? 'PM10',
+                    valueOf('pm10'),
+                  ),
                   _metric(context, air.labelOf('no2') ?? 'NO₂', valueOf('no2')),
-                  _metric(context, air.labelOf('ozono') ?? 'Ozono', valueOf('ozono')),
+                  _metric(
+                    context,
+                    air.labelOf('ozono') ?? 'Ozono',
+                    valueOf('ozono'),
+                  ),
                   _metric(context, air.labelOf('so2') ?? 'SO₂', valueOf('so2')),
                   if (air.hours.isNotEmpty) ...[
                     const SizedBox(height: 12),

@@ -52,7 +52,7 @@ void main() {
     });
 
     testWidgets(
-      'cero registros sin cobertura no muestra un aviso de cobertura',
+      'MOV-09 cero registros distingue ausencia de publicación',
       (tester) async {
         final payload = _response(total: 0);
         payload['datos'] = <Object>[];
@@ -78,7 +78,7 @@ void main() {
         for (var i = 0; i < 8; i++) {
           await tester.pump(const Duration(milliseconds: 50));
         }
-        expect(find.text('Sin cobertura comprobada'), findsNothing);
+        expect(find.text('Sin publicación para estos filtros'), findsOneWidget);
         expect(find.textContaining('Cobertura desconocida'), findsNothing);
         expect(find.text('Sin detecciones para estos filtros'), findsNothing);
         expect(
@@ -90,7 +90,7 @@ void main() {
       },
     );
 
-    testWidgets('cobertura parcial con detecciones no muestra aviso', (
+    testWidgets('MOV-09 cobertura parcial con detecciones muestra aviso', (
       tester,
     ) async {
       tester.view.physicalSize = const Size(800, 2400);
@@ -120,7 +120,7 @@ void main() {
       for (var i = 0; i < 8; i++) {
         await tester.pump(const Duration(milliseconds: 50));
       }
-      expect(find.text('Resultados con cobertura parcial'), findsNothing);
+      expect(find.text('Resultados con cobertura parcial'), findsOneWidget);
       expect(find.textContaining('Cobertura parcial'), findsNothing);
       expect(find.text('Datos de la consulta'), findsOneWidget);
       await tester.pumpWidget(const SizedBox());

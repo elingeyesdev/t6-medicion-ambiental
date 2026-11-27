@@ -860,6 +860,14 @@ class _InundationsScreenState extends State<InundationsScreen> {
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: 14),
+                if (result.comparableFraction < 1) ...[
+                  Text(
+                    result.comparableFraction == 0
+                        ? 'Sin datos comparables: no se puede determinar el cambio de agua.'
+                        : 'Cobertura parcial: el cambio de agua solo describe el área comparable, no todo el territorio.',
+                  ),
+                  const SizedBox(height: 10),
+                ],
                 Row(
                   children: [
                     Expanded(
@@ -1048,6 +1056,9 @@ class _InundationsScreenState extends State<InundationsScreen> {
 
   String _errorMessage(Object error) {
     if (error is GeoCruzApiException) {
+      if (error.statusCode == 401) {
+        return 'Tu sesión venció. Vuelve a iniciar sesión.';
+      }
       if (error.statusCode == 404) {
         return 'El servidor conectado todavía no tiene la consulta de inundaciones. Usa el backend de develop actualizado.';
       }

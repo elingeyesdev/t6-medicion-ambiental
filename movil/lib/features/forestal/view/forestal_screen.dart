@@ -18,6 +18,7 @@ typedef _Result = ({
   String area,
   String version,
   String coverage,
+  int? totalPolygons,
   List<_Cell> cells,
   List<int> years,
   LatLngBounds bounds,
@@ -159,7 +160,9 @@ class _ForestalScreenState extends State<ForestalScreen> {
           version: version,
           coverage: coverage == null
               ? 'Cobertura observacional no informada'
-              : 'Cobertura observacional: ${_format.format(coverage * 100)} %',
+              : '${coverage < 1 ? 'Cobertura parcial' : 'Cobertura observacional'}: ${_format.format(coverage * 100)} % del recorte observado',
+          totalPolygons:
+              (summary['conteos_pixeles'] as Map?)?['perdida_periodo'] as int?,
           cells: cells,
           years: cells.map((cell) => cell.year).toSet().toList()..sort(),
           bounds: bounds,
@@ -168,6 +171,7 @@ class _ForestalScreenState extends State<ForestalScreen> {
     } on GeoCruzApiException catch (error) {
       if (!mounted || request != _request) return;
       if (error.statusCode == 401) {
+        setState(() => _error = 'Tu sesión venció. Vuelve a iniciar sesión.');
         widget.onUnauthorized();
       } else {
         setState(
@@ -721,7 +725,7 @@ class _ForestalScreenState extends State<ForestalScreen> {
           const SizedBox(height: 12),
           Text(result.area, style: Theme.of(context).textTheme.headlineSmall),
           Text(
-            '${result.cells.length} ${result.cells.length == 1 ? 'polígono' : 'polígonos'} · $period',
+            '${result.totalPolygons == null ? 'Total de polígonos no informado' : '${result.totalPolygons} polígonos'} · $period',
           ),
           Text(result.coverage),
           if (selected != null)
