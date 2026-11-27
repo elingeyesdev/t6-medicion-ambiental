@@ -14,7 +14,7 @@ final class ConsultaFocos
 {
     public function __construct(private readonly CatalogoTerritorial $catalogo, private readonly GeometriaTerritorial $geografia, private readonly ClienteFirms $nasa, private readonly NormalizadorFirms $normalizador) {}
 
-    public function ejecutar(array $p): array
+    public function ejecutar(array $p, ?array $cajaSeguimiento = null): array
     {
         $desde = Parametros::instante($p['desde'] ?? null);
         $hasta = Parametros::instante($p['hasta'] ?? null);
@@ -46,7 +46,7 @@ final class ConsultaFocos
             'desde' => Parametros::utc($desde), 'hasta' => Parametros::utc($hasta),
             'modo' => $modo, 'confianza' => $p['confianza'] ?? null,
         ];
-        $huella = hash('sha256', json_encode([$efectivos, $this->catalogo->metadatos()['version'], config('focos.producto'), config('focos.producto_reciente_respaldo'), config('focos.producto_historico')]));
+        $huella = hash('sha256', json_encode([$efectivos, $this->catalogo->metadatos()['version'], config('focos.producto'), config('focos.producto_reciente_respaldo'), config('focos.producto_historico'), ...($cajaSeguimiento === null ? [] : [$cajaSeguimiento])]));
         $token = $p['versionConjunto'] ?? null;
         $esCache = false;
         if ($token !== null) {
@@ -67,7 +67,7 @@ final class ConsultaFocos
             if (is_array($conjunto)) {
                 $esCache = true;
             } else {
-                $conjunto = $this->preparar($desde, $hasta, $seleccion, $p['confianza'] ?? null);
+                $conjunto = $this->preparar($desde, $hasta, $seleccion, $p['confianza'] ?? null, $cajaSeguimiento);
                 $conjunto['huella'] = $huella;
                 $conjunto['versionConjunto'] = (string) Str::uuid();
                 $conjunto['expiraEn'] = now()->addSeconds(config('focos.conjunto_segundos'))->toIso8601ZuluString();
@@ -102,7 +102,7 @@ final class ConsultaFocos
         ];
     }
 
-    private function preparar(DateTimeImmutable $desde, DateTimeImmutable $hasta, array $seleccion, ?string $confianza): array
+    private function preparar(DateTimeImmutable $desde, DateTimeImmutable $hasta, array $seleccion, ?string $confianza, ?array $cajaSeguimiento): array
     {
         $reciente = config('focos.producto');
         $historico = config('focos.producto_historico');
@@ -143,6 +143,14 @@ final class ConsultaFocos
         $geografia = clone $this->geografia;
         $geometria = $this->catalogo->limite($seleccion['territorioEfectivo']['identificador'])['geometry'];
         $caja = $geografia->caja($geometria);
+        if ($cajaSeguimiento !== null) {
+            $caja = [
+                max($caja[0], $cajaSeguimiento[0]),
+                max($caja[1], $cajaSeguimiento[1]),
+                min($caja[2], $cajaSeguimiento[2]),
+                min($caja[3], $cajaSeguimiento[3]),
+            ];
+        }
         $datos = [];
         $invalidos = $duplicados = $conflictos = $fuera = 0;
         $versiones = [];
@@ -167,7 +175,7 @@ final class ConsultaFocos
                     }
                     $fecha = $foco['fechas']['observadoDesde'];
                     [$x, $y] = $foco['geometria']['coordinates'];
-                    if ($fecha < $inicioUtc || $fecha >= $finUtc || ! $geografia->contiene($geometria, $x, $y)) {
+                    if ($fecha < $inicioUtc || $fecha >= $finUtc || ($cajaSeguimiento !== null && ($x < $caja[0] || $x > $caja[2] || $y < $caja[1] || $y > $caja[3])) || ! $geografia->contiene($geometria, $x, $y)) {
                         $fuera++;
 
                         continue;
@@ -197,10 +205,12 @@ final class ConsultaFocos
 
                 continue;
             }
-            $asignacion = $geografia->asignar(...$foco['geometria']['coordinates']);
-            $foco['territorio'] = $this->territorio($this->catalogo->buscar('BO07'), $asignacion);
-            if ($asignacion['motivoAsignacion'] !== null) {
-                $foco['faltantes'][] = ['campo' => 'territorio.municipio', 'motivo' => $asignacion['motivoAsignacion']];
+            if ($cajaSeguimiento === null) {
+                $asignacion = $geografia->asignar(...$foco['geometria']['coordinates']);
+                $foco['territorio'] = $this->territorio($this->catalogo->buscar('BO07'), $asignacion);
+                if ($asignacion['motivoAsignacion'] !== null) {
+                    $foco['faltantes'][] = ['campo' => 'territorio.municipio', 'motivo' => $asignacion['motivoAsignacion']];
+                }
             }
             $versiones[$foco['fuentesRef'][0]][] = $foco['atributos']['versionOriginal'];
         }

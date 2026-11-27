@@ -42,7 +42,7 @@ class ReportesTest extends TestCase
         }
     }
 
-    private function cliente(string $rol = 'analista'): User
+    private function cliente(string $rol = 'admin'): User
     {
         $u = User::factory()->create(['rol' => $rol]);
         Sanctum::actingAs($u, ['cuenta']);
@@ -222,7 +222,7 @@ class ReportesTest extends TestCase
 
     public function test_pantallas_de_plantillas_y_formulario_mantienen_la_base_del_panel(): void
     {
-        $this->actingAs(User::factory()->create(['rol' => 'analista']));
+        $this->actingAs(User::factory()->create(['rol' => 'admin']));
         $this->get('/reportes')->assertOk()->assertSee('Generar reporte')->assertSee('Mis plantillas')->assertDontSee('en preparación');
         $this->get('/plantillas')->assertOk()->assertSee('Crear plantilla')->assertSee('Columnas del reporte');
     }

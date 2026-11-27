@@ -6,7 +6,7 @@
 @section('contenido')
 <div class="sim-contenido">
     <header class="panel-sim-header"><div><h1>Panel de <em>Simulación</em></h1><p>Consulta el recorrido compartido. Los valores de esta sección son simulados.</p></div><a class="btn btn-outline-primary" href="{{ route('mapa') }}">Ver en el mapa</a></header>
-    <p class="sim-aviso">Tu cuenta permite consultar. Los controles para crear o modificar recorridos corresponden a Analista y Administrador.</p>
+    <p class="sim-aviso">Tu cuenta permite consultar. Los controles para crear o modificar recorridos están disponibles para administradores.</p>
     @include('simulaciones.continua')
 </div>
 @endsection

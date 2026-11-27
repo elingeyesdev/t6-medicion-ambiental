@@ -223,3 +223,18 @@
 [data-bs-theme="dark"] .sim-contenido { --sim-azul: #5bc0be; }
 [data-bs-theme="dark"] .sim-contenido .sim-btn--secondary { color: var(--enviro-texto); }
 [data-bs-theme="dark"] .sim-contenido .sim-btn:hover:not(:disabled) { color: #0b132b; }
+
+.sim-workspace {
+    padding: clamp(1.25rem, 3vw, 2.2rem);
+    border: 1px solid var(--enviro-borde);
+    border-radius: .85rem;
+    background: var(--enviro-panel);
+}
+.sim-workspace h1 { margin: 0; font-size: clamp(1.75rem, 4vw, 2.65rem); letter-spacing: -.045em; }
+.sim-workspace p { margin: .5rem 0 0; color: var(--enviro-secundario); }
+.sim-workspace-nav { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-block: .8rem 1.35rem; border-bottom: 1px solid var(--enviro-borde); }
+.sim-workspace-nav > * { display: inline-flex; align-items: center; min-height: 44px; color: var(--enviro-secundario); text-decoration: none; border-bottom: 3px solid transparent; }
+.sim-workspace-nav [aria-current] { color: var(--enviro-texto); border-bottom-color: var(--enviro-accion); font-weight: 700; }
+.sim-opciones { padding: .9rem 1rem; border: 1px solid var(--enviro-borde); border-radius: .65rem; background: var(--enviro-panel); }
+.sim-opciones summary, .sim-units-card summary { cursor: pointer; font-weight: 650; }
+.sim-opciones[open] form { margin-top: .85rem; }

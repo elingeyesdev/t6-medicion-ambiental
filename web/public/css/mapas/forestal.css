@@ -6,3 +6,8 @@
 #forestal-mapa { height: clamp(22rem, 68vh, 52rem); isolation: isolate; background: #dce4db; }
 .forestal-contexto p { margin-bottom: .4rem; }
 .forestal-muestra { display: inline-block; width: .85em; height: .85em; border: 1px solid #a0365c; background: #e34d85; vertical-align: baseline; }
+
+.forestal-linea { display: grid; grid-template-columns: 1fr auto; gap: .45rem 1rem; padding: 1rem; background: var(--enviro-suave); color: var(--enviro-texto); }
+.forestal-linea label, .forestal-linea output { font-weight: 700; }
+.forestal-linea input, .forestal-linea p { grid-column: 1 / -1; margin: 0; }
+.forestal-linea input { width: 100%; accent-color: #37634b; }

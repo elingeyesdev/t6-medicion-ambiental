@@ -141,3 +141,10 @@
 [data-bs-theme="dark"] .grupo-focos h4 { color: #ffd9b5; }
 [data-bs-theme="dark"] .boton-suave { color: #c6eed1; border-color: #52775e; background: #1b3625; }
 [data-bs-theme="dark"] .fila-foco[aria-pressed="true"], [data-bs-theme="dark"] .opcion-grupo[aria-pressed="true"] { background: #49321e; }
+
+/* Mostrar una sola lista: la página actual o el grupo abierto. */
+#visor-focos:has(#grupo-focos:not([hidden])) #listado-detecciones { display: none; }
+#listado-detecciones { flex-shrink: 0; overflow: hidden; }
+#listado-detecciones > summary { display: flex; justify-content: space-between; align-items: center; gap: .6rem; padding: .8rem; cursor: pointer; }
+#listado-detecciones > summary::after { content: "⌄"; }
+#listado-detecciones .lista-focos { height: auto; max-height: clamp(9rem, 25vh, 15rem); }

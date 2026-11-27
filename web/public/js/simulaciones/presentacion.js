@@ -41,91 +41,19 @@ if (pagina) {
         if (ajustes) ajustes.open = true;
     }, true);
 
-    const curvas = {lineal: 'Cambio gradual', pico: 'Subida y bajada', exponencial: 'Aumento acelerado'};
-    function actualizarZona(panel) {
-        const escenario = panel.querySelector('.sim-escenario');
-        const nivel = panel.querySelector('[name$="[nivel]"]');
-        for (const boton of panel.querySelectorAll('[data-escenario]')) {
-            boton.setAttribute('aria-pressed', String(boton.dataset.escenario === escenario.value));
-            const caso = catalogo[metrica.value]?.find(e => e.id === boton.dataset.escenario);
-            const valores = caso?.niveles[nivel.value];
-            const rango = boton.querySelector('.msim-escenario-rango');
-            const unidad = pagina.querySelector(`[data-promedio="${metrica.value}"]`)?.dataset.unidad ?? '';
-            if (rango && valores) rango.textContent = `${valores.inicio} → ${valores.fin} ${unidad}`;
-        }
-        for (const boton of panel.querySelectorAll('[data-nivel]')) boton.setAttribute('aria-pressed', String(boton.dataset.nivel === nivel.value));
-        if (escenario.value === 'personalizado') panel.querySelector('.sim-ajustes').open = true;
-    }
-    function crearTarjetas(panel) {
-        const escenario = panel.querySelector('.sim-escenario');
-        const tarjetas = panel.querySelector('[data-escenario-tarjetas]');
-        const casos = [...(catalogo[metrica.value] ?? []), {id: 'personalizado', nombre: 'Personalizado'}];
-        tarjetas.replaceChildren(...casos.map(caso => {
-            const boton = document.createElement('button');
-            boton.type = 'button';
-            boton.className = 'msim-escenario-card';
-            boton.dataset.escenario = caso.id;
-            if (caso.id === 'personalizado') boton.classList.add('msim-escenario-card--personalizado');
-            else {
-                const icono = document.createElement('span');
-                icono.className = 'msim-escenario-icon';
-                const svg = pagina.querySelector(`[data-promedio="${metrica.value}"] .sim-icono`);
-                if (svg) icono.append(svg.cloneNode(true));
-                boton.append(icono);
-            }
-            const nombre = document.createElement('span');
-            nombre.className = 'msim-escenario-nombre';
-            nombre.textContent = caso.nombre;
-            const descripcion = document.createElement('span');
-            descripcion.className = 'msim-escenario-desc';
-            descripcion.textContent = curvas[caso.curva] ?? 'Define tus propios valores';
-            boton.append(nombre, descripcion);
-            if (caso.niveles) {
-                const rango = document.createElement('span');
-                rango.className = 'msim-escenario-rango';
-                boton.append(rango);
-            }
-            boton.addEventListener('click', () => {
-                escenario.value = caso.id;
-                escenario.dispatchEvent(new Event('change', {bubbles: true}));
-            });
-            return boton;
-        }));
-        tarjetas.hidden = false;
-        // Los selects siguen siendo los campos que envía el formulario.
-        panel.querySelector('.sim-campo-escenario').hidden = true;
-        actualizarZona(panel);
-    }
     for (const [i, panel] of paneles.entries()) {
         const zona = document.getElementById(`sim-zona-${i}`);
-        const actualizarNombre = () => {
-            panel.querySelector('[data-zona-nombre]').textContent = zona.value ? `en ${zona.selectedOptions[0].textContent}` : `en Zona ${i + 1}`;
+        const escenario = panel.querySelector('.sim-escenario');
+        const actualizar = () => {
+            panel.querySelector('[data-zona-nombre]').textContent = zona.value ? 'en ' + zona.selectedOptions[0].textContent : 'en Zona ' + (i + 1);
+            panel.querySelector('[data-metrica-nombre]').textContent = metrica.selectedOptions[0].textContent.split(' (')[0];
+            if (escenario.value === 'personalizado') panel.querySelector('.sim-ajustes').open = true;
         };
-        zona.addEventListener('change', actualizarNombre);
-        actualizarNombre();
-        panel.querySelector('.sim-escenario').addEventListener('change', () => actualizarZona(panel));
-        const nivel = panel.querySelector('[name$="[nivel]"]');
-        nivel.addEventListener('change', () => actualizarZona(panel));
-        const grupo = panel.querySelector('[data-nivel-botones]');
-        grupo.hidden = false;
-        grupo.setAttribute('role', 'group');
-        grupo.setAttribute('aria-label', `Intensidad del escenario · Zona ${i + 1}`);
-        // Conserva el título del selector original junto a los botones de intensidad.
-        panel.querySelector('.sim-campo-nivel label').removeAttribute('for');
-        nivel.hidden = true;
-        for (const boton of grupo.querySelectorAll('[data-nivel]')) boton.addEventListener('click', () => {
-            nivel.value = boton.dataset.nivel;
-            nivel.dispatchEvent(new Event('change', {bubbles: true}));
-        });
-        crearTarjetas(panel);
+        zona.addEventListener('change', actualizar);
+        escenario.addEventListener('change', actualizar);
+        metrica.addEventListener('change', actualizar);
+        actualizar();
     }
-    metrica.addEventListener('change', () => queueMicrotask(() => {
-        // inicio.js actualiza primero los escenarios del catálogo en cada select.
-        for (const panel of paneles) {
-            panel.querySelector('[data-metrica-nombre]').textContent = metrica.selectedOptions[0].textContent.replace(/ \([^)]*\)$/, '');
-            crearTarjetas(panel);
-        }
-    }));
     }
 
     let ultimoEstado = null;

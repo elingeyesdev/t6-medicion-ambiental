@@ -72,10 +72,17 @@ final class PortalIncendiosController extends Controller
     {
         $cuenta = $this->cuentaBrigada();
         abort_if($cuenta === null, 403);
-        $datos = $request->validate(['resultado' => ['required', Rule::in(array_keys(AvisoIncendio::RESULTADOS))]]);
+        $datos = $request->validate([
+            'resultado' => ['required', Rule::in(array_keys(AvisoIncendio::RESULTADOS))],
+            'comentario_verificacion' => ['nullable', 'string', 'max:1000'],
+        ]);
         $actualizados = AvisoIncendio::query()->whereKey($aviso->id)
             ->where('portal_brigadista_id', $cuenta->id)->whereNotNull('tomado_en')->whereNull('resuelto_en')
-            ->update(['resultado' => $datos['resultado'], 'resuelto_en' => now()]);
+            ->update([
+                'resultado' => $datos['resultado'],
+                'comentario_verificacion' => $datos['comentario_verificacion'] ?? null,
+                'resuelto_en' => now(),
+            ]);
 
         return redirect()->route('portal-incendios.ficha', ['aviso' => $aviso, 'vista' => 'historial'])
             ->with('estado', $actualizados ? 'Resultado de la verificación registrado.' : 'Esta cuenta no tiene un aviso pendiente asignado.');

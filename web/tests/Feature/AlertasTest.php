@@ -31,7 +31,7 @@ class AlertasTest extends TestCase
         PuntoAmbiental::create(['codigo' => 'campus', 'nombre' => 'Campus', 'pais' => 'BO', 'latitud' => -17.8, 'longitud' => -63.2, 'tipo' => 'manual']);
     }
 
-    private function cliente(string $rol = 'analista'): User
+    private function cliente(string $rol = 'admin'): User
     {
         $u = User::factory()->create(['rol' => $rol]);
         Sanctum::actingAs($u, ['cuenta']);

@@ -22,9 +22,9 @@ class SimulacionesTest extends TestCase
             'dias' => 1, 'intervalo' => 360, 'semilla' => 'prueba-1', 'zonas' => [['punto' => 'santacruz', 'escenario' => 'calor', 'nivel' => 'medio']]];
     }
 
-    private function analista(): User
+    private function admin(): User
     {
-        $u = User::factory()->create(['rol' => 'analista']);
+        $u = User::factory()->create(['rol' => 'admin']);
         Sanctum::actingAs($u, ['cuenta']);
 
         return $u;
@@ -41,7 +41,7 @@ class SimulacionesTest extends TestCase
 
     public function test_catalogo_recupera_diez_casos_con_tres_intensidades_y_cinco_variables(): void
     {
-        $this->analista();
+        $this->admin();
         $r = $this->getJson('/api/v1/simulaciones/catalogo')->assertOk();
         $this->assertCount(5, $r->json('escenarios'));
         foreach ($r->json('escenarios') as $casos) {
@@ -56,8 +56,8 @@ class SimulacionesTest extends TestCase
 
     public function test_consulta_visualizadora_no_expone_sesiones_privadas_ni_permite_escribir(): void
     {
-        $propietario = User::factory()->create(['rol' => 'analista']);
-        $sesion = app(SimularEscenario::class)->crear($this->parametros(['nombre' => 'Escenario privado del analista']), $propietario->id);
+        $propietario = User::factory()->create(['rol' => 'admin']);
+        $sesion = app(SimularEscenario::class)->crear($this->parametros(['nombre' => 'Escenario privado del admin']), $propietario->id);
         $this->actingAs(User::factory()->create(['rol' => 'visualizador']));
         $this->get('/simulaciones?sesion='.$sesion->id)->assertOk()
             ->assertSee('Simulación continua global')->assertDontSee($sesion->nombre)
@@ -73,7 +73,7 @@ class SimulacionesTest extends TestCase
 
     public function test_escenario_es_reproducible_y_no_se_mezcla_automaticamente_con_lecturas(): void
     {
-        $u = $this->analista();
+        $u = $this->admin();
         $a = $this->postJson('/api/v1/simulaciones', $this->parametros())->assertCreated();
         $b = $this->postJson('/api/v1/simulaciones', $this->parametros())->assertCreated();
         $this->assertSame($a->json('resultado'), $b->json('resultado'));
@@ -88,7 +88,7 @@ class SimulacionesTest extends TestCase
 
     public function test_compara_zonas_con_intensidades_distintas_y_conserva_agua_y_ruido(): void
     {
-        $this->analista();
+        $this->admin();
         foreach (['ica' => 'vertido', 'ruido' => 'construccion', 'humedad' => 'sequia', 'aqi' => 'incendio'] as $metrica => $escenario) {
             $r = $this->postJson('/api/v1/simulaciones', $this->parametros(['metrica' => $metrica, 'zonas' => [
                 ['punto' => 'santacruz', 'escenario' => $escenario, 'nivel' => 'bajo'], ['punto' => 'lapaz', 'escenario' => $escenario, 'nivel' => 'alto'],
@@ -99,7 +99,7 @@ class SimulacionesTest extends TestCase
 
     public function test_zona_por_region_usa_la_geometria_original_y_no_crea_puntos_al_prepararse(): void
     {
-        $this->analista();
+        $this->admin();
         $r = collect(app(RegionesEnvirosense::class)->listado())->first(fn ($r) => $r['pais'] === 'BO' && $r['nombre'] === 'Santa Cruz');
         $this->postJson('/api/v1/simulaciones', $this->parametros(['zonas' => [['region' => $r['codigo'], 'escenario' => 'calor', 'nivel' => 'alto']]]))
             ->assertCreated()->assertJsonPath('resultado.series.0.region', $r['codigo'])->assertJsonPath('resultado.series.0.nombre', 'Santa Cruz');
@@ -108,14 +108,14 @@ class SimulacionesTest extends TestCase
 
     public function test_personalizado_constante_respeta_el_valor_incluido_cero(): void
     {
-        $this->analista();
+        $this->admin();
         $this->postJson('/api/v1/simulaciones', $this->parametros(['zonas' => [['punto' => 'santacruz', 'escenario' => 'personalizado', 'nivel' => 'medio', 'inicio' => 0, 'fin' => 0, 'curva' => 'lineal']]]))
             ->assertCreated()->assertJsonPath('resultado.series.0.valores', [0, 0, 0, 0, 0]);
     }
 
     public function test_filtros_invalidos_y_cargas_excesivas_no_crean_sesiones(): void
     {
-        $this->analista();
+        $this->admin();
         foreach ([
             ['dias' => 31], ['intervalo' => 0], ['dias' => 30, 'intervalo' => 1], ['metrica' => 'inventada'], ['inicio' => '2026-02-30T12:00:00Z'],
             ['zonas' => [['punto' => 'no-existe', 'escenario' => 'calor', 'nivel' => 'medio']]],
@@ -131,7 +131,7 @@ class SimulacionesTest extends TestCase
 
     public function test_controles_y_revision_impiden_sobrescribir_cambios_de_otra_pantalla(): void
     {
-        $this->analista();
+        $this->admin();
         $id = $this->postJson('/api/v1/simulaciones', $this->parametros())->json('id');
         $ruta = '/api/v1/simulaciones/'.$id.'/accion';
         $this->postJson($ruta, ['accion' => 'pausar', 'revision' => 0, 'posicion' => 0])->assertStatus(409);
@@ -146,9 +146,9 @@ class SimulacionesTest extends TestCase
 
     public function test_otra_cuenta_no_puede_leer_controlar_ni_publicar_la_sesion(): void
     {
-        $this->analista();
+        $this->admin();
         $id = $this->postJson('/api/v1/simulaciones', $this->parametros())->json('id');
-        $this->analista();
+        $this->admin();
         $this->getJson('/api/v1/simulaciones/'.$id)->assertNotFound();
         $this->postJson('/api/v1/simulaciones/'.$id.'/accion', ['accion' => 'iniciar', 'revision' => 0, 'posicion' => 0])->assertNotFound();
         $this->postJson('/api/v1/simulaciones/'.$id.'/historial')->assertNotFound();
@@ -157,7 +157,7 @@ class SimulacionesTest extends TestCase
 
     public function test_publicacion_es_explicita_simulada_repetible_y_no_altera_observaciones(): void
     {
-        $u = $this->analista();
+        $u = $this->admin();
         $r = $this->postJson('/api/v1/simulaciones', $this->parametros())->assertCreated();
         $ruta = '/api/v1/simulaciones/'.$r->json('id').'/historial';
         $this->postJson($ruta)->assertOk()->assertJsonPath('nuevas', 5)->assertJsonPath('futuras', 0);
@@ -171,7 +171,7 @@ class SimulacionesTest extends TestCase
 
     public function test_simular_futuro_no_lo_incorpora_al_historial_ni_crea_puntos(): void
     {
-        $this->analista();
+        $this->admin();
         $r = $this->postJson('/api/v1/simulaciones', $this->parametros(['inicio' => now()->addDay()->toIso8601ZuluString()]))->assertCreated();
         $this->postJson('/api/v1/simulaciones/'.$r->json('id').'/historial')->assertOk()->assertJsonPath('nuevas', 0)->assertJsonPath('futuras', 5);
         $this->assertDatabaseCount('lecturas_ambientales', 0);
@@ -180,7 +180,7 @@ class SimulacionesTest extends TestCase
 
     public function test_un_punto_movido_no_cambia_el_historico_de_la_simulacion(): void
     {
-        $this->analista();
+        $this->admin();
         $r = $this->postJson('/api/v1/simulaciones', $this->parametros())->assertCreated();
         $this->postJson('/api/v1/simulaciones/'.$r->json('id').'/historial')->assertOk();
         PuntoAmbiental::where('codigo', 'santacruz')->update(['latitud' => -18]);
@@ -190,7 +190,7 @@ class SimulacionesTest extends TestCase
 
     public function test_pantalla_tiene_acceso_propio_y_no_muestra_funciones_vacias(): void
     {
-        $u = User::factory()->create(['rol' => 'analista']);
+        $u = User::factory()->create(['rol' => 'admin']);
         $this->actingAs($u);
         $this->get('/simulaciones')->assertOk()->assertSee('Simulaciones')->assertSee('Zonas a comparar')->assertSee('Calidad del aire')->assertDontSee('en preparación');
         $sesion = app(SimularEscenario::class)->crear($this->parametros(), $u->id);

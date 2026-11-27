@@ -37,7 +37,7 @@ class ConcurrenciaIngestionDatosTest extends TestCase
         }
         DB::purge();
         Artisan::call('migrate', ['--force' => true]);
-        User::factory()->create(['id' => 1, 'rol' => RolCuenta::Analista]);
+        User::factory()->create(['id' => 1, 'rol' => RolCuenta::Administrador]);
         PuntoAmbiental::create(['codigo' => 'campus', 'nombre' => 'Concurrencia local', 'pais' => 'BO', 'latitud' => -17, 'longitud' => -63, 'tipo' => 'manual']);
     }
 

@@ -22,14 +22,25 @@ class SimulacionesController extends Controller
             ]);
         }
         $sesion = $request->filled('sesion') ? $motor->estado($request->query('sesion'), $request->user()->id) : null;
-        $lista = Simulacion::where('usuario_id', $request->user()->id)->latest()->paginate(20);
+        $lista = Simulacion::where('usuario_id', $request->user()->id)->latest();
         if ($request->is('api/*')) {
+            $lista = $lista->paginate(20);
+
             return response()->json(['datos' => $lista->getCollection()->map(fn ($s) => $s->only(['id', 'nombre', 'estado', 'created_at'])), 'pagina' => $lista->currentPage(), 'ultimaPagina' => $lista->lastPage()])->header('Cache-Control', 'no-store');
         }
 
+        $seccion = $sesion ? 'resultado' : match ($request->query('seccion')) {
+            'continua' => 'continua',
+            'guardadas' => 'guardadas',
+            default => 'escenarios',
+        };
+        $configurar = $seccion === 'escenarios';
+
         return view('simulaciones.index', ['modulos' => array_filter(config('geocruz.modulos'), fn ($m) => $m['habilitado']),
-            'sesiones' => $lista, 'sesion' => $sesion, 'metricas' => $catalogo->metricas(), 'puntos' => $catalogo->leer()['puntos'], 'regiones' => $regiones->listado(),
-            'escenarios' => $motor->escenarios(), 'reproduccion' => $sesion ? ['sesion' => $sesion->paraCliente(), 'accion' => route('simulaciones.accion', $sesion->id),
+            'seccion' => $seccion, 'sesiones' => $seccion === 'guardadas' ? $lista->paginate(20)->withQueryString() : null,
+            'sesion' => $sesion, 'metricas' => $seccion !== 'guardadas' ? $catalogo->metricas() : [],
+            'puntos' => $configurar ? $catalogo->leer()['puntos'] : [], 'regiones' => $configurar ? $regiones->listado() : [],
+            'escenarios' => $configurar ? $motor->escenarios() : [], 'reproduccion' => $sesion ? ['sesion' => $sesion->paraCliente(), 'accion' => route('simulaciones.accion', $sesion->id),
                 'estado' => url('/simulaciones/'.$sesion->id.'/estado'),
                 'limites' => array_values(array_map(fn ($s) => $regiones->limite($s['region']), array_filter($sesion->resultado['series'], fn ($s) => isset($s['region']))))] : null]);
     }

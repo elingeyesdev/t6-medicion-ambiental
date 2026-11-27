@@ -5,6 +5,7 @@
 @section('descripcion', 'Completa el formulario para sumarte a la observación ambiental.')
 @push('estilos')
 <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
+<link rel="stylesheet" href="{{ asset('css/mapas/centrar-seleccion.css') }}">
 @endpush
 @section('formulario')
 @include('cuentas.estado')
@@ -43,5 +44,6 @@
 @push('scripts')
 <script type="application/json" id="configuracion-mapa">@json(\App\Support\ConfiguracionMapa::paraWeb())</script>
 <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
+<script src="{{ asset('js/mapas/centrar-seleccion.js') }}?v=2"></script>
 <script type="module" src="{{ asset('assets/envirosense-publico/registro.js') }}"></script>
 @endpush

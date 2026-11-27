@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="{{ asset('css/panel/panel.css') }}">
     <link rel="stylesheet" href="{{ asset('css/panel/marca.css') }}">
     <link rel="stylesheet" href="{{ asset('css/panel/mapas.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/envirosense/interfaz.css') }}?v=original-1">
+    <link rel="stylesheet" href="{{ asset('css/envirosense/interfaz.css') }}?v=lateral-geosur-2">
+    <link rel="stylesheet" href="{{ asset('css/panel/tema-geosur.css') }}?v=2">
     <link rel="icon" type="image/svg+xml" href="{{ asset('img/marca/geosur-simbolo.svg') }}?v=gs-1">
 </head>
 <body class="@yield('clase-cuerpo')">

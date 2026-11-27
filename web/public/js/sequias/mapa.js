@@ -72,6 +72,7 @@ export class MapaSequias {
     }
     resaltar(id) {
         const elegido = this.porId.get(id);
+        this.mapa?.recordarParaCentrar?.(elegido?.getLatLng() ?? null);
         for (const punto of new Set(this.porId.values())) punto.setStyle({ weight: punto === elegido ? 4 : 2, color: punto === elegido ? '#092f26' : '#fff' });
     }
 }

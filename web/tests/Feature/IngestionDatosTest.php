@@ -32,7 +32,7 @@ class IngestionDatosTest extends TestCase
     {
         parent::setUp();
         Mail::fake();
-        $this->actor = User::factory()->create(['rol' => RolCuenta::Analista]);
+        $this->actor = User::factory()->create(['rol' => RolCuenta::Administrador]);
         PuntoAmbiental::create(['codigo' => 'campus', 'nombre' => 'Prueba local', 'pais' => 'BO', 'latitud' => -17.78, 'longitud' => -63.18, 'tipo' => 'manual']);
         $this->carpeta = base_path('../tmp/pruebas-datos/'.Str::uuid());
         mkdir($this->carpeta, 0777, true);

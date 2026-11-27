@@ -1,0 +1,54 @@
+.usuarios-panel { max-width: 1120px; }
+
+.usuarios-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    padding: clamp(1.25rem, 3vw, 2.2rem);
+    border-inline-start: 4px solid var(--geosur-tierra);
+    border-radius: .85rem;
+    color: var(--geosur-encabezado-texto);
+    background: var(--geosur-encabezado);
+}
+.usuarios-cabecera h1 {
+    margin: 0 0 .4rem;
+    color: inherit;
+    font-size: clamp(1.7rem, 4vw, 2.6rem);
+    letter-spacing: -.045em;
+}
+.usuarios-cabecera p { margin: 0; color: var(--geosur-encabezado-secundario); }
+.usuarios-resumen { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin: 0; }
+.usuarios-resumen div { padding-inline-start: .65rem; border-inline-start: 1px solid var(--geosur-tierra); }
+.usuarios-resumen dt { color: var(--geosur-encabezado-secundario); font-size: .8rem; font-weight: 500; }
+.usuarios-resumen dd { margin: 0; font-size: 1.65rem; font-weight: 600; line-height: 1.2; }
+
+.usuarios-directorio .card-header { background: var(--enviro-suave); }
+.usuarios-directorio h2, .usuarios-permisos h2 { font-size: 1.2rem; font-weight: 650; }
+.usuarios-directorio .cuenta-tabla { min-width: 33rem; }
+.usuarios-directorio .cuenta-tabla td { vertical-align: middle; }
+.usuarios-directorio .cuenta-tabla td:last-child { width: 18rem; }
+.usuarios-directorio .cuenta-avatar { color: var(--enviro-panel); }
+.usuarios-directorio .cuenta-rol, .usuarios-directorio .cuenta-estado { font-size: .82rem; }
+.usuarios-directorio .usuarios-rol-admin { color: var(--geosur-encabezado-texto); background: var(--geosur-encabezado); }
+.usuarios-directorio .cuenta-estado.suspendida { color: #8f3235; }
+[data-bs-theme="dark"] .usuarios-directorio .cuenta-estado.suspendida { color: #ffc2c2; }
+
+.usuarios-acciones summary { color: var(--enviro-acento); font-weight: 650; cursor: pointer; }
+.usuarios-acciones[open] summary { margin-bottom: .6rem; }
+.usuarios-acciones .form-label { font-size: .8rem; }
+.usuarios-acciones .form-select, .usuarios-acciones .btn { min-height: 36px; font-size: .8rem; }
+.usuarios-directorio .cuenta-paginacion { margin: 1rem 0; }
+
+.usuarios-permisos { margin-top: 1.5rem; }
+.usuarios-permisos dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+.usuarios-permisos dl div { padding: 1rem; border: 1px solid var(--enviro-borde); border-radius: .6rem; background: var(--enviro-fondo); }
+.usuarios-permisos dt { color: var(--enviro-acento); }
+.usuarios-permisos dd { margin: .3rem 0 0; color: var(--enviro-secundario); font-size: .9rem; }
+
+@media (max-width: 620px) {
+    .usuarios-panel { padding-inline: 0; }
+    .usuarios-permisos dl { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,12 @@
+.leaflet-bar .geosur-centrar {
+    min-height: 36px;
+    padding: .35rem .65rem;
+    border: 0;
+    border-radius: inherit;
+    background: #fcfbf4;
+    color: #254638;
+    font: 600 .86rem/1.2 system-ui, sans-serif;
+    cursor: pointer;
+}
+.leaflet-bar .geosur-centrar:hover { background: #e8efe5; }
+.leaflet-bar .geosur-centrar:focus-visible { outline: 2px solid #446f56; outline-offset: 2px; }

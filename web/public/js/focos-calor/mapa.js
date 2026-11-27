@@ -1,6 +1,6 @@
 import { agruparProximos, etiquetaDeteccion, etiquetaBreveDeteccion } from './representacion.js';
 import { iniciarMapaBase } from '../mapas/base.js';
-import { crearSimboloCalor, crearContenidoFoco, crearSeleccionCalor } from './elementos.js';
+import { crearSimboloCalor, crearContenidoFoco, crearSeleccionCalor } from './elementos.js?v=confianza-1';
 
 
 /** Leaflet representa la página actual; no recalcula pertenencia ni métricas. */
@@ -130,6 +130,7 @@ export class MapaFocos {
     }
 
     seleccionar(id) {
+        if (id == null) this.mapa?.recordarParaCentrar?.(null);
         this.idSeleccionado = id;
         const foco = this.datos.find(f => f.identificador === id);
         if (this.mapa && foco) this.centrarDeteccion(foco);
@@ -139,6 +140,7 @@ export class MapaFocos {
 
     centrarDeteccion(foco) {
         const posicion = [foco.geometria.coordinates[1], foco.geometria.coordinates[0]];
+        this.mapa.recordarParaCentrar?.(posicion);
         const escritorio = matchMedia('(min-width: 768px)').matches;
         const controles = document.getElementById('controles-mapa');
         const resultados = document.getElementById('resultados-focos');

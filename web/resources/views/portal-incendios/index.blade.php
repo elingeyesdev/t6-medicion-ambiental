@@ -7,7 +7,8 @@
     <link rel="icon" href="{{ asset('img/marca/geosur-simbolo.svg') }}">
     <link rel="stylesheet" href="{{ asset('css/envirosense/fuentes.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/portal-incendios.css') }}?v=panel-atencion">
+<link rel="stylesheet" href="{{ asset('css/mapas/centrar-seleccion.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/portal-incendios.css') }}?v=trayectoria-2">
 </head>
 <body>
     <a href="#contenido-portal" class="salto-contenido">Saltar al contenido</a>
@@ -43,8 +44,8 @@
             </section>
             <section class="guia-portal" aria-labelledby="titulo-guia">
                 <div>
-                    <h2 id="titulo-guia">Una detección, una decisión</h2>
-                    <p>NASA FIRMS localiza señales de calor. Cada aviso reúne la ubicación y la hora para que una brigada pueda revisar la zona y registrar lo que encontró.</p>
+                    <h2 id="titulo-guia">Qué pasa después de una detección</h2>
+                    <p>Para quien vive cerca o tiene familia en la zona, cada aviso reúne el lugar, la hora y el avance de la verificación. Cuando una brigada registra un resultado, queda disponible en la misma ficha.</p>
                 </div>
             </section>
         @else
@@ -83,17 +84,20 @@
                         <h2>Ficha del aviso</h2>
                         <span class="estado" data-estado="{{ $aviso->estado() }}">{{ $aviso->estado() }}</span>
                         @php($estadoAviso = $aviso->estado())
-                        @if($estadoAviso === 'Por verificar' || $estadoAviso === 'En verificación')
+                        @unless($brigadista)
+                            @include('portal-incendios.trayectoria')
+                        @endunless
+                        @if($brigadista && in_array($estadoAviso, ['Por verificar', 'En verificación'], true))
                             <section class="atencion-aviso" id="atencion" aria-labelledby="atencion-titulo">
                                 <h3 id="atencion-titulo">Atención del aviso</h3>
                                 @error('resultado')<p role="alert">{{ $message }}</p>@enderror
-                                @if($brigadista && $estadoAviso === 'Por verificar')
+                                @if($estadoAviso === 'Por verificar')
                                     <p>Toma el aviso para asignarlo a tu cuenta y comenzar la verificación.</p>
                                     <form method="post" action="{{ route('portal-incendios.tomar', $aviso) }}">
                                         @csrf
                                         <button class="boton boton-principal" type="submit">Tomar aviso</button>
                                     </form>
-                                @elseif($brigadista && (int) $aviso->portal_brigadista_id === (int) $cuentaBrigada?->id)
+                                @elseif((int) $aviso->portal_brigadista_id === (int) $cuentaBrigada?->id)
                                     <p>Este aviso está a cargo de tu cuenta.</p>
                                     <form method="post" action="{{ route('portal-incendios.resolver', $aviso) }}">
                                         @csrf
@@ -104,31 +108,30 @@
                                                 <option value="{{ $codigo }}">{{ $nombre }}</option>
                                             @endforeach
                                         </select>
+                                        <label for="comentario-verificacion">Comentario de la brigada (opcional)</label>
+                                        <textarea id="comentario-verificacion" name="comentario_verificacion" rows="3" maxlength="1000">{{ old('comentario_verificacion') }}</textarea>
+                                        @error('comentario_verificacion')<p role="alert">{{ $message }}</p>@enderror
                                         <button class="boton boton-principal" type="submit">Guardar resultado</button>
                                     </form>
-                                @elseif($estadoAviso === 'En verificación')
-                                    <p>Una brigada ya se hizo cargo del aviso.</p>
                                 @else
-                                    <p>Puedes tomar este aviso con una cuenta del portal.</p>
-                                    @unless($brigadista)
-                                        <a href="{{ route('portal-incendios.brigada', ['aviso' => $aviso->id]) }}">Ingresar como brigada</a>
-                                    @endunless
+                                    <p>Una brigada ya se hizo cargo del aviso.</p>
                                 @endif
                             </section>
-                        @elseif($aviso->resultado)
-                            <section class="atencion-aviso cerrado" aria-label="Resultado registrado">
-                                <h3>Resultado registrado</h3>
-                                <p>{{ \App\Models\AvisoIncendio::RESULTADOS[$aviso->resultado] }} · {{ $aviso->resuelto_en->setTimezone('America/La_Paz')->format('d/m/Y · H:i') }}</p>
+                        @elseif($cuentaBrigada && (int) $aviso->portal_brigadista_id === (int) $cuentaBrigada->id && $aviso->comentario_verificacion)
+                            <section class="atencion-aviso cerrado" aria-label="Comentario privado">
+                                <h3>Tu comentario de verificación</h3>
+                                <p>{{ $aviso->comentario_verificacion }}</p>
                             </section>
-                        @else
-                            <p class="nota-operativa">Se archivó al cumplirse 72 horas sin asignación.</p>
+                        @endif
+                        @if($brigadista)
+                            @include('portal-incendios.trayectoria')
+                        @elseif($estadoAviso === 'Por verificar')
+                            <p class="trayectoria-acceso"><a href="{{ route('portal-incendios.brigada', ['aviso' => $aviso->id]) }}">Ingresar como brigada</a></p>
                         @endif
                         <dl>
-                            <div><dt>Detección inicial</dt><dd>{{ $aviso->observado_en->setTimezone('America/La_Paz')->format('d/m/Y · H:i') }} · Bolivia</dd></div>
-                            <div><dt>Ubicación aproximada</dt><dd>{{ $aviso->latitud }}, {{ $aviso->longitud }}<br><a href="https://www.openstreetmap.org/?mlat={{ $aviso->latitud }}&amp;mlon={{ $aviso->longitud }}#map=13/{{ $aviso->latitud }}/{{ $aviso->longitud }}" target="_blank" rel="noopener noreferrer">Abrir ubicación</a></dd></div>
-                            <div><dt>Fuente inicial</dt><dd>NASA FIRMS · {{ $aviso->producto }}</dd></div>
+                            <div><dt>Ubicación aproximada</dt><dd>{{ $aviso->latitud }}, {{ $aviso->longitud }}<br><a href="https://www.google.com/maps/search/?api=1&amp;query={{ rawurlencode($aviso->latitud . ',' . $aviso->longitud) }}" target="_blank" rel="noopener noreferrer">Abrir en Google Maps</a></dd></div>
+                            <div><dt>Fuente inicial</dt><dd>{{ str_starts_with($aviso->producto, 'SIMULACION') ? 'Ejercicio local · ' : 'NASA FIRMS · ' }}{{ $aviso->producto }}</dd></div>
                             <div><dt>Detecciones agrupadas</dt><dd>{{ $aviso->detecciones }} · confianza alta</dd></div>
-                            @if(!$aviso->tomado_en)<div><dt>Vence sin atención</dt><dd>{{ $aviso->vence_en->setTimezone('America/La_Paz')->format('d/m/Y · H:i') }} · Bolivia</dd></div>@endif
                         </dl>
                     </div>
                 @else
@@ -175,6 +178,7 @@
         @json($mapaAvisos)
     </script>
     <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
-    <script type="module" src="{{ asset('js/portal-incendios.js') }}"></script>
+<script src="{{ asset('js/mapas/centrar-seleccion.js') }}?v=2"></script>
+    <script type="module" src="{{ asset('js/portal-incendios.js') }}?v=centrar-2"></script>
 </body>
 </html>

@@ -176,3 +176,33 @@ h2 { font-size: 1.25rem; margin: 0; }
 .solicitar-acceso { margin-bottom: 0; }
 .solicitar-acceso a { font-weight: 650; }
 @media (max-width: 40rem) { .solicitud-campos { grid-template-columns: 1fr; } }
+
+.trayectoria-aviso {
+    margin-block: 1.2rem;
+    padding: clamp(.9rem, 2vw, 1.35rem);
+    border: 1px solid #d3dfd3;
+    border-radius: .85rem;
+    background: #eff4ed;
+}
+.trayectoria-aviso header { display: flex; align-items: baseline; flex-wrap: wrap; justify-content: space-between; gap: .25rem .8rem; }
+.trayectoria-aviso h3 { margin: 0; font-size: clamp(1.1rem, 2vw, 1.4rem); }
+.trayectoria-aviso header p { margin: 0; color: #496057; font-size: .82rem; }
+.trayectoria-aviso ol { list-style: none; padding: 0; margin: 1rem 0 0 .4rem; }
+.trayectoria-aviso li { position: relative; padding: 0 0 1.05rem 1.2rem; border-inline-start: 2px solid #a9bdb0; }
+.trayectoria-aviso li:last-child { padding-bottom: 0; border-color: transparent; }
+.trayectoria-aviso li::before {
+    content: ''; position: absolute; top: .24rem; inset-inline-start: -.38rem;
+    width: .62rem; height: .62rem; border-radius: 50%; background: #436853;
+    box-shadow: 0 0 0 3px #eff4ed;
+}
+.trayectoria-aviso li[data-hito="deteccion"]::before { background: #9a472a; }
+.trayectoria-aviso li[data-hito="vencimiento"]::before { background: #62685d; }
+.trayectoria-hito { display: flex; align-items: baseline; flex-wrap: wrap; justify-content: space-between; gap: .2rem .7rem; }
+.trayectoria-hito time { font-size: .8rem; color: #496057; font-variant-numeric: tabular-nums; }
+.trayectoria-aviso li p { font-size: .9rem; color: #354e41; margin: .2rem 0 0; }
+.trayectoria-proximo { margin: 1rem 0 0; padding-top: .75rem; border-top: 1px solid #d3dfd3; font-size: .88rem; }
+.trayectoria-acceso { margin: -.25rem 0 1rem; }
+
+@media (max-width: 32rem) {
+    .trayectoria-hito { display: grid; gap: .2rem; }
+}

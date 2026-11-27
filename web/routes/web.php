@@ -69,7 +69,7 @@ Route::middleware(['auth', 'cuenta.activa', 'can:mapa.ver', 'can:datos.consultar
         ->middleware('throttle:12,1,mapa-poi')->name('mapa.poi');
 });
 Route::middleware('guest')->group(function (): void {
-    Route::view('/login', 'acceso.entrar')->name('login');
+    Route::get('/login', fn () => response()->view('acceso.entrar')->header('Cache-Control', 'no-store, private'))->name('login');
     Route::post('/login', [AccesoController::class, 'entrar'])->middleware('throttle:cuentas-ingreso')->name('acceso.entrar');
     Route::view('/register', 'acceso.registro')->name('register');
     Route::post('/register', [AccesoController::class, 'registrar'])->middleware('throttle:cuentas-registro')->name('acceso.registrar');
@@ -127,7 +127,7 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function (): void {
         Route::patch('/plantillas/{id}', [ReportesController::class, 'guardarPlantilla'])->name('plantillas.actualizar');
         Route::delete('/plantillas/{id}', [ReportesController::class, 'archivarPlantilla'])->name('plantillas.archivar');
     });
-    Route::get('/simulaciones', [SimulacionesController::class, 'index'])->middleware('can:datos.consultar')->name('simulaciones');
+    Route::get('/simulaciones', [SimulacionesController::class, 'index'])->middleware('can:simulaciones.gestionar')->name('simulaciones');
     Route::middleware('can:simulaciones.gestionar')->group(function (): void {
         Route::post('/simulaciones', [SimulacionesController::class, 'guardar'])->name('simulaciones.guardar');
         Route::post('/simulaciones/{id}/accion', [SimulacionesController::class, 'accion'])->name('simulaciones.accion');

@@ -30,7 +30,7 @@ class ReportesAtmosferaTest extends TestCase
         config(['reportes.atmosfera.habilitado' => true]);
     }
 
-    private function cliente(string $rol = 'analista'): User
+    private function cliente(string $rol = 'admin'): User
     {
         $u = User::factory()->create(['rol' => $rol]);
         Sanctum::actingAs($u, ['cuenta']);

@@ -26,4 +26,9 @@ for (const aviso of avisos) {
     }).bindPopup(ficha).addTo(puntos);
 }
 
-if (avisos.length) mapa.fitBounds(puntos.getBounds(), { padding: [36, 36], maxZoom: 12 });
+if (avisos.length === 1) {
+    mapa.recordarParaCentrar?.([avisos[0].lat, avisos[0].lon]);
+    mapa.centrarSeleccion?.();
+} else if (avisos.length > 1) {
+    mapa.fitBounds(puntos.getBounds(), { padding: [36, 36], maxZoom: 12 });
+}

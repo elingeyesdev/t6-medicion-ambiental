@@ -48,7 +48,7 @@ class MqttTransporteDatosTest extends TestCase
         ]]);
         PuntoAmbiental::create(['codigo' => 'campus', 'nombre' => 'Contrato local', 'pais' => 'BO', 'latitud' => -17, 'longitud' => -63, 'tipo' => 'manual']);
 
-        return User::factory()->create(['rol' => RolCuenta::Analista]);
+        return User::factory()->create(['rol' => RolCuenta::Administrador]);
     }
 
     public function test_tcp_local_negocia_qos1_guarda_antes_del_ack_y_deduplica_reenvio(): void

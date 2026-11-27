@@ -69,19 +69,17 @@ class DatosAmbientalesTest extends TestCase
         $this->assertDatabaseCount('lecturas_ambientales', 0);
     }
 
-    public function test_analista_y_administrador_crean_puntos_y_lecturas_con_permisos_controlados(): void
+    public function test_administrador_crea_puntos_y_lecturas_con_permisos_controlados(): void
     {
-        foreach ([RolCuenta::Administrador, RolCuenta::Analista] as $i => $rol) {
-            $actor = User::factory()->create(['rol' => $rol]);
-            $this->token($actor)->postJson('/api/v1/sensores', ['codigo' => 'punto-'.$i, 'nombre' => 'Punto de prueba', 'pais' => 'BO', 'latitud' => -17, 'longitud' => -63])->assertCreated();
-            $this->token($actor)->postJson('/api/v1/sensores/lecturas', ['lecturas' => [$this->fila(['punto' => 'punto-'.$i])]])->assertOk()->assertJsonPath('nuevas', 1);
-            $this->assertDatabaseHas('lecturas_ambientales', ['registrado_por' => $actor->id]);
-        }
+        $actor = User::factory()->create(['rol' => RolCuenta::Administrador]);
+        $this->token($actor)->postJson('/api/v1/sensores', ['codigo' => 'punto-prueba', 'nombre' => 'Punto de prueba', 'pais' => 'BO', 'latitud' => -17, 'longitud' => -63])->assertCreated();
+        $this->token($actor)->postJson('/api/v1/sensores/lecturas', ['lecturas' => [$this->fila(['punto' => 'punto-prueba'])]])->assertOk()->assertJsonPath('nuevas', 1);
+        $this->assertDatabaseHas('lecturas_ambientales', ['registrado_por' => $actor->id]);
     }
 
     public function test_coordenadas_pais_tipo_y_estado_no_aceptan_datos_arbitrarios(): void
     {
-        $actor = User::factory()->create(['rol' => RolCuenta::Analista]);
+        $actor = User::factory()->create(['rol' => RolCuenta::Administrador]);
         foreach ([['latitud' => 91], ['longitud' => -181], ['pais' => 'XX'], ['tipo' => 'real'], ['activo' => false], ['nombre' => []]] as $invalido) {
             $this->token($actor)->postJson('/api/v1/sensores', $invalido + ['codigo' => 'punto', 'nombre' => 'Prueba', 'pais' => 'BO', 'latitud' => 0, 'longitud' => 0])->assertUnprocessable();
         }
@@ -172,7 +170,7 @@ class DatosAmbientalesTest extends TestCase
     {
         $this->punto();
         app(RegistrarLecturas::class)->ejecutar([$this->fila()]);
-        $this->token(User::factory()->create(['rol' => RolCuenta::Analista]))->patchJson('/api/v1/sensores/campus/estado', ['activo' => false])->assertOk();
+        $this->token(User::factory()->create(['rol' => RolCuenta::Administrador]))->patchJson('/api/v1/sensores/campus/estado', ['activo' => false])->assertOk();
         $this->postJson('/api/v1/sensores/lecturas', ['lecturas' => [$this->fila(['valor' => 25])]])->assertUnprocessable();
         $this->getJson('/api/v1/sensores')->assertOk()->assertJsonPath('total', 0);
         $this->getJson('/api/v1/sensores/campus/lecturas')->assertOk()->assertJsonPath('total', 1);
@@ -192,7 +190,7 @@ class DatosAmbientalesTest extends TestCase
     public function test_csv_web_es_atomico_repetible_y_rechaza_archivo_mal_formado(): void
     {
         $this->punto();
-        $actor = User::factory()->create(['rol' => RolCuenta::Analista]);
+        $actor = User::factory()->create(['rol' => RolCuenta::Administrador]);
         $fila = implode(',', array_values($this->fila()));
         $contenido = "punto,metrica,valor,instante,origen,fuente\n$fila\n";
         $this->actingAs($actor)->post('/sensores/importar', ['archivo' => UploadedFile::fake()->createWithContent('lecturas.csv', $contenido)])->assertSessionHasNoErrors();
@@ -205,7 +203,7 @@ class DatosAmbientalesTest extends TestCase
     public function test_formularios_exigen_csrf_y_las_fechas_invalidas_no_generan_error_interno(): void
     {
         $this->punto();
-        $this->actingAs(User::factory()->create(['rol' => RolCuenta::Analista]))->get('/sensores?desde=fecha')->assertRedirect('/sensores')->assertSessionHasErrors('periodo');
+        $this->actingAs(User::factory()->create(['rol' => RolCuenta::Administrador]))->get('/sensores?desde=fecha')->assertRedirect('/sensores')->assertSessionHasErrors('periodo');
         $this->app->instance('env', 'local');
         $this->post('/sensores', ['nombre' => 'Sin token'])->assertStatus(419);
         $this->post('/sensores/campus/lecturas', [])->assertStatus(419);

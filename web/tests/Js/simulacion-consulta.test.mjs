@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-test('la consola de consulta actualiza promedios sin formulario ni controles de analista', async () => {
+test('la consola de consulta actualiza promedios sin formulario ni controles de admin', async () => {
     const anterior = globalThis.document;
     const eventos = {};
     const paso = {}, puntos = {}, instante = {}, valor = {}, etiqueta = {};

@@ -1,8 +1,8 @@
 import { ultimoPeriodoDisponible } from './periodo.js';
 import { fechaBolivia, numero } from './contrato.js';
-import { MapaFocos } from './mapa.js';
+import { MapaFocos } from './mapa.js?v=confianza-1';
 import { etiquetaDeteccion } from './representacion.js';
-import { crearContenidoFoco, procedenciaFoco } from './elementos.js';
+import { crearContenidoFoco, procedenciaFoco, etiquetaConfianza } from './elementos.js?v=confianza-1';
 import { CompartirFoco } from './compartir.js';
 
 const texto = (id, valor) => { document.getElementById(id).textContent = valor; };
@@ -59,6 +59,7 @@ export class VistaFocos {
         this.actual = estado.actual;
         this.mostrarPanelResultados(!this.resultadosOcultos);
         resultados.setAttribute('aria-busy', String(cargando));
+        document.getElementById('listado-detecciones').hidden = !r;
         resultados.classList.toggle('resultados-anteriores', anterior);
         texto('etiqueta-vigencia', anterior ? 'Resultados anteriores' : 'Resultados');
         const aviso = document.getElementById('aviso-consulta');
@@ -162,7 +163,7 @@ export class VistaFocos {
         }
         const coordenadas = Number.isFinite(lat) && Number.isFinite(lon) ? `${lat}, ${lon} (latitud, longitud)` : 'No informadas';
         const valores = [
-            ['Fecha y hora (Bolivia)', fechaBolivia(f.fechas.observadoDesde)], ['Nivel de confianza', f.atributos.confianza],
+            ['Fecha y hora (Bolivia)', fechaBolivia(f.fechas.observadoDesde)], ['Nivel de confianza', etiquetaConfianza(f.atributos.confianza)],
             ['Municipio', this.nombres.get(f.territorio.municipio) ?? 'No determinado'], ['Provincia', this.nombres.get(f.territorio.provincia) ?? 'No determinada'],
             ['Ubicación', coordenadas], ...procedenciaFoco(f, r.fuentes),
         ];

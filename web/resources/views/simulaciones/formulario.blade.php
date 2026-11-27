@@ -1,5 +1,5 @@
 <section id="nueva-simulacion" class="sim-escenarios" aria-labelledby="sim-configurar-titulo">
-    <div class="sim-section-header"><div><p class="sim-eyebrow">Simulación por lotes · histórico / futuro</p><h2 id="sim-configurar-titulo">Configurar <em>simulación</em></h2></div><span class="sim-page-tag">Hasta 3 zonas</span></div>
+    <div class="sim-section-header"><div><p class="sim-eyebrow">Escenario por zona</p><h2 id="sim-configurar-titulo">Configurar <em>simulación</em></h2></div><span class="sim-page-tag">Hasta 3 zonas</span></div>
     <form action="{{ route('simulaciones.guardar') }}" method="post" class="sim-configuracion">@csrf
         <fieldset class="fronteras-panel sim-zonas">
             <legend class="fronteras-header">Fronteras de Simulación</legend>
@@ -20,7 +20,7 @@
             <div class="fronteras-footer"><p>Los parámetros de tiempo son comunes a todas las zonas para mantener la comparación sincronizada.</p></div>
         </fieldset>
         <div class="msim-box">
-            <div class="msim-box-header"><h3>Configuración de escenarios</h3><span class="sim-page-tag">Simulado</span></div>
+            <div class="msim-box-header"><h3>Variable y escenario</h3><span class="sim-page-tag">Simulado</span></div>
             <div class="sim-datos-generales">
                 <div><label class="form-label" for="sim-nombre">Nombre</label><input id="sim-nombre" name="nombre" class="form-control" maxlength="100" required value="{{ old('nombre','Prueba ambiental') }}"></div>
                 <div><label class="form-label" for="sim-metrica">Dato a simular</label><select id="sim-metrica" name="metrica" class="form-select">@foreach($metricas as $clave=>$m)<option value="{{ $clave }}" @selected(old('metrica','temperatura')===$clave)>{{ $m['nombre'] }} ({{ $m['unidad'] }})</option>@endforeach</select></div>
@@ -40,11 +40,7 @@
                             <option value="personalizado" @selected(old('zonas.'.$i.'.escenario')==='personalizado')>Personalizado</option>
                         </select>
                     </div>
-                    <div class="msim-escenarios-grid" data-escenario-tarjetas hidden></div>
                     <div class="sim-campo-nivel"><label class="form-label" for="sim-nivel-{{ $i }}">Intensidad del escenario</label><select id="sim-nivel-{{ $i }}" name="zonas[{{ $i }}][nivel]" class="form-select">@foreach(['bajo'=>'Baja','medio'=>'Media','alto'=>'Alta'] as $v=>$n)<option value="{{ $v }}" @selected(old('zonas.'.$i.'.nivel','medio')===$v)>{{ $n }}</option>@endforeach</select></div>
-                    <div class="msim-intensidad-selector" data-nivel-botones hidden>
-                        @foreach(['bajo'=>'Baja','medio'=>'Media','alto'=>'Alta'] as $v=>$n)<button class="msim-nivel" type="button" data-nivel="{{ $v }}" aria-pressed="false"><span class="msim-nivel-dot msim-nivel-dot--{{ $v }}" aria-hidden="true"></span>{{ $n }}</button>@endforeach
-                    </div>
                     <details class="sim-ajustes" @if(old('zonas.'.$i.'.escenario')==='personalizado') open @endif>
                         <summary>Ajustar valores</summary>
                         <p class="sim-ayuda">Opcional para los casos del catálogo; obligatorio si eliges Personalizado. Usa la unidad base de la variable.</p>
@@ -59,7 +55,7 @@
             <div class="msim-controls-row">
                 <div><label class="form-label" for="sim-inicio">Inicio · hora de Bolivia</label><input id="sim-inicio" type="datetime-local" name="inicio" class="form-control" required value="{{ old('inicio',now('America/La_Paz')->subDay()->format('Y-m-d\TH:i')) }}"></div>
                 <div><label class="form-label" for="sim-dias">Cantidad de días</label><input id="sim-dias" type="number" min="1" max="30" name="dias" class="form-control" required value="{{ old('dias',1) }}"></div>
-                <div><label class="form-label" for="sim-intervalo">Int. guardado</label><select id="sim-intervalo" name="intervalo" class="form-select">@foreach([15=>'15 minutos',30=>'30 minutos',60=>'Una hora',180=>'Tres horas',360=>'Seis horas',1440=>'Un día'] as $min=>$etiqueta)<option value="{{ $min }}" @selected((int)old('intervalo',60)===$min)>{{ $etiqueta }}</option>@endforeach</select></div>
+                <div><label class="form-label" for="sim-intervalo">Intervalo entre lecturas</label><select id="sim-intervalo" name="intervalo" class="form-select">@foreach([15=>'15 minutos',30=>'30 minutos',60=>'Una hora',180=>'Tres horas',360=>'Seis horas',1440=>'Un día'] as $min=>$etiqueta)<option value="{{ $min }}" @selected((int)old('intervalo',60)===$min)>{{ $etiqueta }}</option>@endforeach</select></div>
                 <div class="sim-semilla"><label class="form-label" for="sim-semilla">Código para repetir la prueba</label><input id="sim-semilla" name="semilla" class="form-control" maxlength="40" pattern="[a-zA-Z0-9_-]+" required value="{{ old('semilla','prueba-1') }}"></div>
             </div>
             <div class="msim-footer sim-enviar"><p>Las fechas futuras pertenecen al escenario. No se guardan como mediciones reales.</p><button class="sim-btn sim-btn--start" type="submit">Preparar simulación @include('simulaciones.icono', ['icono'=>'iniciar'])</button></div>

@@ -4,6 +4,7 @@ namespace App\Services\Seguimiento;
 
 use App\Services\FocosCalor\ConsultaFocos;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Cache;
 
 final class EvaluarZona
 {
@@ -22,7 +23,17 @@ final class EvaluarZona
         $total = 0;
         $altas = 0;
         $distanciaMinima = null;
-        $consulta = $this->focos->ejecutar($parametros);
+        $focoCercano = null;
+        // La caja es conservadora. La pertenencia al radio se decide por distancia.
+        $latitud = (float) $zona->latitud;
+        $longitud = (float) $zona->longitud;
+        $deltaLatitud = $zona->radio_km / 110;
+        $deltaLongitud = $zona->radio_km / (110 * cos(deg2rad(abs($latitud) + $deltaLatitud)));
+        $caja = [
+            $longitud - $deltaLongitud, $latitud - $deltaLatitud,
+            $longitud + $deltaLongitud, $latitud + $deltaLatitud,
+        ];
+        $consulta = $this->focos->ejecutar($parametros, $caja);
         $pagina = $consulta;
         do {
             foreach ($pagina['datos'] as $foco) {
@@ -31,7 +42,14 @@ final class EvaluarZona
                 if ($distancia <= $zona->radio_km) {
                     $total++;
                     $altas += (int) ($foco['atributos']['confianza'] === 'alta');
-                    $distanciaMinima = min($distanciaMinima ?? $distancia, $distancia);
+                    if ($distanciaMinima === null || $distancia < $distanciaMinima) {
+                        $distanciaMinima = $distancia;
+                        $focoCercano = [
+                            'latitud' => $latitud,
+                            'longitud' => $longitud,
+                            'observadoEn' => $foco['fechas']['observadoDesde'] ?? null,
+                        ];
+                    }
                 }
             }
             $siguiente = $pagina['paginacion']['siguiente'];
@@ -39,7 +57,7 @@ final class EvaluarZona
                 $pagina = $this->focos->ejecutar($parametros + [
                     'pagina' => $siguiente,
                     'versionConjunto' => $consulta['paginacion']['versionConjunto'],
-                ]);
+                ], $caja);
             }
         } while ($siguiente !== null);
 
@@ -57,12 +75,24 @@ final class EvaluarZona
             'confianzaAlta' => $cobertura === 'sin_cobertura' ? null : $altas,
             'distanciaKm' => $distanciaMinima === null ? null : round($distanciaMinima, 2),
             'cobertura' => $cobertura,
+            'focoCercano' => $focoCercano,
+            'consultadoEn' => CarbonImmutable::now('UTC')->toIso8601ZuluString(),
             'desde' => $parametros['desde'],
             'hasta' => $parametros['hasta'],
             'fuente' => $consulta['fuentes'][0]['proveedor'],
             'producto' => $consulta['fuentes'][0]['producto'],
             'fechaRecuperacion' => $consulta['consulta']['obtencion']['fechaRecuperacion'],
         ];
+    }
+
+    public function guardarVigilancia(object $zona, array $resultado): void
+    {
+        Cache::put('seguimiento:vigilancia:'.$zona->id, $resultado, now()->addHours(24));
+    }
+
+    public static function ultimaVigilancia(int $zona): ?array
+    {
+        return Cache::get('seguimiento:vigilancia:'.$zona);
     }
 
     private function distancia(object $zona, float $latitud, float $longitud): float

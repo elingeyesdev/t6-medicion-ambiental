@@ -3,7 +3,8 @@
 @section('clase-cuerpo', 'pagina-cobertura-forestal')
 @push('estilos')
 <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
-<link rel="stylesheet" href="{{ asset('css/mapas/forestal.css') }}">
+<link rel="stylesheet" href="{{ asset('css/mapas/centrar-seleccion.css') }}">
+<link rel="stylesheet" href="{{ asset('css/mapas/forestal.css') }}?v=linea-1">
 @endpush
 
 @section('contenido')
@@ -29,6 +30,12 @@
                 <button class="btn btn-outline-primary" id="forestal-centrar" type="button" disabled>Centrar Santa Cruz</button>
             </div>
         </div>
+        <div class="forestal-linea">
+            <label for="forestal-linea">Explorar por año</label>
+            <output id="forestal-anio-elegido" for="forestal-linea">{{ $capa['ultimo_anio'] }}</output>
+            <input type="range" id="forestal-linea" min="{{ $capa['primer_anio'] }}" max="{{ $capa['ultimo_anio'] }}" value="{{ $capa['ultimo_anio'] }}" disabled>
+            <p>El satélite publica la pérdida por año. Cada posición muestra las observaciones de ese año.</p>
+        </div>
         <div id="forestal-mapa" aria-label="Mapa de pérdida de cobertura arbórea en Santa Cruz"></div>
         <div class="card-body forestal-contexto">
             <p id="forestal-estado" role="status" aria-live="polite">Cargando los límites de Santa Cruz…</p>
@@ -42,5 +49,6 @@
 
 @push('scripts')
 <script src="{{ asset('vendor/leaflet/leaflet.js') }}" defer></script>
-<script type="module" src="{{ asset('js/mapas/forestal.js') }}"></script>
+<script src="{{ asset('js/mapas/centrar-seleccion.js') }}?v=2" defer></script>
+<script type="module" src="{{ asset('js/mapas/forestal.js') }}?v=linea-1"></script>
 @endpush
