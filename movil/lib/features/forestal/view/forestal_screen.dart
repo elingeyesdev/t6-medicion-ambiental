@@ -8,7 +8,12 @@ import '../../../core/maps/map_chrome.dart';
 import '../../../core/maps/map_completo_actions.dart';
 import '../../../core/network/geocruz_api_client.dart';
 
-typedef _Cell = ({int year, double area, List<LatLng> points});
+typedef _Cell = ({
+  String? identifier,
+  int year,
+  double area,
+  List<LatLng> points,
+});
 typedef _Result = ({
   String area,
   String version,
@@ -123,6 +128,11 @@ class _ForestalScreenState extends State<ForestalScreen> {
         }
         final coordinates = (geometry['coordinates'] as List).single as List;
         cells.add((
+          identifier:
+              feature['id'] is String &&
+                  (feature['id'] as String).trim().isNotEmpty
+              ? feature['id'] as String
+              : null,
           year: year,
           area: double.parse(properties['area_ha'].toString()),
           points: [
@@ -203,8 +213,86 @@ class _ForestalScreenState extends State<ForestalScreen> {
         ),
       ),
     );
-    if (mounted && picked != null) setState(() => _selected = picked);
+    if (mounted && picked != null) _selectCell(picked);
   }
+
+  void _selectCell(int index) {
+    final result = _result;
+    if (result == null || index < 0 || index >= result.cells.length) return;
+    setState(() => _selected = index);
+    _showCellDetails(index, result);
+  }
+
+  Future<void> _showCellDetails(int index, _Result result) {
+    final cell = result.cells[index];
+    final period = _from == _to ? '$_from' : '$_from–$_to';
+    return showModalBottomSheet<void>(
+      context: context,
+      useSafeArea: true,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (sheetContext) => SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Detalle · Polígono ${index + 1}',
+              style: Theme.of(sheetContext).textTheme.headlineSmall,
+            ),
+            const SizedBox(height: 4),
+            const Text('Piloto técnico de cobertura forestal'),
+            const Divider(height: 24),
+            _detailRow(
+              sheetContext,
+              'Identificador API',
+              cell.identifier ?? 'No disponible en el contrato actual',
+            ),
+            _detailRow(sheetContext, 'Territorio', 'Santa Rosa'),
+            _detailRow(sheetContext, 'Período consultado', period),
+            _detailRow(sheetContext, 'Año de pérdida', '${cell.year}'),
+            _detailRow(sheetContext, 'Superficie', _area(cell.area)),
+            _detailRow(
+              sheetContext,
+              'Fuente',
+              'Hansen Global Forest Change · ${result.version}',
+            ),
+            _detailRow(sheetContext, 'Tipo de dato', 'Piloto técnico'),
+            _detailRow(sheetContext, 'Unidad', 'hectáreas (ha)'),
+            _detailRow(sheetContext, 'Cobertura', result.coverage),
+            const SizedBox(height: 12),
+            const Text(
+              'Cobertura base 2000 · Umbral de copa ≥ 30 %. El resultado describe el recorte observado; la causa de la pérdida requiere verificación.',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _detailRow(BuildContext context, String label, String value) =>
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 132,
+              child: Text(label, style: Theme.of(context).textTheme.bodySmall),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: SelectableText(
+                value,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+              ),
+            ),
+          ],
+        ),
+      );
 
   Widget _yearInput(String label, int value, ValueChanged<int> update) {
     return InputDecorator(
@@ -533,7 +621,7 @@ class _ForestalScreenState extends State<ForestalScreen> {
         GestureDetector(
           onTap: () {
             final id = _hits.value?.hitValues.firstOrNull;
-            if (id != null) setState(() => _selected = id);
+            if (id != null) _selectCell(id);
           },
           child: PolygonLayer<int>(
             hitNotifier: _hits,
@@ -643,6 +731,8 @@ class _ForestalScreenState extends State<ForestalScreen> {
               subtitle: Text(
                 '${result.cells[selected].year} · ${_area(result.cells[selected].area)}',
               ),
+              trailing: const Icon(Icons.chevron_right_rounded),
+              onTap: () => _selectCell(selected),
             )
           else if (result.cells.isEmpty)
             const Padding(

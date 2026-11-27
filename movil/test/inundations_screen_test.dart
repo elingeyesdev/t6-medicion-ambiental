@@ -78,9 +78,7 @@ void main() {
         findsWidgets,
       );
 
-      await tester.tap(
-        find.byKey(const ValueKey('water-place-BO070101')).last,
-      );
+      await tester.tap(find.byKey(const ValueKey('water-place-BO070101')).last);
       await tester.pumpAndSettle();
       await tester.tap(find.text('Warnes').last);
       await tester.pumpAndSettle();
@@ -93,6 +91,73 @@ void main() {
         findsWidgets,
       );
       api.close();
+    },
+  );
+
+  testWidgets(
+    'MOV-08 abre desde la lista la ficha con identidad y procedencia completas',
+    (tester) async {
+      const productId =
+          'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+      final api = GeoCruzApiClient(
+        baseUrl: Uri.parse('https://ejemplo.invalid/api/v1/'),
+        client: MockClient((request) async {
+          if (request.url.path.endsWith('/catalogo')) {
+            return _json({
+              'versionContrato': 'agua-0.1-candidata',
+              'estado': 'disponible',
+              'productos': [
+                _product(
+                  id: productId,
+                  territoryId: 'BO070101',
+                  territoryName: 'Santa Cruz',
+                  referenceDate: '2025-12-06',
+                  comparisonDate: '2025-12-18',
+                ),
+              ],
+            });
+          }
+          return _json(
+            _result(
+              territoryId: 'BO070101',
+              territoryName: 'Santa Cruz',
+              referenceDate: '2025-12-06',
+              comparisonDate: '2025-12-18',
+              withFeature: true,
+            ),
+          );
+        }),
+      )..bearerToken = 'token-prueba';
+      addTearDown(api.close);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: InundationsScreen(
+            api: api,
+            repository: InundationsRepository(api),
+            onUnauthorized: () {},
+            showAppBar: false,
+          ),
+        ),
+      );
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
+
+      final listButton = find.text('Ver lista de zonas');
+      await tester.ensureVisible(listButton);
+      await tester.pump();
+      await tester.tap(listButton);
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('water-feature-zona-1')));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Detalle de zona de agua'), findsOneWidget);
+      expect(find.text('zona-1'), findsWidgets);
+      expect(find.text('Santa Cruz'), findsWidgets);
+      expect(find.text('06/12/2025 a 18/12/2025'), findsOneWidget);
+      expect(find.text('Prueba local · Resultado controlado'), findsOneWidget);
+      expect(find.text('Resultado validado'), findsOneWidget);
+      expect(find.text('km²'), findsOneWidget);
     },
   );
 }
@@ -125,6 +190,7 @@ Map<String, Object?> _result({
   required String territoryName,
   required String referenceDate,
   required String comparisonDate,
+  bool withFeature = false,
 }) => {
   'versionContrato': 'agua-0.1-candidata',
   'tipoEvidencia': 'resultado_validado',
@@ -152,6 +218,27 @@ Map<String, Object?> _result({
     'aguaRetiradaKm2': 0,
     'inundacionConfirmada': null,
   },
-  'capa': {'type': 'FeatureCollection', 'features': <Object?>[]},
+  'capa': {
+    'type': 'FeatureCollection',
+    'features': withFeature
+        ? <Object?>[
+            {
+              'id': 'zona-1',
+              'properties': {'clase': 'agua_persistente'},
+              'geometry': {
+                'type': 'Polygon',
+                'coordinates': [
+                  [
+                    [-63.20, -17.80],
+                    [-63.19, -17.80],
+                    [-63.19, -17.79],
+                    [-63.20, -17.80],
+                  ],
+                ],
+              },
+            },
+          ]
+        : <Object?>[],
+  },
   'advertencias': <String>[],
 };

@@ -201,9 +201,7 @@ class _HotspotsScreenState extends State<HotspotsScreen>
         final place = _controller.territoryName(
           record.territory['municipio']?.toString(),
         );
-        final observed = record.observedAt == null
-            ? 'Fecha no informada'
-            : '${BoliviaTime.dateTime(DateTime.tryParse(record.observedAt!) ?? response.queryFetchedAt)} · Bolivia';
+        final observed = _observedDate(record);
         final frp = record.radiantPower == null
             ? 'FRP sin dato'
             : 'FRP ${_formatNumber(record.radiantPower)} ${record.radiantPowerUnit ?? 'MW'}';
@@ -280,6 +278,43 @@ class _HotspotsScreenState extends State<HotspotsScreen>
         ),
       ),
     );
+  }
+
+  Future<void> _pickRecord(HotspotResponse response) async {
+    final picked = await showModalBottomSheet<HotspotRecord>(
+      context: context,
+      useSafeArea: true,
+      showDragHandle: true,
+      builder: (sheetContext) => SafeArea(
+        child: ListView.separated(
+          itemCount: response.records.length,
+          separatorBuilder: (_, _) => const Divider(height: 1),
+          itemBuilder: (context, index) {
+            final record = response.records[index];
+            final place = _controller.territoryName(
+              record.territory['municipio']?.toString(),
+            );
+            final observed = _observedDate(record);
+            return ListTile(
+              key: ValueKey('hotspot-record-${record.identifier}'),
+              leading: const Icon(Icons.local_fire_department_rounded),
+              title: Text(record.identifier),
+              subtitle: Text('$place · $observed'),
+              selected: record.identifier == _selectedRecord?.identifier,
+              onTap: () => Navigator.of(sheetContext).pop(record),
+            );
+          },
+        ),
+      ),
+    );
+    if (mounted && picked != null) _selectRecord(picked);
+  }
+
+  String _observedDate(HotspotRecord record) {
+    final date = DateTime.tryParse(record.observedAt ?? '');
+    return date == null
+        ? 'Fecha observada no informada'
+        : '${BoliviaTime.dateTime(date)} · Bolivia';
   }
 
   @override
@@ -768,6 +803,17 @@ class _HotspotsScreenState extends State<HotspotsScreen>
                 ),
               ),
             ],
+          ),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: response.records.isEmpty
+                  ? null
+                  : () => _pickRecord(response),
+              icon: const Icon(Icons.list_rounded),
+              label: const Text('Ver lista de detecciones'),
+            ),
           ),
         ],
       ),
