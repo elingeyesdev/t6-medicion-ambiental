@@ -287,7 +287,7 @@ class CapasPanelState extends State<CapasPanel> {
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
-          // Sin PageStorage: si no, recuerda “abierto” entre visitas al Mapa.
+          key: const PageStorageKey<String>('monitoring-environment-layers'),
           initiallyExpanded: initiallyExpanded,
           shape: const Border(),
           collapsedShape: const Border(),
