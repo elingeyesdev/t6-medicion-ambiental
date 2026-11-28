@@ -101,10 +101,10 @@ class ApiCuentasTest extends TestCase
         $this->conToken($tokenDestino)->patchJson('/api/v1/usuarios/'.$destino->id.'/rol', ['rol' => 'admin'])->assertForbidden();
         $admin = User::factory()->create(['rol' => RolCuenta::Administrador]);
         $token = $admin->createToken('Admin', ['cuenta'])->plainTextToken;
-        $this->conToken($token)->getJson('/api/v1/usuarios')->assertOk()->assertJsonCount(2, 'datos')
+        $this->conToken($token)->getJson('/api/v1/usuarios')->assertOk()->assertJsonCount(2, 'datos')->assertJsonCount(2, 'roles')
             ->assertJsonPath('datos.0.id', $destino->id)->assertJsonMissingPath('datos.0.password')->assertJsonMissingPath('datos.0.remember_token')
             ->assertJsonMissingPath('datos.0.sesion_version')->assertJsonMissingPath('datos.0.preferencias');
-        $this->conToken($token)->patchJson('/api/v1/usuarios/'.$destino->id.'/rol', ['rol' => 'analista'])->assertOk()->assertJsonPath('usuario.rol', 'analista');
+        $this->conToken($token)->patchJson('/api/v1/usuarios/'.$destino->id.'/rol', ['rol' => 'admin'])->assertOk()->assertJsonPath('usuario.rol', 'admin');
         $this->conToken($tokenDestino)->getJson('/api/v1/cuenta')->assertUnauthorized();
         $this->conToken($token)->patchJson('/api/v1/usuarios/'.$destino->id.'/estado', ['activo' => false])->assertOk()->assertJsonPath('usuario.activo', false);
         $this->conToken($token)->patchJson('/api/v1/usuarios/'.$admin->id.'/estado', ['activo' => false])->assertUnprocessable()->assertJsonPath('error.codigo', 'FILTROS_INVALIDOS');

@@ -26,7 +26,7 @@ class PerfilClaveTest extends TestCase
 
     public function test_cambiar_clave_revoca_tokens_enlaces_y_otras_sesiones_y_conserva_la_actual(): void
     {
-        $u = User::factory()->create(['rol' => 'analista']);
+        $u = User::factory()->create(['rol' => 'admin']);
         $otro = User::factory()->create();
         $u->createToken('Dispositivo', ['cuenta']);
         $token = Password::createToken($u);
@@ -34,7 +34,7 @@ class PerfilClaveTest extends TestCase
         $this->put('/cuenta/clave', $this->datos())->assertSessionHasNoErrors()->assertSessionHas('cuenta_version', 2);
         $u->refresh();
         $this->assertTrue(Hash::check('Una-clave-nueva-2026', $u->password));
-        $this->assertSame(RolCuenta::Analista, $u->rol);
+        $this->assertSame(RolCuenta::Administrador, $u->rol);
         $this->assertSame(0, $u->tokens()->count());
         $this->assertFalse(Password::tokenExists($u, $token));
         $this->assertTrue(Hash::check('password', $otro->fresh()->password));

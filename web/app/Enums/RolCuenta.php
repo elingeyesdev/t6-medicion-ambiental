@@ -5,13 +5,13 @@ namespace App\Enums;
 enum RolCuenta: string
 {
     case Administrador = 'admin';
-    case Analista = 'analista';
     case Visualizador = 'visualizador';
 
     public function nombre(): string
     {
         return match ($this) {
-            self::Administrador => 'Administrador', self::Analista => 'Analista', self::Visualizador => 'Visualizador',
+            self::Administrador => 'Administrador',
+            self::Visualizador => 'Visualizador',
         };
     }
 
@@ -19,7 +19,6 @@ enum RolCuenta: string
     {
         return match ($this) {
             self::Administrador => ['mapa.ver', 'reportes.ver', 'reportes.crear', 'simulaciones.gestionar', 'alertas.gestionar', 'usuarios.administrar', 'datos.consultar', 'datos.gestionar'],
-            self::Analista => ['mapa.ver', 'reportes.ver', 'reportes.crear', 'simulaciones.gestionar', 'alertas.gestionar', 'datos.consultar', 'datos.gestionar'],
             self::Visualizador => ['mapa.ver', 'reportes.ver', 'datos.consultar'],
         };
     }

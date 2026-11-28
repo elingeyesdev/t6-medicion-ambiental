@@ -13,11 +13,13 @@ class UsuariosController extends Controller
     public function index(Request $request)
     {
         $datos = $request->validate(['buscar' => ['nullable', 'string', 'max:100'], 'page' => ['sometimes', 'integer', 'min:1']]);
-        $usuarios = User::query()->when($datos['buscar'] ?? '', function ($query, $buscar): void {
+        $consulta = User::query()->when($datos['buscar'] ?? '', function ($query, $buscar): void {
             $query->where(fn ($q) => $q->where('name', 'like', '%'.$buscar.'%')->orWhere('email', 'like', '%'.$buscar.'%'));
-        })->orderBy('id')->paginate(15)->withQueryString();
+        });
+        $activas = (clone $consulta)->where('activo', true)->count();
+        $usuarios = $consulta->orderBy('id')->paginate(15)->withQueryString();
 
-        return view('cuentas.usuarios', ['usuarios' => $usuarios, 'roles' => RolCuenta::cases(),
+        return view('cuentas.usuarios', ['usuarios' => $usuarios, 'roles' => RolCuenta::cases(), 'activas' => $activas,
             'modulos' => array_filter(config('geocruz.modulos'), fn ($m) => $m['habilitado'])]);
     }
 

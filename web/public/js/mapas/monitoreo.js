@@ -134,6 +134,7 @@ function cerrarDetalle() {
 }
 
 function seleccionar(punto) {
+    mapa.recordarParaCentrar?.([punto.latitud, punto.longitud]);
     if (modoTiempo) { abrirTiempo(punto.latitud, punto.longitud, punto.nombre); return; }
     if (!respuestaActual) return;
     cerrarDetalle();
@@ -255,6 +256,7 @@ document.getElementById('quitar-comparacion').addEventListener('click', () => {
 });
 
 function abrirTiempo(latitud, longitud, nombre = 'Tiempo del lugar') {
+    mapa.recordarParaCentrar?.([latitud, longitud]);
     cerrarDetalle(); modoTiempo = false;
     botonTiempo.setAttribute('aria-pressed', 'false'); botonTiempo.textContent = 'Tiempo de un lugar';
     document.getElementById('mapa-monitoreo').classList.remove('elegir-tiempo');

@@ -86,6 +86,17 @@ async function iniciar() {
     consultar.disabled = false;
     encuadrar();
 
+    const linea = document.getElementById('forestal-linea');
+    const anioElegido = document.getElementById('forestal-anio-elegido');
+    linea.disabled = false;
+    linea.addEventListener('input', () => { anioElegido.value = linea.value; });
+    linea.addEventListener('change', () => {
+        desde.value = linea.value;
+        hasta.value = linea.value;
+        hasta.setCustomValidity('');
+        aplicar();
+    });
+
     let capa;
     function aplicar() {
         hasta.setCustomValidity(desde.valueAsNumber > hasta.valueAsNumber ? 'El año final debe ser igual o posterior al inicial.' : '');
@@ -95,6 +106,8 @@ async function iniciar() {
         }
         const inicio = desde.valueAsNumber;
         const fin = hasta.valueAsNumber;
+        linea.value = fin;
+        anioElegido.value = inicio === fin ? String(fin) : inicio + '–' + fin;
         const enlace = new URL(location.href);
         enlace.searchParams.set('desde', String(inicio));
         enlace.searchParams.set('hasta', String(fin));

@@ -6,12 +6,7 @@
 <div class="rep-contenido">
 <header class="rep-cabecera"><h1>Reportes <span>Ambientales</span></h1><p>Explora el historial de lecturas por localidad, visualiza tendencias y conserva tus reportes ambientales.</p></header>
 @include('cuentas.estado')
-<nav class="rep-pestanas" aria-label="Área de reportes">
-    <a href="{{ route('reportes', ['vista' => 'dashboard']) }}" @if($vista === 'dashboard') aria-current="page" @endif>Dashboard Global</a>
-    <a href="{{ route('reportes', ['vista' => 'atmosfera']) }}" @if($vista === 'atmosfera') aria-current="page" @endif>Pronóstico Atmosférico</a>
-    <a href="{{ route('reportes', ['vista' => 'historial']) }}" @if($vista === 'historial') aria-current="page" @endif>Historial y Simulaciones</a>
-    <a href="{{ route('plantillas') }}">Plantillas</a>
-</nav>
+@include('reportes.pestanas', ['vistaActiva' => $vista])
 @if($vista === 'dashboard')
     @include('reportes.dashboard')
 @elseif($vista === 'historial')
@@ -48,7 +43,9 @@
 </form></section>
 @endcan
 @if($vista === 'historial')
-@include('simulaciones.continua')
+    @can('simulaciones.gestionar')
+        <p class="mt-3"><a href="{{ route('simulaciones', ['seccion' => 'continua']) }}">Consultar la simulación en vivo</a></p>
+    @endcan
 @endif
 <section class="card mt-4" id="rep-historial"><div class="card-header rep-fila"><div><h2>Mis reportes</h2><p class="rep-subtitulo">{{ $reportes->total() }} reportes guardados · Hora de Bolivia</p></div><a href="{{ route('plantillas') }}" class="btn btn-outline-primary">Mis plantillas</a></div>
 <div class="table-responsive"><table class="table rep-tabla"><thead><tr><th scope="col">Reporte</th><th scope="col">Fecha / Hora</th><th scope="col">Descargas</th><th scope="col">Detalle</th></tr></thead><tbody>
@@ -57,4 +54,4 @@
 </tbody></table></div><div class="rep-paginacion">{{ $reportes->appends(['vista' => $vista])->links() }}</div></section>
 </div>
 @endsection
-@push('scripts')@if($vista === 'dashboard' && $reportes->first() && count($reportes->first()->contenido['filas']))<script id="datos-reporte" type="application/json">@json([...$reportes->first()->contenido['filas'],...($reportes->first()->contenido['faltantes'] ?? [])])</script><script type="module" src="{{ asset('js/reportes/grafico.js') }}"></script>@endif<script src="{{ asset('js/reportes/formulario.js') }}" defer></script><script type="module" src="{{ asset('js/simulaciones/continua.js') }}"></script>@endpush
+@push('scripts')@if($vista === 'dashboard' && $reportes->first() && count($reportes->first()->contenido['filas']))<script id="datos-reporte" type="application/json">@json([...$reportes->first()->contenido['filas'],...($reportes->first()->contenido['faltantes'] ?? [])])</script><script type="module" src="{{ asset('js/reportes/grafico.js') }}"></script>@endif<script src="{{ asset('js/reportes/formulario.js') }}" defer></script>@endpush

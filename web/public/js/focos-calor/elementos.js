@@ -29,9 +29,8 @@ export function crearContenidoFoco(foco, municipio) {
         const e = document.createElement(tipo); e.textContent = texto; e.className = clase; return e;
     };
     const confianza = ['alta', 'nominal', 'baja'].includes(foco.atributos.confianza) ? foco.atributos.confianza : 'desconocida';
-    const etiquetas = { alta: 'Alta', nominal: 'Nominal', baja: 'Baja', desconocida: 'Sin clasificar' };
-    const insignia = nodo('span', etiquetas[confianza], `confianza-foco confianza-${confianza}`);
-    insignia.title = `Confianza ${etiquetas[confianza].toLowerCase()}`;
+    const insignia = nodo('span', etiquetaConfianza(confianza), `confianza-foco confianza-${confianza}`);
+    insignia.title = `Confianza ${etiquetaConfianza(confianza).toLowerCase()}`;
     return [
         nodo('strong', nombreCortoMunicipio(municipio), 'municipio-foco'),
         nodo('span', fechaBolivia(foco.fechas.observadoDesde), 'fecha-foco'),
@@ -54,4 +53,8 @@ export function procedenciaFoco(foco, fuentes) {
         ['Potencia radiativa', potencia],
         ['Identificador', foco.identificador],
     ];
+}
+
+export function etiquetaConfianza(nivel) {
+    return ({ alta: 'Alta', nominal: 'Media', baja: 'Baja' })[nivel] ?? 'Sin clasificar';
 }

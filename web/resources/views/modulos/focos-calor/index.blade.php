@@ -4,8 +4,9 @@
 @push('estilos')
 <link rel="stylesheet" href="{{ asset('vendor/flatpickr/flatpickr.min.css') }}">
 <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
+<link rel="stylesheet" href="{{ asset('css/mapas/centrar-seleccion.css') }}">
 <link rel="stylesheet" href="{{ asset('css/modulos/focos-calor.css') }}">
-<link rel="stylesheet" href="{{ asset('css/modulos/mapa-monitoreo.css') }}">
+<link rel="stylesheet" href="{{ asset('css/modulos/mapa-monitoreo.css') }}?v=panel-focos-1">
 @endpush
 
 @section('contenido')
@@ -19,6 +20,11 @@
             </div>
         </details>
         @include('modulos.focos-calor.estado')
+    <details id="listado-detecciones" class="panel-listado" open hidden>
+        <summary class="encabezado-panel"><strong>Detecciones</strong><span id="conteo-pagina"></span></summary>
+        <div id="lista-focos" class="lista-focos"></div>
+        <div class="paginador"><button type="button" id="anterior" class="boton-suave">← Anterior</button><span id="pagina-actual"></span><button type="button" id="siguiente" class="boton-suave">Siguiente →</button></div>
+    </details>
     </div>
     @include('modulos.focos-calor.resultados')
     <noscript><p class="estado-consulta aviso-sin-js">Esta pantalla interactiva requiere JavaScript. Puedes consultar el <a href="{{ url('/api/v1/territorios') }}">catálogo en formato JSON</a>. No se muestran resultados ambientales sin ejecutar la consulta.</p></noscript>
@@ -27,7 +33,8 @@
 
 @push('scripts')
 <script src="{{ asset('vendor/leaflet/leaflet.js') }}" defer></script>
+<script src="{{ asset('js/mapas/centrar-seleccion.js') }}?v=2" defer></script>
 <script src="{{ asset('vendor/flatpickr/flatpickr.min.js') }}" defer></script>
 <script src="{{ asset('vendor/flatpickr/es.js') }}" defer></script>
-<script type="module" src="{{ asset('js/focos-calor/inicio.js') }}"></script>
+<script type="module" src="{{ asset('js/focos-calor/inicio.js') }}?v=confianza-1"></script>
 @endpush

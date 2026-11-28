@@ -31,6 +31,16 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(new ErroresConsultaMapa);
+        $exceptions->render(static function (HttpExceptionInterface $e, Request $request) {
+            if ($e->getStatusCode() !== 419 || ! $request->routeIs('acceso.entrar') || $request->expectsJson()) {
+                return null;
+            }
+
+            // Se rechaza el envío caducado y se muestra un formulario con un token nuevo.
+            return redirect()->route('login', status: 303)
+                ->withErrors(['email' => 'El formulario de acceso venció. Ingresa tus datos otra vez.'])
+                ->header('Cache-Control', 'no-store');
+        });
         $exceptions->render(static function (ErrorConsulta $e, Request $request) {
             if ($request->is('avisos/novedades', 'avisos/canales', 'avisos/push', 'cuenta/clave') && $request->expectsJson()) {
                 return response()->json(['mensaje' => $e->getMessage()], $e->estado)->header('Cache-Control', 'no-store');

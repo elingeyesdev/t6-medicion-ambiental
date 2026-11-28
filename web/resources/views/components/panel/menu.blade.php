@@ -10,14 +10,15 @@
             <x-panel.icono nombre="map" /><span>Mapa de Monitoreo</span>
         </a>
         @can('datos.consultar')
-            <a class="enviro-enlace {{ request()->routeIs('simulaciones*') ? 'activo' : '' }}" href="{{ route('simulaciones') }}" title="Simulaciones" @if(request()->routeIs('simulaciones*')) aria-current="page" @endif><x-panel.icono nombre="flask" /><span>Simulaciones</span></a>
+            @can('simulaciones.gestionar')
+                <a class="enviro-enlace {{ request()->routeIs('simulaciones*') ? 'activo' : '' }}" href="{{ route('simulaciones') }}" title="Simulaciones" @if(request()->routeIs('simulaciones*')) aria-current="page" @endif><x-panel.icono nombre="flask" /><span>Simulaciones</span></a>
+            @endcan
             <a class="enviro-enlace {{ request()->routeIs('sensores*') ? 'activo' : '' }}" href="{{ route('sensores') }}" title="Mediciones" @if(request()->routeIs('sensores*')) aria-current="page" @endif><x-panel.icono nombre="mediciones" /><span>Mediciones</span></a>
             <a class="enviro-enlace {{ request()->routeIs('alertas*', 'umbrales') ? 'activo' : '' }}" href="{{ route('alertas') }}" title="Alertas"><x-panel.icono nombre="bell" /><span>Alertas</span></a>
             <a class="enviro-enlace {{ request()->routeIs('avisos*') ? 'activo' : '' }}" href="{{ route('avisos') }}" title="Notificaciones"><x-panel.icono nombre="mail" /><span>Notificaciones</span></a>
         @endcan
         @can('reportes.ver')
-            <a class="enviro-enlace {{ request()->routeIs('reportes*') ? 'activo' : '' }}" href="{{ route('reportes') }}" title="Área de Reportes"><x-panel.icono nombre="report" /><span>Área de Reportes</span></a>
-            <a class="enviro-enlace {{ request()->routeIs('plantillas*') ? 'activo' : '' }}" href="{{ route('plantillas') }}" title="Plantillas"><x-panel.icono nombre="layout-dashboard" /><span>Plantillas</span></a>
+            <a class="enviro-enlace {{ request()->routeIs('reportes*', 'plantillas*') ? 'activo' : '' }}" href="{{ route('reportes') }}" title="Área de Reportes" @if(request()->routeIs('plantillas*')) aria-current="location" @elseif(request()->routeIs('reportes*')) aria-current="page" @endif><x-panel.icono nombre="report" /><span>Área de Reportes</span></a>
         @endcan
         <div class="enviro-seccion enviro-seccion-modulos">Análisis GeoSur</div>
         @if($aguaDisponible ?? false)
@@ -32,7 +33,6 @@
             @can('datos.consultar')
                 <a class="enviro-enlace {{ request()->routeIs('mapa.forestal') ? 'activo' : '' }}" href="{{ route('mapa.forestal') }}" title="Cobertura forestal" @if(request()->routeIs('mapa.forestal')) aria-current="page" @endif><x-publico.enviro-icono nombre="leaf" /><span>Cobertura forestal</span></a>
                 <a class="enviro-enlace {{ request()->routeIs('seguimiento.*') ? 'activo' : '' }}" href="{{ route('seguimiento.index') }}" title="Seguimiento territorial" @if(request()->routeIs('seguimiento.*')) aria-current="page" @endif><x-panel.icono nombre="map-pin" /><span>Seguimiento territorial</span></a>
-                <a class="enviro-enlace" href="{{ route('portal-incendios.index') }}" title="Avisos de incendio"><x-panel.icono nombre="bell" /><span>Avisos de incendio</span></a>
             @endcan
         @endcan
         <div class="enviro-seccion">Cuenta</div>

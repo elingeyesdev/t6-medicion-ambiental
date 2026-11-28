@@ -4,6 +4,7 @@
 @php($aguaActiva = request()->routeIs('revision.agua', 'mapa.agua'))
 @push('estilos')
 <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
+<link rel="stylesheet" href="{{ asset('css/mapas/centrar-seleccion.css') }}">
 <link rel="stylesheet" href="{{ asset('css/paginas/monitoreo.css') }}">
 @if($aguaActiva)<link rel="stylesheet" href="{{ asset('css/mapas/agua.css') }}">@endif
 @endpush
@@ -140,6 +141,7 @@
 @push('scripts')
 @include('cuentas.configuracion-unidades')
 <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
+<script src="{{ asset('js/mapas/centrar-seleccion.js') }}?v=2"></script>
 <script type="application/json" id="configuracion-monitoreo">@json($configuracionMonitoreo)</script>
 <script type="module" src="{{ asset('js/mapas/monitoreo.js') }}"></script>
 <script src="{{ asset('js/mapas/interfaz-original.js') }}" defer></script>

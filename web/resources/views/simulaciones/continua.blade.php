@@ -8,7 +8,7 @@
         <p class="mt-3" data-estado-texto role="status" aria-live="polite">Activa la capa para consultar la simulación.</p>
         <p data-resumen-continua role="status" aria-live="polite"></p>
         <p>Usa el país y la región elegidos. Consulta el mapa al cambiar de región. Los puntos naranjas «S» son simulados; su instante es independiente del historial.</p>
-        @can('simulaciones.gestionar')<a href="{{ route('simulaciones') }}">Abrir controles de simulación</a>@endcan
+        @can('simulaciones.gestionar')<a href="{{ route('simulaciones', ['seccion' => 'continua']) }}">Abrir controles de simulación</a>@endcan
     </div>
 </details>
 @else
@@ -42,10 +42,10 @@
         </form>
         @endcan
     </div>
-    <section class="sim-units-card" aria-labelledby="sim-unidades-titulo">
-        <div class="sim-units-header"><h3 class="sim-eyebrow" id="sim-unidades-titulo">Unidades de medida</h3><p>Los cambios aplican en todo el panel y el mapa.</p></div>
+    <details class="sim-units-card"><summary id="sim-unidades-titulo">Unidades de medida</summary>
+        <div class="sim-units-header"><p>Los cambios aplican en todo el panel y el mapa.</p></div>
         @include('cuentas.unidades')
-    </section>
+    </details>
     <div class="sim-summary-grid" aria-label="Promedios de la simulación continua">
         @foreach(['aqi'=>'Calidad del aire','ica'=>'Calidad del agua','ruido'=>'Nivel de ruido','temperatura'=>'Temperatura','humedad'=>'Humedad'] as $k=>$nombre)
             <article class="sim-summary-card" data-promedio="{{ $k }}" data-unidad="{{ $metricas[$k]['unidad'] }}">
@@ -60,6 +60,7 @@
         <p class="sim-footer-note">Tabla en unidades base · Los cambios permanecen en esta simulación. Puedes guardar un corte desde Reportes.</p>
     </section>
     @can('simulaciones.gestionar')
+    <details class="sim-opciones"><summary>Ajustar un valor manualmente</summary>
     <form data-inyectar class="inject-card" method="post" action="{{ url('/simulacion-continua/accion') }}" hidden>@csrf
         <div class="inject-card-header"><h3 class="inject-title">Inyección <em>manual</em> de datos</h3><p>Aplica un valor a una localidad del recorrido activo o pausado.</p></div>
         <div class="sim-formulario inject-form">
@@ -69,6 +70,7 @@
             <div class="sim-enviar"><button class="sim-btn sim-btn--start" type="submit">Aplicar valor simulado</button><button class="sim-btn sim-btn--secondary" type="reset">Limpiar valor</button></div>
         </div>
     </form>
+    </details>
     @endcan
     <noscript><p class="sim-aviso">Activa JavaScript para consultar y controlar el recorrido continuo. Puedes preparar escenarios con el formulario inferior.</p></noscript>
 </section>

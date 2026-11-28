@@ -10,7 +10,10 @@ function escenarios(inicial=false) {
         if([...select.options].some(o=>o.value===elegido)) select.value=elegido;
     }
 }
-escenarios(true);metrica.addEventListener('change',()=>escenarios());
+if (metrica) {
+    escenarios(true);
+    metrica.addEventListener('change', () => escenarios());
+}
 
 const datos=JSON.parse(document.getElementById('reproduccion-simulacion').textContent);
 if(datos) iniciar(datos);
@@ -19,7 +22,8 @@ function iniciar(config) {
     let sesion=config.sesion;
     let posicion=sesion.posicion;
     let reloj=null;
-    let ocupado=false;
+    let actualizacion = null;
+    let guardando = false;
     const estado=document.getElementById('sim-estado');
     const barra=document.getElementById('sim-tiempo');
     const L=window.L;
@@ -60,26 +64,35 @@ function iniciar(config) {
     }
     function parar(){clearInterval(reloj);reloj=null;}
     async function sincronizar() {
-        if(ocupado || document.hidden) return;
-        ocupado=true;
+        if (guardando || actualizacion || document.hidden) return;
+        const consulta = new AbortController();
+        actualizacion = consulta;
         try {
-            const r=await fetch(config.estado,{headers:{Accept:'application/json'},credentials:'same-origin'});
+            const r=await fetch(config.estado,{headers:{Accept:'application/json'},credentials:'same-origin',signal:consulta.signal});
             if(!r.ok) throw new Error('No se pudo actualizar la simulación.');
-            sesion=await r.json();posicion=sesion.posicion;estado.textContent=sesion.estado;mostrar();
-        } catch(e) {estado.textContent='No se pudo actualizar la simulación. Se volverá a intentar.';}
-        finally {ocupado=false;}
+            const respuesta = await r.json();
+            if (consulta.signal.aborted) return;
+            sesion=respuesta;posicion=sesion.posicion;estado.textContent=sesion.estado;mostrar();
+        } catch (e) {
+            if (!consulta.signal.aborted) estado.textContent='No se pudo actualizar la simulación. Se volverá a intentar.';
+        } finally {
+            if (actualizacion === consulta) actualizacion = null;
+        }
     }
     async function accion(tipo) {
-        if(ocupado) return;
-        ocupado=true;parar();
+        if (guardando) return;
+        guardando = true;
+        actualizacion?.abort();
+        actualizacion = null;
+        parar();
         try {
             const r=await fetch(config.accion,{method:'POST',headers:{Accept:'application/json','Content-Type':'application/json','X-CSRF-TOKEN':document.querySelector('input[name="_token"]').value},body:JSON.stringify({accion:tipo,revision:sesion.revision,posicion}),credentials:'same-origin'});
             const cuerpo=await r.json();
-            if(r.status===409) {ocupado=false;await sincronizar();return;}
+            if(r.status===409) {guardando=false;await sincronizar();return;}
             if(!r.ok) throw new Error(cuerpo.error?.mensaje??'No se pudo guardar el cambio. Vuelve a abrir la simulación.');
             sesion=cuerpo;posicion=sesion.posicion;estado.textContent=sesion.estado;mostrar();
         } catch(e){estado.textContent=e instanceof TypeError||e instanceof SyntaxError?'No se pudo conectar. Vuelve a abrir la simulación.':e.message;}
-        finally{ocupado=false;}
+        finally{guardando=false;}
     }
     for(const boton of document.querySelectorAll('.sim-resultado button[data-accion]')) boton.addEventListener('click',()=>accion(boton.dataset.accion));
     barra.addEventListener('input',()=>{parar();posicion=Number(barra.value);mostrar();});

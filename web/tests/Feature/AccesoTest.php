@@ -183,7 +183,8 @@ class AccesoTest extends TestCase
         $this->get('/login')->assertOk();
         $token = session()->token();
         $credenciales = ['email' => 'equipo@example.test', 'password' => 'password'];
-        $this->post('/login', $credenciales)->assertStatus(419);
+        $this->post('/login', $credenciales)->assertStatus(303)->assertRedirect('/login')->assertSessionHasErrors('email');
+        $this->postJson('/login', $credenciales)->assertStatus(419);
         $this->assertGuest();
         $this->post('/login', [...$credenciales, '_token' => $token])->assertRedirect('/mapa');
         $this->assertAuthenticated();

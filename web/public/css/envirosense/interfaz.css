@@ -45,3 +45,90 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 .sq-boton { background:#5bc0be; border-color:#5bc0be; color:#0b132b; }
 .sq-enlace,.sq-texto { color:var(--enviro-texto); }
 @media(max-width:767.98px) { :root,.menu-contraido { --enviro-ancho:0px; } .enviro-ruta { font-size:16px; } }
+
+/* Navegación del panel con la paleta de GeoSur. */
+.enviro-lateral {
+    --lateral-fondo: #263e33;
+    --lateral-borde: #4a6255;
+    --lateral-texto: #f4f3e9;
+    --lateral-secundario: #c5d5ca;
+    --lateral-hover: #345145;
+    --lateral-activo: #deeadc;
+    --lateral-texto-activo: #203c2e;
+    --lateral-acento: #bd8b57;
+    background: var(--lateral-fondo);
+    border-right-color: var(--lateral-borde);
+}
+
+[data-bs-theme="dark"] .enviro-lateral {
+    --lateral-fondo: #1b2e26;
+    --lateral-borde: #3c5548;
+    --lateral-hover: #2b493b;
+    --lateral-activo: #385a47;
+    --lateral-texto-activo: #f5f5eb;
+}
+
+.enviro-lateral .enviro-marca,
+.enviro-lateral .enviro-marca:hover {
+    background: #1b3228;
+    color: var(--lateral-texto);
+}
+
+.enviro-lateral .marca-geocruz {
+    color: var(--lateral-texto);
+}
+
+.enviro-lateral .enviro-navegacion {
+    border-color: var(--lateral-borde);
+    scrollbar-color: #728e7e var(--lateral-fondo);
+    scrollbar-width: thin;
+}
+
+.enviro-lateral .enviro-seccion {
+    color: var(--lateral-secundario);
+    font-size: .8125rem;
+    font-weight: 700;
+    letter-spacing: .035em;
+}
+
+.enviro-lateral .enviro-seccion-modulos,
+.enviro-lateral .enviro-territorio {
+    border-color: var(--lateral-borde);
+}
+
+.enviro-lateral .enviro-enlace {
+    color: var(--lateral-texto);
+    border-radius: 7px;
+}
+
+.enviro-lateral .enviro-enlace:not(.activo):hover {
+    background: var(--lateral-hover);
+    color: var(--lateral-texto);
+}
+
+.enviro-lateral .enviro-enlace.activo {
+    background: var(--lateral-activo);
+    color: var(--lateral-texto-activo);
+    box-shadow: inset 3px 0 var(--lateral-acento);
+}
+
+.enviro-lateral .enviro-territorio {
+    background: #1b3228;
+    color: var(--lateral-secundario);
+    line-height: 1.3;
+}
+
+.enviro-lateral .enviro-territorio small {
+    font-size: .81em;
+}
+
+.enviro-lateral .enviro-contraer {
+    background: var(--lateral-activo);
+    border-color: var(--lateral-borde);
+    color: var(--lateral-texto-activo);
+}
+
+.enviro-lateral :focus-visible {
+    outline: 2px solid #e6b783;
+    outline-offset: 2px;
+}

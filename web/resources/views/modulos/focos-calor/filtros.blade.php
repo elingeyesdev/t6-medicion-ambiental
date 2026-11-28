@@ -6,7 +6,7 @@
                 <div class="rejilla-filtros">
                     <label>Provincia<select class="form-select" name="provincia" id="provincia"><option value="">Todo Santa Cruz</option></select></label>
                     <label>Municipio<select class="form-select" name="municipio" id="municipio"><option value="">Todos los municipios</option></select></label>
-                    <label>Confianza<select class="form-select" name="confianza" id="confianza"><option value="">Todas</option><option value="alta">Alta</option><option value="nominal">Nominal</option><option value="baja">Baja</option><option value="desconocida">Desconocida</option></select></label>
+                    <label>Confianza<select class="form-select" name="confianza" id="confianza"><option value="">Todas</option><option value="alta">Alta</option><option value="nominal">Media</option><option value="baja">Baja</option><option value="desconocida">Sin clasificar</option></select></label>
                     <div class="periodo-rapido" role="group" aria-label="Elegir un período reciente"><button type="button" class="btn boton-suave" data-periodo-dias="1">Últimas 24 horas</button><button type="button" class="btn boton-suave" data-periodo-dias="7">Últimos 7 días</button></div>
                     <label>Desde<input class="form-control" type="datetime-local" id="desde" name="desde" required step="1" aria-describedby="ayuda-fechas"></label>
                     <label>Hasta<input class="form-control" type="datetime-local" id="hasta" name="hasta" required step="1" aria-describedby="ayuda-fechas"></label>

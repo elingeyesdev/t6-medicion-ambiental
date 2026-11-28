@@ -1,0 +1,221 @@
+.login-page {
+    display: grid;
+    grid-template-columns: minmax(0, 1.14fr) minmax(370px, 1fr);
+    min-height: 100vh;
+    min-height: 100svh;
+    background: #e6eae1;
+}
+
+.login-landscape {
+    position: relative;
+    isolation: isolate;
+    margin: 0;
+    --fundido-foto: 1.55s;
+    --fundido-credito: .55s;
+    background: #243a2d;
+    color: #fffdf4;
+}
+
+.login-landscape > img, .login-landscape::after {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.login-landscape > img {
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+}
+.login-landscape > .foto-anterior { opacity: 1; }
+.login-landscape > .foto-activa {
+    z-index: 1;
+    opacity: 1;
+    transition: opacity var(--fundido-foto) ease-in-out;
+}
+.login-landscape::after {
+    content: "";
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(0deg, #0e1d16f5, #10221a90 22%, transparent 57%);
+}
+
+.login-landscape figcaption {
+    position: absolute;
+    z-index: 3;
+    inset: auto 0 0;
+    display: grid;
+    align-items: end;
+    padding: clamp(1.35rem, 4vw, 4.5rem);
+    pointer-events: none;
+}
+.login-photo-caption {
+    grid-area: 1 / 1;
+    display: grid;
+    gap: .28rem;
+    justify-items: start;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--fundido-credito) ease-in;
+}
+.login-photo-caption[inert] {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--fundido-credito) ease-out,
+        visibility 0s linear var(--fundido-credito);
+}
+
+.login-landscape strong {
+    font-family: Georgia, serif;
+    font-size: clamp(1.65rem, 3.3vw, 3.4rem);
+    letter-spacing: -.04em;
+    line-height: 1.08;
+    font-weight: 400;
+    text-wrap: balance;
+}
+.login-landscape small { margin-top: .45rem; color: #e0e8db; font-size: .75rem; }
+.login-landscape a { color: inherit; text-decoration: underline; text-underline-offset: 2px; pointer-events: auto; }
+
+.login-form-col {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    align-items: center;
+    padding: clamp(1.25rem, 3.8vw, 4.25rem);
+    color: #20352c;
+    background:
+        radial-gradient(ellipse at 95% 105%, #bacabc88, transparent 60%),
+        repeating-radial-gradient(ellipse at 108% -12%, transparent 0 18px, #627c6712 19px 20px, transparent 21px 39px),
+        #e8ece3;
+}
+
+.login-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .6rem 1rem;
+}
+.login-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    color: #233b30;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -.045em;
+}
+.login-brand img { display: block; }
+.login-return {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .5rem .7rem;
+    border: 1px solid #b9c7b8;
+    border-radius: .5rem;
+    background: #f6f7f0b0;
+    color: #334f40;
+    font-size: .83rem;
+}
+.login-return:hover { background: #fffdf6; color: #20352c; }
+.login-return .enviro-icon { width: 14px; height: 14px; transform: rotate(180deg); }
+
+.login-form-wrap {
+    width: min(100%, 460px);
+    margin: 2rem auto;
+    padding: clamp(1.35rem, 3.1vw, 3rem);
+    border: 1px solid #bdc8b8;
+    border-top: 3px solid #51745c;
+    border-radius: 1.1rem;
+    background: #fffcf4;
+    box-shadow: 0 18px 38px -16px #243c3450;
+}
+
+.pagina-publica .login-page .auth-heading {
+    margin: 0 0 .6rem;
+    color: #20352c;
+    font-family: Georgia, serif;
+    font-size: clamp(2.2rem, 3.5vw, 3.4rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -.055em;
+}
+.pagina-publica .login-page .auth-subheading {
+    margin-bottom: 1.6rem;
+    color: #51625a;
+    font-size: .95rem;
+    line-height: 1.5;
+}
+.login-page .auth-form { gap: 1.05rem; }
+.login-page .auth-field { gap: .42rem; }
+.login-page .auth-field label {
+    color: #304a40;
+    font-size: .88rem;
+    line-height: 1.25;
+    letter-spacing: 0;
+    text-transform: none;
+}
+.login-page .auth-field input {
+    min-height: 48px;
+    border-color: #b9c5b8;
+    border-radius: .52rem;
+    background: #f5f7ef;
+    color: #20352c;
+    font-size: 1rem;
+    letter-spacing: 0;
+}
+.login-page .auth-field input:autofill {
+    box-shadow: 0 0 0 100px #edf2e8 inset;
+}
+.login-page .auth-field input.is-invalid {
+    border-color: #b42318;
+    background: #fcebe6;
+}
+.login-page .auth-btn {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    min-height: 50px;
+    padding-inline: 1rem;
+    background: #254639;
+    font-size: .96rem;
+}
+.login-page .auth-btn::before { content: ""; }
+.login-page .auth-btn:hover:not(:disabled) { background: #18382b; }
+.login-page .auth-btn .enviro-icon { justify-self: end; width: 18px; height: 18px; }
+.pagina-publica .login-page .auth-footer-text {
+    margin: 1.2rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid #d8dfd2;
+    color: #475b4e;
+    font-size: .86rem;
+}
+.login-page a:focus-visible, .login-page button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+}
+
+@media (max-width: 740px) {
+    .login-page { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+    .login-landscape { min-height: clamp(155px, 32vw, 225px); }
+    .login-landscape figcaption { padding: .9rem 1.2rem; }
+    .login-form-col { align-items: start; padding-inline: clamp(.9rem, 4vw, 1.65rem); }
+    .login-form-wrap { margin-block: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .login-landscape {
+        --fundido-foto: .6s;
+        --fundido-credito: .3s;
+    }
+
+    /* El estilo público desactiva transiciones. Aquí solo cambia la opacidad. */
+    .pagina-publica .login-landscape > .foto-activa {
+        transition: opacity var(--fundido-foto) ease-in-out !important;
+    }
+    .pagina-publica .login-landscape .login-photo-caption {
+        transition: opacity var(--fundido-credito) ease-in !important;
+    }
+    .pagina-publica .login-landscape .login-photo-caption[inert] {
+        transition: opacity var(--fundido-credito) ease-out,
+            visibility 0s linear var(--fundido-credito) !important;
+    }
+}

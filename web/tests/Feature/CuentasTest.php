@@ -25,8 +25,9 @@ class CuentasTest extends TestCase
         $this->assertFalse(Gate::forUser($usuario)->allows('usuarios.administrar'));
     }
 
-    public function test_los_tres_roles_conservan_los_permisos_del_original(): void
+    public function test_los_dos_roles_tienen_los_permisos_esperados(): void
     {
+        $this->assertCount(2, RolCuenta::cases());
         foreach (RolCuenta::cases() as $rol) {
             $usuario = User::factory()->create(['rol' => $rol]);
             $this->assertTrue(Gate::forUser($usuario)->allows('mapa.ver'));
@@ -37,16 +38,14 @@ class CuentasTest extends TestCase
         }
     }
 
-    public function test_un_visualizador_o_analista_no_puede_administrar_ni_con_peticion_directa(): void
+    public function test_un_visualizador_no_puede_administrar_ni_con_peticion_directa(): void
     {
         $destino = User::factory()->create();
-        foreach ([RolCuenta::Visualizador, RolCuenta::Analista] as $rol) {
-            $this->actingAs(User::factory()->create(['rol' => $rol]));
-            $this->get('/cuenta')->assertOk()->assertSee('Mi cuenta')->assertDontSee('href="'.route('usuarios').'"', false);
-            $this->get('/usuarios')->assertForbidden();
-            $this->patch('/usuarios/'.$destino->id.'/rol', ['rol' => 'admin'])->assertForbidden();
-            $this->patch('/usuarios/'.$destino->id.'/estado', ['activo' => false])->assertForbidden();
-        }
+        $this->actingAs(User::factory()->create(['rol' => RolCuenta::Visualizador]));
+        $this->get('/cuenta')->assertOk()->assertSee('Mi cuenta')->assertDontSee('href="'.route('usuarios').'"', false);
+        $this->get('/usuarios')->assertForbidden();
+        $this->patch('/usuarios/'.$destino->id.'/rol', ['rol' => 'admin'])->assertForbidden();
+        $this->patch('/usuarios/'.$destino->id.'/estado', ['activo' => false])->assertForbidden();
         $this->assertTrue($destino->fresh()->activo);
         $this->assertSame(RolCuenta::Visualizador, $destino->fresh()->rol);
     }
@@ -54,12 +53,12 @@ class CuentasTest extends TestCase
     public function test_un_administrador_puede_buscar_y_cambiar_otra_cuenta_con_sesion_revocada(): void
     {
         $admin = User::factory()->create(['rol' => RolCuenta::Administrador]);
-        $destino = User::factory()->create(['name' => 'Analista de prueba']);
+        $destino = User::factory()->create(['name' => 'Cuenta de prueba']);
         $destino->createToken('Prueba', ['cuenta']);
-        $this->actingAs($admin)->get('/usuarios?buscar=Analista')->assertOk()->assertSee('Analista de prueba')->assertDontSee($admin->email);
-        $this->patch('/usuarios/'.$destino->id.'/rol', ['rol' => 'analista'])->assertRedirect()->assertSessionHasNoErrors();
+        $this->actingAs($admin)->get('/usuarios?buscar=Cuenta')->assertOk()->assertSee('Cuenta de prueba')->assertDontSee($admin->email);
+        $this->patch('/usuarios/'.$destino->id.'/rol', ['rol' => 'admin'])->assertRedirect()->assertSessionHasNoErrors();
         $destino->refresh();
-        $this->assertSame(RolCuenta::Analista, $destino->rol);
+        $this->assertSame(RolCuenta::Administrador, $destino->rol);
         $this->assertSame(2, $destino->sesion_version);
         $this->assertSame(0, $destino->tokens()->count());
         $this->patch('/usuarios/'.$destino->id.'/estado', ['activo' => '0'])->assertRedirect()->assertSessionHasNoErrors();
@@ -82,7 +81,7 @@ class CuentasTest extends TestCase
         $admin = User::factory()->create(['rol' => RolCuenta::Administrador]);
         $destino = User::factory()->create();
         $destino->createToken('Prueba', ['cuenta']);
-        $this->actingAs($admin)->patch('/usuarios/'.$destino->id.'/rol', ['rol' => 'superadmin'])->assertSessionHasErrors('rol');
+        $this->actingAs($admin)->patch('/usuarios/'.$destino->id.'/rol', ['rol' => 'analista'])->assertSessionHasErrors('rol');
         $this->patch('/usuarios/'.$destino->id.'/estado', ['activo' => 'cualquier cosa'])->assertSessionHasErrors('activo');
         app(AdministrarCuenta::class)->cambiar($admin, $destino, RolCuenta::Visualizador, true);
         $this->assertSame(1, $destino->fresh()->sesion_version);

@@ -4,10 +4,9 @@
 @section('contenido')
 <div class="rep-contenido">
     <header class="rep-cabecera"><h1>Plantillas de <span>Reportes</span></h1><p>Guarda tus filtros, columnas y gráficos para reutilizarlos en tus consultas.</p></header>
-    <nav class="rep-pestanas" aria-label="Área de reportes"><a href="{{ route('reportes') }}">Dashboard Global</a><a href="{{ route('reportes', ['vista' => 'historial']) }}">Historial y Simulaciones</a><a href="{{ route('plantillas') }}" aria-current="page">Plantillas</a></nav>
+    @include('reportes.pestanas', ['vistaActiva' => 'plantillas'])
     @include('cuentas.estado')
     <div class="rep-acciones">
-        <a class="btn btn-outline-primary" href="{{ route('reportes') }}">Reportes</a>
         <a class="btn btn-outline-primary" href="{{ route('plantillas', ['archivadas' => $archivadas ? 0 : 1]) }}">{{ $archivadas ? 'Ver activas' : 'Ver archivadas' }}</a>
     </div>
     @can('reportes.crear')

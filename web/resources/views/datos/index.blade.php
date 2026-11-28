@@ -4,6 +4,7 @@
 
 @push('estilos')
 <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
+<link rel="stylesheet" href="{{ asset('css/mapas/centrar-seleccion.css') }}">
 <link rel="stylesheet" href="{{ asset('css/paginas/datos.css') }}">
 @endpush
 
@@ -27,6 +28,7 @@
 @push('scripts')
 @include('cuentas.configuracion-unidades')
 <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
+<script src="{{ asset('js/mapas/centrar-seleccion.js') }}?v=2"></script>
 <script type="application/json" id="datos-mediciones">@json($datosMapa)</script>
 <script type="module" src="{{ asset('js/datos/mediciones.js') }}"></script>
 @endpush

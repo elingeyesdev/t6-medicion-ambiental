@@ -1,0 +1,133 @@
+/* Paleta del área de trabajo de GeoSur. */
+.enviro-layout {
+    --geosur-lienzo: #e3ebe2;
+    --geosur-campo: #f2eee2;
+    --geosur-encabezado: #244438;
+    --geosur-encabezado-texto: #fff8e9;
+    --geosur-encabezado-secundario: #e3ece1;
+    --geosur-tierra: #c99862;
+    --enviro-panel: #faf6eb;
+    --enviro-fondo: #e8eee5;
+    --enviro-texto: #22382f;
+    --enviro-secundario: #455c50;
+    --enviro-borde: #c1cebf;
+    --enviro-acento: #32624e;
+    --enviro-accion: #32624e;
+    --enviro-suave: #d8e6d8;
+    --tblr-body-bg: var(--geosur-lienzo);
+    --tblr-body-color: var(--enviro-texto);
+    --tblr-bg-surface: var(--enviro-panel);
+    --tblr-bg-surface-secondary: var(--enviro-fondo);
+    --tblr-border-color: var(--enviro-borde);
+    --tblr-secondary-color: var(--enviro-secundario);
+    --tblr-link-color: var(--enviro-acento);
+    --tblr-link-color-rgb: 50, 98, 78;
+    --tblr-primary: var(--enviro-acento);
+    --tblr-primary-rgb: 50, 98, 78;
+    color: var(--enviro-texto);
+    background: var(--geosur-lienzo);
+}
+
+[data-bs-theme="dark"] .enviro-layout {
+    --geosur-lienzo: #182721;
+    --geosur-campo: #21342c;
+    --geosur-encabezado: #2a493c;
+    --geosur-encabezado-texto: #f8f4e6;
+    --geosur-encabezado-secundario: #deeadf;
+    --geosur-tierra: #d5a777;
+    --enviro-panel: #253b32;
+    --enviro-fondo: #20332b;
+    --enviro-texto: #f0f2e9;
+    --enviro-secundario: #c3d4c9;
+    --enviro-borde: #506b5c;
+    --enviro-acento: #a4cfb5;
+    --enviro-accion: #a4cfb5;
+    --enviro-suave: #304b3d;
+    --tblr-link-color-rgb: 164, 207, 181;
+    --tblr-primary-rgb: 164, 207, 181;
+}
+
+.enviro-principal {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+.enviro-principal > .contenido-panel { flex: 1 0 auto; }
+.enviro-cabecera { flex-shrink: 0; background: var(--enviro-suave); }
+.enviro-pie { color: var(--enviro-secundario); background: var(--enviro-fondo); }
+.enviro-avatar { color: var(--enviro-panel); }
+.enviro-layout .card {
+    --tblr-card-bg: var(--enviro-panel);
+    --tblr-card-color: var(--enviro-texto);
+    --tblr-card-cap-bg: var(--enviro-suave);
+}
+
+.enviro-layout .btn-primary {
+    --tblr-btn-disabled-bg: var(--enviro-acento);
+    --tblr-btn-disabled-border-color: var(--enviro-acento);
+    --tblr-btn-disabled-color: var(--enviro-panel);
+    color: var(--enviro-panel);
+    background: var(--enviro-acento);
+    border-color: var(--enviro-acento);
+}
+
+.enviro-layout .btn-primary:hover:not(:disabled),
+.enviro-layout .btn-primary:focus-visible {
+    color: var(--enviro-panel);
+    background: var(--enviro-texto);
+    border-color: var(--enviro-texto);
+}
+
+.contenido-panel :is(.form-control, .form-select) {
+    color: var(--enviro-texto);
+    background-color: var(--geosur-campo);
+    border-color: var(--enviro-borde);
+}
+
+.enviro-layout :is(a, button, input, select, summary):focus-visible {
+    outline-color: var(--enviro-acento);
+}
+
+.contenido-panel :is(.sim-workspace, .datos-contenido > h1, .alertas-cabecera, .rep-cabecera) {
+    padding: clamp(1.25rem, 3vw, 2.2rem);
+    border: 1px solid var(--geosur-encabezado);
+    border-inline-start: 4px solid var(--geosur-tierra);
+    border-radius: .85rem;
+    color: var(--geosur-encabezado-texto);
+    background: var(--geosur-encabezado);
+}
+
+.contenido-panel :is(.sim-workspace, .alertas-cabecera, .rep-cabecera) p {
+    color: var(--geosur-encabezado-secundario);
+}
+
+.contenido-panel :is(.sim-workspace, .alertas-cabecera, .rep-cabecera) h1,
+.contenido-panel :is(.alertas-cabecera, .rep-cabecera) h1 span {
+    color: var(--geosur-encabezado-texto);
+}
+.contenido-panel .alertas-cabecera .alertas-etiqueta { border-color: var(--geosur-tierra); }
+.contenido-panel .rep-cabecera { margin-bottom: 1.5rem; }
+.contenido-panel :is(.rep-contenido, .alertas-contenido) .card-header { background: var(--enviro-suave); }
+
+.enviro-layout .sim-contenido {
+    --enviro-acento: var(--enviro-accion);
+    --sim-azul: var(--enviro-accion);
+    --sim-suave: var(--enviro-suave);
+}
+
+.sim-contenido .sim-btn--start,
+.sim-contenido .sim-btn:hover:not(:disabled) {
+    color: var(--enviro-panel);
+}
+
+.sim-contenido .sim-workspace-nav [aria-current] {
+    background: var(--enviro-suave);
+    border-radius: .5rem .5rem 0 0;
+}
+
+.sim-contenido .sim-workspace-nav > * { padding-inline: .65rem; }
+
+.sim-contenido :is(.msim-box-header, .msim-zone-selector) {
+    background: var(--enviro-suave);
+}

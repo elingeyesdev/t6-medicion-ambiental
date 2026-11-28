@@ -1,7 +1,7 @@
 import { recordarTerritorio, territorioAnterior } from '../panel/contexto-ambiental.js';
 import { aLocal, filtrosDelFormulario, solicitarJson, validarInstanteUrl } from './contrato.js';
 import { ConsultaFocosWeb } from './consulta.js';
-import { VistaFocos } from './vista.js';
+import { VistaFocos } from './vista.js?v=confianza-1';
 import { ajustarCalendarios, periodoReciente, ultimoPeriodoDisponible } from './periodo.js';
 import { crearRelojServidor } from './reloj.js';
 import { iniciarCalendarios } from './calendario.js';

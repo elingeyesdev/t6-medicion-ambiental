@@ -2,8 +2,10 @@
 
 use App\Services\Api\ErrorConsulta;
 use App\Services\PortalIncendios\ImportarAvisos;
+use App\Services\Seguimiento\EvaluarZona;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schedule;
 
 Artisan::command('inspire', function () {
@@ -32,3 +34,23 @@ Artisan::command('portal-incendios:importar', function (ImportarAvisos $importad
 Schedule::command('portal-incendios:importar')
     ->everyThirtyMinutes()->withoutOverlapping(10)
     ->when(fn () => config('portal_incendios.importacion_programada'));
+
+Artisan::command('seguimiento:vigilar', function (EvaluarZona $evaluador): int {
+    $errores = 0;
+    foreach (DB::table('zonas_seguimiento')->lazyById() as $zona) {
+        try {
+            $resultado = $evaluador->consultar($zona, null);
+            $evaluador->guardarVigilancia($zona, $resultado);
+        } catch (ErrorConsulta) {
+            $errores++;
+        }
+    }
+
+    if ($errores > 0) {
+        $this->warn('Zonas que no pudieron actualizarse: '.$errores);
+    }
+
+    return $errores > 0 ? 1 : 0;
+})->purpose('Actualizar las alarmas de focos en las zonas guardadas');
+
+Schedule::command('seguimiento:vigilar')->everyTenMinutes()->withoutOverlapping(10);

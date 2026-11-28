@@ -8,6 +8,7 @@ use App\Services\Territorios\CatalogoTerritorial;
 use App\Services\Territorios\GeometriaTerritorial;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,21 +36,41 @@ final class SeguimientoController extends Controller
         $zona = $id === null ? null : $this->zona($request, $id);
         $ubicacion = Validator::make($request->query(), self::COORDENADAS);
 
+        $hoy = CarbonImmutable::now('America/La_Paz')->toDateString();
+        $fecha = ['nullable', 'date_format:Y-m-d', 'before_or_equal:'.$hoy];
+        $periodo = Validator::make($request->query(), ['fecha' => $fecha]);
+
+        $evaluacion = $zona?->evaluacion === null ? null : json_decode($zona->evaluacion, true);
+        $vigilancia = $zona === null ? null : EvaluarZona::ultimaVigilancia($zona->id);
+        $reciente = ($vigilancia['hasta'] ?? '') >= ($evaluacion['hasta'] ?? '')
+            ? ($vigilancia ?? $evaluacion) : $evaluacion;
+        $ultima = isset($vigilancia['consultadoEn']) ? CarbonImmutable::parse($vigilancia['consultadoEn']) : null;
+        $esperaAviso = $ultima === null ? 0 : max(0, $ultima->addMinutes(10)->getTimestamp() - now()->getTimestamp()) * 1000;
+
         return view('seguimiento.index', [
+            'esperaAviso' => $esperaAviso,
+            'fechaInicial' => $periodo->passes() ? ($periodo->validated()['fecha'] ?? null) : null,
             'modulos' => array_filter(config('geocruz.modulos'), fn ($modulo) => $modulo['habilitado']),
             'zonas' => $zonas,
             'zona' => $zona,
             'coordenadasIniciales' => $zona === null && $ubicacion->passes() ? $ubicacion->validated() : [],
-            'evaluacion' => $zona?->evaluacion === null ? null : json_decode($zona->evaluacion, true),
+            'evaluacion' => $evaluacion,
+            'resumenVigilancia' => $reciente === null ? null : $this->resumenVigilancia($reciente),
             'tareas' => $zona === null ? null : DB::table('tareas_seguimiento')->where('zona_id', $zona->id)
                 ->orderByDesc('id')->paginate(10, ['*'], 'tareas'),
             'resultados' => self::RESULTADOS,
-            'hoy' => CarbonImmutable::now('America/La_Paz')->toDateString(),
+            'hoy' => $hoy,
         ]);
     }
 
-    public function guardar(Request $request, CatalogoTerritorial $catalogo, GeometriaTerritorial $geografia): RedirectResponse
+    public function guardar(Request $request, CatalogoTerritorial $catalogo, GeometriaTerritorial $geografia, EvaluarZona $servicio): RedirectResponse
     {
+        $hoy = CarbonImmutable::now('America/La_Paz')->toDateString();
+        $opciones = $request->validate([
+            'fecha' => ['nullable', 'date_format:Y-m-d', 'before_or_equal:'.$hoy],
+            'evaluar' => ['sometimes', 'accepted'],
+        ]);
+        $fecha = $opciones['fecha'] ?? null;
         $datos = $request->validate([
             'nombre' => ['required', 'string', 'max:100'],
             'radio_km' => ['required', 'integer', 'between:1,50'],
@@ -60,32 +81,83 @@ final class SeguimientoController extends Controller
             throw ValidationException::withMessages(['latitud' => 'El centro debe estar dentro de Santa Cruz, Bolivia.']);
         }
 
-        $id = DB::table('zonas_seguimiento')->insertGetId($datos + [
-            'user_id' => $request->user()->getKey(),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        // Un reintento de guardado puede llegar después de que la zona ya se creó.
+        $id = $this->zonas($request)->where($datos)->orderBy('id')->value('id')
+            ?? DB::table('zonas_seguimiento')->insertGetId($datos + [
+                'user_id' => $request->user()->getKey(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
-        return to_route('seguimiento.zona', $id)->with('estado', 'Zona guardada.');
+        $destino = ['id' => $id] + ($fecha ? ['fecha' => $fecha] : []);
+        if (! isset($opciones['evaluar'])) {
+            return to_route('seguimiento.zona', $destino)->with('estado', 'Zona guardada.');
+        }
+
+        try {
+            $this->actualizarEvaluacion($request, $id, $this->zona($request, $id), $servicio, $fecha);
+        } catch (ErrorConsulta) {
+            return to_route('seguimiento.zona', $destino)->with('estado', 'Zona guardada.')
+                ->withErrors(['fecha' => 'NASA FIRMS no respondió. Puedes reintentar la evaluación desde esta zona.']);
+        }
+
+        return to_route('seguimiento.zona', $id)->with('estado', 'Zona guardada y evaluada.');
     }
 
-    public function evaluar(Request $request, int $id, EvaluarZona $servicio): RedirectResponse
+    public function evaluar(Request $request, int $id, EvaluarZona $servicio): RedirectResponse|JsonResponse
     {
         $zona = $this->zona($request, $id);
+        if ($request->expectsJson() && $request->boolean('en_vivo')) {
+            try {
+                $actual = $servicio->consultar($zona, null);
+                $servicio->guardarVigilancia($zona, $actual);
+            } catch (ErrorConsulta) {
+                return response()->json(['mensaje' => 'No pudimos consultar NASA FIRMS.'], 503);
+            }
+
+            return response()->json($this->resumenVigilancia($actual));
+        }
+
         $hoy = CarbonImmutable::now('America/La_Paz')->toDateString();
         $datos = $request->validate(['fecha' => ['nullable', 'date_format:Y-m-d', 'before_or_equal:'.$hoy]]);
         try {
-            $evaluacion = $servicio->consultar($zona, $datos['fecha'] ?? null);
+            $this->actualizarEvaluacion($request, $id, $zona, $servicio, $datos['fecha'] ?? null);
         } catch (ErrorConsulta) {
             return to_route('seguimiento.zona', $id)->withInput()->withErrors(['fecha' => 'No pudimos consultar NASA FIRMS. Reintenta en unos minutos. La evaluación anterior sigue disponible.']);
         }
 
+        return to_route('seguimiento.zona', $id)->with('estado', 'Evaluación registrada.');
+    }
+
+    private function resumenVigilancia(array $resultado): array
+    {
+        $hora = fn (?string $fecha) => $fecha === null ? null
+            : CarbonImmutable::parse($fecha)->setTimezone('America/La_Paz')->format('d/m/Y H:i');
+        $foco = $resultado['focoCercano'] ?? null;
+
+        return [
+            'detecciones' => $resultado['detecciones'],
+            'cobertura' => $resultado['cobertura'],
+            'hasta' => $hora($resultado['hasta']),
+            'consultadoEn' => $hora($resultado['consultadoEn'] ?? null),
+            'fuente' => $resultado['fuente'],
+            'producto' => $resultado['producto'],
+            'distancia' => isset($resultado['distanciaKm']) ? number_format($resultado['distanciaKm'], 2, ',', '.') : null,
+            'foco' => $foco === null ? null : [
+                'latitud' => $foco['latitud'],
+                'longitud' => $foco['longitud'],
+                'hora' => $hora($foco['observadoEn']),
+            ],
+        ];
+    }
+
+    private function actualizarEvaluacion(Request $request, int $id, object $zona, EvaluarZona $servicio, ?string $fecha): void
+    {
+        $evaluacion = $servicio->consultar($zona, $fecha);
         $this->zonas($request)->where('id', $id)->update([
             'evaluacion' => json_encode($evaluacion, JSON_THROW_ON_ERROR),
             'updated_at' => now(),
         ]);
-
-        return to_route('seguimiento.zona', $id)->with('estado', 'Evaluación registrada.');
     }
 
     public function crearTarea(Request $request, int $id): RedirectResponse

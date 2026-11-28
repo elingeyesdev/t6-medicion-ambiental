@@ -3,6 +3,7 @@
 @section('clase-cuerpo', 'pagina-sequias')
 @push('estilos')
 <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
+<link rel="stylesheet" href="{{ asset('css/mapas/centrar-seleccion.css') }}">
 <link rel="stylesheet" href="{{ asset('css/modulos/sequias.css') }}">
 @endpush
 
@@ -57,5 +58,6 @@
 
 @push('scripts')
 <script src="{{ asset('vendor/leaflet/leaflet.js') }}" defer></script>
+<script src="{{ asset('js/mapas/centrar-seleccion.js') }}?v=2" defer></script>
 <script type="module" src="{{ asset('js/sequias/inicio.js') }}"></script>
 @endpush

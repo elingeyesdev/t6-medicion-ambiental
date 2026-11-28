@@ -3,6 +3,7 @@
 @section('clase-cuerpo', 'pagina-cuentas')
 @push('estilos')
 <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
+<link rel="stylesheet" href="{{ asset('css/mapas/centrar-seleccion.css') }}">
 <link rel="stylesheet" href="{{ asset('css/paginas/cuentas.css') }}">
 @endpush
 @section('contenido')
@@ -67,5 +68,6 @@
 @push('scripts')
 @include('cuentas.configuracion-unidades')
 <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
+<script src="{{ asset('js/mapas/centrar-seleccion.js') }}?v=2"></script>
 <script type="module" src="{{ asset('js/cuentas/ubicacion.js') }}"></script>
 @endpush
