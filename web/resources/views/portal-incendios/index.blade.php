@@ -35,7 +35,7 @@
                     <p class="portada-region"><span aria-hidden="true"></span> Santa Cruz, Bolivia</p>
                     <h1 id="titulo-portal">Cuidemos el lugar <em>que llamamos hogar</em></h1>
                     <p class="portada-intro">Pensamos en nuestra gente cuando algo pasa cerca. Si te preocupa tu comunidad, tu finca o el lugar donde vive tu familia, aquí puedes ver los avisos y saber qué se encontró.</p>
-                    <div class="portada-acciones"><a class="boton boton-portada" href="#avisos">Ver avisos en el mapa</a><a class="portada-resueltos" href="{{ route('portal-incendios.index', ['vista' => 'resueltos']) }}">Ver qué encontraron las brigadas</a></div>
+                    <div class="portada-acciones"><a class="boton boton-portada" href="#avisos">Ver avisos en el mapa</a><a class="portada-resueltos" href="{{ route('portal-incendios.index', ['vista' => 'resueltos']) }}#lista-avisos">Ver qué encontraron las brigadas</a></div>
                 </div>
                 <figure class="portada-paisaje">
                     <img src="{{ asset('img/portal-incendios/serrania-santiago.webp') }}" alt="Acantilados de la Serranía de Santiago sobre el bosque de la Chiquitanía" width="1280" height="720" fetchpriority="high">
@@ -77,10 +77,10 @@
                     @if($historial || $aviso)<span><i class="punto-estado punto-archivo" aria-hidden="true"></i> Archivado</span>@endif
                 </div>
             </section>
-            <section class="panel" aria-label="{{ $aviso ? 'Detalle del aviso' : 'Listado de avisos' }}">
+            <section class="panel" @unless($aviso) id="lista-avisos" tabindex="-1" @endunless aria-label="{{ $aviso ? 'Detalle del aviso' : 'Listado de avisos' }}">
                 @if($aviso)
                     <div class="ficha">
-                        <a href="{{ route('portal-incendios.index', $historial ? ['vista' => $filtroHistorial] : []) }}">Volver a los avisos</a>
+                        <a href="{{ route('portal-incendios.index', $historial ? ['vista' => $filtroHistorial] : []) }}#lista-avisos">Volver a los avisos</a>
                         <h2>{{ $brigadista ? 'Ficha del aviso' : 'Sobre este aviso' }}</h2>
                         @if(str_starts_with($aviso->producto, 'SIMULACION'))<p class="nota-operativa">Simulacro · ejercicio de verificación</p>@endif
                         <span class="estado" data-estado="{{ $aviso->estado() }}">{{ $aviso->estado() }}</span>
@@ -145,9 +145,9 @@
                 @else
                     <div class="panel-cabecera"><h2>{{ $resueltos ? 'Casos resueltos' : ($historial ? 'Historial' : 'Avisos activos') }}</h2></div>
                     <nav class="pestanas" aria-label="Filtrar avisos">
-                        <a href="{{ route('portal-incendios.index') }}" @unless($historial) aria-current="page" @endunless>Activos</a>
-                        <a href="{{ route('portal-incendios.index', ['vista' => 'historial']) }}" @if($historial && !$resueltos) aria-current="page" @endif>Historial</a>
-                        <a href="{{ route('portal-incendios.index', ['vista' => 'resueltos']) }}" @if($resueltos) aria-current="page" @endif>Resueltos</a>
+                        <a href="{{ route('portal-incendios.index') }}#lista-avisos" @unless($historial) aria-current="page" @endunless>Activos</a>
+                        <a href="{{ route('portal-incendios.index', ['vista' => 'historial']) }}#lista-avisos" @if($historial && !$resueltos) aria-current="page" @endif>Historial</a>
+                        <a href="{{ route('portal-incendios.index', ['vista' => 'resueltos']) }}#lista-avisos" @if($resueltos) aria-current="page" @endif>Resueltos</a>
                     </nav>
                     <ul class="lista">
                         @forelse($avisos as $item)
@@ -172,9 +172,9 @@
                     </ul>
                     @if($avisos->hasPages())
                         <nav class="paginacion" aria-label="Páginas de avisos">
-                            @if($avisos->previousPageUrl())<a href="{{ $avisos->previousPageUrl() }}">Anterior</a>@endif
+                            @if($avisos->previousPageUrl())<a href="{{ $avisos->previousPageUrl() }}#lista-avisos">Anterior</a>@endif
                             <span>{{ $avisos->currentPage() }} de {{ $avisos->lastPage() }}</span>
-                            @if($avisos->nextPageUrl())<a href="{{ $avisos->nextPageUrl() }}">Siguiente</a>@endif
+                            @if($avisos->nextPageUrl())<a href="{{ $avisos->nextPageUrl() }}#lista-avisos">Siguiente</a>@endif
                         </nav>
                     @endif
                 @endif
