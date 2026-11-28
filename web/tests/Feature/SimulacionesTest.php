@@ -35,7 +35,7 @@ class SimulacionesTest extends TestCase
         $this->postJson('/api/v1/simulaciones', $this->parametros())->assertUnauthorized();
         Sanctum::actingAs(User::factory()->create(), ['cuenta']);
         $this->postJson('/api/v1/simulaciones', $this->parametros())->assertForbidden();
-        $this->get('/simulaciones')->assertOk()->assertSee('Panel de')->assertDontSee('data-control=', false)->assertDontSee('data-preparar', false);
+        $this->get('/simulaciones')->assertForbidden();
         $this->assertDatabaseCount('simulaciones', 0);
     }
 
@@ -58,14 +58,14 @@ class SimulacionesTest extends TestCase
     {
         $propietario = User::factory()->create(['rol' => 'admin']);
         $sesion = app(SimularEscenario::class)->crear($this->parametros(['nombre' => 'Escenario privado del admin']), $propietario->id);
-        $this->actingAs(User::factory()->create(['rol' => 'visualizador']));
-        $this->get('/simulaciones?sesion='.$sesion->id)->assertOk()
-            ->assertSee('Simulación continua global')->assertDontSee($sesion->nombre)
-            ->assertDontSee('data-control=', false)->assertDontSee('data-inyectar', false)
-            ->assertDontSee('class="sim-configuracion"', false);
+        $visualizador = User::factory()->create(['rol' => 'visualizador']);
+        $this->actingAs($visualizador);
+        $this->get('/simulaciones?sesion='.$sesion->id)->assertForbidden();
         $this->post('/simulaciones', $this->parametros())->assertForbidden();
         $this->post('/simulaciones/'.$sesion->id.'/accion', ['accion' => 'iniciar', 'revision' => 0, 'posicion' => 0])->assertForbidden();
         $this->post('/simulaciones/'.$sesion->id.'/historial')->assertForbidden();
+        Sanctum::actingAs($visualizador, ['cuenta']);
+        $this->getJson('/api/v1/simulaciones/'.$sesion->id)->assertForbidden();
         $this->assertDatabaseCount('simulaciones', 1);
         $this->assertDatabaseCount('lecturas_ambientales', 0);
         $this->assertSame('lista', $sesion->fresh()->estado);

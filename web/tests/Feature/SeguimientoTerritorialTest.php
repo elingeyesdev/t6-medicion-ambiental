@@ -34,7 +34,7 @@ final class SeguimientoTerritorialTest extends TestCase
         ])->assertRedirect(route('seguimiento.zona', 1));
         $this->post(route('seguimiento.tareas', 1), ['titulo' => 'Antes de evaluar'])->assertConflict();
         $this->post(route('seguimiento.evaluar', 1), ['fecha' => '2026-11-10'])->assertRedirect(route('seguimiento.zona', 1));
-        $this->get(route('seguimiento.zona', 1))->assertOk()->assertSee('Revisión prioritaria');
+        $this->get(route('seguimiento.zona', 1))->assertOk()->assertSee('Aviso de focos dentro del radio')->assertSee('data-prioridad="prioritaria"', false);
         $evaluacion = json_decode(DB::table('zonas_seguimiento')->value('evaluacion'), true);
         $this->assertSame(1, $evaluacion['detecciones']);
         $this->assertSame(1, $evaluacion['confianzaAlta']);

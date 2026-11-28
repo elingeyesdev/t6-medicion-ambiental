@@ -70,7 +70,7 @@ class SimulacionContinuaTest extends TestCase
         $this->getJson('/api/v1/simulacion-continua/estado')->assertUnauthorized();
         $u = $this->cliente('visualizador');
         $this->accion('preparar', 0, ['semilla' => 'x'])->assertForbidden();
-        $this->get('/reportes?vista=historial')->assertOk()->assertDontSee('data-control=', false)->assertSee('Simulación continua global');
+        $this->get('/reportes?vista=historial')->assertOk()->assertSee('Mis reportes')->assertDontSee('data-control=', false)->assertDontSee('Consultar la simulación en vivo');
         $this->assertSame('visualizador', $u->fresh()->rol->value);
         Sanctum::actingAs($u, ['otra']);
         $this->getJson('/api/v1/simulacion-continua/estado')->assertForbidden();
