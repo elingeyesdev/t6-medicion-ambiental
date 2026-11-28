@@ -1,38 +1,62 @@
 @php
-    $estado = $aviso->estado();
-    $resultado = \App\Models\AvisoIncendio::RESULTADOS[$aviso->resultado] ?? null;
+    $esEjercicio = str_starts_with($aviso->producto, 'SIMULACION');
+    $resultado = \App\Models\AvisoIncendio::RESULTADOS[$aviso->resultado] ?? 'Resultado registrado';
     $hitos = [
-        ['Se detectó una señal de calor', $aviso->observado_en, 'Ubicación aproximada de la detección.', 'deteccion'],
-        ['Se publicó el aviso', $aviso->publicado_en, 'La ficha quedó disponible para consulta pública.', 'publicacion'],
+        ['Primera señal de calor', $aviso->observado_en, 'deteccion'],
+        ['Una brigada se hace cargo', $aviso->tomado_en, 'brigada'],
+        [$aviso->estado() === 'Vencido sin atención' ? 'El aviso se cerró sin revisión' : 'Lo que encontró la brigada',
+            $aviso->resuelto_en ?? ($aviso->estado() === 'Vencido sin atención' ? $aviso->vence_en : null),
+            $aviso->estado() === 'Vencido sin atención' ? 'vencimiento' : 'cierre'],
     ];
-    if ($aviso->tomado_en) {
-        $hitos[] = ['Una brigada tomó el aviso', $aviso->tomado_en, 'La ubicación quedó a cargo de una brigada para verificarla.', 'brigada'];
-    }
-    if ($aviso->resuelto_en) {
-        $hitos[] = [$resultado ?? 'Resultado registrado', $aviso->resuelto_en, 'La brigada registró lo que pudo comprobar.', 'cierre'];
-    } elseif ($estado === 'Vencido sin atención') {
-        $hitos[] = ['Venció sin verificación', $aviso->vence_en, 'El aviso pasó al historial tras 72 horas sin asignación.', 'vencimiento'];
+    $seleccionado = $hitos[2][1] ? 'cierre' : ($aviso->tomado_en ? 'brigada' : 'deteccion');
+    if ($hitos[2][2] === 'vencimiento') {
+        $seleccionado = 'vencimiento';
     }
 @endphp
 <section class="trayectoria-aviso" aria-labelledby="trayectoria-titulo">
     <header>
-        <h3 id="trayectoria-titulo">Seguimiento del aviso</h3>
+        <h3 id="trayectoria-titulo">Qué pasó con este aviso</h3>
         <p>Hora de Bolivia</p>
     </header>
     <ol>
-        @foreach ($hitos as [$titulo, $fecha, $detalle, $tipo])
-            <li data-hito="{{ $tipo }}">
-                <div class="trayectoria-hito">
-                    <strong>{{ $titulo }}</strong>
-                    <time datetime="{{ $fecha->toIso8601String() }}">{{ $fecha->setTimezone('America/La_Paz')->format('d/m/Y · H:i') }}</time>
-                </div>
-                <p>{{ $detalle }}</p>
+        @foreach ($hitos as [$titulo, $fecha, $tipo])
+            <li data-hito="{{ $tipo }}" @unless($fecha) class="hito-pendiente" @endunless>
+                <details @if($seleccionado === $tipo) open @endif>
+                    <summary class="trayectoria-hito">
+                        <strong>{{ $titulo }}</strong>
+                        @if($fecha)
+                            <time datetime="{{ $fecha->toIso8601String() }}">{{ $fecha->setTimezone('America/La_Paz')->format('d/m/Y · H:i') }}</time>
+                        @else
+                            <small>{{ $tipo === 'brigada' ? ($seleccionado === 'vencimiento' ? 'No asignado' : 'Sin asignar') : 'Pendiente' }}</small>
+                        @endif
+                    </summary>
+                    <div class="hito-detalle">
+                        @if($tipo === 'deteccion')
+                            <p>{{ $esEjercicio ? 'Esta señal forma parte de un simulacro.' : 'El satélite registró una señal de calor en la zona.' }}</p>
+                        @elseif($tipo === 'brigada' && $fecha)
+                            <p>Una brigada se hizo cargo {{ $aviso->observado_en->lte($fecha) ? $fecha->locale('es')->diffForHumans($aviso->observado_en, \Carbon\CarbonInterface::DIFF_ABSOLUTE, false, 2).' después de la primera señal.' : 'del aviso.' }}</p>
+                        @elseif($tipo === 'vencimiento')
+                            <p>Ninguna brigada se hizo cargo durante las primeras 72 horas. Puedes encontrar el aviso en el historial.</p>
+                        @elseif($tipo === 'cierre' && $fecha)
+                            <p><strong>{{ $resultado }}</strong></p>
+                            @if($aviso->comentario_publico && filled($aviso->comentario_verificacion))
+                                <p class="hito-nota">{{ $aviso->comentario_verificacion }}</p>
+                            @endif
+                        @elseif($tipo === 'brigada')
+                            @if($seleccionado === 'vencimiento')
+                                <p>Ninguna brigada llegó a tomar este aviso.</p>
+                            @else
+                                <p>Una brigada puede tomar el aviso hasta el {{ $aviso->vence_en->setTimezone('America/La_Paz')->format('d/m/Y · H:i') }}.</p>
+                            @endif
+                        @else
+                            <p>Cuando la brigada termine de revisar la zona, podrás leer aquí lo que encontró.</p>
+                        @endif
+                        @if($fecha && $tipo !== 'vencimiento')
+                            <button type="button" class="hito-mapa" data-enfocar-hito data-etiqueta="{{ $tipo === 'cierre' ? $resultado : $titulo }}" hidden>Ver punto en el mapa</button>
+                        @endif
+                    </div>
+                </details>
             </li>
         @endforeach
     </ol>
-    @if ($estado === 'Por verificar')
-        <p class="trayectoria-proximo">Pendiente de asignación hasta el {{ $aviso->vence_en->setTimezone('America/La_Paz')->format('d/m/Y · H:i') }}.</p>
-    @elseif ($estado === 'En verificación')
-        <p class="trayectoria-proximo">A la espera del resultado de la brigada.</p>
-    @endif
 </section>

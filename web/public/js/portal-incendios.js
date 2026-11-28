@@ -32,3 +32,40 @@ if (avisos.length === 1) {
 } else if (avisos.length > 1) {
     mapa.fitBounds(puntos.getBounds(), { padding: [36, 36], maxZoom: 12 });
 }
+
+const trayectoria = document.querySelector('.trayectoria-aviso');
+if (trayectoria && avisos.length === 1) {
+    const marcador = puntos.getLayers()[0];
+    const [aviso] = avisos;
+    const pasos = trayectoria.querySelectorAll('details');
+    const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mostrarPunto = (etiqueta) => {
+        const ficha = document.createElement('div');
+        const titulo = document.createElement('strong');
+        titulo.textContent = aviso.nombre;
+        const evento = document.createElement('p');
+        evento.textContent = etiqueta;
+        ficha.append(titulo, evento);
+        mapa.setView([aviso.lat, aviso.lon], 11, { animate: !sinMovimiento.matches });
+        marcador.setPopupContent(ficha).openPopup();
+    };
+
+    for (const paso of pasos) {
+        const boton = paso.querySelector('[data-enfocar-hito]');
+        if (boton) {
+            boton.hidden = false;
+            boton.addEventListener('click', () => {
+                mostrarPunto(boton.dataset.etiqueta);
+                mapa.getContainer().scrollIntoView({ block: 'nearest', behavior: sinMovimiento.matches ? 'instant' : 'smooth' });
+                mapa.getContainer().focus({ preventScroll: true });
+            });
+        }
+        paso.addEventListener('toggle', () => {
+            if (!paso.open) return;
+            for (const otro of pasos) {
+                if (otro !== paso) otro.open = false;
+            }
+            if (boton) mostrarPunto(boton.dataset.etiqueta);
+        });
+    }
+}

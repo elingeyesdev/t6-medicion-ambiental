@@ -206,3 +206,30 @@ h2 { font-size: 1.25rem; margin: 0; }
 @media (max-width: 32rem) {
     .trayectoria-hito { display: grid; gap: .2rem; }
 }
+
+.portada-acciones { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem 1rem; }
+.portada-resueltos { color: #fff8e9; text-underline-offset: .25em; font-weight: 650; }
+.trayectoria-aviso details { border-radius: .55rem; background: #faf6eb; border: 1px solid #d3dfd3; }
+.trayectoria-aviso details[open] { border-color: #879f8d; box-shadow: 0 2px 6px #24443813; }
+.trayectoria-aviso li:has(details[open])::before { box-shadow: 0 0 0 3px #eff4ed, 0 0 0 5px #879f8d; }
+.trayectoria-aviso .hito-pendiente::before { background: #eff4ed; border: 1px solid #7b9280; }
+.trayectoria-hito { display: list-item; padding: .7rem .85rem; cursor: pointer; }
+.trayectoria-hito time, .trayectoria-hito small { display: block; margin: .24rem 0 0 1rem; font-size: .8rem; color: #496057; }
+.hito-detalle { padding: 0 .85rem .85rem; overflow-wrap: anywhere; }
+.trayectoria-aviso li .hito-nota { margin-top: .6rem; padding: .55rem .7rem; background: #eee4d5; border-inline-start: 3px solid #a16c4f; white-space: pre-wrap; }
+.hito-mapa { margin-top: .65rem; padding: .4rem .65rem; min-height: 2.2rem; border: 1px solid #8da998; border-radius: .4rem; background: #e2ece0; color: #244438; cursor: pointer; font: inherit; font-size: .85rem; }
+.hito-mapa:hover { background: #d6e6d7; }
+@media (prefers-reduced-motion: no-preference) {
+    .trayectoria-aviso details[open] .hito-detalle { animation: hito-entrada .22s ease-out; }
+    @keyframes hito-entrada { from { opacity: 0; } to { opacity: 1; } }
+}
+.atencion-aviso .nota-publica { display: flex; gap: .55rem; align-items: baseline; margin-block: .4rem; }
+.atencion-aviso .nota-publica input { flex-shrink: 0; accent-color: #244438; }
+@media (max-width: 52rem) {
+    .columnas-ficha-publica .mapa-panel { grid-area: 1 / 1; }
+    .columnas-ficha-publica .panel:not(.mapa-panel) { grid-area: 2 / 1; }
+}
+
+.datos-origen { margin-top: .85rem; border-top: 1px solid var(--portal-borde, #cbd5ca); padding-top: .75rem; }
+.datos-origen summary { color: #315849; font-weight: 650; cursor: pointer; }
+.datos-origen dl { margin-top: .65rem; }

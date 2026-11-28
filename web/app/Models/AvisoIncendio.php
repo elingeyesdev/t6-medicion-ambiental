@@ -19,7 +19,7 @@ final class AvisoIncendio extends Model
 
     protected $guarded = ['id'];
 
-    protected $hidden = ['brigadista_id', 'portal_brigadista_id'];
+    protected $hidden = ['brigadista_id', 'portal_brigadista_id', 'comentario_verificacion', 'comentario_publico'];
 
     public $timestamps = false;
 
@@ -30,6 +30,7 @@ final class AvisoIncendio extends Model
         'vence_en' => 'immutable_datetime',
         'tomado_en' => 'immutable_datetime',
         'resuelto_en' => 'immutable_datetime',
+        'comentario_publico' => 'boolean',
     ];
 
     public function estado(): string

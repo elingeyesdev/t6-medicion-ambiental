@@ -15,11 +15,15 @@ final class PortalIncendiosController extends Controller
 {
     public function index(Request $request, ?AvisoIncendio $aviso = null): Response
     {
-        $historial = $request->query('vista') === 'historial';
+        $resueltos = $request->query('vista') === 'resueltos';
+        $historial = $resueltos || $request->query('vista') === 'historial';
+        $filtroHistorial = $resueltos ? 'resueltos' : 'historial';
         $cuentaBrigada = $this->cuentaBrigada();
         $brigadista = $cuentaBrigada !== null;
         $consulta = AvisoIncendio::query();
-        if ($historial) {
+        if ($resueltos) {
+            $consulta->whereNotNull('resuelto_en');
+        } elseif ($historial) {
             $consulta->where(fn ($q) => $q->whereNotNull('resuelto_en')
                 ->orWhere(fn ($q) => $q->whereNull('tomado_en')->where('vence_en', '<=', now())));
         } else {
@@ -37,11 +41,11 @@ final class PortalIncendiosController extends Controller
             'lon' => (float) $item->longitud,
             'nombre' => $item->municipio,
             'estado' => $item->estado(),
-            'url' => route('portal-incendios.ficha', ['aviso' => $item] + ($historial ? ['vista' => 'historial'] : [])),
+            'url' => route('portal-incendios.ficha', ['aviso' => $item] + ($historial ? ['vista' => $filtroHistorial] : [])),
         ])->values();
 
         return response()->view('portal-incendios.index', [
-            'avisos' => $avisos, 'aviso' => $aviso, 'historial' => $historial, 'mapaAvisos' => $mapaAvisos,
+            'avisos' => $avisos, 'aviso' => $aviso, 'historial' => $historial, 'resueltos' => $resueltos, 'filtroHistorial' => $filtroHistorial, 'mapaAvisos' => $mapaAvisos,
             'brigadista' => $brigadista, 'cuentaBrigada' => $cuentaBrigada, 'resumen' => $resumen,
         ])->header('Cache-Control', 'no-store');
     }
@@ -75,12 +79,14 @@ final class PortalIncendiosController extends Controller
         $datos = $request->validate([
             'resultado' => ['required', Rule::in(array_keys(AvisoIncendio::RESULTADOS))],
             'comentario_verificacion' => ['nullable', 'string', 'max:1000'],
+            'comentario_publico' => ['sometimes', 'boolean'],
         ]);
         $actualizados = AvisoIncendio::query()->whereKey($aviso->id)
             ->where('portal_brigadista_id', $cuenta->id)->whereNotNull('tomado_en')->whereNull('resuelto_en')
             ->update([
                 'resultado' => $datos['resultado'],
                 'comentario_verificacion' => $datos['comentario_verificacion'] ?? null,
+                'comentario_publico' => $request->boolean('comentario_publico') && filled($datos['comentario_verificacion'] ?? null),
                 'resuelto_en' => now(),
             ]);
 
