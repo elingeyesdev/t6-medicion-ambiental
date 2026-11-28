@@ -32,6 +32,13 @@ class HotspotDetailScreen extends StatelessWidget {
         : '${BoliviaTime.dateTime(parsed)} · Bolivia';
   }
 
+  String _observedDate(String? value) {
+    final parsed = value == null ? null : DateTime.tryParse(value);
+    return parsed == null
+        ? 'Fecha observada no informada'
+        : '${BoliviaTime.dateTime(parsed)} · Bolivia';
+  }
+
   String _nature(String? value) => switch (value) {
     'observacion' => 'Observación',
     'estimacion_modelada' => 'Estimación modelada',
@@ -97,7 +104,7 @@ class HotspotDetailScreen extends StatelessWidget {
               ),
               _InfoRow(
                 label: 'Fecha observada',
-                value: _date(record.observedAt),
+                value: _observedDate(record.observedAt),
               ),
               _InfoRow(
                 label: 'Potencia radiativa',
