@@ -2,8 +2,10 @@
 
 use App\Services\Api\ErrorConsulta;
 use App\Services\PortalIncendios\ImportarAvisos;
+use App\Services\Seguimiento\EvaluarZona;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schedule;
 
 Artisan::command('inspire', function () {
@@ -29,9 +31,9 @@ Schedule::command('portal-incendios:importar')
     ->everyThirtyMinutes()->withoutOverlapping(10)
     ->when(fn () => config('portal_incendios.importacion_programada'));
 
-Artisan::command('seguimiento:vigilar', function (\App\Services\Seguimiento\EvaluarZona $evaluador): int {
+Artisan::command('seguimiento:vigilar', function (EvaluarZona $evaluador): int {
     $errores = 0;
-    foreach (\Illuminate\Support\Facades\DB::table('zonas_seguimiento')->lazyById() as $zona) {
+    foreach (DB::table('zonas_seguimiento')->lazyById() as $zona) {
         try {
             $resultado = $evaluador->consultar($zona, null);
             $evaluador->guardarVigilancia($zona, $resultado);
