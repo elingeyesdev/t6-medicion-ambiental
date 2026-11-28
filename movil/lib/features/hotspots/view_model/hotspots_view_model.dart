@@ -9,9 +9,22 @@ import '../model/hotspot_models.dart';
 import '../model/hotspot_repository.dart';
 
 class HotspotsViewModel extends ChangeNotifier {
-  HotspotsViewModel(this.repository) : filters = defaultFilters();
+  HotspotsViewModel(this.repository, {this.onUnauthorized})
+    : filters = defaultFilters();
 
   final HotspotRepository repository;
+  final VoidCallback? onUnauthorized;
+  bool _reportedUnauthorized = false;
+
+  void _checkSession(Object error) {
+    if (error is GeoCruzApiException &&
+        error.statusCode == 401 &&
+        !_reportedUnauthorized) {
+      _reportedUnauthorized = true;
+      response = null;
+      onUnauthorized?.call();
+    }
+  }
 
   List<TerritoryOption> territories = const [];
   HotspotFilters filters;
@@ -80,6 +93,7 @@ class HotspotsViewModel extends ChangeNotifier {
       if (_disposed) return;
       loadingCatalog = false;
       catalogError = _friendlyError(error);
+      _checkSession(error);
       notifyListeners();
     }
   }
@@ -246,6 +260,7 @@ class HotspotsViewModel extends ChangeNotifier {
       if (generation != _requestGeneration) return;
       loading = false;
       queryError = _friendlyError(error);
+      _checkSession(error);
       queryExpired =
           error is GeoCruzApiException &&
           (error.statusCode == 409 || error.code == 'CONJUNTO_CAMBIADO');
@@ -255,6 +270,9 @@ class HotspotsViewModel extends ChangeNotifier {
 
   String _friendlyError(Object error) {
     if (error is GeoCruzApiException) {
+      if (error.statusCode == 401) {
+        return 'Tu sesión venció. Vuelve a iniciar sesión.';
+      }
       if (error.code == 'PROVEEDOR_NO_CONFIGURADO' ||
           error.message.contains('NASA_FIRMS_CLAVE')) {
         return 'Focos de calor usa detecciones reales de NASA FIRMS. '

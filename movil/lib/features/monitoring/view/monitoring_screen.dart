@@ -208,6 +208,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
       useSafeArea: true,
       showDragHandle: true,
       builder: (_) => AirSheet(
+        onUnauthorized: widget.onUnauthorized,
         api: widget.api,
         point: _focusPoint(),
         title: _selected?.name ?? 'Calidad del aire',

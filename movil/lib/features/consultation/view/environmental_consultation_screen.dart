@@ -165,6 +165,7 @@ class _EnvironmentalConsultationScreenState
               children: [
                 _visitedSections.contains(0)
                     ? HotspotsScreen(
+                        onUnauthorized: widget.onUnauthorized,
                         key: const PageStorageKey('env-hotspots'),
                         apiClient: widget.apiClient,
                         showAppBar: false,
@@ -177,6 +178,7 @@ class _EnvironmentalConsultationScreenState
                     : const SizedBox.shrink(),
                 _visitedSections.contains(1)
                     ? DroughtScreen(
+                        onUnauthorized: widget.onUnauthorized,
                         key: const PageStorageKey('env-drought'),
                         apiClient: widget.apiClient,
                         showAppBar: false,
